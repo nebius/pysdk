@@ -1,0 +1,8 @@
+version: v2
+plugins:
+  - remote: buf.build/protocolbuffers/python
+    out: src/nebius/api
+  - remote: buf.build/grpc/python
+    out: src/nebius/api
+  - remote: buf.build/protocolbuffers/pyi
+    out: src/nebius/api

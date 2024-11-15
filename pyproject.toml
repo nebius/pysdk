@@ -11,7 +11,10 @@ authors = [
 ]
 license = { text = "MIT" }
 dependencies = [
-    # "requests>=2.25.1"
+    "cryptography>=43.0.3",
+    "grpcio>=1.67.1",
+    "PyJWT>=2.9.0",
+    "grpc-stubs>=1.53",  # For mypy
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,10 +22,16 @@ requires-python = ">=3.10"
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",  # For running tests
+    "pytest-asyncio>=0.24.0",  # For running async tests
     "tox>=4.0",     # For testing automation
     "mypy>=1.13",    # For type checking
     "black>=24.10",  # For code formatting
     "ruff>=0.7",   # For linting
+]
+genproto = [
+    "grpcio-tools>=1.67.1",
+    "mypy-protobuf>=3.6",
+    "protovalidate>=0.5",
 ]
 
 [tool.setuptools]
@@ -34,9 +43,16 @@ where = ["src"]
 [tool.black]
 line-length = 88
 target-version = ["py310"]
+exclude = "(src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
 
 [tool.mypy]
 strict = true
+exclude = "^src/nebius/api/.*"
+files = ["!src/nebius/api/buf/validate/validate_pb2.pyi"]
+
+[[tool.mypy.overrides]]
+module = "nebius.api.*"
+ignore_errors = true
 
 [tool.ruff]
 exclude = [
@@ -67,17 +83,26 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    "src/nebius/api",
 ]
 line-length = 88
 indent-width = 4
 target-version = "py310"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "Q"]
+select = ["E", "F", "I", "N", "Q", "S"]
 ignore = []
+exclude = ["src/nebius/api"]
 fixable = ["ALL"]
 unfixable = []
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**.py" = ["S"]
+"src/nebius/api/**" = ["ALL"]
+
+[tool.ruff.format]
+exclude = ["src/nebius/api/**", "*.pyi"]
 
 [tool.isort]
 profile = "black"

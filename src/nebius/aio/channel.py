@@ -1,0 +1,285 @@
+import ssl
+from asyncio import gather
+from logging import getLogger
+from typing import Any, Coroutine, Dict, Sequence, TypeVar
+
+from google.protobuf.descriptor import MethodDescriptor, ServiceDescriptor
+from google.protobuf.descriptor_pool import (
+    Default,  # type: ignore[unused-ignore]
+    DescriptorPool,
+)
+from google.protobuf.message import Message
+from grpc import (
+    CallCredentials,
+    ChannelConnectivity,
+    Compression,
+    ssl_channel_credentials,
+)
+from grpc.aio import Channel as GRPCChannel
+from grpc.aio._base_call import UnaryUnaryCall
+from grpc.aio._base_channel import (
+    StreamStreamMultiCallable,
+    StreamUnaryMultiCallable,
+    UnaryStreamMultiCallable,
+    UnaryUnaryMultiCallable,
+)
+from grpc.aio._channel import (
+    insecure_channel,  # type: ignore[unused-ignore]
+    secure_channel,  # type: ignore[unused-ignore]
+)
+from grpc.aio._interceptor import ClientInterceptor
+from grpc.aio._typing import (
+    ChannelArgumentType,
+    DeserializingFunction,
+    MetadataType,
+    SerializingFunction,
+)
+
+from nebius.aio._cleaner import CleaningInterceptor
+from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
+from nebius.aio.authorization.interceptor import AuthorizationInterceptor
+from nebius.aio.authorization.token import TokenProvider
+from nebius.aio.idempotency import IdempotencyKeyInterceptor
+from nebius.aio.token import exchangeable, renewable
+from nebius.aio.token.token import Bearer as TokenBearer
+from nebius.base.constants import DOMAIN
+from nebius.base.methods import fix_name
+from nebius.base.options import COMPRESSION, INSECURE, pop_option
+from nebius.base.resolver import Chain, Conventional, Resolver, TemplateExpander
+from nebius.base.service_account.service_account import ServiceAccount
+
+logger = getLogger(__name__)
+
+Req = TypeVar("Req", bound=Message)
+Res = TypeVar("Res", bound=Message)
+
+
+# Get default CA certificates from the system using Python's SSL module
+context = ssl.create_default_context()
+root_certificates_l = context.get_ca_certs(binary_form=True)
+
+# Check if any root certificates were loaded, convert them into a single PEM string
+if root_certificates_l:
+    root_certificates = b"".join(root_certificates_l)
+
+
+class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type: ignore
+    def __init__(
+        self,
+        channel: "Channel",
+        method: str,
+        request_serializer: SerializingFunction | None = None,
+        response_deserializer: DeserializingFunction | None = None,
+        _registered_method: bool | None = False,
+    ) -> None:
+        super().__init__()
+        self._channel = channel
+        self._method = method
+        self._request_serializer = request_serializer
+        self._response_deserializer = response_deserializer
+        self._registered_method = _registered_method
+        self._true_callee: UnaryUnaryMultiCallable[Req, Res] | None = None
+
+    def __call__(
+        self,
+        request: Req,
+        *,
+        timeout: float | None = None,
+        metadata: MetadataType | None = None,
+        credentials: CallCredentials | None = None,
+        wait_for_ready: bool | None = None,
+        compression: Compression | None = None,
+    ) -> UnaryUnaryCall[Req, Res]:
+        if self._true_callee is None:
+            ch = self._channel.get_channel_by_method(self._method)
+            self._true_callee = ch.unary_unary(  # type: ignore[unused-ignore]
+                self._method,
+                self._request_serializer,
+                self._response_deserializer,
+                self._registered_method,  # type: ignore[unused-ignore]
+            )
+        return self._true_callee(  # type: ignore[unused-ignore]
+            request,
+            timeout=timeout,
+            metadata=metadata,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+
+
+Credentials = AuthorizationProvider | TokenBearer | ServiceAccount | None
+
+
+class Channel(GRPCChannel):  # type: ignore
+    def __init__(
+        self,
+        *,
+        resolver: Resolver | None = None,
+        substitutions: Dict[str, str] | None = None,
+        domain: str = DOMAIN,
+        options: ChannelArgumentType | None = None,
+        interceptors: Sequence[ClientInterceptor] | None = None,
+        address_options: Dict[str, ChannelArgumentType] | None = None,
+        address_interceptors: Dict[str, Sequence[ClientInterceptor]] | None = None,
+        credentials: Credentials = None,
+    ) -> None:
+        substitutions_full = dict[str, str]()
+        substitutions_full["{domain}"] = domain
+        if substitutions is not None:
+            substitutions_full.update(substitutions)
+
+        self._resolver: Resolver = Conventional()
+        if resolver is not None:
+            self._resolver = Chain(resolver, self._resolver)
+        self._resolver = TemplateExpander(substitutions_full, self._resolver)
+
+        self._channels = dict[str, GRPCChannel]()
+        self._methods = dict[str, str]()
+
+        if options is None:
+            options = []
+        if interceptors is None:
+            interceptors = []
+        self._global_options = options
+        self._global_interceptors: list[ClientInterceptor] = [
+            IdempotencyKeyInterceptor()
+        ]
+        self._global_interceptors.extend(interceptors)
+
+        if address_options is None:
+            address_options = dict[str, ChannelArgumentType]()
+        if address_interceptors is None:
+            address_interceptors = dict[str, Sequence[ClientInterceptor]]()
+        self._address_options = address_options
+        self._address_interceptors = address_interceptors
+
+        self._global_interceptors_inner: list[ClientInterceptor] = []
+
+        # TODO: (prv) req ID
+        # TODO: OTEL Tracing
+        # TODO: error parser
+        # TODO: (prv) dual
+
+        if isinstance(credentials, ServiceAccount):
+            exchange = exchangeable.Bearer(credentials, self)
+            cache = renewable.Bearer(exchange)
+            credentials = cache
+        if isinstance(credentials, TokenBearer):
+            credentials = TokenProvider(credentials)
+        if isinstance(credentials, AuthorizationProvider):
+            self._global_interceptors_inner.append(
+                AuthorizationInterceptor(credentials)
+            )
+
+        self._global_interceptors_inner.append(CleaningInterceptor())
+
+    async def close(self, grace: float | None = None) -> None:
+        awaits = list[Coroutine[Any, Any, Any]]()
+        for chan in self._channels.values():
+            awaits.append(chan.close(grace))
+        await gather(*awaits)
+
+    def get_addr_by_method(self, method_name: str) -> str:
+        if method_name not in self._methods:
+            pool: DescriptorPool = Default()  # type: ignore[unused-ignore]
+            method: MethodDescriptor = pool.FindMethodByName(fix_name(method_name))  # type: ignore[unused-ignore]
+            service: ServiceDescriptor = method.containing_service  # type: ignore[unused-ignore]
+            addr = self._resolver.resolve(service.full_name)  # type: ignore[unused-ignore]
+            self._methods[method_name] = addr
+        return self._methods[method_name]
+
+    def get_channel_by_method(self, method_name: str) -> GRPCChannel:
+        addr = self.get_addr_by_method(method_name)
+        if addr not in self._channels:
+            self._channels[addr] = self.create_address_channel(addr)
+        return self._channels[addr]
+
+    def get_address_options(self, addr: str) -> ChannelArgumentType:
+        ret = [opt for opt in self._global_options]
+        if addr in self._address_options:
+            ret.extend(self._address_options[addr])
+        return ret
+
+    def get_address_interceptors(self, addr: str) -> Sequence[ClientInterceptor]:
+        ret = [opt for opt in self._global_interceptors]
+        if addr in self._address_interceptors:
+            ret.extend(self._address_interceptors[addr])
+        ret.extend(self._global_interceptors_inner)
+        return ret
+
+    def create_address_channel(self, addr: str) -> GRPCChannel:
+        opts = self.get_address_options(addr)
+        opts, insecure = pop_option(opts, INSECURE, bool)
+        opts, compression = pop_option(opts, COMPRESSION, Compression)
+        interceptors = self.get_address_interceptors(addr)
+        if insecure:
+            return insecure_channel(addr, opts, compression, interceptors)  # type: ignore[unused-ignore]
+        else:
+            return secure_channel(
+                addr,
+                ssl_channel_credentials(root_certificates),  # type: ignore[unused-ignore]
+                opts,
+                compression,
+                interceptors,
+            )
+
+    def unary_unary(  # type: ignore[unused-ignore]
+        self,
+        method_name: str,
+        request_serializer: SerializingFunction | None = None,
+        response_deserializer: DeserializingFunction | None = None,
+        _registered_method: bool | None = False,
+    ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
+        return NebiusUnaryUnaryMultiCallable(
+            self,
+            method_name,
+            request_serializer,
+            response_deserializer,
+            _registered_method,
+        )
+
+    async def __aenter__(self) -> "Channel":
+        return self
+
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        await self.close(None)
+
+    def get_state(self, try_to_connect: bool = False) -> ChannelConnectivity:
+        return ChannelConnectivity.READY
+
+    async def wait_for_state_change(
+        self,
+        last_observed_state: ChannelConnectivity,
+    ) -> None:
+        raise NotImplementedError("this method has no meaning for this channel")
+
+    async def channel_ready(self) -> None:
+        return
+
+    def unary_stream(  # type: ignore[unused-ignore]
+        self,
+        method: str,
+        request_serializer: SerializingFunction | None = None,
+        response_deserializer: DeserializingFunction | None = None,
+        _registered_method: bool | None = None,
+    ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
+        raise NotImplementedError("Method not implemented")
+
+    def stream_unary(  # type: ignore[unused-ignore]
+        self,
+        method: str,
+        request_serializer: SerializingFunction | None = None,
+        response_deserializer: DeserializingFunction | None = None,
+        _registered_method: bool | None = None,
+    ) -> StreamUnaryMultiCallable:
+        raise NotImplementedError("Method not implemented")
+
+    def stream_stream(  # type: ignore[unused-ignore]
+        self,
+        method: str,
+        request_serializer: SerializingFunction | None = None,
+        response_deserializer: DeserializingFunction | None = None,
+        _registered_method: bool | None = None,
+    ) -> StreamStreamMultiCallable:
+        raise NotImplementedError("Method not implemented")

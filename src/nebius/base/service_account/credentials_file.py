@@ -1,0 +1,84 @@
+import json
+from dataclasses import dataclass
+from logging import getLogger
+from typing import Any
+
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
+
+from .pk_file import WrongKeyTypeError
+from .service_account import Reader as BaseReader
+from .service_account import ServiceAccount
+
+log = getLogger(__name__)
+
+
+@dataclass
+class SubjectCredentials:
+    type: str
+    alg: str
+    private_key: str
+    kid: str
+    iss: str
+    sub: str
+
+    def validate(self) -> None:
+        if self.type != "" and self.type != "JWT":
+            raise ValueError(
+                f"Invalid service account credentials type: '{self.type}',"
+                " only 'JWT' is supported."
+            )
+
+        if self.alg != "RS256":
+            raise ValueError(
+                f"Invalid service account algorithm: '{self.alg}',"
+                " only 'RS256' is supported."
+            )
+
+        if self.iss != self.sub:
+            raise ValueError(
+                "Issuer must be the same as subject: " f"'{self.iss}' != '{self.sub}'."
+            )
+
+    def parse_private_key(self) -> RSAPrivateKey:
+        pk = serialization.load_pem_private_key(
+            self.private_key.encode("utf-8"), password=None, backend=default_backend()
+        )
+
+        if not isinstance(pk, RSAPrivateKey):
+            raise WrongKeyTypeError(pk)
+        return pk
+
+
+@dataclass
+class ServiceAccountCredentials:
+    subject_credentials: SubjectCredentials
+
+    @staticmethod
+    def from_json(data: dict[str, Any]) -> "ServiceAccountCredentials":
+        subject_data = data["subject-credentials"]
+        subject_credentials = SubjectCredentials(**subject_data)
+        subject_credentials.validate()
+        return ServiceAccountCredentials(subject_credentials)
+
+
+class Reader(BaseReader):
+    def __init__(
+        self,
+        filename: str,
+    ) -> None:
+        self._fn = filename
+
+    def read(self) -> ServiceAccount:
+        log.debug(f"reading SA from Credentials file: {self._fn}")
+        with open(self._fn, "rb") as f:
+            data = json.load(f)
+
+        credentials = ServiceAccountCredentials.from_json(data)
+        parsed_key = credentials.subject_credentials.parse_private_key()
+        return ServiceAccount(
+            parsed_key,
+            credentials.subject_credentials.kid,
+            credentials.subject_credentials.sub,
+        )
