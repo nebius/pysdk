@@ -15,11 +15,13 @@ dependencies = [
     "grpcio>=1.67.1",
     "PyJWT>=2.9.0",
     "grpc-stubs>=1.53",  # For mypy
+    "certifi>=2024.8.30",
 ]
 readme = "README.md"
 requires-python = ">=3.10"
 
 [project.optional-dependencies]
+windows = ["certifi-win32"]  # to use windows certificates
 dev = [
     "pytest>=8.0",  # For running tests
     "pytest-asyncio>=0.24.0",  # For running async tests

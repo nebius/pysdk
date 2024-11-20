@@ -58,7 +58,14 @@ class ServiceAccountCredentials:
     @staticmethod
     def from_json(data: dict[str, Any]) -> "ServiceAccountCredentials":
         subject_data = data["subject-credentials"]
-        subject_credentials = SubjectCredentials(**subject_data)
+        subject_credentials = SubjectCredentials(
+            type=subject_data["type"] if "type" in subject_data else "",
+            alg=subject_data["alg"],
+            private_key=subject_data["private-key"],
+            kid=subject_data["kid"],
+            iss=subject_data["iss"],
+            sub=subject_data["sub"],
+        )
         subject_credentials.validate()
         return ServiceAccountCredentials(subject_credentials)
 

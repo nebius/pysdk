@@ -65,7 +65,7 @@ class Receiver(ParentReceiver):
         if not isinstance(ret, CreateTokenResponse):
             raise UnsupportedResponseError(CreateTokenResponse.__name__, ret)
 
-        if ret.token_type != "bearer":  # noqa: S105 — not a password
+        if ret.token_type != "Bearer":  # noqa: S105 — not a password
             raise UnsupportedTokenTypeError(ret.token_type)
 
         log.debug(

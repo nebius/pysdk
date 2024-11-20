@@ -69,7 +69,10 @@ class ServiceAccount(TokenRequester):
         )
 
 
-class Reader(ABC):
+class Reader(TokenRequester):
     @abstractmethod
     def read(self) -> ServiceAccount:
         raise NotImplementedError("Method not implemented!")
+
+    def get_exchange_token_request(self) -> ExchangeTokenRequest:
+        return self.read().get_exchange_token_request()

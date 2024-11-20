@@ -1,4 +1,3 @@
-import ssl
 from asyncio import gather
 from logging import getLogger
 from typing import Any, Coroutine, Dict, Sequence, TypeVar
@@ -12,6 +11,7 @@ from google.protobuf.message import Message
 from grpc import (
     CallCredentials,
     ChannelConnectivity,
+    ChannelCredentials,
     Compression,
     ssl_channel_credentials,
 )
@@ -35,6 +35,8 @@ from grpc.aio._typing import (
     SerializingFunction,
 )
 
+import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
+import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # noqa: F401 - load for registration
 from nebius.aio._cleaner import CleaningInterceptor
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
 from nebius.aio.authorization.interceptor import AuthorizationInterceptor
@@ -46,21 +48,15 @@ from nebius.base.constants import DOMAIN
 from nebius.base.methods import fix_name
 from nebius.base.options import COMPRESSION, INSECURE, pop_option
 from nebius.base.resolver import Chain, Conventional, Resolver, TemplateExpander
-from nebius.base.service_account.service_account import ServiceAccount
+from nebius.base.service_account.service_account import (
+    TokenRequester as ServiceAccountReader,
+)
+from nebius.base.tls_certificates import get_system_certificates
 
 logger = getLogger(__name__)
 
 Req = TypeVar("Req", bound=Message)
 Res = TypeVar("Res", bound=Message)
-
-
-# Get default CA certificates from the system using Python's SSL module
-context = ssl.create_default_context()
-root_certificates_l = context.get_ca_certs(binary_form=True)
-
-# Check if any root certificates were loaded, convert them into a single PEM string
-if root_certificates_l:
-    root_certificates = b"".join(root_certificates_l)
 
 
 class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type: ignore
@@ -108,7 +104,7 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         )
 
 
-Credentials = AuthorizationProvider | TokenBearer | ServiceAccount | None
+Credentials = AuthorizationProvider | TokenBearer | ServiceAccountReader | None
 
 
 class Channel(GRPCChannel):  # type: ignore
@@ -123,6 +119,7 @@ class Channel(GRPCChannel):  # type: ignore
         address_options: Dict[str, ChannelArgumentType] | None = None,
         address_interceptors: Dict[str, Sequence[ClientInterceptor]] | None = None,
         credentials: Credentials = None,
+        tls_credentials: ChannelCredentials | None = None,
     ) -> None:
         substitutions_full = dict[str, str]()
         substitutions_full["{domain}"] = domain
@@ -133,6 +130,12 @@ class Channel(GRPCChannel):  # type: ignore
         if resolver is not None:
             self._resolver = Chain(resolver, self._resolver)
         self._resolver = TemplateExpander(substitutions_full, self._resolver)
+        if tls_credentials is None:
+            root_ca = get_system_certificates()
+            with open(root_ca, "rb") as f:
+                trusted_certs = f.read()
+            tls_credentials = ssl_channel_credentials(root_certificates=trusted_certs)
+        self._tls_credentials = tls_credentials
 
         self._channels = dict[str, GRPCChannel]()
         self._methods = dict[str, str]()
@@ -161,7 +164,7 @@ class Channel(GRPCChannel):  # type: ignore
         # TODO: error parser
         # TODO: (prv) dual
 
-        if isinstance(credentials, ServiceAccount):
+        if isinstance(credentials, ServiceAccountReader):
             exchange = exchangeable.Bearer(credentials, self)
             cache = renewable.Bearer(exchange)
             credentials = cache
@@ -216,9 +219,9 @@ class Channel(GRPCChannel):  # type: ignore
         if insecure:
             return insecure_channel(addr, opts, compression, interceptors)  # type: ignore[unused-ignore]
         else:
-            return secure_channel(
+            return secure_channel(  # type: ignore[unused-ignore]
                 addr,
-                ssl_channel_credentials(root_certificates),  # type: ignore[unused-ignore]
+                self._tls_credentials,
                 opts,
                 compression,
                 interceptors,
