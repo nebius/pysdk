@@ -14,7 +14,7 @@ Res = TypeVar("Res")
 log = getLogger(__name__)
 
 
-class CleaningInterceptor(UnaryUnaryClientInterceptor):  # type: ignore
+class CleaningInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unused-ignore,misc]
     async def intercept_unary_unary(
         self,
         continuation: Callable[[ClientCallDetails, Req], UnaryUnaryCall | Res],

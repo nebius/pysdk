@@ -28,7 +28,7 @@ def ensure_key_in_metadata(metadata: Metadata) -> None:
         add_key_to_metadata(metadata)
 
 
-class IdempotencyKeyInterceptor(UnaryUnaryClientInterceptor):  # type: ignore
+class IdempotencyKeyInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unused-ignore,misc]
     async def intercept_unary_unary(
         self,
         continuation: Callable[[ClientCallDetails, Req], UnaryUnaryCall | Res],

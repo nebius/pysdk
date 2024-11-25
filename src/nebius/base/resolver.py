@@ -98,11 +98,11 @@ class Conventional(Resolver):
 
             from nebius.api.nebius.annotations_pb2 import api_service_name
 
-            pool: DescriptorPool = Default()  # type: ignore[unused-ignore]
-            service_descriptor: ServiceDescriptor = pool.FindServiceByName(service_id)  # type: ignore[unused-ignore]
+            pool: DescriptorPool = Default()  # type: ignore[unused-ignore,no-untyped-call]
+            service_descriptor: ServiceDescriptor = pool.FindServiceByName(service_id)  # type: ignore[unused-ignore,no-untyped-call]
             opts: ServiceOptions = service_descriptor.GetOptions()  # type: ignore[unused-ignore]
-            if opts.Extensions[api_service_name] != "":  # type: ignore[unused-ignore]
-                service_name = opts.Extensions[api_service_name]  # type: ignore[unused-ignore]
+            if opts.Extensions[api_service_name] != "":  # type: ignore[unused-ignore,index]
+                service_name = opts.Extensions[api_service_name]  # type: ignore[unused-ignore,index]
         except KeyError:
             pass
         ret = service_name + ".{domain}"  # type: ignore[unused-ignore]

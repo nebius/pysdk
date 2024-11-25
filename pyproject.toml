@@ -16,13 +16,15 @@ dependencies = [
     "PyJWT>=2.9.0",
     "grpc-stubs>=1.53",  # For mypy
     "certifi>=2024.8.30",
+    "protobuf>=5.28.3",
+    "types-protobuf>=5.28.3", # for mypy
 ]
 readme = "README.md"
 requires-python = ">=3.10"
 
 [project.optional-dependencies]
 windows = ["certifi-win32"]  # to use windows certificates
-dev = [
+dev = [ # don't forget to mirror some of these to tox.ini
     "pytest>=8.0",  # For running tests
     "pytest-asyncio>=0.24.0",  # For running async tests
     "tox>=4.0",     # For testing automation
@@ -111,3 +113,6 @@ profile = "black"
 
 [tool.pylint]
 load-plugins = ["pylint.extensions.mccabe"]
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"

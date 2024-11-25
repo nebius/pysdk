@@ -17,7 +17,7 @@ Req = TypeVar("Req")
 Res = TypeVar("Res")
 
 
-class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore
+class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unused-ignore,misc]
     def __init__(self, provider: Provider) -> None:
         super().__init__()
         self._provider = provider
@@ -41,7 +41,7 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore
 
         log.debug(
             f"Authentication for {client_call_details.method} is enabled, "
-            f"auth type: {auth_type}"
+            f"auth type: {auth_type!r}"
         )
         start = time()
         deadline = None

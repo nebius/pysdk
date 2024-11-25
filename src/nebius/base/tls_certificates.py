@@ -22,7 +22,7 @@ def get_system_certificates() -> str:
     elif platform.system() == "Windows":
         # On Windows, use certifi-win32 or fetch manually
         try:
-            import certifi_win32  # type: ignore[unused-ignore]
+            import certifi_win32  # type: ignore[unused-ignore,import-not-found]
 
             system_cert_path = str(certifi_win32.wincerts.where())  # type: ignore[unused-ignore]
         except ImportError:

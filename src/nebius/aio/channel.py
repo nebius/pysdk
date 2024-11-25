@@ -59,7 +59,7 @@ Req = TypeVar("Req", bound=Message)
 Res = TypeVar("Res", bound=Message)
 
 
-class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type: ignore
+class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type: ignore[unused-ignore,misc]
     def __init__(
         self,
         channel: "Channel",
@@ -88,13 +88,13 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
     ) -> UnaryUnaryCall[Req, Res]:
         if self._true_callee is None:
             ch = self._channel.get_channel_by_method(self._method)
-            self._true_callee = ch.unary_unary(  # type: ignore[unused-ignore]
+            self._true_callee = ch.unary_unary(  # type: ignore[unused-ignore,call-arg,assignment]
                 self._method,
                 self._request_serializer,
                 self._response_deserializer,
                 self._registered_method,  # type: ignore[unused-ignore]
             )
-        return self._true_callee(  # type: ignore[unused-ignore]
+        return self._true_callee(  # type: ignore[unused-ignore,misc]
             request,
             timeout=timeout,
             metadata=metadata,
@@ -107,7 +107,7 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
 Credentials = AuthorizationProvider | TokenBearer | ServiceAccountReader | None
 
 
-class Channel(GRPCChannel):  # type: ignore
+class Channel(GRPCChannel):  # type: ignore[unused-ignore,misc]
     def __init__(
         self,
         *,
@@ -185,8 +185,8 @@ class Channel(GRPCChannel):  # type: ignore
 
     def get_addr_by_method(self, method_name: str) -> str:
         if method_name not in self._methods:
-            pool: DescriptorPool = Default()  # type: ignore[unused-ignore]
-            method: MethodDescriptor = pool.FindMethodByName(fix_name(method_name))  # type: ignore[unused-ignore]
+            pool: DescriptorPool = Default()  # type: ignore[unused-ignore,no-untyped-call]
+            method: MethodDescriptor = pool.FindMethodByName(fix_name(method_name))  # type: ignore[unused-ignore,no-untyped-call]
             service: ServiceDescriptor = method.containing_service  # type: ignore[unused-ignore]
             addr = self._resolver.resolve(service.full_name)  # type: ignore[unused-ignore]
             self._methods[method_name] = addr
@@ -217,9 +217,9 @@ class Channel(GRPCChannel):  # type: ignore
         opts, compression = pop_option(opts, COMPRESSION, Compression)
         interceptors = self.get_address_interceptors(addr)
         if insecure:
-            return insecure_channel(addr, opts, compression, interceptors)  # type: ignore[unused-ignore]
+            return insecure_channel(addr, opts, compression, interceptors)  # type: ignore[unused-ignore,no-any-return]
         else:
-            return secure_channel(  # type: ignore[unused-ignore]
+            return secure_channel(  # type: ignore[unused-ignore,no-any-return]
                 addr,
                 self._tls_credentials,
                 opts,
@@ -227,13 +227,13 @@ class Channel(GRPCChannel):  # type: ignore
                 interceptors,
             )
 
-    def unary_unary(  # type: ignore[unused-ignore]
+    def unary_unary(  # type: ignore[unused-ignore,override]
         self,
         method_name: str,
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
         _registered_method: bool | None = False,
-    ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
+    ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore,override]
         return NebiusUnaryUnaryMultiCallable(
             self,
             method_name,
@@ -260,7 +260,7 @@ class Channel(GRPCChannel):  # type: ignore
     async def channel_ready(self) -> None:
         return
 
-    def unary_stream(  # type: ignore[unused-ignore]
+    def unary_stream(  # type: ignore[unused-ignore,override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
@@ -269,7 +269,7 @@ class Channel(GRPCChannel):  # type: ignore
     ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
         raise NotImplementedError("Method not implemented")
 
-    def stream_unary(  # type: ignore[unused-ignore]
+    def stream_unary(  # type: ignore[unused-ignore,override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
@@ -278,7 +278,7 @@ class Channel(GRPCChannel):  # type: ignore
     ) -> StreamUnaryMultiCallable:
         raise NotImplementedError("Method not implemented")
 
-    def stream_stream(  # type: ignore[unused-ignore]
+    def stream_stream(  # type: ignore[unused-ignore,override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
