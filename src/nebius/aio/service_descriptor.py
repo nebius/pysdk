@@ -1,5 +1,11 @@
 from typing import Any, Protocol, Type, TypeVar
 
+from google.protobuf.descriptor import MethodDescriptor, ServiceDescriptor
+from google.protobuf.descriptor_pool import (
+    Default,  # type: ignore[unused-ignore]
+    DescriptorPool,
+)
+from google.protobuf.message import Message
 from grpc import (
     CallCredentials,
     ChannelConnectivity,
@@ -25,12 +31,6 @@ from grpc.aio._typing import (
     SerializingFunction,
 )
 
-from google.protobuf.descriptor import MethodDescriptor, ServiceDescriptor
-from google.protobuf.descriptor_pool import (
-    Default,  # type: ignore[unused-ignore]
-    DescriptorPool,
-)
-from google.protobuf.message import Message
 from nebius.base.error import SDKError
 from nebius.base.methods import fix_name
 
