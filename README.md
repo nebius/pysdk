@@ -6,7 +6,7 @@ TBD.
 Example of usage in `src/nebius/sdk.py`.
 Try it out as follows:
 ```bash
-NEBIUS_IAM_TOKEN=$(npc --profile testing iam get-access-token) PROJECT_ID="your-project-id" python ./src/nebius/sdk.py
+NEBIUS_IAM_TOKEN=$(nebius --profile testing iam get-access-token) PROJECT_ID="your-project-id" python ./src/nebius/sdk.py
 ```
 
 **Important note:**
