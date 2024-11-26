@@ -124,6 +124,9 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         self._last_method = method
         return StubUU()
 
+    async def close(self, grace: float | None = None) -> None:
+        pass
+
     async def __aenter__(self) -> "ExtractorChannel":
         return self
 
