@@ -36,6 +36,7 @@ genproto = [
     "grpcio-tools>=1.67.1",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
+    "betterproto[compiler]>=1.2.5",
 ]
 
 [tool.setuptools]

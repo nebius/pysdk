@@ -24,6 +24,7 @@ if __name__ == "__main__":
         )
 
         stub = DiskServiceStub(channel)  # type: ignore
+        # op_service = channel.get_corresponding_operation_service(DiskServiceStub)
         req = ListDisksRequest(parent_id="project-e0tpublic-api-gateway")
         call: UnaryUnaryCall = stub.List(req)
         ret = await call

@@ -1,11 +1,5 @@
 from typing import Any, Protocol, Type, TypeVar
 
-from google.protobuf.descriptor import MethodDescriptor, ServiceDescriptor
-from google.protobuf.descriptor_pool import (
-    Default,  # type: ignore[unused-ignore]
-    DescriptorPool,
-)
-from google.protobuf.message import Message
 from grpc import (
     CallCredentials,
     ChannelConnectivity,
@@ -31,6 +25,12 @@ from grpc.aio._typing import (
     SerializingFunction,
 )
 
+from google.protobuf.descriptor import MethodDescriptor, ServiceDescriptor
+from google.protobuf.descriptor_pool import (
+    Default,  # type: ignore[unused-ignore]
+    DescriptorPool,
+)
+from google.protobuf.message import Message
 from nebius.base.error import SDKError
 from nebius.base.methods import fix_name
 
@@ -58,7 +58,7 @@ class StubUU(UnaryUnaryMultiCallable):  # type: ignore[unused-ignore,misc,type-a
         credentials: CallCredentials | None = None,
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
-    ) -> UnaryUnaryCall:  # type: ignore[unused-ignore]
+    ) -> UnaryUnaryCall:  # type: ignore[unused-ignore, type-arg]
         raise NotATrueCallError()
 
 
@@ -72,7 +72,7 @@ class StubUS(UnaryStreamMultiCallable):  # type: ignore[unused-ignore,misc,type-
         credentials: CallCredentials | None = None,
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
-    ) -> UnaryStreamCall:  # type: ignore[unused-ignore]
+    ) -> UnaryStreamCall:  # type: ignore[unused-ignore, type-arg]
         raise NotATrueCallError()
 
 
@@ -85,7 +85,7 @@ class StubSU(StreamUnaryMultiCallable):  # type: ignore[unused-ignore,misc]
         credentials: CallCredentials | None = None,
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
-    ) -> StreamUnaryCall:  # type: ignore[unused-ignore]
+    ) -> StreamUnaryCall:  # type: ignore[unused-ignore, type-arg]
         raise NotATrueCallError()
 
 
@@ -98,7 +98,7 @@ class StubSS(StreamStreamMultiCallable):  # type: ignore[unused-ignore,misc]
         credentials: CallCredentials | None = None,
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
-    ) -> StreamStreamCall:  # type: ignore[unused-ignore]
+    ) -> StreamStreamCall:  # type: ignore[unused-ignore, type-arg]
         raise NotATrueCallError()
 
 
@@ -150,7 +150,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
         self._last_method = method
-        raise StubUS()  # type: ignore[unused-ignore]
+        raise StubUS()  # type: ignore[unused-ignore,misc]
 
     def stream_unary(  # type: ignore[unused-ignore,override]
         self,
@@ -160,7 +160,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> StreamUnaryMultiCallable:
         self._last_method = method
-        raise StubSU()  # type: ignore[unused-ignore]
+        raise StubSU()  # type: ignore[unused-ignore,misc]
 
     def stream_stream(  # type: ignore[unused-ignore,override]
         self,
@@ -170,7 +170,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> StreamStreamMultiCallable:
         self._last_method = method
-        raise StubSS()  # type: ignore[unused-ignore]
+        raise StubSS()  # type: ignore[unused-ignore,misc]
 
 
 class ServiceStub(Protocol):
