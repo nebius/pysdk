@@ -40,7 +40,7 @@ Res = TypeVar("Res", bound=Message)
 
 class NotATrueCallError(SDKError):
     def __init__(self, *args: object) -> None:
-        super().__init__("This class is not meant to be run as a call")
+        super().__init__("This class is not meant to be run as a call.")
 
 
 class NoMethodsInServiceError(SDKError):
