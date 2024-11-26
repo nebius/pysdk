@@ -1,8 +1,15 @@
-version: v2
+version: v1
 plugins:
-  - remote: buf.build/protocolbuffers/python
+  - plugin: buf.build/protocolbuffers/python
     out: src/nebius/api
-  - remote: buf.build/grpc/python
+  - plugin: buf.build/grpc/python
     out: src/nebius/api
-  - remote: buf.build/protocolbuffers/pyi
+  - plugin: buf.build/protocolbuffers/pyi
     out: src/nebius/api
+  # - plugin: python_betterproto
+  #   opt:
+  #   - INCLUDE_GOOGLE
+  #   - typing.root
+  #   - pydantic_dataclasses
+  #   out: src/nebius/better_api
+  #   strategy: directory
