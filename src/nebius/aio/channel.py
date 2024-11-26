@@ -1,6 +1,6 @@
 from asyncio import gather
 from logging import getLogger
-from typing import Any, Coroutine, Dict, Sequence, TypeVar
+from typing import Any, Coroutine, Dict, Sequence, Type, TypeVar
 
 from google.protobuf.descriptor import MethodDescriptor, ServiceDescriptor
 from google.protobuf.descriptor_pool import (
@@ -42,8 +42,15 @@ from nebius.aio.authorization.authorization import Provider as AuthorizationProv
 from nebius.aio.authorization.interceptor import AuthorizationInterceptor
 from nebius.aio.authorization.token import TokenProvider
 from nebius.aio.idempotency import IdempotencyKeyInterceptor
+from nebius.aio.service_descriptor import ServiceStub, from_stub_class
 from nebius.aio.token import exchangeable, renewable
 from nebius.aio.token.token import Bearer as TokenBearer
+from nebius.api.nebius.common.v1.operation_service_pb2_grpc import (
+    OperationServiceStub,
+)
+from nebius.api.nebius.common.v1alpha1.operation_service_pb2_grpc import (
+    OperationServiceStub as OperationServiceStubDeprecated,
+)
 from nebius.base.constants import DOMAIN
 from nebius.base.methods import fix_name
 from nebius.base.options import COMPRESSION, INSECURE, pop_option
@@ -183,20 +190,46 @@ class Channel(GRPCChannel):  # type: ignore[unused-ignore,misc]
             awaits.append(chan.close(grace))
         await gather(*awaits)
 
+    def get_corresponding_operation_service(
+        self,
+        service_stub_class: Type[ServiceStub],
+    ) -> OperationServiceStub:
+        addr = self.get_addr_from_stub(service_stub_class)
+        chan = self.get_channel_by_addr(addr)
+        return OperationServiceStub(chan)  # type: ignore[no-untyped-call]
+
+    def get_corresponding_operation_service_alpha(
+        self,
+        service_stub_class: Type[ServiceStub],
+    ) -> OperationServiceStubDeprecated:
+        addr = self.get_addr_from_stub(service_stub_class)
+        chan = self.get_channel_by_addr(addr)
+        return OperationServiceStubDeprecated(chan)  # type: ignore[no-untyped-call]
+
+    def get_addr_from_stub(self, service_stub_class: Type[ServiceStub]) -> str:
+        desc = from_stub_class(service_stub_class)
+        return self.get_addr_from_service_descriptor(desc)
+
+    def get_addr_from_service_descriptor(self, descriptor: ServiceDescriptor) -> str:
+        return self._resolver.resolve(descriptor.full_name)  # type: ignore[unused-ignore]
+
     def get_addr_by_method(self, method_name: str) -> str:
         if method_name not in self._methods:
             pool: DescriptorPool = Default()  # type: ignore[unused-ignore,no-untyped-call]
             method: MethodDescriptor = pool.FindMethodByName(fix_name(method_name))  # type: ignore[unused-ignore,no-untyped-call]
-            service: ServiceDescriptor = method.containing_service  # type: ignore[unused-ignore]
-            addr = self._resolver.resolve(service.full_name)  # type: ignore[unused-ignore]
-            self._methods[method_name] = addr
+            self._methods[method_name] = self.get_addr_from_service_descriptor(
+                method.containing_service,  # type: ignore[unused-ignore]
+            )  # type: ignore[unused-ignore]
         return self._methods[method_name]
 
-    def get_channel_by_method(self, method_name: str) -> GRPCChannel:
-        addr = self.get_addr_by_method(method_name)
+    def get_channel_by_addr(self, addr: str) -> GRPCChannel:
         if addr not in self._channels:
             self._channels[addr] = self.create_address_channel(addr)
         return self._channels[addr]
+
+    def get_channel_by_method(self, method_name: str) -> GRPCChannel:
+        addr = self.get_addr_by_method(method_name)
+        return self.get_channel_by_addr(addr)
 
     def get_address_options(self, addr: str) -> ChannelArgumentType:
         ret = [opt for opt in self._global_options]

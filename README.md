@@ -11,3 +11,4 @@ Issues and TODOs:
  * Fieldmasks
  * Update
  * ServiceErrors
+ * Synchronous functions
