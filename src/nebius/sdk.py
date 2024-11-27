@@ -19,7 +19,6 @@ from nebius.api.nebius.storage.v1.bucket_service_pb2 import (
     GetBucketRequest,
 )
 from nebius.api.nebius.storage.v1.bucket_service_pb2_grpc import BucketServiceStub
-from nebius.base.service_account.credentials_file import Reader as SACReader
 from nebius.base.service_error import from_error
 
 if __name__ == "__main__":
@@ -36,14 +35,6 @@ if __name__ == "__main__":
             ),
         )
         project_id = os.environ.get("PROJECT_ID", "")
-
-        channel = Channel(
-            domain="api.private-api.tst.man.nbhost.net:443",
-            credentials=SACReader(
-                "/home/complynx/nebo/api/tools/terraform/test/e2e/credentials/npc_e2e_credentials.json"
-            ),
-        )
-        project_id = "project-e0tpublic-api-gateway"
 
         service = BucketServiceStub(channel)  # type: ignore
         op_service = channel.get_corresponding_operation_service(BucketServiceStub)
