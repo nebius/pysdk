@@ -142,7 +142,9 @@ def main() -> None:
 
     # Configure logging
     logging.basicConfig(
-        level=getattr(logging, args.level.upper(), None), stream=sys.stderr
+        level=getattr(logging, args.level.upper(), None),
+        stream=sys.stderr,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     prefix_map = parse_prefix_map(args.prefix)
     logging.info(f"Prefix map: {prefix_map}")

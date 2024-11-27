@@ -1,11 +1,16 @@
-version: v1
+version: v2
 plugins:
-  - plugin: buf.build/protocolbuffers/python
+  - remote: buf.build/protocolbuffers/python
     out: src/nebius/api
-  - plugin: buf.build/grpc/python
+  - remote: buf.build/grpc/python
     out: src/nebius/api
-  - plugin: buf.build/protocolbuffers/pyi
+  - remote: buf.build/protocolbuffers/pyi
     out: src/nebius/api
+  - local: ["python", "src/compiler/main.py"]
+    opt:
+    - log_level=DEBUG
+    out: src/nebius/api
+    strategy: directory
   # - plugin: python_betterproto
   #   opt:
   #   - INCLUDE_GOOGLE

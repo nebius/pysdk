@@ -18,7 +18,7 @@ compile-proto:
 	find $(OUT_DIR) -type d -exec touch {}/__init__.py \;
 
 move-imports:
-	find $(OUT_DIR) -type f -name "*.py" -exec python3 src/mover/mover.py --input {} --output {} --prefix buf=nebius.api.buf nebius=nebius.api.nebius google.rpc=nebius.api.google.rpc \;
-	find $(OUT_DIR) -type f -name "*.pyi" -exec python3 src/mover/mover.py --input {} --output {} --prefix buf=nebius.api.buf nebius=nebius.api.nebius google.rpc=nebius.api.google.rpc \;
+	find $(OUT_DIR) -type f -name "*.py" -exec python3 src/compiler/mover.py --level warning --input {} --output {} --prefix buf=nebius.api.buf nebius=nebius.api.nebius google.rpc=nebius.api.google.rpc \;
+	find $(OUT_DIR) -type f -name "*.pyi" -exec python3 src/compiler/mover.py --level warning --input {} --output {} --prefix buf=nebius.api.buf nebius=nebius.api.nebius google.rpc=nebius.api.google.rpc \;
 
 update-proto: update-submodule compile-proto move-imports
