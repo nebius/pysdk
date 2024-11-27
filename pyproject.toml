@@ -12,12 +12,13 @@ authors = [
 license = { text = "MIT" }
 dependencies = [
     "cryptography>=43.0.3",
-    "grpcio>=1.67.1",
+    "grpcio>=1.68.0",
     "PyJWT>=2.9.0",
     "grpc-stubs>=1.53",  # For mypy
     "certifi>=2024.8.30",
     "protobuf>=5.28.3",
     "types-protobuf>=5.28.3", # for mypy
+    "grpcio-status>=1.68.0",
 ]
 readme = "README.md"
 requires-python = ">=3.10"

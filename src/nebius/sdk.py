@@ -2,6 +2,7 @@ import os
 from asyncio import sleep
 from time import time
 
+from grpc import RpcError
 from grpc.aio._call import UnaryUnaryCall
 
 from nebius.aio.channel import Channel
@@ -18,9 +19,8 @@ from nebius.api.nebius.storage.v1.bucket_service_pb2 import (
     GetBucketRequest,
 )
 from nebius.api.nebius.storage.v1.bucket_service_pb2_grpc import BucketServiceStub
-
-SERVER = "[::1]:50051"
-
+from nebius.base.service_account.credentials_file import Reader as SACReader
+from nebius.base.service_error import from_error
 
 if __name__ == "__main__":
     import logging
@@ -29,19 +29,27 @@ if __name__ == "__main__":
 
     async def main() -> None:
         channel = Channel(
-            domain="api.private-api.tst.man.nbhost.net:443",
             credentials=Bearer(
                 Token(
                     os.environ.get("NEBIUS_IAM_TOKEN", ""),
                 )
             ),
         )
+        project_id = os.environ.get("PROJECT_ID", "")
 
-        stub = BucketServiceStub(channel)  # type: ignore
+        channel = Channel(
+            domain="api.private-api.tst.man.nbhost.net:443",
+            credentials=SACReader(
+                "/home/complynx/nebo/api/tools/terraform/test/e2e/credentials/npc_e2e_credentials.json"
+            ),
+        )
+        project_id = "project-e0tpublic-api-gateway"
+
+        service = BucketServiceStub(channel)  # type: ignore
         op_service = channel.get_corresponding_operation_service(BucketServiceStub)
         req = CreateBucketRequest(
             metadata=ResourceMetadata(
-                parent_id=os.environ.get("PROJECT_ID", ""),
+                parent_id=project_id,
                 name=f"test-pysdk-bucket-{time()}",
             ),
             spec=BucketSpec(
@@ -49,22 +57,28 @@ if __name__ == "__main__":
                 max_size_bytes=4096,
             ),
         )
-        call: UnaryUnaryCall = stub.Create(req)
-        ret: Operation = await call
-        mdi = await call.initial_metadata()
-        mdt = await call.trailing_metadata()
-        code = await call.code()
-        details = await call.details()
-        print(ret)
-        print(mdi, mdt, code, details)
-        while not ret.HasField("status"):
-            print("waiting 1 sec for operation to complete...")
-            await sleep(1)
-            ret = await op_service.Get(GetOperationRequest(id=ret.id))
+        try:
+            call: UnaryUnaryCall = service.Create(req)
+            ret: Operation = await call
+            # or just do `ret: Operation = await service.Create(req)`
+            mdi = await call.initial_metadata()
+            mdt = await call.trailing_metadata()
+            code = await call.code()
+            details = await call.details()
             print(ret)
-        bucket: Bucket = await stub.Get(GetBucketRequest(id=ret.resource_id))
-        print(bucket)
-        await stub.Delete(DeleteBucketRequest(id=bucket.metadata.id))
+            print(mdi, mdt, code, details)
+            while not ret.HasField("status"):
+                print("waiting 1 sec for operation to complete...")
+                await sleep(1)
+                ret = await op_service.Get(GetOperationRequest(id=ret.id))
+                print(ret)
+            bucket: Bucket = await service.Get(GetBucketRequest(id=ret.resource_id))
+            print(bucket)
+            await service.Delete(DeleteBucketRequest(id=bucket.metadata.id))
+        except RpcError as e:
+            se = from_error(e)
+            print(e, se)
+            raise
 
     import asyncio
 
