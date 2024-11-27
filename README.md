@@ -169,7 +169,7 @@ try:
     response = await service.Get(req)
 except RpcError as e:
     service_errors = from_error(e)
-    md = await e.initial_metadata()
+    md = e.initial_metadata()
     request_id = md["x-request-id"]
     trace_id = md["x-trace-id"]
     log.exception(f"Caught RPC error {e} with additional information {service_errors}; Request ID: {request_id} and Trace ID: {trace_id}")
