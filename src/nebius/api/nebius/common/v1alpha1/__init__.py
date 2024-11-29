@@ -81,15 +81,15 @@ class Operation(message_1.Message):
         *,
         id: "builtins.str|None" = None,
         description: "builtins.str|None" = None,
-        created_at: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        created_at: "timestamp_pb2.Timestamp|None" = None,
         created_by: "builtins.str|None" = None,
-        finished_at: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
-        request: "any_pb2.Any|any_pb2.Any|None" = None,
+        finished_at: "timestamp_pb2.Timestamp|None" = None,
+        request: "any_pb2.Any|None" = None,
         request_headers: "abc.MutableMapping[builtins.str,Operation.request_header]|None" = None,
         resource_id: "builtins.str|None" = None,
-        resource: "any_pb2.Any|any_pb2.Any|None" = None,
-        progress_data: "any_pb2.Any|any_pb2.Any|None" = None,
-        status: "status_pb2.Status|status_pb2.Status|None" = None,
+        resource: "any_pb2.Any|None" = None,
+        progress_data: "any_pb2.Any|None" = None,
+        status: "status_pb2.Status|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if id is not None:
@@ -136,7 +136,7 @@ class Operation(message_1.Message):
         return super()._get_field("created_at", base=self._pb2_base_, explicit_presence=True,
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def created_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("created_at",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -152,7 +152,7 @@ class Operation(message_1.Message):
         return super()._get_field("finished_at", base=self._pb2_base_, explicit_presence=True,
         )
     @finished_at.setter
-    def finished_at(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def finished_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("finished_at",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -160,7 +160,7 @@ class Operation(message_1.Message):
         return super()._get_field("request", base=self._pb2_base_, explicit_presence=True,
         )
     @request.setter
-    def request(self, value: "any_pb2.Any|any_pb2.Any|None") -> None:
+    def request(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("request",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -185,7 +185,7 @@ class Operation(message_1.Message):
         return super()._get_field("resource", base=self._pb2_base_, explicit_presence=True,
         )
     @resource.setter
-    def resource(self, value: "any_pb2.Any|any_pb2.Any|None") -> None:
+    def resource(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("resource",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -193,7 +193,7 @@ class Operation(message_1.Message):
         return super()._get_field("progress_data", base=self._pb2_base_, explicit_presence=True,
         )
     @progress_data.setter
-    def progress_data(self, value: "any_pb2.Any|any_pb2.Any|None") -> None:
+    def progress_data(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("progress_data",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -201,7 +201,7 @@ class Operation(message_1.Message):
         return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
         )
     @status.setter
-    def status(self, value: "status_pb2.Status|status_pb2.Status|None") -> None:
+    def status(self, value: "status_pb2.Status|None") -> None:
         return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
     
 # file: nebius/common/v1alpha1/operation_service.proto

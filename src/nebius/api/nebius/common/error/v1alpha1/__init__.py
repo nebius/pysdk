@@ -9,6 +9,8 @@ import builtins as builtins
 import collections.abc as abc
 import nebius.api.nebius.common.error.v1alpha1.error_pb2 as error_pb2
 import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
 
 # file: nebius/common/error/v1alpha1/common_errors.proto
 class BadRequest(message_1.Message):
@@ -416,6 +418,13 @@ class ServiceError(message_1.Message):
     _PB2_CLASS_ = error_pb2.ServiceError
     _pb2_base_: error_pb2.ServiceError
     
+    class RetryType(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.common.error.v1alpha1.ServiceError.RetryType",error_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        CALL = 1
+        UNIT_OF_WORK = 2
+        NOTHING = 3
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
@@ -433,7 +442,7 @@ class ServiceError(message_1.Message):
         too_many_requests: "TooManyRequests|common_errors_pb2.TooManyRequests|None" = None,
         quota_failure: "QuotaFailure|common_errors_pb2.QuotaFailure|None" = None,
         internal_error: "InternalError|common_errors_pb2.InternalError|None" = None,
-        retry_type: "pb_enum.Enum|None" = None,
+        retry_type: "ServiceError.RetryType|error_pb2.ServiceError.RetryType|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if service is not None:
@@ -581,10 +590,11 @@ class ServiceError(message_1.Message):
         return super()._set_field("internal_error",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
-    def retry_type(self) -> "pb_enum.Enum":
+    def retry_type(self) -> "ServiceError.RetryType":
         return super()._get_field("retry_type", base=self._pb2_base_, explicit_presence=False,
+        wrap=ServiceError.RetryType,
         )
     @retry_type.setter
-    def retry_type(self, value: "pb_enum.Enum") -> None:
+    def retry_type(self, value: "ServiceError.RetryType|error_pb2.ServiceError.RetryType") -> None:
         return super()._set_field("retry_type",value, base=self._pb2_base_,explicit_presence=False)
     

@@ -10,6 +10,8 @@ import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import builtins as builtins
 import collections.abc as abc
 import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.applications.v1alpha1.k8s_release_service_pb2 as k8s_release_service_pb2
 
 # file: nebius/applications/v1alpha1/k8s_release.proto
@@ -176,11 +178,19 @@ class K8sReleaseStatus(message_1.Message):
     _PB2_CLASS_ = k8s_release_pb2.K8sReleaseStatus
     _pb2_base_: k8s_release_pb2.K8sReleaseStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.applications.v1alpha1.K8sReleaseStatus.State",k8s_release_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        CREATED = 1
+        RUNNING = 2
+        DEPLOYED = 3
+        FAILED = 4
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State|None" = None,
         error_message: "builtins.str|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
@@ -190,11 +200,12 @@ class K8sReleaseStatus(message_1.Message):
             self.error_message = error_message
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "K8sReleaseStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=K8sReleaseStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property

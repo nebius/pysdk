@@ -4,8 +4,10 @@
 
 import nebius.base.protos.message as message
 import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2
-import google.protobuf.message as message_1
 import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
+import google.protobuf.message as message_1
 import builtins as builtins
 
 # file: nebius/msp/v1alpha1/cluster.proto
@@ -13,12 +15,33 @@ class ClusterStatus(message.Message):
     _PB2_CLASS_ = cluster_pb2.ClusterStatus
     _pb2_base_: cluster_pb2.ClusterStatus
     
+    class Phase(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.v1alpha1.ClusterStatus.Phase",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        PHASE_UNSPECIFIED = 0
+        PHASE_PROVISIONING = 1
+        PHASE_RUNNING = 2
+        PHASE_UPDATING = 3
+        PHASE_DELETING = 4
+        PHASE_DELETED = 5
+        PHASE_PURGING = 6
+        PHASE_STOPPING = 7
+        PHASE_RESUMING = 8
+    
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.v1alpha1.ClusterStatus.State",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        STATE_IN_PROGRESS = 1
+        STATE_FINISHED = 2
+        STATE_ERROR = 3
+        STATE_DEGRADED = 4
+        STATE_SCHEDULED = 5
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        phase: "pb_enum.Enum|None" = None,
-        state: "pb_enum.Enum|None" = None,
+        phase: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase|None" = None,
+        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None" = None,
         reconciling: "builtins.bool|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
@@ -30,19 +53,21 @@ class ClusterStatus(message.Message):
             self.reconciling = reconciling
     
     @property
-    def phase(self) -> "pb_enum.Enum":
+    def phase(self) -> "ClusterStatus.Phase":
         return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        wrap=ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "pb_enum.Enum") -> None:
+    def phase(self, value: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase") -> None:
         return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "ClusterStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "ClusterStatus.State|cluster_pb2.ClusterStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property

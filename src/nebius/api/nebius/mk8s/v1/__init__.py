@@ -10,6 +10,8 @@ import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import builtins as builtins
 import collections.abc as abc
 import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.mk8s.v1.cluster_service_pb2 as cluster_service_pb2
 import nebius.api.nebius.mk8s.v1.instance_template_pb2 as instance_template_pb2
 import nebius.api.nebius.mk8s.v1.node_group_pb2 as node_group_pb2
@@ -215,11 +217,18 @@ class ClusterStatus(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.ClusterStatus
     _pb2_base_: cluster_pb2.ClusterStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1.ClusterStatus.State",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        PROVISIONING = 1
+        RUNNING = 2
+        DELETING = 3
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None" = None,
         control_plane: "ControlPlaneStatus|cluster_pb2.ControlPlaneStatus|None" = None,
         reconciling: "builtins.bool|None" = None,
     ) -> None:
@@ -232,11 +241,12 @@ class ClusterStatus(message_1.Message):
             self.reconciling = reconciling
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "ClusterStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "ClusterStatus.State|cluster_pb2.ClusterStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -566,6 +576,14 @@ class DiskSpec(message_1.Message):
     _PB2_CLASS_ = instance_template_pb2.DiskSpec
     _pb2_base_: instance_template_pb2.DiskSpec
     
+    class DiskType(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1.DiskSpec.DiskType",instance_template_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        NETWORK_SSD = 1
+        NETWORK_HDD = 2
+        NETWORK_SSD_IO_M3 = 3
+        NETWORK_SSD_NON_REPLICATED = 4
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
@@ -575,7 +593,7 @@ class DiskSpec(message_1.Message):
         size_mebibytes: "builtins.int|None" = None,
         size_gibibytes: "builtins.int|None" = None,
         block_size_bytes: "builtins.int|None" = None,
-        type: "pb_enum.Enum|None" = None,
+        type: "DiskSpec.DiskType|instance_template_pb2.DiskSpec.DiskType|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if size_bytes is not None:
@@ -632,11 +650,12 @@ class DiskSpec(message_1.Message):
         return super()._set_field("block_size_bytes",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def type(self) -> "pb_enum.Enum":
+    def type(self) -> "DiskSpec.DiskType":
         return super()._get_field("type", base=self._pb2_base_, explicit_presence=False,
+        wrap=DiskSpec.DiskType,
         )
     @type.setter
-    def type(self, value: "pb_enum.Enum") -> None:
+    def type(self, value: "DiskSpec.DiskType|instance_template_pb2.DiskSpec.DiskType") -> None:
         return super()._set_field("type",value, base=self._pb2_base_,explicit_presence=False)
     
 class ResourcesSpec(message_1.Message):
@@ -1033,11 +1052,17 @@ class AttachedFilesystemSpec(message_1.Message):
     _PB2_CLASS_ = node_group_pb2.AttachedFilesystemSpec
     _pb2_base_: node_group_pb2.AttachedFilesystemSpec
     
+    class AttachMode(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1.AttachedFilesystemSpec.AttachMode",node_group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        READ_ONLY = 1
+        READ_WRITE = 2
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        attach_mode: "pb_enum.Enum|None" = None,
+        attach_mode: "AttachedFilesystemSpec.AttachMode|node_group_pb2.AttachedFilesystemSpec.AttachMode|None" = None,
         mount_tag: "builtins.str|None" = None,
         existing_filesystem: "ExistingFilesystem|node_group_pb2.ExistingFilesystem|None" = None,
     ) -> None:
@@ -1050,11 +1075,12 @@ class AttachedFilesystemSpec(message_1.Message):
             self.existing_filesystem = existing_filesystem
     
     @property
-    def attach_mode(self) -> "pb_enum.Enum":
+    def attach_mode(self) -> "AttachedFilesystemSpec.AttachMode":
         return super()._get_field("attach_mode", base=self._pb2_base_, explicit_presence=False,
+        wrap=AttachedFilesystemSpec.AttachMode,
         )
     @attach_mode.setter
-    def attach_mode(self, value: "pb_enum.Enum") -> None:
+    def attach_mode(self, value: "AttachedFilesystemSpec.AttachMode|node_group_pb2.AttachedFilesystemSpec.AttachMode") -> None:
         return super()._set_field("attach_mode",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -1133,13 +1159,20 @@ class NodeTaint(message_1.Message):
     _PB2_CLASS_ = node_group_pb2.NodeTaint
     _pb2_base_: node_group_pb2.NodeTaint
     
+    class Effect(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1.NodeTaint.Effect",node_group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        EFFECT_UNSPECIFIED = 0
+        NO_EXECUTE = 1
+        NO_SCHEDULE = 2
+        PREFER_NO_SCHEDULE = 3
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
         key: "builtins.str|None" = None,
         value: "builtins.str|None" = None,
-        effect: "pb_enum.Enum|None" = None,
+        effect: "NodeTaint.Effect|node_group_pb2.NodeTaint.Effect|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if key is not None:
@@ -1166,11 +1199,12 @@ class NodeTaint(message_1.Message):
         return super()._set_field("value",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def effect(self) -> "pb_enum.Enum":
+    def effect(self) -> "NodeTaint.Effect":
         return super()._get_field("effect", base=self._pb2_base_, explicit_presence=False,
+        wrap=NodeTaint.Effect,
         )
     @effect.setter
-    def effect(self, value: "pb_enum.Enum") -> None:
+    def effect(self, value: "NodeTaint.Effect|node_group_pb2.NodeTaint.Effect") -> None:
         return super()._set_field("effect",value, base=self._pb2_base_,explicit_presence=False)
     
 class NodeGroupDeploymentStrategy(message_1.Message):
@@ -1183,7 +1217,7 @@ class NodeGroupDeploymentStrategy(message_1.Message):
         *,
         max_unavailable: "PercentOrCount|node_group_pb2.PercentOrCount|None" = None,
         max_surge: "PercentOrCount|node_group_pb2.PercentOrCount|None" = None,
-        drain_timeout: "duration_pb2.Duration|duration_pb2.Duration|None" = None,
+        drain_timeout: "duration_pb2.Duration|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if max_unavailable is not None:
@@ -1216,7 +1250,7 @@ class NodeGroupDeploymentStrategy(message_1.Message):
         return super()._get_field("drain_timeout", base=self._pb2_base_, explicit_presence=True,
         )
     @drain_timeout.setter
-    def drain_timeout(self, value: "duration_pb2.Duration|duration_pb2.Duration|None") -> None:
+    def drain_timeout(self, value: "duration_pb2.Duration|None") -> None:
         return super()._set_field("drain_timeout",value, base=self._pb2_base_,explicit_presence=True)
     
 class PercentOrCount(message_1.Message):
@@ -1256,11 +1290,18 @@ class NodeGroupStatus(message_1.Message):
     _PB2_CLASS_ = node_group_pb2.NodeGroupStatus
     _pb2_base_: node_group_pb2.NodeGroupStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1.NodeGroupStatus.State",node_group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        PROVISIONING = 1
+        RUNNING = 2
+        DELETING = 3
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "NodeGroupStatus.State|node_group_pb2.NodeGroupStatus.State|None" = None,
         version: "builtins.str|None" = None,
         target_node_count: "builtins.int|None" = None,
         node_count: "builtins.int|None" = None,
@@ -1285,11 +1326,12 @@ class NodeGroupStatus(message_1.Message):
             self.reconciling = reconciling
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "NodeGroupStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=NodeGroupStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "NodeGroupStatus.State|node_group_pb2.NodeGroupStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -1553,7 +1595,7 @@ class UpgradeNodeGroupRequest(message_1.Message):
         initial_message: message_2.Message|None = None,
         *,
         id: "builtins.str|None" = None,
-        latest_infra_version: "empty_pb2.Empty|empty_pb2.Empty|None" = None,
+        latest_infra_version: "empty_pb2.Empty|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if id is not None:
@@ -1574,6 +1616,6 @@ class UpgradeNodeGroupRequest(message_1.Message):
         return super()._get_field("latest_infra_version", base=self._pb2_base_, explicit_presence=True,
         )
     @latest_infra_version.setter
-    def latest_infra_version(self, value: "empty_pb2.Empty|empty_pb2.Empty|None") -> None:
+    def latest_infra_version(self, value: "empty_pb2.Empty|None") -> None:
         return super()._set_field("latest_infra_version",value, base=self._pb2_base_,explicit_presence=True)
     

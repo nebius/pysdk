@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 from logging import getLogger
 from typing import Sequence
 
@@ -20,10 +21,89 @@ class FieldNotMessageError(DescriptorError):
         )
 
 
+class FieldNotEnumError(DescriptorError):
+    def __init__(self, field: "Field") -> None:
+        super().__init__(
+            f"Field {field.name} of {field.containing_message.full_type_name} is not "
+            "a enum type."
+        )
+
+
 class Descriptor:
     @property
     def name(self) -> str:
         return self.descriptor.name  # type: ignore
+
+
+class EnumValue(Descriptor):
+    def __init__(
+        self,
+        descriptor: pb.EnumValueDescriptorProto,
+        containing_enum: "Enum",
+    ) -> None:
+        self.descriptor = descriptor
+        self.containing_enum = containing_enum
+
+    @property
+    def number(self) -> int:
+        return self.descriptor.number  # type:ignore[no-any-return]
+
+    @property
+    def pb2(self) -> ImportedSymbol:
+        c_import = self.containing_enum.pb2
+        return ImportedSymbol(c_import.name + "." + self.name, c_import.import_path)
+
+
+class Enum(Descriptor):
+    def __init__(
+        self,
+        descriptor: pb.EnumDescriptorProto,
+        containing_file: "File",
+        containing_message: "Message|None" = None,
+    ) -> None:
+        self.descriptor = descriptor
+        self.containing_message = containing_message
+        self.containing_file = containing_file
+        self._values: list[EnumValue] | None = None
+        self._values_dict: dict[str, EnumValue] | None = None
+
+    @property
+    def values(self) -> list[EnumValue]:
+        if self._values is None:
+            self._values = [EnumValue(val, self) for val in self.descriptor.value]
+        return self._values
+
+    @property
+    def values_dict(self) -> dict[str, EnumValue]:
+        if self._values_dict is None:
+            self._values_dict = {val.name: val for val in self.values}
+        return self._values_dict
+
+    @property
+    def no_wrap(self) -> bool:
+        if self.containing_file.skipped:
+            return True
+        return False
+
+    @property
+    def full_type_name(self) -> str:
+        if self.containing_message is not None:
+            return self.containing_message.full_type_name + "." + self.name
+        return "." + self.containing_file.package + "." + self.name
+
+    @property
+    def export_path(self) -> ImportedSymbol:
+        if self.containing_message is not None:
+            c_import = self.containing_message.export_path
+            return ImportedSymbol(c_import.name + "." + self.name, c_import.import_path)
+        return ImportedSymbol(self.name, self.containing_file.export_path)
+
+    @property
+    def pb2(self) -> ImportedSymbol:
+        if self.containing_message is not None:
+            c_import = self.containing_message.pb2
+            return ImportedSymbol(c_import.name + "." + self.name, c_import.import_path)
+        return ImportedSymbol(self.name, self.containing_file.pb2)
 
 
 class Field(Descriptor):
@@ -43,6 +123,15 @@ class Field(Descriptor):
             )
         else:
             raise FieldNotMessageError(self)
+
+    @property
+    def enum(self) -> "Enum":
+        if self.descriptor.type == self.descriptor.TYPE_ENUM:
+            return self.containing_message.get_enum_by_type_name(
+                self.descriptor.type_name
+            )
+        else:
+            raise FieldNotEnumError(self)
 
     def tracks_presence(self) -> bool:
         return (  # type:ignore[no-any-return,unused-ignore]
@@ -83,11 +172,16 @@ class Field(Descriptor):
             case self.descriptor.TYPE_BYTES:
                 return ImportedSymbol("bytes", "builtins")
             case self.descriptor.TYPE_ENUM:
-                return ImportedSymbol("Enum", "nebius.base.protos.pb_enum")
+                return self.enum.export_path
             case self.descriptor.TYPE_MESSAGE:
                 return self.message.export_path
             case _:
                 raise ValueError(f"Unsupported descriptor type: {self.descriptor.type}")
+
+    def is_enum(self) -> bool:
+        if self.descriptor.type == self.descriptor.TYPE_ENUM:
+            return True
+        return False
 
     def is_map(self) -> bool:
         return (
@@ -122,7 +216,21 @@ class Message(Descriptor):
         self._messages_dict: "dict[str,Message]|None" = None
         self._fields: list[Field] | None = None
         self._fields_dict: dict[str, Field] | None = None
+        self._enums_dict: dict[str, Enum] | None = None
         self.attached_names = dict[str, str]()
+
+    @property
+    def enums_dict(self) -> dict[str, Enum]:
+        if self._enums_dict is None:
+            self._enums_dict = {
+                e.name: Enum(e, self.containing_file, self)
+                for e in self.descriptor.enum_type
+            }
+        return self._enums_dict
+
+    @property
+    def enums(self) -> Iterable[Enum]:
+        return self.enums_dict.values()
 
     @property
     def fields_dict(self) -> dict[str, Field]:
@@ -176,6 +284,25 @@ class Message(Descriptor):
             else:
                 return self.containing_file.get_message_by_type_name(name)
 
+    def get_enum_by_type_name(self, name: str, strict: bool = False) -> "Enum":
+        if name[0] == ".":
+            return self.containing_file.get_enum_by_type_name(name)
+        name_parts = name.split(".", 1)
+        try:
+            if len(name_parts) > 1:
+                msg = self.message_by_name(name_parts[0])
+                return msg.get_enum_by_type_name(name_parts[1], strict=True)
+            return self.enums_dict[name_parts[0]]
+        except KeyError:
+            if strict:
+                raise KeyError(
+                    f"Enum {name} not found in scope of " f"{self.full_type_name}"
+                )
+            if self.containing_message is not None:
+                return self.containing_message.get_enum_by_type_name(name)
+            else:
+                return self.containing_file.get_enum_by_type_name(name)
+
     def message_by_name(self, name: str) -> "Message":
         if self._messages_dict is None:
             self._messages_dict = {msg.name: msg for msg in self.messages()}
@@ -206,6 +333,9 @@ class Message(Descriptor):
         for msg in self.messages():
             ret.add(msg.name)
             ret = ret.union(msg.collect_all_names())
+        for enum in self.enums:
+            ret.add(enum.name)
+            ret = ret.union([v.name for v in enum.values])
         return ret
 
 
@@ -245,6 +375,7 @@ class File(Descriptor):
         self._messages: list[Message] | None = None
         self._messages_dict: dict[str, Message] | None = None
         self._deps_dict: dict[str, File] | None = None
+        self._enums_dict: dict[str, Enum] | None = None
 
     def collect_all_names(self, with_locals: bool = True) -> set[str]:
         ret = set[str](self.package.split("."))
@@ -252,6 +383,9 @@ class File(Descriptor):
             ret.add(msg.name)
             if with_locals:
                 ret = ret.union(msg.collect_all_names())
+        for enum in self.enums:
+            ret.add(enum.name)
+            ret = ret.union([v.name for v in enum.values])
         if with_locals:
             for dep in self.dependencies.values():
                 ret = ret.union(dep.collect_all_names(True))
@@ -283,6 +417,32 @@ class File(Descriptor):
                     pass
             raise KeyError(f"Message {name} not found in scope of {self.name}")
 
+    def get_enum_by_type_name(self, name: str, strict: bool = False) -> "Enum":
+        name_partial = name
+        if name_partial[0] == ".":
+            if name_partial.startswith("." + self.package + "."):
+                strict = True
+                name_partial = name_partial.removeprefix("." + self.package + ".")
+        name_parts = name_partial.split(".", 1)
+        try:
+            if len(name_parts) > 1:
+                msg = self.message_by_name(name_parts[0])
+                return msg.get_enum_by_type_name(name_parts[1], strict=True)
+            return self.enums_dict[name_parts[0]]
+        except KeyError:
+            for dep in self.dependencies.values():
+                if (
+                    strict
+                    and dep.package != self.package
+                    and not dep.package.startswith(self.package + ".")
+                ):
+                    continue
+                try:
+                    return dep.get_enum_by_type_name(name)
+                except KeyError:
+                    pass
+            raise KeyError(f"Enum {name} not found in scope of {self.name}")
+
     @property
     def dependencies(self) -> "dict[str, File]":
         if self._deps_dict is None:
@@ -307,6 +467,18 @@ class File(Descriptor):
                 Message(msg, self) for msg in self.descriptor.message_type
             ]
         return self._messages
+
+    @property
+    def enums_dict(self) -> dict[str, Enum]:
+        if self._enums_dict is None:
+            self._enums_dict = {
+                e.name: Enum(e, self) for e in self.descriptor.enum_type
+            }
+        return self._enums_dict
+
+    @property
+    def enums(self) -> Iterable[Enum]:
+        return self.enums_dict.values()
 
     @property
     def grpc(self) -> ImportPath:

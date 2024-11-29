@@ -1,12 +1,9 @@
 from logging import getLogger
 
-from .descriptors import Field, File, Message
+from .descriptors import Enum, Field, File, Message
 from .pygen import ImportedSymbol, PyGenFile
 
 log = getLogger(__name__)
-
-
-CLASS = ImportedSymbol("Message", "nebius.base.protos.message")
 
 
 def generate_field(field: Field, g: PyGenFile, self_name: str, base_name: str) -> None:
@@ -52,6 +49,8 @@ def generate_field(field: Field, g: PyGenFile, self_name: str, base_name: str) -
         )
         if field.is_message() and not field.message.no_wrap:
             g.p("wrap=", field.message.export_path, ",")
+        if field.is_enum() and not field.enum.no_wrap:
+            g.p("wrap=", field.enum.export_path, ",")
         g.p(")")
     g.p("@", field.name, ".setter")
     g.p("def ", field.name, '(self, value: "', add_eol=False)
@@ -75,8 +74,20 @@ def generate_field(field: Field, g: PyGenFile, self_name: str, base_name: str) -
             add_eol=False,
             noindent=True,
         )
+    elif field.is_enum():
+        ptype = field.python_type()
+        pb2 = field.enum.pb2
+        if pb2 == ptype:
+            g.p(ptype, add_eol=False, noindent=True)
+        else:
+            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
     elif field.is_message():
-        g.p(field.python_type(), "|", field.message.pb2, add_eol=False, noindent=True)
+        ptype = field.python_type()
+        pb2 = field.message.pb2
+        if pb2 == ptype:
+            g.p(ptype, add_eol=False, noindent=True)
+        else:
+            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
     else:
         g.p(field.python_type(), add_eol=False, noindent=True)
     if field.tracks_presence():
@@ -120,8 +131,20 @@ def generate_field_init_arg(field: Field, g: PyGenFile) -> None:
             add_eol=False,
             noindent=True,
         )
+    elif field.is_enum():
+        ptype = field.python_type()
+        pb2 = field.enum.pb2
+        if pb2 == ptype:
+            g.p(ptype, add_eol=False, noindent=True)
+        else:
+            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
     elif field.is_message():
-        g.p(field.python_type(), "|", field.message.pb2, add_eol=False, noindent=True)
+        ptype = field.python_type()
+        pb2 = field.message.pb2
+        if pb2 == ptype:
+            g.p(ptype, add_eol=False, noindent=True)
+        else:
+            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
     else:
         g.p(field.python_type(), add_eol=False, noindent=True)
     g.p('|None" = None,', noindent=True)
@@ -133,8 +156,42 @@ def generate_field_init_setter(field: Field, g: PyGenFile, self_name: str) -> No
         g.p(self_name, ".", field.name, " = ", field.name)
 
 
+def generate_enum(enum: Enum, g: PyGenFile) -> None:
+    descriptor_name = g.suggest_name("_PB2_DESCRIPTOR_")
+    g.p(
+        "class ",
+        enum.name,
+        "(",
+        ImportedSymbol("Enum", "nebius.base.protos.pb_enum"),
+        "):",
+    )
+    with g:
+        g.p(
+            descriptor_name,
+            " = ",
+            ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
+            "[",
+            ImportedSymbol("EnumDescriptor", "google.protobuf.descriptor"),
+            ']("',
+            enum.full_type_name,
+            '",',
+            ImportedSymbol("DESCRIPTOR", enum.containing_file.pb2),
+            ",",
+            ImportedSymbol("EnumDescriptor", "google.protobuf.descriptor"),
+            ")",
+        )
+        for val in enum.values:
+            g.p(val.name, " = ", val.number)
+
+
 def generate_message(message: Message, g: PyGenFile) -> None:
-    g.p("class ", message.name, "(", CLASS, "):")
+    g.p(
+        "class ",
+        message.name,
+        "(",
+        ImportedSymbol("Message", "nebius.base.protos.message"),
+        "):",
+    )
     initial_message_name = g.suggest_name("initial_message")
     self_name = g.suggest_name("self")
     base_name = g.suggest_name("_pb2_base_")
@@ -149,6 +206,10 @@ def generate_message(message: Message, g: PyGenFile) -> None:
 
         for msg in message.messages():
             generate_message(msg, g)
+            g.p()
+
+        for enum in message.enums:
+            generate_enum(enum, g)
             g.p()
 
         g.p("def __init__(")
@@ -191,5 +252,8 @@ def generate_file(file: File, g: PyGenFile) -> None:
     if file.skipped:
         g.p("# file skipped")
         return
+    for enum in file.enums:
+        generate_enum(enum, g)
+        g.p()
     for msg in file.messages():
         generate_message(msg, g)

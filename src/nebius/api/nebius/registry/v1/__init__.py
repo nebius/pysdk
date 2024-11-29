@@ -4,9 +4,11 @@
 
 import nebius.base.protos.message as message_1
 import nebius.api.nebius.registry.v1.artifact_pb2 as artifact_pb2
+import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_2
 import builtins as builtins
-import nebius.base.protos.pb_enum as pb_enum
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import nebius.api.nebius.registry.v1.artifact_service_pb2 as artifact_service_pb2
 import collections.abc as abc
@@ -20,6 +22,22 @@ class Artifact(message_1.Message):
     _PB2_CLASS_ = artifact_pb2.Artifact
     _pb2_base_: artifact_pb2.Artifact
     
+    class Status(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.Artifact.Status",artifact_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATUS_UNSPECIFIED = 0
+        ACTIVE = 1
+        DELETING = 2
+    
+    class Type(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.Artifact.Type",artifact_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        BLOB = 0
+        MANIFEST = 1
+        DEB_PACKAGE = 2
+        MANIFEST_LIST = 3
+        RELEASE_INDEX = 4
+        PACKAGE_INDEX = 5
+        GZIPPED_PACKAGE_INDEX = 6
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
@@ -29,10 +47,10 @@ class Artifact(message_1.Message):
         media_type: "builtins.str|None" = None,
         digest: "builtins.str|None" = None,
         size: "builtins.int|None" = None,
-        status: "pb_enum.Enum|None" = None,
-        type: "pb_enum.Enum|None" = None,
-        created_at: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
-        updated_at: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        status: "Artifact.Status|artifact_pb2.Artifact.Status|None" = None,
+        type: "Artifact.Type|artifact_pb2.Artifact.Type|None" = None,
+        created_at: "timestamp_pb2.Timestamp|None" = None,
+        updated_at: "timestamp_pb2.Timestamp|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if id is not None:
@@ -95,19 +113,21 @@ class Artifact(message_1.Message):
         return super()._set_field("size",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def status(self) -> "pb_enum.Enum":
+    def status(self) -> "Artifact.Status":
         return super()._get_field("status", base=self._pb2_base_, explicit_presence=False,
+        wrap=Artifact.Status,
         )
     @status.setter
-    def status(self, value: "pb_enum.Enum") -> None:
+    def status(self, value: "Artifact.Status|artifact_pb2.Artifact.Status") -> None:
         return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def type(self) -> "pb_enum.Enum":
+    def type(self) -> "Artifact.Type":
         return super()._get_field("type", base=self._pb2_base_, explicit_presence=False,
+        wrap=Artifact.Type,
         )
     @type.setter
-    def type(self, value: "pb_enum.Enum") -> None:
+    def type(self, value: "Artifact.Type|artifact_pb2.Artifact.Type") -> None:
         return super()._set_field("type",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -115,7 +135,7 @@ class Artifact(message_1.Message):
         return super()._get_field("created_at", base=self._pb2_base_, explicit_presence=True,
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def created_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("created_at",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -123,7 +143,7 @@ class Artifact(message_1.Message):
         return super()._get_field("updated_at", base=self._pb2_base_, explicit_presence=True,
         )
     @updated_at.setter
-    def updated_at(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def updated_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("updated_at",value, base=self._pb2_base_,explicit_presence=True)
     
 # file: nebius/registry/v1/artifact_service.proto
@@ -345,22 +365,30 @@ class RegistryStatus(message_1.Message):
     _PB2_CLASS_ = registry_pb2.RegistryStatus
     _pb2_base_: registry_pb2.RegistryStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.RegistryStatus.State",registry_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        CREATING = 0
+        ACTIVE = 1
+        DELETING = 2
+        SUSPENDED = 3
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "RegistryStatus.State|registry_pb2.RegistryStatus.State|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if state is not None:
             self.state = state
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "RegistryStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=RegistryStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "RegistryStatus.State|registry_pb2.RegistryStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
 # file: nebius/registry/v1/registry_service.proto

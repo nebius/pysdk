@@ -17,6 +17,13 @@ class ImportPath:
         self.import_path = import_path
         self.suggest_name = suggest_name
 
+    def __eq__(self, value: object) -> bool:
+        if isinstance(value, ImportPath) and value.import_path == self.import_path:
+            return True
+        if isinstance(value, str) and value == self.import_path:
+            return True
+        return False
+
 
 class ImportedSymbol:
     def __init__(self, name: str, import_path: ImportPath | str) -> None:
@@ -26,6 +33,15 @@ class ImportedSymbol:
             if isinstance(import_path, ImportPath)
             else ImportPath(import_path)
         )
+
+    def __eq__(self, value: object) -> bool:
+        if (
+            isinstance(value, ImportedSymbol)
+            and value.import_path == self.import_path
+            and value.name == self.name
+        ):
+            return True
+        return False
 
     def as_type_hint(self) -> "TypeHint":
         return TypeHint(self.name, self.import_path)

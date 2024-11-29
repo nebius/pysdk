@@ -11,10 +11,14 @@ import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.iam.v1.access_key_service_pb2 as access_key_service_pb2
 import collections.abc as abc
 import nebius.api.nebius.iam.v1.auth_public_key_pb2 as auth_public_key_pb2
 import nebius.api.nebius.iam.v1.auth_public_key_service_pb2 as auth_public_key_service_pb2
+import nebius.api.nebius.iam.v1.state_pb2 as state_pb2
+import nebius.api.nebius.iam.v1.suspension_state_pb2 as suspension_state_pb2
 import nebius.api.nebius.iam.v1.container_pb2 as container_pb2
 import nebius.api.nebius.iam.v1.federation_pb2 as federation_pb2
 import nebius.api.nebius.iam.v1.federation_certificate_pb2 as federation_certificate_pb2
@@ -200,7 +204,7 @@ class AccessKeySpec(message_1.Message):
         initial_message: message_2.Message|None = None,
         *,
         account: "Account|access_pb2.Account|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        expires_at: "timestamp_pb2.Timestamp|None" = None,
         description: "builtins.str|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
@@ -225,7 +229,7 @@ class AccessKeySpec(message_1.Message):
         return super()._get_field("expires_at", base=self._pb2_base_, explicit_presence=True,
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def expires_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("expires_at",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -240,11 +244,20 @@ class AccessKeyStatus(message_1.Message):
     _PB2_CLASS_ = access_key_pb2.AccessKeyStatus
     _pb2_base_: access_key_pb2.AccessKeyStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AccessKeyStatus.State",access_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        INACTIVE = 2
+        EXPIRED = 3
+        DELETING = 4
+        DELETED = 5
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State|None" = None,
         fingerprint: "builtins.str|None" = None,
         algorithm: "builtins.str|None" = None,
         key_size: "builtins.int|None" = None,
@@ -266,11 +279,12 @@ class AccessKeyStatus(message_1.Message):
             self.secret = secret
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "AccessKeyStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=AccessKeyStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -776,7 +790,7 @@ class AuthPublicKeySpec(message_1.Message):
         initial_message: message_2.Message|None = None,
         *,
         account: "Account|access_pb2.Account|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        expires_at: "timestamp_pb2.Timestamp|None" = None,
         description: "builtins.str|None" = None,
         data: "builtins.str|None" = None,
     ) -> None:
@@ -804,7 +818,7 @@ class AuthPublicKeySpec(message_1.Message):
         return super()._get_field("expires_at", base=self._pb2_base_, explicit_presence=True,
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def expires_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("expires_at",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -827,11 +841,20 @@ class AuthPublicKeyStatus(message_1.Message):
     _PB2_CLASS_ = auth_public_key_pb2.AuthPublicKeyStatus
     _pb2_base_: auth_public_key_pb2.AuthPublicKeyStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AuthPublicKeyStatus.State",auth_public_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        INACTIVE = 2
+        EXPIRED = 3
+        DELETING = 4
+        DELETED = 5
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State|None" = None,
         fingerprint: "builtins.str|None" = None,
         algorithm: "builtins.str|None" = None,
         key_size: "builtins.int|None" = None,
@@ -847,11 +870,12 @@ class AuthPublicKeyStatus(message_1.Message):
             self.key_size = key_size
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "AuthPublicKeyStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=AuthPublicKeyStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -1183,7 +1207,28 @@ class ListAuthPublicKeyResponse(message_1.Message):
         return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
     
 # file: nebius/iam/v1/state.proto
+class State(pb_enum.Enum):
+    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.State",state_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    STATE_UNSPECIFIED = 0
+    ACTIVE = 1
+    SCHEDULING_FOR_DELETION = 2
+    SCHEDULED_FOR_DELETION = 3
+    SCHEDULING_FOR_DELETION_BY_PARENT = 4
+    SCHEDULED_FOR_DELETION_BY_PARENT = 5
+    UNDELETING = 6
+    PURGING = 7
+    PURGED = 8
+    CREATING = 1001
+
 # file: nebius/iam/v1/suspension_state.proto
+class SuspensionState(pb_enum.Enum):
+    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.SuspensionState",suspension_state_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    SUSPENSION_STATE_UNSPECIFIED = 0
+    NONE = 1
+    SUSPENDING = 2
+    SUSPENDED = 3
+    RESUMING = 4
+
 # file: nebius/iam/v1/container.proto
 class Container(message_1.Message):
     _PB2_CLASS_ = container_pb2.Container
@@ -1250,8 +1295,8 @@ class ContainerStatus(message_1.Message):
         self,
         initial_message: message_2.Message|None = None,
         *,
-        suspension_state: "pb_enum.Enum|None" = None,
-        container_state: "pb_enum.Enum|None" = None,
+        suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|None" = None,
+        container_state: "State|state_pb2.State|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if suspension_state is not None:
@@ -1260,19 +1305,21 @@ class ContainerStatus(message_1.Message):
             self.container_state = container_state
     
     @property
-    def suspension_state(self) -> "pb_enum.Enum":
+    def suspension_state(self) -> "SuspensionState":
         return super()._get_field("suspension_state", base=self._pb2_base_, explicit_presence=False,
+        wrap=SuspensionState,
         )
     @suspension_state.setter
-    def suspension_state(self, value: "pb_enum.Enum") -> None:
+    def suspension_state(self, value: "SuspensionState|suspension_state_pb2.SuspensionState") -> None:
         return super()._set_field("suspension_state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def container_state(self) -> "pb_enum.Enum":
+    def container_state(self) -> "State":
         return super()._get_field("container_state", base=self._pb2_base_, explicit_presence=False,
+        wrap=State,
         )
     @container_state.setter
-    def container_state(self, value: "pb_enum.Enum") -> None:
+    def container_state(self, value: "State|state_pb2.State") -> None:
         return super()._set_field("container_state",value, base=self._pb2_base_,explicit_presence=False)
     
 # file: nebius/iam/v1/federation.proto
@@ -1496,15 +1543,21 @@ class FederationCertificateStatus(message_1.Message):
     _PB2_CLASS_ = federation_certificate_pb2.FederationCertificateStatus
     _pb2_base_: federation_certificate_pb2.FederationCertificateStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.FederationCertificateStatus.State",federation_certificate_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        EXPIRED = 2
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|None" = None,
         algorithm: "builtins.str|None" = None,
         key_size: "builtins.int|None" = None,
-        not_before: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
-        not_after: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        not_before: "timestamp_pb2.Timestamp|None" = None,
+        not_after: "timestamp_pb2.Timestamp|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if state is not None:
@@ -1519,11 +1572,12 @@ class FederationCertificateStatus(message_1.Message):
             self.not_after = not_after
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "FederationCertificateStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=FederationCertificateStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -1547,7 +1601,7 @@ class FederationCertificateStatus(message_1.Message):
         return super()._get_field("not_before", base=self._pb2_base_, explicit_presence=True,
         )
     @not_before.setter
-    def not_before(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def not_before(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("not_before",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -1555,7 +1609,7 @@ class FederationCertificateStatus(message_1.Message):
         return super()._get_field("not_after", base=self._pb2_base_, explicit_presence=True,
         )
     @not_after.setter
-    def not_after(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def not_after(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("not_after",value, base=self._pb2_base_,explicit_presence=True)
     
 # file: nebius/iam/v1/federation_certificate_service.proto
@@ -2029,11 +2083,16 @@ class GroupStatus(message_1.Message):
     _PB2_CLASS_ = group_pb2.GroupStatus
     _pb2_base_: group_pb2.GroupStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.GroupStatus.State",group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        ACTIVE = 1
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "GroupStatus.State|group_pb2.GroupStatus.State|None" = None,
         members_count: "builtins.int|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
@@ -2043,11 +2102,12 @@ class GroupStatus(message_1.Message):
             self.members_count = members_count
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "GroupStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=GroupStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "GroupStatus.State|group_pb2.GroupStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -2070,7 +2130,7 @@ class GroupMembership(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None" = None,
         status: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|None" = None,
-        revoke_at: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        revoke_at: "timestamp_pb2.Timestamp|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if metadata is not None:
@@ -2114,7 +2174,7 @@ class GroupMembership(message_1.Message):
         return super()._get_field("revoke_at", base=self._pb2_base_, explicit_presence=True,
         )
     @revoke_at.setter
-    def revoke_at(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def revoke_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("revoke_at",value, base=self._pb2_base_,explicit_presence=True)
     
 class GroupMembershipSpec(message_1.Message):
@@ -2826,13 +2886,22 @@ class InvitationStatus(message_1.Message):
     _PB2_CLASS_ = invitation_pb2.InvitationStatus
     _pb2_base_: invitation_pb2.InvitationStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.InvitationStatus.State",invitation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        CREATING = 4
+        CREATED = 5
+        PENDING = 1
+        EXPIRED = 2
+        ACCEPTED = 3
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
         tenant_user_account_id: "builtins.str|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
-        state: "pb_enum.Enum|None" = None,
+        expires_at: "timestamp_pb2.Timestamp|None" = None,
+        state: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if tenant_user_account_id is not None:
@@ -2855,15 +2924,16 @@ class InvitationStatus(message_1.Message):
         return super()._get_field("expires_at", base=self._pb2_base_, explicit_presence=True,
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def expires_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("expires_at",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "InvitationStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=InvitationStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "InvitationStatus.State|invitation_pb2.InvitationStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
 # file: nebius/iam/v1/invitation_service.proto
@@ -3413,11 +3483,18 @@ class TenantUserAccountStatus(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_pb2.TenantUserAccountStatus
     _pb2_base_: tenant_user_account_pb2.TenantUserAccountStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.TenantUserAccountStatus.State",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        INACTIVE = 2
+        BLOCKED = 3
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None" = None,
         invitation_id: "builtins.str|None" = None,
         federation_id: "builtins.str|None" = None,
     ) -> None:
@@ -3430,11 +3507,12 @@ class TenantUserAccountStatus(message_1.Message):
             self.federation_id = federation_id
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "TenantUserAccountStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=TenantUserAccountStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property

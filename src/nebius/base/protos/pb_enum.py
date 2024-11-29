@@ -25,11 +25,13 @@ if TYPE_CHECKING:
         Self,
     )
 
+from google.protobuf.descriptor import EnumDescriptor
+
+from .descriptor import DescriptorWrap
+
 
 def _is_descriptor(obj: object) -> bool:
-    return (
-        hasattr(obj, "__get__") or hasattr(obj, "__set__") or hasattr(obj, "__delete__")
-    )
+    return isinstance(obj, EnumDescriptor) or isinstance(obj, DescriptorWrap)
 
 
 class EnumType(EnumMeta if TYPE_CHECKING else type):
@@ -44,17 +46,27 @@ class EnumType(EnumMeta if TYPE_CHECKING else type):
     ) -> Self:
         value_map = {}
         member_map = {}
+        print(f"1, {bases}")
+
+        mod_bases = tuple(
+            dict.fromkeys(
+                [base.__class__ for base in bases if base.__class__ is not type]
+                + [EnumType, type]
+            )
+        )
 
         new_mcs = type(
             f"{name}Type",
-            tuple(
-                dict.fromkeys(
-                    [base.__class__ for base in bases if base.__class__ is not type]
-                    + [EnumType, type]
-                )
-            ),  # reorder the bases so EnumType and type are last to avoid conflicts
+            mod_bases,  # reorder the bases so EnumType and type are last to avoid
+            # conflicts
             {"_value_map_": value_map, "_member_map_": member_map},
         )
+        print(f"2 {new_mcs} {mod_bases}")
+        descriptor = None
+        for name_, value in namespace.items():
+            if _is_descriptor(value):
+                descriptor = value
+                break
 
         members = {
             name: value
@@ -62,28 +74,41 @@ class EnumType(EnumMeta if TYPE_CHECKING else type):
             if not _is_descriptor(value) and not name.startswith("__")
         }
 
+        new_namespace = {
+            key: value for key, value in namespace.items() if key not in members
+        }
+
+        new_namespace["#descriptor"] = descriptor
+        new_namespace["value"] = 0
+        new_namespace["name"] = "None"
+
+        print("3", flush=True)
         cls = type.__new__(
             new_mcs,
             name,
             bases,
-            {key: value for key, value in namespace.items() if key not in members},
+            new_namespace,
         )
         # this allows us to disallow member access from other members as
         # members become proper class variables
 
+        print(f"4 {cls} {name} {bases} {new_namespace}", flush=True)
         for name, value in members.items():
             member = value_map.get(value)
             if member is None:
+                print(f"4.5 value {value} name {name}", flush=True)
                 member = cls.__new__(cls, name=name, value=value)  # type: ignore
                 value_map[value] = member
             member_map[name] = member
             type.__setattr__(new_mcs, name, member)
 
+        print("5", flush=True)
         return cls
 
     if not TYPE_CHECKING:
 
         def __call__(cls, value: int) -> Enum:  # noqa: N804, N805
+            print("6", flush=True)
             try:
                 return cls._value_map_[value]
             except (KeyError, TypeError):
@@ -130,9 +155,10 @@ class Enum(IntEnum if TYPE_CHECKING else int, metaclass=EnumType):
     if not TYPE_CHECKING:
 
         def __new__(cls, *, name: Optional[str], value: int) -> Self:
-            self = super().__new__(cls, value)
-            super().__setattr__(self, "name", name)
-            super().__setattr__(self, "value", value)
+            print(f"7 {cls} {cls.__class__}")
+            self = value
+            setattr(self, "name", name)
+            setattr(self, "value", value)
             return self
 
     def __str__(self) -> str:
@@ -156,6 +182,17 @@ class Enum(IntEnum if TYPE_CHECKING else int, metaclass=EnumType):
 
     def __deepcopy__(self, memo: Any) -> Self:
         return self
+
+    @classmethod
+    def get_descriptor(cls) -> EnumDescriptor:
+        descriptor = getattr(cls, "#descriptor")
+        if descriptor is None:
+            ValueError("No descriptor provided.")
+        if isinstance(descriptor, DescriptorWrap):
+            descriptor = descriptor()
+        if isinstance(descriptor, EnumDescriptor):
+            return descriptor
+        ValueError(f"Wrong descriptor type {type(descriptor)} provided.")
 
     @classmethod
     def try_value(cls, value: int = 0) -> Self:

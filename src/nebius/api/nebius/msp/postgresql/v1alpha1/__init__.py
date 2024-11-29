@@ -11,7 +11,11 @@ import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_pb2 as cluster_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
 import builtins as builtins
+import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
+import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config as config_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config.postgresql_pb2 as postgresql_pb2
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_service_pb2 as cluster_service_pb2
@@ -117,11 +121,17 @@ class ConnectionPoolerConfig(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.ConnectionPoolerConfig
     _pb2_base_: cluster_pb2.ConnectionPoolerConfig
     
+    class PoolingMode(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig.PoolingMode",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        POOLING_MODE_UNSPECIFIED = 0
+        SESSION = 1
+        TRANSACTION = 2
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        pooling_mode: "pb_enum.Enum|None" = None,
+        pooling_mode: "ConnectionPoolerConfig.PoolingMode|cluster_pb2.ConnectionPoolerConfig.PoolingMode|None" = None,
         max_pool_size: "builtins.int|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
@@ -131,11 +141,12 @@ class ConnectionPoolerConfig(message_1.Message):
             self.max_pool_size = max_pool_size
     
     @property
-    def pooling_mode(self) -> "pb_enum.Enum":
+    def pooling_mode(self) -> "ConnectionPoolerConfig.PoolingMode":
         return super()._get_field("pooling_mode", base=self._pb2_base_, explicit_presence=False,
+        wrap=ConnectionPoolerConfig.PoolingMode,
         )
     @pooling_mode.setter
-    def pooling_mode(self, value: "pb_enum.Enum") -> None:
+    def pooling_mode(self, value: "ConnectionPoolerConfig.PoolingMode|cluster_pb2.ConnectionPoolerConfig.PoolingMode") -> None:
         return super()._set_field("pooling_mode",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -223,8 +234,8 @@ class ClusterStatus(message_1.Message):
         self,
         initial_message: message_2.Message|None = None,
         *,
-        phase: "pb_enum.Enum|None" = None,
-        state: "pb_enum.Enum|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
         endpoints: "EndpointsSpec|cluster_pb2.EndpointsSpec|None" = None,
         preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
         connection_endpoints: "Endpoints|cluster_pb2.Endpoints|None" = None,
@@ -242,19 +253,21 @@ class ClusterStatus(message_1.Message):
             self.connection_endpoints = connection_endpoints
     
     @property
-    def phase(self) -> "pb_enum.Enum":
+    def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "pb_enum.Enum") -> None:
+    def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
         return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property

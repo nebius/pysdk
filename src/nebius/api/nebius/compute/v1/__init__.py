@@ -7,8 +7,10 @@ import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
 import google.protobuf.message as message_2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
-import builtins as builtins
 import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
+import builtins as builtins
 import collections.abc as abc
 import nebius.api.nebius.compute.v1.operation_service_pb2 as operation_service_pb2
 import nebius.api.nebius.compute.v1.disk_service_pb2 as disk_service_pb2
@@ -74,6 +76,14 @@ class DiskSpec(message_1.Message):
     _PB2_CLASS_ = disk_pb2.DiskSpec
     _pb2_base_: disk_pb2.DiskSpec
     
+    class DiskType(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskSpec.DiskType",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        NETWORK_SSD = 1
+        NETWORK_HDD = 2
+        NETWORK_SSD_NON_REPLICATED = 3
+        NETWORK_SSD_IO_M3 = 4
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
@@ -83,7 +93,7 @@ class DiskSpec(message_1.Message):
         size_mebibytes: "builtins.int|None" = None,
         size_gibibytes: "builtins.int|None" = None,
         block_size_bytes: "builtins.int|None" = None,
-        type: "pb_enum.Enum|None" = None,
+        type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None" = None,
         placement_policy: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|None" = None,
         source_image_id: "builtins.str|None" = None,
         source_image_family: "SourceImageFamily|disk_pb2.SourceImageFamily|None" = None,
@@ -149,11 +159,12 @@ class DiskSpec(message_1.Message):
         return super()._set_field("block_size_bytes",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def type(self) -> "pb_enum.Enum":
+    def type(self) -> "DiskSpec.DiskType":
         return super()._get_field("type", base=self._pb2_base_, explicit_presence=False,
+        wrap=DiskSpec.DiskType,
         )
     @type.setter
-    def type(self, value: "pb_enum.Enum") -> None:
+    def type(self, value: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType") -> None:
         return super()._set_field("type",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -252,11 +263,20 @@ class DiskStatus(message_1.Message):
     _PB2_CLASS_ = disk_pb2.DiskStatus
     _pb2_base_: disk_pb2.DiskStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskStatus.State",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        CREATING = 1
+        READY = 2
+        UPDATING = 3
+        DELETING = 4
+        ERROR = 5
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "DiskStatus.State|disk_pb2.DiskStatus.State|None" = None,
         state_description: "builtins.str|None" = None,
         read_write_attachment: "builtins.str|None" = None,
         read_only_attachments: "abc.MutableSequence[builtins.str]|None" = None,
@@ -281,11 +301,12 @@ class DiskStatus(message_1.Message):
             self.reconciling = reconciling
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "DiskStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=DiskStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "DiskStatus.State|disk_pb2.DiskStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -637,6 +658,12 @@ class FilesystemSpec(message_1.Message):
     _PB2_CLASS_ = filesystem_pb2.FilesystemSpec
     _pb2_base_: filesystem_pb2.FilesystemSpec
     
+    class FilesystemType(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.FilesystemSpec.FilesystemType",filesystem_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        NETWORK_SSD = 1
+        NETWORK_HDD = 2
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
@@ -646,7 +673,7 @@ class FilesystemSpec(message_1.Message):
         size_mebibytes: "builtins.int|None" = None,
         size_gibibytes: "builtins.int|None" = None,
         block_size_bytes: "builtins.int|None" = None,
-        type: "pb_enum.Enum|None" = None,
+        type: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if size_bytes is not None:
@@ -703,22 +730,32 @@ class FilesystemSpec(message_1.Message):
         return super()._set_field("block_size_bytes",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def type(self) -> "pb_enum.Enum":
+    def type(self) -> "FilesystemSpec.FilesystemType":
         return super()._get_field("type", base=self._pb2_base_, explicit_presence=False,
+        wrap=FilesystemSpec.FilesystemType,
         )
     @type.setter
-    def type(self, value: "pb_enum.Enum") -> None:
+    def type(self, value: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType") -> None:
         return super()._set_field("type",value, base=self._pb2_base_,explicit_presence=False)
     
 class FilesystemStatus(message_1.Message):
     _PB2_CLASS_ = filesystem_pb2.FilesystemStatus
     _pb2_base_: filesystem_pb2.FilesystemStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.FilesystemStatus.State",filesystem_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        CREATING = 1
+        READY = 2
+        UPDATING = 3
+        DELETING = 4
+        ERROR = 5
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "FilesystemStatus.State|filesystem_pb2.FilesystemStatus.State|None" = None,
         state_description: "builtins.str|None" = None,
         read_write_attachments: "abc.MutableSequence[builtins.str]|None" = None,
         read_only_attachments: "abc.MutableSequence[builtins.str]|None" = None,
@@ -740,11 +777,12 @@ class FilesystemStatus(message_1.Message):
             self.reconciling = reconciling
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "FilesystemStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=FilesystemStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "FilesystemStatus.State|filesystem_pb2.FilesystemStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -1394,11 +1432,20 @@ class ImageStatus(message_1.Message):
     _PB2_CLASS_ = image_pb2.ImageStatus
     _pb2_base_: image_pb2.ImageStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.ImageStatus.State",image_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        CREATING = 1
+        READY = 2
+        UPDATING = 3
+        DELETING = 4
+        ERROR = 5
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "ImageStatus.State|image_pb2.ImageStatus.State|None" = None,
         state_description: "builtins.str|None" = None,
         storage_size_bytes: "builtins.int|None" = None,
         min_disk_size_bytes: "builtins.int|None" = None,
@@ -1417,11 +1464,12 @@ class ImageStatus(message_1.Message):
             self.reconciling = reconciling
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "ImageStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=ImageStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "ImageStatus.State|image_pb2.ImageStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -1849,6 +1897,11 @@ class PublicIPAddressStatus(message_1.Message):
         return super()._set_field("allocation_id",value, base=self._pb2_base_,explicit_presence=False)
     
 # file: nebius/compute/v1/instance.proto
+class InstanceRecoveryPolicy(pb_enum.Enum):
+    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.InstanceRecoveryPolicy",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    RECOVER = 0
+    FAIL = 1
+
 class Instance(message_1.Message):
     _PB2_CLASS_ = instance_pb2.Instance
     _pb2_base_: instance_pb2.Instance
@@ -1913,7 +1966,7 @@ class InstanceSpec(message_1.Message):
         filesystems: "abc.MutableSequence[AttachedFilesystemSpec]|None" = None,
         cloud_init_user_data: "builtins.str|None" = None,
         stopped: "builtins.bool|None" = None,
-        recovery_policy: "pb_enum.Enum|None" = None,
+        recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if service_account_id is not None:
@@ -2016,11 +2069,12 @@ class InstanceSpec(message_1.Message):
         return super()._set_field("stopped",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def recovery_policy(self) -> "pb_enum.Enum":
+    def recovery_policy(self) -> "InstanceRecoveryPolicy":
         return super()._get_field("recovery_policy", base=self._pb2_base_, explicit_presence=False,
+        wrap=InstanceRecoveryPolicy,
         )
     @recovery_policy.setter
-    def recovery_policy(self, value: "pb_enum.Enum") -> None:
+    def recovery_policy(self, value: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy") -> None:
         return super()._set_field("recovery_policy",value, base=self._pb2_base_,explicit_presence=False)
     
 class ResourcesSpec(message_1.Message):
@@ -2082,11 +2136,17 @@ class AttachedDiskSpec(message_1.Message):
     _PB2_CLASS_ = instance_pb2.AttachedDiskSpec
     _pb2_base_: instance_pb2.AttachedDiskSpec
     
+    class AttachMode(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.AttachedDiskSpec.AttachMode",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        READ_ONLY = 1
+        READ_WRITE = 2
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        attach_mode: "pb_enum.Enum|None" = None,
+        attach_mode: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode|None" = None,
         existing_disk: "ExistingDisk|instance_pb2.ExistingDisk|None" = None,
         device_id: "builtins.str|None" = None,
     ) -> None:
@@ -2099,11 +2159,12 @@ class AttachedDiskSpec(message_1.Message):
             self.device_id = device_id
     
     @property
-    def attach_mode(self) -> "pb_enum.Enum":
+    def attach_mode(self) -> "AttachedDiskSpec.AttachMode":
         return super()._get_field("attach_mode", base=self._pb2_base_, explicit_presence=False,
+        wrap=AttachedDiskSpec.AttachMode,
         )
     @attach_mode.setter
-    def attach_mode(self, value: "pb_enum.Enum") -> None:
+    def attach_mode(self, value: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode") -> None:
         return super()._set_field("attach_mode",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -2171,11 +2232,17 @@ class AttachedFilesystemSpec(message_1.Message):
     _PB2_CLASS_ = instance_pb2.AttachedFilesystemSpec
     _pb2_base_: instance_pb2.AttachedFilesystemSpec
     
+    class AttachMode(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.AttachedFilesystemSpec.AttachMode",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        READ_ONLY = 1
+        READ_WRITE = 2
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        attach_mode: "pb_enum.Enum|None" = None,
+        attach_mode: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode|None" = None,
         mount_tag: "builtins.str|None" = None,
         existing_filesystem: "ExistingFilesystem|instance_pb2.ExistingFilesystem|None" = None,
     ) -> None:
@@ -2188,11 +2255,12 @@ class AttachedFilesystemSpec(message_1.Message):
             self.existing_filesystem = existing_filesystem
     
     @property
-    def attach_mode(self) -> "pb_enum.Enum":
+    def attach_mode(self) -> "AttachedFilesystemSpec.AttachMode":
         return super()._get_field("attach_mode", base=self._pb2_base_, explicit_presence=False,
+        wrap=AttachedFilesystemSpec.AttachMode,
         )
     @attach_mode.setter
-    def attach_mode(self, value: "pb_enum.Enum") -> None:
+    def attach_mode(self, value: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode") -> None:
         return super()._set_field("attach_mode",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -2216,11 +2284,23 @@ class InstanceStatus(message_1.Message):
     _PB2_CLASS_ = instance_pb2.InstanceStatus
     _pb2_base_: instance_pb2.InstanceStatus
     
+    class InstanceState(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.InstanceStatus.InstanceState",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        CREATING = 1
+        UPDATING = 2
+        STARTING = 3
+        RUNNING = 4
+        STOPPING = 5
+        STOPPED = 6
+        DELETING = 7
+        ERROR = 8
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|None" = None,
         network_interfaces: "abc.MutableSequence[NetworkInterfaceStatus]|None" = None,
         reconciling: "builtins.bool|None" = None,
     ) -> None:
@@ -2233,11 +2313,12 @@ class InstanceStatus(message_1.Message):
             self.reconciling = reconciling
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "InstanceStatus.InstanceState":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=InstanceStatus.InstanceState,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property

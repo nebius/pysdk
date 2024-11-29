@@ -2,6 +2,8 @@ from typing import Any, Type
 
 from google.protobuf.message import Message as PMessage
 
+from nebius.base.protos.pb_enum import Enum  # type:ignore[attr-defined]
+
 
 class Message:
     def __init__(
@@ -56,6 +58,8 @@ class Message:
         if explicit_presence and not base.HasField(name):  # type: ignore[unused-ignore]
             return None
         ret = getattr(base, name)
+        if isinstance(wrap, Enum):
+            return wrap.try_value(ret)
         if wrap is not None:
             return wrap(ret)
         return ret

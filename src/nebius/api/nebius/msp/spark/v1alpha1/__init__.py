@@ -8,7 +8,8 @@ import google.protobuf.message as message_2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import builtins as builtins
-import nebius.base.protos.pb_enum as pb_enum
+import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
+import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.spark.v1alpha1.cluster_service_pb2 as cluster_service_pb2
 import collections.abc as abc
 import nebius.api.nebius.msp.spark.v1alpha1.common_pb2 as common_pb2
@@ -144,8 +145,8 @@ class ClusterStatus(message_1.Message):
         self,
         initial_message: message_2.Message|None = None,
         *,
-        phase: "pb_enum.Enum|None" = None,
-        state: "pb_enum.Enum|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
         history_server_endpoint: "builtins.str|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
@@ -157,19 +158,21 @@ class ClusterStatus(message_1.Message):
             self.history_server_endpoint = history_server_endpoint
     
     @property
-    def phase(self) -> "pb_enum.Enum":
+    def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "pb_enum.Enum") -> None:
+    def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
         return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -883,8 +886,8 @@ class JobStatus(message_1.Message):
         self,
         initial_message: message_2.Message|None = None,
         *,
-        phase: "pb_enum.Enum|None" = None,
-        state: "pb_enum.Enum|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
         driver_endpoint: "builtins.str|None" = None,
         driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
         executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
@@ -902,19 +905,21 @@ class JobStatus(message_1.Message):
             self.executor_preset_details = executor_preset_details
     
     @property
-    def phase(self) -> "pb_enum.Enum":
+    def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "pb_enum.Enum") -> None:
+    def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
         return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -1305,8 +1310,8 @@ class SessionStatus(message_1.Message):
         self,
         initial_message: message_2.Message|None = None,
         *,
-        phase: "pb_enum.Enum|None" = None,
-        state: "pb_enum.Enum|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
         spark_connect_endpoint: "builtins.str|None" = None,
         driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
         executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
@@ -1324,19 +1329,21 @@ class SessionStatus(message_1.Message):
             self.executor_preset_details = executor_preset_details
     
     @property
-    def phase(self) -> "pb_enum.Enum":
+    def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "pb_enum.Enum") -> None:
+    def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
         return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property

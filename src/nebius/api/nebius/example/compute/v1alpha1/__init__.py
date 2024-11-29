@@ -14,6 +14,8 @@ import nebius.api.nebius.example.compute.v1alpha1.instance_pb2 as instance_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.base.protos.pb_enum as pb_enum
+import nebius.base.protos.descriptor as descriptor
+import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.example.compute.v1alpha1.instance_service_pb2 as instance_service_pb2
 
 # file: nebius/example/compute/v1alpha1/testing.proto
@@ -93,21 +95,21 @@ class TestingSpec(message_1.Message):
         self,
         initial_message: message_2.Message|None = None,
         *,
-        any: "any_pb2.Any|any_pb2.Any|None" = None,
-        duration: "duration_pb2.Duration|duration_pb2.Duration|None" = None,
-        timestamp: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        any: "any_pb2.Any|None" = None,
+        duration: "duration_pb2.Duration|None" = None,
+        timestamp: "timestamp_pb2.Timestamp|None" = None,
         recursive: "Recursive|testing_pb2.Recursive|None" = None,
-        any_out: "any_pb2.Any|any_pb2.Any|None" = None,
-        duration_out: "duration_pb2.Duration|duration_pb2.Duration|None" = None,
-        timestamp_out: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        any_out: "any_pb2.Any|None" = None,
+        duration_out: "duration_pb2.Duration|None" = None,
+        timestamp_out: "timestamp_pb2.Timestamp|None" = None,
         recursive_out: "Recursive|testing_pb2.Recursive|None" = None,
         non_empty_default: "builtins.str|None" = None,
         test_tf_validators: "TestTFValidators|testing_pb2.TestTFValidators|None" = None,
         sensitive_input_only: "builtins.str|None" = None,
-        dur: "duration_pb2.Duration|duration_pb2.Duration|None" = None,
-        time: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        dur: "duration_pb2.Duration|None" = None,
+        time: "timestamp_pb2.Timestamp|None" = None,
         duration_array: "abc.MutableSequence[duration_pb2.Duration]|None" = None,
-        optional_well_known: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None" = None,
+        optional_well_known: "timestamp_pb2.Timestamp|None" = None,
         optional_message: "TestTFProtovalidateOneof|testing_pb2.TestTFProtovalidateOneof|None" = None,
         sio_repeated: "abc.MutableSequence[builtins.str]|None" = None,
         sio_map: "abc.MutableMapping[builtins.str,builtins.int]|None" = None,
@@ -158,7 +160,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("any", base=self._pb2_base_, explicit_presence=True,
         )
     @any.setter
-    def any(self, value: "any_pb2.Any|any_pb2.Any|None") -> None:
+    def any(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("any",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -166,7 +168,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("duration", base=self._pb2_base_, explicit_presence=True,
         )
     @duration.setter
-    def duration(self, value: "duration_pb2.Duration|duration_pb2.Duration|None") -> None:
+    def duration(self, value: "duration_pb2.Duration|None") -> None:
         return super()._set_field("duration",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -174,7 +176,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("timestamp", base=self._pb2_base_, explicit_presence=True,
         )
     @timestamp.setter
-    def timestamp(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def timestamp(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("timestamp",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -191,7 +193,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("any_out", base=self._pb2_base_, explicit_presence=True,
         )
     @any_out.setter
-    def any_out(self, value: "any_pb2.Any|any_pb2.Any|None") -> None:
+    def any_out(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("any_out",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -199,7 +201,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("duration_out", base=self._pb2_base_, explicit_presence=True,
         )
     @duration_out.setter
-    def duration_out(self, value: "duration_pb2.Duration|duration_pb2.Duration|None") -> None:
+    def duration_out(self, value: "duration_pb2.Duration|None") -> None:
         return super()._set_field("duration_out",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -207,7 +209,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("timestamp_out", base=self._pb2_base_, explicit_presence=True,
         )
     @timestamp_out.setter
-    def timestamp_out(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def timestamp_out(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("timestamp_out",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -249,7 +251,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("dur", base=self._pb2_base_, explicit_presence=True,
         )
     @dur.setter
-    def dur(self, value: "duration_pb2.Duration|duration_pb2.Duration|None") -> None:
+    def dur(self, value: "duration_pb2.Duration|None") -> None:
         return super()._set_field("dur",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -257,7 +259,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("time", base=self._pb2_base_, explicit_presence=True,
         )
     @time.setter
-    def time(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def time(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("time",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -273,7 +275,7 @@ class TestingSpec(message_1.Message):
         return super()._get_field("optional_well_known", base=self._pb2_base_, explicit_presence=True,
         )
     @optional_well_known.setter
-    def optional_well_known(self, value: "timestamp_pb2.Timestamp|timestamp_pb2.Timestamp|None") -> None:
+    def optional_well_known(self, value: "timestamp_pb2.Timestamp|None") -> None:
         return super()._set_field("optional_well_known",value, base=self._pb2_base_,explicit_presence=True)
     
     @property
@@ -743,11 +745,25 @@ class InstanceStatus(message_1.Message):
     _PB2_CLASS_ = instance_pb2.InstanceStatus
     _pb2_base_: instance_pb2.InstanceStatus
     
+    class State(pb_enum.Enum):
+        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.example.compute.v1alpha1.InstanceStatus.State",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATUS_UNSPECIFIED = 0
+        PROVISIONING = 1
+        RUNNING = 2
+        STOPPING = 3
+        STOPPED = 4
+        STARTING = 5
+        RESTARTING = 6
+        UPDATING = 7
+        ERROR = 8
+        CRASHED = 9
+        DELETING = 10
+    
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        state: "pb_enum.Enum|None" = None,
+        state: "InstanceStatus.State|instance_pb2.InstanceStatus.State|None" = None,
         compute_node: "builtins.str|None" = None,
         reconciling: "builtins.bool|None" = None,
     ) -> None:
@@ -760,11 +776,12 @@ class InstanceStatus(message_1.Message):
             self.reconciling = reconciling
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "InstanceStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=InstanceStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "InstanceStatus.State|instance_pb2.InstanceStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -784,6 +801,11 @@ class InstanceStatus(message_1.Message):
         return super()._set_field("reconciling",value, base=self._pb2_base_,explicit_presence=False)
     
 # file: nebius/example/compute/v1alpha1/instance_service.proto
+class InstanceView(pb_enum.Enum):
+    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.example.compute.v1alpha1.InstanceView",instance_service_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    BASIC = 0
+    FULL = 1
+
 class GetInstanceRequest(message_1.Message):
     _PB2_CLASS_ = instance_service_pb2.GetInstanceRequest
     _pb2_base_: instance_service_pb2.GetInstanceRequest
@@ -793,7 +815,7 @@ class GetInstanceRequest(message_1.Message):
         initial_message: message_2.Message|None = None,
         *,
         id: "builtins.str|None" = None,
-        view: "pb_enum.Enum|None" = None,
+        view: "InstanceView|instance_service_pb2.InstanceView|None" = None,
         resource_version: "builtins.str|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
@@ -813,11 +835,12 @@ class GetInstanceRequest(message_1.Message):
         return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def view(self) -> "pb_enum.Enum":
+    def view(self) -> "InstanceView":
         return super()._get_field("view", base=self._pb2_base_, explicit_presence=False,
+        wrap=InstanceView,
         )
     @view.setter
-    def view(self, value: "pb_enum.Enum") -> None:
+    def view(self, value: "InstanceView|instance_service_pb2.InstanceView") -> None:
         return super()._set_field("view",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
@@ -840,7 +863,7 @@ class ListInstancesRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
-        view: "pb_enum.Enum|None" = None,
+        view: "InstanceView|instance_service_pb2.InstanceView|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
         if project_id is not None:
@@ -887,11 +910,12 @@ class ListInstancesRequest(message_1.Message):
         return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def view(self) -> "pb_enum.Enum":
+    def view(self) -> "InstanceView":
         return super()._get_field("view", base=self._pb2_base_, explicit_presence=False,
+        wrap=InstanceView,
         )
     @view.setter
-    def view(self, value: "pb_enum.Enum") -> None:
+    def view(self, value: "InstanceView|instance_service_pb2.InstanceView") -> None:
         return super()._set_field("view",value, base=self._pb2_base_,explicit_presence=False)
     
 class ListInstancesResponse(message_1.Message):
@@ -1041,7 +1065,7 @@ class StopInstanceRequest(message_1.Message):
         *,
         instance_id: "builtins.str|None" = None,
         force: "builtins.bool|None" = None,
-        termination_grace_period: "duration_pb2.Duration|duration_pb2.Duration|None" = None,
+        termination_grace_period: "duration_pb2.Duration|None" = None,
         compute_node: "builtins.str|None" = None,
     ) -> None:
         super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
@@ -1075,7 +1099,7 @@ class StopInstanceRequest(message_1.Message):
         return super()._get_field("termination_grace_period", base=self._pb2_base_, explicit_presence=True,
         )
     @termination_grace_period.setter
-    def termination_grace_period(self, value: "duration_pb2.Duration|duration_pb2.Duration|None") -> None:
+    def termination_grace_period(self, value: "duration_pb2.Duration|None") -> None:
         return super()._set_field("termination_grace_period",value, base=self._pb2_base_,explicit_presence=True)
     
     @property

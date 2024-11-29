@@ -8,7 +8,8 @@ import google.protobuf.message as message_2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import builtins as builtins
-import nebius.base.protos.pb_enum as pb_enum
+import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
+import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.mlflow.v1alpha1.cluster_service_pb2 as cluster_service_pb2
 import collections.abc as abc
 
@@ -156,8 +157,8 @@ class MlflowClusterStatus(message_1.Message):
         self,
         initial_message: message_2.Message|None = None,
         *,
-        phase: "pb_enum.Enum|None" = None,
-        state: "pb_enum.Enum|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
         tracking_endpoint: "builtins.str|None" = None,
         effective_storage_bucket_name: "builtins.str|None" = None,
         experiments_count: "builtins.int|None" = None,
@@ -178,19 +179,21 @@ class MlflowClusterStatus(message_1.Message):
             self.mlflow_version = mlflow_version
     
     @property
-    def phase(self) -> "pb_enum.Enum":
+    def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "pb_enum.Enum") -> None:
+    def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
         return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
-    def state(self) -> "pb_enum.Enum":
+    def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "pb_enum.Enum") -> None:
+    def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
         return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
     
     @property
