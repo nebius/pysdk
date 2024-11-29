@@ -6,9 +6,14 @@ plugins:
     out: src/nebius/api
   - remote: buf.build/protocolbuffers/pyi
     out: src/nebius/api
-  - local: ["python", "src/compiler/main.py"]
+  - local: ["python", "-m", "nebius.base.protos.compiler.main"]
     opt:
     - log_level=DEBUG
+    - import_substitution=nebius=nebius.api.nebius
+    - import_substitution=buf=nebius.api.buf
+    - skip=google
+    - skip=buf
+    # - debugger_connect=localhost:56790
     out: src/nebius/api
     strategy: directory
   # - plugin: python_betterproto

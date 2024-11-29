@@ -12,8 +12,8 @@ async def test_get_instance() -> None:
     from grpc.aio._interceptor import InterceptedUnaryUnaryCall as UnaryUnaryCall
     from grpc.aio._metadata import Metadata
 
+    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel
-    from nebius.api.nebius.compute.v1 import disk_pb2
     from nebius.api.nebius.compute.v1.disk_service_pb2 import (
         GetDiskRequest,
     )
@@ -100,8 +100,8 @@ async def test_custom_resolver() -> None:
     from grpc.aio._interceptor import InterceptedUnaryUnaryCall as UnaryUnaryCall
     from grpc.aio._metadata import Metadata
 
+    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel
-    from nebius.api.nebius.compute.v1 import disk_pb2
     from nebius.api.nebius.compute.v1.disk_service_pb2 import (
         GetDiskRequest,
     )

@@ -5,7 +5,7 @@ import tempfile
 from typing import Tuple
 
 # Define the path to the mover script
-MOVER_SCRIPT_PATH = "./src/compiler/mover.py"
+MOVER_SCRIPT_PATH = "./src/nebius/base/protos/compiler/mover.py"
 
 
 def run_mover(
