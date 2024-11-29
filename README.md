@@ -114,7 +114,7 @@ async def my_call():
     )
     return await service.Get(req)
 
-asyncio.run(my_call)
+asyncio.run(my_call())
 ```
 
 ##### Poll operations

@@ -18,7 +18,14 @@ def get_system_certificates() -> str:
                 break
     elif platform.system() == "Darwin":  # macOS
         # macOS requires fetching certs via security CLI
-        system_cert_path = "/usr/local/etc/openssl@1.1/cert.pem"  # Homebrew path
+        possible_paths = [
+            "/opt/homebrew/etc/openssl@3/cert.pem",  # New
+            "/usr/local/etc/openssl@1.1/cert.pem",  # Deprecated
+        ]
+        for path in possible_paths:
+            if os.path.exists(path):
+                system_cert_path = path
+                break
     elif platform.system() == "Windows":
         # On Windows, use certifi-win32 or fetch manually
         try:
