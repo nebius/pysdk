@@ -14,9 +14,11 @@ class DescriptorWrap(ABC, Generic[T]):
         file_descriptor: pb.FileDescriptor,
         expected_type: Type[T],
     ) -> None:
+        if name[0] == ".":
+            name = name[1:]
         self._name = name
         self._file_descriptor = file_descriptor
-        self._expected_type = expected_type
+        self._expected_type: Type[T] = expected_type
         self._descriptor: T | None = None
 
     def __call__(self) -> T:
@@ -45,6 +47,8 @@ class DescriptorWrap(ABC, Generic[T]):
         if isinstance(container, pb.FileDescriptor):
             for enum in container.enum_types_by_name.values():
                 if enum.full_name == name:
+                    if not isinstance(enum, pb.EnumDescriptor):
+                        raise ValueError(f"Pool returned unexpected type {type(enum)}")
                     return enum
             for message in container.message_types_by_name.values():
                 found = self._find_descriptor(message, name)
@@ -61,9 +65,15 @@ class DescriptorWrap(ABC, Generic[T]):
                     return found
             for nested_enum in container.enum_types:
                 if nested_enum.full_name == name:
+                    if not isinstance(nested_enum, pb.EnumDescriptor):
+                        raise ValueError(
+                            f"Pool returned unexpected type {type(nested_enum)}"
+                        )
                     return nested_enum
             for oneof in container.oneofs:
                 if oneof.full_name == name:
+                    if not isinstance(oneof, pb.OneofDescriptor):
+                        raise ValueError(f"Pool returned unexpected type {type(oneof)}")
                     return oneof
 
         return None

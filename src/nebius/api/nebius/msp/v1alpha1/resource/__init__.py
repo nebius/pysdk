@@ -14,7 +14,6 @@ import nebius.api.nebius.msp.v1alpha1.resource.template_service_pb2 as template_
 # file: nebius/msp/v1alpha1/resource/template.proto
 class Template(message_1.Message):
     _PB2_CLASS_ = template_pb2.Template
-    _pb2_base_: template_pb2.Template
     
     def __init__(
         self,
@@ -23,7 +22,7 @@ class Template(message_1.Message):
         status: "TemplateStatus|template_pb2.TemplateStatus|None" = None,
         spec: "TemplateSpec|template_pb2.TemplateSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.Template",template_pb2.DESCRIPTOR)
         if status is not None:
             self.status = status
         if spec is not None:
@@ -31,25 +30,24 @@ class Template(message_1.Message):
     
     @property
     def status(self) -> "TemplateStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=TemplateStatus,
         )
     @status.setter
     def status(self, value: "TemplateStatus|template_pb2.TemplateStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
     @property
     def spec(self) -> "TemplateSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=TemplateSpec,
         )
     @spec.setter
     def spec(self, value: "TemplateSpec|template_pb2.TemplateSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class TemplateStatus(message_1.Message):
     _PB2_CLASS_ = template_pb2.TemplateStatus
-    _pb2_base_: template_pb2.TemplateStatus
     
     def __init__(
         self,
@@ -57,22 +55,21 @@ class TemplateStatus(message_1.Message):
         *,
         preset_details: "PresetDetails|template_pb2.PresetDetails|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.TemplateStatus",template_pb2.DESCRIPTOR)
         if preset_details is not None:
             self.preset_details = preset_details
     
     @property
     def preset_details(self) -> "PresetDetails|None":
-        return super()._get_field("preset_details", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("preset_details", explicit_presence=True,
         wrap=PresetDetails,
         )
     @preset_details.setter
     def preset_details(self, value: "PresetDetails|template_pb2.PresetDetails|None") -> None:
-        return super()._set_field("preset_details",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("preset_details",value,explicit_presence=True)
     
 class TemplateSpec(message_1.Message):
     _PB2_CLASS_ = template_pb2.TemplateSpec
-    _pb2_base_: template_pb2.TemplateSpec
     
     def __init__(
         self,
@@ -83,7 +80,7 @@ class TemplateSpec(message_1.Message):
         disk: "Disk|template_pb2.Disk|None" = None,
         role: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.TemplateSpec",template_pb2.DESCRIPTOR)
         if resources is not None:
             self.resources = resources
         if hosts is not None:
@@ -95,42 +92,41 @@ class TemplateSpec(message_1.Message):
     
     @property
     def resources(self) -> "ResourcesSpec|None":
-        return super()._get_field("resources", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("resources", explicit_presence=True,
         wrap=ResourcesSpec,
         )
     @resources.setter
     def resources(self, value: "ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
-        return super()._set_field("resources",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("resources",value,explicit_presence=True)
     
     @property
     def hosts(self) -> "Host|None":
-        return super()._get_field("hosts", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("hosts", explicit_presence=True,
         wrap=Host,
         )
     @hosts.setter
     def hosts(self, value: "Host|template_pb2.Host|None") -> None:
-        return super()._set_field("hosts",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("hosts",value,explicit_presence=True)
     
     @property
     def disk(self) -> "Disk|None":
-        return super()._get_field("disk", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("disk", explicit_presence=True,
         wrap=Disk,
         )
     @disk.setter
     def disk(self, value: "Disk|template_pb2.Disk|None") -> None:
-        return super()._set_field("disk",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("disk",value,explicit_presence=True)
     
     @property
     def role(self) -> "builtins.str":
-        return super()._get_field("role", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("role", explicit_presence=False,
         )
     @role.setter
     def role(self, value: "builtins.str") -> None:
-        return super()._set_field("role",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("role",value,explicit_presence=False)
     
 class ResourcesSpec(message_1.Message):
     _PB2_CLASS_ = template_pb2.ResourcesSpec
-    _pb2_base_: template_pb2.ResourcesSpec
     
     def __init__(
         self,
@@ -139,7 +135,7 @@ class ResourcesSpec(message_1.Message):
         platform: "builtins.str|None" = None,
         preset: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.ResourcesSpec",template_pb2.DESCRIPTOR)
         if platform is not None:
             self.platform = platform
         if preset is not None:
@@ -147,23 +143,22 @@ class ResourcesSpec(message_1.Message):
     
     @property
     def platform(self) -> "builtins.str":
-        return super()._get_field("platform", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("platform", explicit_presence=False,
         )
     @platform.setter
     def platform(self, value: "builtins.str") -> None:
-        return super()._set_field("platform",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("platform",value,explicit_presence=False)
     
     @property
     def preset(self) -> "builtins.str":
-        return super()._get_field("preset", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("preset", explicit_presence=False,
         )
     @preset.setter
     def preset(self, value: "builtins.str") -> None:
-        return super()._set_field("preset",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("preset",value,explicit_presence=False)
     
 class PresetDetails(message_1.Message):
     _PB2_CLASS_ = template_pb2.PresetDetails
-    _pb2_base_: template_pb2.PresetDetails
     
     def __init__(
         self,
@@ -172,7 +167,7 @@ class PresetDetails(message_1.Message):
         cpu_count: "builtins.int|None" = None,
         memory_gibibytes: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.PresetDetails",template_pb2.DESCRIPTOR)
         if cpu_count is not None:
             self.cpu_count = cpu_count
         if memory_gibibytes is not None:
@@ -180,23 +175,22 @@ class PresetDetails(message_1.Message):
     
     @property
     def cpu_count(self) -> "builtins.int":
-        return super()._get_field("cpu_count", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cpu_count", explicit_presence=False,
         )
     @cpu_count.setter
     def cpu_count(self, value: "builtins.int") -> None:
-        return super()._set_field("cpu_count",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("cpu_count",value,explicit_presence=False)
     
     @property
     def memory_gibibytes(self) -> "builtins.int":
-        return super()._get_field("memory_gibibytes", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("memory_gibibytes", explicit_presence=False,
         )
     @memory_gibibytes.setter
     def memory_gibibytes(self, value: "builtins.int") -> None:
-        return super()._set_field("memory_gibibytes",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("memory_gibibytes",value,explicit_presence=False)
     
 class Range(message_1.Message):
     _PB2_CLASS_ = template_pb2.Range
-    _pb2_base_: template_pb2.Range
     
     def __init__(
         self,
@@ -207,7 +201,7 @@ class Range(message_1.Message):
         step: "builtins.int|None" = None,
         value: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.Range",template_pb2.DESCRIPTOR)
         if min is not None:
             self.min = min
         if max is not None:
@@ -219,39 +213,38 @@ class Range(message_1.Message):
     
     @property
     def min(self) -> "builtins.int":
-        return super()._get_field("min", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("min", explicit_presence=False,
         )
     @min.setter
     def min(self, value: "builtins.int") -> None:
-        return super()._set_field("min",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("min",value,explicit_presence=False)
     
     @property
     def max(self) -> "builtins.int":
-        return super()._get_field("max", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("max", explicit_presence=False,
         )
     @max.setter
     def max(self, value: "builtins.int") -> None:
-        return super()._set_field("max",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("max",value,explicit_presence=False)
     
     @property
     def step(self) -> "builtins.int":
-        return super()._get_field("step", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("step", explicit_presence=False,
         )
     @step.setter
     def step(self, value: "builtins.int") -> None:
-        return super()._set_field("step",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("step",value,explicit_presence=False)
     
     @property
     def value(self) -> "builtins.int":
-        return super()._get_field("value", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("value", explicit_presence=False,
         )
     @value.setter
     def value(self, value: "builtins.int") -> None:
-        return super()._set_field("value",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("value",value,explicit_presence=False)
     
 class Disk(message_1.Message):
     _PB2_CLASS_ = template_pb2.Disk
-    _pb2_base_: template_pb2.Disk
     
     def __init__(
         self,
@@ -260,7 +253,7 @@ class Disk(message_1.Message):
         type: "builtins.str|None" = None,
         size_gibibytes: "Range|template_pb2.Range|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.Disk",template_pb2.DESCRIPTOR)
         if type is not None:
             self.type = type
         if size_gibibytes is not None:
@@ -268,24 +261,23 @@ class Disk(message_1.Message):
     
     @property
     def type(self) -> "builtins.str":
-        return super()._get_field("type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("type", explicit_presence=False,
         )
     @type.setter
     def type(self, value: "builtins.str") -> None:
-        return super()._set_field("type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("type",value,explicit_presence=False)
     
     @property
     def size_gibibytes(self) -> "Range|None":
-        return super()._get_field("size_gibibytes", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("size_gibibytes", explicit_presence=True,
         wrap=Range,
         )
     @size_gibibytes.setter
     def size_gibibytes(self, value: "Range|template_pb2.Range|None") -> None:
-        return super()._set_field("size_gibibytes",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("size_gibibytes",value,explicit_presence=True)
     
 class DiskSpec(message_1.Message):
     _PB2_CLASS_ = template_pb2.DiskSpec
-    _pb2_base_: template_pb2.DiskSpec
     
     def __init__(
         self,
@@ -294,7 +286,7 @@ class DiskSpec(message_1.Message):
         type: "builtins.str|None" = None,
         size_gibibytes: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.DiskSpec",template_pb2.DESCRIPTOR)
         if type is not None:
             self.type = type
         if size_gibibytes is not None:
@@ -302,23 +294,22 @@ class DiskSpec(message_1.Message):
     
     @property
     def type(self) -> "builtins.str":
-        return super()._get_field("type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("type", explicit_presence=False,
         )
     @type.setter
     def type(self, value: "builtins.str") -> None:
-        return super()._set_field("type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("type",value,explicit_presence=False)
     
     @property
     def size_gibibytes(self) -> "builtins.int":
-        return super()._get_field("size_gibibytes", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("size_gibibytes", explicit_presence=False,
         )
     @size_gibibytes.setter
     def size_gibibytes(self, value: "builtins.int") -> None:
-        return super()._set_field("size_gibibytes",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("size_gibibytes",value,explicit_presence=False)
     
 class Host(message_1.Message):
     _PB2_CLASS_ = template_pb2.Host
-    _pb2_base_: template_pb2.Host
     
     def __init__(
         self,
@@ -326,22 +317,21 @@ class Host(message_1.Message):
         *,
         count: "Range|template_pb2.Range|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.Host",template_pb2.DESCRIPTOR)
         if count is not None:
             self.count = count
     
     @property
     def count(self) -> "Range|None":
-        return super()._get_field("count", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("count", explicit_presence=True,
         wrap=Range,
         )
     @count.setter
     def count(self, value: "Range|template_pb2.Range|None") -> None:
-        return super()._set_field("count",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("count",value,explicit_presence=True)
     
 class HostSpec(message_1.Message):
     _PB2_CLASS_ = template_pb2.HostSpec
-    _pb2_base_: template_pb2.HostSpec
     
     def __init__(
         self,
@@ -349,22 +339,21 @@ class HostSpec(message_1.Message):
         *,
         count: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.HostSpec",template_pb2.DESCRIPTOR)
         if count is not None:
             self.count = count
     
     @property
     def count(self) -> "builtins.int":
-        return super()._get_field("count", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("count", explicit_presence=False,
         )
     @count.setter
     def count(self, value: "builtins.int") -> None:
-        return super()._set_field("count",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("count",value,explicit_presence=False)
     
 # file: nebius/msp/v1alpha1/resource/preset.proto
 class Preset(message_1.Message):
     _PB2_CLASS_ = preset_pb2.Preset
-    _pb2_base_: preset_pb2.Preset
     
     def __init__(
         self,
@@ -372,22 +361,21 @@ class Preset(message_1.Message):
         *,
         spec: "PresetSpec|preset_pb2.PresetSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.Preset",preset_pb2.DESCRIPTOR)
         if spec is not None:
             self.spec = spec
     
     @property
     def spec(self) -> "PresetSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=PresetSpec,
         )
     @spec.setter
     def spec(self, value: "PresetSpec|preset_pb2.PresetSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class PresetSpec(message_1.Message):
     _PB2_CLASS_ = preset_pb2.PresetSpec
-    _pb2_base_: preset_pb2.PresetSpec
     
     def __init__(
         self,
@@ -398,7 +386,7 @@ class PresetSpec(message_1.Message):
         disk: "Disk|template_pb2.Disk|None" = None,
         role: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.PresetSpec",preset_pb2.DESCRIPTOR)
         if flavor is not None:
             self.flavor = flavor
         if hosts is not None:
@@ -410,42 +398,41 @@ class PresetSpec(message_1.Message):
     
     @property
     def flavor(self) -> "FlavorSpec|None":
-        return super()._get_field("flavor", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("flavor", explicit_presence=True,
         wrap=FlavorSpec,
         )
     @flavor.setter
     def flavor(self, value: "FlavorSpec|preset_pb2.FlavorSpec|None") -> None:
-        return super()._set_field("flavor",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("flavor",value,explicit_presence=True)
     
     @property
     def hosts(self) -> "Host|None":
-        return super()._get_field("hosts", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("hosts", explicit_presence=True,
         wrap=Host,
         )
     @hosts.setter
     def hosts(self, value: "Host|template_pb2.Host|None") -> None:
-        return super()._set_field("hosts",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("hosts",value,explicit_presence=True)
     
     @property
     def disk(self) -> "Disk|None":
-        return super()._get_field("disk", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("disk", explicit_presence=True,
         wrap=Disk,
         )
     @disk.setter
     def disk(self, value: "Disk|template_pb2.Disk|None") -> None:
-        return super()._set_field("disk",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("disk",value,explicit_presence=True)
     
     @property
     def role(self) -> "builtins.str":
-        return super()._get_field("role", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("role", explicit_presence=False,
         )
     @role.setter
     def role(self, value: "builtins.str") -> None:
-        return super()._set_field("role",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("role",value,explicit_presence=False)
     
 class FlavorSpec(message_1.Message):
     _PB2_CLASS_ = preset_pb2.FlavorSpec
-    _pb2_base_: preset_pb2.FlavorSpec
     
     def __init__(
         self,
@@ -454,7 +441,7 @@ class FlavorSpec(message_1.Message):
         cpu: "CpuSpec|preset_pb2.CpuSpec|None" = None,
         memory: "MemorySpec|preset_pb2.MemorySpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.FlavorSpec",preset_pb2.DESCRIPTOR)
         if cpu is not None:
             self.cpu = cpu
         if memory is not None:
@@ -462,25 +449,24 @@ class FlavorSpec(message_1.Message):
     
     @property
     def cpu(self) -> "CpuSpec|None":
-        return super()._get_field("cpu", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("cpu", explicit_presence=True,
         wrap=CpuSpec,
         )
     @cpu.setter
     def cpu(self, value: "CpuSpec|preset_pb2.CpuSpec|None") -> None:
-        return super()._set_field("cpu",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("cpu",value,explicit_presence=True)
     
     @property
     def memory(self) -> "MemorySpec|None":
-        return super()._get_field("memory", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("memory", explicit_presence=True,
         wrap=MemorySpec,
         )
     @memory.setter
     def memory(self, value: "MemorySpec|preset_pb2.MemorySpec|None") -> None:
-        return super()._set_field("memory",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("memory",value,explicit_presence=True)
     
 class CpuSpec(message_1.Message):
     _PB2_CLASS_ = preset_pb2.CpuSpec
-    _pb2_base_: preset_pb2.CpuSpec
     
     def __init__(
         self,
@@ -489,7 +475,7 @@ class CpuSpec(message_1.Message):
         count: "builtins.int|None" = None,
         generation: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.CpuSpec",preset_pb2.DESCRIPTOR)
         if count is not None:
             self.count = count
         if generation is not None:
@@ -497,23 +483,22 @@ class CpuSpec(message_1.Message):
     
     @property
     def count(self) -> "builtins.int":
-        return super()._get_field("count", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("count", explicit_presence=False,
         )
     @count.setter
     def count(self, value: "builtins.int") -> None:
-        return super()._set_field("count",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("count",value,explicit_presence=False)
     
     @property
     def generation(self) -> "builtins.int":
-        return super()._get_field("generation", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("generation", explicit_presence=False,
         )
     @generation.setter
     def generation(self, value: "builtins.int") -> None:
-        return super()._set_field("generation",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("generation",value,explicit_presence=False)
     
 class MemorySpec(message_1.Message):
     _PB2_CLASS_ = preset_pb2.MemorySpec
-    _pb2_base_: preset_pb2.MemorySpec
     
     def __init__(
         self,
@@ -521,22 +506,21 @@ class MemorySpec(message_1.Message):
         *,
         limit_gibibytes: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.MemorySpec",preset_pb2.DESCRIPTOR)
         if limit_gibibytes is not None:
             self.limit_gibibytes = limit_gibibytes
     
     @property
     def limit_gibibytes(self) -> "builtins.int":
-        return super()._get_field("limit_gibibytes", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("limit_gibibytes", explicit_presence=False,
         )
     @limit_gibibytes.setter
     def limit_gibibytes(self, value: "builtins.int") -> None:
-        return super()._set_field("limit_gibibytes",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("limit_gibibytes",value,explicit_presence=False)
     
 # file: nebius/msp/v1alpha1/resource/preset_service.proto
 class ListPresetsRequest(message_1.Message):
     _PB2_CLASS_ = preset_service_pb2.ListPresetsRequest
-    _pb2_base_: preset_service_pb2.ListPresetsRequest
     
     def __init__(
         self,
@@ -545,7 +529,7 @@ class ListPresetsRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.ListPresetsRequest",preset_service_pb2.DESCRIPTOR)
         if page_size is not None:
             self.page_size = page_size
         if page_token is not None:
@@ -553,58 +537,56 @@ class ListPresetsRequest(message_1.Message):
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListPresetsResponse(message_1.Message):
     _PB2_CLASS_ = preset_service_pb2.ListPresetsResponse
-    _pb2_base_: preset_service_pb2.ListPresetsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Preset]|None" = None,
+        items: "abc.Iterable[Preset]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.ListPresetsResponse",preset_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Preset]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Preset]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Preset,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Preset]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Preset]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/msp/v1alpha1/resource/template_service.proto
 class ListTemplatesRequest(message_1.Message):
     _PB2_CLASS_ = template_service_pb2.ListTemplatesRequest
-    _pb2_base_: template_service_pb2.ListTemplatesRequest
     
     def __init__(
         self,
@@ -613,7 +595,7 @@ class ListTemplatesRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.ListTemplatesRequest",template_service_pb2.DESCRIPTOR)
         if page_size is not None:
             self.page_size = page_size
         if page_token is not None:
@@ -621,51 +603,50 @@ class ListTemplatesRequest(message_1.Message):
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListTemplatesResponse(message_1.Message):
     _PB2_CLASS_ = template_service_pb2.ListTemplatesResponse
-    _pb2_base_: template_service_pb2.ListTemplatesResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Template]|None" = None,
+        items: "abc.Iterable[Template]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.resource.ListTemplatesResponse",template_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Template]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Template]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Template,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Template]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Template]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     

@@ -15,11 +15,9 @@ import google.protobuf.descriptor as descriptor_1
 # file: nebius/common/error/v1alpha1/common_errors.proto
 class BadRequest(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.BadRequest
-    _pb2_base_: common_errors_pb2.BadRequest
     
     class Violation(message_1.Message):
         _PB2_CLASS_ = common_errors_pb2.BadRequest.Violation
-        _pb2_base_: common_errors_pb2.BadRequest.Violation
         
         def __init__(
             self,
@@ -28,7 +26,7 @@ class BadRequest(message_1.Message):
             field: "builtins.str|None" = None,
             message: "builtins.str|None" = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.BadRequest.Violation",common_errors_pb2.DESCRIPTOR)
             if field is not None:
                 self.field = field
             if message is not None:
@@ -36,43 +34,42 @@ class BadRequest(message_1.Message):
         
         @property
         def field(self) -> "builtins.str":
-            return super()._get_field("field", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("field", explicit_presence=False,
             )
         @field.setter
         def field(self, value: "builtins.str") -> None:
-            return super()._set_field("field",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("field",value,explicit_presence=False)
         
         @property
         def message(self) -> "builtins.str":
-            return super()._get_field("message", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("message", explicit_presence=False,
             )
         @message.setter
         def message(self, value: "builtins.str") -> None:
-            return super()._set_field("message",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("message",value,explicit_presence=False)
         
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        violations: "abc.MutableSequence[BadRequest.Violation]|None" = None,
+        violations: "abc.Iterable[BadRequest.Violation]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.BadRequest",common_errors_pb2.DESCRIPTOR)
         if violations is not None:
             self.violations = violations
     
     @property
-    def violations(self) -> "abc.MutableSequence[BadRequest.Violation]|None":
-        return super()._get_field("violations", base=self._pb2_base_, explicit_presence=True,
+    def violations(self) -> "abc.MutableSequence[BadRequest.Violation]":
+        return super()._get_field("violations", explicit_presence=False,
         wrap=BadRequest.Violation,
         )
     @violations.setter
-    def violations(self, value: "abc.MutableSequence[BadRequest.Violation]|None") -> None:
-        return super()._set_field("violations",value, base=self._pb2_base_,explicit_presence=True)
+    def violations(self, value: "abc.Iterable[BadRequest.Violation]") -> None:
+        return super()._set_field("violations",value,explicit_presence=False)
     
 class BadResourceState(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.BadResourceState
-    _pb2_base_: common_errors_pb2.BadResourceState
     
     def __init__(
         self,
@@ -81,7 +78,7 @@ class BadResourceState(message_1.Message):
         resource_id: "builtins.str|None" = None,
         message: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.BadResourceState",common_errors_pb2.DESCRIPTOR)
         if resource_id is not None:
             self.resource_id = resource_id
         if message is not None:
@@ -89,23 +86,22 @@ class BadResourceState(message_1.Message):
     
     @property
     def resource_id(self) -> "builtins.str":
-        return super()._get_field("resource_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
     def resource_id(self, value: "builtins.str") -> None:
-        return super()._set_field("resource_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("resource_id",value,explicit_presence=False)
     
     @property
     def message(self) -> "builtins.str":
-        return super()._get_field("message", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
     def message(self, value: "builtins.str") -> None:
-        return super()._set_field("message",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("message",value,explicit_presence=False)
     
 class ResourceNotFound(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.ResourceNotFound
-    _pb2_base_: common_errors_pb2.ResourceNotFound
     
     def __init__(
         self,
@@ -113,21 +109,20 @@ class ResourceNotFound(message_1.Message):
         *,
         resource_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.ResourceNotFound",common_errors_pb2.DESCRIPTOR)
         if resource_id is not None:
             self.resource_id = resource_id
     
     @property
     def resource_id(self) -> "builtins.str":
-        return super()._get_field("resource_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
     def resource_id(self, value: "builtins.str") -> None:
-        return super()._set_field("resource_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("resource_id",value,explicit_presence=False)
     
 class ResourceAlreadyExists(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.ResourceAlreadyExists
-    _pb2_base_: common_errors_pb2.ResourceAlreadyExists
     
     def __init__(
         self,
@@ -135,21 +130,20 @@ class ResourceAlreadyExists(message_1.Message):
         *,
         resource_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.ResourceAlreadyExists",common_errors_pb2.DESCRIPTOR)
         if resource_id is not None:
             self.resource_id = resource_id
     
     @property
     def resource_id(self) -> "builtins.str":
-        return super()._get_field("resource_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
     def resource_id(self, value: "builtins.str") -> None:
-        return super()._set_field("resource_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("resource_id",value,explicit_presence=False)
     
 class ResourceConflict(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.ResourceConflict
-    _pb2_base_: common_errors_pb2.ResourceConflict
     
     def __init__(
         self,
@@ -158,7 +152,7 @@ class ResourceConflict(message_1.Message):
         resource_id: "builtins.str|None" = None,
         message: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.ResourceConflict",common_errors_pb2.DESCRIPTOR)
         if resource_id is not None:
             self.resource_id = resource_id
         if message is not None:
@@ -166,23 +160,22 @@ class ResourceConflict(message_1.Message):
     
     @property
     def resource_id(self) -> "builtins.str":
-        return super()._get_field("resource_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
     def resource_id(self, value: "builtins.str") -> None:
-        return super()._set_field("resource_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("resource_id",value,explicit_presence=False)
     
     @property
     def message(self) -> "builtins.str":
-        return super()._get_field("message", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
     def message(self, value: "builtins.str") -> None:
-        return super()._set_field("message",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("message",value,explicit_presence=False)
     
 class OperationAborted(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.OperationAborted
-    _pb2_base_: common_errors_pb2.OperationAborted
     
     def __init__(
         self,
@@ -192,7 +185,7 @@ class OperationAborted(message_1.Message):
         aborted_by_operation_id: "builtins.str|None" = None,
         resource_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.OperationAborted",common_errors_pb2.DESCRIPTOR)
         if operation_id is not None:
             self.operation_id = operation_id
         if aborted_by_operation_id is not None:
@@ -202,31 +195,30 @@ class OperationAborted(message_1.Message):
     
     @property
     def operation_id(self) -> "builtins.str":
-        return super()._get_field("operation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("operation_id", explicit_presence=False,
         )
     @operation_id.setter
     def operation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("operation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("operation_id",value,explicit_presence=False)
     
     @property
     def aborted_by_operation_id(self) -> "builtins.str":
-        return super()._get_field("aborted_by_operation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("aborted_by_operation_id", explicit_presence=False,
         )
     @aborted_by_operation_id.setter
     def aborted_by_operation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("aborted_by_operation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("aborted_by_operation_id",value,explicit_presence=False)
     
     @property
     def resource_id(self) -> "builtins.str":
-        return super()._get_field("resource_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
     def resource_id(self, value: "builtins.str") -> None:
-        return super()._set_field("resource_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("resource_id",value,explicit_presence=False)
     
 class OutOfRange(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.OutOfRange
-    _pb2_base_: common_errors_pb2.OutOfRange
     
     def __init__(
         self,
@@ -235,7 +227,7 @@ class OutOfRange(message_1.Message):
         requested: "builtins.str|None" = None,
         limit: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.OutOfRange",common_errors_pb2.DESCRIPTOR)
         if requested is not None:
             self.requested = requested
         if limit is not None:
@@ -243,23 +235,22 @@ class OutOfRange(message_1.Message):
     
     @property
     def requested(self) -> "builtins.str":
-        return super()._get_field("requested", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("requested", explicit_presence=False,
         )
     @requested.setter
     def requested(self, value: "builtins.str") -> None:
-        return super()._set_field("requested",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("requested",value,explicit_presence=False)
     
     @property
     def limit(self) -> "builtins.str":
-        return super()._get_field("limit", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("limit", explicit_presence=False,
         )
     @limit.setter
     def limit(self, value: "builtins.str") -> None:
-        return super()._set_field("limit",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("limit",value,explicit_presence=False)
     
 class PermissionDenied(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.PermissionDenied
-    _pb2_base_: common_errors_pb2.PermissionDenied
     
     def __init__(
         self,
@@ -267,21 +258,20 @@ class PermissionDenied(message_1.Message):
         *,
         resource_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.PermissionDenied",common_errors_pb2.DESCRIPTOR)
         if resource_id is not None:
             self.resource_id = resource_id
     
     @property
     def resource_id(self) -> "builtins.str":
-        return super()._get_field("resource_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
     def resource_id(self, value: "builtins.str") -> None:
-        return super()._set_field("resource_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("resource_id",value,explicit_presence=False)
     
 class InternalError(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.InternalError
-    _pb2_base_: common_errors_pb2.InternalError
     
     def __init__(
         self,
@@ -290,7 +280,7 @@ class InternalError(message_1.Message):
         request_id: "builtins.str|None" = None,
         trace_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.InternalError",common_errors_pb2.DESCRIPTOR)
         if request_id is not None:
             self.request_id = request_id
         if trace_id is not None:
@@ -298,23 +288,22 @@ class InternalError(message_1.Message):
     
     @property
     def request_id(self) -> "builtins.str":
-        return super()._get_field("request_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("request_id", explicit_presence=False,
         )
     @request_id.setter
     def request_id(self, value: "builtins.str") -> None:
-        return super()._set_field("request_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("request_id",value,explicit_presence=False)
     
     @property
     def trace_id(self) -> "builtins.str":
-        return super()._get_field("trace_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("trace_id", explicit_presence=False,
         )
     @trace_id.setter
     def trace_id(self, value: "builtins.str") -> None:
-        return super()._set_field("trace_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("trace_id",value,explicit_presence=False)
     
 class TooManyRequests(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.TooManyRequests
-    _pb2_base_: common_errors_pb2.TooManyRequests
     
     def __init__(
         self,
@@ -322,25 +311,23 @@ class TooManyRequests(message_1.Message):
         *,
         violation: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.TooManyRequests",common_errors_pb2.DESCRIPTOR)
         if violation is not None:
             self.violation = violation
     
     @property
     def violation(self) -> "builtins.str":
-        return super()._get_field("violation", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("violation", explicit_presence=False,
         )
     @violation.setter
     def violation(self, value: "builtins.str") -> None:
-        return super()._set_field("violation",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("violation",value,explicit_presence=False)
     
 class QuotaFailure(message_1.Message):
     _PB2_CLASS_ = common_errors_pb2.QuotaFailure
-    _pb2_base_: common_errors_pb2.QuotaFailure
     
     class Violation(message_1.Message):
         _PB2_CLASS_ = common_errors_pb2.QuotaFailure.Violation
-        _pb2_base_: common_errors_pb2.QuotaFailure.Violation
         
         def __init__(
             self,
@@ -351,7 +338,7 @@ class QuotaFailure(message_1.Message):
             limit: "builtins.str|None" = None,
             requested: "builtins.str|None" = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.QuotaFailure.Violation",common_errors_pb2.DESCRIPTOR)
             if quota is not None:
                 self.quota = quota
             if message is not None:
@@ -363,63 +350,62 @@ class QuotaFailure(message_1.Message):
         
         @property
         def quota(self) -> "builtins.str":
-            return super()._get_field("quota", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("quota", explicit_presence=False,
             )
         @quota.setter
         def quota(self, value: "builtins.str") -> None:
-            return super()._set_field("quota",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("quota",value,explicit_presence=False)
         
         @property
         def message(self) -> "builtins.str":
-            return super()._get_field("message", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("message", explicit_presence=False,
             )
         @message.setter
         def message(self, value: "builtins.str") -> None:
-            return super()._set_field("message",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("message",value,explicit_presence=False)
         
         @property
         def limit(self) -> "builtins.str":
-            return super()._get_field("limit", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("limit", explicit_presence=False,
             )
         @limit.setter
         def limit(self, value: "builtins.str") -> None:
-            return super()._set_field("limit",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("limit",value,explicit_presence=False)
         
         @property
         def requested(self) -> "builtins.str":
-            return super()._get_field("requested", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("requested", explicit_presence=False,
             )
         @requested.setter
         def requested(self, value: "builtins.str") -> None:
-            return super()._set_field("requested",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("requested",value,explicit_presence=False)
         
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        violations: "abc.MutableSequence[QuotaFailure.Violation]|None" = None,
+        violations: "abc.Iterable[QuotaFailure.Violation]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.QuotaFailure",common_errors_pb2.DESCRIPTOR)
         if violations is not None:
             self.violations = violations
     
     @property
-    def violations(self) -> "abc.MutableSequence[QuotaFailure.Violation]|None":
-        return super()._get_field("violations", base=self._pb2_base_, explicit_presence=True,
+    def violations(self) -> "abc.MutableSequence[QuotaFailure.Violation]":
+        return super()._get_field("violations", explicit_presence=False,
         wrap=QuotaFailure.Violation,
         )
     @violations.setter
-    def violations(self, value: "abc.MutableSequence[QuotaFailure.Violation]|None") -> None:
-        return super()._set_field("violations",value, base=self._pb2_base_,explicit_presence=True)
+    def violations(self, value: "abc.Iterable[QuotaFailure.Violation]") -> None:
+        return super()._set_field("violations",value,explicit_presence=False)
     
 # file: nebius/common/error/v1alpha1/error.proto
 class ServiceError(message_1.Message):
     _PB2_CLASS_ = error_pb2.ServiceError
-    _pb2_base_: error_pb2.ServiceError
     
     class RetryType(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.common.error.v1alpha1.ServiceError.RetryType",error_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.common.error.v1alpha1.ServiceError.RetryType",error_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         CALL = 1
         UNIT_OF_WORK = 2
@@ -444,7 +430,7 @@ class ServiceError(message_1.Message):
         internal_error: "InternalError|common_errors_pb2.InternalError|None" = None,
         retry_type: "ServiceError.RetryType|error_pb2.ServiceError.RetryType|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.common.error.v1alpha1.ServiceError",error_pb2.DESCRIPTOR)
         if service is not None:
             self.service = service
         if code is not None:
@@ -476,125 +462,125 @@ class ServiceError(message_1.Message):
     
     @property
     def service(self) -> "builtins.str":
-        return super()._get_field("service", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("service", explicit_presence=False,
         )
     @service.setter
     def service(self, value: "builtins.str") -> None:
-        return super()._set_field("service",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("service",value,explicit_presence=False)
     
     @property
     def code(self) -> "builtins.str":
-        return super()._get_field("code", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("code", explicit_presence=False,
         )
     @code.setter
     def code(self, value: "builtins.str") -> None:
-        return super()._set_field("code",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("code",value,explicit_presence=False)
     
     @property
     def bad_request(self) -> "BadRequest|None":
-        return super()._get_field("bad_request", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("bad_request", explicit_presence=True,
         wrap=BadRequest,
         )
     @bad_request.setter
     def bad_request(self, value: "BadRequest|common_errors_pb2.BadRequest|None") -> None:
-        return super()._set_field("bad_request",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("bad_request",value,explicit_presence=True)
     
     @property
     def bad_resource_state(self) -> "BadResourceState|None":
-        return super()._get_field("bad_resource_state", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("bad_resource_state", explicit_presence=True,
         wrap=BadResourceState,
         )
     @bad_resource_state.setter
     def bad_resource_state(self, value: "BadResourceState|common_errors_pb2.BadResourceState|None") -> None:
-        return super()._set_field("bad_resource_state",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("bad_resource_state",value,explicit_presence=True)
     
     @property
     def resource_not_found(self) -> "ResourceNotFound|None":
-        return super()._get_field("resource_not_found", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("resource_not_found", explicit_presence=True,
         wrap=ResourceNotFound,
         )
     @resource_not_found.setter
     def resource_not_found(self, value: "ResourceNotFound|common_errors_pb2.ResourceNotFound|None") -> None:
-        return super()._set_field("resource_not_found",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("resource_not_found",value,explicit_presence=True)
     
     @property
     def resource_already_exists(self) -> "ResourceAlreadyExists|None":
-        return super()._get_field("resource_already_exists", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("resource_already_exists", explicit_presence=True,
         wrap=ResourceAlreadyExists,
         )
     @resource_already_exists.setter
     def resource_already_exists(self, value: "ResourceAlreadyExists|common_errors_pb2.ResourceAlreadyExists|None") -> None:
-        return super()._set_field("resource_already_exists",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("resource_already_exists",value,explicit_presence=True)
     
     @property
     def out_of_range(self) -> "OutOfRange|None":
-        return super()._get_field("out_of_range", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("out_of_range", explicit_presence=True,
         wrap=OutOfRange,
         )
     @out_of_range.setter
     def out_of_range(self, value: "OutOfRange|common_errors_pb2.OutOfRange|None") -> None:
-        return super()._set_field("out_of_range",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("out_of_range",value,explicit_presence=True)
     
     @property
     def permission_denied(self) -> "PermissionDenied|None":
-        return super()._get_field("permission_denied", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("permission_denied", explicit_presence=True,
         wrap=PermissionDenied,
         )
     @permission_denied.setter
     def permission_denied(self, value: "PermissionDenied|common_errors_pb2.PermissionDenied|None") -> None:
-        return super()._set_field("permission_denied",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("permission_denied",value,explicit_presence=True)
     
     @property
     def resource_conflict(self) -> "ResourceConflict|None":
-        return super()._get_field("resource_conflict", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("resource_conflict", explicit_presence=True,
         wrap=ResourceConflict,
         )
     @resource_conflict.setter
     def resource_conflict(self, value: "ResourceConflict|common_errors_pb2.ResourceConflict|None") -> None:
-        return super()._set_field("resource_conflict",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("resource_conflict",value,explicit_presence=True)
     
     @property
     def operation_aborted(self) -> "OperationAborted|None":
-        return super()._get_field("operation_aborted", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("operation_aborted", explicit_presence=True,
         wrap=OperationAborted,
         )
     @operation_aborted.setter
     def operation_aborted(self, value: "OperationAborted|common_errors_pb2.OperationAborted|None") -> None:
-        return super()._set_field("operation_aborted",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("operation_aborted",value,explicit_presence=True)
     
     @property
     def too_many_requests(self) -> "TooManyRequests|None":
-        return super()._get_field("too_many_requests", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("too_many_requests", explicit_presence=True,
         wrap=TooManyRequests,
         )
     @too_many_requests.setter
     def too_many_requests(self, value: "TooManyRequests|common_errors_pb2.TooManyRequests|None") -> None:
-        return super()._set_field("too_many_requests",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("too_many_requests",value,explicit_presence=True)
     
     @property
     def quota_failure(self) -> "QuotaFailure|None":
-        return super()._get_field("quota_failure", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("quota_failure", explicit_presence=True,
         wrap=QuotaFailure,
         )
     @quota_failure.setter
     def quota_failure(self, value: "QuotaFailure|common_errors_pb2.QuotaFailure|None") -> None:
-        return super()._set_field("quota_failure",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("quota_failure",value,explicit_presence=True)
     
     @property
     def internal_error(self) -> "InternalError|None":
-        return super()._get_field("internal_error", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("internal_error", explicit_presence=True,
         wrap=InternalError,
         )
     @internal_error.setter
     def internal_error(self, value: "InternalError|common_errors_pb2.InternalError|None") -> None:
-        return super()._set_field("internal_error",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("internal_error",value,explicit_presence=True)
     
     @property
     def retry_type(self) -> "ServiceError.RetryType":
-        return super()._get_field("retry_type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("retry_type", explicit_presence=False,
         wrap=ServiceError.RetryType,
         )
     @retry_type.setter
     def retry_type(self, value: "ServiceError.RetryType|error_pb2.ServiceError.RetryType") -> None:
-        return super()._set_field("retry_type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("retry_type",value,explicit_presence=False)
     

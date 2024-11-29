@@ -20,16 +20,15 @@ import nebius.api.nebius.registry.v1.registry_service_pb2 as registry_service_pb
 # file: nebius/registry/v1/artifact.proto
 class Artifact(message_1.Message):
     _PB2_CLASS_ = artifact_pb2.Artifact
-    _pb2_base_: artifact_pb2.Artifact
     
     class Status(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.Artifact.Status",artifact_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.Artifact.Status",artifact_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATUS_UNSPECIFIED = 0
         ACTIVE = 1
         DELETING = 2
     
     class Type(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.Artifact.Type",artifact_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.Artifact.Type",artifact_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         BLOB = 0
         MANIFEST = 1
         DEB_PACKAGE = 2
@@ -52,7 +51,7 @@ class Artifact(message_1.Message):
         created_at: "timestamp_pb2.Timestamp|None" = None,
         updated_at: "timestamp_pb2.Timestamp|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.Artifact",artifact_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
         if name is not None:
@@ -74,82 +73,81 @@ class Artifact(message_1.Message):
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
     @property
     def media_type(self) -> "builtins.str":
-        return super()._get_field("media_type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("media_type", explicit_presence=False,
         )
     @media_type.setter
     def media_type(self, value: "builtins.str") -> None:
-        return super()._set_field("media_type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("media_type",value,explicit_presence=False)
     
     @property
     def digest(self) -> "builtins.str":
-        return super()._get_field("digest", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("digest", explicit_presence=False,
         )
     @digest.setter
     def digest(self, value: "builtins.str") -> None:
-        return super()._set_field("digest",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("digest",value,explicit_presence=False)
     
     @property
     def size(self) -> "builtins.int":
-        return super()._get_field("size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("size", explicit_presence=False,
         )
     @size.setter
     def size(self, value: "builtins.int") -> None:
-        return super()._set_field("size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("size",value,explicit_presence=False)
     
     @property
     def status(self) -> "Artifact.Status":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("status", explicit_presence=False,
         wrap=Artifact.Status,
         )
     @status.setter
     def status(self, value: "Artifact.Status|artifact_pb2.Artifact.Status") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("status",value,explicit_presence=False)
     
     @property
     def type(self) -> "Artifact.Type":
-        return super()._get_field("type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("type", explicit_presence=False,
         wrap=Artifact.Type,
         )
     @type.setter
     def type(self, value: "Artifact.Type|artifact_pb2.Artifact.Type") -> None:
-        return super()._set_field("type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("type",value,explicit_presence=False)
     
     @property
     def created_at(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("created_at", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("created_at", explicit_presence=True,
         )
     @created_at.setter
     def created_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("created_at",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("created_at",value,explicit_presence=True)
     
     @property
     def updated_at(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("updated_at", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("updated_at", explicit_presence=True,
         )
     @updated_at.setter
     def updated_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("updated_at",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("updated_at",value,explicit_presence=True)
     
 # file: nebius/registry/v1/artifact_service.proto
 class GetArtifactRequest(message_1.Message):
     _PB2_CLASS_ = artifact_service_pb2.GetArtifactRequest
-    _pb2_base_: artifact_service_pb2.GetArtifactRequest
     
     def __init__(
         self,
@@ -157,21 +155,20 @@ class GetArtifactRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.GetArtifactRequest",artifact_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListArtifactsRequest(message_1.Message):
     _PB2_CLASS_ = artifact_service_pb2.ListArtifactsRequest
-    _pb2_base_: artifact_service_pb2.ListArtifactsRequest
     
     def __init__(
         self,
@@ -182,7 +179,7 @@ class ListArtifactsRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.ListArtifactsRequest",artifact_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -194,73 +191,71 @@ class ListArtifactsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListArtifactsResponse(message_1.Message):
     _PB2_CLASS_ = artifact_service_pb2.ListArtifactsResponse
-    _pb2_base_: artifact_service_pb2.ListArtifactsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Artifact]|None" = None,
+        items: "abc.Iterable[Artifact]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.ListArtifactsResponse",artifact_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Artifact]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Artifact]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Artifact,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Artifact]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Artifact]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class DeleteArtifactRequest(message_1.Message):
     _PB2_CLASS_ = artifact_service_pb2.DeleteArtifactRequest
-    _pb2_base_: artifact_service_pb2.DeleteArtifactRequest
     
     def __init__(
         self,
@@ -268,22 +263,21 @@ class DeleteArtifactRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.DeleteArtifactRequest",artifact_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 # file: nebius/registry/v1/registry.proto
 class Registry(message_1.Message):
     _PB2_CLASS_ = registry_pb2.Registry
-    _pb2_base_: registry_pb2.Registry
     
     def __init__(
         self,
@@ -293,7 +287,7 @@ class Registry(message_1.Message):
         spec: "RegistrySpec|registry_pb2.RegistrySpec|None" = None,
         status: "RegistryStatus|registry_pb2.RegistryStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.Registry",registry_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -303,34 +297,33 @@ class Registry(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "RegistrySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=RegistrySpec,
         )
     @spec.setter
     def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "RegistryStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=RegistryStatus,
         )
     @status.setter
     def status(self, value: "RegistryStatus|registry_pb2.RegistryStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class RegistrySpec(message_1.Message):
     _PB2_CLASS_ = registry_pb2.RegistrySpec
-    _pb2_base_: registry_pb2.RegistrySpec
     
     def __init__(
         self,
@@ -339,7 +332,7 @@ class RegistrySpec(message_1.Message):
         description: "builtins.str|None" = None,
         images_count: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.RegistrySpec",registry_pb2.DESCRIPTOR)
         if description is not None:
             self.description = description
         if images_count is not None:
@@ -347,26 +340,25 @@ class RegistrySpec(message_1.Message):
     
     @property
     def description(self) -> "builtins.str":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
     def description(self, value: "builtins.str") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("description",value,explicit_presence=False)
     
     @property
     def images_count(self) -> "builtins.int":
-        return super()._get_field("images_count", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("images_count", explicit_presence=False,
         )
     @images_count.setter
     def images_count(self, value: "builtins.int") -> None:
-        return super()._set_field("images_count",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("images_count",value,explicit_presence=False)
     
 class RegistryStatus(message_1.Message):
     _PB2_CLASS_ = registry_pb2.RegistryStatus
-    _pb2_base_: registry_pb2.RegistryStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.RegistryStatus.State",registry_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.RegistryStatus.State",registry_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         CREATING = 0
         ACTIVE = 1
         DELETING = 2
@@ -378,23 +370,22 @@ class RegistryStatus(message_1.Message):
         *,
         state: "RegistryStatus.State|registry_pb2.RegistryStatus.State|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.RegistryStatus",registry_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
     
     @property
     def state(self) -> "RegistryStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=RegistryStatus.State,
         )
     @state.setter
     def state(self, value: "RegistryStatus.State|registry_pb2.RegistryStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
 # file: nebius/registry/v1/registry_service.proto
 class GetRegistryRequest(message_1.Message):
     _PB2_CLASS_ = registry_service_pb2.GetRegistryRequest
-    _pb2_base_: registry_service_pb2.GetRegistryRequest
     
     def __init__(
         self,
@@ -402,21 +393,20 @@ class GetRegistryRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.GetRegistryRequest",registry_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListRegistriesRequest(message_1.Message):
     _PB2_CLASS_ = registry_service_pb2.ListRegistriesRequest
-    _pb2_base_: registry_service_pb2.ListRegistriesRequest
     
     def __init__(
         self,
@@ -427,7 +417,7 @@ class ListRegistriesRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.ListRegistriesRequest",registry_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -439,73 +429,71 @@ class ListRegistriesRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListRegistriesResponse(message_1.Message):
     _PB2_CLASS_ = registry_service_pb2.ListRegistriesResponse
-    _pb2_base_: registry_service_pb2.ListRegistriesResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Registry]|None" = None,
+        items: "abc.Iterable[Registry]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.ListRegistriesResponse",registry_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Registry]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Registry]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Registry,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Registry]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Registry]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class CreateRegistryRequest(message_1.Message):
     _PB2_CLASS_ = registry_service_pb2.CreateRegistryRequest
-    _pb2_base_: registry_service_pb2.CreateRegistryRequest
     
     def __init__(
         self,
@@ -514,7 +502,7 @@ class CreateRegistryRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "RegistrySpec|registry_pb2.RegistrySpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.CreateRegistryRequest",registry_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -522,25 +510,24 @@ class CreateRegistryRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "RegistrySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=RegistrySpec,
         )
     @spec.setter
     def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class UpdateRegistryRequest(message_1.Message):
     _PB2_CLASS_ = registry_service_pb2.UpdateRegistryRequest
-    _pb2_base_: registry_service_pb2.UpdateRegistryRequest
     
     def __init__(
         self,
@@ -549,7 +536,7 @@ class UpdateRegistryRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "RegistrySpec|registry_pb2.RegistrySpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.UpdateRegistryRequest",registry_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -557,25 +544,24 @@ class UpdateRegistryRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "RegistrySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=RegistrySpec,
         )
     @spec.setter
     def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class DeleteRegistryRequest(message_1.Message):
     _PB2_CLASS_ = registry_service_pb2.DeleteRegistryRequest
-    _pb2_base_: registry_service_pb2.DeleteRegistryRequest
     
     def __init__(
         self,
@@ -583,15 +569,15 @@ class DeleteRegistryRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.registry.v1.DeleteRegistryRequest",registry_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     

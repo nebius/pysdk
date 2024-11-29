@@ -4,6 +4,17 @@ import pytest
 
 
 @pytest.mark.asyncio  # type: ignore
+async def test_simple() -> None:
+    from nebius.api.nebius.example.compute.v1alpha1 import Instance, InstanceSpec
+
+    instance = Instance()
+    instance.spec = InstanceSpec(instance_name="abc")
+    desc = instance.get_descriptor()
+    print(instance.spec)
+    print(desc)
+
+
+@pytest.mark.asyncio  # type: ignore
 async def test_get_instance() -> None:
     import grpc
     import grpc.aio

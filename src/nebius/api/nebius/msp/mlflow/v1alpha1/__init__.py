@@ -16,7 +16,6 @@ import collections.abc as abc
 # file: nebius/msp/mlflow/v1alpha1/cluster.proto
 class Cluster(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.Cluster
-    _pb2_base_: cluster_pb2.Cluster
     
     def __init__(
         self,
@@ -26,7 +25,7 @@ class Cluster(message_1.Message):
         spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
         status: "MlflowClusterStatus|cluster_pb2.MlflowClusterStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.Cluster",cluster_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -36,34 +35,33 @@ class Cluster(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ClusterSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ClusterSpec,
         )
     @spec.setter
     def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "MlflowClusterStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=MlflowClusterStatus,
         )
     @status.setter
     def status(self, value: "MlflowClusterStatus|cluster_pb2.MlflowClusterStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class ClusterSpec(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.ClusterSpec
-    _pb2_base_: cluster_pb2.ClusterSpec
     
     def __init__(
         self,
@@ -77,7 +75,7 @@ class ClusterSpec(message_1.Message):
         storage_bucket_name: "builtins.str|None" = None,
         network_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR)
         if description is not None:
             self.description = description
         if public_access is not None:
@@ -95,63 +93,62 @@ class ClusterSpec(message_1.Message):
     
     @property
     def description(self) -> "builtins.str":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
     def description(self, value: "builtins.str") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("description",value,explicit_presence=False)
     
     @property
     def public_access(self) -> "builtins.bool":
-        return super()._get_field("public_access", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("public_access", explicit_presence=False,
         )
     @public_access.setter
     def public_access(self, value: "builtins.bool") -> None:
-        return super()._set_field("public_access",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("public_access",value,explicit_presence=False)
     
     @property
     def admin_username(self) -> "builtins.str":
-        return super()._get_field("admin_username", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("admin_username", explicit_presence=False,
         )
     @admin_username.setter
     def admin_username(self, value: "builtins.str") -> None:
-        return super()._set_field("admin_username",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("admin_username",value,explicit_presence=False)
     
     @property
     def admin_password(self) -> "builtins.str":
-        return super()._get_field("admin_password", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("admin_password", explicit_presence=False,
         )
     @admin_password.setter
     def admin_password(self, value: "builtins.str") -> None:
-        return super()._set_field("admin_password",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("admin_password",value,explicit_presence=False)
     
     @property
     def service_account_id(self) -> "builtins.str":
-        return super()._get_field("service_account_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("service_account_id", explicit_presence=False,
         )
     @service_account_id.setter
     def service_account_id(self, value: "builtins.str") -> None:
-        return super()._set_field("service_account_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("service_account_id",value,explicit_presence=False)
     
     @property
     def storage_bucket_name(self) -> "builtins.str":
-        return super()._get_field("storage_bucket_name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("storage_bucket_name", explicit_presence=False,
         )
     @storage_bucket_name.setter
     def storage_bucket_name(self, value: "builtins.str") -> None:
-        return super()._set_field("storage_bucket_name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("storage_bucket_name",value,explicit_presence=False)
     
     @property
     def network_id(self) -> "builtins.str":
-        return super()._get_field("network_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
     def network_id(self, value: "builtins.str") -> None:
-        return super()._set_field("network_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("network_id",value,explicit_presence=False)
     
 class MlflowClusterStatus(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.MlflowClusterStatus
-    _pb2_base_: cluster_pb2.MlflowClusterStatus
     
     def __init__(
         self,
@@ -164,7 +161,7 @@ class MlflowClusterStatus(message_1.Message):
         experiments_count: "builtins.int|None" = None,
         mlflow_version: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.MlflowClusterStatus",cluster_pb2.DESCRIPTOR)
         if phase is not None:
             self.phase = phase
         if state is not None:
@@ -180,58 +177,57 @@ class MlflowClusterStatus(message_1.Message):
     
     @property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
-        return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
     def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
-        return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("phase",value,explicit_presence=False)
     
     @property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
     def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def tracking_endpoint(self) -> "builtins.str":
-        return super()._get_field("tracking_endpoint", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("tracking_endpoint", explicit_presence=False,
         )
     @tracking_endpoint.setter
     def tracking_endpoint(self, value: "builtins.str") -> None:
-        return super()._set_field("tracking_endpoint",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("tracking_endpoint",value,explicit_presence=False)
     
     @property
     def effective_storage_bucket_name(self) -> "builtins.str":
-        return super()._get_field("effective_storage_bucket_name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("effective_storage_bucket_name", explicit_presence=False,
         )
     @effective_storage_bucket_name.setter
     def effective_storage_bucket_name(self, value: "builtins.str") -> None:
-        return super()._set_field("effective_storage_bucket_name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("effective_storage_bucket_name",value,explicit_presence=False)
     
     @property
     def experiments_count(self) -> "builtins.int":
-        return super()._get_field("experiments_count", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("experiments_count", explicit_presence=False,
         )
     @experiments_count.setter
     def experiments_count(self, value: "builtins.int") -> None:
-        return super()._set_field("experiments_count",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("experiments_count",value,explicit_presence=False)
     
     @property
     def mlflow_version(self) -> "builtins.str":
-        return super()._get_field("mlflow_version", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("mlflow_version", explicit_presence=False,
         )
     @mlflow_version.setter
     def mlflow_version(self, value: "builtins.str") -> None:
-        return super()._set_field("mlflow_version",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("mlflow_version",value,explicit_presence=False)
     
 # file: nebius/msp/mlflow/v1alpha1/cluster_service.proto
 class GetClusterRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.GetClusterRequest
-    _pb2_base_: cluster_service_pb2.GetClusterRequest
     
     def __init__(
         self,
@@ -239,21 +235,20 @@ class GetClusterRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.GetClusterRequest",cluster_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetClusterByNameRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.GetClusterByNameRequest
-    _pb2_base_: cluster_service_pb2.GetClusterByNameRequest
     
     def __init__(
         self,
@@ -262,7 +257,7 @@ class GetClusterByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.GetClusterByNameRequest",cluster_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -270,23 +265,22 @@ class GetClusterByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListClustersRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.ListClustersRequest
-    _pb2_base_: cluster_service_pb2.ListClustersRequest
     
     def __init__(
         self,
@@ -296,7 +290,7 @@ class ListClustersRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.ListClustersRequest",cluster_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -306,65 +300,63 @@ class ListClustersRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListClustersResponse(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.ListClustersResponse
-    _pb2_base_: cluster_service_pb2.ListClustersResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Cluster]|None" = None,
+        items: "abc.Iterable[Cluster]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Cluster]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Cluster]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Cluster,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Cluster]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Cluster]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class CreateClusterRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.CreateClusterRequest
-    _pb2_base_: cluster_service_pb2.CreateClusterRequest
     
     def __init__(
         self,
@@ -373,7 +365,7 @@ class CreateClusterRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -381,25 +373,24 @@ class CreateClusterRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ClusterSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ClusterSpec,
         )
     @spec.setter
     def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class DeleteClusterRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.DeleteClusterRequest
-    _pb2_base_: cluster_service_pb2.DeleteClusterRequest
     
     def __init__(
         self,
@@ -407,15 +398,15 @@ class DeleteClusterRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.mlflow.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     

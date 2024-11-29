@@ -22,26 +22,25 @@ import nebius.api.nebius.vpc.v1.subnet_service_pb2 as subnet_service_pb2
 
 # file: nebius/vpc/v1/pool.proto
 class AddressBlockState(pb_enum.Enum):
-    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.AddressBlockState",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.AddressBlockState",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     STATE_UNSPECIFIED = 0
     AVAILABLE = 1
     DISABLED = 2
 
 class IpVersion(pb_enum.Enum):
-    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.IpVersion",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.IpVersion",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     IP_VERSION_UNSPECIFIED = 0
     IPV4 = 1
     IPV6 = 2
 
 class IpVisibility(pb_enum.Enum):
-    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.IpVisibility",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.IpVisibility",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     IP_VISIBILITY_UNSPECIFIED = 0
     PRIVATE = 1
     PUBLIC = 2
 
 class Pool(message_1.Message):
     _PB2_CLASS_ = pool_pb2.Pool
-    _pb2_base_: pool_pb2.Pool
     
     def __init__(
         self,
@@ -51,7 +50,7 @@ class Pool(message_1.Message):
         spec: "PoolSpec|pool_pb2.PoolSpec|None" = None,
         status: "PoolStatus|pool_pb2.PoolStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.Pool",pool_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -61,34 +60,33 @@ class Pool(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "PoolSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=PoolSpec,
         )
     @spec.setter
     def spec(self, value: "PoolSpec|pool_pb2.PoolSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "PoolStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=PoolStatus,
         )
     @status.setter
     def status(self, value: "PoolStatus|pool_pb2.PoolStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class PoolSpec(message_1.Message):
     _PB2_CLASS_ = pool_pb2.PoolSpec
-    _pb2_base_: pool_pb2.PoolSpec
     
     def __init__(
         self,
@@ -97,9 +95,9 @@ class PoolSpec(message_1.Message):
         source_pool_id: "builtins.str|None" = None,
         version: "IpVersion|pool_pb2.IpVersion|None" = None,
         visibility: "IpVisibility|pool_pb2.IpVisibility|None" = None,
-        cidrs: "abc.MutableSequence[PoolCidr]|None" = None,
+        cidrs: "abc.Iterable[PoolCidr]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.PoolSpec",pool_pb2.DESCRIPTOR)
         if source_pool_id is not None:
             self.source_pool_id = source_pool_id
         if version is not None:
@@ -111,42 +109,41 @@ class PoolSpec(message_1.Message):
     
     @property
     def source_pool_id(self) -> "builtins.str":
-        return super()._get_field("source_pool_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("source_pool_id", explicit_presence=False,
         )
     @source_pool_id.setter
     def source_pool_id(self, value: "builtins.str") -> None:
-        return super()._set_field("source_pool_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("source_pool_id",value,explicit_presence=False)
     
     @property
     def version(self) -> "IpVersion":
-        return super()._get_field("version", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("version", explicit_presence=False,
         wrap=IpVersion,
         )
     @version.setter
     def version(self, value: "IpVersion|pool_pb2.IpVersion") -> None:
-        return super()._set_field("version",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("version",value,explicit_presence=False)
     
     @property
     def visibility(self) -> "IpVisibility":
-        return super()._get_field("visibility", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("visibility", explicit_presence=False,
         wrap=IpVisibility,
         )
     @visibility.setter
     def visibility(self, value: "IpVisibility|pool_pb2.IpVisibility") -> None:
-        return super()._set_field("visibility",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("visibility",value,explicit_presence=False)
     
     @property
-    def cidrs(self) -> "abc.MutableSequence[PoolCidr]|None":
-        return super()._get_field("cidrs", base=self._pb2_base_, explicit_presence=True,
+    def cidrs(self) -> "abc.MutableSequence[PoolCidr]":
+        return super()._get_field("cidrs", explicit_presence=False,
         wrap=PoolCidr,
         )
     @cidrs.setter
-    def cidrs(self, value: "abc.MutableSequence[PoolCidr]|None") -> None:
-        return super()._set_field("cidrs",value, base=self._pb2_base_,explicit_presence=True)
+    def cidrs(self, value: "abc.Iterable[PoolCidr]") -> None:
+        return super()._set_field("cidrs",value,explicit_presence=False)
     
 class PoolCidr(message_1.Message):
     _PB2_CLASS_ = pool_pb2.PoolCidr
-    _pb2_base_: pool_pb2.PoolCidr
     
     def __init__(
         self,
@@ -156,7 +153,7 @@ class PoolCidr(message_1.Message):
         state: "AddressBlockState|pool_pb2.AddressBlockState|None" = None,
         max_mask_length: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.PoolCidr",pool_pb2.DESCRIPTOR)
         if cidr is not None:
             self.cidr = cidr
         if state is not None:
@@ -166,35 +163,34 @@ class PoolCidr(message_1.Message):
     
     @property
     def cidr(self) -> "builtins.str":
-        return super()._get_field("cidr", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
     def cidr(self, value: "builtins.str") -> None:
-        return super()._set_field("cidr",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("cidr",value,explicit_presence=False)
     
     @property
     def state(self) -> "AddressBlockState":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=AddressBlockState,
         )
     @state.setter
     def state(self, value: "AddressBlockState|pool_pb2.AddressBlockState") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def max_mask_length(self) -> "builtins.int":
-        return super()._get_field("max_mask_length", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("max_mask_length", explicit_presence=False,
         )
     @max_mask_length.setter
     def max_mask_length(self, value: "builtins.int") -> None:
-        return super()._set_field("max_mask_length",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("max_mask_length",value,explicit_presence=False)
     
 class PoolStatus(message_1.Message):
     _PB2_CLASS_ = pool_pb2.PoolStatus
-    _pb2_base_: pool_pb2.PoolStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.PoolStatus.State",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.PoolStatus.State",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         CREATING = 1
         READY = 2
@@ -205,10 +201,10 @@ class PoolStatus(message_1.Message):
         initial_message: message_2.Message|None = None,
         *,
         state: "PoolStatus.State|pool_pb2.PoolStatus.State|None" = None,
-        cidrs: "abc.MutableSequence[builtins.str]|None" = None,
+        cidrs: "abc.Iterable[builtins.str]|None" = None,
         scope_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.PoolStatus",pool_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if cidrs is not None:
@@ -218,33 +214,32 @@ class PoolStatus(message_1.Message):
     
     @property
     def state(self) -> "PoolStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=PoolStatus.State,
         )
     @state.setter
     def state(self, value: "PoolStatus.State|pool_pb2.PoolStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def cidrs(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("cidrs", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cidrs", explicit_presence=False,
         )
     @cidrs.setter
-    def cidrs(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("cidrs",value, base=self._pb2_base_,explicit_presence=False)
+    def cidrs(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("cidrs",value,explicit_presence=False)
     
     @property
     def scope_id(self) -> "builtins.str":
-        return super()._get_field("scope_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("scope_id", explicit_presence=False,
         )
     @scope_id.setter
     def scope_id(self, value: "builtins.str") -> None:
-        return super()._set_field("scope_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("scope_id",value,explicit_presence=False)
     
 # file: nebius/vpc/v1/allocation.proto
 class Allocation(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.Allocation
-    _pb2_base_: allocation_pb2.Allocation
     
     def __init__(
         self,
@@ -254,7 +249,7 @@ class Allocation(message_1.Message):
         spec: "AllocationSpec|allocation_pb2.AllocationSpec|None" = None,
         status: "AllocationStatus|allocation_pb2.AllocationStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.Allocation",allocation_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -264,34 +259,33 @@ class Allocation(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AllocationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AllocationSpec,
         )
     @spec.setter
     def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "AllocationStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=AllocationStatus,
         )
     @status.setter
     def status(self, value: "AllocationStatus|allocation_pb2.AllocationStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class AllocationSpec(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.AllocationSpec
-    _pb2_base_: allocation_pb2.AllocationSpec
     
     def __init__(
         self,
@@ -300,7 +294,7 @@ class AllocationSpec(message_1.Message):
         ipv4_private: "IPv4PrivateAllocationSpec|allocation_pb2.IPv4PrivateAllocationSpec|None" = None,
         ipv4_public: "IPv4PublicAllocationSpec|allocation_pb2.IPv4PublicAllocationSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.AllocationSpec",allocation_pb2.DESCRIPTOR)
         if ipv4_private is not None:
             self.ipv4_private = ipv4_private
         if ipv4_public is not None:
@@ -308,25 +302,24 @@ class AllocationSpec(message_1.Message):
     
     @property
     def ipv4_private(self) -> "IPv4PrivateAllocationSpec|None":
-        return super()._get_field("ipv4_private", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("ipv4_private", explicit_presence=True,
         wrap=IPv4PrivateAllocationSpec,
         )
     @ipv4_private.setter
     def ipv4_private(self, value: "IPv4PrivateAllocationSpec|allocation_pb2.IPv4PrivateAllocationSpec|None") -> None:
-        return super()._set_field("ipv4_private",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("ipv4_private",value,explicit_presence=True)
     
     @property
     def ipv4_public(self) -> "IPv4PublicAllocationSpec|None":
-        return super()._get_field("ipv4_public", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("ipv4_public", explicit_presence=True,
         wrap=IPv4PublicAllocationSpec,
         )
     @ipv4_public.setter
     def ipv4_public(self, value: "IPv4PublicAllocationSpec|allocation_pb2.IPv4PublicAllocationSpec|None") -> None:
-        return super()._set_field("ipv4_public",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("ipv4_public",value,explicit_presence=True)
     
 class IPv4PrivateAllocationSpec(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.IPv4PrivateAllocationSpec
-    _pb2_base_: allocation_pb2.IPv4PrivateAllocationSpec
     
     def __init__(
         self,
@@ -336,7 +329,7 @@ class IPv4PrivateAllocationSpec(message_1.Message):
         subnet_id: "builtins.str|None" = None,
         pool_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.IPv4PrivateAllocationSpec",allocation_pb2.DESCRIPTOR)
         if cidr is not None:
             self.cidr = cidr
         if subnet_id is not None:
@@ -346,31 +339,30 @@ class IPv4PrivateAllocationSpec(message_1.Message):
     
     @property
     def cidr(self) -> "builtins.str":
-        return super()._get_field("cidr", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
     def cidr(self, value: "builtins.str") -> None:
-        return super()._set_field("cidr",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("cidr",value,explicit_presence=False)
     
     @property
     def subnet_id(self) -> "builtins.str|None":
-        return super()._get_field("subnet_id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("subnet_id", explicit_presence=True,
         )
     @subnet_id.setter
     def subnet_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("subnet_id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("subnet_id",value,explicit_presence=True)
     
     @property
     def pool_id(self) -> "builtins.str|None":
-        return super()._get_field("pool_id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("pool_id", explicit_presence=True,
         )
     @pool_id.setter
     def pool_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("pool_id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("pool_id",value,explicit_presence=True)
     
 class IPv4PublicAllocationSpec(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.IPv4PublicAllocationSpec
-    _pb2_base_: allocation_pb2.IPv4PublicAllocationSpec
     
     def __init__(
         self,
@@ -380,7 +372,7 @@ class IPv4PublicAllocationSpec(message_1.Message):
         subnet_id: "builtins.str|None" = None,
         pool_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.IPv4PublicAllocationSpec",allocation_pb2.DESCRIPTOR)
         if cidr is not None:
             self.cidr = cidr
         if subnet_id is not None:
@@ -390,34 +382,33 @@ class IPv4PublicAllocationSpec(message_1.Message):
     
     @property
     def cidr(self) -> "builtins.str":
-        return super()._get_field("cidr", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
     def cidr(self, value: "builtins.str") -> None:
-        return super()._set_field("cidr",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("cidr",value,explicit_presence=False)
     
     @property
     def subnet_id(self) -> "builtins.str|None":
-        return super()._get_field("subnet_id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("subnet_id", explicit_presence=True,
         )
     @subnet_id.setter
     def subnet_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("subnet_id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("subnet_id",value,explicit_presence=True)
     
     @property
     def pool_id(self) -> "builtins.str|None":
-        return super()._get_field("pool_id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("pool_id", explicit_presence=True,
         )
     @pool_id.setter
     def pool_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("pool_id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("pool_id",value,explicit_presence=True)
     
 class AllocationStatus(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.AllocationStatus
-    _pb2_base_: allocation_pb2.AllocationStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.AllocationStatus.State",allocation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.AllocationStatus.State",allocation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         CREATING = 1
         ALLOCATED = 2
@@ -433,7 +424,7 @@ class AllocationStatus(message_1.Message):
         assignment: "Assignment|allocation_pb2.Assignment|None" = None,
         static: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.AllocationStatus",allocation_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if details is not None:
@@ -445,42 +436,41 @@ class AllocationStatus(message_1.Message):
     
     @property
     def state(self) -> "AllocationStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=AllocationStatus.State,
         )
     @state.setter
     def state(self, value: "AllocationStatus.State|allocation_pb2.AllocationStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def details(self) -> "AllocationDetails|None":
-        return super()._get_field("details", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("details", explicit_presence=True,
         wrap=AllocationDetails,
         )
     @details.setter
     def details(self, value: "AllocationDetails|allocation_pb2.AllocationDetails|None") -> None:
-        return super()._set_field("details",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("details",value,explicit_presence=True)
     
     @property
     def assignment(self) -> "Assignment|None":
-        return super()._get_field("assignment", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("assignment", explicit_presence=True,
         wrap=Assignment,
         )
     @assignment.setter
     def assignment(self, value: "Assignment|allocation_pb2.Assignment|None") -> None:
-        return super()._set_field("assignment",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("assignment",value,explicit_presence=True)
     
     @property
     def static(self) -> "builtins.bool":
-        return super()._get_field("static", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("static", explicit_presence=False,
         )
     @static.setter
     def static(self, value: "builtins.bool") -> None:
-        return super()._set_field("static",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("static",value,explicit_presence=False)
     
 class AllocationDetails(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.AllocationDetails
-    _pb2_base_: allocation_pb2.AllocationDetails
     
     def __init__(
         self,
@@ -490,7 +480,7 @@ class AllocationDetails(message_1.Message):
         pool_id: "builtins.str|None" = None,
         version: "IpVersion|pool_pb2.IpVersion|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.AllocationDetails",allocation_pb2.DESCRIPTOR)
         if allocated_cidr is not None:
             self.allocated_cidr = allocated_cidr
         if pool_id is not None:
@@ -500,32 +490,31 @@ class AllocationDetails(message_1.Message):
     
     @property
     def allocated_cidr(self) -> "builtins.str":
-        return super()._get_field("allocated_cidr", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("allocated_cidr", explicit_presence=False,
         )
     @allocated_cidr.setter
     def allocated_cidr(self, value: "builtins.str") -> None:
-        return super()._set_field("allocated_cidr",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("allocated_cidr",value,explicit_presence=False)
     
     @property
     def pool_id(self) -> "builtins.str":
-        return super()._get_field("pool_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("pool_id", explicit_presence=False,
         )
     @pool_id.setter
     def pool_id(self, value: "builtins.str") -> None:
-        return super()._set_field("pool_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("pool_id",value,explicit_presence=False)
     
     @property
     def version(self) -> "IpVersion":
-        return super()._get_field("version", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("version", explicit_presence=False,
         wrap=IpVersion,
         )
     @version.setter
     def version(self, value: "IpVersion|pool_pb2.IpVersion") -> None:
-        return super()._set_field("version",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("version",value,explicit_presence=False)
     
 class Assignment(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.Assignment
-    _pb2_base_: allocation_pb2.Assignment
     
     def __init__(
         self,
@@ -534,7 +523,7 @@ class Assignment(message_1.Message):
         network_interface: "NetworkInterfaceAssignment|allocation_pb2.NetworkInterfaceAssignment|None" = None,
         load_balancer: "LoadBalancerAssignment|allocation_pb2.LoadBalancerAssignment|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.Assignment",allocation_pb2.DESCRIPTOR)
         if network_interface is not None:
             self.network_interface = network_interface
         if load_balancer is not None:
@@ -542,25 +531,24 @@ class Assignment(message_1.Message):
     
     @property
     def network_interface(self) -> "NetworkInterfaceAssignment|None":
-        return super()._get_field("network_interface", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("network_interface", explicit_presence=True,
         wrap=NetworkInterfaceAssignment,
         )
     @network_interface.setter
     def network_interface(self, value: "NetworkInterfaceAssignment|allocation_pb2.NetworkInterfaceAssignment|None") -> None:
-        return super()._set_field("network_interface",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("network_interface",value,explicit_presence=True)
     
     @property
     def load_balancer(self) -> "LoadBalancerAssignment|None":
-        return super()._get_field("load_balancer", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("load_balancer", explicit_presence=True,
         wrap=LoadBalancerAssignment,
         )
     @load_balancer.setter
     def load_balancer(self, value: "LoadBalancerAssignment|allocation_pb2.LoadBalancerAssignment|None") -> None:
-        return super()._set_field("load_balancer",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("load_balancer",value,explicit_presence=True)
     
 class NetworkInterfaceAssignment(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.NetworkInterfaceAssignment
-    _pb2_base_: allocation_pb2.NetworkInterfaceAssignment
     
     def __init__(
         self,
@@ -569,7 +557,7 @@ class NetworkInterfaceAssignment(message_1.Message):
         instance_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.NetworkInterfaceAssignment",allocation_pb2.DESCRIPTOR)
         if instance_id is not None:
             self.instance_id = instance_id
         if name is not None:
@@ -577,23 +565,22 @@ class NetworkInterfaceAssignment(message_1.Message):
     
     @property
     def instance_id(self) -> "builtins.str":
-        return super()._get_field("instance_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("instance_id", explicit_presence=False,
         )
     @instance_id.setter
     def instance_id(self, value: "builtins.str") -> None:
-        return super()._set_field("instance_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("instance_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class LoadBalancerAssignment(message_1.Message):
     _PB2_CLASS_ = allocation_pb2.LoadBalancerAssignment
-    _pb2_base_: allocation_pb2.LoadBalancerAssignment
     
     def __init__(
         self,
@@ -601,22 +588,21 @@ class LoadBalancerAssignment(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.LoadBalancerAssignment",allocation_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 # file: nebius/vpc/v1/allocation_service.proto
 class GetAllocationRequest(message_1.Message):
     _PB2_CLASS_ = allocation_service_pb2.GetAllocationRequest
-    _pb2_base_: allocation_service_pb2.GetAllocationRequest
     
     def __init__(
         self,
@@ -624,21 +610,20 @@ class GetAllocationRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.GetAllocationRequest",allocation_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetAllocationByNameRequest(message_1.Message):
     _PB2_CLASS_ = allocation_service_pb2.GetAllocationByNameRequest
-    _pb2_base_: allocation_service_pb2.GetAllocationByNameRequest
     
     def __init__(
         self,
@@ -647,7 +632,7 @@ class GetAllocationByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.GetAllocationByNameRequest",allocation_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -655,23 +640,22 @@ class GetAllocationByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListAllocationsRequest(message_1.Message):
     _PB2_CLASS_ = allocation_service_pb2.ListAllocationsRequest
-    _pb2_base_: allocation_service_pb2.ListAllocationsRequest
     
     def __init__(
         self,
@@ -681,7 +665,7 @@ class ListAllocationsRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListAllocationsRequest",allocation_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -691,65 +675,63 @@ class ListAllocationsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListAllocationsResponse(message_1.Message):
     _PB2_CLASS_ = allocation_service_pb2.ListAllocationsResponse
-    _pb2_base_: allocation_service_pb2.ListAllocationsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Allocation]|None" = None,
+        items: "abc.Iterable[Allocation]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListAllocationsResponse",allocation_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Allocation]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Allocation]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Allocation,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Allocation]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Allocation]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class CreateAllocationRequest(message_1.Message):
     _PB2_CLASS_ = allocation_service_pb2.CreateAllocationRequest
-    _pb2_base_: allocation_service_pb2.CreateAllocationRequest
     
     def __init__(
         self,
@@ -758,7 +740,7 @@ class CreateAllocationRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "AllocationSpec|allocation_pb2.AllocationSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.CreateAllocationRequest",allocation_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -766,25 +748,24 @@ class CreateAllocationRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AllocationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AllocationSpec,
         )
     @spec.setter
     def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class UpdateAllocationRequest(message_1.Message):
     _PB2_CLASS_ = allocation_service_pb2.UpdateAllocationRequest
-    _pb2_base_: allocation_service_pb2.UpdateAllocationRequest
     
     def __init__(
         self,
@@ -793,7 +774,7 @@ class UpdateAllocationRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "AllocationSpec|allocation_pb2.AllocationSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.UpdateAllocationRequest",allocation_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -801,25 +782,24 @@ class UpdateAllocationRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AllocationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AllocationSpec,
         )
     @spec.setter
     def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class DeleteAllocationRequest(message_1.Message):
     _PB2_CLASS_ = allocation_service_pb2.DeleteAllocationRequest
-    _pb2_base_: allocation_service_pb2.DeleteAllocationRequest
     
     def __init__(
         self,
@@ -827,22 +807,21 @@ class DeleteAllocationRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.DeleteAllocationRequest",allocation_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 # file: nebius/vpc/v1/network.proto
 class Network(message_1.Message):
     _PB2_CLASS_ = network_pb2.Network
-    _pb2_base_: network_pb2.Network
     
     def __init__(
         self,
@@ -852,7 +831,7 @@ class Network(message_1.Message):
         spec: "NetworkSpec|network_pb2.NetworkSpec|None" = None,
         status: "NetworkStatus|network_pb2.NetworkStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.Network",network_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -862,34 +841,33 @@ class Network(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "NetworkSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=NetworkSpec,
         )
     @spec.setter
     def spec(self, value: "NetworkSpec|network_pb2.NetworkSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "NetworkStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=NetworkStatus,
         )
     @status.setter
     def status(self, value: "NetworkStatus|network_pb2.NetworkStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class NetworkSpec(message_1.Message):
     _PB2_CLASS_ = network_pb2.NetworkSpec
-    _pb2_base_: network_pb2.NetworkSpec
     
     def __init__(
         self,
@@ -898,7 +876,7 @@ class NetworkSpec(message_1.Message):
         ipv4_private_pools: "IPv4PrivateNetworkPools|network_pb2.IPv4PrivateNetworkPools|None" = None,
         ipv4_public_pools: "IPv4PublicNetworkPools|network_pb2.IPv4PublicNetworkPools|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.NetworkSpec",network_pb2.DESCRIPTOR)
         if ipv4_private_pools is not None:
             self.ipv4_private_pools = ipv4_private_pools
         if ipv4_public_pools is not None:
@@ -906,71 +884,68 @@ class NetworkSpec(message_1.Message):
     
     @property
     def ipv4_private_pools(self) -> "IPv4PrivateNetworkPools|None":
-        return super()._get_field("ipv4_private_pools", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("ipv4_private_pools", explicit_presence=True,
         wrap=IPv4PrivateNetworkPools,
         )
     @ipv4_private_pools.setter
     def ipv4_private_pools(self, value: "IPv4PrivateNetworkPools|network_pb2.IPv4PrivateNetworkPools|None") -> None:
-        return super()._set_field("ipv4_private_pools",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("ipv4_private_pools",value,explicit_presence=True)
     
     @property
     def ipv4_public_pools(self) -> "IPv4PublicNetworkPools|None":
-        return super()._get_field("ipv4_public_pools", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("ipv4_public_pools", explicit_presence=True,
         wrap=IPv4PublicNetworkPools,
         )
     @ipv4_public_pools.setter
     def ipv4_public_pools(self, value: "IPv4PublicNetworkPools|network_pb2.IPv4PublicNetworkPools|None") -> None:
-        return super()._set_field("ipv4_public_pools",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("ipv4_public_pools",value,explicit_presence=True)
     
 class IPv4PrivateNetworkPools(message_1.Message):
     _PB2_CLASS_ = network_pb2.IPv4PrivateNetworkPools
-    _pb2_base_: network_pb2.IPv4PrivateNetworkPools
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        pools: "abc.MutableSequence[NetworkPool]|None" = None,
+        pools: "abc.Iterable[NetworkPool]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.IPv4PrivateNetworkPools",network_pb2.DESCRIPTOR)
         if pools is not None:
             self.pools = pools
     
     @property
-    def pools(self) -> "abc.MutableSequence[NetworkPool]|None":
-        return super()._get_field("pools", base=self._pb2_base_, explicit_presence=True,
+    def pools(self) -> "abc.MutableSequence[NetworkPool]":
+        return super()._get_field("pools", explicit_presence=False,
         wrap=NetworkPool,
         )
     @pools.setter
-    def pools(self, value: "abc.MutableSequence[NetworkPool]|None") -> None:
-        return super()._set_field("pools",value, base=self._pb2_base_,explicit_presence=True)
+    def pools(self, value: "abc.Iterable[NetworkPool]") -> None:
+        return super()._set_field("pools",value,explicit_presence=False)
     
 class IPv4PublicNetworkPools(message_1.Message):
     _PB2_CLASS_ = network_pb2.IPv4PublicNetworkPools
-    _pb2_base_: network_pb2.IPv4PublicNetworkPools
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        pools: "abc.MutableSequence[NetworkPool]|None" = None,
+        pools: "abc.Iterable[NetworkPool]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.IPv4PublicNetworkPools",network_pb2.DESCRIPTOR)
         if pools is not None:
             self.pools = pools
     
     @property
-    def pools(self) -> "abc.MutableSequence[NetworkPool]|None":
-        return super()._get_field("pools", base=self._pb2_base_, explicit_presence=True,
+    def pools(self) -> "abc.MutableSequence[NetworkPool]":
+        return super()._get_field("pools", explicit_presence=False,
         wrap=NetworkPool,
         )
     @pools.setter
-    def pools(self, value: "abc.MutableSequence[NetworkPool]|None") -> None:
-        return super()._set_field("pools",value, base=self._pb2_base_,explicit_presence=True)
+    def pools(self, value: "abc.Iterable[NetworkPool]") -> None:
+        return super()._set_field("pools",value,explicit_presence=False)
     
 class NetworkPool(message_1.Message):
     _PB2_CLASS_ = network_pb2.NetworkPool
-    _pb2_base_: network_pb2.NetworkPool
     
     def __init__(
         self,
@@ -978,24 +953,23 @@ class NetworkPool(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.NetworkPool",network_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class NetworkStatus(message_1.Message):
     _PB2_CLASS_ = network_pb2.NetworkStatus
-    _pb2_base_: network_pb2.NetworkStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.NetworkStatus.State",network_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.NetworkStatus.State",network_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         CREATING = 1
         READY = 2
@@ -1007,23 +981,22 @@ class NetworkStatus(message_1.Message):
         *,
         state: "NetworkStatus.State|network_pb2.NetworkStatus.State|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.NetworkStatus",network_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
     
     @property
     def state(self) -> "NetworkStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=NetworkStatus.State,
         )
     @state.setter
     def state(self, value: "NetworkStatus.State|network_pb2.NetworkStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
 # file: nebius/vpc/v1/network_service.proto
 class GetNetworkRequest(message_1.Message):
     _PB2_CLASS_ = network_service_pb2.GetNetworkRequest
-    _pb2_base_: network_service_pb2.GetNetworkRequest
     
     def __init__(
         self,
@@ -1031,21 +1004,20 @@ class GetNetworkRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.GetNetworkRequest",network_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetNetworkByNameRequest(message_1.Message):
     _PB2_CLASS_ = network_service_pb2.GetNetworkByNameRequest
-    _pb2_base_: network_service_pb2.GetNetworkByNameRequest
     
     def __init__(
         self,
@@ -1054,7 +1026,7 @@ class GetNetworkByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.GetNetworkByNameRequest",network_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -1062,23 +1034,22 @@ class GetNetworkByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListNetworksRequest(message_1.Message):
     _PB2_CLASS_ = network_service_pb2.ListNetworksRequest
-    _pb2_base_: network_service_pb2.ListNetworksRequest
     
     def __init__(
         self,
@@ -1088,7 +1059,7 @@ class ListNetworksRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListNetworksRequest",network_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -1098,66 +1069,64 @@ class ListNetworksRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListNetworksResponse(message_1.Message):
     _PB2_CLASS_ = network_service_pb2.ListNetworksResponse
-    _pb2_base_: network_service_pb2.ListNetworksResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Network]|None" = None,
+        items: "abc.Iterable[Network]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListNetworksResponse",network_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Network]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Network]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Network,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Network]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Network]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/vpc/v1/pool_service.proto
 class GetPoolRequest(message_1.Message):
     _PB2_CLASS_ = pool_service_pb2.GetPoolRequest
-    _pb2_base_: pool_service_pb2.GetPoolRequest
     
     def __init__(
         self,
@@ -1165,21 +1134,20 @@ class GetPoolRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.GetPoolRequest",pool_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetPoolByNameRequest(message_1.Message):
     _PB2_CLASS_ = pool_service_pb2.GetPoolByNameRequest
-    _pb2_base_: pool_service_pb2.GetPoolByNameRequest
     
     def __init__(
         self,
@@ -1188,7 +1156,7 @@ class GetPoolByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.GetPoolByNameRequest",pool_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -1196,23 +1164,22 @@ class GetPoolByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListPoolsRequest(message_1.Message):
     _PB2_CLASS_ = pool_service_pb2.ListPoolsRequest
-    _pb2_base_: pool_service_pb2.ListPoolsRequest
     
     def __init__(
         self,
@@ -1222,7 +1189,7 @@ class ListPoolsRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListPoolsRequest",pool_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -1232,65 +1199,63 @@ class ListPoolsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListPoolsResponse(message_1.Message):
     _PB2_CLASS_ = pool_service_pb2.ListPoolsResponse
-    _pb2_base_: pool_service_pb2.ListPoolsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Pool]|None" = None,
+        items: "abc.Iterable[Pool]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListPoolsResponse",pool_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Pool]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Pool]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Pool,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Pool]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Pool]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class UpdatePoolRequest(message_1.Message):
     _PB2_CLASS_ = pool_service_pb2.UpdatePoolRequest
-    _pb2_base_: pool_service_pb2.UpdatePoolRequest
     
     def __init__(
         self,
@@ -1299,7 +1264,7 @@ class UpdatePoolRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "PoolSpec|pool_pb2.PoolSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.UpdatePoolRequest",pool_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1307,26 +1272,25 @@ class UpdatePoolRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "PoolSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=PoolSpec,
         )
     @spec.setter
     def spec(self, value: "PoolSpec|pool_pb2.PoolSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 # file: nebius/vpc/v1/subnet.proto
 class Subnet(message_1.Message):
     _PB2_CLASS_ = subnet_pb2.Subnet
-    _pb2_base_: subnet_pb2.Subnet
     
     def __init__(
         self,
@@ -1336,7 +1300,7 @@ class Subnet(message_1.Message):
         spec: "SubnetSpec|subnet_pb2.SubnetSpec|None" = None,
         status: "SubnetStatus|subnet_pb2.SubnetStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.Subnet",subnet_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1346,34 +1310,33 @@ class Subnet(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "SubnetSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=SubnetSpec,
         )
     @spec.setter
     def spec(self, value: "SubnetSpec|subnet_pb2.SubnetSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "SubnetStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=SubnetStatus,
         )
     @status.setter
     def status(self, value: "SubnetStatus|subnet_pb2.SubnetStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class SubnetSpec(message_1.Message):
     _PB2_CLASS_ = subnet_pb2.SubnetSpec
-    _pb2_base_: subnet_pb2.SubnetSpec
     
     def __init__(
         self,
@@ -1383,7 +1346,7 @@ class SubnetSpec(message_1.Message):
         ipv4_private_pools: "IPv4PrivateSubnetPools|subnet_pb2.IPv4PrivateSubnetPools|None" = None,
         ipv4_public_pools: "IPv4PublicSubnetPools|subnet_pb2.IPv4PublicSubnetPools|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.SubnetSpec",subnet_pb2.DESCRIPTOR)
         if network_id is not None:
             self.network_id = network_id
         if ipv4_private_pools is not None:
@@ -1393,124 +1356,120 @@ class SubnetSpec(message_1.Message):
     
     @property
     def network_id(self) -> "builtins.str":
-        return super()._get_field("network_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
     def network_id(self, value: "builtins.str") -> None:
-        return super()._set_field("network_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("network_id",value,explicit_presence=False)
     
     @property
     def ipv4_private_pools(self) -> "IPv4PrivateSubnetPools|None":
-        return super()._get_field("ipv4_private_pools", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("ipv4_private_pools", explicit_presence=True,
         wrap=IPv4PrivateSubnetPools,
         )
     @ipv4_private_pools.setter
     def ipv4_private_pools(self, value: "IPv4PrivateSubnetPools|subnet_pb2.IPv4PrivateSubnetPools|None") -> None:
-        return super()._set_field("ipv4_private_pools",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("ipv4_private_pools",value,explicit_presence=True)
     
     @property
     def ipv4_public_pools(self) -> "IPv4PublicSubnetPools|None":
-        return super()._get_field("ipv4_public_pools", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("ipv4_public_pools", explicit_presence=True,
         wrap=IPv4PublicSubnetPools,
         )
     @ipv4_public_pools.setter
     def ipv4_public_pools(self, value: "IPv4PublicSubnetPools|subnet_pb2.IPv4PublicSubnetPools|None") -> None:
-        return super()._set_field("ipv4_public_pools",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("ipv4_public_pools",value,explicit_presence=True)
     
 class IPv4PrivateSubnetPools(message_1.Message):
     _PB2_CLASS_ = subnet_pb2.IPv4PrivateSubnetPools
-    _pb2_base_: subnet_pb2.IPv4PrivateSubnetPools
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        pools: "abc.MutableSequence[SubnetPool]|None" = None,
+        pools: "abc.Iterable[SubnetPool]|None" = None,
         use_network_pools: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.IPv4PrivateSubnetPools",subnet_pb2.DESCRIPTOR)
         if pools is not None:
             self.pools = pools
         if use_network_pools is not None:
             self.use_network_pools = use_network_pools
     
     @property
-    def pools(self) -> "abc.MutableSequence[SubnetPool]|None":
-        return super()._get_field("pools", base=self._pb2_base_, explicit_presence=True,
+    def pools(self) -> "abc.MutableSequence[SubnetPool]":
+        return super()._get_field("pools", explicit_presence=False,
         wrap=SubnetPool,
         )
     @pools.setter
-    def pools(self, value: "abc.MutableSequence[SubnetPool]|None") -> None:
-        return super()._set_field("pools",value, base=self._pb2_base_,explicit_presence=True)
+    def pools(self, value: "abc.Iterable[SubnetPool]") -> None:
+        return super()._set_field("pools",value,explicit_presence=False)
     
     @property
     def use_network_pools(self) -> "builtins.bool":
-        return super()._get_field("use_network_pools", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("use_network_pools", explicit_presence=False,
         )
     @use_network_pools.setter
     def use_network_pools(self, value: "builtins.bool") -> None:
-        return super()._set_field("use_network_pools",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("use_network_pools",value,explicit_presence=False)
     
 class IPv4PublicSubnetPools(message_1.Message):
     _PB2_CLASS_ = subnet_pb2.IPv4PublicSubnetPools
-    _pb2_base_: subnet_pb2.IPv4PublicSubnetPools
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        pools: "abc.MutableSequence[SubnetPool]|None" = None,
+        pools: "abc.Iterable[SubnetPool]|None" = None,
         use_network_pools: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.IPv4PublicSubnetPools",subnet_pb2.DESCRIPTOR)
         if pools is not None:
             self.pools = pools
         if use_network_pools is not None:
             self.use_network_pools = use_network_pools
     
     @property
-    def pools(self) -> "abc.MutableSequence[SubnetPool]|None":
-        return super()._get_field("pools", base=self._pb2_base_, explicit_presence=True,
+    def pools(self) -> "abc.MutableSequence[SubnetPool]":
+        return super()._get_field("pools", explicit_presence=False,
         wrap=SubnetPool,
         )
     @pools.setter
-    def pools(self, value: "abc.MutableSequence[SubnetPool]|None") -> None:
-        return super()._set_field("pools",value, base=self._pb2_base_,explicit_presence=True)
+    def pools(self, value: "abc.Iterable[SubnetPool]") -> None:
+        return super()._set_field("pools",value,explicit_presence=False)
     
     @property
     def use_network_pools(self) -> "builtins.bool":
-        return super()._get_field("use_network_pools", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("use_network_pools", explicit_presence=False,
         )
     @use_network_pools.setter
     def use_network_pools(self, value: "builtins.bool") -> None:
-        return super()._set_field("use_network_pools",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("use_network_pools",value,explicit_presence=False)
     
 class SubnetPool(message_1.Message):
     _PB2_CLASS_ = subnet_pb2.SubnetPool
-    _pb2_base_: subnet_pb2.SubnetPool
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        cidrs: "abc.MutableSequence[SubnetCidr]|None" = None,
+        cidrs: "abc.Iterable[SubnetCidr]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.SubnetPool",subnet_pb2.DESCRIPTOR)
         if cidrs is not None:
             self.cidrs = cidrs
     
     @property
-    def cidrs(self) -> "abc.MutableSequence[SubnetCidr]|None":
-        return super()._get_field("cidrs", base=self._pb2_base_, explicit_presence=True,
+    def cidrs(self) -> "abc.MutableSequence[SubnetCidr]":
+        return super()._get_field("cidrs", explicit_presence=False,
         wrap=SubnetCidr,
         )
     @cidrs.setter
-    def cidrs(self, value: "abc.MutableSequence[SubnetCidr]|None") -> None:
-        return super()._set_field("cidrs",value, base=self._pb2_base_,explicit_presence=True)
+    def cidrs(self, value: "abc.Iterable[SubnetCidr]") -> None:
+        return super()._set_field("cidrs",value,explicit_presence=False)
     
 class SubnetCidr(message_1.Message):
     _PB2_CLASS_ = subnet_pb2.SubnetCidr
-    _pb2_base_: subnet_pb2.SubnetCidr
     
     def __init__(
         self,
@@ -1520,7 +1479,7 @@ class SubnetCidr(message_1.Message):
         state: "AddressBlockState|pool_pb2.AddressBlockState|None" = None,
         max_mask_length: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.SubnetCidr",subnet_pb2.DESCRIPTOR)
         if cidr is not None:
             self.cidr = cidr
         if state is not None:
@@ -1530,35 +1489,34 @@ class SubnetCidr(message_1.Message):
     
     @property
     def cidr(self) -> "builtins.str":
-        return super()._get_field("cidr", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
     def cidr(self, value: "builtins.str") -> None:
-        return super()._set_field("cidr",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("cidr",value,explicit_presence=False)
     
     @property
     def state(self) -> "AddressBlockState":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=AddressBlockState,
         )
     @state.setter
     def state(self, value: "AddressBlockState|pool_pb2.AddressBlockState") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def max_mask_length(self) -> "builtins.int":
-        return super()._get_field("max_mask_length", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("max_mask_length", explicit_presence=False,
         )
     @max_mask_length.setter
     def max_mask_length(self, value: "builtins.int") -> None:
-        return super()._set_field("max_mask_length",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("max_mask_length",value,explicit_presence=False)
     
 class SubnetStatus(message_1.Message):
     _PB2_CLASS_ = subnet_pb2.SubnetStatus
-    _pb2_base_: subnet_pb2.SubnetStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.SubnetStatus.State",subnet_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.SubnetStatus.State",subnet_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         CREATING = 1
         READY = 2
@@ -1569,10 +1527,10 @@ class SubnetStatus(message_1.Message):
         initial_message: message_2.Message|None = None,
         *,
         state: "SubnetStatus.State|subnet_pb2.SubnetStatus.State|None" = None,
-        ipv4_private_cidrs: "abc.MutableSequence[builtins.str]|None" = None,
-        ipv4_public_cidrs: "abc.MutableSequence[builtins.str]|None" = None,
+        ipv4_private_cidrs: "abc.Iterable[builtins.str]|None" = None,
+        ipv4_public_cidrs: "abc.Iterable[builtins.str]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.SubnetStatus",subnet_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if ipv4_private_cidrs is not None:
@@ -1582,33 +1540,32 @@ class SubnetStatus(message_1.Message):
     
     @property
     def state(self) -> "SubnetStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=SubnetStatus.State,
         )
     @state.setter
     def state(self, value: "SubnetStatus.State|subnet_pb2.SubnetStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def ipv4_private_cidrs(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("ipv4_private_cidrs", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("ipv4_private_cidrs", explicit_presence=False,
         )
     @ipv4_private_cidrs.setter
-    def ipv4_private_cidrs(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("ipv4_private_cidrs",value, base=self._pb2_base_,explicit_presence=False)
+    def ipv4_private_cidrs(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("ipv4_private_cidrs",value,explicit_presence=False)
     
     @property
     def ipv4_public_cidrs(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("ipv4_public_cidrs", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("ipv4_public_cidrs", explicit_presence=False,
         )
     @ipv4_public_cidrs.setter
-    def ipv4_public_cidrs(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("ipv4_public_cidrs",value, base=self._pb2_base_,explicit_presence=False)
+    def ipv4_public_cidrs(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("ipv4_public_cidrs",value,explicit_presence=False)
     
 # file: nebius/vpc/v1/subnet_service.proto
 class GetSubnetRequest(message_1.Message):
     _PB2_CLASS_ = subnet_service_pb2.GetSubnetRequest
-    _pb2_base_: subnet_service_pb2.GetSubnetRequest
     
     def __init__(
         self,
@@ -1616,21 +1573,20 @@ class GetSubnetRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.GetSubnetRequest",subnet_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetSubnetByNameRequest(message_1.Message):
     _PB2_CLASS_ = subnet_service_pb2.GetSubnetByNameRequest
-    _pb2_base_: subnet_service_pb2.GetSubnetByNameRequest
     
     def __init__(
         self,
@@ -1639,7 +1595,7 @@ class GetSubnetByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.GetSubnetByNameRequest",subnet_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -1647,23 +1603,22 @@ class GetSubnetByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListSubnetsRequest(message_1.Message):
     _PB2_CLASS_ = subnet_service_pb2.ListSubnetsRequest
-    _pb2_base_: subnet_service_pb2.ListSubnetsRequest
     
     def __init__(
         self,
@@ -1673,7 +1628,7 @@ class ListSubnetsRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListSubnetsRequest",subnet_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -1683,31 +1638,30 @@ class ListSubnetsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListSubnetsByNetworkRequest(message_1.Message):
     _PB2_CLASS_ = subnet_service_pb2.ListSubnetsByNetworkRequest
-    _pb2_base_: subnet_service_pb2.ListSubnetsByNetworkRequest
     
     def __init__(
         self,
@@ -1717,7 +1671,7 @@ class ListSubnetsByNetworkRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListSubnetsByNetworkRequest",subnet_service_pb2.DESCRIPTOR)
         if network_id is not None:
             self.network_id = network_id
         if page_size is not None:
@@ -1727,59 +1681,58 @@ class ListSubnetsByNetworkRequest(message_1.Message):
     
     @property
     def network_id(self) -> "builtins.str":
-        return super()._get_field("network_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
     def network_id(self, value: "builtins.str") -> None:
-        return super()._set_field("network_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("network_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListSubnetsResponse(message_1.Message):
     _PB2_CLASS_ = subnet_service_pb2.ListSubnetsResponse
-    _pb2_base_: subnet_service_pb2.ListSubnetsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Subnet]|None" = None,
+        items: "abc.Iterable[Subnet]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1.ListSubnetsResponse",subnet_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Subnet]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Subnet]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Subnet,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Subnet]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Subnet]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     

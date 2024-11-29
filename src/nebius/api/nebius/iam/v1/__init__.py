@@ -45,11 +45,9 @@ import nebius.api.nebius.iam.v1.tenant_user_account_with_attributes_service_pb2 
 # file: nebius/iam/v1/access.proto
 class Account(message_1.Message):
     _PB2_CLASS_ = access_pb2.Account
-    _pb2_base_: access_pb2.Account
     
     class UserAccount(message_1.Message):
         _PB2_CLASS_ = access_pb2.Account.UserAccount
-        _pb2_base_: access_pb2.Account.UserAccount
         
         def __init__(
             self,
@@ -57,22 +55,21 @@ class Account(message_1.Message):
             *,
             id: "builtins.str|None" = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Account.UserAccount",access_pb2.DESCRIPTOR)
             if id is not None:
                 self.id = id
         
         @property
         def id(self) -> "builtins.str":
-            return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("id", explicit_presence=False,
             )
         @id.setter
         def id(self, value: "builtins.str") -> None:
-            return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("id",value,explicit_presence=False)
         
     
     class ServiceAccount(message_1.Message):
         _PB2_CLASS_ = access_pb2.Account.ServiceAccount
-        _pb2_base_: access_pb2.Account.ServiceAccount
         
         def __init__(
             self,
@@ -80,28 +77,27 @@ class Account(message_1.Message):
             *,
             id: "builtins.str|None" = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Account.ServiceAccount",access_pb2.DESCRIPTOR)
             if id is not None:
                 self.id = id
         
         @property
         def id(self) -> "builtins.str":
-            return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("id", explicit_presence=False,
             )
         @id.setter
         def id(self, value: "builtins.str") -> None:
-            return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("id",value,explicit_presence=False)
         
     
     class AnonymousAccount(message_1.Message):
         _PB2_CLASS_ = access_pb2.Account.AnonymousAccount
-        _pb2_base_: access_pb2.Account.AnonymousAccount
         
         def __init__(
             self,
             initial_message: message_2.Message|None = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Account.AnonymousAccount",access_pb2.DESCRIPTOR)
         
     
     def __init__(
@@ -112,7 +108,7 @@ class Account(message_1.Message):
         service_account: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|None" = None,
         anonymous_account: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Account",access_pb2.DESCRIPTOR)
         if user_account is not None:
             self.user_account = user_account
         if service_account is not None:
@@ -122,35 +118,34 @@ class Account(message_1.Message):
     
     @property
     def user_account(self) -> "Account.UserAccount|None":
-        return super()._get_field("user_account", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("user_account", explicit_presence=True,
         wrap=Account.UserAccount,
         )
     @user_account.setter
     def user_account(self, value: "Account.UserAccount|access_pb2.Account.UserAccount|None") -> None:
-        return super()._set_field("user_account",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("user_account",value,explicit_presence=True)
     
     @property
     def service_account(self) -> "Account.ServiceAccount|None":
-        return super()._get_field("service_account", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("service_account", explicit_presence=True,
         wrap=Account.ServiceAccount,
         )
     @service_account.setter
     def service_account(self, value: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|None") -> None:
-        return super()._set_field("service_account",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("service_account",value,explicit_presence=True)
     
     @property
     def anonymous_account(self) -> "Account.AnonymousAccount|None":
-        return super()._get_field("anonymous_account", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("anonymous_account", explicit_presence=True,
         wrap=Account.AnonymousAccount,
         )
     @anonymous_account.setter
     def anonymous_account(self, value: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|None") -> None:
-        return super()._set_field("anonymous_account",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("anonymous_account",value,explicit_presence=True)
     
 # file: nebius/iam/v1/access_key.proto
 class AccessKey(message_1.Message):
     _PB2_CLASS_ = access_key_pb2.AccessKey
-    _pb2_base_: access_key_pb2.AccessKey
     
     def __init__(
         self,
@@ -160,7 +155,7 @@ class AccessKey(message_1.Message):
         spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
         status: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.AccessKey",access_key_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -170,34 +165,33 @@ class AccessKey(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AccessKeySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AccessKeySpec,
         )
     @spec.setter
     def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "AccessKeyStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=AccessKeyStatus,
         )
     @status.setter
     def status(self, value: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class AccessKeySpec(message_1.Message):
     _PB2_CLASS_ = access_key_pb2.AccessKeySpec
-    _pb2_base_: access_key_pb2.AccessKeySpec
     
     def __init__(
         self,
@@ -207,7 +201,7 @@ class AccessKeySpec(message_1.Message):
         expires_at: "timestamp_pb2.Timestamp|None" = None,
         description: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.AccessKeySpec",access_key_pb2.DESCRIPTOR)
         if account is not None:
             self.account = account
         if expires_at is not None:
@@ -217,35 +211,34 @@ class AccessKeySpec(message_1.Message):
     
     @property
     def account(self) -> "Account|None":
-        return super()._get_field("account", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("account", explicit_presence=True,
         wrap=Account,
         )
     @account.setter
     def account(self, value: "Account|access_pb2.Account|None") -> None:
-        return super()._set_field("account",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("account",value,explicit_presence=True)
     
     @property
     def expires_at(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("expires_at", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("expires_at", explicit_presence=True,
         )
     @expires_at.setter
     def expires_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("expires_at",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("expires_at",value,explicit_presence=True)
     
     @property
     def description(self) -> "builtins.str":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
     def description(self, value: "builtins.str") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("description",value,explicit_presence=False)
     
 class AccessKeyStatus(message_1.Message):
     _PB2_CLASS_ = access_key_pb2.AccessKeyStatus
-    _pb2_base_: access_key_pb2.AccessKeyStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AccessKeyStatus.State",access_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AccessKeyStatus.State",access_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         ACTIVE = 1
         INACTIVE = 2
@@ -264,7 +257,7 @@ class AccessKeyStatus(message_1.Message):
         aws_access_key_id: "builtins.str|None" = None,
         secret: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.AccessKeyStatus",access_key_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if fingerprint is not None:
@@ -280,57 +273,56 @@ class AccessKeyStatus(message_1.Message):
     
     @property
     def state(self) -> "AccessKeyStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=AccessKeyStatus.State,
         )
     @state.setter
     def state(self, value: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def fingerprint(self) -> "builtins.str":
-        return super()._get_field("fingerprint", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("fingerprint", explicit_presence=False,
         )
     @fingerprint.setter
     def fingerprint(self, value: "builtins.str") -> None:
-        return super()._set_field("fingerprint",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("fingerprint",value,explicit_presence=False)
     
     @property
     def algorithm(self) -> "builtins.str":
-        return super()._get_field("algorithm", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("algorithm", explicit_presence=False,
         )
     @algorithm.setter
     def algorithm(self, value: "builtins.str") -> None:
-        return super()._set_field("algorithm",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("algorithm",value,explicit_presence=False)
     
     @property
     def key_size(self) -> "builtins.int":
-        return super()._get_field("key_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("key_size", explicit_presence=False,
         )
     @key_size.setter
     def key_size(self, value: "builtins.int") -> None:
-        return super()._set_field("key_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("key_size",value,explicit_presence=False)
     
     @property
     def aws_access_key_id(self) -> "builtins.str":
-        return super()._get_field("aws_access_key_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("aws_access_key_id", explicit_presence=False,
         )
     @aws_access_key_id.setter
     def aws_access_key_id(self, value: "builtins.str") -> None:
-        return super()._set_field("aws_access_key_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("aws_access_key_id",value,explicit_presence=False)
     
     @property
     def secret(self) -> "builtins.str":
-        return super()._get_field("secret", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("secret", explicit_presence=False,
         )
     @secret.setter
     def secret(self, value: "builtins.str") -> None:
-        return super()._set_field("secret",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("secret",value,explicit_presence=False)
     
 # file: nebius/iam/v1/access_key_service.proto
 class CreateAccessKeyRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.CreateAccessKeyRequest
-    _pb2_base_: access_key_service_pb2.CreateAccessKeyRequest
     
     def __init__(
         self,
@@ -339,7 +331,7 @@ class CreateAccessKeyRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.CreateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -347,25 +339,24 @@ class CreateAccessKeyRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AccessKeySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AccessKeySpec,
         )
     @spec.setter
     def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class KeyIdentity(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.KeyIdentity
-    _pb2_base_: access_key_service_pb2.KeyIdentity
     
     def __init__(
         self,
@@ -374,7 +365,7 @@ class KeyIdentity(message_1.Message):
         id: "builtins.str|None" = None,
         aws_access_key_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.KeyIdentity",access_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
         if aws_access_key_id is not None:
@@ -382,23 +373,22 @@ class KeyIdentity(message_1.Message):
     
     @property
     def id(self) -> "builtins.str|None":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("id", explicit_presence=True,
         )
     @id.setter
     def id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("id",value,explicit_presence=True)
     
     @property
     def aws_access_key_id(self) -> "builtins.str|None":
-        return super()._get_field("aws_access_key_id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("aws_access_key_id", explicit_presence=True,
         )
     @aws_access_key_id.setter
     def aws_access_key_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("aws_access_key_id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("aws_access_key_id",value,explicit_presence=True)
     
 class GetAccessKeySecretOnceRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.GetAccessKeySecretOnceRequest
-    _pb2_base_: access_key_service_pb2.GetAccessKeySecretOnceRequest
     
     def __init__(
         self,
@@ -406,21 +396,20 @@ class GetAccessKeySecretOnceRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetAccessKeySecretOnceRequest",access_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetAccessKeyByIdRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.GetAccessKeyByIdRequest
-    _pb2_base_: access_key_service_pb2.GetAccessKeyByIdRequest
     
     def __init__(
         self,
@@ -428,21 +417,20 @@ class GetAccessKeyByIdRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetAccessKeyByIdRequest",access_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetAccessKeyByAwsIdRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.GetAccessKeyByAwsIdRequest
-    _pb2_base_: access_key_service_pb2.GetAccessKeyByAwsIdRequest
     
     def __init__(
         self,
@@ -450,21 +438,20 @@ class GetAccessKeyByAwsIdRequest(message_1.Message):
         *,
         aws_access_key_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetAccessKeyByAwsIdRequest",access_key_service_pb2.DESCRIPTOR)
         if aws_access_key_id is not None:
             self.aws_access_key_id = aws_access_key_id
     
     @property
     def aws_access_key_id(self) -> "builtins.str":
-        return super()._get_field("aws_access_key_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("aws_access_key_id", explicit_presence=False,
         )
     @aws_access_key_id.setter
     def aws_access_key_id(self, value: "builtins.str") -> None:
-        return super()._set_field("aws_access_key_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("aws_access_key_id",value,explicit_presence=False)
     
 class ListAccessKeysRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.ListAccessKeysRequest
-    _pb2_base_: access_key_service_pb2.ListAccessKeysRequest
     
     def __init__(
         self,
@@ -475,7 +462,7 @@ class ListAccessKeysRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListAccessKeysRequest",access_key_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -487,39 +474,38 @@ class ListAccessKeysRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListAccessKeysByAccountRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.ListAccessKeysByAccountRequest
-    _pb2_base_: access_key_service_pb2.ListAccessKeysByAccountRequest
     
     def __init__(
         self,
@@ -530,7 +516,7 @@ class ListAccessKeysByAccountRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListAccessKeysByAccountRequest",access_key_service_pb2.DESCRIPTOR)
         if account is not None:
             self.account = account
         if page_size is not None:
@@ -542,40 +528,39 @@ class ListAccessKeysByAccountRequest(message_1.Message):
     
     @property
     def account(self) -> "Account|None":
-        return super()._get_field("account", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("account", explicit_presence=True,
         wrap=Account,
         )
     @account.setter
     def account(self, value: "Account|access_pb2.Account|None") -> None:
-        return super()._set_field("account",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("account",value,explicit_presence=True)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class UpdateAccessKeyRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.UpdateAccessKeyRequest
-    _pb2_base_: access_key_service_pb2.UpdateAccessKeyRequest
     
     def __init__(
         self,
@@ -584,7 +569,7 @@ class UpdateAccessKeyRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UpdateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -592,25 +577,24 @@ class UpdateAccessKeyRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AccessKeySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AccessKeySpec,
         )
     @spec.setter
     def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class ActivateAccessKeyRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.ActivateAccessKeyRequest
-    _pb2_base_: access_key_service_pb2.ActivateAccessKeyRequest
     
     def __init__(
         self,
@@ -618,22 +602,21 @@ class ActivateAccessKeyRequest(message_1.Message):
         *,
         id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ActivateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "KeyIdentity|None":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("id", explicit_presence=True,
         wrap=KeyIdentity,
         )
     @id.setter
     def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity|None") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("id",value,explicit_presence=True)
     
 class DeactivateAccessKeyRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.DeactivateAccessKeyRequest
-    _pb2_base_: access_key_service_pb2.DeactivateAccessKeyRequest
     
     def __init__(
         self,
@@ -641,22 +624,21 @@ class DeactivateAccessKeyRequest(message_1.Message):
         *,
         id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeactivateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "KeyIdentity|None":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("id", explicit_presence=True,
         wrap=KeyIdentity,
         )
     @id.setter
     def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity|None") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("id",value,explicit_presence=True)
     
 class DeleteAccessKeyRequest(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.DeleteAccessKeyRequest
-    _pb2_base_: access_key_service_pb2.DeleteAccessKeyRequest
     
     def __init__(
         self,
@@ -664,22 +646,21 @@ class DeleteAccessKeyRequest(message_1.Message):
         *,
         id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeleteAccessKeyRequest",access_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "KeyIdentity|None":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("id", explicit_presence=True,
         wrap=KeyIdentity,
         )
     @id.setter
     def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity|None") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("id",value,explicit_presence=True)
     
 class GetAccessKeySecretOnceResponse(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.GetAccessKeySecretOnceResponse
-    _pb2_base_: access_key_service_pb2.GetAccessKeySecretOnceResponse
     
     def __init__(
         self,
@@ -687,56 +668,54 @@ class GetAccessKeySecretOnceResponse(message_1.Message):
         *,
         secret: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetAccessKeySecretOnceResponse",access_key_service_pb2.DESCRIPTOR)
         if secret is not None:
             self.secret = secret
     
     @property
     def secret(self) -> "builtins.str":
-        return super()._get_field("secret", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("secret", explicit_presence=False,
         )
     @secret.setter
     def secret(self, value: "builtins.str") -> None:
-        return super()._set_field("secret",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("secret",value,explicit_presence=False)
     
 class ListAccessKeysResponse(message_1.Message):
     _PB2_CLASS_ = access_key_service_pb2.ListAccessKeysResponse
-    _pb2_base_: access_key_service_pb2.ListAccessKeysResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[AccessKey]|None" = None,
+        items: "abc.Iterable[AccessKey]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListAccessKeysResponse",access_key_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[AccessKey]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[AccessKey]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=AccessKey,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[AccessKey]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[AccessKey]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/auth_public_key.proto
 class AuthPublicKey(message_1.Message):
     _PB2_CLASS_ = auth_public_key_pb2.AuthPublicKey
-    _pb2_base_: auth_public_key_pb2.AuthPublicKey
     
     def __init__(
         self,
@@ -746,7 +725,7 @@ class AuthPublicKey(message_1.Message):
         spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
         status: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.AuthPublicKey",auth_public_key_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -756,34 +735,33 @@ class AuthPublicKey(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AuthPublicKeySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AuthPublicKeySpec,
         )
     @spec.setter
     def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "AuthPublicKeyStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=AuthPublicKeyStatus,
         )
     @status.setter
     def status(self, value: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class AuthPublicKeySpec(message_1.Message):
     _PB2_CLASS_ = auth_public_key_pb2.AuthPublicKeySpec
-    _pb2_base_: auth_public_key_pb2.AuthPublicKeySpec
     
     def __init__(
         self,
@@ -794,7 +772,7 @@ class AuthPublicKeySpec(message_1.Message):
         description: "builtins.str|None" = None,
         data: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.AuthPublicKeySpec",auth_public_key_pb2.DESCRIPTOR)
         if account is not None:
             self.account = account
         if expires_at is not None:
@@ -806,43 +784,42 @@ class AuthPublicKeySpec(message_1.Message):
     
     @property
     def account(self) -> "Account|None":
-        return super()._get_field("account", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("account", explicit_presence=True,
         wrap=Account,
         )
     @account.setter
     def account(self, value: "Account|access_pb2.Account|None") -> None:
-        return super()._set_field("account",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("account",value,explicit_presence=True)
     
     @property
     def expires_at(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("expires_at", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("expires_at", explicit_presence=True,
         )
     @expires_at.setter
     def expires_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("expires_at",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("expires_at",value,explicit_presence=True)
     
     @property
     def description(self) -> "builtins.str":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
     def description(self, value: "builtins.str") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("description",value,explicit_presence=False)
     
     @property
     def data(self) -> "builtins.str":
-        return super()._get_field("data", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("data", explicit_presence=False,
         )
     @data.setter
     def data(self, value: "builtins.str") -> None:
-        return super()._set_field("data",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("data",value,explicit_presence=False)
     
 class AuthPublicKeyStatus(message_1.Message):
     _PB2_CLASS_ = auth_public_key_pb2.AuthPublicKeyStatus
-    _pb2_base_: auth_public_key_pb2.AuthPublicKeyStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AuthPublicKeyStatus.State",auth_public_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AuthPublicKeyStatus.State",auth_public_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         ACTIVE = 1
         INACTIVE = 2
@@ -859,7 +836,7 @@ class AuthPublicKeyStatus(message_1.Message):
         algorithm: "builtins.str|None" = None,
         key_size: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.AuthPublicKeyStatus",auth_public_key_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if fingerprint is not None:
@@ -871,41 +848,40 @@ class AuthPublicKeyStatus(message_1.Message):
     
     @property
     def state(self) -> "AuthPublicKeyStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=AuthPublicKeyStatus.State,
         )
     @state.setter
     def state(self, value: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def fingerprint(self) -> "builtins.str":
-        return super()._get_field("fingerprint", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("fingerprint", explicit_presence=False,
         )
     @fingerprint.setter
     def fingerprint(self, value: "builtins.str") -> None:
-        return super()._set_field("fingerprint",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("fingerprint",value,explicit_presence=False)
     
     @property
     def algorithm(self) -> "builtins.str":
-        return super()._get_field("algorithm", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("algorithm", explicit_presence=False,
         )
     @algorithm.setter
     def algorithm(self, value: "builtins.str") -> None:
-        return super()._set_field("algorithm",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("algorithm",value,explicit_presence=False)
     
     @property
     def key_size(self) -> "builtins.int":
-        return super()._get_field("key_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("key_size", explicit_presence=False,
         )
     @key_size.setter
     def key_size(self, value: "builtins.int") -> None:
-        return super()._set_field("key_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("key_size",value,explicit_presence=False)
     
 # file: nebius/iam/v1/auth_public_key_service.proto
 class CreateAuthPublicKeyRequest(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.CreateAuthPublicKeyRequest
-    _pb2_base_: auth_public_key_service_pb2.CreateAuthPublicKeyRequest
     
     def __init__(
         self,
@@ -914,7 +890,7 @@ class CreateAuthPublicKeyRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.CreateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -922,25 +898,24 @@ class CreateAuthPublicKeyRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AuthPublicKeySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AuthPublicKeySpec,
         )
     @spec.setter
     def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class GetAuthPublicKeyRequest(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.GetAuthPublicKeyRequest
-    _pb2_base_: auth_public_key_service_pb2.GetAuthPublicKeyRequest
     
     def __init__(
         self,
@@ -948,21 +923,20 @@ class GetAuthPublicKeyRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListAuthPublicKeyRequest(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.ListAuthPublicKeyRequest
-    _pb2_base_: auth_public_key_service_pb2.ListAuthPublicKeyRequest
     
     def __init__(
         self,
@@ -973,7 +947,7 @@ class ListAuthPublicKeyRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -985,39 +959,38 @@ class ListAuthPublicKeyRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListAuthPublicKeyByAccountRequest(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.ListAuthPublicKeyByAccountRequest
-    _pb2_base_: auth_public_key_service_pb2.ListAuthPublicKeyByAccountRequest
     
     def __init__(
         self,
@@ -1028,7 +1001,7 @@ class ListAuthPublicKeyByAccountRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListAuthPublicKeyByAccountRequest",auth_public_key_service_pb2.DESCRIPTOR)
         if account is not None:
             self.account = account
         if page_size is not None:
@@ -1040,40 +1013,39 @@ class ListAuthPublicKeyByAccountRequest(message_1.Message):
     
     @property
     def account(self) -> "Account|None":
-        return super()._get_field("account", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("account", explicit_presence=True,
         wrap=Account,
         )
     @account.setter
     def account(self, value: "Account|access_pb2.Account|None") -> None:
-        return super()._set_field("account",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("account",value,explicit_presence=True)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class UpdateAuthPublicKeyRequest(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.UpdateAuthPublicKeyRequest
-    _pb2_base_: auth_public_key_service_pb2.UpdateAuthPublicKeyRequest
     
     def __init__(
         self,
@@ -1082,7 +1054,7 @@ class UpdateAuthPublicKeyRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UpdateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1090,25 +1062,24 @@ class UpdateAuthPublicKeyRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "AuthPublicKeySpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=AuthPublicKeySpec,
         )
     @spec.setter
     def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class ActivateAuthPublicKeyRequest(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.ActivateAuthPublicKeyRequest
-    _pb2_base_: auth_public_key_service_pb2.ActivateAuthPublicKeyRequest
     
     def __init__(
         self,
@@ -1116,21 +1087,20 @@ class ActivateAuthPublicKeyRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ActivateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class DeactivateAuthPublicKeyRequest(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.DeactivateAuthPublicKeyRequest
-    _pb2_base_: auth_public_key_service_pb2.DeactivateAuthPublicKeyRequest
     
     def __init__(
         self,
@@ -1138,21 +1108,20 @@ class DeactivateAuthPublicKeyRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeactivateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class DeleteAuthPublicKeyRequest(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.DeleteAuthPublicKeyRequest
-    _pb2_base_: auth_public_key_service_pb2.DeleteAuthPublicKeyRequest
     
     def __init__(
         self,
@@ -1160,55 +1129,54 @@ class DeleteAuthPublicKeyRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeleteAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListAuthPublicKeyResponse(message_1.Message):
     _PB2_CLASS_ = auth_public_key_service_pb2.ListAuthPublicKeyResponse
-    _pb2_base_: auth_public_key_service_pb2.ListAuthPublicKeyResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[AuthPublicKey]|None" = None,
+        items: "abc.Iterable[AuthPublicKey]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListAuthPublicKeyResponse",auth_public_key_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[AuthPublicKey]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[AuthPublicKey]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=AuthPublicKey,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[AuthPublicKey]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[AuthPublicKey]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/state.proto
 class State(pb_enum.Enum):
-    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.State",state_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.State",state_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     STATE_UNSPECIFIED = 0
     ACTIVE = 1
     SCHEDULING_FOR_DELETION = 2
@@ -1222,7 +1190,7 @@ class State(pb_enum.Enum):
 
 # file: nebius/iam/v1/suspension_state.proto
 class SuspensionState(pb_enum.Enum):
-    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.SuspensionState",suspension_state_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.SuspensionState",suspension_state_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     SUSPENSION_STATE_UNSPECIFIED = 0
     NONE = 1
     SUSPENDING = 2
@@ -1232,7 +1200,6 @@ class SuspensionState(pb_enum.Enum):
 # file: nebius/iam/v1/container.proto
 class Container(message_1.Message):
     _PB2_CLASS_ = container_pb2.Container
-    _pb2_base_: container_pb2.Container
     
     def __init__(
         self,
@@ -1242,7 +1209,7 @@ class Container(message_1.Message):
         spec: "ContainerSpec|container_pb2.ContainerSpec|None" = None,
         status: "ContainerStatus|container_pb2.ContainerStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Container",container_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1252,44 +1219,42 @@ class Container(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ContainerSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ContainerSpec,
         )
     @spec.setter
     def spec(self, value: "ContainerSpec|container_pb2.ContainerSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "ContainerStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=ContainerStatus,
         )
     @status.setter
     def status(self, value: "ContainerStatus|container_pb2.ContainerStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class ContainerSpec(message_1.Message):
     _PB2_CLASS_ = container_pb2.ContainerSpec
-    _pb2_base_: container_pb2.ContainerSpec
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ContainerSpec",container_pb2.DESCRIPTOR)
     
 class ContainerStatus(message_1.Message):
     _PB2_CLASS_ = container_pb2.ContainerStatus
-    _pb2_base_: container_pb2.ContainerStatus
     
     def __init__(
         self,
@@ -1298,7 +1263,7 @@ class ContainerStatus(message_1.Message):
         suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|None" = None,
         container_state: "State|state_pb2.State|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ContainerStatus",container_pb2.DESCRIPTOR)
         if suspension_state is not None:
             self.suspension_state = suspension_state
         if container_state is not None:
@@ -1306,26 +1271,25 @@ class ContainerStatus(message_1.Message):
     
     @property
     def suspension_state(self) -> "SuspensionState":
-        return super()._get_field("suspension_state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("suspension_state", explicit_presence=False,
         wrap=SuspensionState,
         )
     @suspension_state.setter
     def suspension_state(self, value: "SuspensionState|suspension_state_pb2.SuspensionState") -> None:
-        return super()._set_field("suspension_state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("suspension_state",value,explicit_presence=False)
     
     @property
     def container_state(self) -> "State":
-        return super()._get_field("container_state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("container_state", explicit_presence=False,
         wrap=State,
         )
     @container_state.setter
     def container_state(self, value: "State|state_pb2.State") -> None:
-        return super()._set_field("container_state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("container_state",value,explicit_presence=False)
     
 # file: nebius/iam/v1/federation.proto
 class Federation(message_1.Message):
     _PB2_CLASS_ = federation_pb2.Federation
-    _pb2_base_: federation_pb2.Federation
     
     def __init__(
         self,
@@ -1335,7 +1299,7 @@ class Federation(message_1.Message):
         spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
         status: "FederationStatus|federation_pb2.FederationStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Federation",federation_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1345,34 +1309,33 @@ class Federation(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "FederationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=FederationSpec,
         )
     @spec.setter
     def spec(self, value: "FederationSpec|federation_pb2.FederationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "FederationStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=FederationStatus,
         )
     @status.setter
     def status(self, value: "FederationStatus|federation_pb2.FederationStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class FederationSpec(message_1.Message):
     _PB2_CLASS_ = federation_pb2.FederationSpec
-    _pb2_base_: federation_pb2.FederationSpec
     
     def __init__(
         self,
@@ -1382,7 +1345,7 @@ class FederationSpec(message_1.Message):
         active: "builtins.bool|None" = None,
         saml_settings: "SamlSettings|federation_pb2.SamlSettings|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.FederationSpec",federation_pb2.DESCRIPTOR)
         if user_account_auto_creation is not None:
             self.user_account_auto_creation = user_account_auto_creation
         if active is not None:
@@ -1392,32 +1355,31 @@ class FederationSpec(message_1.Message):
     
     @property
     def user_account_auto_creation(self) -> "builtins.bool":
-        return super()._get_field("user_account_auto_creation", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("user_account_auto_creation", explicit_presence=False,
         )
     @user_account_auto_creation.setter
     def user_account_auto_creation(self, value: "builtins.bool") -> None:
-        return super()._set_field("user_account_auto_creation",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("user_account_auto_creation",value,explicit_presence=False)
     
     @property
     def active(self) -> "builtins.bool":
-        return super()._get_field("active", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("active", explicit_presence=False,
         )
     @active.setter
     def active(self, value: "builtins.bool") -> None:
-        return super()._set_field("active",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("active",value,explicit_presence=False)
     
     @property
     def saml_settings(self) -> "SamlSettings|None":
-        return super()._get_field("saml_settings", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("saml_settings", explicit_presence=True,
         wrap=SamlSettings,
         )
     @saml_settings.setter
     def saml_settings(self, value: "SamlSettings|federation_pb2.SamlSettings|None") -> None:
-        return super()._set_field("saml_settings",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("saml_settings",value,explicit_presence=True)
     
 class SamlSettings(message_1.Message):
     _PB2_CLASS_ = federation_pb2.SamlSettings
-    _pb2_base_: federation_pb2.SamlSettings
     
     def __init__(
         self,
@@ -1426,7 +1388,7 @@ class SamlSettings(message_1.Message):
         idp_issuer: "builtins.str|None" = None,
         sso_url: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.SamlSettings",federation_pb2.DESCRIPTOR)
         if idp_issuer is not None:
             self.idp_issuer = idp_issuer
         if sso_url is not None:
@@ -1434,34 +1396,32 @@ class SamlSettings(message_1.Message):
     
     @property
     def idp_issuer(self) -> "builtins.str":
-        return super()._get_field("idp_issuer", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("idp_issuer", explicit_presence=False,
         )
     @idp_issuer.setter
     def idp_issuer(self, value: "builtins.str") -> None:
-        return super()._set_field("idp_issuer",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("idp_issuer",value,explicit_presence=False)
     
     @property
     def sso_url(self) -> "builtins.str":
-        return super()._get_field("sso_url", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("sso_url", explicit_presence=False,
         )
     @sso_url.setter
     def sso_url(self, value: "builtins.str") -> None:
-        return super()._set_field("sso_url",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("sso_url",value,explicit_presence=False)
     
 class FederationStatus(message_1.Message):
     _PB2_CLASS_ = federation_pb2.FederationStatus
-    _pb2_base_: federation_pb2.FederationStatus
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.FederationStatus",federation_pb2.DESCRIPTOR)
     
 # file: nebius/iam/v1/federation_certificate.proto
 class FederationCertificate(message_1.Message):
     _PB2_CLASS_ = federation_certificate_pb2.FederationCertificate
-    _pb2_base_: federation_certificate_pb2.FederationCertificate
     
     def __init__(
         self,
@@ -1471,7 +1431,7 @@ class FederationCertificate(message_1.Message):
         spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
         status: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.FederationCertificate",federation_certificate_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1481,34 +1441,33 @@ class FederationCertificate(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "FederationCertificateSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=FederationCertificateSpec,
         )
     @spec.setter
     def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "FederationCertificateStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=FederationCertificateStatus,
         )
     @status.setter
     def status(self, value: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class FederationCertificateSpec(message_1.Message):
     _PB2_CLASS_ = federation_certificate_pb2.FederationCertificateSpec
-    _pb2_base_: federation_certificate_pb2.FederationCertificateSpec
     
     def __init__(
         self,
@@ -1517,7 +1476,7 @@ class FederationCertificateSpec(message_1.Message):
         description: "builtins.str|None" = None,
         data: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.FederationCertificateSpec",federation_certificate_pb2.DESCRIPTOR)
         if description is not None:
             self.description = description
         if data is not None:
@@ -1525,26 +1484,25 @@ class FederationCertificateSpec(message_1.Message):
     
     @property
     def description(self) -> "builtins.str":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
     def description(self, value: "builtins.str") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("description",value,explicit_presence=False)
     
     @property
     def data(self) -> "builtins.str":
-        return super()._get_field("data", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("data", explicit_presence=False,
         )
     @data.setter
     def data(self, value: "builtins.str") -> None:
-        return super()._set_field("data",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("data",value,explicit_presence=False)
     
 class FederationCertificateStatus(message_1.Message):
     _PB2_CLASS_ = federation_certificate_pb2.FederationCertificateStatus
-    _pb2_base_: federation_certificate_pb2.FederationCertificateStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.FederationCertificateStatus.State",federation_certificate_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.FederationCertificateStatus.State",federation_certificate_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         ACTIVE = 1
         EXPIRED = 2
@@ -1559,7 +1517,7 @@ class FederationCertificateStatus(message_1.Message):
         not_before: "timestamp_pb2.Timestamp|None" = None,
         not_after: "timestamp_pb2.Timestamp|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.FederationCertificateStatus",federation_certificate_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if algorithm is not None:
@@ -1573,49 +1531,48 @@ class FederationCertificateStatus(message_1.Message):
     
     @property
     def state(self) -> "FederationCertificateStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=FederationCertificateStatus.State,
         )
     @state.setter
     def state(self, value: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def algorithm(self) -> "builtins.str":
-        return super()._get_field("algorithm", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("algorithm", explicit_presence=False,
         )
     @algorithm.setter
     def algorithm(self, value: "builtins.str") -> None:
-        return super()._set_field("algorithm",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("algorithm",value,explicit_presence=False)
     
     @property
     def key_size(self) -> "builtins.int":
-        return super()._get_field("key_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("key_size", explicit_presence=False,
         )
     @key_size.setter
     def key_size(self, value: "builtins.int") -> None:
-        return super()._set_field("key_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("key_size",value,explicit_presence=False)
     
     @property
     def not_before(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("not_before", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("not_before", explicit_presence=True,
         )
     @not_before.setter
     def not_before(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("not_before",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("not_before",value,explicit_presence=True)
     
     @property
     def not_after(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("not_after", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("not_after", explicit_presence=True,
         )
     @not_after.setter
     def not_after(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("not_after",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("not_after",value,explicit_presence=True)
     
 # file: nebius/iam/v1/federation_certificate_service.proto
 class CreateFederationCertificateRequest(message_1.Message):
     _PB2_CLASS_ = federation_certificate_service_pb2.CreateFederationCertificateRequest
-    _pb2_base_: federation_certificate_service_pb2.CreateFederationCertificateRequest
     
     def __init__(
         self,
@@ -1624,7 +1581,7 @@ class CreateFederationCertificateRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.CreateFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1632,25 +1589,24 @@ class CreateFederationCertificateRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "FederationCertificateSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=FederationCertificateSpec,
         )
     @spec.setter
     def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class GetFederationCertificateRequest(message_1.Message):
     _PB2_CLASS_ = federation_certificate_service_pb2.GetFederationCertificateRequest
-    _pb2_base_: federation_certificate_service_pb2.GetFederationCertificateRequest
     
     def __init__(
         self,
@@ -1658,21 +1614,20 @@ class GetFederationCertificateRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListFederationCertificateByFederationRequest(message_1.Message):
     _PB2_CLASS_ = federation_certificate_service_pb2.ListFederationCertificateByFederationRequest
-    _pb2_base_: federation_certificate_service_pb2.ListFederationCertificateByFederationRequest
     
     def __init__(
         self,
@@ -1682,7 +1637,7 @@ class ListFederationCertificateByFederationRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListFederationCertificateByFederationRequest",federation_certificate_service_pb2.DESCRIPTOR)
         if federation_id is not None:
             self.federation_id = federation_id
         if page_size is not None:
@@ -1692,31 +1647,30 @@ class ListFederationCertificateByFederationRequest(message_1.Message):
     
     @property
     def federation_id(self) -> "builtins.str":
-        return super()._get_field("federation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
     def federation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("federation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("federation_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class UpdateFederationCertificateRequest(message_1.Message):
     _PB2_CLASS_ = federation_certificate_service_pb2.UpdateFederationCertificateRequest
-    _pb2_base_: federation_certificate_service_pb2.UpdateFederationCertificateRequest
     
     def __init__(
         self,
@@ -1725,7 +1679,7 @@ class UpdateFederationCertificateRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UpdateFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1733,25 +1687,24 @@ class UpdateFederationCertificateRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "FederationCertificateSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=FederationCertificateSpec,
         )
     @spec.setter
     def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class DeleteFederationCertificateRequest(message_1.Message):
     _PB2_CLASS_ = federation_certificate_service_pb2.DeleteFederationCertificateRequest
-    _pb2_base_: federation_certificate_service_pb2.DeleteFederationCertificateRequest
     
     def __init__(
         self,
@@ -1759,56 +1712,54 @@ class DeleteFederationCertificateRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeleteFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListFederationCertificateResponse(message_1.Message):
     _PB2_CLASS_ = federation_certificate_service_pb2.ListFederationCertificateResponse
-    _pb2_base_: federation_certificate_service_pb2.ListFederationCertificateResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[FederationCertificate]|None" = None,
+        items: "abc.Iterable[FederationCertificate]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListFederationCertificateResponse",federation_certificate_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[FederationCertificate]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[FederationCertificate]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=FederationCertificate,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[FederationCertificate]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[FederationCertificate]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/federation_service.proto
 class CreateFederationRequest(message_1.Message):
     _PB2_CLASS_ = federation_service_pb2.CreateFederationRequest
-    _pb2_base_: federation_service_pb2.CreateFederationRequest
     
     def __init__(
         self,
@@ -1817,7 +1768,7 @@ class CreateFederationRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.CreateFederationRequest",federation_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1825,25 +1776,24 @@ class CreateFederationRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "FederationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=FederationSpec,
         )
     @spec.setter
     def spec(self, value: "FederationSpec|federation_pb2.FederationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class GetFederationRequest(message_1.Message):
     _PB2_CLASS_ = federation_service_pb2.GetFederationRequest
-    _pb2_base_: federation_service_pb2.GetFederationRequest
     
     def __init__(
         self,
@@ -1851,21 +1801,20 @@ class GetFederationRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetFederationRequest",federation_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListFederationsRequest(message_1.Message):
     _PB2_CLASS_ = federation_service_pb2.ListFederationsRequest
-    _pb2_base_: federation_service_pb2.ListFederationsRequest
     
     def __init__(
         self,
@@ -1876,7 +1825,7 @@ class ListFederationsRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListFederationsRequest",federation_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -1888,73 +1837,71 @@ class ListFederationsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListFederationsResponse(message_1.Message):
     _PB2_CLASS_ = federation_service_pb2.ListFederationsResponse
-    _pb2_base_: federation_service_pb2.ListFederationsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Federation]|None" = None,
+        items: "abc.Iterable[Federation]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListFederationsResponse",federation_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Federation]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Federation]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Federation,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Federation]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Federation]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class UpdateFederationRequest(message_1.Message):
     _PB2_CLASS_ = federation_service_pb2.UpdateFederationRequest
-    _pb2_base_: federation_service_pb2.UpdateFederationRequest
     
     def __init__(
         self,
@@ -1964,7 +1911,7 @@ class UpdateFederationRequest(message_1.Message):
         spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
         status: "FederationStatus|federation_pb2.FederationStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UpdateFederationRequest",federation_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1974,34 +1921,33 @@ class UpdateFederationRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "FederationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=FederationSpec,
         )
     @spec.setter
     def spec(self, value: "FederationSpec|federation_pb2.FederationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "FederationStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=FederationStatus,
         )
     @status.setter
     def status(self, value: "FederationStatus|federation_pb2.FederationStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class DeleteFederationRequest(message_1.Message):
     _PB2_CLASS_ = federation_service_pb2.DeleteFederationRequest
-    _pb2_base_: federation_service_pb2.DeleteFederationRequest
     
     def __init__(
         self,
@@ -2009,22 +1955,21 @@ class DeleteFederationRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeleteFederationRequest",federation_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 # file: nebius/iam/v1/group.proto
 class Group(message_1.Message):
     _PB2_CLASS_ = group_pb2.Group
-    _pb2_base_: group_pb2.Group
     
     def __init__(
         self,
@@ -2034,7 +1979,7 @@ class Group(message_1.Message):
         spec: "GroupSpec|group_pb2.GroupSpec|None" = None,
         status: "GroupStatus|group_pb2.GroupStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Group",group_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -2044,47 +1989,45 @@ class Group(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "GroupSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=GroupSpec,
         )
     @spec.setter
     def spec(self, value: "GroupSpec|group_pb2.GroupSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "GroupStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=GroupStatus,
         )
     @status.setter
     def status(self, value: "GroupStatus|group_pb2.GroupStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class GroupSpec(message_1.Message):
     _PB2_CLASS_ = group_pb2.GroupSpec
-    _pb2_base_: group_pb2.GroupSpec
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GroupSpec",group_pb2.DESCRIPTOR)
     
 class GroupStatus(message_1.Message):
     _PB2_CLASS_ = group_pb2.GroupStatus
-    _pb2_base_: group_pb2.GroupStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.GroupStatus.State",group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.GroupStatus.State",group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         ACTIVE = 1
     
@@ -2095,7 +2038,7 @@ class GroupStatus(message_1.Message):
         state: "GroupStatus.State|group_pb2.GroupStatus.State|None" = None,
         members_count: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GroupStatus",group_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if members_count is not None:
@@ -2103,25 +2046,24 @@ class GroupStatus(message_1.Message):
     
     @property
     def state(self) -> "GroupStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=GroupStatus.State,
         )
     @state.setter
     def state(self, value: "GroupStatus.State|group_pb2.GroupStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def members_count(self) -> "builtins.int":
-        return super()._get_field("members_count", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("members_count", explicit_presence=False,
         )
     @members_count.setter
     def members_count(self, value: "builtins.int") -> None:
-        return super()._set_field("members_count",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("members_count",value,explicit_presence=False)
     
 # file: nebius/iam/v1/group_membership.proto
 class GroupMembership(message_1.Message):
     _PB2_CLASS_ = group_membership_pb2.GroupMembership
-    _pb2_base_: group_membership_pb2.GroupMembership
     
     def __init__(
         self,
@@ -2132,7 +2074,7 @@ class GroupMembership(message_1.Message):
         status: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|None" = None,
         revoke_at: "timestamp_pb2.Timestamp|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GroupMembership",group_membership_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -2144,42 +2086,41 @@ class GroupMembership(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "GroupMembershipSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=GroupMembershipSpec,
         )
     @spec.setter
     def spec(self, value: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "GroupMembershipStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=GroupMembershipStatus,
         )
     @status.setter
     def status(self, value: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
     @property
     def revoke_at(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("revoke_at", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("revoke_at", explicit_presence=True,
         )
     @revoke_at.setter
     def revoke_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("revoke_at",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("revoke_at",value,explicit_presence=True)
     
 class GroupMembershipSpec(message_1.Message):
     _PB2_CLASS_ = group_membership_pb2.GroupMembershipSpec
-    _pb2_base_: group_membership_pb2.GroupMembershipSpec
     
     def __init__(
         self,
@@ -2187,32 +2128,30 @@ class GroupMembershipSpec(message_1.Message):
         *,
         member_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GroupMembershipSpec",group_membership_pb2.DESCRIPTOR)
         if member_id is not None:
             self.member_id = member_id
     
     @property
     def member_id(self) -> "builtins.str":
-        return super()._get_field("member_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("member_id", explicit_presence=False,
         )
     @member_id.setter
     def member_id(self, value: "builtins.str") -> None:
-        return super()._set_field("member_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("member_id",value,explicit_presence=False)
     
 class GroupMembershipStatus(message_1.Message):
     _PB2_CLASS_ = group_membership_pb2.GroupMembershipStatus
-    _pb2_base_: group_membership_pb2.GroupMembershipStatus
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GroupMembershipStatus",group_membership_pb2.DESCRIPTOR)
     
 # file: nebius/iam/v1/group_membership_service.proto
 class CreateGroupMembershipRequest(message_1.Message):
     _PB2_CLASS_ = group_membership_service_pb2.CreateGroupMembershipRequest
-    _pb2_base_: group_membership_service_pb2.CreateGroupMembershipRequest
     
     def __init__(
         self,
@@ -2222,7 +2161,7 @@ class CreateGroupMembershipRequest(message_1.Message):
         spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None" = None,
         revoke_after_hours: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.CreateGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -2232,33 +2171,32 @@ class CreateGroupMembershipRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "GroupMembershipSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=GroupMembershipSpec,
         )
     @spec.setter
     def spec(self, value: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def revoke_after_hours(self) -> "builtins.int":
-        return super()._get_field("revoke_after_hours", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("revoke_after_hours", explicit_presence=False,
         )
     @revoke_after_hours.setter
     def revoke_after_hours(self, value: "builtins.int") -> None:
-        return super()._set_field("revoke_after_hours",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("revoke_after_hours",value,explicit_presence=False)
     
 class DeleteGroupMembershipRequest(message_1.Message):
     _PB2_CLASS_ = group_membership_service_pb2.DeleteGroupMembershipRequest
-    _pb2_base_: group_membership_service_pb2.DeleteGroupMembershipRequest
     
     def __init__(
         self,
@@ -2266,21 +2204,20 @@ class DeleteGroupMembershipRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeleteGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetGroupMembershipRequest(message_1.Message):
     _PB2_CLASS_ = group_membership_service_pb2.GetGroupMembershipRequest
-    _pb2_base_: group_membership_service_pb2.GetGroupMembershipRequest
     
     def __init__(
         self,
@@ -2288,21 +2225,20 @@ class GetGroupMembershipRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListGroupMembershipsRequest(message_1.Message):
     _PB2_CLASS_ = group_membership_service_pb2.ListGroupMembershipsRequest
-    _pb2_base_: group_membership_service_pb2.ListGroupMembershipsRequest
     
     def __init__(
         self,
@@ -2313,7 +2249,7 @@ class ListGroupMembershipsRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListGroupMembershipsRequest",group_membership_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -2325,39 +2261,38 @@ class ListGroupMembershipsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListMemberOfRequest(message_1.Message):
     _PB2_CLASS_ = group_membership_service_pb2.ListMemberOfRequest
-    _pb2_base_: group_membership_service_pb2.ListMemberOfRequest
     
     def __init__(
         self,
@@ -2368,7 +2303,7 @@ class ListMemberOfRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListMemberOfRequest",group_membership_service_pb2.DESCRIPTOR)
         if subject_id is not None:
             self.subject_id = subject_id
         if page_size is not None:
@@ -2380,108 +2315,105 @@ class ListMemberOfRequest(message_1.Message):
     
     @property
     def subject_id(self) -> "builtins.str":
-        return super()._get_field("subject_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("subject_id", explicit_presence=False,
         )
     @subject_id.setter
     def subject_id(self, value: "builtins.str") -> None:
-        return super()._set_field("subject_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("subject_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListGroupMembershipsResponse(message_1.Message):
     _PB2_CLASS_ = group_membership_service_pb2.ListGroupMembershipsResponse
-    _pb2_base_: group_membership_service_pb2.ListGroupMembershipsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        memberships: "abc.MutableSequence[GroupMembership]|None" = None,
+        memberships: "abc.Iterable[GroupMembership]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListGroupMembershipsResponse",group_membership_service_pb2.DESCRIPTOR)
         if memberships is not None:
             self.memberships = memberships
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def memberships(self) -> "abc.MutableSequence[GroupMembership]|None":
-        return super()._get_field("memberships", base=self._pb2_base_, explicit_presence=True,
+    def memberships(self) -> "abc.MutableSequence[GroupMembership]":
+        return super()._get_field("memberships", explicit_presence=False,
         wrap=GroupMembership,
         )
     @memberships.setter
-    def memberships(self, value: "abc.MutableSequence[GroupMembership]|None") -> None:
-        return super()._set_field("memberships",value, base=self._pb2_base_,explicit_presence=True)
+    def memberships(self, value: "abc.Iterable[GroupMembership]") -> None:
+        return super()._set_field("memberships",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class ListMemberOfResponse(message_1.Message):
     _PB2_CLASS_ = group_membership_service_pb2.ListMemberOfResponse
-    _pb2_base_: group_membership_service_pb2.ListMemberOfResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Group]|None" = None,
+        items: "abc.Iterable[Group]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListMemberOfResponse",group_membership_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Group]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Group]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Group,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Group]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Group]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/group_service.proto
 class GetGroupRequest(message_1.Message):
     _PB2_CLASS_ = group_service_pb2.GetGroupRequest
-    _pb2_base_: group_service_pb2.GetGroupRequest
     
     def __init__(
         self,
@@ -2489,21 +2421,20 @@ class GetGroupRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetGroupRequest",group_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetGroupByNameRequest(message_1.Message):
     _PB2_CLASS_ = group_service_pb2.GetGroupByNameRequest
-    _pb2_base_: group_service_pb2.GetGroupByNameRequest
     
     def __init__(
         self,
@@ -2512,7 +2443,7 @@ class GetGroupByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetGroupByNameRequest",group_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -2520,23 +2451,22 @@ class GetGroupByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListGroupsRequest(message_1.Message):
     _PB2_CLASS_ = group_service_pb2.ListGroupsRequest
-    _pb2_base_: group_service_pb2.ListGroupsRequest
     
     def __init__(
         self,
@@ -2547,7 +2477,7 @@ class ListGroupsRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListGroupsRequest",group_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -2559,74 +2489,72 @@ class ListGroupsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListGroupsResponse(message_1.Message):
     _PB2_CLASS_ = group_service_pb2.ListGroupsResponse
-    _pb2_base_: group_service_pb2.ListGroupsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Group]|None" = None,
+        items: "abc.Iterable[Group]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListGroupsResponse",group_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Group]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Group]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Group,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Group]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Group]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/token_service.proto
 class ExchangeTokenRequest(message_1.Message):
     _PB2_CLASS_ = token_service_pb2.ExchangeTokenRequest
-    _pb2_base_: token_service_pb2.ExchangeTokenRequest
     
     def __init__(
         self,
@@ -2636,13 +2564,13 @@ class ExchangeTokenRequest(message_1.Message):
         requested_token_type: "builtins.str|None" = None,
         subject_token: "builtins.str|None" = None,
         subject_token_type: "builtins.str|None" = None,
-        scopes: "abc.MutableSequence[builtins.str]|None" = None,
+        scopes: "abc.Iterable[builtins.str]|None" = None,
         audience: "builtins.str|None" = None,
         actor_token: "builtins.str|None" = None,
         actor_token_type: "builtins.str|None" = None,
-        resource: "abc.MutableSequence[builtins.str]|None" = None,
+        resource: "abc.Iterable[builtins.str]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ExchangeTokenRequest",token_service_pb2.DESCRIPTOR)
         if grant_type is not None:
             self.grant_type = grant_type
         if requested_token_type is not None:
@@ -2664,79 +2592,78 @@ class ExchangeTokenRequest(message_1.Message):
     
     @property
     def grant_type(self) -> "builtins.str":
-        return super()._get_field("grant_type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("grant_type", explicit_presence=False,
         )
     @grant_type.setter
     def grant_type(self, value: "builtins.str") -> None:
-        return super()._set_field("grant_type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("grant_type",value,explicit_presence=False)
     
     @property
     def requested_token_type(self) -> "builtins.str":
-        return super()._get_field("requested_token_type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("requested_token_type", explicit_presence=False,
         )
     @requested_token_type.setter
     def requested_token_type(self, value: "builtins.str") -> None:
-        return super()._set_field("requested_token_type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("requested_token_type",value,explicit_presence=False)
     
     @property
     def subject_token(self) -> "builtins.str":
-        return super()._get_field("subject_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("subject_token", explicit_presence=False,
         )
     @subject_token.setter
     def subject_token(self, value: "builtins.str") -> None:
-        return super()._set_field("subject_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("subject_token",value,explicit_presence=False)
     
     @property
     def subject_token_type(self) -> "builtins.str":
-        return super()._get_field("subject_token_type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("subject_token_type", explicit_presence=False,
         )
     @subject_token_type.setter
     def subject_token_type(self, value: "builtins.str") -> None:
-        return super()._set_field("subject_token_type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("subject_token_type",value,explicit_presence=False)
     
     @property
     def scopes(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("scopes", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("scopes", explicit_presence=False,
         )
     @scopes.setter
-    def scopes(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("scopes",value, base=self._pb2_base_,explicit_presence=False)
+    def scopes(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("scopes",value,explicit_presence=False)
     
     @property
     def audience(self) -> "builtins.str":
-        return super()._get_field("audience", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("audience", explicit_presence=False,
         )
     @audience.setter
     def audience(self, value: "builtins.str") -> None:
-        return super()._set_field("audience",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("audience",value,explicit_presence=False)
     
     @property
     def actor_token(self) -> "builtins.str":
-        return super()._get_field("actor_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("actor_token", explicit_presence=False,
         )
     @actor_token.setter
     def actor_token(self, value: "builtins.str") -> None:
-        return super()._set_field("actor_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("actor_token",value,explicit_presence=False)
     
     @property
     def actor_token_type(self) -> "builtins.str":
-        return super()._get_field("actor_token_type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("actor_token_type", explicit_presence=False,
         )
     @actor_token_type.setter
     def actor_token_type(self, value: "builtins.str") -> None:
-        return super()._set_field("actor_token_type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("actor_token_type",value,explicit_presence=False)
     
     @property
     def resource(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("resource", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("resource", explicit_presence=False,
         )
     @resource.setter
-    def resource(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("resource",value, base=self._pb2_base_,explicit_presence=False)
+    def resource(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("resource",value,explicit_presence=False)
     
 class CreateTokenResponse(message_1.Message):
     _PB2_CLASS_ = token_service_pb2.CreateTokenResponse
-    _pb2_base_: token_service_pb2.CreateTokenResponse
     
     def __init__(
         self,
@@ -2746,9 +2673,9 @@ class CreateTokenResponse(message_1.Message):
         issued_token_type: "builtins.str|None" = None,
         token_type: "builtins.str|None" = None,
         expires_in: "builtins.int|None" = None,
-        scopes: "abc.MutableSequence[builtins.str]|None" = None,
+        scopes: "abc.Iterable[builtins.str]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.CreateTokenResponse",token_service_pb2.DESCRIPTOR)
         if access_token is not None:
             self.access_token = access_token
         if issued_token_type is not None:
@@ -2762,49 +2689,48 @@ class CreateTokenResponse(message_1.Message):
     
     @property
     def access_token(self) -> "builtins.str":
-        return super()._get_field("access_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("access_token", explicit_presence=False,
         )
     @access_token.setter
     def access_token(self, value: "builtins.str") -> None:
-        return super()._set_field("access_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("access_token",value,explicit_presence=False)
     
     @property
     def issued_token_type(self) -> "builtins.str":
-        return super()._get_field("issued_token_type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("issued_token_type", explicit_presence=False,
         )
     @issued_token_type.setter
     def issued_token_type(self, value: "builtins.str") -> None:
-        return super()._set_field("issued_token_type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("issued_token_type",value,explicit_presence=False)
     
     @property
     def token_type(self) -> "builtins.str":
-        return super()._get_field("token_type", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("token_type", explicit_presence=False,
         )
     @token_type.setter
     def token_type(self, value: "builtins.str") -> None:
-        return super()._set_field("token_type",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("token_type",value,explicit_presence=False)
     
     @property
     def expires_in(self) -> "builtins.int":
-        return super()._get_field("expires_in", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("expires_in", explicit_presence=False,
         )
     @expires_in.setter
     def expires_in(self, value: "builtins.int") -> None:
-        return super()._set_field("expires_in",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("expires_in",value,explicit_presence=False)
     
     @property
     def scopes(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("scopes", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("scopes", explicit_presence=False,
         )
     @scopes.setter
-    def scopes(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("scopes",value, base=self._pb2_base_,explicit_presence=False)
+    def scopes(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("scopes",value,explicit_presence=False)
     
 # file: nebius/iam/v1/identity_service.proto
 # file: nebius/iam/v1/invitation.proto
 class Invitation(message_1.Message):
     _PB2_CLASS_ = invitation_pb2.Invitation
-    _pb2_base_: invitation_pb2.Invitation
     
     def __init__(
         self,
@@ -2814,7 +2740,7 @@ class Invitation(message_1.Message):
         spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
         status: "InvitationStatus|invitation_pb2.InvitationStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Invitation",invitation_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -2824,34 +2750,33 @@ class Invitation(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "InvitationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=InvitationSpec,
         )
     @spec.setter
     def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "InvitationStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=InvitationStatus,
         )
     @status.setter
     def status(self, value: "InvitationStatus|invitation_pb2.InvitationStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class InvitationSpec(message_1.Message):
     _PB2_CLASS_ = invitation_pb2.InvitationSpec
-    _pb2_base_: invitation_pb2.InvitationSpec
     
     def __init__(
         self,
@@ -2860,7 +2785,7 @@ class InvitationSpec(message_1.Message):
         description: "builtins.str|None" = None,
         email: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.InvitationSpec",invitation_pb2.DESCRIPTOR)
         if description is not None:
             self.description = description
         if email is not None:
@@ -2868,26 +2793,25 @@ class InvitationSpec(message_1.Message):
     
     @property
     def description(self) -> "builtins.str":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
     def description(self, value: "builtins.str") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("description",value,explicit_presence=False)
     
     @property
     def email(self) -> "builtins.str|None":
-        return super()._get_field("email", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("email", explicit_presence=True,
         )
     @email.setter
     def email(self, value: "builtins.str|None") -> None:
-        return super()._set_field("email",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("email",value,explicit_presence=True)
     
 class InvitationStatus(message_1.Message):
     _PB2_CLASS_ = invitation_pb2.InvitationStatus
-    _pb2_base_: invitation_pb2.InvitationStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.InvitationStatus.State",invitation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.InvitationStatus.State",invitation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         CREATING = 4
         CREATED = 5
@@ -2903,7 +2827,7 @@ class InvitationStatus(message_1.Message):
         expires_at: "timestamp_pb2.Timestamp|None" = None,
         state: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.InvitationStatus",invitation_pb2.DESCRIPTOR)
         if tenant_user_account_id is not None:
             self.tenant_user_account_id = tenant_user_account_id
         if expires_at is not None:
@@ -2913,33 +2837,32 @@ class InvitationStatus(message_1.Message):
     
     @property
     def tenant_user_account_id(self) -> "builtins.str":
-        return super()._get_field("tenant_user_account_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("tenant_user_account_id", explicit_presence=False,
         )
     @tenant_user_account_id.setter
     def tenant_user_account_id(self, value: "builtins.str") -> None:
-        return super()._set_field("tenant_user_account_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("tenant_user_account_id",value,explicit_presence=False)
     
     @property
     def expires_at(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("expires_at", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("expires_at", explicit_presence=True,
         )
     @expires_at.setter
     def expires_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("expires_at",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("expires_at",value,explicit_presence=True)
     
     @property
     def state(self) -> "InvitationStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=InvitationStatus.State,
         )
     @state.setter
     def state(self, value: "InvitationStatus.State|invitation_pb2.InvitationStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
 # file: nebius/iam/v1/invitation_service.proto
 class CreateInvitationRequest(message_1.Message):
     _PB2_CLASS_ = invitation_service_pb2.CreateInvitationRequest
-    _pb2_base_: invitation_service_pb2.CreateInvitationRequest
     
     def __init__(
         self,
@@ -2949,7 +2872,7 @@ class CreateInvitationRequest(message_1.Message):
         spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
         no_send: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.CreateInvitationRequest",invitation_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -2959,33 +2882,32 @@ class CreateInvitationRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "InvitationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=InvitationSpec,
         )
     @spec.setter
     def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def no_send(self) -> "builtins.bool":
-        return super()._get_field("no_send", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("no_send", explicit_presence=False,
         )
     @no_send.setter
     def no_send(self, value: "builtins.bool") -> None:
-        return super()._set_field("no_send",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("no_send",value,explicit_presence=False)
     
 class GetInvitationRequest(message_1.Message):
     _PB2_CLASS_ = invitation_service_pb2.GetInvitationRequest
-    _pb2_base_: invitation_service_pb2.GetInvitationRequest
     
     def __init__(
         self,
@@ -2993,21 +2915,20 @@ class GetInvitationRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetInvitationRequest",invitation_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListInvitationsRequest(message_1.Message):
     _PB2_CLASS_ = invitation_service_pb2.ListInvitationsRequest
-    _pb2_base_: invitation_service_pb2.ListInvitationsRequest
     
     def __init__(
         self,
@@ -3018,7 +2939,7 @@ class ListInvitationsRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListInvitationsRequest",invitation_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -3030,73 +2951,71 @@ class ListInvitationsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListInvitationsResponse(message_1.Message):
     _PB2_CLASS_ = invitation_service_pb2.ListInvitationsResponse
-    _pb2_base_: invitation_service_pb2.ListInvitationsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Invitation]|None" = None,
+        items: "abc.Iterable[Invitation]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListInvitationsResponse",invitation_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Invitation]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Invitation]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Invitation,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Invitation]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Invitation]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class DeleteInvitationRequest(message_1.Message):
     _PB2_CLASS_ = invitation_service_pb2.DeleteInvitationRequest
-    _pb2_base_: invitation_service_pb2.DeleteInvitationRequest
     
     def __init__(
         self,
@@ -3104,21 +3023,20 @@ class DeleteInvitationRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeleteInvitationRequest",invitation_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class UpdateInvitationRequest(message_1.Message):
     _PB2_CLASS_ = invitation_service_pb2.UpdateInvitationRequest
-    _pb2_base_: invitation_service_pb2.UpdateInvitationRequest
     
     def __init__(
         self,
@@ -3127,7 +3045,7 @@ class UpdateInvitationRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UpdateInvitationRequest",invitation_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -3135,25 +3053,24 @@ class UpdateInvitationRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "InvitationSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=InvitationSpec,
         )
     @spec.setter
     def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class ResendInvitationRequest(message_1.Message):
     _PB2_CLASS_ = invitation_service_pb2.ResendInvitationRequest
-    _pb2_base_: invitation_service_pb2.ResendInvitationRequest
     
     def __init__(
         self,
@@ -3161,22 +3078,21 @@ class ResendInvitationRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ResendInvitationRequest",invitation_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 # file: nebius/iam/v1/tenant_user_account.proto
 class TenantUserAccount(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_pb2.TenantUserAccount
-    _pb2_base_: tenant_user_account_pb2.TenantUserAccount
     
     def __init__(
         self,
@@ -3186,7 +3102,7 @@ class TenantUserAccount(message_1.Message):
         spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|None" = None,
         status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.TenantUserAccount",tenant_user_account_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -3196,34 +3112,33 @@ class TenantUserAccount(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "TenantUserAccountSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=TenantUserAccountSpec,
         )
     @spec.setter
     def spec(self, value: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "TenantUserAccountStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=TenantUserAccountStatus,
         )
     @status.setter
     def status(self, value: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class TenantUserAccountWithAttributes(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_pb2.TenantUserAccountWithAttributes
-    _pb2_base_: tenant_user_account_pb2.TenantUserAccountWithAttributes
     
     def __init__(
         self,
@@ -3233,7 +3148,7 @@ class TenantUserAccountWithAttributes(message_1.Message):
         attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
         error: "Error|tenant_user_account_pb2.Error|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.TenantUserAccountWithAttributes",tenant_user_account_pb2.DESCRIPTOR)
         if tenant_user_account is not None:
             self.tenant_user_account = tenant_user_account
         if attributes is not None:
@@ -3243,34 +3158,33 @@ class TenantUserAccountWithAttributes(message_1.Message):
     
     @property
     def tenant_user_account(self) -> "TenantUserAccount|None":
-        return super()._get_field("tenant_user_account", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("tenant_user_account", explicit_presence=True,
         wrap=TenantUserAccount,
         )
     @tenant_user_account.setter
     def tenant_user_account(self, value: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|None") -> None:
-        return super()._set_field("tenant_user_account",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("tenant_user_account",value,explicit_presence=True)
     
     @property
     def attributes(self) -> "UserAttributes|None":
-        return super()._get_field("attributes", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
     @attributes.setter
     def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes|None") -> None:
-        return super()._set_field("attributes",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("attributes",value,explicit_presence=True)
     
     @property
     def error(self) -> "Error|None":
-        return super()._get_field("error", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("error", explicit_presence=True,
         wrap=Error,
         )
     @error.setter
     def error(self, value: "Error|tenant_user_account_pb2.Error|None") -> None:
-        return super()._set_field("error",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("error",value,explicit_presence=True)
     
 class UserAttributes(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_pb2.UserAttributes
-    _pb2_base_: tenant_user_account_pb2.UserAttributes
     
     def __init__(
         self,
@@ -3289,7 +3203,7 @@ class UserAttributes(message_1.Message):
         phone_number: "builtins.str|None" = None,
         phone_number_verified: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UserAttributes",tenant_user_account_pb2.DESCRIPTOR)
         if sub is not None:
             self.sub = sub
         if name is not None:
@@ -3317,103 +3231,102 @@ class UserAttributes(message_1.Message):
     
     @property
     def sub(self) -> "builtins.str|None":
-        return super()._get_field("sub", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("sub", explicit_presence=True,
         )
     @sub.setter
     def sub(self, value: "builtins.str|None") -> None:
-        return super()._set_field("sub",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("sub",value,explicit_presence=True)
     
     @property
     def name(self) -> "builtins.str|None":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("name", explicit_presence=True,
         )
     @name.setter
     def name(self, value: "builtins.str|None") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("name",value,explicit_presence=True)
     
     @property
     def given_name(self) -> "builtins.str|None":
-        return super()._get_field("given_name", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("given_name", explicit_presence=True,
         )
     @given_name.setter
     def given_name(self, value: "builtins.str|None") -> None:
-        return super()._set_field("given_name",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("given_name",value,explicit_presence=True)
     
     @property
     def family_name(self) -> "builtins.str|None":
-        return super()._get_field("family_name", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("family_name", explicit_presence=True,
         )
     @family_name.setter
     def family_name(self, value: "builtins.str|None") -> None:
-        return super()._set_field("family_name",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("family_name",value,explicit_presence=True)
     
     @property
     def preferred_username(self) -> "builtins.str|None":
-        return super()._get_field("preferred_username", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("preferred_username", explicit_presence=True,
         )
     @preferred_username.setter
     def preferred_username(self, value: "builtins.str|None") -> None:
-        return super()._set_field("preferred_username",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("preferred_username",value,explicit_presence=True)
     
     @property
     def picture(self) -> "builtins.str|None":
-        return super()._get_field("picture", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("picture", explicit_presence=True,
         )
     @picture.setter
     def picture(self, value: "builtins.str|None") -> None:
-        return super()._set_field("picture",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("picture",value,explicit_presence=True)
     
     @property
     def email(self) -> "builtins.str|None":
-        return super()._get_field("email", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("email", explicit_presence=True,
         )
     @email.setter
     def email(self, value: "builtins.str|None") -> None:
-        return super()._set_field("email",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("email",value,explicit_presence=True)
     
     @property
     def email_verified(self) -> "builtins.bool|None":
-        return super()._get_field("email_verified", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("email_verified", explicit_presence=True,
         )
     @email_verified.setter
     def email_verified(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("email_verified",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("email_verified",value,explicit_presence=True)
     
     @property
     def zoneinfo(self) -> "builtins.str|None":
-        return super()._get_field("zoneinfo", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("zoneinfo", explicit_presence=True,
         )
     @zoneinfo.setter
     def zoneinfo(self, value: "builtins.str|None") -> None:
-        return super()._set_field("zoneinfo",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("zoneinfo",value,explicit_presence=True)
     
     @property
     def locale(self) -> "builtins.str|None":
-        return super()._get_field("locale", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("locale", explicit_presence=True,
         )
     @locale.setter
     def locale(self, value: "builtins.str|None") -> None:
-        return super()._set_field("locale",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("locale",value,explicit_presence=True)
     
     @property
     def phone_number(self) -> "builtins.str|None":
-        return super()._get_field("phone_number", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("phone_number", explicit_presence=True,
         )
     @phone_number.setter
     def phone_number(self, value: "builtins.str|None") -> None:
-        return super()._set_field("phone_number",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("phone_number",value,explicit_presence=True)
     
     @property
     def phone_number_verified(self) -> "builtins.bool|None":
-        return super()._get_field("phone_number_verified", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("phone_number_verified", explicit_presence=True,
         )
     @phone_number_verified.setter
     def phone_number_verified(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("phone_number_verified",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("phone_number_verified",value,explicit_presence=True)
     
 class Error(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_pb2.Error
-    _pb2_base_: tenant_user_account_pb2.Error
     
     def __init__(
         self,
@@ -3421,43 +3334,41 @@ class Error(message_1.Message):
         *,
         message: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.Error",tenant_user_account_pb2.DESCRIPTOR)
         if message is not None:
             self.message = message
     
     @property
     def message(self) -> "builtins.str":
-        return super()._get_field("message", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
     def message(self, value: "builtins.str") -> None:
-        return super()._set_field("message",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("message",value,explicit_presence=False)
     
 class TenantUserAccountSpec(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_pb2.TenantUserAccountSpec
-    _pb2_base_: tenant_user_account_pb2.TenantUserAccountSpec
     
     class VisibleAttributes(message_1.Message):
         _PB2_CLASS_ = tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes
-        _pb2_base_: tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes
         
         def __init__(
             self,
             initial_message: message_2.Message|None = None,
             *,
-            attribute: "abc.MutableSequence[builtins.str]|None" = None,
+            attribute: "abc.Iterable[builtins.str]|None" = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.TenantUserAccountSpec.VisibleAttributes",tenant_user_account_pb2.DESCRIPTOR)
             if attribute is not None:
                 self.attribute = attribute
         
         @property
         def attribute(self) -> "abc.MutableSequence[builtins.str]":
-            return super()._get_field("attribute", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("attribute", explicit_presence=False,
             )
         @attribute.setter
-        def attribute(self, value: "abc.MutableSequence[builtins.str]") -> None:
-            return super()._set_field("attribute",value, base=self._pb2_base_,explicit_presence=False)
+        def attribute(self, value: "abc.Iterable[builtins.str]") -> None:
+            return super()._set_field("attribute",value,explicit_presence=False)
         
     
     def __init__(
@@ -3466,25 +3377,24 @@ class TenantUserAccountSpec(message_1.Message):
         *,
         visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.TenantUserAccountSpec",tenant_user_account_pb2.DESCRIPTOR)
         if visible_attributes is not None:
             self.visible_attributes = visible_attributes
     
     @property
     def visible_attributes(self) -> "TenantUserAccountSpec.VisibleAttributes|None":
-        return super()._get_field("visible_attributes", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("visible_attributes", explicit_presence=True,
         wrap=TenantUserAccountSpec.VisibleAttributes,
         )
     @visible_attributes.setter
     def visible_attributes(self, value: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|None") -> None:
-        return super()._set_field("visible_attributes",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("visible_attributes",value,explicit_presence=True)
     
 class TenantUserAccountStatus(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_pb2.TenantUserAccountStatus
-    _pb2_base_: tenant_user_account_pb2.TenantUserAccountStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.TenantUserAccountStatus.State",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.TenantUserAccountStatus.State",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         ACTIVE = 1
         INACTIVE = 2
@@ -3498,7 +3408,7 @@ class TenantUserAccountStatus(message_1.Message):
         invitation_id: "builtins.str|None" = None,
         federation_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.TenantUserAccountStatus",tenant_user_account_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if invitation_id is not None:
@@ -3508,33 +3418,32 @@ class TenantUserAccountStatus(message_1.Message):
     
     @property
     def state(self) -> "TenantUserAccountStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=TenantUserAccountStatus.State,
         )
     @state.setter
     def state(self, value: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def invitation_id(self) -> "builtins.str":
-        return super()._get_field("invitation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("invitation_id", explicit_presence=False,
         )
     @invitation_id.setter
     def invitation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("invitation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("invitation_id",value,explicit_presence=False)
     
     @property
     def federation_id(self) -> "builtins.str":
-        return super()._get_field("federation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
     def federation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("federation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("federation_id",value,explicit_presence=False)
     
 # file: nebius/iam/v1/service_account.proto
 class ServiceAccount(message_1.Message):
     _PB2_CLASS_ = service_account_pb2.ServiceAccount
-    _pb2_base_: service_account_pb2.ServiceAccount
     
     def __init__(
         self,
@@ -3544,7 +3453,7 @@ class ServiceAccount(message_1.Message):
         spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
         status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ServiceAccount",service_account_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -3554,34 +3463,33 @@ class ServiceAccount(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ServiceAccountSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ServiceAccountSpec,
         )
     @spec.setter
     def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "ServiceAccountStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=ServiceAccountStatus,
         )
     @status.setter
     def status(self, value: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class ServiceAccountSpec(message_1.Message):
     _PB2_CLASS_ = service_account_pb2.ServiceAccountSpec
-    _pb2_base_: service_account_pb2.ServiceAccountSpec
     
     def __init__(
         self,
@@ -3589,21 +3497,20 @@ class ServiceAccountSpec(message_1.Message):
         *,
         description: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ServiceAccountSpec",service_account_pb2.DESCRIPTOR)
         if description is not None:
             self.description = description
     
     @property
     def description(self) -> "builtins.str":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
     def description(self, value: "builtins.str") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("description",value,explicit_presence=False)
     
 class ServiceAccountStatus(message_1.Message):
     _PB2_CLASS_ = service_account_pb2.ServiceAccountStatus
-    _pb2_base_: service_account_pb2.ServiceAccountStatus
     
     def __init__(
         self,
@@ -3611,22 +3518,21 @@ class ServiceAccountStatus(message_1.Message):
         *,
         active: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ServiceAccountStatus",service_account_pb2.DESCRIPTOR)
         if active is not None:
             self.active = active
     
     @property
     def active(self) -> "builtins.bool":
-        return super()._get_field("active", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("active", explicit_presence=False,
         )
     @active.setter
     def active(self, value: "builtins.bool") -> None:
-        return super()._set_field("active",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("active",value,explicit_presence=False)
     
 # file: nebius/iam/v1/user_account.proto
 class UserAccountExternalId(message_1.Message):
     _PB2_CLASS_ = user_account_pb2.UserAccountExternalId
-    _pb2_base_: user_account_pb2.UserAccountExternalId
     
     def __init__(
         self,
@@ -3635,7 +3541,7 @@ class UserAccountExternalId(message_1.Message):
         federation_user_account_id: "builtins.str|None" = None,
         federation_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UserAccountExternalId",user_account_pb2.DESCRIPTOR)
         if federation_user_account_id is not None:
             self.federation_user_account_id = federation_user_account_id
         if federation_id is not None:
@@ -3643,34 +3549,32 @@ class UserAccountExternalId(message_1.Message):
     
     @property
     def federation_user_account_id(self) -> "builtins.str":
-        return super()._get_field("federation_user_account_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("federation_user_account_id", explicit_presence=False,
         )
     @federation_user_account_id.setter
     def federation_user_account_id(self, value: "builtins.str") -> None:
-        return super()._set_field("federation_user_account_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("federation_user_account_id",value,explicit_presence=False)
     
     @property
     def federation_id(self) -> "builtins.str":
-        return super()._get_field("federation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
     def federation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("federation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("federation_id",value,explicit_presence=False)
     
 # file: nebius/iam/v1/profile_service.proto
 class GetProfileRequest(message_1.Message):
     _PB2_CLASS_ = profile_service_pb2.GetProfileRequest
-    _pb2_base_: profile_service_pb2.GetProfileRequest
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetProfileRequest",profile_service_pb2.DESCRIPTOR)
     
 class GetProfileResponse(message_1.Message):
     _PB2_CLASS_ = profile_service_pb2.GetProfileResponse
-    _pb2_base_: profile_service_pb2.GetProfileResponse
     
     def __init__(
         self,
@@ -3680,7 +3584,7 @@ class GetProfileResponse(message_1.Message):
         service_account_profile: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|None" = None,
         anonymous_profile: "AnonymousAccount|profile_service_pb2.AnonymousAccount|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetProfileResponse",profile_service_pb2.DESCRIPTOR)
         if user_profile is not None:
             self.user_profile = user_profile
         if service_account_profile is not None:
@@ -3690,34 +3594,33 @@ class GetProfileResponse(message_1.Message):
     
     @property
     def user_profile(self) -> "UserProfile|None":
-        return super()._get_field("user_profile", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("user_profile", explicit_presence=True,
         wrap=UserProfile,
         )
     @user_profile.setter
     def user_profile(self, value: "UserProfile|profile_service_pb2.UserProfile|None") -> None:
-        return super()._set_field("user_profile",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("user_profile",value,explicit_presence=True)
     
     @property
     def service_account_profile(self) -> "ServiceAccountProfile|None":
-        return super()._get_field("service_account_profile", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("service_account_profile", explicit_presence=True,
         wrap=ServiceAccountProfile,
         )
     @service_account_profile.setter
     def service_account_profile(self, value: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|None") -> None:
-        return super()._set_field("service_account_profile",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("service_account_profile",value,explicit_presence=True)
     
     @property
     def anonymous_profile(self) -> "AnonymousAccount|None":
-        return super()._get_field("anonymous_profile", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("anonymous_profile", explicit_presence=True,
         wrap=AnonymousAccount,
         )
     @anonymous_profile.setter
     def anonymous_profile(self, value: "AnonymousAccount|profile_service_pb2.AnonymousAccount|None") -> None:
-        return super()._set_field("anonymous_profile",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("anonymous_profile",value,explicit_presence=True)
     
 class UserProfile(message_1.Message):
     _PB2_CLASS_ = profile_service_pb2.UserProfile
-    _pb2_base_: profile_service_pb2.UserProfile
     
     def __init__(
         self,
@@ -3727,9 +3630,9 @@ class UserProfile(message_1.Message):
         federation_info: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|None" = None,
         attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
         retrieving_error: "Error|tenant_user_account_pb2.Error|None" = None,
-        tenants: "abc.MutableSequence[UserTenantInfo]|None" = None,
+        tenants: "abc.Iterable[UserTenantInfo]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UserProfile",profile_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
         if federation_info is not None:
@@ -3743,51 +3646,50 @@ class UserProfile(message_1.Message):
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
     @property
     def federation_info(self) -> "UserAccountExternalId|None":
-        return super()._get_field("federation_info", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("federation_info", explicit_presence=True,
         wrap=UserAccountExternalId,
         )
     @federation_info.setter
     def federation_info(self, value: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|None") -> None:
-        return super()._set_field("federation_info",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("federation_info",value,explicit_presence=True)
     
     @property
     def attributes(self) -> "UserAttributes|None":
-        return super()._get_field("attributes", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
     @attributes.setter
     def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes|None") -> None:
-        return super()._set_field("attributes",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("attributes",value,explicit_presence=True)
     
     @property
     def retrieving_error(self) -> "Error|None":
-        return super()._get_field("retrieving_error", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("retrieving_error", explicit_presence=True,
         wrap=Error,
         )
     @retrieving_error.setter
     def retrieving_error(self, value: "Error|tenant_user_account_pb2.Error|None") -> None:
-        return super()._set_field("retrieving_error",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("retrieving_error",value,explicit_presence=True)
     
     @property
-    def tenants(self) -> "abc.MutableSequence[UserTenantInfo]|None":
-        return super()._get_field("tenants", base=self._pb2_base_, explicit_presence=True,
+    def tenants(self) -> "abc.MutableSequence[UserTenantInfo]":
+        return super()._get_field("tenants", explicit_presence=False,
         wrap=UserTenantInfo,
         )
     @tenants.setter
-    def tenants(self, value: "abc.MutableSequence[UserTenantInfo]|None") -> None:
-        return super()._set_field("tenants",value, base=self._pb2_base_,explicit_presence=True)
+    def tenants(self, value: "abc.Iterable[UserTenantInfo]") -> None:
+        return super()._set_field("tenants",value,explicit_presence=False)
     
 class UserTenantInfo(message_1.Message):
     _PB2_CLASS_ = profile_service_pb2.UserTenantInfo
-    _pb2_base_: profile_service_pb2.UserTenantInfo
     
     def __init__(
         self,
@@ -3796,7 +3698,7 @@ class UserTenantInfo(message_1.Message):
         tenant_id: "builtins.str|None" = None,
         tenant_user_account_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UserTenantInfo",profile_service_pb2.DESCRIPTOR)
         if tenant_id is not None:
             self.tenant_id = tenant_id
         if tenant_user_account_id is not None:
@@ -3804,23 +3706,22 @@ class UserTenantInfo(message_1.Message):
     
     @property
     def tenant_id(self) -> "builtins.str":
-        return super()._get_field("tenant_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("tenant_id", explicit_presence=False,
         )
     @tenant_id.setter
     def tenant_id(self, value: "builtins.str") -> None:
-        return super()._set_field("tenant_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("tenant_id",value,explicit_presence=False)
     
     @property
     def tenant_user_account_id(self) -> "builtins.str":
-        return super()._get_field("tenant_user_account_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("tenant_user_account_id", explicit_presence=False,
         )
     @tenant_user_account_id.setter
     def tenant_user_account_id(self, value: "builtins.str") -> None:
-        return super()._set_field("tenant_user_account_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("tenant_user_account_id",value,explicit_presence=False)
     
 class ServiceAccountProfile(message_1.Message):
     _PB2_CLASS_ = profile_service_pb2.ServiceAccountProfile
-    _pb2_base_: profile_service_pb2.ServiceAccountProfile
     
     def __init__(
         self,
@@ -3828,33 +3729,31 @@ class ServiceAccountProfile(message_1.Message):
         *,
         info: "ServiceAccount|service_account_pb2.ServiceAccount|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ServiceAccountProfile",profile_service_pb2.DESCRIPTOR)
         if info is not None:
             self.info = info
     
     @property
     def info(self) -> "ServiceAccount|None":
-        return super()._get_field("info", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("info", explicit_presence=True,
         wrap=ServiceAccount,
         )
     @info.setter
     def info(self, value: "ServiceAccount|service_account_pb2.ServiceAccount|None") -> None:
-        return super()._set_field("info",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("info",value,explicit_presence=True)
     
 class AnonymousAccount(message_1.Message):
     _PB2_CLASS_ = profile_service_pb2.AnonymousAccount
-    _pb2_base_: profile_service_pb2.AnonymousAccount
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.AnonymousAccount",profile_service_pb2.DESCRIPTOR)
     
 # file: nebius/iam/v1/project_service.proto
 class GetProjectRequest(message_1.Message):
     _PB2_CLASS_ = project_service_pb2.GetProjectRequest
-    _pb2_base_: project_service_pb2.GetProjectRequest
     
     def __init__(
         self,
@@ -3862,21 +3761,20 @@ class GetProjectRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetProjectRequest",project_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetProjectByNameRequest(message_1.Message):
     _PB2_CLASS_ = project_service_pb2.GetProjectByNameRequest
-    _pb2_base_: project_service_pb2.GetProjectByNameRequest
     
     def __init__(
         self,
@@ -3885,7 +3783,7 @@ class GetProjectByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetProjectByNameRequest",project_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -3893,23 +3791,22 @@ class GetProjectByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListProjectsRequest(message_1.Message):
     _PB2_CLASS_ = project_service_pb2.ListProjectsRequest
-    _pb2_base_: project_service_pb2.ListProjectsRequest
     
     def __init__(
         self,
@@ -3920,7 +3817,7 @@ class ListProjectsRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListProjectsRequest",project_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -3932,74 +3829,72 @@ class ListProjectsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListProjectsResponse(message_1.Message):
     _PB2_CLASS_ = project_service_pb2.ListProjectsResponse
-    _pb2_base_: project_service_pb2.ListProjectsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Container]|None" = None,
+        items: "abc.Iterable[Container]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListProjectsResponse",project_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Container]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Container]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Container,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Container]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Container]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/service_account_service.proto
 class CreateServiceAccountRequest(message_1.Message):
     _PB2_CLASS_ = service_account_service_pb2.CreateServiceAccountRequest
-    _pb2_base_: service_account_service_pb2.CreateServiceAccountRequest
     
     def __init__(
         self,
@@ -4008,7 +3903,7 @@ class CreateServiceAccountRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.CreateServiceAccountRequest",service_account_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -4016,25 +3911,24 @@ class CreateServiceAccountRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ServiceAccountSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ServiceAccountSpec,
         )
     @spec.setter
     def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class GetServiceAccountRequest(message_1.Message):
     _PB2_CLASS_ = service_account_service_pb2.GetServiceAccountRequest
-    _pb2_base_: service_account_service_pb2.GetServiceAccountRequest
     
     def __init__(
         self,
@@ -4042,21 +3936,20 @@ class GetServiceAccountRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetServiceAccountRequest",service_account_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetServiceAccountByNameRequest(message_1.Message):
     _PB2_CLASS_ = service_account_service_pb2.GetServiceAccountByNameRequest
-    _pb2_base_: service_account_service_pb2.GetServiceAccountByNameRequest
     
     def __init__(
         self,
@@ -4065,7 +3958,7 @@ class GetServiceAccountByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetServiceAccountByNameRequest",service_account_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -4073,23 +3966,22 @@ class GetServiceAccountByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListServiceAccountRequest(message_1.Message):
     _PB2_CLASS_ = service_account_service_pb2.ListServiceAccountRequest
-    _pb2_base_: service_account_service_pb2.ListServiceAccountRequest
     
     def __init__(
         self,
@@ -4100,7 +3992,7 @@ class ListServiceAccountRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListServiceAccountRequest",service_account_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -4112,39 +4004,38 @@ class ListServiceAccountRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class UpdateServiceAccountRequest(message_1.Message):
     _PB2_CLASS_ = service_account_service_pb2.UpdateServiceAccountRequest
-    _pb2_base_: service_account_service_pb2.UpdateServiceAccountRequest
     
     def __init__(
         self,
@@ -4153,7 +4044,7 @@ class UpdateServiceAccountRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UpdateServiceAccountRequest",service_account_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -4161,25 +4052,24 @@ class UpdateServiceAccountRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ServiceAccountSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ServiceAccountSpec,
         )
     @spec.setter
     def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class DeleteServiceAccountRequest(message_1.Message):
     _PB2_CLASS_ = service_account_service_pb2.DeleteServiceAccountRequest
-    _pb2_base_: service_account_service_pb2.DeleteServiceAccountRequest
     
     def __init__(
         self,
@@ -4187,56 +4077,54 @@ class DeleteServiceAccountRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.DeleteServiceAccountRequest",service_account_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListServiceAccountResponse(message_1.Message):
     _PB2_CLASS_ = service_account_service_pb2.ListServiceAccountResponse
-    _pb2_base_: service_account_service_pb2.ListServiceAccountResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[ServiceAccount]|None" = None,
+        items: "abc.Iterable[ServiceAccount]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListServiceAccountResponse",service_account_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[ServiceAccount]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[ServiceAccount]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=ServiceAccount,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[ServiceAccount]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[ServiceAccount]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/session_management_service.proto
 class RevokeSessionRequest(message_1.Message):
     _PB2_CLASS_ = session_management_service_pb2.RevokeSessionRequest
-    _pb2_base_: session_management_service_pb2.RevokeSessionRequest
     
     def __init__(
         self,
@@ -4246,7 +4134,7 @@ class RevokeSessionRequest(message_1.Message):
         all_my_active: "builtins.bool|None" = None,
         tenant_user_account_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.RevokeSessionRequest",session_management_service_pb2.DESCRIPTOR)
         if service_account_id is not None:
             self.service_account_id = service_account_id
         if all_my_active is not None:
@@ -4256,42 +4144,40 @@ class RevokeSessionRequest(message_1.Message):
     
     @property
     def service_account_id(self) -> "builtins.str|None":
-        return super()._get_field("service_account_id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("service_account_id", explicit_presence=True,
         )
     @service_account_id.setter
     def service_account_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("service_account_id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("service_account_id",value,explicit_presence=True)
     
     @property
     def all_my_active(self) -> "builtins.bool|None":
-        return super()._get_field("all_my_active", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("all_my_active", explicit_presence=True,
         )
     @all_my_active.setter
     def all_my_active(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("all_my_active",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("all_my_active",value,explicit_presence=True)
     
     @property
     def tenant_user_account_id(self) -> "builtins.str|None":
-        return super()._get_field("tenant_user_account_id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("tenant_user_account_id", explicit_presence=True,
         )
     @tenant_user_account_id.setter
     def tenant_user_account_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("tenant_user_account_id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("tenant_user_account_id",value,explicit_presence=True)
     
 class RevokeSessionResponse(message_1.Message):
     _PB2_CLASS_ = session_management_service_pb2.RevokeSessionResponse
-    _pb2_base_: session_management_service_pb2.RevokeSessionResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.RevokeSessionResponse",session_management_service_pb2.DESCRIPTOR)
     
 # file: nebius/iam/v1/tenant_service.proto
 class GetTenantRequest(message_1.Message):
     _PB2_CLASS_ = tenant_service_pb2.GetTenantRequest
-    _pb2_base_: tenant_service_pb2.GetTenantRequest
     
     def __init__(
         self,
@@ -4299,21 +4185,20 @@ class GetTenantRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetTenantRequest",tenant_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListTenantsRequest(message_1.Message):
     _PB2_CLASS_ = tenant_service_pb2.ListTenantsRequest
-    _pb2_base_: tenant_service_pb2.ListTenantsRequest
     
     def __init__(
         self,
@@ -4323,7 +4208,7 @@ class ListTenantsRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListTenantsRequest",tenant_service_pb2.DESCRIPTOR)
         if page_size is not None:
             self.page_size = page_size
         if page_token is not None:
@@ -4333,66 +4218,64 @@ class ListTenantsRequest(message_1.Message):
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListTenantsResponse(message_1.Message):
     _PB2_CLASS_ = tenant_service_pb2.ListTenantsResponse
-    _pb2_base_: tenant_service_pb2.ListTenantsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Container]|None" = None,
+        items: "abc.Iterable[Container]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListTenantsResponse",tenant_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Container]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Container]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Container,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Container]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Container]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/tenant_user_account_service.proto
 class GetTenantUserAccountRequest(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_service_pb2.GetTenantUserAccountRequest
-    _pb2_base_: tenant_user_account_service_pb2.GetTenantUserAccountRequest
     
     def __init__(
         self,
@@ -4400,21 +4283,20 @@ class GetTenantUserAccountRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListTenantUserAccountsRequest(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_service_pb2.ListTenantUserAccountsRequest
-    _pb2_base_: tenant_user_account_service_pb2.ListTenantUserAccountsRequest
     
     def __init__(
         self,
@@ -4425,7 +4307,7 @@ class ListTenantUserAccountsRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListTenantUserAccountsRequest",tenant_user_account_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -4437,73 +4319,71 @@ class ListTenantUserAccountsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListTenantUserAccountsResponse(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_service_pb2.ListTenantUserAccountsResponse
-    _pb2_base_: tenant_user_account_service_pb2.ListTenantUserAccountsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[TenantUserAccount]|None" = None,
+        items: "abc.Iterable[TenantUserAccount]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListTenantUserAccountsResponse",tenant_user_account_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[TenantUserAccount]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[TenantUserAccount]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=TenantUserAccount,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[TenantUserAccount]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[TenantUserAccount]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 class BlockTenantUserAccountRequest(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_service_pb2.BlockTenantUserAccountRequest
-    _pb2_base_: tenant_user_account_service_pb2.BlockTenantUserAccountRequest
     
     def __init__(
         self,
@@ -4511,21 +4391,20 @@ class BlockTenantUserAccountRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.BlockTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class UnblockTenantUserAccountRequest(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_service_pb2.UnblockTenantUserAccountRequest
-    _pb2_base_: tenant_user_account_service_pb2.UnblockTenantUserAccountRequest
     
     def __init__(
         self,
@@ -4533,22 +4412,21 @@ class UnblockTenantUserAccountRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.UnblockTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 # file: nebius/iam/v1/tenant_user_account_with_attributes_service.proto
 class GetTenantUserAccountWithAttributesRequest(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_with_attributes_service_pb2.GetTenantUserAccountWithAttributesRequest
-    _pb2_base_: tenant_user_account_with_attributes_service_pb2.GetTenantUserAccountWithAttributesRequest
     
     def __init__(
         self,
@@ -4556,21 +4434,20 @@ class GetTenantUserAccountWithAttributesRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.GetTenantUserAccountWithAttributesRequest",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListTenantUserAccountsWithAttributesRequest(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesRequest
-    _pb2_base_: tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesRequest
     
     def __init__(
         self,
@@ -4581,7 +4458,7 @@ class ListTenantUserAccountsWithAttributesRequest(message_1.Message):
         page_token: "builtins.str|None" = None,
         filter: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListTenantUserAccountsWithAttributesRequest",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -4593,68 +4470,67 @@ class ListTenantUserAccountsWithAttributesRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int|None":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("page_size",value,explicit_presence=True)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
 class ListTenantUserAccountsWithAttributesResponse(message_1.Message):
     _PB2_CLASS_ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesResponse
-    _pb2_base_: tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[TenantUserAccountWithAttributes]|None" = None,
+        items: "abc.Iterable[TenantUserAccountWithAttributes]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.iam.v1.ListTenantUserAccountsWithAttributesResponse",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[TenantUserAccountWithAttributes]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[TenantUserAccountWithAttributes]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=TenantUserAccountWithAttributes,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[TenantUserAccountWithAttributes]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[TenantUserAccountWithAttributes]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     
 # file: nebius/iam/v1/token_exchange_service.proto

@@ -13,14 +13,14 @@ import builtins as builtins
 
 # file: nebius/annotations.proto
 class ResourceBehavior(pb_enum.Enum):
-    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.ResourceBehavior",annotations_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.ResourceBehavior",annotations_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     RESOURCE_BEHAVIOR_UNSPECIFIED = 0
     MOVABLE = 1
     UNNAMED = 2
     IMMUTABLE_NAME = 3
 
 class FieldBehavior(pb_enum.Enum):
-    _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.FieldBehavior",annotations_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.FieldBehavior",annotations_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     FIELD_BEHAVIOR_UNSPECIFIED = 0
     IMMUTABLE = 2
     IDENTIFIER = 3
@@ -31,17 +31,16 @@ class FieldBehavior(pb_enum.Enum):
 
 class RegionRouting(message.Message):
     _PB2_CLASS_ = annotations_pb2.RegionRouting
-    _pb2_base_: annotations_pb2.RegionRouting
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        nid: "abc.MutableSequence[builtins.str]|None" = None,
+        nid: "abc.Iterable[builtins.str]|None" = None,
         disabled: "builtins.bool|None" = None,
         strict: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.RegionRouting",annotations_pb2.DESCRIPTOR)
         if nid is not None:
             self.nid = nid
         if disabled is not None:
@@ -51,25 +50,25 @@ class RegionRouting(message.Message):
     
     @property
     def nid(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("nid", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("nid", explicit_presence=False,
         )
     @nid.setter
-    def nid(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("nid",value, base=self._pb2_base_,explicit_presence=False)
+    def nid(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("nid",value,explicit_presence=False)
     
     @property
     def disabled(self) -> "builtins.bool":
-        return super()._get_field("disabled", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("disabled", explicit_presence=False,
         )
     @disabled.setter
     def disabled(self, value: "builtins.bool") -> None:
-        return super()._set_field("disabled",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("disabled",value,explicit_presence=False)
     
     @property
     def strict(self) -> "builtins.bool":
-        return super()._get_field("strict", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("strict", explicit_presence=False,
         )
     @strict.setter
     def strict(self, value: "builtins.bool") -> None:
-        return super()._set_field("strict",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("strict",value,explicit_presence=False)
     

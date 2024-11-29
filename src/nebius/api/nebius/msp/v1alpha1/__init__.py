@@ -13,10 +13,9 @@ import builtins as builtins
 # file: nebius/msp/v1alpha1/cluster.proto
 class ClusterStatus(message.Message):
     _PB2_CLASS_ = cluster_pb2.ClusterStatus
-    _pb2_base_: cluster_pb2.ClusterStatus
     
     class Phase(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.v1alpha1.ClusterStatus.Phase",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.v1alpha1.ClusterStatus.Phase",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         PHASE_UNSPECIFIED = 0
         PHASE_PROVISIONING = 1
         PHASE_RUNNING = 2
@@ -28,7 +27,7 @@ class ClusterStatus(message.Message):
         PHASE_RESUMING = 8
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.v1alpha1.ClusterStatus.State",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.v1alpha1.ClusterStatus.State",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         STATE_IN_PROGRESS = 1
         STATE_FINISHED = 2
@@ -44,7 +43,7 @@ class ClusterStatus(message.Message):
         state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None" = None,
         reconciling: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.v1alpha1.ClusterStatus",cluster_pb2.DESCRIPTOR)
         if phase is not None:
             self.phase = phase
         if state is not None:
@@ -54,27 +53,27 @@ class ClusterStatus(message.Message):
     
     @property
     def phase(self) -> "ClusterStatus.Phase":
-        return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("phase", explicit_presence=False,
         wrap=ClusterStatus.Phase,
         )
     @phase.setter
     def phase(self, value: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase") -> None:
-        return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("phase",value,explicit_presence=False)
     
     @property
     def state(self) -> "ClusterStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=ClusterStatus.State,
         )
     @state.setter
     def state(self, value: "ClusterStatus.State|cluster_pb2.ClusterStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def reconciling(self) -> "builtins.bool":
-        return super()._get_field("reconciling", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
     def reconciling(self, value: "builtins.bool") -> None:
-        return super()._set_field("reconciling",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("reconciling",value,explicit_presence=False)
     

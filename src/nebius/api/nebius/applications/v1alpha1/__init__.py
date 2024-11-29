@@ -17,7 +17,6 @@ import nebius.api.nebius.applications.v1alpha1.k8s_release_service_pb2 as k8s_re
 # file: nebius/applications/v1alpha1/k8s_release.proto
 class K8sRelease(message_1.Message):
     _PB2_CLASS_ = k8s_release_pb2.K8sRelease
-    _pb2_base_: k8s_release_pb2.K8sRelease
     
     def __init__(
         self,
@@ -27,7 +26,7 @@ class K8sRelease(message_1.Message):
         spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None" = None,
         status: "K8sReleaseStatus|k8s_release_pb2.K8sReleaseStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.K8sRelease",k8s_release_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -37,38 +36,36 @@ class K8sRelease(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "K8sReleaseSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=K8sReleaseSpec,
         )
     @spec.setter
     def spec(self, value: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "K8sReleaseStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=K8sReleaseStatus,
         )
     @status.setter
     def status(self, value: "K8sReleaseStatus|k8s_release_pb2.K8sReleaseStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class K8sReleaseSpec(message_1.Message):
     _PB2_CLASS_ = k8s_release_pb2.K8sReleaseSpec
-    _pb2_base_: k8s_release_pb2.K8sReleaseSpec
     
     class SetEntry(message_1.Message):
         _PB2_CLASS_ = k8s_release_pb2.K8sReleaseSpec.SetEntry
-        _pb2_base_: k8s_release_pb2.K8sReleaseSpec.SetEntry
         
         def __init__(
             self,
@@ -77,7 +74,7 @@ class K8sReleaseSpec(message_1.Message):
             key: "builtins.str|None" = None,
             value: "builtins.str|None" = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.K8sReleaseSpec.SetEntry",k8s_release_pb2.DESCRIPTOR)
             if key is not None:
                 self.key = key
             if value is not None:
@@ -85,19 +82,19 @@ class K8sReleaseSpec(message_1.Message):
         
         @property
         def key(self) -> "builtins.str":
-            return super()._get_field("key", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("key", explicit_presence=False,
             )
         @key.setter
         def key(self, value: "builtins.str") -> None:
-            return super()._set_field("key",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("key",value,explicit_presence=False)
         
         @property
         def value(self) -> "builtins.str":
-            return super()._get_field("value", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("value", explicit_presence=False,
             )
         @value.setter
         def value(self, value: "builtins.str") -> None:
-            return super()._set_field("value",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("value",value,explicit_presence=False)
         
     
     def __init__(
@@ -109,9 +106,9 @@ class K8sReleaseSpec(message_1.Message):
         namespace: "builtins.str|None" = None,
         application_name: "builtins.str|None" = None,
         values: "builtins.str|None" = None,
-        set: "abc.MutableMapping[builtins.str,builtins.str]|None" = None,
+        set: "abc.Mapping[builtins.str,builtins.str]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.K8sReleaseSpec",k8s_release_pb2.DESCRIPTOR)
         if cluster_id is not None:
             self.cluster_id = cluster_id
         if product_slug is not None:
@@ -127,59 +124,58 @@ class K8sReleaseSpec(message_1.Message):
     
     @property
     def cluster_id(self) -> "builtins.str":
-        return super()._get_field("cluster_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cluster_id", explicit_presence=False,
         )
     @cluster_id.setter
     def cluster_id(self, value: "builtins.str") -> None:
-        return super()._set_field("cluster_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("cluster_id",value,explicit_presence=False)
     
     @property
     def product_slug(self) -> "builtins.str":
-        return super()._get_field("product_slug", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("product_slug", explicit_presence=False,
         )
     @product_slug.setter
     def product_slug(self, value: "builtins.str") -> None:
-        return super()._set_field("product_slug",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("product_slug",value,explicit_presence=False)
     
     @property
     def namespace(self) -> "builtins.str":
-        return super()._get_field("namespace", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("namespace", explicit_presence=False,
         )
     @namespace.setter
     def namespace(self, value: "builtins.str") -> None:
-        return super()._set_field("namespace",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("namespace",value,explicit_presence=False)
     
     @property
     def application_name(self) -> "builtins.str":
-        return super()._get_field("application_name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("application_name", explicit_presence=False,
         )
     @application_name.setter
     def application_name(self, value: "builtins.str") -> None:
-        return super()._set_field("application_name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("application_name",value,explicit_presence=False)
     
     @property
     def values(self) -> "builtins.str":
-        return super()._get_field("values", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("values", explicit_presence=False,
         )
     @values.setter
     def values(self, value: "builtins.str") -> None:
-        return super()._set_field("values",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("values",value,explicit_presence=False)
     
     @property
-    def set(self) -> "abc.MutableMapping[builtins.str,builtins.str]|None":
-        return super()._get_field("set", base=self._pb2_base_, explicit_presence=True,
+    def set(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        return super()._get_field("set", explicit_presence=False,
         wrap=K8sReleaseSpec.SetEntry,
         )
     @set.setter
-    def set(self, value: "abc.MutableMapping[builtins.str,builtins.str]|None") -> None:
-        return super()._set_field("set",value, base=self._pb2_base_,explicit_presence=True)
+    def set(self, value: "abc.Mapping[builtins.str,builtins.str]") -> None:
+        return super()._set_field("set",value,explicit_presence=False)
     
 class K8sReleaseStatus(message_1.Message):
     _PB2_CLASS_ = k8s_release_pb2.K8sReleaseStatus
-    _pb2_base_: k8s_release_pb2.K8sReleaseStatus
     
     class State(pb_enum.Enum):
-        _PB2_DESCRIPTOR_ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.applications.v1alpha1.K8sReleaseStatus.State",k8s_release_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.applications.v1alpha1.K8sReleaseStatus.State",k8s_release_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         CREATED = 1
         RUNNING = 2
@@ -193,7 +189,7 @@ class K8sReleaseStatus(message_1.Message):
         state: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State|None" = None,
         error_message: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.K8sReleaseStatus",k8s_release_pb2.DESCRIPTOR)
         if state is not None:
             self.state = state
         if error_message is not None:
@@ -201,25 +197,24 @@ class K8sReleaseStatus(message_1.Message):
     
     @property
     def state(self) -> "K8sReleaseStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=K8sReleaseStatus.State,
         )
     @state.setter
     def state(self, value: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def error_message(self) -> "builtins.str":
-        return super()._get_field("error_message", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("error_message", explicit_presence=False,
         )
     @error_message.setter
     def error_message(self, value: "builtins.str") -> None:
-        return super()._set_field("error_message",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("error_message",value,explicit_presence=False)
     
 # file: nebius/applications/v1alpha1/k8s_release_service.proto
 class GetK8sReleaseRequest(message_1.Message):
     _PB2_CLASS_ = k8s_release_service_pb2.GetK8sReleaseRequest
-    _pb2_base_: k8s_release_service_pb2.GetK8sReleaseRequest
     
     def __init__(
         self,
@@ -227,21 +222,20 @@ class GetK8sReleaseRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.GetK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListK8sReleasesRequest(message_1.Message):
     _PB2_CLASS_ = k8s_release_service_pb2.ListK8sReleasesRequest
-    _pb2_base_: k8s_release_service_pb2.ListK8sReleasesRequest
     
     def __init__(
         self,
@@ -253,7 +247,7 @@ class ListK8sReleasesRequest(message_1.Message):
         filter: "builtins.str|None" = None,
         cluster_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.ListK8sReleasesRequest",k8s_release_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -267,47 +261,46 @@ class ListK8sReleasesRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
     @property
     def filter(self) -> "builtins.str":
-        return super()._get_field("filter", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False)
     
     @property
     def cluster_id(self) -> "builtins.str":
-        return super()._get_field("cluster_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cluster_id", explicit_presence=False,
         )
     @cluster_id.setter
     def cluster_id(self, value: "builtins.str") -> None:
-        return super()._set_field("cluster_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("cluster_id",value,explicit_presence=False)
     
 class CreateK8sReleaseRequest(message_1.Message):
     _PB2_CLASS_ = k8s_release_service_pb2.CreateK8sReleaseRequest
-    _pb2_base_: k8s_release_service_pb2.CreateK8sReleaseRequest
     
     def __init__(
         self,
@@ -316,7 +309,7 @@ class CreateK8sReleaseRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.CreateK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -324,25 +317,24 @@ class CreateK8sReleaseRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "K8sReleaseSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=K8sReleaseSpec,
         )
     @spec.setter
     def spec(self, value: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class DeleteK8sReleaseRequest(message_1.Message):
     _PB2_CLASS_ = k8s_release_service_pb2.DeleteK8sReleaseRequest
-    _pb2_base_: k8s_release_service_pb2.DeleteK8sReleaseRequest
     
     def __init__(
         self,
@@ -350,49 +342,48 @@ class DeleteK8sReleaseRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.DeleteK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListK8sReleasesResponse(message_1.Message):
     _PB2_CLASS_ = k8s_release_service_pb2.ListK8sReleasesResponse
-    _pb2_base_: k8s_release_service_pb2.ListK8sReleasesResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[K8sRelease]|None" = None,
+        items: "abc.Iterable[K8sRelease]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.applications.v1alpha1.ListK8sReleasesResponse",k8s_release_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[K8sRelease]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[K8sRelease]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=K8sRelease,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[K8sRelease]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[K8sRelease]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False)
     

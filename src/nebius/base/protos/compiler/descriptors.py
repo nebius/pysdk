@@ -46,7 +46,7 @@ class EnumValue(Descriptor):
 
     @property
     def number(self) -> int:
-        return self.descriptor.number  # type:ignore[no-any-return]
+        return self.descriptor.number  # type:ignore[no-any-return,unused-ignore]
 
     @property
     def pb2(self) -> ImportedSymbol:
@@ -136,7 +136,10 @@ class Field(Descriptor):
     def tracks_presence(self) -> bool:
         return (  # type:ignore[no-any-return,unused-ignore]
             self.descriptor.proto3_optional
-            or self.descriptor.type == self.descriptor.TYPE_MESSAGE
+            or (
+                self.descriptor.type == self.descriptor.TYPE_MESSAGE
+                and self.descriptor.label != self.descriptor.LABEL_REPEATED
+            )
             or self.descriptor.HasField("oneof_index")
         )
 

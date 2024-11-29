@@ -6,9 +6,7 @@ from .pygen import ImportedSymbol, PyGenFile
 log = getLogger(__name__)
 
 
-def generate_field(field: Field, g: PyGenFile, self_name: str, base_name: str) -> None:
-    g.p("@property")
-    g.p("def ", field.name, "(", self_name, ') -> "', add_eol=False)
+def getter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
     if field.is_map():
         g.p(
             ImportedSymbol("MutableMapping", "collections.abc"),
@@ -31,19 +29,62 @@ def generate_field(field: Field, g: PyGenFile, self_name: str, base_name: str) -
         )
     else:
         g.p(field.python_type(), add_eol=False, noindent=True)
-    if field.tracks_presence():
+    if field.tracks_presence() or always_none:
         g.p("|None", add_eol=False, noindent=True)
+
+
+def setter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
+    if field.is_map():
+        g.p(
+            ImportedSymbol("Mapping", "collections.abc"),
+            "[",
+            field.map_key.python_type(),
+            ",",
+            field.map_value.python_type(),
+            "]",
+            add_eol=False,
+            noindent=True,
+        )
+    elif field.is_repeated():
+        g.p(
+            ImportedSymbol("Iterable", "collections.abc"),
+            "[",
+            field.python_type(),
+            "]",
+            add_eol=False,
+            noindent=True,
+        )
+    elif field.is_enum():
+        ptype = field.python_type()
+        pb2 = field.enum.pb2
+        if pb2 == ptype:
+            g.p(ptype, add_eol=False, noindent=True)
+        else:
+            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
+    elif field.is_message():
+        ptype = field.python_type()
+        pb2 = field.message.pb2
+        if pb2 == ptype:
+            g.p(ptype, add_eol=False, noindent=True)
+        else:
+            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
+    else:
+        g.p(field.python_type(), add_eol=False, noindent=True)
+    if field.tracks_presence() or always_none:
+        g.p("|None", add_eol=False, noindent=True)
+
+
+def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
+    g.p("@property")
+    g.p("def ", field.name, "(", self_name, ') -> "', add_eol=False)
+    getter_type(field, g)
     g.p('":', noindent=True)
     with g:
         g.p(
             "return super()._get_field(",
             '"',
             field.name,
-            '", base=',
-            self_name,
-            ".",
-            base_name,
-            ", explicit_presence=",
+            '", explicit_presence=',
             field.tracks_presence(),
             ",",
         )
@@ -54,55 +95,14 @@ def generate_field(field: Field, g: PyGenFile, self_name: str, base_name: str) -
         g.p(")")
     g.p("@", field.name, ".setter")
     g.p("def ", field.name, '(self, value: "', add_eol=False)
-    if field.is_map():
-        g.p(
-            ImportedSymbol("MutableMapping", "collections.abc"),
-            "[",
-            field.map_key.python_type(),
-            ",",
-            field.map_value.python_type(),
-            "]",
-            add_eol=False,
-            noindent=True,
-        )
-    elif field.is_repeated():
-        g.p(
-            ImportedSymbol("MutableSequence", "collections.abc"),
-            "[",
-            field.python_type(),
-            "]",
-            add_eol=False,
-            noindent=True,
-        )
-    elif field.is_enum():
-        ptype = field.python_type()
-        pb2 = field.enum.pb2
-        if pb2 == ptype:
-            g.p(ptype, add_eol=False, noindent=True)
-        else:
-            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
-    elif field.is_message():
-        ptype = field.python_type()
-        pb2 = field.message.pb2
-        if pb2 == ptype:
-            g.p(ptype, add_eol=False, noindent=True)
-        else:
-            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
-    else:
-        g.p(field.python_type(), add_eol=False, noindent=True)
-    if field.tracks_presence():
-        g.p("|None", add_eol=False, noindent=True)
+    setter_type(field, g)
     g.p('") -> None:', noindent=True)
     with g:
         g.p(
             "return super()._set_field(",
             '"',
             field.name,
-            '",value, base=',
-            self_name,
-            ".",
-            base_name,
-            ",explicit_presence=",
+            '",value,explicit_presence=',
             field.tracks_presence(),
             ")",
         )
@@ -111,43 +111,8 @@ def generate_field(field: Field, g: PyGenFile, self_name: str, base_name: str) -
 
 def generate_field_init_arg(field: Field, g: PyGenFile) -> None:
     g.p(field.name, ': "', add_eol=False)
-    if field.is_map():
-        g.p(
-            ImportedSymbol("MutableMapping", "collections.abc"),
-            "[",
-            field.map_key.python_type(),
-            ",",
-            field.map_value.python_type(),
-            "]",
-            add_eol=False,
-            noindent=True,
-        )
-    elif field.is_repeated():
-        g.p(
-            ImportedSymbol("MutableSequence", "collections.abc"),
-            "[",
-            field.python_type(),
-            "]",
-            add_eol=False,
-            noindent=True,
-        )
-    elif field.is_enum():
-        ptype = field.python_type()
-        pb2 = field.enum.pb2
-        if pb2 == ptype:
-            g.p(ptype, add_eol=False, noindent=True)
-        else:
-            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
-    elif field.is_message():
-        ptype = field.python_type()
-        pb2 = field.message.pb2
-        if pb2 == ptype:
-            g.p(ptype, add_eol=False, noindent=True)
-        else:
-            g.p(ptype, "|", pb2, add_eol=False, noindent=True)
-    else:
-        g.p(field.python_type(), add_eol=False, noindent=True)
-    g.p('|None" = None,', noindent=True)
+    setter_type(field, g, always_none=True)
+    g.p('" = None,', noindent=True)
 
 
 def generate_field_init_setter(field: Field, g: PyGenFile, self_name: str) -> None:
@@ -157,7 +122,7 @@ def generate_field_init_setter(field: Field, g: PyGenFile, self_name: str) -> No
 
 
 def generate_enum(enum: Enum, g: PyGenFile) -> None:
-    descriptor_name = g.suggest_name("_PB2_DESCRIPTOR_")
+    descriptor_name = g.suggest_name("__PB2_DESCRIPTOR__")
     g.p(
         "class ",
         enum.name,
@@ -194,14 +159,11 @@ def generate_message(message: Message, g: PyGenFile) -> None:
     )
     initial_message_name = g.suggest_name("initial_message")
     self_name = g.suggest_name("self")
-    base_name = g.suggest_name("_pb2_base_")
     class_name = g.suggest_name("_PB2_CLASS_")
     message.attached_names["self"] = self_name
-    message.attached_names["base"] = base_name
     message.attached_names["cls"] = class_name
     with g:
         g.p(class_name, " = ", message.pb2)
-        g.p(base_name, ": ", message.pb2)
         g.p()
 
         for msg in message.messages():
@@ -230,12 +192,14 @@ def generate_message(message: Message, g: PyGenFile) -> None:
             g.p(
                 "super().__init__(",
                 initial_message_name,
-                ', "',
-                base_name,
-                '", ',
+                ",",
                 self_name,
                 ".",
                 class_name,
+                ',"',
+                message.full_type_name,
+                '",',
+                ImportedSymbol("DESCRIPTOR", message.containing_file.pb2),
                 ")",
             )
 
@@ -244,7 +208,7 @@ def generate_message(message: Message, g: PyGenFile) -> None:
         g.p()
 
         for field in message.fields():
-            generate_field(field, g, self_name, base_name)
+            generate_field(field, g, self_name)
 
 
 def generate_file(file: File, g: PyGenFile) -> None:

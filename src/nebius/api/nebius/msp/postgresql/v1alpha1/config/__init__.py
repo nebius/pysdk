@@ -10,7 +10,6 @@ import builtins as builtins
 # file: nebius/msp/postgresql/v1alpha1/config/postgresql.proto
 class PostgresqlConfig16(message_1.Message):
     _PB2_CLASS_ = postgresql_pb2.PostgresqlConfig16
-    _pb2_base_: postgresql_pb2.PostgresqlConfig16
     
     def __init__(
         self,
@@ -29,7 +28,7 @@ class PostgresqlConfig16(message_1.Message):
         max_connections: "builtins.int|None" = None,
         shared_buffers: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.postgresql.v1alpha1.config.PostgresqlConfig16",postgresql_pb2.DESCRIPTOR)
         if autovacuum_work_mem is not None:
             self.autovacuum_work_mem = autovacuum_work_mem
         if statement_timeout is not None:
@@ -57,97 +56,97 @@ class PostgresqlConfig16(message_1.Message):
     
     @property
     def autovacuum_work_mem(self) -> "builtins.int|None":
-        return super()._get_field("autovacuum_work_mem", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("autovacuum_work_mem", explicit_presence=True,
         )
     @autovacuum_work_mem.setter
     def autovacuum_work_mem(self, value: "builtins.int|None") -> None:
-        return super()._set_field("autovacuum_work_mem",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("autovacuum_work_mem",value,explicit_presence=True)
     
     @property
     def statement_timeout(self) -> "builtins.int|None":
-        return super()._get_field("statement_timeout", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("statement_timeout", explicit_presence=True,
         )
     @statement_timeout.setter
     def statement_timeout(self, value: "builtins.int|None") -> None:
-        return super()._set_field("statement_timeout",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("statement_timeout",value,explicit_presence=True)
     
     @property
     def idle_in_transaction_session_timeout(self) -> "builtins.int|None":
-        return super()._get_field("idle_in_transaction_session_timeout", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("idle_in_transaction_session_timeout", explicit_presence=True,
         )
     @idle_in_transaction_session_timeout.setter
     def idle_in_transaction_session_timeout(self, value: "builtins.int|None") -> None:
-        return super()._set_field("idle_in_transaction_session_timeout",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("idle_in_transaction_session_timeout",value,explicit_presence=True)
     
     @property
     def autovacuum_vacuum_cost_delay(self) -> "builtins.int|None":
-        return super()._get_field("autovacuum_vacuum_cost_delay", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("autovacuum_vacuum_cost_delay", explicit_presence=True,
         )
     @autovacuum_vacuum_cost_delay.setter
     def autovacuum_vacuum_cost_delay(self, value: "builtins.int|None") -> None:
-        return super()._set_field("autovacuum_vacuum_cost_delay",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("autovacuum_vacuum_cost_delay",value,explicit_presence=True)
     
     @property
     def autovacuum_vacuum_cost_limit(self) -> "builtins.int|None":
-        return super()._get_field("autovacuum_vacuum_cost_limit", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("autovacuum_vacuum_cost_limit", explicit_presence=True,
         )
     @autovacuum_vacuum_cost_limit.setter
     def autovacuum_vacuum_cost_limit(self, value: "builtins.int|None") -> None:
-        return super()._set_field("autovacuum_vacuum_cost_limit",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("autovacuum_vacuum_cost_limit",value,explicit_presence=True)
     
     @property
     def autovacuum_naptime(self) -> "builtins.int|None":
-        return super()._get_field("autovacuum_naptime", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("autovacuum_naptime", explicit_presence=True,
         )
     @autovacuum_naptime.setter
     def autovacuum_naptime(self, value: "builtins.int|None") -> None:
-        return super()._set_field("autovacuum_naptime",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("autovacuum_naptime",value,explicit_presence=True)
     
     @property
     def autovacuum_vacuum_scale_factor(self) -> "builtins.float|None":
-        return super()._get_field("autovacuum_vacuum_scale_factor", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("autovacuum_vacuum_scale_factor", explicit_presence=True,
         )
     @autovacuum_vacuum_scale_factor.setter
     def autovacuum_vacuum_scale_factor(self, value: "builtins.float|None") -> None:
-        return super()._set_field("autovacuum_vacuum_scale_factor",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("autovacuum_vacuum_scale_factor",value,explicit_presence=True)
     
     @property
     def autovacuum_analyze_scale_factor(self) -> "builtins.float|None":
-        return super()._get_field("autovacuum_analyze_scale_factor", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("autovacuum_analyze_scale_factor", explicit_presence=True,
         )
     @autovacuum_analyze_scale_factor.setter
     def autovacuum_analyze_scale_factor(self, value: "builtins.float|None") -> None:
-        return super()._set_field("autovacuum_analyze_scale_factor",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("autovacuum_analyze_scale_factor",value,explicit_presence=True)
     
     @property
     def default_transaction_read_only(self) -> "builtins.bool|None":
-        return super()._get_field("default_transaction_read_only", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("default_transaction_read_only", explicit_presence=True,
         )
     @default_transaction_read_only.setter
     def default_transaction_read_only(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("default_transaction_read_only",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("default_transaction_read_only",value,explicit_presence=True)
     
     @property
     def search_path(self) -> "builtins.str|None":
-        return super()._get_field("search_path", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("search_path", explicit_presence=True,
         )
     @search_path.setter
     def search_path(self, value: "builtins.str|None") -> None:
-        return super()._set_field("search_path",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("search_path",value,explicit_presence=True)
     
     @property
     def max_connections(self) -> "builtins.int|None":
-        return super()._get_field("max_connections", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("max_connections", explicit_presence=True,
         )
     @max_connections.setter
     def max_connections(self, value: "builtins.int|None") -> None:
-        return super()._set_field("max_connections",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("max_connections",value,explicit_presence=True)
     
     @property
     def shared_buffers(self) -> "builtins.int|None":
-        return super()._get_field("shared_buffers", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("shared_buffers", explicit_presence=True,
         )
     @shared_buffers.setter
     def shared_buffers(self, value: "builtins.int|None") -> None:
-        return super()._set_field("shared_buffers",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("shared_buffers",value,explicit_presence=True)
     

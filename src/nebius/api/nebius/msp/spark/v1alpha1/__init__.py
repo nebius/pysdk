@@ -24,7 +24,6 @@ import nebius.api.nebius.msp.spark.v1alpha1.session_service_pb2 as session_servi
 # file: nebius/msp/spark/v1alpha1/cluster.proto
 class Cluster(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.Cluster
-    _pb2_base_: cluster_pb2.Cluster
     
     def __init__(
         self,
@@ -34,7 +33,7 @@ class Cluster(message_1.Message):
         spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
         status: "ClusterStatus|cluster_pb2.ClusterStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.Cluster",cluster_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -44,34 +43,33 @@ class Cluster(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ClusterSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ClusterSpec,
         )
     @spec.setter
     def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "ClusterStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=ClusterStatus,
         )
     @status.setter
     def status(self, value: "ClusterStatus|cluster_pb2.ClusterStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class ClusterSpec(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.ClusterSpec
-    _pb2_base_: cluster_pb2.ClusterSpec
     
     def __init__(
         self,
@@ -83,7 +81,7 @@ class ClusterSpec(message_1.Message):
         service_account_id: "builtins.str|None" = None,
         network_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR)
         if description is not None:
             self.description = description
         if limits is not None:
@@ -97,49 +95,48 @@ class ClusterSpec(message_1.Message):
     
     @property
     def description(self) -> "builtins.str|None":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("description", explicit_presence=True,
         )
     @description.setter
     def description(self, value: "builtins.str|None") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("description",value,explicit_presence=True)
     
     @property
     def limits(self) -> "Limits|None":
-        return super()._get_field("limits", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("limits", explicit_presence=True,
         wrap=Limits,
         )
     @limits.setter
     def limits(self, value: "Limits|cluster_pb2.Limits|None") -> None:
-        return super()._set_field("limits",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("limits",value,explicit_presence=True)
     
     @property
     def authorization(self) -> "Password|None":
-        return super()._get_field("authorization", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("authorization", explicit_presence=True,
         wrap=Password,
         )
     @authorization.setter
     def authorization(self, value: "Password|cluster_pb2.Password|None") -> None:
-        return super()._set_field("authorization",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("authorization",value,explicit_presence=True)
     
     @property
     def service_account_id(self) -> "builtins.str":
-        return super()._get_field("service_account_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("service_account_id", explicit_presence=False,
         )
     @service_account_id.setter
     def service_account_id(self, value: "builtins.str") -> None:
-        return super()._set_field("service_account_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("service_account_id",value,explicit_presence=False)
     
     @property
     def network_id(self) -> "builtins.str":
-        return super()._get_field("network_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
     def network_id(self, value: "builtins.str") -> None:
-        return super()._set_field("network_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("network_id",value,explicit_presence=False)
     
 class ClusterStatus(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.ClusterStatus
-    _pb2_base_: cluster_pb2.ClusterStatus
     
     def __init__(
         self,
@@ -149,7 +146,7 @@ class ClusterStatus(message_1.Message):
         state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
         history_server_endpoint: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ClusterStatus",cluster_pb2.DESCRIPTOR)
         if phase is not None:
             self.phase = phase
         if state is not None:
@@ -159,33 +156,32 @@ class ClusterStatus(message_1.Message):
     
     @property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
-        return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
     def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
-        return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("phase",value,explicit_presence=False)
     
     @property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
     def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def history_server_endpoint(self) -> "builtins.str|None":
-        return super()._get_field("history_server_endpoint", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("history_server_endpoint", explicit_presence=True,
         )
     @history_server_endpoint.setter
     def history_server_endpoint(self, value: "builtins.str|None") -> None:
-        return super()._set_field("history_server_endpoint",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("history_server_endpoint",value,explicit_presence=True)
     
 class Limits(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.Limits
-    _pb2_base_: cluster_pb2.Limits
     
     def __init__(
         self,
@@ -194,7 +190,7 @@ class Limits(message_1.Message):
         cpu: "builtins.int|None" = None,
         memory_gibibytes: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.Limits",cluster_pb2.DESCRIPTOR)
         if cpu is not None:
             self.cpu = cpu
         if memory_gibibytes is not None:
@@ -202,23 +198,22 @@ class Limits(message_1.Message):
     
     @property
     def cpu(self) -> "builtins.int":
-        return super()._get_field("cpu", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("cpu", explicit_presence=False,
         )
     @cpu.setter
     def cpu(self, value: "builtins.int") -> None:
-        return super()._set_field("cpu",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("cpu",value,explicit_presence=False)
     
     @property
     def memory_gibibytes(self) -> "builtins.int":
-        return super()._get_field("memory_gibibytes", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("memory_gibibytes", explicit_presence=False,
         )
     @memory_gibibytes.setter
     def memory_gibibytes(self, value: "builtins.int") -> None:
-        return super()._set_field("memory_gibibytes",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("memory_gibibytes",value,explicit_presence=False)
     
 class Password(message_1.Message):
     _PB2_CLASS_ = cluster_pb2.Password
-    _pb2_base_: cluster_pb2.Password
     
     def __init__(
         self,
@@ -226,22 +221,21 @@ class Password(message_1.Message):
         *,
         password: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.Password",cluster_pb2.DESCRIPTOR)
         if password is not None:
             self.password = password
     
     @property
     def password(self) -> "builtins.str":
-        return super()._get_field("password", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("password", explicit_presence=False,
         )
     @password.setter
     def password(self, value: "builtins.str") -> None:
-        return super()._set_field("password",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("password",value,explicit_presence=False)
     
 # file: nebius/msp/spark/v1alpha1/cluster_service.proto
 class GetClusterRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.GetClusterRequest
-    _pb2_base_: cluster_service_pb2.GetClusterRequest
     
     def __init__(
         self,
@@ -249,21 +243,20 @@ class GetClusterRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.GetClusterRequest",cluster_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetClusterByNameRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.GetClusterByNameRequest
-    _pb2_base_: cluster_service_pb2.GetClusterByNameRequest
     
     def __init__(
         self,
@@ -272,7 +265,7 @@ class GetClusterByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.GetClusterByNameRequest",cluster_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -280,23 +273,22 @@ class GetClusterByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListClustersRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.ListClustersRequest
-    _pb2_base_: cluster_service_pb2.ListClustersRequest
     
     def __init__(
         self,
@@ -306,7 +298,7 @@ class ListClustersRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ListClustersRequest",cluster_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -316,65 +308,63 @@ class ListClustersRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListClustersResponse(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.ListClustersResponse
-    _pb2_base_: cluster_service_pb2.ListClustersResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Cluster]|None" = None,
+        items: "abc.Iterable[Cluster]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Cluster]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Cluster]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Cluster,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Cluster]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Cluster]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str|None":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("next_page_token", explicit_presence=True,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str|None") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("next_page_token",value,explicit_presence=True)
     
 class CreateClusterRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.CreateClusterRequest
-    _pb2_base_: cluster_service_pb2.CreateClusterRequest
     
     def __init__(
         self,
@@ -383,7 +373,7 @@ class CreateClusterRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -391,25 +381,24 @@ class CreateClusterRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ClusterSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ClusterSpec,
         )
     @spec.setter
     def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class UpdateClusterRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.UpdateClusterRequest
-    _pb2_base_: cluster_service_pb2.UpdateClusterRequest
     
     def __init__(
         self,
@@ -418,7 +407,7 @@ class UpdateClusterRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.UpdateClusterRequest",cluster_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -426,25 +415,24 @@ class UpdateClusterRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "ClusterSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=ClusterSpec,
         )
     @spec.setter
     def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class DeleteClusterRequest(message_1.Message):
     _PB2_CLASS_ = cluster_service_pb2.DeleteClusterRequest
-    _pb2_base_: cluster_service_pb2.DeleteClusterRequest
     
     def __init__(
         self,
@@ -452,31 +440,30 @@ class DeleteClusterRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 # file: nebius/msp/spark/v1alpha1/common.proto
 class PythonConfig(message_1.Message):
     _PB2_CLASS_ = common_pb2.PythonConfig
-    _pb2_base_: common_pb2.PythonConfig
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        requirements: "abc.MutableSequence[builtins.str]|None" = None,
-        file_uris: "abc.MutableSequence[builtins.str]|None" = None,
+        requirements: "abc.Iterable[builtins.str]|None" = None,
+        file_uris: "abc.Iterable[builtins.str]|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.PythonConfig",common_pb2.DESCRIPTOR)
         if requirements is not None:
             self.requirements = requirements
         if file_uris is not None:
@@ -484,23 +471,22 @@ class PythonConfig(message_1.Message):
     
     @property
     def requirements(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("requirements", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("requirements", explicit_presence=False,
         )
     @requirements.setter
-    def requirements(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("requirements",value, base=self._pb2_base_,explicit_presence=False)
+    def requirements(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("requirements",value,explicit_presence=False)
     
     @property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("file_uris", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("file_uris", explicit_presence=False,
         )
     @file_uris.setter
-    def file_uris(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("file_uris",value, base=self._pb2_base_,explicit_presence=False)
+    def file_uris(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("file_uris",value,explicit_presence=False)
     
 class JavaConfig(message_1.Message):
     _PB2_CLASS_ = common_pb2.JavaConfig
-    _pb2_base_: common_pb2.JavaConfig
     
     def __init__(
         self,
@@ -508,22 +494,21 @@ class JavaConfig(message_1.Message):
         *,
         entrypoint_class: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.JavaConfig",common_pb2.DESCRIPTOR)
         if entrypoint_class is not None:
             self.entrypoint_class = entrypoint_class
     
     @property
     def entrypoint_class(self) -> "builtins.str":
-        return super()._get_field("entrypoint_class", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("entrypoint_class", explicit_presence=False,
         )
     @entrypoint_class.setter
     def entrypoint_class(self, value: "builtins.str") -> None:
-        return super()._set_field("entrypoint_class",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("entrypoint_class",value,explicit_presence=False)
     
 # file: nebius/msp/spark/v1alpha1/preset.proto
 class DriverTemplateSpec(message_1.Message):
     _PB2_CLASS_ = preset_pb2.DriverTemplateSpec
-    _pb2_base_: preset_pb2.DriverTemplateSpec
     
     def __init__(
         self,
@@ -532,7 +517,7 @@ class DriverTemplateSpec(message_1.Message):
         disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None" = None,
         resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.DriverTemplateSpec",preset_pb2.DESCRIPTOR)
         if disk is not None:
             self.disk = disk
         if resources is not None:
@@ -540,25 +525,24 @@ class DriverTemplateSpec(message_1.Message):
     
     @property
     def disk(self) -> "resource_1.DiskSpec|None":
-        return super()._get_field("disk", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("disk", explicit_presence=True,
         wrap=resource_1.DiskSpec,
         )
     @disk.setter
     def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec|None") -> None:
-        return super()._set_field("disk",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("disk",value,explicit_presence=True)
     
     @property
     def resources(self) -> "resource_1.ResourcesSpec|None":
-        return super()._get_field("resources", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("resources", explicit_presence=True,
         wrap=resource_1.ResourcesSpec,
         )
     @resources.setter
     def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
-        return super()._set_field("resources",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("resources",value,explicit_presence=True)
     
 class DynamicAllocationSpec(message_1.Message):
     _PB2_CLASS_ = preset_pb2.DynamicAllocationSpec
-    _pb2_base_: preset_pb2.DynamicAllocationSpec
     
     def __init__(
         self,
@@ -567,7 +551,7 @@ class DynamicAllocationSpec(message_1.Message):
         min: "builtins.int|None" = None,
         max: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.DynamicAllocationSpec",preset_pb2.DESCRIPTOR)
         if min is not None:
             self.min = min
         if max is not None:
@@ -575,23 +559,22 @@ class DynamicAllocationSpec(message_1.Message):
     
     @property
     def min(self) -> "builtins.int":
-        return super()._get_field("min", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("min", explicit_presence=False,
         )
     @min.setter
     def min(self, value: "builtins.int") -> None:
-        return super()._set_field("min",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("min",value,explicit_presence=False)
     
     @property
     def max(self) -> "builtins.int":
-        return super()._get_field("max", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("max", explicit_presence=False,
         )
     @max.setter
     def max(self, value: "builtins.int") -> None:
-        return super()._set_field("max",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("max",value,explicit_presence=False)
     
 class ExecutorTemplateSpec(message_1.Message):
     _PB2_CLASS_ = preset_pb2.ExecutorTemplateSpec
-    _pb2_base_: preset_pb2.ExecutorTemplateSpec
     
     def __init__(
         self,
@@ -602,7 +585,7 @@ class ExecutorTemplateSpec(message_1.Message):
         hosts: "resource_1.HostSpec|template_pb2.HostSpec|None" = None,
         hosts_dynamic_allocation: "DynamicAllocationSpec|preset_pb2.DynamicAllocationSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ExecutorTemplateSpec",preset_pb2.DESCRIPTOR)
         if disk is not None:
             self.disk = disk
         if resources is not None:
@@ -614,44 +597,43 @@ class ExecutorTemplateSpec(message_1.Message):
     
     @property
     def disk(self) -> "resource_1.DiskSpec|None":
-        return super()._get_field("disk", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("disk", explicit_presence=True,
         wrap=resource_1.DiskSpec,
         )
     @disk.setter
     def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec|None") -> None:
-        return super()._set_field("disk",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("disk",value,explicit_presence=True)
     
     @property
     def resources(self) -> "resource_1.ResourcesSpec|None":
-        return super()._get_field("resources", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("resources", explicit_presence=True,
         wrap=resource_1.ResourcesSpec,
         )
     @resources.setter
     def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
-        return super()._set_field("resources",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("resources",value,explicit_presence=True)
     
     @property
     def hosts(self) -> "resource_1.HostSpec|None":
-        return super()._get_field("hosts", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("hosts", explicit_presence=True,
         wrap=resource_1.HostSpec,
         )
     @hosts.setter
     def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec|None") -> None:
-        return super()._set_field("hosts",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("hosts",value,explicit_presence=True)
     
     @property
     def hosts_dynamic_allocation(self) -> "DynamicAllocationSpec|None":
-        return super()._get_field("hosts_dynamic_allocation", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("hosts_dynamic_allocation", explicit_presence=True,
         wrap=DynamicAllocationSpec,
         )
     @hosts_dynamic_allocation.setter
     def hosts_dynamic_allocation(self, value: "DynamicAllocationSpec|preset_pb2.DynamicAllocationSpec|None") -> None:
-        return super()._set_field("hosts_dynamic_allocation",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("hosts_dynamic_allocation",value,explicit_presence=True)
     
 # file: nebius/msp/spark/v1alpha1/job.proto
 class Job(message_1.Message):
     _PB2_CLASS_ = job_pb2.Job
-    _pb2_base_: job_pb2.Job
     
     def __init__(
         self,
@@ -661,7 +643,7 @@ class Job(message_1.Message):
         spec: "JobSpec|job_pb2.JobSpec|None" = None,
         status: "JobStatus|job_pb2.JobStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.Job",job_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -671,38 +653,36 @@ class Job(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "JobSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=JobSpec,
         )
     @spec.setter
     def spec(self, value: "JobSpec|job_pb2.JobSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "JobStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=JobStatus,
         )
     @status.setter
     def status(self, value: "JobStatus|job_pb2.JobStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class JobSpec(message_1.Message):
     _PB2_CLASS_ = job_pb2.JobSpec
-    _pb2_base_: job_pb2.JobSpec
     
     class SparkConfEntry(message_1.Message):
         _PB2_CLASS_ = job_pb2.JobSpec.SparkConfEntry
-        _pb2_base_: job_pb2.JobSpec.SparkConfEntry
         
         def __init__(
             self,
@@ -711,7 +691,7 @@ class JobSpec(message_1.Message):
             key: "builtins.str|None" = None,
             value: "builtins.str|None" = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.JobSpec.SparkConfEntry",job_pb2.DESCRIPTOR)
             if key is not None:
                 self.key = key
             if value is not None:
@@ -719,19 +699,19 @@ class JobSpec(message_1.Message):
         
         @property
         def key(self) -> "builtins.str":
-            return super()._get_field("key", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("key", explicit_presence=False,
             )
         @key.setter
         def key(self, value: "builtins.str") -> None:
-            return super()._set_field("key",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("key",value,explicit_presence=False)
         
         @property
         def value(self) -> "builtins.str":
-            return super()._get_field("value", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("value", explicit_presence=False,
             )
         @value.setter
         def value(self, value: "builtins.str") -> None:
-            return super()._set_field("value",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("value",value,explicit_presence=False)
         
     
     def __init__(
@@ -743,15 +723,15 @@ class JobSpec(message_1.Message):
         driver: "DriverTemplateSpec|preset_pb2.DriverTemplateSpec|None" = None,
         executor: "ExecutorTemplateSpec|preset_pb2.ExecutorTemplateSpec|None" = None,
         spark_version: "builtins.str|None" = None,
-        application_args: "abc.MutableSequence[builtins.str]|None" = None,
-        file_uris: "abc.MutableSequence[builtins.str]|None" = None,
-        jar_uris: "abc.MutableSequence[builtins.str]|None" = None,
-        packages: "abc.MutableSequence[builtins.str]|None" = None,
-        spark_conf: "abc.MutableMapping[builtins.str,builtins.str]|None" = None,
+        application_args: "abc.Iterable[builtins.str]|None" = None,
+        file_uris: "abc.Iterable[builtins.str]|None" = None,
+        jar_uris: "abc.Iterable[builtins.str]|None" = None,
+        packages: "abc.Iterable[builtins.str]|None" = None,
+        spark_conf: "abc.Mapping[builtins.str,builtins.str]|None" = None,
         python: "PythonConfig|common_pb2.PythonConfig|None" = None,
         java: "JavaConfig|common_pb2.JavaConfig|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.JobSpec",job_pb2.DESCRIPTOR)
         if description is not None:
             self.description = description
         if application_file_uri is not None:
@@ -779,108 +759,107 @@ class JobSpec(message_1.Message):
     
     @property
     def description(self) -> "builtins.str|None":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("description", explicit_presence=True,
         )
     @description.setter
     def description(self, value: "builtins.str|None") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("description",value,explicit_presence=True)
     
     @property
     def application_file_uri(self) -> "builtins.str":
-        return super()._get_field("application_file_uri", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("application_file_uri", explicit_presence=False,
         )
     @application_file_uri.setter
     def application_file_uri(self, value: "builtins.str") -> None:
-        return super()._set_field("application_file_uri",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("application_file_uri",value,explicit_presence=False)
     
     @property
     def driver(self) -> "DriverTemplateSpec|None":
-        return super()._get_field("driver", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("driver", explicit_presence=True,
         wrap=DriverTemplateSpec,
         )
     @driver.setter
     def driver(self, value: "DriverTemplateSpec|preset_pb2.DriverTemplateSpec|None") -> None:
-        return super()._set_field("driver",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("driver",value,explicit_presence=True)
     
     @property
     def executor(self) -> "ExecutorTemplateSpec|None":
-        return super()._get_field("executor", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("executor", explicit_presence=True,
         wrap=ExecutorTemplateSpec,
         )
     @executor.setter
     def executor(self, value: "ExecutorTemplateSpec|preset_pb2.ExecutorTemplateSpec|None") -> None:
-        return super()._set_field("executor",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("executor",value,explicit_presence=True)
     
     @property
     def spark_version(self) -> "builtins.str":
-        return super()._get_field("spark_version", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("spark_version", explicit_presence=False,
         )
     @spark_version.setter
     def spark_version(self, value: "builtins.str") -> None:
-        return super()._set_field("spark_version",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("spark_version",value,explicit_presence=False)
     
     @property
     def application_args(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("application_args", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("application_args", explicit_presence=False,
         )
     @application_args.setter
-    def application_args(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("application_args",value, base=self._pb2_base_,explicit_presence=False)
+    def application_args(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("application_args",value,explicit_presence=False)
     
     @property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("file_uris", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("file_uris", explicit_presence=False,
         )
     @file_uris.setter
-    def file_uris(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("file_uris",value, base=self._pb2_base_,explicit_presence=False)
+    def file_uris(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("file_uris",value,explicit_presence=False)
     
     @property
     def jar_uris(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("jar_uris", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("jar_uris", explicit_presence=False,
         )
     @jar_uris.setter
-    def jar_uris(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("jar_uris",value, base=self._pb2_base_,explicit_presence=False)
+    def jar_uris(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("jar_uris",value,explicit_presence=False)
     
     @property
     def packages(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("packages", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("packages", explicit_presence=False,
         )
     @packages.setter
-    def packages(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("packages",value, base=self._pb2_base_,explicit_presence=False)
+    def packages(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("packages",value,explicit_presence=False)
     
     @property
-    def spark_conf(self) -> "abc.MutableMapping[builtins.str,builtins.str]|None":
-        return super()._get_field("spark_conf", base=self._pb2_base_, explicit_presence=True,
+    def spark_conf(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        return super()._get_field("spark_conf", explicit_presence=False,
         wrap=JobSpec.SparkConfEntry,
         )
     @spark_conf.setter
-    def spark_conf(self, value: "abc.MutableMapping[builtins.str,builtins.str]|None") -> None:
-        return super()._set_field("spark_conf",value, base=self._pb2_base_,explicit_presence=True)
+    def spark_conf(self, value: "abc.Mapping[builtins.str,builtins.str]") -> None:
+        return super()._set_field("spark_conf",value,explicit_presence=False)
     
     @property
     def python(self) -> "PythonConfig|None":
-        return super()._get_field("python", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("python", explicit_presence=True,
         wrap=PythonConfig,
         )
     @python.setter
     def python(self, value: "PythonConfig|common_pb2.PythonConfig|None") -> None:
-        return super()._set_field("python",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("python",value,explicit_presence=True)
     
     @property
     def java(self) -> "JavaConfig|None":
-        return super()._get_field("java", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("java", explicit_presence=True,
         wrap=JavaConfig,
         )
     @java.setter
     def java(self, value: "JavaConfig|common_pb2.JavaConfig|None") -> None:
-        return super()._set_field("java",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("java",value,explicit_presence=True)
     
 class JobStatus(message_1.Message):
     _PB2_CLASS_ = job_pb2.JobStatus
-    _pb2_base_: job_pb2.JobStatus
     
     def __init__(
         self,
@@ -892,7 +871,7 @@ class JobStatus(message_1.Message):
         driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
         executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.JobStatus",job_pb2.DESCRIPTOR)
         if phase is not None:
             self.phase = phase
         if state is not None:
@@ -906,52 +885,51 @@ class JobStatus(message_1.Message):
     
     @property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
-        return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
     def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
-        return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("phase",value,explicit_presence=False)
     
     @property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
     def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def driver_endpoint(self) -> "builtins.str|None":
-        return super()._get_field("driver_endpoint", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("driver_endpoint", explicit_presence=True,
         )
     @driver_endpoint.setter
     def driver_endpoint(self, value: "builtins.str|None") -> None:
-        return super()._set_field("driver_endpoint",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("driver_endpoint",value,explicit_presence=True)
     
     @property
     def driver_preset_details(self) -> "resource_1.PresetDetails|None":
-        return super()._get_field("driver_preset_details", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("driver_preset_details", explicit_presence=True,
         wrap=resource_1.PresetDetails,
         )
     @driver_preset_details.setter
     def driver_preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails|None") -> None:
-        return super()._set_field("driver_preset_details",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("driver_preset_details",value,explicit_presence=True)
     
     @property
     def executor_preset_details(self) -> "resource_1.PresetDetails|None":
-        return super()._get_field("executor_preset_details", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("executor_preset_details", explicit_presence=True,
         wrap=resource_1.PresetDetails,
         )
     @executor_preset_details.setter
     def executor_preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails|None") -> None:
-        return super()._set_field("executor_preset_details",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("executor_preset_details",value,explicit_presence=True)
     
 # file: nebius/msp/spark/v1alpha1/job_service.proto
 class GetJobRequest(message_1.Message):
     _PB2_CLASS_ = job_service_pb2.GetJobRequest
-    _pb2_base_: job_service_pb2.GetJobRequest
     
     def __init__(
         self,
@@ -959,21 +937,20 @@ class GetJobRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.GetJobRequest",job_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class ListJobsRequest(message_1.Message):
     _PB2_CLASS_ = job_service_pb2.ListJobsRequest
-    _pb2_base_: job_service_pb2.ListJobsRequest
     
     def __init__(
         self,
@@ -983,7 +960,7 @@ class ListJobsRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ListJobsRequest",job_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -993,65 +970,63 @@ class ListJobsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListJobsResponse(message_1.Message):
     _PB2_CLASS_ = job_service_pb2.ListJobsResponse
-    _pb2_base_: job_service_pb2.ListJobsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Job]|None" = None,
+        items: "abc.Iterable[Job]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ListJobsResponse",job_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Job]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Job]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Job,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Job]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Job]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str|None":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("next_page_token", explicit_presence=True,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str|None") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("next_page_token",value,explicit_presence=True)
     
 class CreateJobRequest(message_1.Message):
     _PB2_CLASS_ = job_service_pb2.CreateJobRequest
-    _pb2_base_: job_service_pb2.CreateJobRequest
     
     def __init__(
         self,
@@ -1060,7 +1035,7 @@ class CreateJobRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "JobSpec|job_pb2.JobSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.CreateJobRequest",job_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1068,25 +1043,24 @@ class CreateJobRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "JobSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=JobSpec,
         )
     @spec.setter
     def spec(self, value: "JobSpec|job_pb2.JobSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class CancelJobRequest(message_1.Message):
     _PB2_CLASS_ = job_service_pb2.CancelJobRequest
-    _pb2_base_: job_service_pb2.CancelJobRequest
     
     def __init__(
         self,
@@ -1094,22 +1068,21 @@ class CancelJobRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.CancelJobRequest",job_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 # file: nebius/msp/spark/v1alpha1/session.proto
 class Session(message_1.Message):
     _PB2_CLASS_ = session_pb2.Session
-    _pb2_base_: session_pb2.Session
     
     def __init__(
         self,
@@ -1119,7 +1092,7 @@ class Session(message_1.Message):
         spec: "SessionSpec|session_pb2.SessionSpec|None" = None,
         status: "SessionStatus|session_pb2.SessionStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.Session",session_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1129,38 +1102,36 @@ class Session(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "SessionSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=SessionSpec,
         )
     @spec.setter
     def spec(self, value: "SessionSpec|session_pb2.SessionSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
     @property
     def status(self) -> "SessionStatus|None":
-        return super()._get_field("status", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("status", explicit_presence=True,
         wrap=SessionStatus,
         )
     @status.setter
     def status(self, value: "SessionStatus|session_pb2.SessionStatus|None") -> None:
-        return super()._set_field("status",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("status",value,explicit_presence=True)
     
 class SessionSpec(message_1.Message):
     _PB2_CLASS_ = session_pb2.SessionSpec
-    _pb2_base_: session_pb2.SessionSpec
     
     class SparkConfEntry(message_1.Message):
         _PB2_CLASS_ = session_pb2.SessionSpec.SparkConfEntry
-        _pb2_base_: session_pb2.SessionSpec.SparkConfEntry
         
         def __init__(
             self,
@@ -1169,7 +1140,7 @@ class SessionSpec(message_1.Message):
             key: "builtins.str|None" = None,
             value: "builtins.str|None" = None,
         ) -> None:
-            super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+            super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.SessionSpec.SparkConfEntry",session_pb2.DESCRIPTOR)
             if key is not None:
                 self.key = key
             if value is not None:
@@ -1177,19 +1148,19 @@ class SessionSpec(message_1.Message):
         
         @property
         def key(self) -> "builtins.str":
-            return super()._get_field("key", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("key", explicit_presence=False,
             )
         @key.setter
         def key(self, value: "builtins.str") -> None:
-            return super()._set_field("key",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("key",value,explicit_presence=False)
         
         @property
         def value(self) -> "builtins.str":
-            return super()._get_field("value", base=self._pb2_base_, explicit_presence=False,
+            return super()._get_field("value", explicit_presence=False,
             )
         @value.setter
         def value(self, value: "builtins.str") -> None:
-            return super()._set_field("value",value, base=self._pb2_base_,explicit_presence=False)
+            return super()._set_field("value",value,explicit_presence=False)
         
     
     def __init__(
@@ -1200,13 +1171,13 @@ class SessionSpec(message_1.Message):
         driver: "DriverTemplateSpec|preset_pb2.DriverTemplateSpec|None" = None,
         executor: "ExecutorTemplateSpec|preset_pb2.ExecutorTemplateSpec|None" = None,
         spark_version: "builtins.str|None" = None,
-        file_uris: "abc.MutableSequence[builtins.str]|None" = None,
-        jar_uris: "abc.MutableSequence[builtins.str]|None" = None,
-        packages: "abc.MutableSequence[builtins.str]|None" = None,
-        spark_conf: "abc.MutableMapping[builtins.str,builtins.str]|None" = None,
+        file_uris: "abc.Iterable[builtins.str]|None" = None,
+        jar_uris: "abc.Iterable[builtins.str]|None" = None,
+        packages: "abc.Iterable[builtins.str]|None" = None,
+        spark_conf: "abc.Mapping[builtins.str,builtins.str]|None" = None,
         python: "PythonConfig|common_pb2.PythonConfig|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.SessionSpec",session_pb2.DESCRIPTOR)
         if description is not None:
             self.description = description
         if driver is not None:
@@ -1228,83 +1199,82 @@ class SessionSpec(message_1.Message):
     
     @property
     def description(self) -> "builtins.str|None":
-        return super()._get_field("description", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("description", explicit_presence=True,
         )
     @description.setter
     def description(self, value: "builtins.str|None") -> None:
-        return super()._set_field("description",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("description",value,explicit_presence=True)
     
     @property
     def driver(self) -> "DriverTemplateSpec|None":
-        return super()._get_field("driver", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("driver", explicit_presence=True,
         wrap=DriverTemplateSpec,
         )
     @driver.setter
     def driver(self, value: "DriverTemplateSpec|preset_pb2.DriverTemplateSpec|None") -> None:
-        return super()._set_field("driver",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("driver",value,explicit_presence=True)
     
     @property
     def executor(self) -> "ExecutorTemplateSpec|None":
-        return super()._get_field("executor", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("executor", explicit_presence=True,
         wrap=ExecutorTemplateSpec,
         )
     @executor.setter
     def executor(self, value: "ExecutorTemplateSpec|preset_pb2.ExecutorTemplateSpec|None") -> None:
-        return super()._set_field("executor",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("executor",value,explicit_presence=True)
     
     @property
     def spark_version(self) -> "builtins.str":
-        return super()._get_field("spark_version", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("spark_version", explicit_presence=False,
         )
     @spark_version.setter
     def spark_version(self, value: "builtins.str") -> None:
-        return super()._set_field("spark_version",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("spark_version",value,explicit_presence=False)
     
     @property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("file_uris", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("file_uris", explicit_presence=False,
         )
     @file_uris.setter
-    def file_uris(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("file_uris",value, base=self._pb2_base_,explicit_presence=False)
+    def file_uris(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("file_uris",value,explicit_presence=False)
     
     @property
     def jar_uris(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("jar_uris", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("jar_uris", explicit_presence=False,
         )
     @jar_uris.setter
-    def jar_uris(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("jar_uris",value, base=self._pb2_base_,explicit_presence=False)
+    def jar_uris(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("jar_uris",value,explicit_presence=False)
     
     @property
     def packages(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("packages", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("packages", explicit_presence=False,
         )
     @packages.setter
-    def packages(self, value: "abc.MutableSequence[builtins.str]") -> None:
-        return super()._set_field("packages",value, base=self._pb2_base_,explicit_presence=False)
+    def packages(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("packages",value,explicit_presence=False)
     
     @property
-    def spark_conf(self) -> "abc.MutableMapping[builtins.str,builtins.str]|None":
-        return super()._get_field("spark_conf", base=self._pb2_base_, explicit_presence=True,
+    def spark_conf(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        return super()._get_field("spark_conf", explicit_presence=False,
         wrap=SessionSpec.SparkConfEntry,
         )
     @spark_conf.setter
-    def spark_conf(self, value: "abc.MutableMapping[builtins.str,builtins.str]|None") -> None:
-        return super()._set_field("spark_conf",value, base=self._pb2_base_,explicit_presence=True)
+    def spark_conf(self, value: "abc.Mapping[builtins.str,builtins.str]") -> None:
+        return super()._set_field("spark_conf",value,explicit_presence=False)
     
     @property
     def python(self) -> "PythonConfig|None":
-        return super()._get_field("python", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("python", explicit_presence=True,
         wrap=PythonConfig,
         )
     @python.setter
     def python(self, value: "PythonConfig|common_pb2.PythonConfig|None") -> None:
-        return super()._set_field("python",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("python",value,explicit_presence=True)
     
 class SessionStatus(message_1.Message):
     _PB2_CLASS_ = session_pb2.SessionStatus
-    _pb2_base_: session_pb2.SessionStatus
     
     def __init__(
         self,
@@ -1316,7 +1286,7 @@ class SessionStatus(message_1.Message):
         driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
         executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.SessionStatus",session_pb2.DESCRIPTOR)
         if phase is not None:
             self.phase = phase
         if state is not None:
@@ -1330,52 +1300,51 @@ class SessionStatus(message_1.Message):
     
     @property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
-        return super()._get_field("phase", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
     def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
-        return super()._set_field("phase",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("phase",value,explicit_presence=False)
     
     @property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
-        return super()._get_field("state", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
     def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
-        return super()._set_field("state",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False)
     
     @property
     def spark_connect_endpoint(self) -> "builtins.str|None":
-        return super()._get_field("spark_connect_endpoint", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spark_connect_endpoint", explicit_presence=True,
         )
     @spark_connect_endpoint.setter
     def spark_connect_endpoint(self, value: "builtins.str|None") -> None:
-        return super()._set_field("spark_connect_endpoint",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spark_connect_endpoint",value,explicit_presence=True)
     
     @property
     def driver_preset_details(self) -> "resource_1.PresetDetails|None":
-        return super()._get_field("driver_preset_details", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("driver_preset_details", explicit_presence=True,
         wrap=resource_1.PresetDetails,
         )
     @driver_preset_details.setter
     def driver_preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails|None") -> None:
-        return super()._set_field("driver_preset_details",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("driver_preset_details",value,explicit_presence=True)
     
     @property
     def executor_preset_details(self) -> "resource_1.PresetDetails|None":
-        return super()._get_field("executor_preset_details", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("executor_preset_details", explicit_presence=True,
         wrap=resource_1.PresetDetails,
         )
     @executor_preset_details.setter
     def executor_preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails|None") -> None:
-        return super()._set_field("executor_preset_details",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("executor_preset_details",value,explicit_presence=True)
     
 # file: nebius/msp/spark/v1alpha1/session_service.proto
 class GetSessionRequest(message_1.Message):
     _PB2_CLASS_ = session_service_pb2.GetSessionRequest
-    _pb2_base_: session_service_pb2.GetSessionRequest
     
     def __init__(
         self,
@@ -1383,21 +1352,20 @@ class GetSessionRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.GetSessionRequest",session_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     
 class GetSessionByNameRequest(message_1.Message):
     _PB2_CLASS_ = session_service_pb2.GetSessionByNameRequest
-    _pb2_base_: session_service_pb2.GetSessionByNameRequest
     
     def __init__(
         self,
@@ -1406,7 +1374,7 @@ class GetSessionByNameRequest(message_1.Message):
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.GetSessionByNameRequest",session_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -1414,23 +1382,22 @@ class GetSessionByNameRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
 class ListSessionsRequest(message_1.Message):
     _PB2_CLASS_ = session_service_pb2.ListSessionsRequest
-    _pb2_base_: session_service_pb2.ListSessionsRequest
     
     def __init__(
         self,
@@ -1440,7 +1407,7 @@ class ListSessionsRequest(message_1.Message):
         page_size: "builtins.int|None" = None,
         page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ListSessionsRequest",session_service_pb2.DESCRIPTOR)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -1450,65 +1417,63 @@ class ListSessionsRequest(message_1.Message):
     
     @property
     def parent_id(self) -> "builtins.str":
-        return super()._get_field("parent_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False)
     
     @property
     def page_size(self) -> "builtins.int":
-        return super()._get_field("page_size", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False)
     
     @property
     def page_token(self) -> "builtins.str":
-        return super()._get_field("page_token", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False)
     
 class ListSessionsResponse(message_1.Message):
     _PB2_CLASS_ = session_service_pb2.ListSessionsResponse
-    _pb2_base_: session_service_pb2.ListSessionsResponse
     
     def __init__(
         self,
         initial_message: message_2.Message|None = None,
         *,
-        items: "abc.MutableSequence[Session]|None" = None,
+        items: "abc.Iterable[Session]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.ListSessionsResponse",session_service_pb2.DESCRIPTOR)
         if items is not None:
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
     @property
-    def items(self) -> "abc.MutableSequence[Session]|None":
-        return super()._get_field("items", base=self._pb2_base_, explicit_presence=True,
+    def items(self) -> "abc.MutableSequence[Session]":
+        return super()._get_field("items", explicit_presence=False,
         wrap=Session,
         )
     @items.setter
-    def items(self, value: "abc.MutableSequence[Session]|None") -> None:
-        return super()._set_field("items",value, base=self._pb2_base_,explicit_presence=True)
+    def items(self, value: "abc.Iterable[Session]") -> None:
+        return super()._set_field("items",value,explicit_presence=False)
     
     @property
     def next_page_token(self) -> "builtins.str|None":
-        return super()._get_field("next_page_token", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("next_page_token", explicit_presence=True,
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str|None") -> None:
-        return super()._set_field("next_page_token",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("next_page_token",value,explicit_presence=True)
     
 class CreateSessionRequest(message_1.Message):
     _PB2_CLASS_ = session_service_pb2.CreateSessionRequest
-    _pb2_base_: session_service_pb2.CreateSessionRequest
     
     def __init__(
         self,
@@ -1517,7 +1482,7 @@ class CreateSessionRequest(message_1.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "SessionSpec|session_pb2.SessionSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.CreateSessionRequest",session_service_pb2.DESCRIPTOR)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -1525,25 +1490,24 @@ class CreateSessionRequest(message_1.Message):
     
     @property
     def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("metadata", explicit_presence=True,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
     def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("metadata",value,explicit_presence=True)
     
     @property
     def spec(self) -> "SessionSpec|None":
-        return super()._get_field("spec", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("spec", explicit_presence=True,
         wrap=SessionSpec,
         )
     @spec.setter
     def spec(self, value: "SessionSpec|session_pb2.SessionSpec|None") -> None:
-        return super()._set_field("spec",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("spec",value,explicit_presence=True)
     
 class DeleteSessionRequest(message_1.Message):
     _PB2_CLASS_ = session_service_pb2.DeleteSessionRequest
-    _pb2_base_: session_service_pb2.DeleteSessionRequest
     
     def __init__(
         self,
@@ -1551,15 +1515,15 @@ class DeleteSessionRequest(message_1.Message):
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.msp.spark.v1alpha1.DeleteSessionRequest",session_service_pb2.DESCRIPTOR)
         if id is not None:
             self.id = id
     
     @property
     def id(self) -> "builtins.str":
-        return super()._get_field("id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False)
     

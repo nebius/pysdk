@@ -10,7 +10,6 @@ import builtins as builtins
 # file: nebius/vpc/v1alpha1/network_interface.proto
 class NetworkInterfaceSpec(message_1.Message):
     _PB2_CLASS_ = network_interface_pb2.NetworkInterfaceSpec
-    _pb2_base_: network_interface_pb2.NetworkInterfaceSpec
     
     def __init__(
         self,
@@ -21,7 +20,7 @@ class NetworkInterfaceSpec(message_1.Message):
         ip_address: "IPAddress|network_interface_pb2.IPAddress|None" = None,
         public_ip_address: "PublicIPAddress|network_interface_pb2.PublicIPAddress|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1alpha1.NetworkInterfaceSpec",network_interface_pb2.DESCRIPTOR)
         if subnet_id is not None:
             self.subnet_id = subnet_id
         if name is not None:
@@ -33,41 +32,40 @@ class NetworkInterfaceSpec(message_1.Message):
     
     @property
     def subnet_id(self) -> "builtins.str":
-        return super()._get_field("subnet_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("subnet_id", explicit_presence=False,
         )
     @subnet_id.setter
     def subnet_id(self, value: "builtins.str") -> None:
-        return super()._set_field("subnet_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("subnet_id",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
     @property
     def ip_address(self) -> "IPAddress|None":
-        return super()._get_field("ip_address", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("ip_address", explicit_presence=True,
         wrap=IPAddress,
         )
     @ip_address.setter
     def ip_address(self, value: "IPAddress|network_interface_pb2.IPAddress|None") -> None:
-        return super()._set_field("ip_address",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("ip_address",value,explicit_presence=True)
     
     @property
     def public_ip_address(self) -> "PublicIPAddress|None":
-        return super()._get_field("public_ip_address", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("public_ip_address", explicit_presence=True,
         wrap=PublicIPAddress,
         )
     @public_ip_address.setter
     def public_ip_address(self, value: "PublicIPAddress|network_interface_pb2.PublicIPAddress|None") -> None:
-        return super()._set_field("public_ip_address",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("public_ip_address",value,explicit_presence=True)
     
 class IPAddress(message_1.Message):
     _PB2_CLASS_ = network_interface_pb2.IPAddress
-    _pb2_base_: network_interface_pb2.IPAddress
     
     def __init__(
         self,
@@ -75,21 +73,20 @@ class IPAddress(message_1.Message):
         *,
         allocation_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1alpha1.IPAddress",network_interface_pb2.DESCRIPTOR)
         if allocation_id is not None:
             self.allocation_id = allocation_id
     
     @property
     def allocation_id(self) -> "builtins.str":
-        return super()._get_field("allocation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("allocation_id", explicit_presence=False,
         )
     @allocation_id.setter
     def allocation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("allocation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("allocation_id",value,explicit_presence=False)
     
 class PublicIPAddress(message_1.Message):
     _PB2_CLASS_ = network_interface_pb2.PublicIPAddress
-    _pb2_base_: network_interface_pb2.PublicIPAddress
     
     def __init__(
         self,
@@ -98,7 +95,7 @@ class PublicIPAddress(message_1.Message):
         allocation_id: "builtins.str|None" = None,
         static: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1alpha1.PublicIPAddress",network_interface_pb2.DESCRIPTOR)
         if allocation_id is not None:
             self.allocation_id = allocation_id
         if static is not None:
@@ -106,23 +103,22 @@ class PublicIPAddress(message_1.Message):
     
     @property
     def allocation_id(self) -> "builtins.str|None":
-        return super()._get_field("allocation_id", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("allocation_id", explicit_presence=True,
         )
     @allocation_id.setter
     def allocation_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("allocation_id",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("allocation_id",value,explicit_presence=True)
     
     @property
     def static(self) -> "builtins.bool":
-        return super()._get_field("static", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("static", explicit_presence=False,
         )
     @static.setter
     def static(self, value: "builtins.bool") -> None:
-        return super()._set_field("static",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("static",value,explicit_presence=False)
     
 class NetworkInterfaceStatus(message_1.Message):
     _PB2_CLASS_ = network_interface_pb2.NetworkInterfaceStatus
-    _pb2_base_: network_interface_pb2.NetworkInterfaceStatus
     
     def __init__(
         self,
@@ -134,7 +130,7 @@ class NetworkInterfaceStatus(message_1.Message):
         public_ip_address: "PublicIPAddressStatus|network_interface_pb2.PublicIPAddressStatus|None" = None,
         mac_address: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1alpha1.NetworkInterfaceStatus",network_interface_pb2.DESCRIPTOR)
         if index is not None:
             self.index = index
         if name is not None:
@@ -148,49 +144,48 @@ class NetworkInterfaceStatus(message_1.Message):
     
     @property
     def index(self) -> "builtins.int":
-        return super()._get_field("index", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("index", explicit_presence=False,
         )
     @index.setter
     def index(self, value: "builtins.int") -> None:
-        return super()._set_field("index",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("index",value,explicit_presence=False)
     
     @property
     def name(self) -> "builtins.str":
-        return super()._get_field("name", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False)
     
     @property
     def ip_address(self) -> "IPAddressStatus|None":
-        return super()._get_field("ip_address", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("ip_address", explicit_presence=True,
         wrap=IPAddressStatus,
         )
     @ip_address.setter
     def ip_address(self, value: "IPAddressStatus|network_interface_pb2.IPAddressStatus|None") -> None:
-        return super()._set_field("ip_address",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("ip_address",value,explicit_presence=True)
     
     @property
     def public_ip_address(self) -> "PublicIPAddressStatus|None":
-        return super()._get_field("public_ip_address", base=self._pb2_base_, explicit_presence=True,
+        return super()._get_field("public_ip_address", explicit_presence=True,
         wrap=PublicIPAddressStatus,
         )
     @public_ip_address.setter
     def public_ip_address(self, value: "PublicIPAddressStatus|network_interface_pb2.PublicIPAddressStatus|None") -> None:
-        return super()._set_field("public_ip_address",value, base=self._pb2_base_,explicit_presence=True)
+        return super()._set_field("public_ip_address",value,explicit_presence=True)
     
     @property
     def mac_address(self) -> "builtins.str":
-        return super()._get_field("mac_address", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("mac_address", explicit_presence=False,
         )
     @mac_address.setter
     def mac_address(self, value: "builtins.str") -> None:
-        return super()._set_field("mac_address",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("mac_address",value,explicit_presence=False)
     
 class IPAddressStatus(message_1.Message):
     _PB2_CLASS_ = network_interface_pb2.IPAddressStatus
-    _pb2_base_: network_interface_pb2.IPAddressStatus
     
     def __init__(
         self,
@@ -199,7 +194,7 @@ class IPAddressStatus(message_1.Message):
         address: "builtins.str|None" = None,
         allocation_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1alpha1.IPAddressStatus",network_interface_pb2.DESCRIPTOR)
         if address is not None:
             self.address = address
         if allocation_id is not None:
@@ -207,23 +202,22 @@ class IPAddressStatus(message_1.Message):
     
     @property
     def address(self) -> "builtins.str":
-        return super()._get_field("address", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("address", explicit_presence=False,
         )
     @address.setter
     def address(self, value: "builtins.str") -> None:
-        return super()._set_field("address",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("address",value,explicit_presence=False)
     
     @property
     def allocation_id(self) -> "builtins.str":
-        return super()._get_field("allocation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("allocation_id", explicit_presence=False,
         )
     @allocation_id.setter
     def allocation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("allocation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("allocation_id",value,explicit_presence=False)
     
 class PublicIPAddressStatus(message_1.Message):
     _PB2_CLASS_ = network_interface_pb2.PublicIPAddressStatus
-    _pb2_base_: network_interface_pb2.PublicIPAddressStatus
     
     def __init__(
         self,
@@ -232,7 +226,7 @@ class PublicIPAddressStatus(message_1.Message):
         address: "builtins.str|None" = None,
         allocation_id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message, "_pb2_base_", self._PB2_CLASS_)
+        super().__init__(initial_message,self._PB2_CLASS_,".nebius.vpc.v1alpha1.PublicIPAddressStatus",network_interface_pb2.DESCRIPTOR)
         if address is not None:
             self.address = address
         if allocation_id is not None:
@@ -240,17 +234,17 @@ class PublicIPAddressStatus(message_1.Message):
     
     @property
     def address(self) -> "builtins.str":
-        return super()._get_field("address", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("address", explicit_presence=False,
         )
     @address.setter
     def address(self, value: "builtins.str") -> None:
-        return super()._set_field("address",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("address",value,explicit_presence=False)
     
     @property
     def allocation_id(self) -> "builtins.str":
-        return super()._get_field("allocation_id", base=self._pb2_base_, explicit_presence=False,
+        return super()._get_field("allocation_id", explicit_presence=False,
         )
     @allocation_id.setter
     def allocation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("allocation_id",value, base=self._pb2_base_,explicit_presence=False)
+        return super()._set_field("allocation_id",value,explicit_presence=False)
     
