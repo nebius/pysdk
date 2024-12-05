@@ -107,13 +107,13 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
             raise NoMethodsInServiceError()
         return service_from_method_name(self._last_method)
 
-    def unary_unary(  # type: ignore[unused-ignore,override]
+    def unary_unary(  # type: ignore[unused-ignore, override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
         _registered_method: bool | None = False,
-    ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore,override]
+    ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore, override]
         self._last_method = method
         return StubUU()
 
@@ -138,7 +138,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
     async def channel_ready(self) -> None:
         return
 
-    def unary_stream(  # type: ignore[unused-ignore,override]
+    def unary_stream(  # type: ignore[override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
@@ -146,9 +146,9 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
         self._last_method = method
-        raise StubUS()  # type: ignore[unused-ignore,misc]
+        raise StubUS()  # type: ignore[misc]
 
-    def stream_unary(  # type: ignore[unused-ignore,override]
+    def stream_unary(  # type: ignore[override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
@@ -156,9 +156,9 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> StreamUnaryMultiCallable:
         self._last_method = method
-        raise StubSU()  # type: ignore[unused-ignore,misc]
+        raise StubSU()  # type: ignore[misc]
 
-    def stream_stream(  # type: ignore[unused-ignore,override]
+    def stream_stream(  # type: ignore[override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
@@ -166,7 +166,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> StreamStreamMultiCallable:
         self._last_method = method
-        raise StubSS()  # type: ignore[unused-ignore,misc]
+        raise StubSS()  # type: ignore[misc]
 
 
 class ServiceStub(Protocol):
@@ -175,7 +175,7 @@ class ServiceStub(Protocol):
 
 def from_stub_class(stub: Type[ServiceStub]) -> str:
     if hasattr(stub, "__PB2_NAME__"):
-        return getattr(stub, "__PB2_NAME__")  # type: ignore[no-any-return,unused-ignore]
+        return getattr(stub, "__PB2_NAME__")  # type: ignore[no-any-return]
     extractor = ExtractorChannel()
     _ = stub(extractor)
     ret = extractor.get_service_name()
