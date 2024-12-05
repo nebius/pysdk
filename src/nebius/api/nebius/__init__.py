@@ -6,10 +6,11 @@ import nebius.base.protos.pb_enum as pb_enum
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.annotations_pb2 as annotations_pb2
-import nebius.base.protos.message as message
-import google.protobuf.message as message_1
+import nebius.base.protos.pb_classes as pb_classes
+import google.protobuf.message as message
 import collections.abc as abc
 import builtins as builtins
+#@ local imports here @#
 
 # file: nebius/annotations.proto
 class ResourceBehavior(pb_enum.Enum):
@@ -29,18 +30,19 @@ class FieldBehavior(pb_enum.Enum):
     MEANINGFUL_EMPTY_VALUE = 6
     NON_EMPTY_DEFAULT = 7
 
-class RegionRouting(message.Message):
-    _PB2_CLASS_ = annotations_pb2.RegionRouting
+class RegionRouting(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.RegionRouting
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.RegionRouting",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_1.Message|None = None,
+        initial_message: message.Message|None = None,
         *,
         nid: "abc.Iterable[builtins.str]|None" = None,
         disabled: "builtins.bool|None" = None,
         strict: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.RegionRouting",annotations_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if nid is not None:
             self.nid = nid
         if disabled is not None:
@@ -51,10 +53,12 @@ class RegionRouting(message.Message):
     @property
     def nid(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("nid", explicit_presence=False,
+        wrap=pb_classes.Repeated,
         )
     @nid.setter
     def nid(self, value: "abc.Iterable[builtins.str]") -> None:
-        return super()._set_field("nid",value,explicit_presence=False)
+        return super()._set_field("nid",value,explicit_presence=False,
+        )
     
     @property
     def disabled(self) -> "builtins.bool":
@@ -62,7 +66,8 @@ class RegionRouting(message.Message):
         )
     @disabled.setter
     def disabled(self, value: "builtins.bool") -> None:
-        return super()._set_field("disabled",value,explicit_presence=False)
+        return super()._set_field("disabled",value,explicit_presence=False,
+        )
     
     @property
     def strict(self) -> "builtins.bool":
@@ -70,5 +75,28 @@ class RegionRouting(message.Message):
         )
     @strict.setter
     def strict(self, value: "builtins.bool") -> None:
-        return super()._set_field("strict",value,explicit_presence=False)
+        return super()._set_field("strict",value,explicit_presence=False,
+        )
     
+unstable = annotations_pb2.unstable
+api_service_name = annotations_pb2.api_service_name
+region_routing = annotations_pb2.region_routing
+resource_behavior = annotations_pb2.resource_behavior
+field_behavior = annotations_pb2.field_behavior
+sensitive = annotations_pb2.sensitive
+credentials = annotations_pb2.credentials
+oneof_behavior = annotations_pb2.oneof_behavior
+__all__ = [
+    #@ local import names here @#
+    "ResourceBehavior",
+    "FieldBehavior",
+    "unstable",
+    "api_service_name",
+    "region_routing",
+    "resource_behavior",
+    "field_behavior",
+    "sensitive",
+    "credentials",
+    "oneof_behavior",
+    "RegionRouting",
+]

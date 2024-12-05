@@ -5,7 +5,7 @@ from typing import Any
 
 import google.protobuf.descriptor as pb
 
-from .descriptor import DescriptorWrap
+from nebius.base.protos.descriptor import DescriptorWrap
 
 
 class Enum(IntEnum):

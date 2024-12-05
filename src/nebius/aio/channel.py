@@ -2,11 +2,6 @@ from asyncio import gather
 from logging import getLogger
 from typing import Any, Coroutine, Dict, Sequence, Type, TypeVar
 
-from google.protobuf.descriptor import MethodDescriptor, ServiceDescriptor
-from google.protobuf.descriptor_pool import (
-    Default,  # type: ignore[unused-ignore]
-    DescriptorPool,
-)
 from google.protobuf.message import Message
 from grpc import (
     CallCredentials,
@@ -35,8 +30,6 @@ from grpc.aio._typing import (
     SerializingFunction,
 )
 
-import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
-import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # noqa: F401 - load for registration
 from nebius.aio._cleaner import CleaningInterceptor
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
 from nebius.aio.authorization.interceptor import AuthorizationInterceptor
@@ -52,13 +45,15 @@ from nebius.api.nebius.common.v1alpha1.operation_service_pb2_grpc import (
     OperationServiceStub as OperationServiceStubDeprecated,
 )
 from nebius.base.constants import DOMAIN
-from nebius.base.methods import fix_name
+from nebius.base.methods import service_from_method_name
 from nebius.base.options import COMPRESSION, INSECURE, pop_option
 from nebius.base.resolver import Chain, Conventional, Resolver, TemplateExpander
 from nebius.base.service_account.service_account import (
     TokenRequester as ServiceAccountReader,
 )
 from nebius.base.tls_certificates import get_system_certificates
+
+from .base import ChannelBase
 
 logger = getLogger(__name__)
 
@@ -114,7 +109,7 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
 Credentials = AuthorizationProvider | TokenBearer | ServiceAccountReader | None
 
 
-class Channel(GRPCChannel):  # type: ignore[unused-ignore,misc]
+class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def __init__(
         self,
         *,
@@ -128,6 +123,9 @@ class Channel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         credentials: Credentials = None,
         tls_credentials: ChannelCredentials | None = None,
     ) -> None:
+        import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
+        import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # noqa: F401 - load for registration
+
         substitutions_full = dict[str, str]()
         substitutions_full["{domain}"] = domain
         if substitutions is not None:
@@ -207,19 +205,18 @@ class Channel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         return OperationServiceStubDeprecated(chan)  # type: ignore[no-untyped-call]
 
     def get_addr_from_stub(self, service_stub_class: Type[ServiceStub]) -> str:
-        desc = from_stub_class(service_stub_class)
-        return self.get_addr_from_service_descriptor(desc)
+        service = from_stub_class(service_stub_class)
+        return self.get_addr_from_service_name(service)
 
-    def get_addr_from_service_descriptor(self, descriptor: ServiceDescriptor) -> str:
-        return self._resolver.resolve(descriptor.full_name)  # type: ignore[unused-ignore]
+    def get_addr_from_service_name(self, service_name: str) -> str:
+        if len(service_name) > 1 and service_name[0] == ".":
+            service_name = service_name[1:]
+        return self._resolver.resolve(service_name)
 
     def get_addr_by_method(self, method_name: str) -> str:
         if method_name not in self._methods:
-            pool: DescriptorPool = Default()  # type: ignore[unused-ignore,no-untyped-call]
-            method: MethodDescriptor = pool.FindMethodByName(fix_name(method_name))  # type: ignore[unused-ignore,no-untyped-call]
-            self._methods[method_name] = self.get_addr_from_service_descriptor(
-                method.containing_service,  # type: ignore[unused-ignore]
-            )  # type: ignore[unused-ignore]
+            service_name = service_from_method_name(method_name)
+            self._methods[method_name] = self.get_addr_from_service_name(service_name)
         return self._methods[method_name]
 
     def get_channel_by_addr(self, addr: str) -> GRPCChannel:

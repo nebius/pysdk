@@ -19,7 +19,7 @@ from nebius.api.nebius.storage.v1.bucket_service_pb2 import (
     GetBucketRequest,
 )
 from nebius.api.nebius.storage.v1.bucket_service_pb2_grpc import BucketServiceStub
-from nebius.base.service_error import from_error
+from nebius.base._service_error import pb2_from_error
 
 if __name__ == "__main__":
     import logging
@@ -67,7 +67,7 @@ if __name__ == "__main__":
             print(bucket)
             await service.Delete(DeleteBucketRequest(id=bucket.metadata.id))
         except RpcError as e:
-            se = from_error(e)
+            se = pb2_from_error(e)
             print(e, se)
             raise
 

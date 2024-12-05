@@ -12,13 +12,13 @@ authors = [
 license = { text = "MIT" }
 dependencies = [
     "cryptography>=43.0.3",
-    "grpcio>=1.68.0",
+    "grpcio>=1.68.1",
     "PyJWT>=2.9.0",
     "grpc-stubs>=1.53",  # For mypy
     "certifi>=2024.8.30",
-    "protobuf>=5.28.3",
+    "protobuf>=5.29.0",
     "types-protobuf>=5.28.3", # for mypy
-    "grpcio-status>=1.68.0",
+    "grpcio-status>=1.68.1",
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -34,7 +34,7 @@ dev = [ # don't forget to mirror some of these to tox.ini
     "ruff>=0.7",   # For linting
 ]
 genproto = [
-    "grpcio-tools>=1.67.1",
+    "grpcio-tools>=1.68.1",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
 ]
@@ -117,3 +117,39 @@ load-plugins = ["pylint.extensions.mccabe"]
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
+
+[tool.tox]
+requires = ["tox>=4.23"]
+env_list = ["py310", "lint", "type", "format"]
+isolated_build = true
+
+[tool.tox.env]
+[tool.tox.env.py310]
+description = "Run tests with pytest"
+deps = [
+    "pytest",
+    "pytest-cov",
+    "pytest-asyncio",
+    "grpcio",
+    "protobuf",
+    "types-protobuf",
+]
+commands = [["pytest","-vv"]]
+
+[tool.tox.env.lint]
+description = "Run linter checks"
+package = "skip"  # Skip installing the package
+deps = ["ruff"]
+commands = [["ruff","check","src/","tests/"]]
+
+[tool.tox.env.format]
+description = "Run code formatting checks"
+package = "skip"
+deps = ["black"]
+commands = [["black","--check","src/"]]
+
+[tool.tox.env.type]
+description = "Run type-checking"
+package = "skip"
+deps = ["mypy"]
+commands = [["mypy","src/"]]

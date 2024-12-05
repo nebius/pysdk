@@ -1,9 +1,30 @@
 from logging import getLogger
 
-from .descriptors import Enum, Field, File, Message
+from nebius.api.nebius import FieldBehavior
+
+from .annotations import field_behavior
+from .descriptors import Enum, Field, File, Message, Method, Service
 from .pygen import ImportedSymbol, PyGenFile
+from .recursion_detector import is_recursive
+from .well_known import converter_dict
 
 log = getLogger(__name__)
+
+
+def py_symbol(field: Field) -> ImportedSymbol:
+    if field.is_message():
+        if field.message.full_type_name in converter_dict:
+            return converter_dict[field.message.full_type_name].python_class
+    return field.python_type()
+
+
+def tracks_presence(field: Field) -> bool:
+    if field.is_message() and field.full_type_name.startswith(".nebius."):
+        behavior = field_behavior(field)
+        if FieldBehavior.MEANINGFUL_EMPTY_VALUE in behavior:
+            return True
+        return is_recursive(field.message)
+    return field.tracks_presence()
 
 
 def getter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
@@ -13,7 +34,7 @@ def getter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
             "[",
             field.map_key.python_type(),
             ",",
-            field.map_value.python_type(),
+            py_symbol(field.map_value),
             "]",
             add_eol=False,
             noindent=True,
@@ -22,14 +43,14 @@ def getter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
         g.p(
             ImportedSymbol("MutableSequence", "collections.abc"),
             "[",
-            field.python_type(),
+            py_symbol(field),
             "]",
             add_eol=False,
             noindent=True,
         )
     else:
-        g.p(field.python_type(), add_eol=False, noindent=True)
-    if field.tracks_presence() or always_none:
+        g.p(py_symbol(field), add_eol=False, noindent=True)
+    if tracks_presence(field) or always_none:
         g.p("|None", add_eol=False, noindent=True)
 
 
@@ -41,6 +62,20 @@ def setter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
             field.map_key.python_type(),
             ",",
             field.map_value.python_type(),
+            add_eol=False,
+            noindent=True,
+        )
+        if (
+            field.map_value.is_message()
+            and field.map_value.message.full_type_name in converter_dict
+        ):
+            g.p(
+                "|",
+                converter_dict[field.map_value.message.full_type_name].python_class,
+                add_eol=False,
+                noindent=True,
+            )
+        g.p(
             "]",
             add_eol=False,
             noindent=True,
@@ -50,6 +85,17 @@ def setter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
             ImportedSymbol("Iterable", "collections.abc"),
             "[",
             field.python_type(),
+            add_eol=False,
+            noindent=True,
+        )
+        if field.is_message() and field.message.full_type_name in converter_dict:
+            g.p(
+                "|",
+                converter_dict[field.message.full_type_name].python_class,
+                add_eol=False,
+                noindent=True,
+            )
+        g.p(
             "]",
             add_eol=False,
             noindent=True,
@@ -68,15 +114,22 @@ def setter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
             g.p(ptype, add_eol=False, noindent=True)
         else:
             g.p(ptype, "|", pb2, add_eol=False, noindent=True)
+        if field.message.full_type_name in converter_dict:
+            g.p(
+                "|",
+                converter_dict[field.message.full_type_name].python_class,
+                add_eol=False,
+                noindent=True,
+            )
     else:
         g.p(field.python_type(), add_eol=False, noindent=True)
-    if field.tracks_presence() or always_none:
+    if tracks_presence(field) or always_none:
         g.p("|None", add_eol=False, noindent=True)
 
 
 def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
     g.p("@property")
-    g.p("def ", field.name, "(", self_name, ') -> "', add_eol=False)
+    g.p("def ", field.pythonic_name, "(", self_name, ') -> "', add_eol=False)
     getter_type(field, g)
     g.p('":', noindent=True)
     with g:
@@ -85,16 +138,65 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
             '"',
             field.name,
             '", explicit_presence=',
-            field.tracks_presence(),
+            tracks_presence(field),
             ",",
         )
-        if field.is_message() and not field.message.no_wrap:
+        if field.is_map():
+            if field.map_value.is_message():
+                wrap = field.map_value.message.export_path
+                unwrap = None
+                if field.map_value.message.full_type_name in converter_dict:
+                    wrap = converter_dict[
+                        field.map_value.message.full_type_name
+                    ].from_func
+                    unwrap = converter_dict[
+                        field.map_value.message.full_type_name
+                    ].to_func
+                g.p(
+                    "wrap=",
+                    ImportedSymbol("Map", "nebius.base.protos.pb_classes"),
+                    ".with_wrap(",
+                    wrap,
+                    ",",
+                    unwrap,
+                    "),",
+                )
+            else:
+                g.p(
+                    "wrap=", ImportedSymbol("Map", "nebius.base.protos.pb_classes"), ","
+                )
+        elif field.is_repeated():
+            if field.is_message():
+                wrap = field.message.export_path
+                unwrap = None
+                if field.message.full_type_name in converter_dict:
+                    wrap = converter_dict[field.message.full_type_name].from_func
+                    unwrap = converter_dict[field.message.full_type_name].to_func
+                g.p(
+                    "wrap=",
+                    ImportedSymbol("Repeated", "nebius.base.protos.pb_classes"),
+                    ".with_wrap(",
+                    wrap,
+                    ",",
+                    unwrap,
+                    "),",
+                )
+            else:
+                g.p(
+                    "wrap=",
+                    ImportedSymbol("Repeated", "nebius.base.protos.pb_classes"),
+                    ",",
+                )
+        elif field.is_message() and field.message.full_type_name in converter_dict:
+            wrap = converter_dict[field.message.full_type_name].from_func
+            g.p("wrap=", wrap)
+        elif field.is_message() and not field.message.no_wrap:
             g.p("wrap=", field.message.export_path, ",")
-        if field.is_enum() and not field.enum.no_wrap:
+        elif field.is_enum() and not field.enum.no_wrap:
             g.p("wrap=", field.enum.export_path, ",")
         g.p(")")
-    g.p("@", field.name, ".setter")
-    g.p("def ", field.name, '(self, value: "', add_eol=False)
+    g.p("@", field.pythonic_name, ".setter")
+    g.p("def ", field.pythonic_name, '(self, value: "', add_eol=False)
     setter_type(field, g)
     g.p('") -> None:', noindent=True)
     with g:
@@ -103,37 +205,43 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
             '"',
             field.name,
             '",value,explicit_presence=',
-            field.tracks_presence(),
-            ")",
+            tracks_presence(field),
+            ",",
         )
+        if (
+            not (field.is_map() or field.is_repeated())
+            and field.is_message()
+            and field.message.full_type_name in converter_dict
+        ):
+            unwrap = converter_dict[field.message.full_type_name].to_func
+            g.p("unwrap=", unwrap)
+        g.p(")")
     g.p()
 
 
 def generate_field_init_arg(field: Field, g: PyGenFile) -> None:
-    g.p(field.name, ': "', add_eol=False)
+    g.p(field.pythonic_name, ': "', add_eol=False)
     setter_type(field, g, always_none=True)
     g.p('" = None,', noindent=True)
 
 
 def generate_field_init_setter(field: Field, g: PyGenFile, self_name: str) -> None:
-    g.p("if ", field.name, " is not None:")
+    g.p("if ", field.pythonic_name, " is not None:")
     with g:
-        g.p(self_name, ".", field.name, " = ", field.name)
+        g.p(self_name, ".", field.pythonic_name, " = ", field.pythonic_name)
 
 
 def generate_enum(enum: Enum, g: PyGenFile) -> None:
-    descriptor_name = g.suggest_name("__PB2_DESCRIPTOR__")
     g.p(
         "class ",
-        enum.name,
+        enum.pythonic_name,
         "(",
         ImportedSymbol("Enum", "nebius.base.protos.pb_enum"),
         "):",
     )
     with g:
         g.p(
-            descriptor_name,
-            " = ",
+            "__PB2_DESCRIPTOR__ = ",
             ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
             "[",
             ImportedSymbol("EnumDescriptor", "google.protobuf.descriptor"),
@@ -152,18 +260,28 @@ def generate_enum(enum: Enum, g: PyGenFile) -> None:
 def generate_message(message: Message, g: PyGenFile) -> None:
     g.p(
         "class ",
-        message.name,
+        message.pythonic_name,
         "(",
-        ImportedSymbol("Message", "nebius.base.protos.message"),
+        ImportedSymbol("Message", "nebius.base.protos.pb_classes"),
         "):",
     )
     initial_message_name = g.suggest_name("initial_message")
     self_name = g.suggest_name("self")
-    class_name = g.suggest_name("_PB2_CLASS_")
-    message.attached_names["self"] = self_name
-    message.attached_names["cls"] = class_name
     with g:
-        g.p(class_name, " = ", message.pb2)
+        g.p("__PB2_CLASS__ = ", message.pb2)
+        g.p(
+            "__PB2_DESCRIPTOR__ = ",
+            ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
+            "[",
+            ImportedSymbol("Descriptor", "google.protobuf.descriptor"),
+            ']("',
+            message.full_type_name,
+            '",',
+            ImportedSymbol("DESCRIPTOR", message.containing_file.pb2),
+            ",",
+            ImportedSymbol("Descriptor", "google.protobuf.descriptor"),
+            ")",
+        )
         g.p()
 
         for msg in message.messages():
@@ -189,19 +307,7 @@ def generate_message(message: Message, g: PyGenFile) -> None:
                 generate_field_init_arg(field, g)
         g.p(") -> None:")
         with g:
-            g.p(
-                "super().__init__(",
-                initial_message_name,
-                ",",
-                self_name,
-                ".",
-                class_name,
-                ',"',
-                message.full_type_name,
-                '",',
-                ImportedSymbol("DESCRIPTOR", message.containing_file.pb2),
-                ")",
-            )
+            g.p("super().__init__(", initial_message_name, ")")
 
             for field in message.fields():
                 generate_field_init_setter(field, g, self_name)
@@ -209,6 +315,135 @@ def generate_message(message: Message, g: PyGenFile) -> None:
 
         for field in message.fields():
             generate_field(field, g, self_name)
+
+
+def is_operation_output(method: Method) -> bool:
+    return (
+        method.output.full_type_name == ".nebius.common.v1.Operation"
+        or method.output.full_type_name == ".nebius.common.v1alpha1.Operation"
+    )
+
+
+def generate_service(srv: Service, g: PyGenFile) -> None:
+    g.p()
+    g.p(
+        "class ",
+        srv.pythonic_name,
+        "Client(",
+        ImportedSymbol("Client", "nebius.aio.client"),
+        "):",
+    )
+    with g:
+        g.p(
+            "__PB2_DESCRIPTOR__ = ",
+            ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
+            "[",
+            ImportedSymbol("ServiceDescriptor", "google.protobuf.descriptor"),
+            ']("',
+            srv.full_type_name,
+            '",',
+            ImportedSymbol("DESCRIPTOR", srv.containing_file.pb2),
+            ",",
+            ImportedSymbol("ServiceDescriptor", "google.protobuf.descriptor"),
+            ")",
+        )
+        g.p('__service_name__ = "', srv.full_type_name, '"')
+        for method in srv.methods.values():
+            if is_operation_output(method):
+                g.p("__operation_type__ = ", method.output.export_path)
+                break
+        g.p()
+        for method in srv.methods.values():
+            g.p("def ", method.pythonic_name, "(self,")
+            with g:
+                g.p('request: "', method.input.export_path, '",')
+                g.p(
+                    "metadata: ",
+                    ImportedSymbol("Iterable", "typing"),
+                    "[",
+                    ImportedSymbol("Tuple", "typing"),
+                    "[",
+                    ImportedSymbol("str", "builtins"),
+                    ",",
+                    ImportedSymbol("str", "builtins"),
+                    "]]|None = None,",
+                )
+                g.p("timeout: ", ImportedSymbol("float", "builtins"), "|None = None,")
+                g.p(
+                    "credentials: ",
+                    ImportedSymbol("CallCredentials", "grpc"),
+                    " | None = None,",
+                )
+                g.p(
+                    "wait_for_ready: ",
+                    ImportedSymbol("bool", "builtins"),
+                    " | None = None,",
+                )
+                g.p(
+                    "compression: ",
+                    ImportedSymbol("Compression", "grpc"),
+                    " | None = None,",
+                )
+            g.p(
+                ") -> ",
+                ImportedSymbol("Request", "nebius.aio.request"),
+                '["',
+                method.input.export_path,
+                '","',
+                add_eol=False,
+            )
+            if is_operation_output(method):
+                g.p(
+                    ImportedSymbol("Operation", "nebius.aio.operation"),
+                    "[",
+                    method.output.export_path,
+                    "]",
+                    noindent=True,
+                    add_eol=False,
+                )
+            else:
+                g.p(method.output.export_path, noindent=True, add_eol=False)
+            g.p('"]:', noindent=True)
+            with g:
+                g.p("return super().request(")
+                with g:
+                    g.p('method="', method.name, '",')
+                    g.p("request=request,")
+                    g.p("result_pb2_class=", method.output.pb2, ",")
+                    g.p("metadata=metadata,")
+                    g.p("timeout=timeout,")
+                    g.p("credentials=credentials,")
+                    g.p("wait_for_ready=wait_for_ready,")
+                    g.p("compression=compression,")
+                    if is_operation_output(method):
+                        g.p(
+                            "result_wrapper=",
+                            ImportedSymbol("Operation", "nebius.aio.operation"),
+                            ",",
+                        )
+                g.p(")")
+            g.p()
+    g.p()
+
+
+def generate_extension(ext: Field, g: PyGenFile) -> None:
+    g.p(ext.pythonic_name, " = ", ext.pb2)
+
+
+def generate_enum_export(enum: Enum, g: PyGenFile) -> None:
+    g.p('"', enum.pythonic_name, '",')
+
+
+def generate_extension_export(ext: Field, g: PyGenFile) -> None:
+    g.p('"', ext.pythonic_name, '",')
+
+
+def generate_message_export(msg: Message, g: PyGenFile) -> None:
+    g.p('"', msg.pythonic_name, '",')
+
+
+def generate_service_export(srv: Service, g: PyGenFile) -> None:
+    g.p('"', srv.pythonic_name, 'Client",')
 
 
 def generate_file(file: File, g: PyGenFile) -> None:
@@ -221,3 +456,18 @@ def generate_file(file: File, g: PyGenFile) -> None:
         g.p()
     for msg in file.messages():
         generate_message(msg, g)
+    for ext in file.extensions.values():
+        generate_extension(ext, g)
+    for srv in file.services_dict.values():
+        generate_service(srv, g)
+
+
+def generate_exports(file: File, g: PyGenFile) -> None:
+    for enum in file.enums:
+        generate_enum_export(enum, g)
+    for ext in file.extensions.values():
+        generate_extension_export(ext, g)
+    for msg in file.messages():
+        generate_message_export(msg, g)
+    for srv in file.services_dict.values():
+        generate_service_export(srv, g)

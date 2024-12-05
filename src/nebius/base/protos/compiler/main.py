@@ -6,7 +6,7 @@ from typing import Any, Sequence
 from google.protobuf.compiler import plugin_pb2 as plugin
 
 from .descriptors import FileSet
-from .generators import generate_file
+from .generators import generate_exports, generate_file
 from .pygen import PyGenFile
 
 # Set up a logger
@@ -92,7 +92,26 @@ def main() -> None:
         stream=sys.stderr,
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
-    if options.debugger_connect != "":
+
+    # Prepare CodeGeneratorResponse
+    response = plugin.CodeGeneratorResponse()
+    response.supported_features = (
+        plugin.CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL
+    )
+
+    results = dict[str, PyGenFile]()
+
+    file_set = FileSet(
+        request.proto_file,
+        options.import_substitution,
+        options.export_substitution,
+        options.skip,
+    )
+    lock_file = ""
+    if (
+        options.debugger_connect != ""
+        and "nebius/compute/v1/network_interface.proto" in file_set.files_dict
+    ):
         from urllib.parse import urlparse
 
         from filelock import FileLock  # type: ignore[unused-ignore,import-not-found]
@@ -112,21 +131,6 @@ def main() -> None:
         debugpy.wait_for_client()
         log.debug("Debugger attached. Continuing execution...")
 
-    # Prepare CodeGeneratorResponse
-    response = plugin.CodeGeneratorResponse()
-    response.supported_features = (
-        plugin.CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL
-    )
-
-    results = dict[str, PyGenFile]()
-
-    file_set = FileSet(
-        request.proto_file,
-        options.import_substitution,
-        options.export_substitution,
-        options.skip,
-    )
-
     for file in file_set.files:
         if file.package not in results:
             results[file.package] = PyGenFile(
@@ -141,6 +145,20 @@ def main() -> None:
         )
 
     for package, g in results.items():
+        g.p("__all__ = [")
+        with g:
+            g.p("#@ local import names here @#")
+    for file in file_set.files:
+        g = results[file.package]
+        with g:
+            generate_exports(
+                file,
+                g,
+            )
+    for package, g in results.items():
+        g.p("]")
+
+    for package, g in results.items():
         # Create a new file for each .proto file
         output_file = response.file.add()
         output_file.name = package_to_path(package)
@@ -149,7 +167,7 @@ def main() -> None:
     # Write the CodeGeneratorResponse to stdout
     sys.stdout.buffer.write(response.SerializeToString())
 
-    if options.debugger_connect != "":
+    if options.debugger_connect != "" and lock_file != "":
         lock.release()  # type: ignore[unused-ignore]
 
 

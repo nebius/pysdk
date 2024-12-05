@@ -4,7 +4,9 @@ from typing import Generic, Optional, Type, TypeVar, Union
 import google.protobuf.descriptor as pb
 
 # Define the TypeVar for supported descriptor types
-T = TypeVar("T", pb.EnumDescriptor, pb.Descriptor, pb.OneofDescriptor)
+T = TypeVar(
+    "T", pb.EnumDescriptor, pb.Descriptor, pb.OneofDescriptor, pb.ServiceDescriptor
+)
 
 
 class DescriptorWrap(ABC, Generic[T]):
@@ -39,12 +41,24 @@ class DescriptorWrap(ABC, Generic[T]):
 
     def _find_descriptor(
         self, container: Union[pb.FileDescriptor, pb.Descriptor], name: str
-    ) -> Optional[Union[pb.Descriptor, pb.EnumDescriptor, pb.OneofDescriptor]]:
+    ) -> Optional[
+        Union[
+            pb.Descriptor,
+            pb.EnumDescriptor,
+            pb.OneofDescriptor,
+            pb.ServiceDescriptor,
+        ]
+    ]:
         """
         Recursively searches for the descriptor in the given container (file or message)
         """
         # Check for top-level messages
         if isinstance(container, pb.FileDescriptor):
+            for srv in container.services_by_name.values():
+                if srv.full_name == name:
+                    if not isinstance(srv, pb.ServiceDescriptor):
+                        raise ValueError(f"Pool returned unexpected type {type(srv)}")
+                    return srv
             for enum in container.enum_types_by_name.values():
                 if enum.full_name == name:
                     if not isinstance(enum, pb.EnumDescriptor):

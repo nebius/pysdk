@@ -1,11 +1,11 @@
 version: v2
 plugins:
   - remote: buf.build/protocolbuffers/python
-    out: src/nebius/api
+    out: src/nebius/api-new
   - remote: buf.build/grpc/python
-    out: src/nebius/api
+    out: src/nebius/api-new
   - remote: buf.build/protocolbuffers/pyi
-    out: src/nebius/api
+    out: src/nebius/api-new
   - local: ["python", "-m", "nebius.base.protos.compiler.main"]
     opt:
     - log_level=DEBUG
@@ -13,8 +13,8 @@ plugins:
     - import_substitution=buf=nebius.api.buf
     - skip=google
     - skip=buf
-    # - debugger_connect=localhost:56790
-    out: src/nebius/api
+    # - debugger_connect=localhost:56792
+    out: src/nebius/api-new
     strategy: directory
   # - plugin: python_betterproto
   #   opt:

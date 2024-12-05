@@ -6,17 +6,26 @@ import nebius.base.protos.pb_enum as pb_enum
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.storage.v1.base_pb2 as base_pb2
-import nebius.base.protos.message as message_1
+import nebius.base.protos.pb_classes as pb_classes
 import nebius.api.nebius.storage.v1.bucket_counters_pb2 as bucket_counters_pb2
-import google.protobuf.message as message_2
+import google.protobuf.message as message_1
 import builtins as builtins
 import nebius.api.nebius.storage.v1.lifecycle_pb2 as lifecycle_pb2
 import collections.abc as abc
 import google.protobuf.timestamp_pb2 as timestamp_pb2
+import datetime as datetime
+import nebius.base.protos.well_known as well_known
 import nebius.api.nebius.storage.v1.bucket_pb2 as bucket_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.storage.v1.bucket_service_pb2 as bucket_service_pb2
+import nebius.aio.client as client
+import typing as typing
+import grpc as grpc
+import nebius.aio.request as request_1
+import nebius.aio.operation as operation
+import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+#@ local imports here @#
 
 # file: nebius/storage/v1/base.proto
 class StorageClass(pb_enum.Enum):
@@ -32,12 +41,13 @@ class VersioningPolicy(pb_enum.Enum):
     SUSPENDED = 3
 
 # file: nebius/storage/v1/bucket_counters.proto
-class CurrentBucketCounters(message_1.Message):
-    _PB2_CLASS_ = bucket_counters_pb2.CurrentBucketCounters
+class CurrentBucketCounters(pb_classes.Message):
+    __PB2_CLASS__ = bucket_counters_pb2.CurrentBucketCounters
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         simple_objects_quantity: "builtins.int|None" = None,
         simple_objects_size: "builtins.int|None" = None,
@@ -47,7 +57,7 @@ class CurrentBucketCounters(message_1.Message):
         inflight_parts_quantity: "builtins.int|None" = None,
         inflight_parts_size: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.CurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if simple_objects_quantity is not None:
             self.simple_objects_quantity = simple_objects_quantity
         if simple_objects_size is not None:
@@ -69,7 +79,8 @@ class CurrentBucketCounters(message_1.Message):
         )
     @simple_objects_quantity.setter
     def simple_objects_quantity(self, value: "builtins.int") -> None:
-        return super()._set_field("simple_objects_quantity",value,explicit_presence=False)
+        return super()._set_field("simple_objects_quantity",value,explicit_presence=False,
+        )
     
     @property
     def simple_objects_size(self) -> "builtins.int":
@@ -77,7 +88,8 @@ class CurrentBucketCounters(message_1.Message):
         )
     @simple_objects_size.setter
     def simple_objects_size(self, value: "builtins.int") -> None:
-        return super()._set_field("simple_objects_size",value,explicit_presence=False)
+        return super()._set_field("simple_objects_size",value,explicit_presence=False,
+        )
     
     @property
     def multipart_objects_quantity(self) -> "builtins.int":
@@ -85,7 +97,8 @@ class CurrentBucketCounters(message_1.Message):
         )
     @multipart_objects_quantity.setter
     def multipart_objects_quantity(self, value: "builtins.int") -> None:
-        return super()._set_field("multipart_objects_quantity",value,explicit_presence=False)
+        return super()._set_field("multipart_objects_quantity",value,explicit_presence=False,
+        )
     
     @property
     def multipart_objects_size(self) -> "builtins.int":
@@ -93,7 +106,8 @@ class CurrentBucketCounters(message_1.Message):
         )
     @multipart_objects_size.setter
     def multipart_objects_size(self, value: "builtins.int") -> None:
-        return super()._set_field("multipart_objects_size",value,explicit_presence=False)
+        return super()._set_field("multipart_objects_size",value,explicit_presence=False,
+        )
     
     @property
     def multipart_uploads_quantity(self) -> "builtins.int":
@@ -101,7 +115,8 @@ class CurrentBucketCounters(message_1.Message):
         )
     @multipart_uploads_quantity.setter
     def multipart_uploads_quantity(self, value: "builtins.int") -> None:
-        return super()._set_field("multipart_uploads_quantity",value,explicit_presence=False)
+        return super()._set_field("multipart_uploads_quantity",value,explicit_presence=False,
+        )
     
     @property
     def inflight_parts_quantity(self) -> "builtins.int":
@@ -109,7 +124,8 @@ class CurrentBucketCounters(message_1.Message):
         )
     @inflight_parts_quantity.setter
     def inflight_parts_quantity(self, value: "builtins.int") -> None:
-        return super()._set_field("inflight_parts_quantity",value,explicit_presence=False)
+        return super()._set_field("inflight_parts_quantity",value,explicit_presence=False,
+        )
     
     @property
     def inflight_parts_size(self) -> "builtins.int":
@@ -117,21 +133,23 @@ class CurrentBucketCounters(message_1.Message):
         )
     @inflight_parts_size.setter
     def inflight_parts_size(self, value: "builtins.int") -> None:
-        return super()._set_field("inflight_parts_size",value,explicit_presence=False)
+        return super()._set_field("inflight_parts_size",value,explicit_presence=False,
+        )
     
-class NonCurrentBucketCounters(message_1.Message):
-    _PB2_CLASS_ = bucket_counters_pb2.NonCurrentBucketCounters
+class NonCurrentBucketCounters(pb_classes.Message):
+    __PB2_CLASS__ = bucket_counters_pb2.NonCurrentBucketCounters
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.NonCurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         simple_objects_quantity: "builtins.int|None" = None,
         simple_objects_size: "builtins.int|None" = None,
         multipart_objects_quantity: "builtins.int|None" = None,
         multipart_objects_size: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.NonCurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if simple_objects_quantity is not None:
             self.simple_objects_quantity = simple_objects_quantity
         if simple_objects_size is not None:
@@ -147,7 +165,8 @@ class NonCurrentBucketCounters(message_1.Message):
         )
     @simple_objects_quantity.setter
     def simple_objects_quantity(self, value: "builtins.int") -> None:
-        return super()._set_field("simple_objects_quantity",value,explicit_presence=False)
+        return super()._set_field("simple_objects_quantity",value,explicit_presence=False,
+        )
     
     @property
     def simple_objects_size(self) -> "builtins.int":
@@ -155,7 +174,8 @@ class NonCurrentBucketCounters(message_1.Message):
         )
     @simple_objects_size.setter
     def simple_objects_size(self, value: "builtins.int") -> None:
-        return super()._set_field("simple_objects_size",value,explicit_presence=False)
+        return super()._set_field("simple_objects_size",value,explicit_presence=False,
+        )
     
     @property
     def multipart_objects_quantity(self) -> "builtins.int":
@@ -163,7 +183,8 @@ class NonCurrentBucketCounters(message_1.Message):
         )
     @multipart_objects_quantity.setter
     def multipart_objects_quantity(self, value: "builtins.int") -> None:
-        return super()._set_field("multipart_objects_quantity",value,explicit_presence=False)
+        return super()._set_field("multipart_objects_quantity",value,explicit_presence=False,
+        )
     
     @property
     def multipart_objects_size(self) -> "builtins.int":
@@ -171,20 +192,22 @@ class NonCurrentBucketCounters(message_1.Message):
         )
     @multipart_objects_size.setter
     def multipart_objects_size(self, value: "builtins.int") -> None:
-        return super()._set_field("multipart_objects_size",value,explicit_presence=False)
+        return super()._set_field("multipart_objects_size",value,explicit_presence=False,
+        )
     
-class BucketCounters(message_1.Message):
-    _PB2_CLASS_ = bucket_counters_pb2.BucketCounters
+class BucketCounters(pb_classes.Message):
+    __PB2_CLASS__ = bucket_counters_pb2.BucketCounters
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         storage_class: "StorageClass|base_pb2.StorageClass|None" = None,
         counters: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters|None" = None,
         non_current_counters: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.BucketCounters",bucket_counters_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if storage_class is not None:
             self.storage_class = storage_class
         if counters is not None:
@@ -199,51 +222,57 @@ class BucketCounters(message_1.Message):
         )
     @storage_class.setter
     def storage_class(self, value: "StorageClass|base_pb2.StorageClass") -> None:
-        return super()._set_field("storage_class",value,explicit_presence=False)
+        return super()._set_field("storage_class",value,explicit_presence=False,
+        )
     
     @property
-    def counters(self) -> "CurrentBucketCounters|None":
-        return super()._get_field("counters", explicit_presence=True,
+    def counters(self) -> "CurrentBucketCounters":
+        return super()._get_field("counters", explicit_presence=False,
         wrap=CurrentBucketCounters,
         )
     @counters.setter
-    def counters(self, value: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters|None") -> None:
-        return super()._set_field("counters",value,explicit_presence=True)
+    def counters(self, value: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters") -> None:
+        return super()._set_field("counters",value,explicit_presence=False,
+        )
     
     @property
-    def non_current_counters(self) -> "NonCurrentBucketCounters|None":
-        return super()._get_field("non_current_counters", explicit_presence=True,
+    def non_current_counters(self) -> "NonCurrentBucketCounters":
+        return super()._get_field("non_current_counters", explicit_presence=False,
         wrap=NonCurrentBucketCounters,
         )
     @non_current_counters.setter
-    def non_current_counters(self, value: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters|None") -> None:
-        return super()._set_field("non_current_counters",value,explicit_presence=True)
+    def non_current_counters(self, value: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters") -> None:
+        return super()._set_field("non_current_counters",value,explicit_presence=False,
+        )
     
 # file: nebius/storage/v1/lifecycle.proto
-class LifecycleConfiguration(message_1.Message):
-    _PB2_CLASS_ = lifecycle_pb2.LifecycleConfiguration
+class LifecycleConfiguration(pb_classes.Message):
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleConfiguration
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleConfiguration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         rules: "abc.Iterable[LifecycleRule]|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.LifecycleConfiguration",lifecycle_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if rules is not None:
             self.rules = rules
     
     @property
     def rules(self) -> "abc.MutableSequence[LifecycleRule]":
         return super()._get_field("rules", explicit_presence=False,
-        wrap=LifecycleRule,
+        wrap=pb_classes.Repeated.with_wrap(LifecycleRule,None),
         )
     @rules.setter
     def rules(self, value: "abc.Iterable[LifecycleRule]") -> None:
-        return super()._set_field("rules",value,explicit_presence=False)
+        return super()._set_field("rules",value,explicit_presence=False,
+        )
     
-class LifecycleRule(message_1.Message):
-    _PB2_CLASS_ = lifecycle_pb2.LifecycleRule
+class LifecycleRule(pb_classes.Message):
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleRule
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleRule",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     class Status(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.LifecycleRule.Status",lifecycle_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -253,7 +282,7 @@ class LifecycleRule(message_1.Message):
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         id: "builtins.str|None" = None,
         status: "LifecycleRule.Status|lifecycle_pb2.LifecycleRule.Status|None" = None,
@@ -262,7 +291,7 @@ class LifecycleRule(message_1.Message):
         noncurrent_version_expiration: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration|None" = None,
         abort_incomplete_multipart_upload: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.LifecycleRule",lifecycle_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if id is not None:
             self.id = id
         if status is not None:
@@ -282,7 +311,8 @@ class LifecycleRule(message_1.Message):
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False,
+        )
     
     @property
     def status(self) -> "LifecycleRule.Status":
@@ -291,56 +321,62 @@ class LifecycleRule(message_1.Message):
         )
     @status.setter
     def status(self, value: "LifecycleRule.Status|lifecycle_pb2.LifecycleRule.Status") -> None:
-        return super()._set_field("status",value,explicit_presence=False)
+        return super()._set_field("status",value,explicit_presence=False,
+        )
     
     @property
-    def filter(self) -> "LifecycleFilter|None":
-        return super()._get_field("filter", explicit_presence=True,
+    def filter(self) -> "LifecycleFilter":
+        return super()._get_field("filter", explicit_presence=False,
         wrap=LifecycleFilter,
         )
     @filter.setter
-    def filter(self, value: "LifecycleFilter|lifecycle_pb2.LifecycleFilter|None") -> None:
-        return super()._set_field("filter",value,explicit_presence=True)
+    def filter(self, value: "LifecycleFilter|lifecycle_pb2.LifecycleFilter") -> None:
+        return super()._set_field("filter",value,explicit_presence=False,
+        )
     
     @property
-    def expiration(self) -> "LifecycleExpiration|None":
-        return super()._get_field("expiration", explicit_presence=True,
+    def expiration(self) -> "LifecycleExpiration":
+        return super()._get_field("expiration", explicit_presence=False,
         wrap=LifecycleExpiration,
         )
     @expiration.setter
-    def expiration(self, value: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration|None") -> None:
-        return super()._set_field("expiration",value,explicit_presence=True)
+    def expiration(self, value: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration") -> None:
+        return super()._set_field("expiration",value,explicit_presence=False,
+        )
     
     @property
-    def noncurrent_version_expiration(self) -> "LifecycleNoncurrentVersionExpiration|None":
-        return super()._get_field("noncurrent_version_expiration", explicit_presence=True,
+    def noncurrent_version_expiration(self) -> "LifecycleNoncurrentVersionExpiration":
+        return super()._get_field("noncurrent_version_expiration", explicit_presence=False,
         wrap=LifecycleNoncurrentVersionExpiration,
         )
     @noncurrent_version_expiration.setter
-    def noncurrent_version_expiration(self, value: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration|None") -> None:
-        return super()._set_field("noncurrent_version_expiration",value,explicit_presence=True)
+    def noncurrent_version_expiration(self, value: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration") -> None:
+        return super()._set_field("noncurrent_version_expiration",value,explicit_presence=False,
+        )
     
     @property
-    def abort_incomplete_multipart_upload(self) -> "LifecycleAbortIncompleteMultipartUpload|None":
-        return super()._get_field("abort_incomplete_multipart_upload", explicit_presence=True,
+    def abort_incomplete_multipart_upload(self) -> "LifecycleAbortIncompleteMultipartUpload":
+        return super()._get_field("abort_incomplete_multipart_upload", explicit_presence=False,
         wrap=LifecycleAbortIncompleteMultipartUpload,
         )
     @abort_incomplete_multipart_upload.setter
-    def abort_incomplete_multipart_upload(self, value: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload|None") -> None:
-        return super()._set_field("abort_incomplete_multipart_upload",value,explicit_presence=True)
+    def abort_incomplete_multipart_upload(self, value: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload") -> None:
+        return super()._set_field("abort_incomplete_multipart_upload",value,explicit_presence=False,
+        )
     
-class LifecycleFilter(message_1.Message):
-    _PB2_CLASS_ = lifecycle_pb2.LifecycleFilter
+class LifecycleFilter(pb_classes.Message):
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleFilter
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleFilter",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         prefix: "builtins.str|None" = None,
         object_size_greater_than_bytes: "builtins.int|None" = None,
         object_size_less_than_bytes: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.LifecycleFilter",lifecycle_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if prefix is not None:
             self.prefix = prefix
         if object_size_greater_than_bytes is not None:
@@ -354,7 +390,8 @@ class LifecycleFilter(message_1.Message):
         )
     @prefix.setter
     def prefix(self, value: "builtins.str") -> None:
-        return super()._set_field("prefix",value,explicit_presence=False)
+        return super()._set_field("prefix",value,explicit_presence=False,
+        )
     
     @property
     def object_size_greater_than_bytes(self) -> "builtins.int":
@@ -362,7 +399,8 @@ class LifecycleFilter(message_1.Message):
         )
     @object_size_greater_than_bytes.setter
     def object_size_greater_than_bytes(self, value: "builtins.int") -> None:
-        return super()._set_field("object_size_greater_than_bytes",value,explicit_presence=False)
+        return super()._set_field("object_size_greater_than_bytes",value,explicit_presence=False,
+        )
     
     @property
     def object_size_less_than_bytes(self) -> "builtins.int":
@@ -370,20 +408,22 @@ class LifecycleFilter(message_1.Message):
         )
     @object_size_less_than_bytes.setter
     def object_size_less_than_bytes(self, value: "builtins.int") -> None:
-        return super()._set_field("object_size_less_than_bytes",value,explicit_presence=False)
+        return super()._set_field("object_size_less_than_bytes",value,explicit_presence=False,
+        )
     
-class LifecycleExpiration(message_1.Message):
-    _PB2_CLASS_ = lifecycle_pb2.LifecycleExpiration
+class LifecycleExpiration(pb_classes.Message):
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleExpiration
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleExpiration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
-        date: "timestamp_pb2.Timestamp|None" = None,
+        date: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
         days: "builtins.int|None" = None,
         expired_object_delete_marker: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.LifecycleExpiration",lifecycle_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if date is not None:
             self.date = date
         if days is not None:
@@ -392,12 +432,15 @@ class LifecycleExpiration(message_1.Message):
             self.expired_object_delete_marker = expired_object_delete_marker
     
     @property
-    def date(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("date", explicit_presence=True,
+    def date(self) -> "datetime.datetime":
+        return super()._get_field("date", explicit_presence=False,
+        wrap=well_known.from_timestamp
         )
     @date.setter
-    def date(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("date",value,explicit_presence=True)
+    def date(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("date",value,explicit_presence=False,
+        unwrap=well_known.to_timestamp
+        )
     
     @property
     def days(self) -> "builtins.int|None":
@@ -405,7 +448,8 @@ class LifecycleExpiration(message_1.Message):
         )
     @days.setter
     def days(self, value: "builtins.int|None") -> None:
-        return super()._set_field("days",value,explicit_presence=True)
+        return super()._set_field("days",value,explicit_presence=True,
+        )
     
     @property
     def expired_object_delete_marker(self) -> "builtins.bool":
@@ -413,19 +457,21 @@ class LifecycleExpiration(message_1.Message):
         )
     @expired_object_delete_marker.setter
     def expired_object_delete_marker(self, value: "builtins.bool") -> None:
-        return super()._set_field("expired_object_delete_marker",value,explicit_presence=False)
+        return super()._set_field("expired_object_delete_marker",value,explicit_presence=False,
+        )
     
-class LifecycleNoncurrentVersionExpiration(message_1.Message):
-    _PB2_CLASS_ = lifecycle_pb2.LifecycleNoncurrentVersionExpiration
+class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleNoncurrentVersionExpiration
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleNoncurrentVersionExpiration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         newer_noncurrent_versions: "builtins.int|None" = None,
         noncurrent_days: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.LifecycleNoncurrentVersionExpiration",lifecycle_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if newer_noncurrent_versions is not None:
             self.newer_noncurrent_versions = newer_noncurrent_versions
         if noncurrent_days is not None:
@@ -437,7 +483,8 @@ class LifecycleNoncurrentVersionExpiration(message_1.Message):
         )
     @newer_noncurrent_versions.setter
     def newer_noncurrent_versions(self, value: "builtins.int|None") -> None:
-        return super()._set_field("newer_noncurrent_versions",value,explicit_presence=True)
+        return super()._set_field("newer_noncurrent_versions",value,explicit_presence=True,
+        )
     
     @property
     def noncurrent_days(self) -> "builtins.int":
@@ -445,18 +492,20 @@ class LifecycleNoncurrentVersionExpiration(message_1.Message):
         )
     @noncurrent_days.setter
     def noncurrent_days(self, value: "builtins.int") -> None:
-        return super()._set_field("noncurrent_days",value,explicit_presence=False)
+        return super()._set_field("noncurrent_days",value,explicit_presence=False,
+        )
     
-class LifecycleAbortIncompleteMultipartUpload(message_1.Message):
-    _PB2_CLASS_ = lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload
+class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleAbortIncompleteMultipartUpload",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         days_after_initiation: "builtins.int|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.LifecycleAbortIncompleteMultipartUpload",lifecycle_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if days_after_initiation is not None:
             self.days_after_initiation = days_after_initiation
     
@@ -466,21 +515,23 @@ class LifecycleAbortIncompleteMultipartUpload(message_1.Message):
         )
     @days_after_initiation.setter
     def days_after_initiation(self, value: "builtins.int") -> None:
-        return super()._set_field("days_after_initiation",value,explicit_presence=False)
+        return super()._set_field("days_after_initiation",value,explicit_presence=False,
+        )
     
 # file: nebius/storage/v1/bucket.proto
-class Bucket(message_1.Message):
-    _PB2_CLASS_ = bucket_pb2.Bucket
+class Bucket(pb_classes.Message):
+    __PB2_CLASS__ = bucket_pb2.Bucket
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.Bucket",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "BucketSpec|bucket_pb2.BucketSpec|None" = None,
         status: "BucketStatus|bucket_pb2.BucketStatus|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.Bucket",bucket_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
@@ -489,44 +540,48 @@ class Bucket(message_1.Message):
             self.status = status
     
     @property
-    def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", explicit_presence=True,
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value,explicit_presence=True)
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
     
     @property
-    def spec(self) -> "BucketSpec|None":
-        return super()._get_field("spec", explicit_presence=True,
+    def spec(self) -> "BucketSpec":
+        return super()._get_field("spec", explicit_presence=False,
         wrap=BucketSpec,
         )
     @spec.setter
-    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec|None") -> None:
-        return super()._set_field("spec",value,explicit_presence=True)
+    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
     
     @property
-    def status(self) -> "BucketStatus|None":
-        return super()._get_field("status", explicit_presence=True,
+    def status(self) -> "BucketStatus":
+        return super()._get_field("status", explicit_presence=False,
         wrap=BucketStatus,
         )
     @status.setter
-    def status(self, value: "BucketStatus|bucket_pb2.BucketStatus|None") -> None:
-        return super()._set_field("status",value,explicit_presence=True)
+    def status(self, value: "BucketStatus|bucket_pb2.BucketStatus") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
     
-class BucketSpec(message_1.Message):
-    _PB2_CLASS_ = bucket_pb2.BucketSpec
+class BucketSpec(pb_classes.Message):
+    __PB2_CLASS__ = bucket_pb2.BucketSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketSpec",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         versioning_policy: "VersioningPolicy|base_pb2.VersioningPolicy|None" = None,
         max_size_bytes: "builtins.int|None" = None,
         lifecycle_configuration: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.BucketSpec",bucket_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if versioning_policy is not None:
             self.versioning_policy = versioning_policy
         if max_size_bytes is not None:
@@ -541,7 +596,8 @@ class BucketSpec(message_1.Message):
         )
     @versioning_policy.setter
     def versioning_policy(self, value: "VersioningPolicy|base_pb2.VersioningPolicy") -> None:
-        return super()._set_field("versioning_policy",value,explicit_presence=False)
+        return super()._set_field("versioning_policy",value,explicit_presence=False,
+        )
     
     @property
     def max_size_bytes(self) -> "builtins.int":
@@ -549,19 +605,22 @@ class BucketSpec(message_1.Message):
         )
     @max_size_bytes.setter
     def max_size_bytes(self, value: "builtins.int") -> None:
-        return super()._set_field("max_size_bytes",value,explicit_presence=False)
+        return super()._set_field("max_size_bytes",value,explicit_presence=False,
+        )
     
     @property
-    def lifecycle_configuration(self) -> "LifecycleConfiguration|None":
-        return super()._get_field("lifecycle_configuration", explicit_presence=True,
+    def lifecycle_configuration(self) -> "LifecycleConfiguration":
+        return super()._get_field("lifecycle_configuration", explicit_presence=False,
         wrap=LifecycleConfiguration,
         )
     @lifecycle_configuration.setter
-    def lifecycle_configuration(self, value: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|None") -> None:
-        return super()._set_field("lifecycle_configuration",value,explicit_presence=True)
+    def lifecycle_configuration(self, value: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration") -> None:
+        return super()._set_field("lifecycle_configuration",value,explicit_presence=False,
+        )
     
-class BucketStatus(message_1.Message):
-    _PB2_CLASS_ = bucket_pb2.BucketStatus
+class BucketStatus(pb_classes.Message):
+    __PB2_CLASS__ = bucket_pb2.BucketStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketStatus",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.BucketStatus.State",bucket_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -579,15 +638,15 @@ class BucketStatus(message_1.Message):
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         counters: "abc.Iterable[BucketCounters]|None" = None,
         state: "BucketStatus.State|bucket_pb2.BucketStatus.State|None" = None,
         suspension_state: "BucketStatus.SuspensionState|bucket_pb2.BucketStatus.SuspensionState|None" = None,
-        deleted_at: "timestamp_pb2.Timestamp|None" = None,
-        purge_at: "timestamp_pb2.Timestamp|None" = None,
+        deleted_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
+        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.BucketStatus",bucket_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if counters is not None:
             self.counters = counters
         if state is not None:
@@ -602,11 +661,12 @@ class BucketStatus(message_1.Message):
     @property
     def counters(self) -> "abc.MutableSequence[BucketCounters]":
         return super()._get_field("counters", explicit_presence=False,
-        wrap=BucketCounters,
+        wrap=pb_classes.Repeated.with_wrap(BucketCounters,None),
         )
     @counters.setter
     def counters(self, value: "abc.Iterable[BucketCounters]") -> None:
-        return super()._set_field("counters",value,explicit_presence=False)
+        return super()._set_field("counters",value,explicit_presence=False,
+        )
     
     @property
     def state(self) -> "BucketStatus.State":
@@ -615,7 +675,8 @@ class BucketStatus(message_1.Message):
         )
     @state.setter
     def state(self, value: "BucketStatus.State|bucket_pb2.BucketStatus.State") -> None:
-        return super()._set_field("state",value,explicit_presence=False)
+        return super()._set_field("state",value,explicit_presence=False,
+        )
     
     @property
     def suspension_state(self) -> "BucketStatus.SuspensionState":
@@ -624,36 +685,44 @@ class BucketStatus(message_1.Message):
         )
     @suspension_state.setter
     def suspension_state(self, value: "BucketStatus.SuspensionState|bucket_pb2.BucketStatus.SuspensionState") -> None:
-        return super()._set_field("suspension_state",value,explicit_presence=False)
+        return super()._set_field("suspension_state",value,explicit_presence=False,
+        )
     
     @property
-    def deleted_at(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("deleted_at", explicit_presence=True,
+    def deleted_at(self) -> "datetime.datetime":
+        return super()._get_field("deleted_at", explicit_presence=False,
+        wrap=well_known.from_timestamp
         )
     @deleted_at.setter
-    def deleted_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("deleted_at",value,explicit_presence=True)
+    def deleted_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("deleted_at",value,explicit_presence=False,
+        unwrap=well_known.to_timestamp
+        )
     
     @property
-    def purge_at(self) -> "timestamp_pb2.Timestamp|None":
-        return super()._get_field("purge_at", explicit_presence=True,
+    def purge_at(self) -> "datetime.datetime":
+        return super()._get_field("purge_at", explicit_presence=False,
+        wrap=well_known.from_timestamp
         )
     @purge_at.setter
-    def purge_at(self, value: "timestamp_pb2.Timestamp|None") -> None:
-        return super()._set_field("purge_at",value,explicit_presence=True)
+    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("purge_at",value,explicit_presence=False,
+        unwrap=well_known.to_timestamp
+        )
     
 # file: nebius/storage/v1/bucket_service.proto
-class GetBucketRequest(message_1.Message):
-    _PB2_CLASS_ = bucket_service_pb2.GetBucketRequest
+class GetBucketRequest(pb_classes.Message):
+    __PB2_CLASS__ = bucket_service_pb2.GetBucketRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         id: "builtins.str|None" = None,
         with_deleted: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.GetBucketRequest",bucket_service_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if id is not None:
             self.id = id
         if with_deleted is not None:
@@ -665,7 +734,8 @@ class GetBucketRequest(message_1.Message):
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False,
+        )
     
     @property
     def with_deleted(self) -> "builtins.bool":
@@ -673,20 +743,22 @@ class GetBucketRequest(message_1.Message):
         )
     @with_deleted.setter
     def with_deleted(self, value: "builtins.bool") -> None:
-        return super()._set_field("with_deleted",value,explicit_presence=False)
+        return super()._set_field("with_deleted",value,explicit_presence=False,
+        )
     
-class GetBucketByNameRequest(message_1.Message):
-    _PB2_CLASS_ = bucket_service_pb2.GetBucketByNameRequest
+class GetBucketByNameRequest(pb_classes.Message):
+    __PB2_CLASS__ = bucket_service_pb2.GetBucketByNameRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetBucketByNameRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         parent_id: "builtins.str|None" = None,
         name: "builtins.str|None" = None,
         with_deleted: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.GetBucketByNameRequest",bucket_service_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if parent_id is not None:
             self.parent_id = parent_id
         if name is not None:
@@ -700,7 +772,8 @@ class GetBucketByNameRequest(message_1.Message):
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
     
     @property
     def name(self) -> "builtins.str":
@@ -708,7 +781,8 @@ class GetBucketByNameRequest(message_1.Message):
         )
     @name.setter
     def name(self, value: "builtins.str") -> None:
-        return super()._set_field("name",value,explicit_presence=False)
+        return super()._set_field("name",value,explicit_presence=False,
+        )
     
     @property
     def with_deleted(self) -> "builtins.bool":
@@ -716,86 +790,94 @@ class GetBucketByNameRequest(message_1.Message):
         )
     @with_deleted.setter
     def with_deleted(self, value: "builtins.bool") -> None:
-        return super()._set_field("with_deleted",value,explicit_presence=False)
+        return super()._set_field("with_deleted",value,explicit_presence=False,
+        )
     
-class CreateBucketRequest(message_1.Message):
-    _PB2_CLASS_ = bucket_service_pb2.CreateBucketRequest
+class CreateBucketRequest(pb_classes.Message):
+    __PB2_CLASS__ = bucket_service_pb2.CreateBucketRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CreateBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "BucketSpec|bucket_pb2.BucketSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.CreateBucketRequest",bucket_service_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
     
     @property
-    def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", explicit_presence=True,
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value,explicit_presence=True)
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
     
     @property
-    def spec(self) -> "BucketSpec|None":
-        return super()._get_field("spec", explicit_presence=True,
+    def spec(self) -> "BucketSpec":
+        return super()._get_field("spec", explicit_presence=False,
         wrap=BucketSpec,
         )
     @spec.setter
-    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec|None") -> None:
-        return super()._set_field("spec",value,explicit_presence=True)
+    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
     
-class UpdateBucketRequest(message_1.Message):
-    _PB2_CLASS_ = bucket_service_pb2.UpdateBucketRequest
+class UpdateBucketRequest(pb_classes.Message):
+    __PB2_CLASS__ = bucket_service_pb2.UpdateBucketRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.UpdateBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
         spec: "BucketSpec|bucket_pb2.BucketSpec|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.UpdateBucketRequest",bucket_service_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if metadata is not None:
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
     
     @property
-    def metadata(self) -> "v1_1.ResourceMetadata|None":
-        return super()._get_field("metadata", explicit_presence=True,
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value,explicit_presence=True)
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
     
     @property
-    def spec(self) -> "BucketSpec|None":
-        return super()._get_field("spec", explicit_presence=True,
+    def spec(self) -> "BucketSpec":
+        return super()._get_field("spec", explicit_presence=False,
         wrap=BucketSpec,
         )
     @spec.setter
-    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec|None") -> None:
-        return super()._set_field("spec",value,explicit_presence=True)
+    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
     
-class DeleteBucketRequest(message_1.Message):
-    _PB2_CLASS_ = bucket_service_pb2.DeleteBucketRequest
+class DeleteBucketRequest(pb_classes.Message):
+    __PB2_CLASS__ = bucket_service_pb2.DeleteBucketRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.DeleteBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         id: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.DeleteBucketRequest",bucket_service_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if id is not None:
             self.id = id
     
@@ -805,14 +887,16 @@ class DeleteBucketRequest(message_1.Message):
         )
     @id.setter
     def id(self, value: "builtins.str") -> None:
-        return super()._set_field("id",value,explicit_presence=False)
+        return super()._set_field("id",value,explicit_presence=False,
+        )
     
-class ListBucketsRequest(message_1.Message):
-    _PB2_CLASS_ = bucket_service_pb2.ListBucketsRequest
+class ListBucketsRequest(pb_classes.Message):
+    __PB2_CLASS__ = bucket_service_pb2.ListBucketsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListBucketsRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         parent_id: "builtins.str|None" = None,
         page_size: "builtins.int|None" = None,
@@ -820,7 +904,7 @@ class ListBucketsRequest(message_1.Message):
         filter: "builtins.str|None" = None,
         with_deleted: "builtins.bool|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.ListBucketsRequest",bucket_service_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if parent_id is not None:
             self.parent_id = parent_id
         if page_size is not None:
@@ -838,7 +922,8 @@ class ListBucketsRequest(message_1.Message):
         )
     @parent_id.setter
     def parent_id(self, value: "builtins.str") -> None:
-        return super()._set_field("parent_id",value,explicit_presence=False)
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
     
     @property
     def page_size(self) -> "builtins.int":
@@ -846,7 +931,8 @@ class ListBucketsRequest(message_1.Message):
         )
     @page_size.setter
     def page_size(self, value: "builtins.int") -> None:
-        return super()._set_field("page_size",value,explicit_presence=False)
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
     
     @property
     def page_token(self) -> "builtins.str":
@@ -854,7 +940,8 @@ class ListBucketsRequest(message_1.Message):
         )
     @page_token.setter
     def page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("page_token",value,explicit_presence=False)
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
     
     @property
     def filter(self) -> "builtins.str":
@@ -862,7 +949,8 @@ class ListBucketsRequest(message_1.Message):
         )
     @filter.setter
     def filter(self, value: "builtins.str") -> None:
-        return super()._set_field("filter",value,explicit_presence=False)
+        return super()._set_field("filter",value,explicit_presence=False,
+        )
     
     @property
     def with_deleted(self) -> "builtins.bool":
@@ -870,19 +958,21 @@ class ListBucketsRequest(message_1.Message):
         )
     @with_deleted.setter
     def with_deleted(self, value: "builtins.bool") -> None:
-        return super()._set_field("with_deleted",value,explicit_presence=False)
+        return super()._set_field("with_deleted",value,explicit_presence=False,
+        )
     
-class ListBucketsResponse(message_1.Message):
-    _PB2_CLASS_ = bucket_service_pb2.ListBucketsResponse
+class ListBucketsResponse(pb_classes.Message):
+    __PB2_CLASS__ = bucket_service_pb2.ListBucketsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListBucketsResponse",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
-        initial_message: message_2.Message|None = None,
+        initial_message: message_1.Message|None = None,
         *,
         items: "abc.Iterable[Bucket]|None" = None,
         next_page_token: "builtins.str|None" = None,
     ) -> None:
-        super().__init__(initial_message,self._PB2_CLASS_,".nebius.storage.v1.ListBucketsResponse",bucket_service_pb2.DESCRIPTOR)
+        super().__init__(initial_message)
         if items is not None:
             self.items = items
         if next_page_token is not None:
@@ -891,11 +981,12 @@ class ListBucketsResponse(message_1.Message):
     @property
     def items(self) -> "abc.MutableSequence[Bucket]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=Bucket,
+        wrap=pb_classes.Repeated.with_wrap(Bucket,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Bucket]") -> None:
-        return super()._set_field("items",value,explicit_presence=False)
+        return super()._set_field("items",value,explicit_presence=False,
+        )
     
     @property
     def next_page_token(self) -> "builtins.str":
@@ -903,5 +994,155 @@ class ListBucketsResponse(message_1.Message):
         )
     @next_page_token.setter
     def next_page_token(self, value: "builtins.str") -> None:
-        return super()._set_field("next_page_token",value,explicit_presence=False)
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
     
+
+class BucketServiceClient(client.Client):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.storage.v1.BucketService",bucket_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.storage.v1.BucketService"
+    __operation_type__ = v1_1.Operation
+    
+    def get(self,
+        request: "GetBucketRequest",
+        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["GetBucketRequest","Bucket"]:
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=bucket_pb2.Bucket,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+    
+    def get_by_name(self,
+        request: "GetBucketByNameRequest",
+        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["GetBucketByNameRequest","Bucket"]:
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=bucket_pb2.Bucket,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+    
+    def list(self,
+        request: "ListBucketsRequest",
+        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["ListBucketsRequest","ListBucketsResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=bucket_service_pb2.ListBucketsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+    
+    def create(self,
+        request: "CreateBucketRequest",
+        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["CreateBucketRequest","operation.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+            result_wrapper=operation.Operation,
+        )
+    
+    def update(self,
+        request: "UpdateBucketRequest",
+        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["UpdateBucketRequest","operation.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+            result_wrapper=operation.Operation,
+        )
+    
+    def delete(self,
+        request: "DeleteBucketRequest",
+        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["DeleteBucketRequest","operation.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+            result_wrapper=operation.Operation,
+        )
+    
+
+__all__ = [
+    #@ local import names here @#
+    "StorageClass",
+    "VersioningPolicy",
+    "CurrentBucketCounters",
+    "NonCurrentBucketCounters",
+    "BucketCounters",
+    "LifecycleConfiguration",
+    "LifecycleRule",
+    "LifecycleFilter",
+    "LifecycleExpiration",
+    "LifecycleNoncurrentVersionExpiration",
+    "LifecycleAbortIncompleteMultipartUpload",
+    "Bucket",
+    "BucketSpec",
+    "BucketStatus",
+    "GetBucketRequest",
+    "GetBucketByNameRequest",
+    "CreateBucketRequest",
+    "UpdateBucketRequest",
+    "DeleteBucketRequest",
+    "ListBucketsRequest",
+    "ListBucketsResponse",
+    "BucketServiceClient",
+]

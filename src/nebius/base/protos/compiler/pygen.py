@@ -232,6 +232,8 @@ class PyGenFile:
             writer.write(" as ")
             writer.write(str(_imp.suggest_name))
             writer.write("\n")
+        writer.write("#@ local imports here @#")
+        writer.write("\n")
         writer.write("\n")
         writer.write(self._main_code.getvalue())
         writer.flush()
