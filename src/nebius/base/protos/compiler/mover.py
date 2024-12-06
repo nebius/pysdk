@@ -2,10 +2,9 @@ import argparse
 import ast
 import logging
 import sys
-from typing import Dict, List, Tuple
 
 # Custom types for readability
-PrefixMap = Dict[str, str]
+PrefixMap = dict[str, str]
 
 
 class Replacement:
@@ -24,7 +23,7 @@ class Replacement:
         self.replace_to = replace_to
 
 
-ReplacementPositions = Dict[Tuple[int, int], Replacement]
+ReplacementPositions = dict[tuple[int, int], Replacement]
 
 
 class ImportTransformer(ast.NodeVisitor):
@@ -75,7 +74,7 @@ class ImportTransformer(ast.NodeVisitor):
         return name
 
 
-def parse_prefix_map(prefix_str: List[str]) -> PrefixMap:
+def parse_prefix_map(prefix_str: list[str]) -> PrefixMap:
     prefix_map: PrefixMap = {}
     for pair in prefix_str:
         if "=" not in pair:

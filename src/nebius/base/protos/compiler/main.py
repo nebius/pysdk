@@ -1,7 +1,8 @@
 import argparse
 import logging
 import sys
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from google.protobuf.compiler import plugin_pb2 as plugin
 

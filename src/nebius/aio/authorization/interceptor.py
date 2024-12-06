@@ -1,6 +1,7 @@
+from collections.abc import Callable
 from logging import getLogger
 from time import time
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 from grpc import StatusCode
 from grpc.aio._call import AioRpcError, UnaryUnaryCall

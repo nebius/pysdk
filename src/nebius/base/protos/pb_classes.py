@@ -1,14 +1,14 @@
-from collections.abc import MutableSequence
-from typing import (
-    Any,
+from collections.abc import (
     Callable,
     Iterable,
     Iterator,
     Mapping,
     MutableMapping,
-    Type,
+    MutableSequence,
+)
+from typing import (
+    Any,
     TypeVar,
-    Union,
     overload,
 )
 
@@ -47,7 +47,7 @@ def unwrap_type(obj: Any, unwrap: Callable[[Any], Any] | None = None) -> Any:
 
 
 class Message:
-    __PB2_CLASS__: Type[PMessage]
+    __PB2_CLASS__: type[PMessage]
     __PB2_DESCRIPTOR__: DescriptorWrap[Descriptor] | Descriptor
 
     def __init__(self, initial_message: PMessage | None):
@@ -179,8 +179,8 @@ class Repeated(MutableSequence[CollectibleOuter]):
     @overload
     def __getitem__(self, index: slice) -> MutableSequence[CollectibleOuter]: ...
     def __getitem__(
-        self, index: Union[int, slice]
-    ) -> Union[CollectibleOuter, MutableSequence[CollectibleOuter]]:
+        self, index: int | slice
+    ) -> CollectibleOuter | MutableSequence[CollectibleOuter]:
         if isinstance(index, int):
             ret = self._source[index]
             return wrap_type(ret, self._wrap)  # type: ignore [unused-ignore]
@@ -191,8 +191,8 @@ class Repeated(MutableSequence[CollectibleOuter]):
 
     def __setitem__(
         self,
-        index: Union[int, slice],
-        value: Union[CollectibleOuter, Iterable[CollectibleOuter]],
+        index: int | slice,
+        value: CollectibleOuter | Iterable[CollectibleOuter],
     ) -> None:
         if isinstance(index, int):
             value = unwrap_type(value, self._unwrap)
@@ -208,7 +208,7 @@ class Repeated(MutableSequence[CollectibleOuter]):
             for i, v in zip(range(len(self))[index], value):  # type: ignore[arg-type]
                 self[i] = v  # type: ignore[assignment]
 
-    def __delitem__(self, index: Union[int, slice]) -> None:
+    def __delitem__(self, index: int | slice) -> None:
         self._source.__delitem__(index)
 
     def __len__(self) -> int:

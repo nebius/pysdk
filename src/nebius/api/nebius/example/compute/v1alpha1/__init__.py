@@ -20,7 +20,6 @@ import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.example.compute.v1alpha1.instance_service_pb2 as instance_service_pb2
 import nebius.aio.client as client
-import typing as typing
 import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
@@ -1258,7 +1257,7 @@ class InstanceServiceClient(client.Client):
     
     def get(self,
         request: "GetInstanceRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1277,7 +1276,7 @@ class InstanceServiceClient(client.Client):
     
     def list(self,
         request: "ListInstancesRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1296,7 +1295,7 @@ class InstanceServiceClient(client.Client):
     
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1315,7 +1314,7 @@ class InstanceServiceClient(client.Client):
     
     def create(self,
         request: "CreateInstanceRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1335,7 +1334,7 @@ class InstanceServiceClient(client.Client):
     
     def update(self,
         request: "UpdateInstanceRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1355,7 +1354,7 @@ class InstanceServiceClient(client.Client):
     
     def delete(self,
         request: "DeleteInstanceRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1375,7 +1374,7 @@ class InstanceServiceClient(client.Client):
     
     def stop(self,
         request: "StopInstanceRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1395,7 +1394,7 @@ class InstanceServiceClient(client.Client):
     
     def start(self,
         request: "StartInstanceRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,

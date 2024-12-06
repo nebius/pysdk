@@ -15,7 +15,6 @@ import collections.abc as abc
 import nebius.api.nebius.vpc.v1.allocation_pb2 as allocation_pb2
 import nebius.api.nebius.vpc.v1.allocation_service_pb2 as allocation_service_pb2
 import nebius.aio.client as client
-import typing as typing
 import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
@@ -904,7 +903,7 @@ class AllocationServiceClient(client.Client):
     
     def get(self,
         request: "GetAllocationRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -923,7 +922,7 @@ class AllocationServiceClient(client.Client):
     
     def get_by_name(self,
         request: "GetAllocationByNameRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -942,7 +941,7 @@ class AllocationServiceClient(client.Client):
     
     def list(self,
         request: "ListAllocationsRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -961,7 +960,7 @@ class AllocationServiceClient(client.Client):
     
     def create(self,
         request: "CreateAllocationRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -981,7 +980,7 @@ class AllocationServiceClient(client.Client):
     
     def update(self,
         request: "UpdateAllocationRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1001,7 +1000,7 @@ class AllocationServiceClient(client.Client):
     
     def delete(self,
         request: "DeleteAllocationRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1359,7 +1358,7 @@ class NetworkServiceClient(client.Client):
     
     def get(self,
         request: "GetNetworkRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1378,7 +1377,7 @@ class NetworkServiceClient(client.Client):
     
     def get_by_name(self,
         request: "GetNetworkByNameRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1397,7 +1396,7 @@ class NetworkServiceClient(client.Client):
     
     def list(self,
         request: "ListNetworksRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1602,7 +1601,7 @@ class PoolServiceClient(client.Client):
     
     def get(self,
         request: "GetPoolRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1621,7 +1620,7 @@ class PoolServiceClient(client.Client):
     
     def get_by_name(self,
         request: "GetPoolByNameRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1640,7 +1639,7 @@ class PoolServiceClient(client.Client):
     
     def list(self,
         request: "ListPoolsRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1659,7 +1658,7 @@ class PoolServiceClient(client.Client):
     
     def update(self,
         request: "UpdatePoolRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -2175,7 +2174,7 @@ class SubnetServiceClient(client.Client):
     
     def get(self,
         request: "GetSubnetRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -2194,7 +2193,7 @@ class SubnetServiceClient(client.Client):
     
     def get_by_name(self,
         request: "GetSubnetByNameRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -2213,7 +2212,7 @@ class SubnetServiceClient(client.Client):
     
     def list(self,
         request: "ListSubnetsRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -2232,7 +2231,7 @@ class SubnetServiceClient(client.Client):
     
     def list_by_network(self,
         request: "ListSubnetsByNetworkRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,

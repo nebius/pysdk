@@ -1,4 +1,4 @@
-from typing import Iterable, Tuple, Union
+from collections.abc import Iterable
 
 from google.protobuf.any_pb2 import Any as AnyPb
 from google.rpc.status_pb2 import Status as StatusPb  # type: ignore
@@ -8,13 +8,22 @@ from grpc_status import rpc_status
 from nebius.api.nebius.common.v1.error_pb2 import ServiceError as ServiceErrorPb
 
 
-def pb2_from_status(status: StatusPb) -> list[ServiceErrorPb]:  # type: ignore[unused-ignore]
+def pb2_from_status(
+    status: StatusPb,  # type: ignore[unused-ignore]
+    remove_from_details: bool = False,
+) -> list[ServiceErrorPb]:
     ret = list[ServiceErrorPb]()
+    rest = list[AnyPb]()
     for detail in status.details:  # type: ignore[unused-ignore]
         if detail.Is(ServiceErrorPb.DESCRIPTOR):  # type: ignore[unused-ignore]
             se = ServiceErrorPb()
             detail.Unpack(se)  # type: ignore[unused-ignore]
             ret.append(se)
+        elif remove_from_details:
+            rest.append(detail)  # type: ignore[unused-ignore]
+    if remove_from_details:
+        status.ClearField("details")  # type: ignore[unused-ignore]
+        status.details.extend(rest)  # type: ignore[unused-ignore]
     return ret
 
 
@@ -54,8 +63,8 @@ def grpc_status_of_errors(
     return rpc_status.to_status(pbrpc_status_of_errors(code, message, errors))
 
 
-Metadata = Tuple[
-    Tuple[str, Union[str, bytes]],
+Metadata = tuple[
+    tuple[str, str | bytes],
     ...,
 ]
 

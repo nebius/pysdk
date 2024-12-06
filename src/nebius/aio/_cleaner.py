@@ -1,5 +1,6 @@
+from collections.abc import Callable
 from logging import getLogger
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 from grpc.aio._call import UnaryUnaryCall
 from grpc.aio._interceptor import ClientCallDetails, UnaryUnaryClientInterceptor

@@ -14,7 +14,6 @@ import collections.abc as abc
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.applications.v1alpha1.k8s_release_service_pb2 as k8s_release_service_pb2
 import nebius.aio.client as client
-import typing as typing
 import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
@@ -435,7 +434,7 @@ class K8sReleaseServiceClient(client.Client):
     
     def get(self,
         request: "GetK8sReleaseRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -454,7 +453,7 @@ class K8sReleaseServiceClient(client.Client):
     
     def list(self,
         request: "ListK8sReleasesRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -473,7 +472,7 @@ class K8sReleaseServiceClient(client.Client):
     
     def create(self,
         request: "CreateK8sReleaseRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -493,7 +492,7 @@ class K8sReleaseServiceClient(client.Client):
     
     def delete(self,
         request: "DeleteK8sReleaseRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,

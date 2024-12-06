@@ -359,9 +359,9 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                 g.p('request: "', method.input.export_path, '",')
                 g.p(
                     "metadata: ",
-                    ImportedSymbol("Iterable", "typing"),
+                    ImportedSymbol("Iterable", "collections.abc"),
                     "[",
-                    ImportedSymbol("Tuple", "typing"),
+                    ImportedSymbol("tuple", "builtins"),
                     "[",
                     ImportedSymbol("str", "builtins"),
                     ",",

@@ -1,4 +1,4 @@
-from typing import Any, Protocol, Type, TypeVar
+from typing import Any, Protocol, TypeVar
 
 from google.protobuf.message import Message
 from grpc import (
@@ -173,7 +173,7 @@ class ServiceStub(Protocol):
     def __init__(self, channel: GRPCChannel) -> None: ...
 
 
-def from_stub_class(stub: Type[ServiceStub]) -> str:
+def from_stub_class(stub: type[ServiceStub]) -> str:
     if hasattr(stub, "__PB2_NAME__"):
         return getattr(stub, "__PB2_NAME__")  # type: ignore[no-any-return]
     extractor = ExtractorChannel()

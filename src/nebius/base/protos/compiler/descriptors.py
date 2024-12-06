@@ -1,6 +1,5 @@
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 from logging import getLogger
-from typing import Sequence
 
 import google.protobuf.descriptor_pb2 as pb
 

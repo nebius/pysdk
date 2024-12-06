@@ -20,7 +20,6 @@ import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.storage.v1.bucket_service_pb2 as bucket_service_pb2
 import nebius.aio.client as client
-import typing as typing
 import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
@@ -1005,7 +1004,7 @@ class BucketServiceClient(client.Client):
     
     def get(self,
         request: "GetBucketRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1024,7 +1023,7 @@ class BucketServiceClient(client.Client):
     
     def get_by_name(self,
         request: "GetBucketByNameRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1043,7 +1042,7 @@ class BucketServiceClient(client.Client):
     
     def list(self,
         request: "ListBucketsRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1062,7 +1061,7 @@ class BucketServiceClient(client.Client):
     
     def create(self,
         request: "CreateBucketRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1082,7 +1081,7 @@ class BucketServiceClient(client.Client):
     
     def update(self,
         request: "UpdateBucketRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1102,7 +1101,7 @@ class BucketServiceClient(client.Client):
     
     def delete(self,
         request: "DeleteBucketRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,

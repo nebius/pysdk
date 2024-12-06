@@ -15,7 +15,6 @@ import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.spark.v1alpha1.cluster_service_pb2 as cluster_service_pb2
 import collections.abc as abc
 import nebius.aio.client as client
-import typing as typing
 import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
@@ -508,7 +507,7 @@ class ClusterServiceClient(client.Client):
     
     def get(self,
         request: "GetClusterRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -527,7 +526,7 @@ class ClusterServiceClient(client.Client):
     
     def get_by_name(self,
         request: "GetClusterByNameRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -546,7 +545,7 @@ class ClusterServiceClient(client.Client):
     
     def list(self,
         request: "ListClustersRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -565,7 +564,7 @@ class ClusterServiceClient(client.Client):
     
     def create(self,
         request: "CreateClusterRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -585,7 +584,7 @@ class ClusterServiceClient(client.Client):
     
     def update(self,
         request: "UpdateClusterRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -605,7 +604,7 @@ class ClusterServiceClient(client.Client):
     
     def delete(self,
         request: "DeleteClusterRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1322,7 +1321,7 @@ class JobServiceClient(client.Client):
     
     def get(self,
         request: "GetJobRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1341,7 +1340,7 @@ class JobServiceClient(client.Client):
     
     def list(self,
         request: "ListJobsRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1360,7 +1359,7 @@ class JobServiceClient(client.Client):
     
     def create(self,
         request: "CreateJobRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1380,7 +1379,7 @@ class JobServiceClient(client.Client):
     
     def cancel(self,
         request: "CancelJobRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1897,7 +1896,7 @@ class SessionServiceClient(client.Client):
     
     def get(self,
         request: "GetSessionRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1916,7 +1915,7 @@ class SessionServiceClient(client.Client):
     
     def get_by_name(self,
         request: "GetSessionByNameRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1935,7 +1934,7 @@ class SessionServiceClient(client.Client):
     
     def list(self,
         request: "ListSessionsRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1954,7 +1953,7 @@ class SessionServiceClient(client.Client):
     
     def create(self,
         request: "CreateSessionRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1974,7 +1973,7 @@ class SessionServiceClient(client.Client):
     
     def delete(self,
         request: "DeleteSessionRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,

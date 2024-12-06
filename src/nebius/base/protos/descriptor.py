@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Generic, Optional, Type, TypeVar, Union
+from typing import Generic, TypeVar
 
 import google.protobuf.descriptor as pb
 
@@ -14,13 +14,13 @@ class DescriptorWrap(ABC, Generic[T]):
         self,
         name: str,
         file_descriptor: pb.FileDescriptor,
-        expected_type: Type[T],
+        expected_type: type[T],
     ) -> None:
         if name[0] == ".":
             name = name[1:]
         self._name = name
         self._file_descriptor = file_descriptor
-        self._expected_type: Type[T] = expected_type
+        self._expected_type: type[T] = expected_type
         self._descriptor: T | None = None
 
     def __call__(self) -> T:
@@ -40,15 +40,14 @@ class DescriptorWrap(ABC, Generic[T]):
         return descriptor
 
     def _find_descriptor(
-        self, container: Union[pb.FileDescriptor, pb.Descriptor], name: str
-    ) -> Optional[
-        Union[
-            pb.Descriptor,
-            pb.EnumDescriptor,
-            pb.OneofDescriptor,
-            pb.ServiceDescriptor,
-        ]
-    ]:
+        self, container: pb.FileDescriptor | pb.Descriptor, name: str
+    ) -> (
+        pb.Descriptor
+        | pb.EnumDescriptor
+        | pb.OneofDescriptor
+        | pb.ServiceDescriptor
+        | None
+    ):
         """
         Recursively searches for the descriptor in the given container (file or message)
         """

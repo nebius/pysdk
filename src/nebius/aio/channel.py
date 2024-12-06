@@ -1,6 +1,7 @@
 from asyncio import gather
+from collections.abc import Coroutine, Sequence
 from logging import getLogger
-from typing import Any, Coroutine, Dict, Sequence, Type, TypeVar
+from typing import Any, TypeVar
 
 from google.protobuf.message import Message
 from grpc import (
@@ -114,12 +115,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self,
         *,
         resolver: Resolver | None = None,
-        substitutions: Dict[str, str] | None = None,
+        substitutions: dict[str, str] | None = None,
         domain: str = DOMAIN,
         options: ChannelArgumentType | None = None,
         interceptors: Sequence[ClientInterceptor] | None = None,
-        address_options: Dict[str, ChannelArgumentType] | None = None,
-        address_interceptors: Dict[str, Sequence[ClientInterceptor]] | None = None,
+        address_options: dict[str, ChannelArgumentType] | None = None,
+        address_interceptors: dict[str, Sequence[ClientInterceptor]] | None = None,
         credentials: Credentials = None,
         tls_credentials: ChannelCredentials | None = None,
     ) -> None:
@@ -190,7 +191,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
     def get_corresponding_operation_service(
         self,
-        service_stub_class: Type[ServiceStub],
+        service_stub_class: type[ServiceStub],
     ) -> OperationServiceStub:
         addr = self.get_addr_from_stub(service_stub_class)
         chan = self.get_channel_by_addr(addr)
@@ -198,13 +199,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
     def get_corresponding_operation_service_alpha(
         self,
-        service_stub_class: Type[ServiceStub],
+        service_stub_class: type[ServiceStub],
     ) -> OperationServiceStubDeprecated:
         addr = self.get_addr_from_stub(service_stub_class)
         chan = self.get_channel_by_addr(addr)
         return OperationServiceStubDeprecated(chan)  # type: ignore[no-untyped-call]
 
-    def get_addr_from_stub(self, service_stub_class: Type[ServiceStub]) -> str:
+    def get_addr_from_stub(self, service_stub_class: type[ServiceStub]) -> str:
         service = from_stub_class(service_stub_class)
         return self.get_addr_from_service_name(service)
 

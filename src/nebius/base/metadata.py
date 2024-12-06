@@ -1,4 +1,5 @@
-from typing import Iterable, MutableSequence, Sequence, Tuple, Union, overload
+from collections.abc import Iterable, MutableSequence, Sequence
+from typing import overload
 
 
 class Internal:
@@ -19,15 +20,15 @@ class Authorization:
     DISABLE = "disable"
 
 
-class Metadata(MutableSequence[Tuple[str, str]]):
-    def __init__(self, initial: Iterable[Tuple[str, str]] | None = None) -> None:
+class Metadata(MutableSequence[tuple[str, str]]):
+    def __init__(self, initial: Iterable[tuple[str, str]] | None = None) -> None:
         self._contents = list[tuple[str, str]]()
         if initial is not None:
             for k, v in initial:
                 if isinstance(k, str) and isinstance(v, str):  # type: ignore[unused-ignore]
                     self._contents.append((k.lower(), v))
 
-    def insert(self, index: int, value: Tuple[str, str]) -> None:
+    def insert(self, index: int, value: tuple[str, str]) -> None:
         self._contents.insert(index, value)
 
     def clean(self) -> "Metadata":
@@ -45,17 +46,17 @@ class Metadata(MutableSequence[Tuple[str, str]]):
             return default
 
     @overload
-    def __getitem__(self, index: int) -> Tuple[str, str]: ...
+    def __getitem__(self, index: int) -> tuple[str, str]: ...
 
     @overload
-    def __getitem__(self, index: slice) -> MutableSequence[Tuple[str, str]]: ...
+    def __getitem__(self, index: slice) -> MutableSequence[tuple[str, str]]: ...
 
     @overload
     def __getitem__(self, index: str) -> Sequence[str]: ...
 
     def __getitem__(
-        self, index: Union[int, slice, str]
-    ) -> Union[Tuple[str, str], MutableSequence[Tuple[str, str]], Sequence[str]]:
+        self, index: int | slice | str
+    ) -> tuple[str, str] | MutableSequence[tuple[str, str]] | Sequence[str]:
         if isinstance(index, int) or isinstance(index, slice):
             return self._contents[index]
         if isinstance(index, str):  # type: ignore[unused-ignore]
@@ -65,17 +66,17 @@ class Metadata(MutableSequence[Tuple[str, str]]):
 
     def __setitem__(
         self,
-        index: Union[int, slice, str],
-        value: Union[Tuple[str, str], Iterable[Tuple[str, str]], Iterable[str], str],
+        index: int | slice | str,
+        value: tuple[str, str] | Iterable[tuple[str, str]] | Iterable[str] | str,
     ) -> None:
         if isinstance(index, int):
             if (
-                isinstance(value, Tuple)  # type: ignore[arg-type]
-                and len(value) == 2  # type: ignore[arg-type]
-                and isinstance(value[0], str)  # type: ignore[index]
-                and isinstance(value[1], str)  # type: ignore[index]
+                isinstance(value, tuple)
+                and len(value) == 2
+                and isinstance(value[0], str)
+                and isinstance(value[1], str)
             ):
-                self._contents[index] = (value[0].lower(), value[1])  # type: ignore[index]
+                self._contents[index] = (value[0].lower(), value[1])
                 return
             else:
                 TypeError("If index is int, value must be Tuple[str,str]")
@@ -98,7 +99,7 @@ class Metadata(MutableSequence[Tuple[str, str]]):
             return
         raise TypeError("Index must be int, str or slice")
 
-    def __delitem__(self, index: Union[int, slice, str]) -> None:
+    def __delitem__(self, index: int | slice | str) -> None:
         if isinstance(index, int) or isinstance(index, slice):
             del self._contents[index]
             return

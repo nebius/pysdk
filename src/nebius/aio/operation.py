@@ -1,7 +1,8 @@
 from asyncio import sleep
+from collections.abc import Iterable
 from datetime import datetime, timedelta
 from time import time
-from typing import Generic, Iterable, Tuple, Type, TypeVar
+from typing import Generic, TypeVar
 
 from grpc import CallCredentials, Compression, StatusCode
 from grpc.aio import Channel as GRPCChannel
@@ -44,7 +45,7 @@ class Operation(Generic[OperationPb]):
             self._service: OperationServiceClient | OldClient = OperationServiceClient(
                 Static(channel)
             )
-            self._get_request_obj: Type[GetOperationRequest | OldGet] = (
+            self._get_request_obj: type[GetOperationRequest | OldGet] = (
                 GetOperationRequest
             )
         elif isinstance(operation, Old):
@@ -64,7 +65,7 @@ class Operation(Generic[OperationPb]):
 
     async def update(
         self,
-        metadata: Iterable[Tuple[str, str]] | None = None,
+        metadata: Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         wait_for_ready: bool | None = None,
@@ -87,7 +88,7 @@ class Operation(Generic[OperationPb]):
     async def wait(
         self,
         interval: float | timedelta = 1,
-        metadata: Iterable[Tuple[str, str]] | None = None,
+        metadata: Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         wait_for_ready: bool | None = None,

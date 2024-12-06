@@ -20,7 +20,6 @@ import google.rpc.status_pb2 as status_pb2
 import nebius.aio.request_status as request_status
 import nebius.api.nebius.common.v1.operation_service_pb2 as operation_service_pb2
 import nebius.aio.client as client
-import typing as typing
 import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
@@ -1221,7 +1220,7 @@ class OperationServiceClient(client.Client):
     
     def get(self,
         request: "GetOperationRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
@@ -1241,7 +1240,7 @@ class OperationServiceClient(client.Client):
     
     def list(self,
         request: "ListOperationsRequest",
-        metadata: typing.Iterable[typing.Tuple[builtins.str,builtins.str]]|None = None,
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,

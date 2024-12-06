@@ -1,4 +1,5 @@
-from typing import Any, Callable, Generator, Generic, Iterable, Tuple, Type, TypeVar
+from collections.abc import Callable, Generator, Iterable
+from typing import Any, Generic, TypeVar
 
 from google.protobuf.message import Message as PMessage
 from grpc import CallCredentials, Compression
@@ -49,8 +50,8 @@ class Request(Generic[Req, Res]):
         service: str,
         method: str,
         request: Req,
-        result_pb2_class: Type[PMessage],
-        metadata: Metadata | Iterable[Tuple[str, str]] | None = None,
+        result_pb2_class: type[PMessage],
+        metadata: Metadata | Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         wait_for_ready: bool | None = None,
