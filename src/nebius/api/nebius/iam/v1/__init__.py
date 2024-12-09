@@ -8,12 +8,13 @@ import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import builtins as builtins
+import typing as typing
 import nebius.api.nebius.iam.v1.access_key_pb2 as access_key_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
-import nebius.base.protos.well_known as well_known
+import nebius.base.protos.well_known as well_known_1
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.iam.v1.access_key_service_pb2 as access_key_service_pb2
 import collections.abc as abc
@@ -32,6 +33,8 @@ import nebius.api.nebius.iam.v1.federation_certificate_pb2 as federation_certifi
 import nebius.api.nebius.iam.v1.federation_certificate_service_pb2 as federation_certificate_service_pb2
 import nebius.api.nebius.iam.v1.federation_service_pb2 as federation_service_pb2
 import nebius.api.nebius.iam.v1.group_pb2 as group_pb2
+import nebius.api.nebius.iam.v1.service_account_pb2 as service_account_pb2
+import nebius.api.nebius.iam.v1.tenant_user_account_pb2 as tenant_user_account_pb2
 import nebius.api.nebius.iam.v1.group_membership_pb2 as group_membership_pb2
 import nebius.api.nebius.iam.v1.group_membership_service_pb2 as group_membership_service_pb2
 import nebius.api.nebius.iam.v1.group_service_pb2 as group_service_pb2
@@ -39,8 +42,6 @@ import nebius.api.nebius.iam.v1.token_service_pb2 as token_service_pb2
 import nebius.api.nebius.iam.v1.identity_service_pb2 as identity_service_pb2
 import nebius.api.nebius.iam.v1.invitation_pb2 as invitation_pb2
 import nebius.api.nebius.iam.v1.invitation_service_pb2 as invitation_service_pb2
-import nebius.api.nebius.iam.v1.tenant_user_account_pb2 as tenant_user_account_pb2
-import nebius.api.nebius.iam.v1.service_account_pb2 as service_account_pb2
 import nebius.api.nebius.iam.v1.user_account_pb2 as user_account_pb2
 import nebius.api.nebius.iam.v1.profile_service_pb2 as profile_service_pb2
 import nebius.api.nebius.iam.v1.project_service_pb2 as project_service_pb2
@@ -71,7 +72,7 @@ class Account(pb_classes.Message):
             if id is not None:
                 self.id = id
         
-        @property
+        @builtins.property
         def id(self) -> "builtins.str":
             return super()._get_field("id", explicit_presence=False,
             )
@@ -95,7 +96,7 @@ class Account(pb_classes.Message):
             if id is not None:
                 self.id = id
         
-        @property
+        @builtins.property
         def id(self) -> "builtins.str":
             return super()._get_field("id", explicit_presence=False,
             )
@@ -116,6 +117,55 @@ class Account(pb_classes.Message):
             super().__init__(initial_message)
         
     
+    class __OneOfClass_type__(pb_classes.OneOf):
+        name: builtins.str= "type"
+        
+        def __init__(self, msg: "Account") -> None:
+            super().__init__()
+            self._message: "Account" = msg
+    
+    class __OneOfClass_type_user_account__(__OneOfClass_type__):
+        field: typing.Literal["user_account"] = "user_account"
+        
+        def __init__(self, msg: "Account") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "Account.UserAccount":
+            return self._message.user_account
+    
+    class __OneOfClass_type_service_account__(__OneOfClass_type__):
+        field: typing.Literal["service_account"] = "service_account"
+        
+        def __init__(self, msg: "Account") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "Account.ServiceAccount":
+            return self._message.service_account
+    
+    class __OneOfClass_type_anonymous_account__(__OneOfClass_type__):
+        field: typing.Literal["anonymous_account"] = "anonymous_account"
+        
+        def __init__(self, msg: "Account") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "Account.AnonymousAccount":
+            return self._message.anonymous_account
+    
+    @builtins.property
+    def type(self) -> __OneOfClass_type_user_account__|__OneOfClass_type_service_account__|__OneOfClass_type_anonymous_account__|None:
+        field_name: str|None = super().which_field_in_oneof("type")
+        match field_name:
+            case "user_account":
+                return self.__OneOfClass_type_user_account__(self)
+            case "service_account":
+                return self.__OneOfClass_type_service_account__(self)
+            case "anonymous_account":
+                return self.__OneOfClass_type_anonymous_account__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -132,7 +182,7 @@ class Account(pb_classes.Message):
         if anonymous_account is not None:
             self.anonymous_account = anonymous_account
     
-    @property
+    @builtins.property
     def user_account(self) -> "Account.UserAccount":
         return super()._get_field("user_account", explicit_presence=False,
         wrap=Account.UserAccount,
@@ -142,7 +192,7 @@ class Account(pb_classes.Message):
         return super()._set_field("user_account",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def service_account(self) -> "Account.ServiceAccount":
         return super()._get_field("service_account", explicit_presence=False,
         wrap=Account.ServiceAccount,
@@ -152,7 +202,7 @@ class Account(pb_classes.Message):
         return super()._set_field("service_account",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def anonymous_account(self) -> "Account.AnonymousAccount":
         return super()._get_field("anonymous_account", explicit_presence=False,
         wrap=Account.AnonymousAccount,
@@ -183,7 +233,7 @@ class AccessKey(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -193,7 +243,7 @@ class AccessKey(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AccessKeySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AccessKeySpec,
@@ -203,7 +253,7 @@ class AccessKey(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "AccessKeyStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=AccessKeyStatus,
@@ -233,7 +283,7 @@ class AccessKeySpec(pb_classes.Message):
         if description is not None:
             self.description = description
     
-    @property
+    @builtins.property
     def account(self) -> "Account":
         return super()._get_field("account", explicit_presence=False,
         wrap=Account,
@@ -243,18 +293,18 @@ class AccessKeySpec(pb_classes.Message):
         return super()._set_field("account",value,explicit_presence=False,
         )
     
-    @property
-    def expires_at(self) -> "datetime.datetime":
-        return super()._get_field("expires_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def expires_at(self) -> "datetime.datetime|None":
+        return super()._get_field("expires_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("expires_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("expires_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -301,7 +351,7 @@ class AccessKeyStatus(pb_classes.Message):
         if secret is not None:
             self.secret = secret
     
-    @property
+    @builtins.property
     def state(self) -> "AccessKeyStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=AccessKeyStatus.State,
@@ -311,7 +361,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def fingerprint(self) -> "builtins.str":
         return super()._get_field("fingerprint", explicit_presence=False,
         )
@@ -320,7 +370,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._set_field("fingerprint",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def algorithm(self) -> "builtins.str":
         return super()._get_field("algorithm", explicit_presence=False,
         )
@@ -329,7 +379,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._set_field("algorithm",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def key_size(self) -> "builtins.int":
         return super()._get_field("key_size", explicit_presence=False,
         )
@@ -338,7 +388,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._set_field("key_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def aws_access_key_id(self) -> "builtins.str":
         return super()._get_field("aws_access_key_id", explicit_presence=False,
         )
@@ -347,7 +397,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._set_field("aws_access_key_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def secret(self) -> "builtins.str":
         return super()._get_field("secret", explicit_presence=False,
         )
@@ -374,7 +424,7 @@ class CreateAccessKeyRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -384,7 +434,7 @@ class CreateAccessKeyRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AccessKeySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AccessKeySpec,
@@ -397,6 +447,44 @@ class CreateAccessKeyRequest(pb_classes.Message):
 class KeyIdentity(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.KeyIdentity
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.KeyIdentity",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_identity__(pb_classes.OneOf):
+        name: builtins.str= "identity"
+        
+        def __init__(self, msg: "KeyIdentity") -> None:
+            super().__init__()
+            self._message: "KeyIdentity" = msg
+    
+    class __OneOfClass_identity_id__(__OneOfClass_identity__):
+        field: typing.Literal["id"] = "id"
+        
+        def __init__(self, msg: "KeyIdentity") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.id
+    
+    class __OneOfClass_identity_aws_access_key_id__(__OneOfClass_identity__):
+        field: typing.Literal["aws_access_key_id"] = "aws_access_key_id"
+        
+        def __init__(self, msg: "KeyIdentity") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.aws_access_key_id
+    
+    @builtins.property
+    def identity(self) -> __OneOfClass_identity_id__|__OneOfClass_identity_aws_access_key_id__|None:
+        field_name: str|None = super().which_field_in_oneof("identity")
+        match field_name:
+            case "id":
+                return self.__OneOfClass_identity_id__(self)
+            case "aws_access_key_id":
+                return self.__OneOfClass_identity_aws_access_key_id__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -411,7 +499,7 @@ class KeyIdentity(pb_classes.Message):
         if aws_access_key_id is not None:
             self.aws_access_key_id = aws_access_key_id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str|None":
         return super()._get_field("id", explicit_presence=True,
         )
@@ -420,7 +508,7 @@ class KeyIdentity(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def aws_access_key_id(self) -> "builtins.str|None":
         return super()._get_field("aws_access_key_id", explicit_presence=True,
         )
@@ -443,7 +531,7 @@ class GetAccessKeySecretOnceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -466,7 +554,7 @@ class GetAccessKeyByIdRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -489,7 +577,7 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
         if aws_access_key_id is not None:
             self.aws_access_key_id = aws_access_key_id
     
-    @property
+    @builtins.property
     def aws_access_key_id(self) -> "builtins.str":
         return super()._get_field("aws_access_key_id", explicit_presence=False,
         )
@@ -501,6 +589,33 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
 class ListAccessKeysRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessKeysRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListAccessKeysRequest") -> None:
+            super().__init__()
+            self._message: "ListAccessKeysRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListAccessKeysRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -521,7 +636,7 @@ class ListAccessKeysRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -530,7 +645,7 @@ class ListAccessKeysRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -539,7 +654,7 @@ class ListAccessKeysRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -548,7 +663,7 @@ class ListAccessKeysRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -580,7 +695,7 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def account(self) -> "Account":
         return super()._get_field("account", explicit_presence=False,
         wrap=Account,
@@ -590,7 +705,7 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         return super()._set_field("account",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -599,7 +714,7 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -608,7 +723,7 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -634,7 +749,7 @@ class UpdateAccessKeyRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -644,7 +759,7 @@ class UpdateAccessKeyRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AccessKeySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AccessKeySpec,
@@ -668,7 +783,7 @@ class ActivateAccessKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "KeyIdentity":
         return super()._get_field("id", explicit_presence=False,
         wrap=KeyIdentity,
@@ -692,7 +807,7 @@ class DeactivateAccessKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "KeyIdentity":
         return super()._get_field("id", explicit_presence=False,
         wrap=KeyIdentity,
@@ -716,7 +831,7 @@ class DeleteAccessKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "KeyIdentity":
         return super()._get_field("id", explicit_presence=False,
         wrap=KeyIdentity,
@@ -740,7 +855,7 @@ class GetAccessKeySecretOnceResponse(pb_classes.Message):
         if secret is not None:
             self.secret = secret
     
-    @property
+    @builtins.property
     def secret(self) -> "builtins.str":
         return super()._get_field("secret", explicit_presence=False,
         )
@@ -766,7 +881,7 @@ class ListAccessKeysResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[AccessKey]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AccessKey,None),
@@ -776,7 +891,7 @@ class ListAccessKeysResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -1008,7 +1123,7 @@ class AuthPublicKey(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1018,7 +1133,7 @@ class AuthPublicKey(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AuthPublicKeySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AuthPublicKeySpec,
@@ -1028,7 +1143,7 @@ class AuthPublicKey(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "AuthPublicKeyStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=AuthPublicKeyStatus,
@@ -1061,7 +1176,7 @@ class AuthPublicKeySpec(pb_classes.Message):
         if data is not None:
             self.data = data
     
-    @property
+    @builtins.property
     def account(self) -> "Account":
         return super()._get_field("account", explicit_presence=False,
         wrap=Account,
@@ -1071,18 +1186,18 @@ class AuthPublicKeySpec(pb_classes.Message):
         return super()._set_field("account",value,explicit_presence=False,
         )
     
-    @property
-    def expires_at(self) -> "datetime.datetime":
-        return super()._get_field("expires_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def expires_at(self) -> "datetime.datetime|None":
+        return super()._get_field("expires_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("expires_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("expires_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -1091,7 +1206,7 @@ class AuthPublicKeySpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def data(self) -> "builtins.str":
         return super()._get_field("data", explicit_presence=False,
         )
@@ -1132,7 +1247,7 @@ class AuthPublicKeyStatus(pb_classes.Message):
         if key_size is not None:
             self.key_size = key_size
     
-    @property
+    @builtins.property
     def state(self) -> "AuthPublicKeyStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=AuthPublicKeyStatus.State,
@@ -1142,7 +1257,7 @@ class AuthPublicKeyStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def fingerprint(self) -> "builtins.str":
         return super()._get_field("fingerprint", explicit_presence=False,
         )
@@ -1151,7 +1266,7 @@ class AuthPublicKeyStatus(pb_classes.Message):
         return super()._set_field("fingerprint",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def algorithm(self) -> "builtins.str":
         return super()._get_field("algorithm", explicit_presence=False,
         )
@@ -1160,7 +1275,7 @@ class AuthPublicKeyStatus(pb_classes.Message):
         return super()._set_field("algorithm",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def key_size(self) -> "builtins.int":
         return super()._get_field("key_size", explicit_presence=False,
         )
@@ -1187,7 +1302,7 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1197,7 +1312,7 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AuthPublicKeySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AuthPublicKeySpec,
@@ -1221,7 +1336,7 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1233,6 +1348,33 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
 class ListAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListAuthPublicKeyRequest") -> None:
+            super().__init__()
+            self._message: "ListAuthPublicKeyRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListAuthPublicKeyRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1253,7 +1395,7 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1262,7 +1404,7 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -1271,7 +1413,7 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1280,7 +1422,7 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -1312,7 +1454,7 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def account(self) -> "Account":
         return super()._get_field("account", explicit_presence=False,
         wrap=Account,
@@ -1322,7 +1464,7 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         return super()._set_field("account",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1331,7 +1473,7 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1340,7 +1482,7 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -1366,7 +1508,7 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1376,7 +1518,7 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AuthPublicKeySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AuthPublicKeySpec,
@@ -1400,7 +1542,7 @@ class ActivateAuthPublicKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1423,7 +1565,7 @@ class DeactivateAuthPublicKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1446,7 +1588,7 @@ class DeleteAuthPublicKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1472,7 +1614,7 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[AuthPublicKey]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AuthPublicKey,None),
@@ -1482,7 +1624,7 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -1699,7 +1841,7 @@ class Container(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1709,7 +1851,7 @@ class Container(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ContainerSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ContainerSpec,
@@ -1719,7 +1861,7 @@ class Container(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "ContainerStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=ContainerStatus,
@@ -1756,7 +1898,7 @@ class ContainerStatus(pb_classes.Message):
         if container_state is not None:
             self.container_state = container_state
     
-    @property
+    @builtins.property
     def suspension_state(self) -> "SuspensionState":
         return super()._get_field("suspension_state", explicit_presence=False,
         wrap=SuspensionState,
@@ -1766,7 +1908,7 @@ class ContainerStatus(pb_classes.Message):
         return super()._set_field("suspension_state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def container_state(self) -> "State":
         return super()._get_field("container_state", explicit_presence=False,
         wrap=State,
@@ -1797,7 +1939,7 @@ class Federation(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1807,7 +1949,7 @@ class Federation(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FederationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationSpec,
@@ -1817,7 +1959,7 @@ class Federation(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "FederationStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=FederationStatus,
@@ -1830,6 +1972,33 @@ class Federation(pb_classes.Message):
 class FederationSpec(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.FederationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationSpec",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_settings__(pb_classes.OneOf):
+        name: builtins.str= "settings"
+        
+        def __init__(self, msg: "FederationSpec") -> None:
+            super().__init__()
+            self._message: "FederationSpec" = msg
+    
+    class __OneOfClass_settings_saml_settings__(__OneOfClass_settings__):
+        field: typing.Literal["saml_settings"] = "saml_settings"
+        
+        def __init__(self, msg: "FederationSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "SamlSettings":
+            return self._message.saml_settings
+    
+    @builtins.property
+    def settings(self) -> __OneOfClass_settings_saml_settings__|None:
+        field_name: str|None = super().which_field_in_oneof("settings")
+        match field_name:
+            case "saml_settings":
+                return self.__OneOfClass_settings_saml_settings__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1847,7 +2016,7 @@ class FederationSpec(pb_classes.Message):
         if saml_settings is not None:
             self.saml_settings = saml_settings
     
-    @property
+    @builtins.property
     def user_account_auto_creation(self) -> "builtins.bool":
         return super()._get_field("user_account_auto_creation", explicit_presence=False,
         )
@@ -1856,7 +2025,7 @@ class FederationSpec(pb_classes.Message):
         return super()._set_field("user_account_auto_creation",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def active(self) -> "builtins.bool":
         return super()._get_field("active", explicit_presence=False,
         )
@@ -1865,7 +2034,7 @@ class FederationSpec(pb_classes.Message):
         return super()._set_field("active",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def saml_settings(self) -> "SamlSettings":
         return super()._get_field("saml_settings", explicit_presence=False,
         wrap=SamlSettings,
@@ -1892,7 +2061,7 @@ class SamlSettings(pb_classes.Message):
         if sso_url is not None:
             self.sso_url = sso_url
     
-    @property
+    @builtins.property
     def idp_issuer(self) -> "builtins.str":
         return super()._get_field("idp_issuer", explicit_presence=False,
         )
@@ -1901,7 +2070,7 @@ class SamlSettings(pb_classes.Message):
         return super()._set_field("idp_issuer",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def sso_url(self) -> "builtins.str":
         return super()._get_field("sso_url", explicit_presence=False,
         )
@@ -1941,7 +2110,7 @@ class FederationCertificate(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1951,7 +2120,7 @@ class FederationCertificate(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FederationCertificateSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationCertificateSpec,
@@ -1961,7 +2130,7 @@ class FederationCertificate(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "FederationCertificateStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=FederationCertificateStatus,
@@ -1988,7 +2157,7 @@ class FederationCertificateSpec(pb_classes.Message):
         if data is not None:
             self.data = data
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -1997,7 +2166,7 @@ class FederationCertificateSpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def data(self) -> "builtins.str":
         return super()._get_field("data", explicit_presence=False,
         )
@@ -2038,7 +2207,7 @@ class FederationCertificateStatus(pb_classes.Message):
         if not_after is not None:
             self.not_after = not_after
     
-    @property
+    @builtins.property
     def state(self) -> "FederationCertificateStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=FederationCertificateStatus.State,
@@ -2048,7 +2217,7 @@ class FederationCertificateStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def algorithm(self) -> "builtins.str":
         return super()._get_field("algorithm", explicit_presence=False,
         )
@@ -2057,7 +2226,7 @@ class FederationCertificateStatus(pb_classes.Message):
         return super()._set_field("algorithm",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def key_size(self) -> "builtins.int":
         return super()._get_field("key_size", explicit_presence=False,
         )
@@ -2066,26 +2235,26 @@ class FederationCertificateStatus(pb_classes.Message):
         return super()._set_field("key_size",value,explicit_presence=False,
         )
     
-    @property
-    def not_before(self) -> "datetime.datetime":
-        return super()._get_field("not_before", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def not_before(self) -> "datetime.datetime|None":
+        return super()._get_field("not_before", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @not_before.setter
-    def not_before(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("not_before",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def not_before(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("not_before",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
-    def not_after(self) -> "datetime.datetime":
-        return super()._get_field("not_after", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def not_after(self) -> "datetime.datetime|None":
+        return super()._get_field("not_after", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @not_after.setter
-    def not_after(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("not_after",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def not_after(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("not_after",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
 # file: nebius/iam/v1/federation_certificate_service.proto
@@ -2106,7 +2275,7 @@ class CreateFederationCertificateRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2116,7 +2285,7 @@ class CreateFederationCertificateRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FederationCertificateSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationCertificateSpec,
@@ -2140,7 +2309,7 @@ class GetFederationCertificateRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2169,7 +2338,7 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def federation_id(self) -> "builtins.str":
         return super()._get_field("federation_id", explicit_presence=False,
         )
@@ -2178,7 +2347,7 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         return super()._set_field("federation_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -2187,7 +2356,7 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -2213,7 +2382,7 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2223,7 +2392,7 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FederationCertificateSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationCertificateSpec,
@@ -2247,7 +2416,7 @@ class DeleteFederationCertificateRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2273,7 +2442,7 @@ class ListFederationCertificateResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[FederationCertificate]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(FederationCertificate,None),
@@ -2283,7 +2452,7 @@ class ListFederationCertificateResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -2415,7 +2584,7 @@ class CreateFederationRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2425,7 +2594,7 @@ class CreateFederationRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FederationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationSpec,
@@ -2449,7 +2618,7 @@ class GetFederationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2481,7 +2650,7 @@ class ListFederationsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -2490,7 +2659,7 @@ class ListFederationsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -2499,7 +2668,7 @@ class ListFederationsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -2508,7 +2677,7 @@ class ListFederationsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -2534,7 +2703,7 @@ class ListFederationsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Federation]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Federation,None),
@@ -2544,7 +2713,7 @@ class ListFederationsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -2573,7 +2742,7 @@ class UpdateFederationRequest(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2583,7 +2752,7 @@ class UpdateFederationRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FederationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationSpec,
@@ -2593,7 +2762,7 @@ class UpdateFederationRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "FederationStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=FederationStatus,
@@ -2617,7 +2786,7 @@ class DeleteFederationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2771,7 +2940,7 @@ class Group(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2781,7 +2950,7 @@ class Group(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "GroupSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=GroupSpec,
@@ -2791,7 +2960,7 @@ class Group(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "GroupStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=GroupStatus,
@@ -2833,7 +3002,7 @@ class GroupStatus(pb_classes.Message):
         if members_count is not None:
             self.members_count = members_count
     
-    @property
+    @builtins.property
     def state(self) -> "GroupStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=GroupStatus.State,
@@ -2843,13 +3012,890 @@ class GroupStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def members_count(self) -> "builtins.int":
         return super()._get_field("members_count", explicit_presence=False,
         )
     @members_count.setter
     def members_count(self, value: "builtins.int") -> None:
         return super()._set_field("members_count",value,explicit_presence=False,
+        )
+    
+# file: nebius/iam/v1/service_account.proto
+class ServiceAccount(pb_classes.Message):
+    __PB2_CLASS__ = service_account_pb2.ServiceAccount
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccount",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
+        status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if metadata is not None:
+            self.metadata = metadata
+        if spec is not None:
+            self.spec = spec
+        if status is not None:
+            self.status = status
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ServiceAccountSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ServiceAccountSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "ServiceAccountStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=ServiceAccountStatus,
+        )
+    @status.setter
+    def status(self, value: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+class ServiceAccountSpec(pb_classes.Message):
+    __PB2_CLASS__ = service_account_pb2.ServiceAccountSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountSpec",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        description: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if description is not None:
+            self.description = description
+    
+    @builtins.property
+    def description(self) -> "builtins.str":
+        return super()._get_field("description", explicit_presence=False,
+        )
+    @description.setter
+    def description(self, value: "builtins.str") -> None:
+        return super()._set_field("description",value,explicit_presence=False,
+        )
+    
+class ServiceAccountStatus(pb_classes.Message):
+    __PB2_CLASS__ = service_account_pb2.ServiceAccountStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountStatus",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        active: "builtins.bool|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if active is not None:
+            self.active = active
+    
+    @builtins.property
+    def active(self) -> "builtins.bool":
+        return super()._get_field("active", explicit_presence=False,
+        )
+    @active.setter
+    def active(self, value: "builtins.bool") -> None:
+        return super()._set_field("active",value,explicit_presence=False,
+        )
+    
+class ServiceAccountAttributes(pb_classes.Message):
+    __PB2_CLASS__ = service_account_pb2.ServiceAccountAttributes
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountAttributes",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        name: "builtins.str|None" = None,
+        description: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if name is not None:
+            self.name = name
+        if description is not None:
+            self.description = description
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def description(self) -> "builtins.str":
+        return super()._get_field("description", explicit_presence=False,
+        )
+    @description.setter
+    def description(self, value: "builtins.str") -> None:
+        return super()._set_field("description",value,explicit_presence=False,
+        )
+    
+# file: nebius/iam/v1/tenant_user_account.proto
+class TenantUserAccount(pb_classes.Message):
+    __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccount
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccount",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
+        spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|None" = None,
+        status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if metadata is not None:
+            self.metadata = metadata
+        if spec is not None:
+            self.spec = spec
+        if status is not None:
+            self.status = status
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "TenantUserAccountSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=TenantUserAccountSpec,
+        )
+    @spec.setter
+    def spec(self, value: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "TenantUserAccountStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=TenantUserAccountStatus,
+        )
+    @status.setter
+    def status(self, value: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+class TenantUserAccountWithAttributes(pb_classes.Message):
+    __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountWithAttributes
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountWithAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_attributesOptional__(pb_classes.OneOf):
+        name: builtins.str= "attributesOptional"
+        
+        def __init__(self, msg: "TenantUserAccountWithAttributes") -> None:
+            super().__init__()
+            self._message: "TenantUserAccountWithAttributes" = msg
+    
+    class __OneOfClass_attributesOptional_attributes__(__OneOfClass_attributesOptional__):
+        field: typing.Literal["attributes"] = "attributes"
+        
+        def __init__(self, msg: "TenantUserAccountWithAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "UserAttributes":
+            return self._message.attributes
+    
+    class __OneOfClass_attributesOptional_error__(__OneOfClass_attributesOptional__):
+        field: typing.Literal["error"] = "error"
+        
+        def __init__(self, msg: "TenantUserAccountWithAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "Error":
+            return self._message.error
+    
+    @builtins.property
+    def attributesOptional(self) -> __OneOfClass_attributesOptional_attributes__|__OneOfClass_attributesOptional_error__|None:
+        field_name: str|None = super().which_field_in_oneof("attributesOptional")
+        match field_name:
+            case "attributes":
+                return self.__OneOfClass_attributesOptional_attributes__(self)
+            case "error":
+                return self.__OneOfClass_attributesOptional_error__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|None" = None,
+        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
+        error: "Error|tenant_user_account_pb2.Error|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if tenant_user_account is not None:
+            self.tenant_user_account = tenant_user_account
+        if attributes is not None:
+            self.attributes = attributes
+        if error is not None:
+            self.error = error
+    
+    @builtins.property
+    def tenant_user_account(self) -> "TenantUserAccount":
+        return super()._get_field("tenant_user_account", explicit_presence=False,
+        wrap=TenantUserAccount,
+        )
+    @tenant_user_account.setter
+    def tenant_user_account(self, value: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount") -> None:
+        return super()._set_field("tenant_user_account",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def attributes(self) -> "UserAttributes":
+        return super()._get_field("attributes", explicit_presence=False,
+        wrap=UserAttributes,
+        )
+    @attributes.setter
+    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
+        return super()._set_field("attributes",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def error(self) -> "Error":
+        return super()._get_field("error", explicit_presence=False,
+        wrap=Error,
+        )
+    @error.setter
+    def error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
+        return super()._set_field("error",value,explicit_presence=False,
+        )
+    
+class UserAttributes(pb_classes.Message):
+    __PB2_CLASS__ = tenant_user_account_pb2.UserAttributes
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__sub__(pb_classes.OneOf):
+        name: builtins.str= "_sub"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__sub_sub__(__OneOfClass__sub__):
+        field: typing.Literal["sub"] = "sub"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.sub
+    
+    @builtins.property
+    def _sub(self) -> __OneOfClass__sub_sub__|None:
+        field_name: str|None = super().which_field_in_oneof("_sub")
+        match field_name:
+            case "sub":
+                return self.__OneOfClass__sub_sub__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__name__(pb_classes.OneOf):
+        name: builtins.str= "_name"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__name_name__(__OneOfClass__name__):
+        field: typing.Literal["name"] = "name"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.name
+    
+    @builtins.property
+    def _name(self) -> __OneOfClass__name_name__|None:
+        field_name: str|None = super().which_field_in_oneof("_name")
+        match field_name:
+            case "name":
+                return self.__OneOfClass__name_name__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__given_name__(pb_classes.OneOf):
+        name: builtins.str= "_given_name"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__given_name_given_name__(__OneOfClass__given_name__):
+        field: typing.Literal["given_name"] = "given_name"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.given_name
+    
+    @builtins.property
+    def _given_name(self) -> __OneOfClass__given_name_given_name__|None:
+        field_name: str|None = super().which_field_in_oneof("_given_name")
+        match field_name:
+            case "given_name":
+                return self.__OneOfClass__given_name_given_name__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__family_name__(pb_classes.OneOf):
+        name: builtins.str= "_family_name"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__family_name_family_name__(__OneOfClass__family_name__):
+        field: typing.Literal["family_name"] = "family_name"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.family_name
+    
+    @builtins.property
+    def _family_name(self) -> __OneOfClass__family_name_family_name__|None:
+        field_name: str|None = super().which_field_in_oneof("_family_name")
+        match field_name:
+            case "family_name":
+                return self.__OneOfClass__family_name_family_name__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__preferred_username__(pb_classes.OneOf):
+        name: builtins.str= "_preferred_username"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__preferred_username_preferred_username__(__OneOfClass__preferred_username__):
+        field: typing.Literal["preferred_username"] = "preferred_username"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.preferred_username
+    
+    @builtins.property
+    def _preferred_username(self) -> __OneOfClass__preferred_username_preferred_username__|None:
+        field_name: str|None = super().which_field_in_oneof("_preferred_username")
+        match field_name:
+            case "preferred_username":
+                return self.__OneOfClass__preferred_username_preferred_username__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__picture__(pb_classes.OneOf):
+        name: builtins.str= "_picture"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__picture_picture__(__OneOfClass__picture__):
+        field: typing.Literal["picture"] = "picture"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.picture
+    
+    @builtins.property
+    def _picture(self) -> __OneOfClass__picture_picture__|None:
+        field_name: str|None = super().which_field_in_oneof("_picture")
+        match field_name:
+            case "picture":
+                return self.__OneOfClass__picture_picture__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__email__(pb_classes.OneOf):
+        name: builtins.str= "_email"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__email_email__(__OneOfClass__email__):
+        field: typing.Literal["email"] = "email"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.email
+    
+    @builtins.property
+    def _email(self) -> __OneOfClass__email_email__|None:
+        field_name: str|None = super().which_field_in_oneof("_email")
+        match field_name:
+            case "email":
+                return self.__OneOfClass__email_email__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__email_verified__(pb_classes.OneOf):
+        name: builtins.str= "_email_verified"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__email_verified_email_verified__(__OneOfClass__email_verified__):
+        field: typing.Literal["email_verified"] = "email_verified"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.email_verified
+    
+    @builtins.property
+    def _email_verified(self) -> __OneOfClass__email_verified_email_verified__|None:
+        field_name: str|None = super().which_field_in_oneof("_email_verified")
+        match field_name:
+            case "email_verified":
+                return self.__OneOfClass__email_verified_email_verified__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__zoneinfo__(pb_classes.OneOf):
+        name: builtins.str= "_zoneinfo"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__zoneinfo_zoneinfo__(__OneOfClass__zoneinfo__):
+        field: typing.Literal["zoneinfo"] = "zoneinfo"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.zoneinfo
+    
+    @builtins.property
+    def _zoneinfo(self) -> __OneOfClass__zoneinfo_zoneinfo__|None:
+        field_name: str|None = super().which_field_in_oneof("_zoneinfo")
+        match field_name:
+            case "zoneinfo":
+                return self.__OneOfClass__zoneinfo_zoneinfo__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__locale__(pb_classes.OneOf):
+        name: builtins.str= "_locale"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__locale_locale__(__OneOfClass__locale__):
+        field: typing.Literal["locale"] = "locale"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.locale
+    
+    @builtins.property
+    def _locale(self) -> __OneOfClass__locale_locale__|None:
+        field_name: str|None = super().which_field_in_oneof("_locale")
+        match field_name:
+            case "locale":
+                return self.__OneOfClass__locale_locale__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__phone_number__(pb_classes.OneOf):
+        name: builtins.str= "_phone_number"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__phone_number_phone_number__(__OneOfClass__phone_number__):
+        field: typing.Literal["phone_number"] = "phone_number"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.phone_number
+    
+    @builtins.property
+    def _phone_number(self) -> __OneOfClass__phone_number_phone_number__|None:
+        field_name: str|None = super().which_field_in_oneof("_phone_number")
+        match field_name:
+            case "phone_number":
+                return self.__OneOfClass__phone_number_phone_number__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__phone_number_verified__(pb_classes.OneOf):
+        name: builtins.str= "_phone_number_verified"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__()
+            self._message: "UserAttributes" = msg
+    
+    class __OneOfClass__phone_number_verified_phone_number_verified__(__OneOfClass__phone_number_verified__):
+        field: typing.Literal["phone_number_verified"] = "phone_number_verified"
+        
+        def __init__(self, msg: "UserAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.phone_number_verified
+    
+    @builtins.property
+    def _phone_number_verified(self) -> __OneOfClass__phone_number_verified_phone_number_verified__|None:
+        field_name: str|None = super().which_field_in_oneof("_phone_number_verified")
+        match field_name:
+            case "phone_number_verified":
+                return self.__OneOfClass__phone_number_verified_phone_number_verified__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        sub: "builtins.str|None" = None,
+        name: "builtins.str|None" = None,
+        given_name: "builtins.str|None" = None,
+        family_name: "builtins.str|None" = None,
+        preferred_username: "builtins.str|None" = None,
+        picture: "builtins.str|None" = None,
+        email: "builtins.str|None" = None,
+        email_verified: "builtins.bool|None" = None,
+        zoneinfo: "builtins.str|None" = None,
+        locale: "builtins.str|None" = None,
+        phone_number: "builtins.str|None" = None,
+        phone_number_verified: "builtins.bool|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if sub is not None:
+            self.sub = sub
+        if name is not None:
+            self.name = name
+        if given_name is not None:
+            self.given_name = given_name
+        if family_name is not None:
+            self.family_name = family_name
+        if preferred_username is not None:
+            self.preferred_username = preferred_username
+        if picture is not None:
+            self.picture = picture
+        if email is not None:
+            self.email = email
+        if email_verified is not None:
+            self.email_verified = email_verified
+        if zoneinfo is not None:
+            self.zoneinfo = zoneinfo
+        if locale is not None:
+            self.locale = locale
+        if phone_number is not None:
+            self.phone_number = phone_number
+        if phone_number_verified is not None:
+            self.phone_number_verified = phone_number_verified
+    
+    @builtins.property
+    def sub(self) -> "builtins.str|None":
+        return super()._get_field("sub", explicit_presence=True,
+        )
+    @sub.setter
+    def sub(self, value: "builtins.str|None") -> None:
+        return super()._set_field("sub",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str|None":
+        return super()._get_field("name", explicit_presence=True,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def given_name(self) -> "builtins.str|None":
+        return super()._get_field("given_name", explicit_presence=True,
+        )
+    @given_name.setter
+    def given_name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("given_name",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def family_name(self) -> "builtins.str|None":
+        return super()._get_field("family_name", explicit_presence=True,
+        )
+    @family_name.setter
+    def family_name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("family_name",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def preferred_username(self) -> "builtins.str|None":
+        return super()._get_field("preferred_username", explicit_presence=True,
+        )
+    @preferred_username.setter
+    def preferred_username(self, value: "builtins.str|None") -> None:
+        return super()._set_field("preferred_username",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def picture(self) -> "builtins.str|None":
+        return super()._get_field("picture", explicit_presence=True,
+        )
+    @picture.setter
+    def picture(self, value: "builtins.str|None") -> None:
+        return super()._set_field("picture",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def email(self) -> "builtins.str|None":
+        return super()._get_field("email", explicit_presence=True,
+        )
+    @email.setter
+    def email(self, value: "builtins.str|None") -> None:
+        return super()._set_field("email",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def email_verified(self) -> "builtins.bool|None":
+        return super()._get_field("email_verified", explicit_presence=True,
+        )
+    @email_verified.setter
+    def email_verified(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("email_verified",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def zoneinfo(self) -> "builtins.str|None":
+        return super()._get_field("zoneinfo", explicit_presence=True,
+        )
+    @zoneinfo.setter
+    def zoneinfo(self, value: "builtins.str|None") -> None:
+        return super()._set_field("zoneinfo",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def locale(self) -> "builtins.str|None":
+        return super()._get_field("locale", explicit_presence=True,
+        )
+    @locale.setter
+    def locale(self, value: "builtins.str|None") -> None:
+        return super()._set_field("locale",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def phone_number(self) -> "builtins.str|None":
+        return super()._get_field("phone_number", explicit_presence=True,
+        )
+    @phone_number.setter
+    def phone_number(self, value: "builtins.str|None") -> None:
+        return super()._set_field("phone_number",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def phone_number_verified(self) -> "builtins.bool|None":
+        return super()._get_field("phone_number_verified", explicit_presence=True,
+        )
+    @phone_number_verified.setter
+    def phone_number_verified(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("phone_number_verified",value,explicit_presence=True,
+        )
+    
+class Error(pb_classes.Message):
+    __PB2_CLASS__ = tenant_user_account_pb2.Error
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Error",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        message: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if message is not None:
+            self.message = message
+    
+    @builtins.property
+    def message(self) -> "builtins.str":
+        return super()._get_field("message", explicit_presence=False,
+        )
+    @message.setter
+    def message(self, value: "builtins.str") -> None:
+        return super()._set_field("message",value,explicit_presence=False,
+        )
+    
+class TenantUserAccountSpec(pb_classes.Message):
+    __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class VisibleAttributes(pb_classes.Message):
+        __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec.VisibleAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            attribute: "abc.Iterable[builtins.str]|None" = None,
+        ) -> None:
+            super().__init__(initial_message)
+            if attribute is not None:
+                self.attribute = attribute
+        
+        @builtins.property
+        def attribute(self) -> "abc.MutableSequence[builtins.str]":
+            return super()._get_field("attribute", explicit_presence=False,
+            wrap=pb_classes.Repeated,
+            )
+        @attribute.setter
+        def attribute(self, value: "abc.Iterable[builtins.str]") -> None:
+            return super()._set_field("attribute",value,explicit_presence=False,
+            )
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if visible_attributes is not None:
+            self.visible_attributes = visible_attributes
+    
+    @builtins.property
+    def visible_attributes(self) -> "TenantUserAccountSpec.VisibleAttributes":
+        return super()._get_field("visible_attributes", explicit_presence=False,
+        wrap=TenantUserAccountSpec.VisibleAttributes,
+        )
+    @visible_attributes.setter
+    def visible_attributes(self, value: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes") -> None:
+        return super()._set_field("visible_attributes",value,explicit_presence=False,
+        )
+    
+class TenantUserAccountStatus(pb_classes.Message):
+    __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountStatus",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class State(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.TenantUserAccountStatus.State",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        INACTIVE = 2
+        BLOCKED = 3
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None" = None,
+        invitation_id: "builtins.str|None" = None,
+        federation_id: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if state is not None:
+            self.state = state
+        if invitation_id is not None:
+            self.invitation_id = invitation_id
+        if federation_id is not None:
+            self.federation_id = federation_id
+    
+    @builtins.property
+    def state(self) -> "TenantUserAccountStatus.State":
+        return super()._get_field("state", explicit_presence=False,
+        wrap=TenantUserAccountStatus.State,
+        )
+    @state.setter
+    def state(self, value: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def invitation_id(self) -> "builtins.str":
+        return super()._get_field("invitation_id", explicit_presence=False,
+        )
+    @invitation_id.setter
+    def invitation_id(self, value: "builtins.str") -> None:
+        return super()._set_field("invitation_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def federation_id(self) -> "builtins.str":
+        return super()._get_field("federation_id", explicit_presence=False,
+        )
+    @federation_id.setter
+    def federation_id(self, value: "builtins.str") -> None:
+        return super()._set_field("federation_id",value,explicit_presence=False,
         )
     
 # file: nebius/iam/v1/group_membership.proto
@@ -2876,7 +3922,7 @@ class GroupMembership(pb_classes.Message):
         if revoke_at is not None:
             self.revoke_at = revoke_at
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2886,7 +3932,7 @@ class GroupMembership(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "GroupMembershipSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=GroupMembershipSpec,
@@ -2896,7 +3942,7 @@ class GroupMembership(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "GroupMembershipStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=GroupMembershipStatus,
@@ -2906,15 +3952,15 @@ class GroupMembership(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
-    @property
-    def revoke_at(self) -> "datetime.datetime":
-        return super()._get_field("revoke_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def revoke_at(self) -> "datetime.datetime|None":
+        return super()._get_field("revoke_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @revoke_at.setter
-    def revoke_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("revoke_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def revoke_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("revoke_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
 class GroupMembershipSpec(pb_classes.Message):
@@ -2931,7 +3977,7 @@ class GroupMembershipSpec(pb_classes.Message):
         if member_id is not None:
             self.member_id = member_id
     
-    @property
+    @builtins.property
     def member_id(self) -> "builtins.str":
         return super()._get_field("member_id", explicit_presence=False,
         )
@@ -2949,6 +3995,118 @@ class GroupMembershipStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+class GroupMembershipWithAttributes(pb_classes.Message):
+    __PB2_CLASS__ = group_membership_pb2.GroupMembershipWithAttributes
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipWithAttributes",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_attributesOptional__(pb_classes.OneOf):
+        name: builtins.str= "attributesOptional"
+        
+        def __init__(self, msg: "GroupMembershipWithAttributes") -> None:
+            super().__init__()
+            self._message: "GroupMembershipWithAttributes" = msg
+    
+    class __OneOfClass_attributesOptional_user_attributes__(__OneOfClass_attributesOptional__):
+        field: typing.Literal["user_attributes"] = "user_attributes"
+        
+        def __init__(self, msg: "GroupMembershipWithAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "UserAttributes":
+            return self._message.user_attributes
+    
+    class __OneOfClass_attributesOptional_service_account_attributes__(__OneOfClass_attributesOptional__):
+        field: typing.Literal["service_account_attributes"] = "service_account_attributes"
+        
+        def __init__(self, msg: "GroupMembershipWithAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ServiceAccountAttributes":
+            return self._message.service_account_attributes
+    
+    class __OneOfClass_attributesOptional_error__(__OneOfClass_attributesOptional__):
+        field: typing.Literal["error"] = "error"
+        
+        def __init__(self, msg: "GroupMembershipWithAttributes") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "Error":
+            return self._message.error
+    
+    @builtins.property
+    def attributesOptional(self) -> __OneOfClass_attributesOptional_user_attributes__|__OneOfClass_attributesOptional_service_account_attributes__|__OneOfClass_attributesOptional_error__|None:
+        field_name: str|None = super().which_field_in_oneof("attributesOptional")
+        match field_name:
+            case "user_attributes":
+                return self.__OneOfClass_attributesOptional_user_attributes__(self)
+            case "service_account_attributes":
+                return self.__OneOfClass_attributesOptional_service_account_attributes__(self)
+            case "error":
+                return self.__OneOfClass_attributesOptional_error__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        group_membership: "GroupMembership|group_membership_pb2.GroupMembership|None" = None,
+        user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
+        service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None" = None,
+        error: "Error|tenant_user_account_pb2.Error|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if group_membership is not None:
+            self.group_membership = group_membership
+        if user_attributes is not None:
+            self.user_attributes = user_attributes
+        if service_account_attributes is not None:
+            self.service_account_attributes = service_account_attributes
+        if error is not None:
+            self.error = error
+    
+    @builtins.property
+    def group_membership(self) -> "GroupMembership":
+        return super()._get_field("group_membership", explicit_presence=False,
+        wrap=GroupMembership,
+        )
+    @group_membership.setter
+    def group_membership(self, value: "GroupMembership|group_membership_pb2.GroupMembership") -> None:
+        return super()._set_field("group_membership",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def user_attributes(self) -> "UserAttributes":
+        return super()._get_field("user_attributes", explicit_presence=False,
+        wrap=UserAttributes,
+        )
+    @user_attributes.setter
+    def user_attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
+        return super()._set_field("user_attributes",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def service_account_attributes(self) -> "ServiceAccountAttributes":
+        return super()._get_field("service_account_attributes", explicit_presence=False,
+        wrap=ServiceAccountAttributes,
+        )
+    @service_account_attributes.setter
+    def service_account_attributes(self, value: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes") -> None:
+        return super()._set_field("service_account_attributes",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def error(self) -> "Error":
+        return super()._get_field("error", explicit_presence=False,
+        wrap=Error,
+        )
+    @error.setter
+    def error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
+        return super()._set_field("error",value,explicit_presence=False,
+        )
     
 # file: nebius/iam/v1/group_membership_service.proto
 class CreateGroupMembershipRequest(pb_classes.Message):
@@ -2971,7 +4129,7 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         if revoke_after_hours is not None:
             self.revoke_after_hours = revoke_after_hours
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2981,7 +4139,7 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "GroupMembershipSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=GroupMembershipSpec,
@@ -2991,7 +4149,7 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def revoke_after_hours(self) -> "builtins.int":
         return super()._get_field("revoke_after_hours", explicit_presence=False,
         )
@@ -3014,7 +4172,7 @@ class DeleteGroupMembershipRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -3037,7 +4195,7 @@ class GetGroupMembershipRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -3049,6 +4207,33 @@ class GetGroupMembershipRequest(pb_classes.Message):
 class ListGroupMembershipsRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListGroupMembershipsRequest") -> None:
+            super().__init__()
+            self._message: "ListGroupMembershipsRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListGroupMembershipsRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -3069,7 +4254,7 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -3078,7 +4263,7 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -3087,7 +4272,7 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -3096,7 +4281,7 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -3108,6 +4293,33 @@ class ListGroupMembershipsRequest(pb_classes.Message):
 class ListMemberOfRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListMemberOfRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListMemberOfRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListMemberOfRequest") -> None:
+            super().__init__()
+            self._message: "ListMemberOfRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListMemberOfRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -3128,7 +4340,7 @@ class ListMemberOfRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def subject_id(self) -> "builtins.str":
         return super()._get_field("subject_id", explicit_presence=False,
         )
@@ -3137,7 +4349,7 @@ class ListMemberOfRequest(pb_classes.Message):
         return super()._set_field("subject_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -3146,7 +4358,7 @@ class ListMemberOfRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -3155,7 +4367,7 @@ class ListMemberOfRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -3181,7 +4393,7 @@ class ListGroupMembershipsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembership]":
         return super()._get_field("memberships", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(GroupMembership,None),
@@ -3191,7 +4403,43 @@ class ListGroupMembershipsResponse(pb_classes.Message):
         return super()._set_field("memberships",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
+    __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsWithAttributesResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsWithAttributesResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        memberships: "abc.Iterable[GroupMembershipWithAttributes]|None" = None,
+        next_page_token: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if memberships is not None:
+            self.memberships = memberships
+        if next_page_token is not None:
+            self.next_page_token = next_page_token
+    
+    @builtins.property
+    def memberships(self) -> "abc.MutableSequence[GroupMembershipWithAttributes]":
+        return super()._get_field("memberships", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(GroupMembershipWithAttributes,None),
+        )
+    @memberships.setter
+    def memberships(self, value: "abc.Iterable[GroupMembershipWithAttributes]") -> None:
+        return super()._set_field("memberships",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -3217,7 +4465,7 @@ class ListMemberOfResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Group,None),
@@ -3227,7 +4475,7 @@ class ListMemberOfResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -3320,6 +4568,25 @@ class GroupMembershipServiceClient(client.Client):
             compression=compression,
         )
     
+    def list_members_with_attributes(self,
+        request: "ListGroupMembershipsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["ListGroupMembershipsRequest","ListGroupMembershipsWithAttributesResponse"]:
+        return super().request(
+            method="ListMembersWithAttributes",
+            request=request,
+            result_pb2_class=group_membership_service_pb2.ListGroupMembershipsWithAttributesResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+    
     def list_member_of(self,
         request: "ListMemberOfRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
@@ -3355,7 +4622,7 @@ class GetGroupRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -3381,7 +4648,7 @@ class GetGroupByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -3390,7 +4657,7 @@ class GetGroupByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -3402,6 +4669,33 @@ class GetGroupByNameRequest(pb_classes.Message):
 class ListGroupsRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.ListGroupsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupsRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListGroupsRequest") -> None:
+            super().__init__()
+            self._message: "ListGroupsRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListGroupsRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -3422,7 +4716,7 @@ class ListGroupsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -3431,7 +4725,7 @@ class ListGroupsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -3440,7 +4734,7 @@ class ListGroupsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -3449,7 +4743,7 @@ class ListGroupsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -3475,7 +4769,7 @@ class ListGroupsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Group,None),
@@ -3485,7 +4779,7 @@ class ListGroupsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -3596,7 +4890,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         if resource is not None:
             self.resource = resource
     
-    @property
+    @builtins.property
     def grant_type(self) -> "builtins.str":
         return super()._get_field("grant_type", explicit_presence=False,
         )
@@ -3605,7 +4899,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("grant_type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def requested_token_type(self) -> "builtins.str":
         return super()._get_field("requested_token_type", explicit_presence=False,
         )
@@ -3614,7 +4908,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("requested_token_type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def subject_token(self) -> "builtins.str":
         return super()._get_field("subject_token", explicit_presence=False,
         )
@@ -3623,7 +4917,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("subject_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def subject_token_type(self) -> "builtins.str":
         return super()._get_field("subject_token_type", explicit_presence=False,
         )
@@ -3632,7 +4926,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("subject_token_type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def scopes(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("scopes", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -3642,7 +4936,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("scopes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def audience(self) -> "builtins.str":
         return super()._get_field("audience", explicit_presence=False,
         )
@@ -3651,7 +4945,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("audience",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def actor_token(self) -> "builtins.str":
         return super()._get_field("actor_token", explicit_presence=False,
         )
@@ -3660,7 +4954,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("actor_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def actor_token_type(self) -> "builtins.str":
         return super()._get_field("actor_token_type", explicit_presence=False,
         )
@@ -3669,7 +4963,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("actor_token_type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("resource", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -3705,7 +4999,7 @@ class CreateTokenResponse(pb_classes.Message):
         if scopes is not None:
             self.scopes = scopes
     
-    @property
+    @builtins.property
     def access_token(self) -> "builtins.str":
         return super()._get_field("access_token", explicit_presence=False,
         )
@@ -3714,7 +5008,7 @@ class CreateTokenResponse(pb_classes.Message):
         return super()._set_field("access_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def issued_token_type(self) -> "builtins.str":
         return super()._get_field("issued_token_type", explicit_presence=False,
         )
@@ -3723,7 +5017,7 @@ class CreateTokenResponse(pb_classes.Message):
         return super()._set_field("issued_token_type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def token_type(self) -> "builtins.str":
         return super()._get_field("token_type", explicit_presence=False,
         )
@@ -3732,7 +5026,7 @@ class CreateTokenResponse(pb_classes.Message):
         return super()._set_field("token_type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def expires_in(self) -> "builtins.int":
         return super()._get_field("expires_in", explicit_presence=False,
         )
@@ -3741,7 +5035,7 @@ class CreateTokenResponse(pb_classes.Message):
         return super()._set_field("expires_in",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def scopes(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("scopes", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -3798,7 +5092,7 @@ class Invitation(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -3808,7 +5102,7 @@ class Invitation(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "InvitationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=InvitationSpec,
@@ -3818,7 +5112,7 @@ class Invitation(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "InvitationStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=InvitationStatus,
@@ -3831,6 +5125,33 @@ class Invitation(pb_classes.Message):
 class InvitationSpec(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.InvitationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.InvitationSpec",invitation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_contact__(pb_classes.OneOf):
+        name: builtins.str= "contact"
+        
+        def __init__(self, msg: "InvitationSpec") -> None:
+            super().__init__()
+            self._message: "InvitationSpec" = msg
+    
+    class __OneOfClass_contact_email__(__OneOfClass_contact__):
+        field: typing.Literal["email"] = "email"
+        
+        def __init__(self, msg: "InvitationSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.email
+    
+    @builtins.property
+    def contact(self) -> __OneOfClass_contact_email__|None:
+        field_name: str|None = super().which_field_in_oneof("contact")
+        match field_name:
+            case "email":
+                return self.__OneOfClass_contact_email__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -3845,7 +5166,7 @@ class InvitationSpec(pb_classes.Message):
         if email is not None:
             self.email = email
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -3854,7 +5175,7 @@ class InvitationSpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def email(self) -> "builtins.str|None":
         return super()._get_field("email", explicit_presence=True,
         )
@@ -3892,7 +5213,7 @@ class InvitationStatus(pb_classes.Message):
         if state is not None:
             self.state = state
     
-    @property
+    @builtins.property
     def tenant_user_account_id(self) -> "builtins.str":
         return super()._get_field("tenant_user_account_id", explicit_presence=False,
         )
@@ -3901,18 +5222,18 @@ class InvitationStatus(pb_classes.Message):
         return super()._set_field("tenant_user_account_id",value,explicit_presence=False,
         )
     
-    @property
-    def expires_at(self) -> "datetime.datetime":
-        return super()._get_field("expires_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def expires_at(self) -> "datetime.datetime|None":
+        return super()._get_field("expires_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("expires_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("expires_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
+    @builtins.property
     def state(self) -> "InvitationStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=InvitationStatus.State,
@@ -3943,7 +5264,7 @@ class CreateInvitationRequest(pb_classes.Message):
         if no_send is not None:
             self.no_send = no_send
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -3953,7 +5274,7 @@ class CreateInvitationRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "InvitationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=InvitationSpec,
@@ -3963,7 +5284,7 @@ class CreateInvitationRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def no_send(self) -> "builtins.bool":
         return super()._get_field("no_send", explicit_presence=False,
         )
@@ -3986,7 +5307,7 @@ class GetInvitationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -4018,7 +5339,7 @@ class ListInvitationsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -4027,7 +5348,7 @@ class ListInvitationsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -4036,7 +5357,7 @@ class ListInvitationsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -4045,7 +5366,7 @@ class ListInvitationsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -4071,7 +5392,7 @@ class ListInvitationsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Invitation]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Invitation,None),
@@ -4081,7 +5402,7 @@ class ListInvitationsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -4104,7 +5425,7 @@ class DeleteInvitationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -4130,7 +5451,7 @@ class UpdateInvitationRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -4140,7 +5461,7 @@ class UpdateInvitationRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "InvitationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=InvitationSpec,
@@ -4164,7 +5485,7 @@ class ResendInvitationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -4298,486 +5619,6 @@ class InvitationServiceClient(client.Client):
         )
     
 
-# file: nebius/iam/v1/tenant_user_account.proto
-class TenantUserAccount(pb_classes.Message):
-    __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccount
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccount",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|None" = None,
-        status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if metadata is not None:
-            self.metadata = metadata
-        if spec is not None:
-            self.spec = spec
-        if status is not None:
-            self.status = status
-    
-    @property
-    def metadata(self) -> "v1_1.ResourceMetadata":
-        return super()._get_field("metadata", explicit_presence=False,
-        wrap=v1_1.ResourceMetadata,
-        )
-    @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
-        return super()._set_field("metadata",value,explicit_presence=False,
-        )
-    
-    @property
-    def spec(self) -> "TenantUserAccountSpec":
-        return super()._get_field("spec", explicit_presence=False,
-        wrap=TenantUserAccountSpec,
-        )
-    @spec.setter
-    def spec(self, value: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec") -> None:
-        return super()._set_field("spec",value,explicit_presence=False,
-        )
-    
-    @property
-    def status(self) -> "TenantUserAccountStatus":
-        return super()._get_field("status", explicit_presence=False,
-        wrap=TenantUserAccountStatus,
-        )
-    @status.setter
-    def status(self, value: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus") -> None:
-        return super()._set_field("status",value,explicit_presence=False,
-        )
-    
-class TenantUserAccountWithAttributes(pb_classes.Message):
-    __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountWithAttributes
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountWithAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|None" = None,
-        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
-        error: "Error|tenant_user_account_pb2.Error|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if tenant_user_account is not None:
-            self.tenant_user_account = tenant_user_account
-        if attributes is not None:
-            self.attributes = attributes
-        if error is not None:
-            self.error = error
-    
-    @property
-    def tenant_user_account(self) -> "TenantUserAccount":
-        return super()._get_field("tenant_user_account", explicit_presence=False,
-        wrap=TenantUserAccount,
-        )
-    @tenant_user_account.setter
-    def tenant_user_account(self, value: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount") -> None:
-        return super()._set_field("tenant_user_account",value,explicit_presence=False,
-        )
-    
-    @property
-    def attributes(self) -> "UserAttributes":
-        return super()._get_field("attributes", explicit_presence=False,
-        wrap=UserAttributes,
-        )
-    @attributes.setter
-    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
-        return super()._set_field("attributes",value,explicit_presence=False,
-        )
-    
-    @property
-    def error(self) -> "Error":
-        return super()._get_field("error", explicit_presence=False,
-        wrap=Error,
-        )
-    @error.setter
-    def error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
-        return super()._set_field("error",value,explicit_presence=False,
-        )
-    
-class UserAttributes(pb_classes.Message):
-    __PB2_CLASS__ = tenant_user_account_pb2.UserAttributes
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        sub: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
-        given_name: "builtins.str|None" = None,
-        family_name: "builtins.str|None" = None,
-        preferred_username: "builtins.str|None" = None,
-        picture: "builtins.str|None" = None,
-        email: "builtins.str|None" = None,
-        email_verified: "builtins.bool|None" = None,
-        zoneinfo: "builtins.str|None" = None,
-        locale: "builtins.str|None" = None,
-        phone_number: "builtins.str|None" = None,
-        phone_number_verified: "builtins.bool|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if sub is not None:
-            self.sub = sub
-        if name is not None:
-            self.name = name
-        if given_name is not None:
-            self.given_name = given_name
-        if family_name is not None:
-            self.family_name = family_name
-        if preferred_username is not None:
-            self.preferred_username = preferred_username
-        if picture is not None:
-            self.picture = picture
-        if email is not None:
-            self.email = email
-        if email_verified is not None:
-            self.email_verified = email_verified
-        if zoneinfo is not None:
-            self.zoneinfo = zoneinfo
-        if locale is not None:
-            self.locale = locale
-        if phone_number is not None:
-            self.phone_number = phone_number
-        if phone_number_verified is not None:
-            self.phone_number_verified = phone_number_verified
-    
-    @property
-    def sub(self) -> "builtins.str|None":
-        return super()._get_field("sub", explicit_presence=True,
-        )
-    @sub.setter
-    def sub(self, value: "builtins.str|None") -> None:
-        return super()._set_field("sub",value,explicit_presence=True,
-        )
-    
-    @property
-    def name(self) -> "builtins.str|None":
-        return super()._get_field("name", explicit_presence=True,
-        )
-    @name.setter
-    def name(self, value: "builtins.str|None") -> None:
-        return super()._set_field("name",value,explicit_presence=True,
-        )
-    
-    @property
-    def given_name(self) -> "builtins.str|None":
-        return super()._get_field("given_name", explicit_presence=True,
-        )
-    @given_name.setter
-    def given_name(self, value: "builtins.str|None") -> None:
-        return super()._set_field("given_name",value,explicit_presence=True,
-        )
-    
-    @property
-    def family_name(self) -> "builtins.str|None":
-        return super()._get_field("family_name", explicit_presence=True,
-        )
-    @family_name.setter
-    def family_name(self, value: "builtins.str|None") -> None:
-        return super()._set_field("family_name",value,explicit_presence=True,
-        )
-    
-    @property
-    def preferred_username(self) -> "builtins.str|None":
-        return super()._get_field("preferred_username", explicit_presence=True,
-        )
-    @preferred_username.setter
-    def preferred_username(self, value: "builtins.str|None") -> None:
-        return super()._set_field("preferred_username",value,explicit_presence=True,
-        )
-    
-    @property
-    def picture(self) -> "builtins.str|None":
-        return super()._get_field("picture", explicit_presence=True,
-        )
-    @picture.setter
-    def picture(self, value: "builtins.str|None") -> None:
-        return super()._set_field("picture",value,explicit_presence=True,
-        )
-    
-    @property
-    def email(self) -> "builtins.str|None":
-        return super()._get_field("email", explicit_presence=True,
-        )
-    @email.setter
-    def email(self, value: "builtins.str|None") -> None:
-        return super()._set_field("email",value,explicit_presence=True,
-        )
-    
-    @property
-    def email_verified(self) -> "builtins.bool|None":
-        return super()._get_field("email_verified", explicit_presence=True,
-        )
-    @email_verified.setter
-    def email_verified(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("email_verified",value,explicit_presence=True,
-        )
-    
-    @property
-    def zoneinfo(self) -> "builtins.str|None":
-        return super()._get_field("zoneinfo", explicit_presence=True,
-        )
-    @zoneinfo.setter
-    def zoneinfo(self, value: "builtins.str|None") -> None:
-        return super()._set_field("zoneinfo",value,explicit_presence=True,
-        )
-    
-    @property
-    def locale(self) -> "builtins.str|None":
-        return super()._get_field("locale", explicit_presence=True,
-        )
-    @locale.setter
-    def locale(self, value: "builtins.str|None") -> None:
-        return super()._set_field("locale",value,explicit_presence=True,
-        )
-    
-    @property
-    def phone_number(self) -> "builtins.str|None":
-        return super()._get_field("phone_number", explicit_presence=True,
-        )
-    @phone_number.setter
-    def phone_number(self, value: "builtins.str|None") -> None:
-        return super()._set_field("phone_number",value,explicit_presence=True,
-        )
-    
-    @property
-    def phone_number_verified(self) -> "builtins.bool|None":
-        return super()._get_field("phone_number_verified", explicit_presence=True,
-        )
-    @phone_number_verified.setter
-    def phone_number_verified(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("phone_number_verified",value,explicit_presence=True,
-        )
-    
-class Error(pb_classes.Message):
-    __PB2_CLASS__ = tenant_user_account_pb2.Error
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Error",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        message: "builtins.str|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if message is not None:
-            self.message = message
-    
-    @property
-    def message(self) -> "builtins.str":
-        return super()._get_field("message", explicit_presence=False,
-        )
-    @message.setter
-    def message(self, value: "builtins.str") -> None:
-        return super()._set_field("message",value,explicit_presence=False,
-        )
-    
-class TenantUserAccountSpec(pb_classes.Message):
-    __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    class VisibleAttributes(pb_classes.Message):
-        __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes
-        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec.VisibleAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        
-        def __init__(
-            self,
-            initial_message: message_1.Message|None = None,
-            *,
-            attribute: "abc.Iterable[builtins.str]|None" = None,
-        ) -> None:
-            super().__init__(initial_message)
-            if attribute is not None:
-                self.attribute = attribute
-        
-        @property
-        def attribute(self) -> "abc.MutableSequence[builtins.str]":
-            return super()._get_field("attribute", explicit_presence=False,
-            wrap=pb_classes.Repeated,
-            )
-        @attribute.setter
-        def attribute(self, value: "abc.Iterable[builtins.str]") -> None:
-            return super()._set_field("attribute",value,explicit_presence=False,
-            )
-        
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if visible_attributes is not None:
-            self.visible_attributes = visible_attributes
-    
-    @property
-    def visible_attributes(self) -> "TenantUserAccountSpec.VisibleAttributes":
-        return super()._get_field("visible_attributes", explicit_presence=False,
-        wrap=TenantUserAccountSpec.VisibleAttributes,
-        )
-    @visible_attributes.setter
-    def visible_attributes(self, value: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes") -> None:
-        return super()._set_field("visible_attributes",value,explicit_presence=False,
-        )
-    
-class TenantUserAccountStatus(pb_classes.Message):
-    __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountStatus
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountStatus",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    class State(pb_enum.Enum):
-        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.TenantUserAccountStatus.State",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
-        STATE_UNSPECIFIED = 0
-        ACTIVE = 1
-        INACTIVE = 2
-        BLOCKED = 3
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None" = None,
-        invitation_id: "builtins.str|None" = None,
-        federation_id: "builtins.str|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if state is not None:
-            self.state = state
-        if invitation_id is not None:
-            self.invitation_id = invitation_id
-        if federation_id is not None:
-            self.federation_id = federation_id
-    
-    @property
-    def state(self) -> "TenantUserAccountStatus.State":
-        return super()._get_field("state", explicit_presence=False,
-        wrap=TenantUserAccountStatus.State,
-        )
-    @state.setter
-    def state(self, value: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State") -> None:
-        return super()._set_field("state",value,explicit_presence=False,
-        )
-    
-    @property
-    def invitation_id(self) -> "builtins.str":
-        return super()._get_field("invitation_id", explicit_presence=False,
-        )
-    @invitation_id.setter
-    def invitation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("invitation_id",value,explicit_presence=False,
-        )
-    
-    @property
-    def federation_id(self) -> "builtins.str":
-        return super()._get_field("federation_id", explicit_presence=False,
-        )
-    @federation_id.setter
-    def federation_id(self, value: "builtins.str") -> None:
-        return super()._set_field("federation_id",value,explicit_presence=False,
-        )
-    
-# file: nebius/iam/v1/service_account.proto
-class ServiceAccount(pb_classes.Message):
-    __PB2_CLASS__ = service_account_pb2.ServiceAccount
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccount",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
-        status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if metadata is not None:
-            self.metadata = metadata
-        if spec is not None:
-            self.spec = spec
-        if status is not None:
-            self.status = status
-    
-    @property
-    def metadata(self) -> "v1_1.ResourceMetadata":
-        return super()._get_field("metadata", explicit_presence=False,
-        wrap=v1_1.ResourceMetadata,
-        )
-    @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
-        return super()._set_field("metadata",value,explicit_presence=False,
-        )
-    
-    @property
-    def spec(self) -> "ServiceAccountSpec":
-        return super()._get_field("spec", explicit_presence=False,
-        wrap=ServiceAccountSpec,
-        )
-    @spec.setter
-    def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec") -> None:
-        return super()._set_field("spec",value,explicit_presence=False,
-        )
-    
-    @property
-    def status(self) -> "ServiceAccountStatus":
-        return super()._get_field("status", explicit_presence=False,
-        wrap=ServiceAccountStatus,
-        )
-    @status.setter
-    def status(self, value: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus") -> None:
-        return super()._set_field("status",value,explicit_presence=False,
-        )
-    
-class ServiceAccountSpec(pb_classes.Message):
-    __PB2_CLASS__ = service_account_pb2.ServiceAccountSpec
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountSpec",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        description: "builtins.str|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if description is not None:
-            self.description = description
-    
-    @property
-    def description(self) -> "builtins.str":
-        return super()._get_field("description", explicit_presence=False,
-        )
-    @description.setter
-    def description(self, value: "builtins.str") -> None:
-        return super()._set_field("description",value,explicit_presence=False,
-        )
-    
-class ServiceAccountStatus(pb_classes.Message):
-    __PB2_CLASS__ = service_account_pb2.ServiceAccountStatus
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountStatus",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        active: "builtins.bool|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if active is not None:
-            self.active = active
-    
-    @property
-    def active(self) -> "builtins.bool":
-        return super()._get_field("active", explicit_presence=False,
-        )
-    @active.setter
-    def active(self, value: "builtins.bool") -> None:
-        return super()._set_field("active",value,explicit_presence=False,
-        )
-    
 # file: nebius/iam/v1/user_account.proto
 class UserAccountExternalId(pb_classes.Message):
     __PB2_CLASS__ = user_account_pb2.UserAccountExternalId
@@ -4796,7 +5637,7 @@ class UserAccountExternalId(pb_classes.Message):
         if federation_id is not None:
             self.federation_id = federation_id
     
-    @property
+    @builtins.property
     def federation_user_account_id(self) -> "builtins.str":
         return super()._get_field("federation_user_account_id", explicit_presence=False,
         )
@@ -4805,7 +5646,7 @@ class UserAccountExternalId(pb_classes.Message):
         return super()._set_field("federation_user_account_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def federation_id(self) -> "builtins.str":
         return super()._get_field("federation_id", explicit_presence=False,
         )
@@ -4829,6 +5670,55 @@ class GetProfileResponse(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.GetProfileResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProfileResponse",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
+    class __OneOfClass_profile__(pb_classes.OneOf):
+        name: builtins.str= "profile"
+        
+        def __init__(self, msg: "GetProfileResponse") -> None:
+            super().__init__()
+            self._message: "GetProfileResponse" = msg
+    
+    class __OneOfClass_profile_user_profile__(__OneOfClass_profile__):
+        field: typing.Literal["user_profile"] = "user_profile"
+        
+        def __init__(self, msg: "GetProfileResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "UserProfile":
+            return self._message.user_profile
+    
+    class __OneOfClass_profile_service_account_profile__(__OneOfClass_profile__):
+        field: typing.Literal["service_account_profile"] = "service_account_profile"
+        
+        def __init__(self, msg: "GetProfileResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ServiceAccountProfile":
+            return self._message.service_account_profile
+    
+    class __OneOfClass_profile_anonymous_profile__(__OneOfClass_profile__):
+        field: typing.Literal["anonymous_profile"] = "anonymous_profile"
+        
+        def __init__(self, msg: "GetProfileResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "AnonymousAccount":
+            return self._message.anonymous_profile
+    
+    @builtins.property
+    def profile(self) -> __OneOfClass_profile_user_profile__|__OneOfClass_profile_service_account_profile__|__OneOfClass_profile_anonymous_profile__|None:
+        field_name: str|None = super().which_field_in_oneof("profile")
+        match field_name:
+            case "user_profile":
+                return self.__OneOfClass_profile_user_profile__(self)
+            case "service_account_profile":
+                return self.__OneOfClass_profile_service_account_profile__(self)
+            case "anonymous_profile":
+                return self.__OneOfClass_profile_anonymous_profile__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -4845,7 +5735,7 @@ class GetProfileResponse(pb_classes.Message):
         if anonymous_profile is not None:
             self.anonymous_profile = anonymous_profile
     
-    @property
+    @builtins.property
     def user_profile(self) -> "UserProfile":
         return super()._get_field("user_profile", explicit_presence=False,
         wrap=UserProfile,
@@ -4855,7 +5745,7 @@ class GetProfileResponse(pb_classes.Message):
         return super()._set_field("user_profile",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def service_account_profile(self) -> "ServiceAccountProfile":
         return super()._get_field("service_account_profile", explicit_presence=False,
         wrap=ServiceAccountProfile,
@@ -4865,7 +5755,7 @@ class GetProfileResponse(pb_classes.Message):
         return super()._set_field("service_account_profile",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def anonymous_profile(self) -> "AnonymousAccount":
         return super()._get_field("anonymous_profile", explicit_presence=False,
         wrap=AnonymousAccount,
@@ -4878,6 +5768,44 @@ class GetProfileResponse(pb_classes.Message):
 class UserProfile(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.UserProfile
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserProfile",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_attributes_optional__(pb_classes.OneOf):
+        name: builtins.str= "attributes_optional"
+        
+        def __init__(self, msg: "UserProfile") -> None:
+            super().__init__()
+            self._message: "UserProfile" = msg
+    
+    class __OneOfClass_attributes_optional_attributes__(__OneOfClass_attributes_optional__):
+        field: typing.Literal["attributes"] = "attributes"
+        
+        def __init__(self, msg: "UserProfile") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "UserAttributes":
+            return self._message.attributes
+    
+    class __OneOfClass_attributes_optional_retrieving_error__(__OneOfClass_attributes_optional__):
+        field: typing.Literal["retrieving_error"] = "retrieving_error"
+        
+        def __init__(self, msg: "UserProfile") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "Error":
+            return self._message.retrieving_error
+    
+    @builtins.property
+    def attributes_optional(self) -> __OneOfClass_attributes_optional_attributes__|__OneOfClass_attributes_optional_retrieving_error__|None:
+        field_name: str|None = super().which_field_in_oneof("attributes_optional")
+        match field_name:
+            case "attributes":
+                return self.__OneOfClass_attributes_optional_attributes__(self)
+            case "retrieving_error":
+                return self.__OneOfClass_attributes_optional_retrieving_error__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -4901,7 +5829,7 @@ class UserProfile(pb_classes.Message):
         if tenants is not None:
             self.tenants = tenants
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -4910,7 +5838,7 @@ class UserProfile(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def federation_info(self) -> "UserAccountExternalId":
         return super()._get_field("federation_info", explicit_presence=False,
         wrap=UserAccountExternalId,
@@ -4920,7 +5848,7 @@ class UserProfile(pb_classes.Message):
         return super()._set_field("federation_info",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def attributes(self) -> "UserAttributes":
         return super()._get_field("attributes", explicit_presence=False,
         wrap=UserAttributes,
@@ -4930,7 +5858,7 @@ class UserProfile(pb_classes.Message):
         return super()._set_field("attributes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def retrieving_error(self) -> "Error":
         return super()._get_field("retrieving_error", explicit_presence=False,
         wrap=Error,
@@ -4940,7 +5868,7 @@ class UserProfile(pb_classes.Message):
         return super()._set_field("retrieving_error",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def tenants(self) -> "abc.MutableSequence[UserTenantInfo]":
         return super()._get_field("tenants", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(UserTenantInfo,None),
@@ -4967,7 +5895,7 @@ class UserTenantInfo(pb_classes.Message):
         if tenant_user_account_id is not None:
             self.tenant_user_account_id = tenant_user_account_id
     
-    @property
+    @builtins.property
     def tenant_id(self) -> "builtins.str":
         return super()._get_field("tenant_id", explicit_presence=False,
         )
@@ -4976,7 +5904,7 @@ class UserTenantInfo(pb_classes.Message):
         return super()._set_field("tenant_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def tenant_user_account_id(self) -> "builtins.str":
         return super()._get_field("tenant_user_account_id", explicit_presence=False,
         )
@@ -4999,7 +5927,7 @@ class ServiceAccountProfile(pb_classes.Message):
         if info is not None:
             self.info = info
     
-    @property
+    @builtins.property
     def info(self) -> "ServiceAccount":
         return super()._get_field("info", explicit_presence=False,
         wrap=ServiceAccount,
@@ -5059,7 +5987,7 @@ class GetProjectRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -5085,7 +6013,7 @@ class GetProjectByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -5094,7 +6022,7 @@ class GetProjectByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -5106,6 +6034,33 @@ class GetProjectByNameRequest(pb_classes.Message):
 class ListProjectsRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListProjectsRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListProjectsRequest") -> None:
+            super().__init__()
+            self._message: "ListProjectsRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListProjectsRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -5126,7 +6081,7 @@ class ListProjectsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -5135,7 +6090,7 @@ class ListProjectsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -5144,7 +6099,7 @@ class ListProjectsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -5153,7 +6108,7 @@ class ListProjectsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -5179,7 +6134,7 @@ class ListProjectsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Container]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Container,None),
@@ -5189,7 +6144,7 @@ class ListProjectsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -5279,7 +6234,7 @@ class CreateServiceAccountRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -5289,7 +6244,7 @@ class CreateServiceAccountRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ServiceAccountSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ServiceAccountSpec,
@@ -5313,7 +6268,7 @@ class GetServiceAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -5339,7 +6294,7 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -5348,7 +6303,7 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -5360,6 +6315,33 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
 class ListServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.ListServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListServiceAccountRequest") -> None:
+            super().__init__()
+            self._message: "ListServiceAccountRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListServiceAccountRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -5380,7 +6362,7 @@ class ListServiceAccountRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -5389,7 +6371,7 @@ class ListServiceAccountRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -5398,7 +6380,7 @@ class ListServiceAccountRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -5407,7 +6389,7 @@ class ListServiceAccountRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -5433,7 +6415,7 @@ class UpdateServiceAccountRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -5443,7 +6425,7 @@ class UpdateServiceAccountRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ServiceAccountSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ServiceAccountSpec,
@@ -5467,7 +6449,7 @@ class DeleteServiceAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -5493,7 +6475,7 @@ class ListServiceAccountResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[ServiceAccount]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(ServiceAccount,None),
@@ -5503,7 +6485,7 @@ class ListServiceAccountResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -5641,6 +6623,55 @@ class RevokeSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_management_service_pb2.RevokeSessionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.RevokeSessionRequest",session_management_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
+    class __OneOfClass_revoke__(pb_classes.OneOf):
+        name: builtins.str= "revoke"
+        
+        def __init__(self, msg: "RevokeSessionRequest") -> None:
+            super().__init__()
+            self._message: "RevokeSessionRequest" = msg
+    
+    class __OneOfClass_revoke_service_account_id__(__OneOfClass_revoke__):
+        field: typing.Literal["service_account_id"] = "service_account_id"
+        
+        def __init__(self, msg: "RevokeSessionRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.service_account_id
+    
+    class __OneOfClass_revoke_all_my_active__(__OneOfClass_revoke__):
+        field: typing.Literal["all_my_active"] = "all_my_active"
+        
+        def __init__(self, msg: "RevokeSessionRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.all_my_active
+    
+    class __OneOfClass_revoke_tenant_user_account_id__(__OneOfClass_revoke__):
+        field: typing.Literal["tenant_user_account_id"] = "tenant_user_account_id"
+        
+        def __init__(self, msg: "RevokeSessionRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.tenant_user_account_id
+    
+    @builtins.property
+    def revoke(self) -> __OneOfClass_revoke_service_account_id__|__OneOfClass_revoke_all_my_active__|__OneOfClass_revoke_tenant_user_account_id__|None:
+        field_name: str|None = super().which_field_in_oneof("revoke")
+        match field_name:
+            case "service_account_id":
+                return self.__OneOfClass_revoke_service_account_id__(self)
+            case "all_my_active":
+                return self.__OneOfClass_revoke_all_my_active__(self)
+            case "tenant_user_account_id":
+                return self.__OneOfClass_revoke_tenant_user_account_id__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -5657,7 +6688,7 @@ class RevokeSessionRequest(pb_classes.Message):
         if tenant_user_account_id is not None:
             self.tenant_user_account_id = tenant_user_account_id
     
-    @property
+    @builtins.property
     def service_account_id(self) -> "builtins.str|None":
         return super()._get_field("service_account_id", explicit_presence=True,
         )
@@ -5666,7 +6697,7 @@ class RevokeSessionRequest(pb_classes.Message):
         return super()._set_field("service_account_id",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def all_my_active(self) -> "builtins.bool|None":
         return super()._get_field("all_my_active", explicit_presence=True,
         )
@@ -5675,7 +6706,7 @@ class RevokeSessionRequest(pb_classes.Message):
         return super()._set_field("all_my_active",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def tenant_user_account_id(self) -> "builtins.str|None":
         return super()._get_field("tenant_user_account_id", explicit_presence=True,
         )
@@ -5734,7 +6765,7 @@ class GetTenantRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -5746,6 +6777,33 @@ class GetTenantRequest(pb_classes.Message):
 class ListTenantsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.ListTenantsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantsRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListTenantsRequest") -> None:
+            super().__init__()
+            self._message: "ListTenantsRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListTenantsRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -5763,7 +6821,7 @@ class ListTenantsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -5772,7 +6830,7 @@ class ListTenantsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -5781,7 +6839,7 @@ class ListTenantsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -5807,7 +6865,7 @@ class ListTenantsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Container]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Container,None),
@@ -5817,7 +6875,7 @@ class ListTenantsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -5885,7 +6943,7 @@ class GetTenantUserAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -5897,6 +6955,33 @@ class GetTenantUserAccountRequest(pb_classes.Message):
 class ListTenantUserAccountsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.ListTenantUserAccountsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListTenantUserAccountsRequest") -> None:
+            super().__init__()
+            self._message: "ListTenantUserAccountsRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListTenantUserAccountsRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -5917,7 +7002,7 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -5926,7 +7011,7 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -5935,7 +7020,7 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -5944,7 +7029,7 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -5970,7 +7055,7 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccount]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(TenantUserAccount,None),
@@ -5980,7 +7065,7 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -6003,7 +7088,7 @@ class BlockTenantUserAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -6026,7 +7111,7 @@ class UnblockTenantUserAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -6135,7 +7220,7 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -6147,6 +7232,33 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
 class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsWithAttributesRequest",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListTenantUserAccountsWithAttributesRequest") -> None:
+            super().__init__()
+            self._message: "ListTenantUserAccountsWithAttributesRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListTenantUserAccountsWithAttributesRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_page_size")
+        match field_name:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -6167,7 +7279,7 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -6176,7 +7288,7 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
         )
@@ -6185,7 +7297,7 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -6194,7 +7306,7 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -6220,7 +7332,7 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccountWithAttributes]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(TenantUserAccountWithAttributes,None),
@@ -6230,7 +7342,7 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -6371,15 +7483,27 @@ __all__ = [
     "Group",
     "GroupSpec",
     "GroupStatus",
+    "ServiceAccount",
+    "ServiceAccountSpec",
+    "ServiceAccountStatus",
+    "ServiceAccountAttributes",
+    "TenantUserAccount",
+    "TenantUserAccountWithAttributes",
+    "UserAttributes",
+    "Error",
+    "TenantUserAccountSpec",
+    "TenantUserAccountStatus",
     "GroupMembership",
     "GroupMembershipSpec",
     "GroupMembershipStatus",
+    "GroupMembershipWithAttributes",
     "CreateGroupMembershipRequest",
     "DeleteGroupMembershipRequest",
     "GetGroupMembershipRequest",
     "ListGroupMembershipsRequest",
     "ListMemberOfRequest",
     "ListGroupMembershipsResponse",
+    "ListGroupMembershipsWithAttributesResponse",
     "ListMemberOfResponse",
     "GroupMembershipServiceClient",
     "GetGroupRequest",
@@ -6401,15 +7525,6 @@ __all__ = [
     "UpdateInvitationRequest",
     "ResendInvitationRequest",
     "InvitationServiceClient",
-    "TenantUserAccount",
-    "TenantUserAccountWithAttributes",
-    "UserAttributes",
-    "Error",
-    "TenantUserAccountSpec",
-    "TenantUserAccountStatus",
-    "ServiceAccount",
-    "ServiceAccountSpec",
-    "ServiceAccountStatus",
     "UserAccountExternalId",
     "GetProfileRequest",
     "GetProfileResponse",

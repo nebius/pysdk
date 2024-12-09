@@ -7,13 +7,14 @@ import nebius.api.nebius.common.v1.error_pb2 as error_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import nebius.base.protos.pb_enum as pb_enum
-import google.protobuf.message as message_1
 import builtins as builtins
+import typing as typing
+import google.protobuf.message as message_1
 import collections.abc as abc
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
-import nebius.base.protos.well_known as well_known
+import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import google.protobuf.any_pb2 as any_pb2
 import google.rpc.status_pb2 as status_pb2
@@ -36,6 +37,154 @@ class ServiceError(pb_classes.Message):
         CALL = 1
         UNIT_OF_WORK = 2
         NOTHING = 3
+    
+    class __OneOfClass_details__(pb_classes.OneOf):
+        name: builtins.str= "details"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__()
+            self._message: "ServiceError" = msg
+    
+    class __OneOfClass_details_bad_request__(__OneOfClass_details__):
+        field: typing.Literal["bad_request"] = "bad_request"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "BadRequest":
+            return self._message.bad_request
+    
+    class __OneOfClass_details_bad_resource_state__(__OneOfClass_details__):
+        field: typing.Literal["bad_resource_state"] = "bad_resource_state"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "BadResourceState":
+            return self._message.bad_resource_state
+    
+    class __OneOfClass_details_resource_not_found__(__OneOfClass_details__):
+        field: typing.Literal["resource_not_found"] = "resource_not_found"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ResourceNotFound":
+            return self._message.resource_not_found
+    
+    class __OneOfClass_details_resource_already_exists__(__OneOfClass_details__):
+        field: typing.Literal["resource_already_exists"] = "resource_already_exists"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ResourceAlreadyExists":
+            return self._message.resource_already_exists
+    
+    class __OneOfClass_details_out_of_range__(__OneOfClass_details__):
+        field: typing.Literal["out_of_range"] = "out_of_range"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "OutOfRange":
+            return self._message.out_of_range
+    
+    class __OneOfClass_details_permission_denied__(__OneOfClass_details__):
+        field: typing.Literal["permission_denied"] = "permission_denied"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "PermissionDenied":
+            return self._message.permission_denied
+    
+    class __OneOfClass_details_resource_conflict__(__OneOfClass_details__):
+        field: typing.Literal["resource_conflict"] = "resource_conflict"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ResourceConflict":
+            return self._message.resource_conflict
+    
+    class __OneOfClass_details_operation_aborted__(__OneOfClass_details__):
+        field: typing.Literal["operation_aborted"] = "operation_aborted"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "OperationAborted":
+            return self._message.operation_aborted
+    
+    class __OneOfClass_details_too_many_requests__(__OneOfClass_details__):
+        field: typing.Literal["too_many_requests"] = "too_many_requests"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TooManyRequests":
+            return self._message.too_many_requests
+    
+    class __OneOfClass_details_quota_failure__(__OneOfClass_details__):
+        field: typing.Literal["quota_failure"] = "quota_failure"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "QuotaFailure":
+            return self._message.quota_failure
+    
+    class __OneOfClass_details_not_enough_resources__(__OneOfClass_details__):
+        field: typing.Literal["not_enough_resources"] = "not_enough_resources"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "NotEnoughResources":
+            return self._message.not_enough_resources
+    
+    class __OneOfClass_details_internal_error__(__OneOfClass_details__):
+        field: typing.Literal["internal_error"] = "internal_error"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "InternalError":
+            return self._message.internal_error
+    
+    @builtins.property
+    def details(self) -> __OneOfClass_details_bad_request__|__OneOfClass_details_bad_resource_state__|__OneOfClass_details_resource_not_found__|__OneOfClass_details_resource_already_exists__|__OneOfClass_details_out_of_range__|__OneOfClass_details_permission_denied__|__OneOfClass_details_resource_conflict__|__OneOfClass_details_operation_aborted__|__OneOfClass_details_too_many_requests__|__OneOfClass_details_quota_failure__|__OneOfClass_details_not_enough_resources__|__OneOfClass_details_internal_error__|None:
+        field_name: str|None = super().which_field_in_oneof("details")
+        match field_name:
+            case "bad_request":
+                return self.__OneOfClass_details_bad_request__(self)
+            case "bad_resource_state":
+                return self.__OneOfClass_details_bad_resource_state__(self)
+            case "resource_not_found":
+                return self.__OneOfClass_details_resource_not_found__(self)
+            case "resource_already_exists":
+                return self.__OneOfClass_details_resource_already_exists__(self)
+            case "out_of_range":
+                return self.__OneOfClass_details_out_of_range__(self)
+            case "permission_denied":
+                return self.__OneOfClass_details_permission_denied__(self)
+            case "resource_conflict":
+                return self.__OneOfClass_details_resource_conflict__(self)
+            case "operation_aborted":
+                return self.__OneOfClass_details_operation_aborted__(self)
+            case "too_many_requests":
+                return self.__OneOfClass_details_too_many_requests__(self)
+            case "quota_failure":
+                return self.__OneOfClass_details_quota_failure__(self)
+            case "not_enough_resources":
+                return self.__OneOfClass_details_not_enough_resources__(self)
+            case "internal_error":
+                return self.__OneOfClass_details_internal_error__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -89,7 +238,7 @@ class ServiceError(pb_classes.Message):
         if retry_type is not None:
             self.retry_type = retry_type
     
-    @property
+    @builtins.property
     def service(self) -> "builtins.str":
         return super()._get_field("service", explicit_presence=False,
         )
@@ -98,7 +247,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("service",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def code(self) -> "builtins.str":
         return super()._get_field("code", explicit_presence=False,
         )
@@ -107,7 +256,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("code",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def bad_request(self) -> "BadRequest":
         return super()._get_field("bad_request", explicit_presence=False,
         wrap=BadRequest,
@@ -117,7 +266,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("bad_request",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def bad_resource_state(self) -> "BadResourceState":
         return super()._get_field("bad_resource_state", explicit_presence=False,
         wrap=BadResourceState,
@@ -127,7 +276,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("bad_resource_state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_not_found(self) -> "ResourceNotFound":
         return super()._get_field("resource_not_found", explicit_presence=False,
         wrap=ResourceNotFound,
@@ -137,7 +286,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("resource_not_found",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_already_exists(self) -> "ResourceAlreadyExists":
         return super()._get_field("resource_already_exists", explicit_presence=False,
         wrap=ResourceAlreadyExists,
@@ -147,7 +296,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("resource_already_exists",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def out_of_range(self) -> "OutOfRange":
         return super()._get_field("out_of_range", explicit_presence=False,
         wrap=OutOfRange,
@@ -157,7 +306,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("out_of_range",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def permission_denied(self) -> "PermissionDenied":
         return super()._get_field("permission_denied", explicit_presence=False,
         wrap=PermissionDenied,
@@ -167,7 +316,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("permission_denied",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_conflict(self) -> "ResourceConflict":
         return super()._get_field("resource_conflict", explicit_presence=False,
         wrap=ResourceConflict,
@@ -177,7 +326,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("resource_conflict",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def operation_aborted(self) -> "OperationAborted":
         return super()._get_field("operation_aborted", explicit_presence=False,
         wrap=OperationAborted,
@@ -187,7 +336,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("operation_aborted",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def too_many_requests(self) -> "TooManyRequests":
         return super()._get_field("too_many_requests", explicit_presence=False,
         wrap=TooManyRequests,
@@ -197,7 +346,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("too_many_requests",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def quota_failure(self) -> "QuotaFailure":
         return super()._get_field("quota_failure", explicit_presence=False,
         wrap=QuotaFailure,
@@ -207,7 +356,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("quota_failure",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def not_enough_resources(self) -> "NotEnoughResources":
         return super()._get_field("not_enough_resources", explicit_presence=False,
         wrap=NotEnoughResources,
@@ -217,7 +366,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("not_enough_resources",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def internal_error(self) -> "InternalError":
         return super()._get_field("internal_error", explicit_presence=False,
         wrap=InternalError,
@@ -227,7 +376,7 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("internal_error",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def retry_type(self) -> "ServiceError.RetryType":
         return super()._get_field("retry_type", explicit_presence=False,
         wrap=ServiceError.RetryType,
@@ -258,7 +407,7 @@ class BadRequest(pb_classes.Message):
             if message is not None:
                 self.message = message
         
-        @property
+        @builtins.property
         def field(self) -> "builtins.str":
             return super()._get_field("field", explicit_presence=False,
             )
@@ -267,7 +416,7 @@ class BadRequest(pb_classes.Message):
             return super()._set_field("field",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def message(self) -> "builtins.str":
             return super()._get_field("message", explicit_presence=False,
             )
@@ -287,7 +436,7 @@ class BadRequest(pb_classes.Message):
         if violations is not None:
             self.violations = violations
     
-    @property
+    @builtins.property
     def violations(self) -> "abc.MutableSequence[BadRequest.Violation]":
         return super()._get_field("violations", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(BadRequest.Violation,None),
@@ -314,7 +463,7 @@ class BadResourceState(pb_classes.Message):
         if message is not None:
             self.message = message
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -323,7 +472,7 @@ class BadResourceState(pb_classes.Message):
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def message(self) -> "builtins.str":
         return super()._get_field("message", explicit_presence=False,
         )
@@ -346,7 +495,7 @@ class ResourceNotFound(pb_classes.Message):
         if resource_id is not None:
             self.resource_id = resource_id
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -369,7 +518,7 @@ class ResourceAlreadyExists(pb_classes.Message):
         if resource_id is not None:
             self.resource_id = resource_id
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -395,7 +544,7 @@ class ResourceConflict(pb_classes.Message):
         if message is not None:
             self.message = message
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -404,7 +553,7 @@ class ResourceConflict(pb_classes.Message):
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def message(self) -> "builtins.str":
         return super()._get_field("message", explicit_presence=False,
         )
@@ -433,7 +582,7 @@ class OperationAborted(pb_classes.Message):
         if resource_id is not None:
             self.resource_id = resource_id
     
-    @property
+    @builtins.property
     def operation_id(self) -> "builtins.str":
         return super()._get_field("operation_id", explicit_presence=False,
         )
@@ -442,7 +591,7 @@ class OperationAborted(pb_classes.Message):
         return super()._set_field("operation_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def aborted_by_operation_id(self) -> "builtins.str":
         return super()._get_field("aborted_by_operation_id", explicit_presence=False,
         )
@@ -451,7 +600,7 @@ class OperationAborted(pb_classes.Message):
         return super()._set_field("aborted_by_operation_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -477,7 +626,7 @@ class OutOfRange(pb_classes.Message):
         if limit is not None:
             self.limit = limit
     
-    @property
+    @builtins.property
     def requested(self) -> "builtins.str":
         return super()._get_field("requested", explicit_presence=False,
         )
@@ -486,7 +635,7 @@ class OutOfRange(pb_classes.Message):
         return super()._set_field("requested",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def limit(self) -> "builtins.str":
         return super()._get_field("limit", explicit_presence=False,
         )
@@ -509,7 +658,7 @@ class PermissionDenied(pb_classes.Message):
         if resource_id is not None:
             self.resource_id = resource_id
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -535,7 +684,7 @@ class InternalError(pb_classes.Message):
         if trace_id is not None:
             self.trace_id = trace_id
     
-    @property
+    @builtins.property
     def request_id(self) -> "builtins.str":
         return super()._get_field("request_id", explicit_presence=False,
         )
@@ -544,7 +693,7 @@ class InternalError(pb_classes.Message):
         return super()._set_field("request_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def trace_id(self) -> "builtins.str":
         return super()._get_field("trace_id", explicit_presence=False,
         )
@@ -567,7 +716,7 @@ class TooManyRequests(pb_classes.Message):
         if violation is not None:
             self.violation = violation
     
-    @property
+    @builtins.property
     def violation(self) -> "builtins.str":
         return super()._get_field("violation", explicit_presence=False,
         )
@@ -603,7 +752,7 @@ class QuotaFailure(pb_classes.Message):
             if requested is not None:
                 self.requested = requested
         
-        @property
+        @builtins.property
         def quota(self) -> "builtins.str":
             return super()._get_field("quota", explicit_presence=False,
             )
@@ -612,7 +761,7 @@ class QuotaFailure(pb_classes.Message):
             return super()._set_field("quota",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def message(self) -> "builtins.str":
             return super()._get_field("message", explicit_presence=False,
             )
@@ -621,7 +770,7 @@ class QuotaFailure(pb_classes.Message):
             return super()._set_field("message",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def limit(self) -> "builtins.str":
             return super()._get_field("limit", explicit_presence=False,
             )
@@ -630,7 +779,7 @@ class QuotaFailure(pb_classes.Message):
             return super()._set_field("limit",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def requested(self) -> "builtins.str":
             return super()._get_field("requested", explicit_presence=False,
             )
@@ -650,7 +799,7 @@ class QuotaFailure(pb_classes.Message):
         if violations is not None:
             self.violations = violations
     
-    @property
+    @builtins.property
     def violations(self) -> "abc.MutableSequence[QuotaFailure.Violation]":
         return super()._get_field("violations", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(QuotaFailure.Violation,None),
@@ -684,7 +833,7 @@ class NotEnoughResources(pb_classes.Message):
             if requested is not None:
                 self.requested = requested
         
-        @property
+        @builtins.property
         def resource_type(self) -> "builtins.str":
             return super()._get_field("resource_type", explicit_presence=False,
             )
@@ -693,7 +842,7 @@ class NotEnoughResources(pb_classes.Message):
             return super()._set_field("resource_type",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def message(self) -> "builtins.str":
             return super()._get_field("message", explicit_presence=False,
             )
@@ -702,7 +851,7 @@ class NotEnoughResources(pb_classes.Message):
             return super()._set_field("message",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def requested(self) -> "builtins.str":
             return super()._get_field("requested", explicit_presence=False,
             )
@@ -722,7 +871,7 @@ class NotEnoughResources(pb_classes.Message):
         if violations is not None:
             self.violations = violations
     
-    @property
+    @builtins.property
     def violations(self) -> "abc.MutableSequence[NotEnoughResources.Violation]":
         return super()._get_field("violations", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(NotEnoughResources.Violation,None),
@@ -754,7 +903,7 @@ class ResourceMetadata(pb_classes.Message):
             if value is not None:
                 self.value = value
         
-        @property
+        @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
             )
@@ -763,7 +912,7 @@ class ResourceMetadata(pb_classes.Message):
             return super()._set_field("key",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def value(self) -> "builtins.str":
             return super()._get_field("value", explicit_presence=False,
             )
@@ -801,7 +950,7 @@ class ResourceMetadata(pb_classes.Message):
         if labels is not None:
             self.labels = labels
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -810,7 +959,7 @@ class ResourceMetadata(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -819,7 +968,7 @@ class ResourceMetadata(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -828,7 +977,7 @@ class ResourceMetadata(pb_classes.Message):
         return super()._set_field("name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_version(self) -> "builtins.int":
         return super()._get_field("resource_version", explicit_presence=False,
         )
@@ -837,29 +986,29 @@ class ResourceMetadata(pb_classes.Message):
         return super()._set_field("resource_version",value,explicit_presence=False,
         )
     
-    @property
-    def created_at(self) -> "datetime.datetime":
-        return super()._get_field("created_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def created_at(self) -> "datetime.datetime|None":
+        return super()._get_field("created_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("created_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("created_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
-    def updated_at(self) -> "datetime.datetime":
-        return super()._get_field("updated_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def updated_at(self) -> "datetime.datetime|None":
+        return super()._get_field("updated_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @updated_at.setter
-    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("updated_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("updated_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
+    @builtins.property
     def labels(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         return super()._get_field("labels", explicit_presence=False,
         wrap=pb_classes.Map,
@@ -886,7 +1035,7 @@ class GetByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -895,7 +1044,7 @@ class GetByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -923,7 +1072,7 @@ class Operation(pb_classes.Message):
             if values is not None:
                 self.values = values
         
-        @property
+        @builtins.property
         def values(self) -> "abc.MutableSequence[builtins.str]":
             return super()._get_field("values", explicit_presence=False,
             wrap=pb_classes.Repeated,
@@ -951,7 +1100,7 @@ class Operation(pb_classes.Message):
             if value is not None:
                 self.value = value
         
-        @property
+        @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
             )
@@ -960,7 +1109,7 @@ class Operation(pb_classes.Message):
             return super()._set_field("key",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def value(self) -> "Operation.RequestHeader":
             return super()._get_field("value", explicit_presence=False,
             wrap=Operation.RequestHeader,
@@ -1008,7 +1157,7 @@ class Operation(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1017,7 +1166,7 @@ class Operation(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -1026,18 +1175,18 @@ class Operation(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
-    @property
-    def created_at(self) -> "datetime.datetime":
-        return super()._get_field("created_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def created_at(self) -> "datetime.datetime|None":
+        return super()._get_field("created_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("created_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("created_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
+    @builtins.property
     def created_by(self) -> "builtins.str":
         return super()._get_field("created_by", explicit_presence=False,
         )
@@ -1046,27 +1195,27 @@ class Operation(pb_classes.Message):
         return super()._set_field("created_by",value,explicit_presence=False,
         )
     
-    @property
-    def finished_at(self) -> "datetime.datetime":
-        return super()._get_field("finished_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def finished_at(self) -> "datetime.datetime|None":
+        return super()._get_field("finished_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @finished_at.setter
-    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("finished_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("finished_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
-    def request(self) -> "any_pb2.Any":
-        return super()._get_field("request", explicit_presence=False,
+    @builtins.property
+    def request(self) -> "any_pb2.Any|None":
+        return super()._get_field("request", explicit_presence=True,
         )
     @request.setter
-    def request(self, value: "any_pb2.Any") -> None:
-        return super()._set_field("request",value,explicit_presence=False,
+    def request(self, value: "any_pb2.Any|None") -> None:
+        return super()._set_field("request",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def request_headers(self) -> "abc.MutableMapping[builtins.str,Operation.RequestHeader]":
         return super()._get_field("request_headers", explicit_presence=False,
         wrap=pb_classes.Map.with_wrap(Operation.RequestHeader,None),
@@ -1076,7 +1225,7 @@ class Operation(pb_classes.Message):
         return super()._set_field("request_headers",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -1085,23 +1234,23 @@ class Operation(pb_classes.Message):
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
-    @property
-    def progress_data(self) -> "any_pb2.Any":
-        return super()._get_field("progress_data", explicit_presence=False,
+    @builtins.property
+    def progress_data(self) -> "any_pb2.Any|None":
+        return super()._get_field("progress_data", explicit_presence=True,
         )
     @progress_data.setter
-    def progress_data(self, value: "any_pb2.Any") -> None:
-        return super()._set_field("progress_data",value,explicit_presence=False,
+    def progress_data(self, value: "any_pb2.Any|None") -> None:
+        return super()._set_field("progress_data",value,explicit_presence=True,
         )
     
-    @property
-    def status(self) -> "request_status.RequestStatus":
-        return super()._get_field("status", explicit_presence=False,
+    @builtins.property
+    def status(self) -> "request_status.RequestStatus|None":
+        return super()._get_field("status", explicit_presence=True,
         wrap=request_status.request_status_from_rpc_status
         )
     @status.setter
-    def status(self, value: "status_pb2.Status|request_status.RequestStatus") -> None:
-        return super()._set_field("status",value,explicit_presence=False,
+    def status(self, value: "status_pb2.Status|request_status.RequestStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=True,
         unwrap=request_status.request_status_to_rpc_status
         )
     
@@ -1120,7 +1269,7 @@ class GetOperationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1149,7 +1298,7 @@ class ListOperationsRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -1158,7 +1307,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1167,7 +1316,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1193,7 +1342,7 @@ class ListOperationsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def operations(self) -> "abc.MutableSequence[Operation]":
         return super()._get_field("operations", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Operation,None),
@@ -1203,7 +1352,7 @@ class ListOperationsResponse(pb_classes.Message):
         return super()._set_field("operations",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )

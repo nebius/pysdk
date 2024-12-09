@@ -9,8 +9,9 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
-import nebius.base.protos.pb_enum as pb_enum
 import builtins as builtins
+import nebius.base.protos.pb_enum as pb_enum
+import typing as typing
 import collections.abc as abc
 import nebius.api.nebius.compute.v1alpha1.disk_service_pb2 as disk_service_pb2
 import nebius.aio.client as client
@@ -52,7 +53,7 @@ class Disk(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -62,7 +63,7 @@ class Disk(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "DiskSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=DiskSpec,
@@ -72,7 +73,7 @@ class Disk(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "DiskStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=DiskStatus,
@@ -93,6 +94,104 @@ class DiskSpec(pb_classes.Message):
         NETWORK_HDD = 2
         NETWORK_SSD_NON_REPLICATED = 3
         NETWORK_SSD_IO_M3 = 4
+    
+    class __OneOfClass_size__(pb_classes.OneOf):
+        name: builtins.str= "size"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__()
+            self._message: "DiskSpec" = msg
+    
+    class __OneOfClass_size_size_bytes__(__OneOfClass_size__):
+        field: typing.Literal["size_bytes"] = "size_bytes"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_bytes
+    
+    class __OneOfClass_size_size_kibibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_kibibytes"] = "size_kibibytes"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_kibibytes
+    
+    class __OneOfClass_size_size_mebibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_mebibytes"] = "size_mebibytes"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_mebibytes
+    
+    class __OneOfClass_size_size_gibibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_gibibytes"] = "size_gibibytes"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_gibibytes
+    
+    @builtins.property
+    def size(self) -> __OneOfClass_size_size_bytes__|__OneOfClass_size_size_kibibytes__|__OneOfClass_size_size_mebibytes__|__OneOfClass_size_size_gibibytes__|None:
+        field_name: str|None = super().which_field_in_oneof("size")
+        match field_name:
+            case "size_bytes":
+                return self.__OneOfClass_size_size_bytes__(self)
+            case "size_kibibytes":
+                return self.__OneOfClass_size_size_kibibytes__(self)
+            case "size_mebibytes":
+                return self.__OneOfClass_size_size_mebibytes__(self)
+            case "size_gibibytes":
+                return self.__OneOfClass_size_size_gibibytes__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass_source__(pb_classes.OneOf):
+        name: builtins.str= "source"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__()
+            self._message: "DiskSpec" = msg
+    
+    class __OneOfClass_source_source_image_id__(__OneOfClass_source__):
+        field: typing.Literal["source_image_id"] = "source_image_id"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.source_image_id
+    
+    class __OneOfClass_source_source_image_family__(__OneOfClass_source__):
+        field: typing.Literal["source_image_family"] = "source_image_family"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.source_image_family
+    
+    @builtins.property
+    def source(self) -> __OneOfClass_source_source_image_id__|__OneOfClass_source_source_image_family__|None:
+        field_name: str|None = super().which_field_in_oneof("source")
+        match field_name:
+            case "source_image_id":
+                return self.__OneOfClass_source_source_image_id__(self)
+            case "source_image_family":
+                return self.__OneOfClass_source_source_image_family__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -128,7 +227,7 @@ class DiskSpec(pb_classes.Message):
         if source_image_family is not None:
             self.source_image_family = source_image_family
     
-    @property
+    @builtins.property
     def size_bytes(self) -> "builtins.int|None":
         return super()._get_field("size_bytes", explicit_presence=True,
         )
@@ -137,7 +236,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("size_bytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_kibibytes(self) -> "builtins.int|None":
         return super()._get_field("size_kibibytes", explicit_presence=True,
         )
@@ -146,7 +245,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("size_kibibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_mebibytes(self) -> "builtins.int|None":
         return super()._get_field("size_mebibytes", explicit_presence=True,
         )
@@ -155,7 +254,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("size_mebibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_gibibytes(self) -> "builtins.int|None":
         return super()._get_field("size_gibibytes", explicit_presence=True,
         )
@@ -164,7 +263,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("size_gibibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def block_size_bytes(self) -> "builtins.int":
         return super()._get_field("block_size_bytes", explicit_presence=False,
         )
@@ -173,7 +272,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("block_size_bytes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def type(self) -> "DiskSpec.DiskType":
         return super()._get_field("type", explicit_presence=False,
         wrap=DiskSpec.DiskType,
@@ -183,7 +282,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def placement_policy(self) -> "DiskPlacementPolicy":
         return super()._get_field("placement_policy", explicit_presence=False,
         wrap=DiskPlacementPolicy,
@@ -193,7 +292,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("placement_policy",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def source_image_id(self) -> "builtins.str|None":
         return super()._get_field("source_image_id", explicit_presence=True,
         )
@@ -202,7 +301,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("source_image_id",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def source_image_family(self) -> "builtins.str|None":
         return super()._get_field("source_image_family", explicit_presence=True,
         )
@@ -228,7 +327,7 @@ class DiskPlacementPolicy(pb_classes.Message):
         if placement_group_partition is not None:
             self.placement_group_partition = placement_group_partition
     
-    @property
+    @builtins.property
     def placement_group_id(self) -> "builtins.str":
         return super()._get_field("placement_group_id", explicit_presence=False,
         )
@@ -237,7 +336,7 @@ class DiskPlacementPolicy(pb_classes.Message):
         return super()._set_field("placement_group_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def placement_group_partition(self) -> "builtins.int":
         return super()._get_field("placement_group_partition", explicit_presence=False,
         )
@@ -287,7 +386,7 @@ class DiskStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
-    @property
+    @builtins.property
     def state(self) -> "DiskStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=DiskStatus.State,
@@ -297,7 +396,7 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state_description(self) -> "builtins.str":
         return super()._get_field("state_description", explicit_presence=False,
         )
@@ -306,7 +405,7 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("state_description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def read_write_attachment(self) -> "builtins.str":
         return super()._get_field("read_write_attachment", explicit_presence=False,
         )
@@ -315,7 +414,7 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("read_write_attachment",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def read_only_attachments(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("read_only_attachments", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -325,7 +424,7 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("read_only_attachments",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def source_image_id(self) -> "builtins.str":
         return super()._get_field("source_image_id", explicit_presence=False,
         )
@@ -334,7 +433,7 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("source_image_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def size_bytes(self) -> "builtins.int":
         return super()._get_field("size_bytes", explicit_presence=False,
         )
@@ -343,7 +442,7 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("size_bytes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         return super()._get_field("reconciling", explicit_presence=False,
         )
@@ -367,7 +466,7 @@ class GetDiskRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -399,7 +498,7 @@ class ListDisksRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -408,7 +507,7 @@ class ListDisksRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -417,7 +516,7 @@ class ListDisksRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -426,7 +525,7 @@ class ListDisksRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -452,7 +551,7 @@ class CreateDiskRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -462,7 +561,7 @@ class CreateDiskRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "DiskSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=DiskSpec,
@@ -489,7 +588,7 @@ class UpdateDiskRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -499,7 +598,7 @@ class UpdateDiskRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "DiskSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=DiskSpec,
@@ -523,7 +622,7 @@ class DeleteDiskRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -549,7 +648,7 @@ class ListDisksResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Disk]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Disk,None),
@@ -559,7 +658,7 @@ class ListDisksResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -732,7 +831,7 @@ class Filesystem(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -742,7 +841,7 @@ class Filesystem(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FilesystemSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FilesystemSpec,
@@ -752,7 +851,7 @@ class Filesystem(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "FilesystemStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=FilesystemStatus,
@@ -771,6 +870,66 @@ class FilesystemSpec(pb_classes.Message):
         UNSPECIFIED = 0
         NETWORK_SSD = 1
         NETWORK_HDD = 2
+    
+    class __OneOfClass_size__(pb_classes.OneOf):
+        name: builtins.str= "size"
+        
+        def __init__(self, msg: "FilesystemSpec") -> None:
+            super().__init__()
+            self._message: "FilesystemSpec" = msg
+    
+    class __OneOfClass_size_size_bytes__(__OneOfClass_size__):
+        field: typing.Literal["size_bytes"] = "size_bytes"
+        
+        def __init__(self, msg: "FilesystemSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_bytes
+    
+    class __OneOfClass_size_size_kibibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_kibibytes"] = "size_kibibytes"
+        
+        def __init__(self, msg: "FilesystemSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_kibibytes
+    
+    class __OneOfClass_size_size_mebibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_mebibytes"] = "size_mebibytes"
+        
+        def __init__(self, msg: "FilesystemSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_mebibytes
+    
+    class __OneOfClass_size_size_gibibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_gibibytes"] = "size_gibibytes"
+        
+        def __init__(self, msg: "FilesystemSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_gibibytes
+    
+    @builtins.property
+    def size(self) -> __OneOfClass_size_size_bytes__|__OneOfClass_size_size_kibibytes__|__OneOfClass_size_size_mebibytes__|__OneOfClass_size_size_gibibytes__|None:
+        field_name: str|None = super().which_field_in_oneof("size")
+        match field_name:
+            case "size_bytes":
+                return self.__OneOfClass_size_size_bytes__(self)
+            case "size_kibibytes":
+                return self.__OneOfClass_size_size_kibibytes__(self)
+            case "size_mebibytes":
+                return self.__OneOfClass_size_size_mebibytes__(self)
+            case "size_gibibytes":
+                return self.__OneOfClass_size_size_gibibytes__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -797,7 +956,7 @@ class FilesystemSpec(pb_classes.Message):
         if type is not None:
             self.type = type
     
-    @property
+    @builtins.property
     def size_bytes(self) -> "builtins.int|None":
         return super()._get_field("size_bytes", explicit_presence=True,
         )
@@ -806,7 +965,7 @@ class FilesystemSpec(pb_classes.Message):
         return super()._set_field("size_bytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_kibibytes(self) -> "builtins.int|None":
         return super()._get_field("size_kibibytes", explicit_presence=True,
         )
@@ -815,7 +974,7 @@ class FilesystemSpec(pb_classes.Message):
         return super()._set_field("size_kibibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_mebibytes(self) -> "builtins.int|None":
         return super()._get_field("size_mebibytes", explicit_presence=True,
         )
@@ -824,7 +983,7 @@ class FilesystemSpec(pb_classes.Message):
         return super()._set_field("size_mebibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_gibibytes(self) -> "builtins.int|None":
         return super()._get_field("size_gibibytes", explicit_presence=True,
         )
@@ -833,7 +992,7 @@ class FilesystemSpec(pb_classes.Message):
         return super()._set_field("size_gibibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def block_size_bytes(self) -> "builtins.int":
         return super()._get_field("block_size_bytes", explicit_presence=False,
         )
@@ -842,7 +1001,7 @@ class FilesystemSpec(pb_classes.Message):
         return super()._set_field("block_size_bytes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def type(self) -> "FilesystemSpec.FilesystemType":
         return super()._get_field("type", explicit_presence=False,
         wrap=FilesystemSpec.FilesystemType,
@@ -890,7 +1049,7 @@ class FilesystemStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
-    @property
+    @builtins.property
     def state(self) -> "FilesystemStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=FilesystemStatus.State,
@@ -900,7 +1059,7 @@ class FilesystemStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state_description(self) -> "builtins.str":
         return super()._get_field("state_description", explicit_presence=False,
         )
@@ -909,7 +1068,7 @@ class FilesystemStatus(pb_classes.Message):
         return super()._set_field("state_description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def read_write_attachments(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("read_write_attachments", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -919,7 +1078,7 @@ class FilesystemStatus(pb_classes.Message):
         return super()._set_field("read_write_attachments",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def read_only_attachments(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("read_only_attachments", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -929,7 +1088,7 @@ class FilesystemStatus(pb_classes.Message):
         return super()._set_field("read_only_attachments",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def size_bytes(self) -> "builtins.int":
         return super()._get_field("size_bytes", explicit_presence=False,
         )
@@ -938,7 +1097,7 @@ class FilesystemStatus(pb_classes.Message):
         return super()._set_field("size_bytes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         return super()._get_field("reconciling", explicit_presence=False,
         )
@@ -962,7 +1121,7 @@ class GetFilesystemRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -994,7 +1153,7 @@ class ListFilesystemsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1003,7 +1162,7 @@ class ListFilesystemsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1012,7 +1171,7 @@ class ListFilesystemsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1021,7 +1180,7 @@ class ListFilesystemsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -1047,7 +1206,7 @@ class CreateFilesystemRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1057,7 +1216,7 @@ class CreateFilesystemRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FilesystemSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FilesystemSpec,
@@ -1084,7 +1243,7 @@ class UpdateFilesystemRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1094,7 +1253,7 @@ class UpdateFilesystemRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "FilesystemSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=FilesystemSpec,
@@ -1118,7 +1277,7 @@ class DeleteFilesystemRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1144,7 +1303,7 @@ class ListFilesystemsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Filesystem]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Filesystem,None),
@@ -1154,7 +1313,7 @@ class ListFilesystemsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -1327,7 +1486,7 @@ class GpuCluster(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1337,7 +1496,7 @@ class GpuCluster(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "GpuClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=GpuClusterSpec,
@@ -1347,7 +1506,7 @@ class GpuCluster(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "GpuClusterStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=GpuClusterStatus,
@@ -1371,7 +1530,7 @@ class GpuClusterSpec(pb_classes.Message):
         if infiniband_fabric is not None:
             self.infiniband_fabric = infiniband_fabric
     
-    @property
+    @builtins.property
     def infiniband_fabric(self) -> "builtins.str":
         return super()._get_field("infiniband_fabric", explicit_presence=False,
         )
@@ -1397,7 +1556,7 @@ class GpuClusterStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
-    @property
+    @builtins.property
     def instances(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("instances", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1407,7 +1566,7 @@ class GpuClusterStatus(pb_classes.Message):
         return super()._set_field("instances",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         return super()._get_field("reconciling", explicit_presence=False,
         )
@@ -1431,7 +1590,7 @@ class GetGpuClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1463,7 +1622,7 @@ class ListGpuClustersRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1472,7 +1631,7 @@ class ListGpuClustersRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1481,7 +1640,7 @@ class ListGpuClustersRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1490,7 +1649,7 @@ class ListGpuClustersRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -1516,7 +1675,7 @@ class CreateGpuClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1526,7 +1685,7 @@ class CreateGpuClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "GpuClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=GpuClusterSpec,
@@ -1553,7 +1712,7 @@ class UpdateGpuClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1563,7 +1722,7 @@ class UpdateGpuClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "GpuClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=GpuClusterSpec,
@@ -1587,7 +1746,7 @@ class DeleteGpuClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1613,7 +1772,7 @@ class ListGpuClustersResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[GpuCluster]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(GpuCluster,None),
@@ -1623,7 +1782,7 @@ class ListGpuClustersResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -1796,7 +1955,7 @@ class Image(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1806,7 +1965,7 @@ class Image(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ImageSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ImageSpec,
@@ -1816,7 +1975,7 @@ class Image(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "ImageStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=ImageStatus,
@@ -1829,6 +1988,33 @@ class Image(pb_classes.Message):
 class ImageSpec(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.ImageSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ImageSpec",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__description__(pb_classes.OneOf):
+        name: builtins.str= "_description"
+        
+        def __init__(self, msg: "ImageSpec") -> None:
+            super().__init__()
+            self._message: "ImageSpec" = msg
+    
+    class __OneOfClass__description_description__(__OneOfClass__description__):
+        field: typing.Literal["description"] = "description"
+        
+        def __init__(self, msg: "ImageSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.description
+    
+    @builtins.property
+    def _description(self) -> __OneOfClass__description_description__|None:
+        field_name: str|None = super().which_field_in_oneof("_description")
+        match field_name:
+            case "description":
+                return self.__OneOfClass__description_description__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1846,7 +2032,7 @@ class ImageSpec(pb_classes.Message):
         if version is not None:
             self.version = version
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str|None":
         return super()._get_field("description", explicit_presence=True,
         )
@@ -1855,7 +2041,7 @@ class ImageSpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def image_family(self) -> "builtins.str":
         return super()._get_field("image_family", explicit_presence=False,
         )
@@ -1864,7 +2050,7 @@ class ImageSpec(pb_classes.Message):
         return super()._set_field("image_family",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def version(self) -> "builtins.str":
         return super()._get_field("version", explicit_presence=False,
         )
@@ -1908,7 +2094,7 @@ class ImageStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
-    @property
+    @builtins.property
     def state(self) -> "ImageStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=ImageStatus.State,
@@ -1918,7 +2104,7 @@ class ImageStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state_description(self) -> "builtins.str":
         return super()._get_field("state_description", explicit_presence=False,
         )
@@ -1927,7 +2113,7 @@ class ImageStatus(pb_classes.Message):
         return super()._set_field("state_description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def storage_size_bytes(self) -> "builtins.int":
         return super()._get_field("storage_size_bytes", explicit_presence=False,
         )
@@ -1936,7 +2122,7 @@ class ImageStatus(pb_classes.Message):
         return super()._set_field("storage_size_bytes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def min_disk_size_bytes(self) -> "builtins.int":
         return super()._get_field("min_disk_size_bytes", explicit_presence=False,
         )
@@ -1945,7 +2131,7 @@ class ImageStatus(pb_classes.Message):
         return super()._set_field("min_disk_size_bytes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         return super()._get_field("reconciling", explicit_presence=False,
         )
@@ -1969,7 +2155,7 @@ class GetImageRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1995,7 +2181,7 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
         if parent_id is not None:
             self.parent_id = parent_id
     
-    @property
+    @builtins.property
     def image_family(self) -> "builtins.str":
         return super()._get_field("image_family", explicit_presence=False,
         )
@@ -2004,7 +2190,7 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
         return super()._set_field("image_family",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -2036,7 +2222,7 @@ class ListImagesRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -2045,7 +2231,7 @@ class ListImagesRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -2054,7 +2240,7 @@ class ListImagesRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -2063,7 +2249,7 @@ class ListImagesRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -2089,7 +2275,7 @@ class ListImagesResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Image]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Image,None),
@@ -2099,7 +2285,7 @@ class ListImagesResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -2235,7 +2421,7 @@ class Instance(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2245,7 +2431,7 @@ class Instance(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "InstanceSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=InstanceSpec,
@@ -2255,7 +2441,7 @@ class Instance(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "InstanceStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=InstanceStatus,
@@ -2306,7 +2492,7 @@ class InstanceSpec(pb_classes.Message):
         if recovery_policy is not None:
             self.recovery_policy = recovery_policy
     
-    @property
+    @builtins.property
     def service_account_id(self) -> "builtins.str":
         return super()._get_field("service_account_id", explicit_presence=False,
         )
@@ -2315,7 +2501,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("service_account_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resources(self) -> "ResourcesSpec":
         return super()._get_field("resources", explicit_presence=False,
         wrap=ResourcesSpec,
@@ -2325,7 +2511,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def gpu_cluster(self) -> "InstanceGpuClusterSpec":
         return super()._get_field("gpu_cluster", explicit_presence=False,
         wrap=InstanceGpuClusterSpec,
@@ -2335,7 +2521,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("gpu_cluster",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def network_interfaces(self) -> "abc.MutableSequence[v1alpha1_2.NetworkInterfaceSpec]":
         return super()._get_field("network_interfaces", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(v1alpha1_2.NetworkInterfaceSpec,None),
@@ -2345,7 +2531,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("network_interfaces",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def boot_disk(self) -> "AttachedDiskSpec":
         return super()._get_field("boot_disk", explicit_presence=False,
         wrap=AttachedDiskSpec,
@@ -2355,7 +2541,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("boot_disk",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def secondary_disks(self) -> "abc.MutableSequence[AttachedDiskSpec]":
         return super()._get_field("secondary_disks", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AttachedDiskSpec,None),
@@ -2365,7 +2551,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("secondary_disks",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filesystems(self) -> "abc.MutableSequence[AttachedFilesystemSpec]":
         return super()._get_field("filesystems", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None),
@@ -2375,7 +2561,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("filesystems",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def cloud_init_user_data(self) -> "builtins.str":
         return super()._get_field("cloud_init_user_data", explicit_presence=False,
         )
@@ -2384,7 +2570,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("cloud_init_user_data",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def stopped(self) -> "builtins.bool":
         return super()._get_field("stopped", explicit_presence=False,
         )
@@ -2393,7 +2579,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("stopped",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def recovery_policy(self) -> "InstanceRecoveryPolicy":
         return super()._get_field("recovery_policy", explicit_presence=False,
         wrap=InstanceRecoveryPolicy,
@@ -2406,6 +2592,33 @@ class InstanceSpec(pb_classes.Message):
 class ResourcesSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ResourcesSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ResourcesSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_size__(pb_classes.OneOf):
+        name: builtins.str= "size"
+        
+        def __init__(self, msg: "ResourcesSpec") -> None:
+            super().__init__()
+            self._message: "ResourcesSpec" = msg
+    
+    class __OneOfClass_size_preset__(__OneOfClass_size__):
+        field: typing.Literal["preset"] = "preset"
+        
+        def __init__(self, msg: "ResourcesSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.preset
+    
+    @builtins.property
+    def size(self) -> __OneOfClass_size_preset__|None:
+        field_name: str|None = super().which_field_in_oneof("size")
+        match field_name:
+            case "preset":
+                return self.__OneOfClass_size_preset__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -2420,7 +2633,7 @@ class ResourcesSpec(pb_classes.Message):
         if preset is not None:
             self.preset = preset
     
-    @property
+    @builtins.property
     def platform(self) -> "builtins.str":
         return super()._get_field("platform", explicit_presence=False,
         )
@@ -2429,7 +2642,7 @@ class ResourcesSpec(pb_classes.Message):
         return super()._set_field("platform",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def preset(self) -> "builtins.str|None":
         return super()._get_field("preset", explicit_presence=True,
         )
@@ -2452,7 +2665,7 @@ class InstanceGpuClusterSpec(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2471,6 +2684,33 @@ class AttachedDiskSpec(pb_classes.Message):
         READ_ONLY = 1
         READ_WRITE = 2
     
+    class __OneOfClass_type__(pb_classes.OneOf):
+        name: builtins.str= "type"
+        
+        def __init__(self, msg: "AttachedDiskSpec") -> None:
+            super().__init__()
+            self._message: "AttachedDiskSpec" = msg
+    
+    class __OneOfClass_type_existing_disk__(__OneOfClass_type__):
+        field: typing.Literal["existing_disk"] = "existing_disk"
+        
+        def __init__(self, msg: "AttachedDiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ExistingDisk":
+            return self._message.existing_disk
+    
+    @builtins.property
+    def type(self) -> __OneOfClass_type_existing_disk__|None:
+        field_name: str|None = super().which_field_in_oneof("type")
+        match field_name:
+            case "existing_disk":
+                return self.__OneOfClass_type_existing_disk__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -2487,7 +2727,7 @@ class AttachedDiskSpec(pb_classes.Message):
         if device_name is not None:
             self.device_name = device_name
     
-    @property
+    @builtins.property
     def attach_mode(self) -> "AttachedDiskSpec.AttachMode":
         return super()._get_field("attach_mode", explicit_presence=False,
         wrap=AttachedDiskSpec.AttachMode,
@@ -2497,7 +2737,7 @@ class AttachedDiskSpec(pb_classes.Message):
         return super()._set_field("attach_mode",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def existing_disk(self) -> "ExistingDisk":
         return super()._get_field("existing_disk", explicit_presence=False,
         wrap=ExistingDisk,
@@ -2507,7 +2747,7 @@ class AttachedDiskSpec(pb_classes.Message):
         return super()._set_field("existing_disk",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def device_name(self) -> "builtins.str":
         return super()._get_field("device_name", explicit_presence=False,
         )
@@ -2530,7 +2770,7 @@ class ExistingDisk(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2553,7 +2793,7 @@ class ExistingFilesystem(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2572,6 +2812,33 @@ class AttachedFilesystemSpec(pb_classes.Message):
         READ_ONLY = 1
         READ_WRITE = 2
     
+    class __OneOfClass_type__(pb_classes.OneOf):
+        name: builtins.str= "type"
+        
+        def __init__(self, msg: "AttachedFilesystemSpec") -> None:
+            super().__init__()
+            self._message: "AttachedFilesystemSpec" = msg
+    
+    class __OneOfClass_type_existing_filesystem__(__OneOfClass_type__):
+        field: typing.Literal["existing_filesystem"] = "existing_filesystem"
+        
+        def __init__(self, msg: "AttachedFilesystemSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ExistingFilesystem":
+            return self._message.existing_filesystem
+    
+    @builtins.property
+    def type(self) -> __OneOfClass_type_existing_filesystem__|None:
+        field_name: str|None = super().which_field_in_oneof("type")
+        match field_name:
+            case "existing_filesystem":
+                return self.__OneOfClass_type_existing_filesystem__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -2588,7 +2855,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         if existing_filesystem is not None:
             self.existing_filesystem = existing_filesystem
     
-    @property
+    @builtins.property
     def attach_mode(self) -> "AttachedFilesystemSpec.AttachMode":
         return super()._get_field("attach_mode", explicit_presence=False,
         wrap=AttachedFilesystemSpec.AttachMode,
@@ -2598,7 +2865,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         return super()._set_field("attach_mode",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def device_name(self) -> "builtins.str":
         return super()._get_field("device_name", explicit_presence=False,
         )
@@ -2607,7 +2874,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         return super()._set_field("device_name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def existing_filesystem(self) -> "ExistingFilesystem":
         return super()._get_field("existing_filesystem", explicit_presence=False,
         wrap=ExistingFilesystem,
@@ -2649,7 +2916,7 @@ class InstanceStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
-    @property
+    @builtins.property
     def state(self) -> "InstanceStatus.InstanceState":
         return super()._get_field("state", explicit_presence=False,
         wrap=InstanceStatus.InstanceState,
@@ -2659,7 +2926,7 @@ class InstanceStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def network_interfaces(self) -> "abc.MutableSequence[v1alpha1_2.NetworkInterfaceStatus]":
         return super()._get_field("network_interfaces", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(v1alpha1_2.NetworkInterfaceStatus,None),
@@ -2669,7 +2936,7 @@ class InstanceStatus(pb_classes.Message):
         return super()._set_field("network_interfaces",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         return super()._get_field("reconciling", explicit_presence=False,
         )
@@ -2693,7 +2960,7 @@ class GetInstanceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2722,7 +2989,7 @@ class ListInstancesRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -2731,7 +2998,7 @@ class ListInstancesRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -2740,7 +3007,7 @@ class ListInstancesRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -2766,7 +3033,7 @@ class CreateInstanceRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2776,7 +3043,7 @@ class CreateInstanceRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "InstanceSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=InstanceSpec,
@@ -2803,7 +3070,7 @@ class UpdateInstanceRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -2813,7 +3080,7 @@ class UpdateInstanceRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "InstanceSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=InstanceSpec,
@@ -2837,7 +3104,7 @@ class DeleteInstanceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2863,7 +3130,7 @@ class ListInstancesResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Instance]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Instance,None),
@@ -2873,7 +3140,7 @@ class ListInstancesResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -2896,7 +3163,7 @@ class StartInstanceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2919,7 +3186,7 @@ class StopInstanceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )

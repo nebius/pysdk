@@ -9,6 +9,7 @@ from grpc.aio._call import UnaryUnaryCall
 from grpc_status import rpc_status
 
 from nebius.aio.abc import ClientChannelInterface as Channel
+from nebius.aio.abc import SyncronizerInterface
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata
 
@@ -33,14 +34,9 @@ class RequestIsCancelledError(RequestError):
         super().__init__("Request is cancelled")
 
 
-class UnparsedRequestStatusError(RequestError):
-    def __init__(self, status: RequestStatus) -> None:
-        self.status = status
-        if status.message is None:
-            msg_x = "."
-        else:
-            msg_x = ": " + status.message
-        super().__init__(f"GRPC error with code {status.code.name}{msg_x}")
+class RequestSentNoCallError(RequestError):
+    def __init__(self) -> None:
+        super().__init__("Request marked as sent without call.")
 
 
 class Request(Generic[Req, Res]):
@@ -56,7 +52,9 @@ class Request(Generic[Req, Res]):
         credentials: CallCredentials | None = None,
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
-        result_wrapper: Callable[[GRPCChannel, Any], Res] | None = None,
+        result_wrapper: (
+            Callable[[GRPCChannel, SyncronizerInterface, Any], Res] | None
+        ) = None,
         grpc_channel_override: GRPCChannel | None = None,
         error_wrapper: Callable[[RequestStatus], RequestError] | None = None,
     ) -> None:
@@ -74,10 +72,11 @@ class Request(Generic[Req, Res]):
         self._compression = compression
         self._call: UnaryUnaryCall | None = None
         self._cancelled: bool = False
-        self._error_wrapper = (
-            error_wrapper if error_wrapper is not None else UnparsedRequestStatusError
-        )
-        self._status: RequestStatus | None = None
+        from .service_error import RequestError as RSError
+        from .service_error import RequestStatusExtended
+
+        self._error_wrapper = error_wrapper if error_wrapper is not None else RSError
+        self._status: RequestStatusExtended | None = None
 
     def done(self) -> bool:
         if self._call is None:
@@ -143,14 +142,6 @@ class Request(Generic[Req, Res]):
     def is_sent(self) -> bool:
         return self._sent
 
-    def wait(self) -> Res:
-        from asyncio import run
-
-        async def main() -> Res:
-            return await self
-
-        return run(main())
-
     def send(self) -> None:
         from nebius.base.protos.pb_classes import Message
 
@@ -186,11 +177,25 @@ class Request(Generic[Req, Res]):
             compression=self._compression,
         )
 
+    def wait(self) -> Res:
+        return self._channel.run_sync(self, timeout=self._timeout)
+
+    def initial_metadata_sync(self) -> Metadata:
+        return self._channel.run_sync(self.initial_metadata(), timeout=self._timeout)
+
+    def trailing_metadata_sync(self) -> Metadata:
+        return self._channel.run_sync(self.trailing_metadata(), timeout=self._timeout)
+
+    def status_sync(self) -> RequestStatus:
+        if self._status is not None:
+            return self._status
+        return self._channel.run_sync(self.status(), timeout=self._timeout)
+
     async def initial_metadata(self) -> Metadata:
         if self._call is None:
             self.send()
         if self._call is None:
-            raise SDKError("Request sent but no call found.")
+            raise RequestSentNoCallError()
         md = await self._call.initial_metadata()
         return Metadata(md)
 
@@ -198,7 +203,7 @@ class Request(Generic[Req, Res]):
         if self._call is None:
             self.send()
         if self._call is None:
-            raise SDKError("Request sent but no call found.")
+            raise RequestSentNoCallError()
         md = await self._call.trailing_metadata()
         return Metadata(md)
 
@@ -208,46 +213,45 @@ class Request(Generic[Req, Res]):
         if self._call is None:
             self.send()
         if self._call is None:
-            raise SDKError("Request sent but no call found.")
+            raise RequestSentNoCallError()
         code = await self._call.code()
         msg = await self._call.details()
         mdi = await self._call.initial_metadata()
         mdt = await self._call.trailing_metadata()
         e = AioRpcError(code, mdi, mdt, msg, None)  # type: ignore
         status = rpc_status.from_call(e)  # type: ignore
+        from .service_error import RequestStatusExtended
+
         if status is None:
-            self._status = RequestStatus(
-                code=e.code(),
-                message=e.details(),
-                details=[],
+            self._status = RequestStatusExtended(
+                code=e.code(), message=e.details(), details=[], service_errors=[]
             )
         else:
-            self._status = RequestStatus(
-                code=status.code,
-                message=status.message,
-                details=status.details,
-            )
+            self._status = RequestStatusExtended.from_rpc_status(status)  # type: ignore[unused-ignore]
         return self._status
 
     def __await__(self) -> Generator[Any, None, Res]:
         if self._call is None:
             self.send()
         if self._call is None:
-            raise SDKError("Request sent but no call found.")
+            raise RequestSentNoCallError()
         try:
             ret = yield from self._call.__await__()  # type: ignore[unused-ignore]
             if self._result_wrapper is not None:
-                return self._result_wrapper(self._grpc_channel, ret)  # type: ignore
+                return self._result_wrapper(self._grpc_channel, self._channel, ret)  # type: ignore
             return ret  # type: ignore
         except AioRpcError as e:
             status = rpc_status.from_call(e)  # type: ignore
+            from .service_error import RequestError, RequestStatusExtended
+
             if status is None:
-                self._status = RequestStatus(
+                self._status = RequestStatusExtended(
                     code=e.code(),
                     message=e.details(),
                     details=[],
+                    service_errors=[],
                 )
-                raise self._error_wrapper(self._status)
+                raise RequestError(self._status)
 
-            self._status = RequestStatus.from_rpc_status(status)  # type: ignore[unused-ignore]
-            raise self._error_wrapper(self._status)
+            self._status = RequestStatusExtended.from_rpc_status(status)  # type: ignore[unused-ignore]
+            raise RequestError(self._status)

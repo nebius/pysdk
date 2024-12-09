@@ -3,7 +3,7 @@ from logging import getLogger
 from nebius.api.nebius import FieldBehavior
 
 from .annotations import field_behavior
-from .descriptors import Enum, Field, File, Message, Method, Service
+from .descriptors import Enum, Field, File, Message, Method, OneOf, Service
 from .pygen import ImportedSymbol, PyGenFile
 from .recursion_detector import is_recursive
 from .well_known import converter_dict
@@ -19,7 +19,7 @@ def py_symbol(field: Field) -> ImportedSymbol:
 
 
 def tracks_presence(field: Field) -> bool:
-    if field.is_message() and field.full_type_name.startswith(".nebius."):
+    if field.is_message() and field.message.full_type_name.startswith(".nebius."):
         behavior = field_behavior(field)
         if FieldBehavior.MEANINGFUL_EMPTY_VALUE in behavior:
             return True
@@ -27,7 +27,12 @@ def tracks_presence(field: Field) -> bool:
     return field.tracks_presence()
 
 
-def getter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
+def getter_type(
+    field: Field,
+    g: PyGenFile,
+    always_none: bool = False,
+    never_none: bool = False,
+) -> None:
     if field.is_map():
         g.p(
             ImportedSymbol("MutableMapping", "collections.abc"),
@@ -50,7 +55,7 @@ def getter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
         )
     else:
         g.p(py_symbol(field), add_eol=False, noindent=True)
-    if tracks_presence(field) or always_none:
+    if not never_none and (tracks_presence(field) or always_none):
         g.p("|None", add_eol=False, noindent=True)
 
 
@@ -128,7 +133,7 @@ def setter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
 
 
 def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
-    g.p("@property")
+    g.p("@", ImportedSymbol("property", "builtins"))
     g.p("def ", field.pythonic_name, "(", self_name, ') -> "', add_eol=False)
     getter_type(field, g)
     g.p('":', noindent=True)
@@ -257,6 +262,122 @@ def generate_enum(enum: Enum, g: PyGenFile) -> None:
             g.p(val.name, " = ", val.number)
 
 
+def generate_oneof(oneof: OneOf, g: PyGenFile) -> None:
+    self_name = g.suggest_name("self")
+    g.p(
+        "class __OneOfClass_",
+        oneof.pythonic_name,
+        "__(",
+        ImportedSymbol("OneOf", "nebius.base.protos.pb_classes"),
+        "):",
+    )
+    with g:
+        g.p("name: ", ImportedSymbol("str", "builtins"), '= "', oneof.name, '"')
+        g.p()
+        g.p(
+            "def __init__(",
+            self_name,
+            ', msg: "',
+            oneof.containing_message.export_path,
+            '") -> None:',
+        )
+        with g:
+            g.p("super().__init__()")
+            g.p(
+                self_name,
+                '._message: "',
+                oneof.containing_message.export_path,
+                '" = msg',
+            )
+    g.p()
+
+    for field in oneof.fields:
+        g.p(
+            "class __OneOfClass_",
+            oneof.pythonic_name,
+            "_",
+            field.pythonic_name,
+            "__(",
+            "__OneOfClass_",
+            oneof.pythonic_name,
+            "__):",
+        )
+        with g:
+            g.p(
+                "field: ",
+                ImportedSymbol("Literal", "typing"),
+                '["',
+                field.pythonic_name,
+                '"] = "',
+                field.pythonic_name,
+                '"',
+            )
+            g.p()
+            g.p(
+                "def __init__(",
+                self_name,
+                ', msg: "',
+                oneof.containing_message.export_path,
+                '") -> None:',
+            )
+            with g:
+                g.p("super().__init__(msg)")
+            g.p("@", ImportedSymbol("property", "builtins"))
+            g.p("def value(", self_name, ') -> "', add_eol=False)
+            getter_type(field, g, never_none=True)
+            g.p('":', noindent=True)
+            with g:
+                g.p("return ", self_name, "._message.", field.pythonic_name)
+        g.p()
+
+    g.p("@", ImportedSymbol("property", "builtins"))
+    g.p("def ", oneof.pythonic_name, "(", self_name, ") -> ", add_eol=False)
+    for field in oneof.fields:
+        g.p(
+            "__OneOfClass_",
+            oneof.pythonic_name,
+            "_",
+            field.pythonic_name,
+            "__|",
+            noindent=True,
+            add_eol=False,
+        )
+    g.p("None:", noindent=True)
+    with g:
+        field_name = g.suggest_name("field_name", [self_name])
+        g.p(field_name, ': str|None = super().which_field_in_oneof("', oneof.name, '")')
+        g.p("match ", field_name, ":")
+        with g:
+            for field in oneof.fields:
+                g.p('case "', field.name, '":')
+                with g:
+                    g.p(
+                        "return ",
+                        self_name,
+                        ".__OneOfClass_",
+                        oneof.pythonic_name,
+                        "_",
+                        field.pythonic_name,
+                        "__(",
+                        self_name,
+                        ")",
+                    )
+            g.p("case None:")
+            with g:
+                g.p("return None")
+            g.p("case _:")
+            with g:
+                g.p(
+                    "raise ",
+                    ImportedSymbol("OneOfMatchError", "nebius.base.protos.pb_classes"),
+                    "(",
+                    field_name,
+                    ")",
+                )
+
+    g.p()
+
+
 def generate_message(message: Message, g: PyGenFile) -> None:
     g.p(
         "class ",
@@ -291,6 +412,9 @@ def generate_message(message: Message, g: PyGenFile) -> None:
         for enum in message.enums:
             generate_enum(enum, g)
             g.p()
+
+        for oneof in message.oneofs:
+            generate_oneof(oneof, g)
 
         g.p("def __init__(")
         with g:

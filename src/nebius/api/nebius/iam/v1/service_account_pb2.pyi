@@ -28,3 +28,11 @@ class ServiceAccountStatus(_message.Message):
     ACTIVE_FIELD_NUMBER: _ClassVar[int]
     active: bool
     def __init__(self, active: bool = ...) -> None: ...
+
+class ServiceAccountAttributes(_message.Message):
+    __slots__ = ("name", "description")
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    description: str
+    def __init__(self, name: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...

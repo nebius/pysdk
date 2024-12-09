@@ -50,7 +50,7 @@ class RegionRouting(pb_classes.Message):
         if strict is not None:
             self.strict = strict
     
-    @property
+    @builtins.property
     def nid(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("nid", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -60,7 +60,7 @@ class RegionRouting(pb_classes.Message):
         return super()._set_field("nid",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def disabled(self) -> "builtins.bool":
         return super()._get_field("disabled", explicit_presence=False,
         )
@@ -69,7 +69,7 @@ class RegionRouting(pb_classes.Message):
         return super()._set_field("disabled",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def strict(self) -> "builtins.bool":
         return super()._get_field("strict", explicit_presence=False,
         )

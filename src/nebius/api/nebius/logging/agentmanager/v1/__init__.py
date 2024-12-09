@@ -13,6 +13,7 @@ import google.protobuf.duration_pb2 as duration_pb2
 import datetime as datetime
 import collections.abc as abc
 import nebius.base.protos.well_known as well_known
+import typing as typing
 import nebius.aio.client as client
 import grpc as grpc
 import nebius.aio.request as request
@@ -57,6 +58,7 @@ class GetVersionRequest(pb_classes.Message):
         updater_uptime: "duration_pb2.Duration|datetime.timedelta|None" = None,
         agent_state_messages: "abc.Iterable[builtins.str]|None" = None,
         last_update_error: "builtins.str|None" = None,
+        mk8s_cluster_id: "builtins.str|None" = None,
     ) -> None:
         super().__init__(initial_message)
         if type is not None:
@@ -83,8 +85,10 @@ class GetVersionRequest(pb_classes.Message):
             self.agent_state_messages = agent_state_messages
         if last_update_error is not None:
             self.last_update_error = last_update_error
+        if mk8s_cluster_id is not None:
+            self.mk8s_cluster_id = mk8s_cluster_id
     
-    @property
+    @builtins.property
     def type(self) -> "AgentType":
         return super()._get_field("type", explicit_presence=False,
         wrap=AgentType,
@@ -94,7 +98,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def agent_version(self) -> "builtins.str":
         return super()._get_field("agent_version", explicit_presence=False,
         )
@@ -103,7 +107,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("agent_version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def updater_version(self) -> "builtins.str":
         return super()._get_field("updater_version", explicit_presence=False,
         )
@@ -112,7 +116,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("updater_version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -121,7 +125,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def instance_id(self) -> "builtins.str":
         return super()._get_field("instance_id", explicit_presence=False,
         )
@@ -130,7 +134,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("instance_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def os_info(self) -> "OSInfo":
         return super()._get_field("os_info", explicit_presence=False,
         wrap=OSInfo,
@@ -140,7 +144,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("os_info",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def agent_state(self) -> "AgentState":
         return super()._get_field("agent_state", explicit_presence=False,
         wrap=AgentState,
@@ -150,40 +154,40 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("agent_state",value,explicit_presence=False,
         )
     
-    @property
-    def agent_uptime(self) -> "datetime.timedelta":
-        return super()._get_field("agent_uptime", explicit_presence=False,
+    @builtins.property
+    def agent_uptime(self) -> "datetime.timedelta|None":
+        return super()._get_field("agent_uptime", explicit_presence=True,
         wrap=well_known.from_duration
         )
     @agent_uptime.setter
-    def agent_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
-        return super()._set_field("agent_uptime",value,explicit_presence=False,
+    def agent_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("agent_uptime",value,explicit_presence=True,
         unwrap=well_known.to_duration
         )
     
-    @property
-    def system_uptime(self) -> "datetime.timedelta":
-        return super()._get_field("system_uptime", explicit_presence=False,
+    @builtins.property
+    def system_uptime(self) -> "datetime.timedelta|None":
+        return super()._get_field("system_uptime", explicit_presence=True,
         wrap=well_known.from_duration
         )
     @system_uptime.setter
-    def system_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
-        return super()._set_field("system_uptime",value,explicit_presence=False,
+    def system_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("system_uptime",value,explicit_presence=True,
         unwrap=well_known.to_duration
         )
     
-    @property
-    def updater_uptime(self) -> "datetime.timedelta":
-        return super()._get_field("updater_uptime", explicit_presence=False,
+    @builtins.property
+    def updater_uptime(self) -> "datetime.timedelta|None":
+        return super()._get_field("updater_uptime", explicit_presence=True,
         wrap=well_known.from_duration
         )
     @updater_uptime.setter
-    def updater_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
-        return super()._set_field("updater_uptime",value,explicit_presence=False,
+    def updater_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("updater_uptime",value,explicit_presence=True,
         unwrap=well_known.to_duration
         )
     
-    @property
+    @builtins.property
     def agent_state_messages(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("agent_state_messages", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -193,13 +197,22 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("agent_state_messages",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def last_update_error(self) -> "builtins.str":
         return super()._get_field("last_update_error", explicit_presence=False,
         )
     @last_update_error.setter
     def last_update_error(self, value: "builtins.str") -> None:
         return super()._set_field("last_update_error",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def mk8s_cluster_id(self) -> "builtins.str":
+        return super()._get_field("mk8s_cluster_id", explicit_presence=False,
+        )
+    @mk8s_cluster_id.setter
+    def mk8s_cluster_id(self, value: "builtins.str") -> None:
+        return super()._set_field("mk8s_cluster_id",value,explicit_presence=False,
         )
     
 class OSInfo(pb_classes.Message):
@@ -222,7 +235,7 @@ class OSInfo(pb_classes.Message):
         if architecture is not None:
             self.architecture = architecture
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -231,7 +244,7 @@ class OSInfo(pb_classes.Message):
         return super()._set_field("name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def uname(self) -> "builtins.str":
         return super()._get_field("uname", explicit_presence=False,
         )
@@ -240,7 +253,7 @@ class OSInfo(pb_classes.Message):
         return super()._set_field("uname",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def architecture(self) -> "builtins.str":
         return super()._get_field("architecture", explicit_presence=False,
         )
@@ -252,6 +265,55 @@ class OSInfo(pb_classes.Message):
 class GetVersionResponse(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.GetVersionResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.GetVersionResponse",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_response__(pb_classes.OneOf):
+        name: builtins.str= "response"
+        
+        def __init__(self, msg: "GetVersionResponse") -> None:
+            super().__init__()
+            self._message: "GetVersionResponse" = msg
+    
+    class __OneOfClass_response_nop__(__OneOfClass_response__):
+        field: typing.Literal["nop"] = "nop"
+        
+        def __init__(self, msg: "GetVersionResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "NopActionParams":
+            return self._message.nop
+    
+    class __OneOfClass_response_update__(__OneOfClass_response__):
+        field: typing.Literal["update"] = "update"
+        
+        def __init__(self, msg: "GetVersionResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "UpdateActionParams":
+            return self._message.update
+    
+    class __OneOfClass_response_restart__(__OneOfClass_response__):
+        field: typing.Literal["restart"] = "restart"
+        
+        def __init__(self, msg: "GetVersionResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "RestartActionParams":
+            return self._message.restart
+    
+    @builtins.property
+    def response(self) -> __OneOfClass_response_nop__|__OneOfClass_response_update__|__OneOfClass_response_restart__|None:
+        field_name: str|None = super().which_field_in_oneof("response")
+        match field_name:
+            case "nop":
+                return self.__OneOfClass_response_nop__(self)
+            case "update":
+                return self.__OneOfClass_response_update__(self)
+            case "restart":
+                return self.__OneOfClass_response_restart__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -272,7 +334,7 @@ class GetVersionResponse(pb_classes.Message):
         if restart is not None:
             self.restart = restart
     
-    @property
+    @builtins.property
     def action(self) -> "Action":
         return super()._get_field("action", explicit_presence=False,
         wrap=Action,
@@ -282,7 +344,7 @@ class GetVersionResponse(pb_classes.Message):
         return super()._set_field("action",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def nop(self) -> "NopActionParams":
         return super()._get_field("nop", explicit_presence=False,
         wrap=NopActionParams,
@@ -292,7 +354,7 @@ class GetVersionResponse(pb_classes.Message):
         return super()._set_field("nop",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def update(self) -> "UpdateActionParams":
         return super()._get_field("update", explicit_presence=False,
         wrap=UpdateActionParams,
@@ -302,7 +364,7 @@ class GetVersionResponse(pb_classes.Message):
         return super()._set_field("update",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def restart(self) -> "RestartActionParams":
         return super()._get_field("restart", explicit_presence=False,
         wrap=RestartActionParams,
@@ -339,7 +401,7 @@ class UpdateActionParams(pb_classes.Message):
         if repo_url is not None:
             self.repo_url = repo_url
     
-    @property
+    @builtins.property
     def version(self) -> "builtins.str":
         return super()._get_field("version", explicit_presence=False,
         )
@@ -348,7 +410,7 @@ class UpdateActionParams(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def repo_url(self) -> "builtins.str":
         return super()._get_field("repo_url", explicit_presence=False,
         )

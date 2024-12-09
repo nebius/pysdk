@@ -76,14 +76,16 @@ class ClusterStatus(_message.Message):
     def __init__(self, state: _Optional[_Union[ClusterStatus.State, str]] = ..., control_plane: _Optional[_Union[ControlPlaneStatus, _Mapping]] = ..., reconciling: bool = ...) -> None: ...
 
 class ControlPlaneStatus(_message.Message):
-    __slots__ = ("version", "endpoints", "auth")
+    __slots__ = ("version", "endpoints", "etcd_cluster_size", "auth")
     VERSION_FIELD_NUMBER: _ClassVar[int]
     ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
+    ETCD_CLUSTER_SIZE_FIELD_NUMBER: _ClassVar[int]
     AUTH_FIELD_NUMBER: _ClassVar[int]
     version: str
     endpoints: ControlPlaneStatusEndpoints
+    etcd_cluster_size: int
     auth: ControlPlaneStatusAuth
-    def __init__(self, version: _Optional[str] = ..., endpoints: _Optional[_Union[ControlPlaneStatusEndpoints, _Mapping]] = ..., auth: _Optional[_Union[ControlPlaneStatusAuth, _Mapping]] = ...) -> None: ...
+    def __init__(self, version: _Optional[str] = ..., endpoints: _Optional[_Union[ControlPlaneStatusEndpoints, _Mapping]] = ..., etcd_cluster_size: _Optional[int] = ..., auth: _Optional[_Union[ControlPlaneStatusAuth, _Mapping]] = ...) -> None: ...
 
 class ControlPlaneStatusEndpoints(_message.Message):
     __slots__ = ("public_endpoint", "private_endpoint")

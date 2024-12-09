@@ -1,5 +1,12 @@
-from asyncio import gather
-from collections.abc import Coroutine, Sequence
+from asyncio import (
+    AbstractEventLoop,
+    gather,
+    get_event_loop,
+    new_event_loop,
+    run_coroutine_threadsafe,
+    wait_for,
+)
+from collections.abc import Awaitable, Coroutine, Sequence
 from logging import getLogger
 from typing import Any, TypeVar
 
@@ -46,6 +53,7 @@ from nebius.api.nebius.common.v1alpha1.operation_service_pb2_grpc import (
     OperationServiceStub as OperationServiceStubDeprecated,
 )
 from nebius.base.constants import DOMAIN
+from nebius.base.error import SDKError
 from nebius.base.methods import service_from_method_name
 from nebius.base.options import COMPRESSION, INSECURE, pop_option
 from nebius.base.resolver import Chain, Conventional, Resolver, TemplateExpander
@@ -60,6 +68,12 @@ logger = getLogger(__name__)
 
 Req = TypeVar("Req", bound=Message)
 Res = TypeVar("Res", bound=Message)
+
+T = TypeVar("T")
+
+
+class LoopError(SDKError):
+    pass
 
 
 class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type: ignore[unused-ignore,misc]
@@ -123,6 +137,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         address_interceptors: dict[str, Sequence[ClientInterceptor]] | None = None,
         credentials: Credentials = None,
         tls_credentials: ChannelCredentials | None = None,
+        event_loop: AbstractEventLoop | None = None,
     ) -> None:
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # noqa: F401 - load for registration
@@ -165,11 +180,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._global_interceptors_inner: list[ClientInterceptor] = []
 
-        # TODO: (prv) req ID
-        # TODO: OTEL Tracing
-        # TODO: error parser
-        # TODO: (prv) dual
-
         if isinstance(credentials, ServiceAccountReader):
             exchange = exchangeable.Bearer(credentials, self)
             cache = renewable.Bearer(exchange)
@@ -180,8 +190,43 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             self._global_interceptors_inner.append(
                 AuthorizationInterceptor(credentials)
             )
+        self._event_loop = event_loop
 
         self._global_interceptors_inner.append(CleaningInterceptor())
+
+    def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
+        loop_provided = self._event_loop is not None
+        if self._event_loop is None:
+            try:
+                self._event_loop = get_event_loop()
+            except RuntimeError:
+                self._event_loop = new_event_loop()
+
+        if self._event_loop.is_running():
+            if loop_provided:
+                try:
+                    if get_event_loop() == self._event_loop:
+                        raise LoopError(
+                            "Provided loop is equal to current thread's "
+                            "loop. Either use async/await or provide "
+                            "another loop."
+                        )
+                except RuntimeError:
+                    pass
+                return run_coroutine_threadsafe(awaitable, self._event_loop).result(
+                    timeout
+                )
+            else:
+                raise LoopError(
+                    "Synchronous call inside async context. Either use "
+                    "async/await or provide a safe and separate loop "
+                    "to run."
+                )
+
+        return self._event_loop.run_until_complete(wait_for(awaitable, timeout))
+
+    def sync_close(self, timeout: float | None = None) -> None:
+        return self.run_sync(self.close(), timeout)
 
     async def close(self, grace: float | None = None) -> None:
         awaits = list[Coroutine[Any, Any, Any]]()

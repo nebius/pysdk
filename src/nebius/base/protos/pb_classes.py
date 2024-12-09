@@ -15,6 +15,8 @@ from typing import (
 from google.protobuf.descriptor import Descriptor
 from google.protobuf.message import Message as PMessage
 
+from nebius.base.error import SDKError
+
 from .descriptor import DescriptorWrap
 from .pb_enum import Enum
 
@@ -44,6 +46,15 @@ def unwrap_type(obj: Any, unwrap: Callable[[Any], Any] | None = None) -> Any:
     if unwrap is not None:
         return unwrap(obj)
     return obj
+
+
+class OneOf:
+    name: str
+
+
+class OneOfMatchError(SDKError):
+    def __init__(self, name: str) -> None:
+        super().__init__(f"Unexpected oneof field name {name} returned.")
 
 
 class Message:
@@ -77,6 +88,9 @@ class Message:
 
     def check_presence(self, name: str) -> bool:
         return self.__pb2_message__.HasField(name)  # type: ignore[unused-ignore,no-any-return]
+
+    def which_field_in_oneof(self, name: str) -> str | None:
+        return self.__pb2_message__.WhichOneof(name)  # type: ignore[no-any-return]
 
     def _clear_field(
         self,

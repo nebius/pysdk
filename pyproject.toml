@@ -16,7 +16,7 @@ dependencies = [
     "PyJWT>=2.9.0",
     "grpc-stubs>=1.53",  # For mypy
     "certifi>=2024.8.30",
-    "protobuf>=5.29.0",
+    "protobuf>=5.29.1",
     "types-protobuf>=5.28.3", # for mypy
     "grpcio-status>=1.68.1",
 ]
@@ -120,11 +120,11 @@ asyncio_default_fixture_loop_scope = "function"
 
 [tool.tox]
 requires = ["tox>=4.23"]
-env_list = ["py310", "lint", "type", "format"]
+env_list = ["test", "lint", "type", "format"]
 isolated_build = true
 
 [tool.tox.env]
-[tool.tox.env.py310]
+[tool.tox.env.test]
 description = "Run tests with pytest"
 deps = [
     "pytest",

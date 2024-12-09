@@ -104,6 +104,7 @@ def main() -> None:
 
     file_set = FileSet(
         request.proto_file,
+        request.file_to_generate,
         options.import_substitution,
         options.export_substitution,
         options.skip,
@@ -132,14 +133,14 @@ def main() -> None:
         debugpy.wait_for_client()
         log.debug("Debugger attached. Continuing execution...")
 
-    for file in file_set.files:
+    for file in file_set.files_generated:
         if file.package not in results:
             results[file.package] = PyGenFile(
                 import_path=file.export_path.import_path,
             )
         results[file.package].append_used_names(list(file.collect_all_names()))
 
-    for file in file_set.files:
+    for file in file_set.files_generated:
         generate_file(
             file,
             results[file.package],
@@ -149,7 +150,7 @@ def main() -> None:
         g.p("__all__ = [")
         with g:
             g.p("#@ local import names here @#")
-    for file in file_set.files:
+    for file in file_set.files_generated:
         g = results[file.package]
         with g:
             generate_exports(

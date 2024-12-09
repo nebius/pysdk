@@ -1,3 +1,5 @@
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from google.protobuf import duration_pb2 as _duration_pb2
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
@@ -45,6 +47,22 @@ class UpdateBucketRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_bucket_pb2.BucketSpec, _Mapping]] = ...) -> None: ...
 
 class DeleteBucketRequest(_message.Message):
+    __slots__ = ("id", "purge_at", "ttl")
+    ID_FIELD_NUMBER: _ClassVar[int]
+    PURGE_AT_FIELD_NUMBER: _ClassVar[int]
+    TTL_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    purge_at: _timestamp_pb2.Timestamp
+    ttl: _duration_pb2.Duration
+    def __init__(self, id: _Optional[str] = ..., purge_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., ttl: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ...) -> None: ...
+
+class PurgeBucketRequest(_message.Message):
+    __slots__ = ("id",)
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class UndeleteBucketRequest(_message.Message):
     __slots__ = ("id",)
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str

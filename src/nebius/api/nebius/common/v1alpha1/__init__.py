@@ -14,7 +14,7 @@ import datetime as datetime
 import google.protobuf.any_pb2 as any_pb2
 import google.rpc.status_pb2 as status_pb2
 import nebius.aio.request_status as request_status
-import nebius.base.protos.well_known as well_known
+import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.common.v1alpha1.operation_service_pb2 as operation_service_pb2
 import nebius.aio.client as client
 import grpc as grpc
@@ -41,7 +41,7 @@ class Operation(pb_classes.Message):
             if values is not None:
                 self.values = values
         
-        @property
+        @builtins.property
         def values(self) -> "abc.MutableSequence[builtins.str]":
             return super()._get_field("values", explicit_presence=False,
             wrap=pb_classes.Repeated,
@@ -69,7 +69,7 @@ class Operation(pb_classes.Message):
             if value is not None:
                 self.value = value
         
-        @property
+        @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
             )
@@ -78,7 +78,7 @@ class Operation(pb_classes.Message):
             return super()._set_field("key",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def value(self) -> "Operation.request_header":
             return super()._get_field("value", explicit_presence=False,
             wrap=Operation.request_header,
@@ -129,7 +129,7 @@ class Operation(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -138,7 +138,7 @@ class Operation(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -147,18 +147,18 @@ class Operation(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
-    @property
-    def created_at(self) -> "datetime.datetime":
-        return super()._get_field("created_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def created_at(self) -> "datetime.datetime|None":
+        return super()._get_field("created_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("created_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("created_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
+    @builtins.property
     def created_by(self) -> "builtins.str":
         return super()._get_field("created_by", explicit_presence=False,
         )
@@ -167,27 +167,27 @@ class Operation(pb_classes.Message):
         return super()._set_field("created_by",value,explicit_presence=False,
         )
     
-    @property
-    def finished_at(self) -> "datetime.datetime":
-        return super()._get_field("finished_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def finished_at(self) -> "datetime.datetime|None":
+        return super()._get_field("finished_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @finished_at.setter
-    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("finished_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("finished_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
-    def request(self) -> "any_pb2.Any":
-        return super()._get_field("request", explicit_presence=False,
+    @builtins.property
+    def request(self) -> "any_pb2.Any|None":
+        return super()._get_field("request", explicit_presence=True,
         )
     @request.setter
-    def request(self, value: "any_pb2.Any") -> None:
-        return super()._set_field("request",value,explicit_presence=False,
+    def request(self, value: "any_pb2.Any|None") -> None:
+        return super()._set_field("request",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def request_headers(self) -> "abc.MutableMapping[builtins.str,Operation.request_header]":
         return super()._get_field("request_headers", explicit_presence=False,
         wrap=pb_classes.Map.with_wrap(Operation.request_header,None),
@@ -197,7 +197,7 @@ class Operation(pb_classes.Message):
         return super()._set_field("request_headers",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -206,32 +206,32 @@ class Operation(pb_classes.Message):
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
-    @property
-    def resource(self) -> "any_pb2.Any":
-        return super()._get_field("resource", explicit_presence=False,
+    @builtins.property
+    def resource(self) -> "any_pb2.Any|None":
+        return super()._get_field("resource", explicit_presence=True,
         )
     @resource.setter
-    def resource(self, value: "any_pb2.Any") -> None:
-        return super()._set_field("resource",value,explicit_presence=False,
+    def resource(self, value: "any_pb2.Any|None") -> None:
+        return super()._set_field("resource",value,explicit_presence=True,
         )
     
-    @property
-    def progress_data(self) -> "any_pb2.Any":
-        return super()._get_field("progress_data", explicit_presence=False,
+    @builtins.property
+    def progress_data(self) -> "any_pb2.Any|None":
+        return super()._get_field("progress_data", explicit_presence=True,
         )
     @progress_data.setter
-    def progress_data(self, value: "any_pb2.Any") -> None:
-        return super()._set_field("progress_data",value,explicit_presence=False,
+    def progress_data(self, value: "any_pb2.Any|None") -> None:
+        return super()._set_field("progress_data",value,explicit_presence=True,
         )
     
-    @property
-    def status(self) -> "request_status.RequestStatus":
-        return super()._get_field("status", explicit_presence=False,
+    @builtins.property
+    def status(self) -> "request_status.RequestStatus|None":
+        return super()._get_field("status", explicit_presence=True,
         wrap=request_status.request_status_from_rpc_status
         )
     @status.setter
-    def status(self, value: "status_pb2.Status|request_status.RequestStatus") -> None:
-        return super()._set_field("status",value,explicit_presence=False,
+    def status(self, value: "status_pb2.Status|request_status.RequestStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=True,
         unwrap=request_status.request_status_to_rpc_status
         )
     
@@ -250,7 +250,7 @@ class GetOperationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -282,7 +282,7 @@ class ListOperationsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
         )
@@ -291,7 +291,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -300,7 +300,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -309,7 +309,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -335,7 +335,7 @@ class ListOperationsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def operations(self) -> "abc.MutableSequence[Operation]":
         return super()._get_field("operations", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Operation,None),
@@ -345,7 +345,7 @@ class ListOperationsResponse(pb_classes.Message):
         return super()._set_field("operations",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -377,7 +377,7 @@ class ListOperationsByParentRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -386,7 +386,7 @@ class ListOperationsByParentRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -395,7 +395,7 @@ class ListOperationsByParentRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -404,7 +404,7 @@ class ListOperationsByParentRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )

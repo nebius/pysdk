@@ -3,7 +3,8 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.msp.v1alpha1 import cluster_pb2 as _cluster_pb2
 from nebius.api.nebius.msp.postgresql.v1alpha1.config import postgresql_pb2 as _postgresql_pb2
 from nebius.api.nebius.msp.postgresql.v1alpha1 import preset_pb2 as _preset_pb2
-from nebius.api.nebius.msp.v1alpha1.resource import template_pb2 as _template_pb2
+from nebius.api.nebius.msp.postgresql.v1alpha1 import template_pb2 as _template_pb2
+from nebius.api.nebius.msp.v1alpha1.resource import template_pb2 as _template_pb2_1
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -53,26 +54,16 @@ class ClusterSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., network_id: _Optional[str] = ..., config: _Optional[_Union[ConfigSpec, _Mapping]] = ..., bootstrap: _Optional[_Union[BootstrapSpec, _Mapping]] = ..., backup: _Optional[_Union[BackupSpec, _Mapping]] = ...) -> None: ...
 
 class ClusterStatus(_message.Message):
-    __slots__ = ("phase", "state", "endpoints", "preset_details", "connection_endpoints")
+    __slots__ = ("phase", "state", "preset_details", "connection_endpoints")
     PHASE_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
-    ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     PRESET_DETAILS_FIELD_NUMBER: _ClassVar[int]
     CONNECTION_ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     phase: _cluster_pb2.ClusterStatus.Phase
     state: _cluster_pb2.ClusterStatus.State
-    endpoints: EndpointsSpec
-    preset_details: _template_pb2.PresetDetails
+    preset_details: _template_pb2_1.PresetDetails
     connection_endpoints: Endpoints
-    def __init__(self, phase: _Optional[_Union[_cluster_pb2.ClusterStatus.Phase, str]] = ..., state: _Optional[_Union[_cluster_pb2.ClusterStatus.State, str]] = ..., endpoints: _Optional[_Union[EndpointsSpec, _Mapping]] = ..., preset_details: _Optional[_Union[_template_pb2.PresetDetails, _Mapping]] = ..., connection_endpoints: _Optional[_Union[Endpoints, _Mapping]] = ...) -> None: ...
-
-class EndpointsSpec(_message.Message):
-    __slots__ = ("read_write_endpoint", "read_only_endpoint")
-    READ_WRITE_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
-    READ_ONLY_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
-    read_write_endpoint: str
-    read_only_endpoint: str
-    def __init__(self, read_write_endpoint: _Optional[str] = ..., read_only_endpoint: _Optional[str] = ...) -> None: ...
+    def __init__(self, phase: _Optional[_Union[_cluster_pb2.ClusterStatus.Phase, str]] = ..., state: _Optional[_Union[_cluster_pb2.ClusterStatus.State, str]] = ..., preset_details: _Optional[_Union[_template_pb2_1.PresetDetails, _Mapping]] = ..., connection_endpoints: _Optional[_Union[Endpoints, _Mapping]] = ...) -> None: ...
 
 class Endpoints(_message.Message):
     __slots__ = ("private_read_write", "private_read_only", "public_read_write", "public_read_only")
@@ -87,18 +78,20 @@ class Endpoints(_message.Message):
     def __init__(self, private_read_write: _Optional[str] = ..., private_read_only: _Optional[str] = ..., public_read_write: _Optional[str] = ..., public_read_only: _Optional[str] = ...) -> None: ...
 
 class ConfigSpec(_message.Message):
-    __slots__ = ("version", "pooler_config", "resources", "postgresql_config_16", "public_access")
+    __slots__ = ("version", "pooler_config", "resources", "postgresql_config_16", "public_access", "template")
     VERSION_FIELD_NUMBER: _ClassVar[int]
     POOLER_CONFIG_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     POSTGRESQL_CONFIG_16_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_ACCESS_FIELD_NUMBER: _ClassVar[int]
+    TEMPLATE_FIELD_NUMBER: _ClassVar[int]
     version: str
     pooler_config: ConnectionPoolerConfig
-    resources: _preset_pb2.TemplateSpec
+    resources: _preset_pb2.PresetSpec
     postgresql_config_16: _postgresql_pb2.PostgresqlConfig16
     public_access: bool
-    def __init__(self, version: _Optional[str] = ..., pooler_config: _Optional[_Union[ConnectionPoolerConfig, _Mapping]] = ..., resources: _Optional[_Union[_preset_pb2.TemplateSpec, _Mapping]] = ..., postgresql_config_16: _Optional[_Union[_postgresql_pb2.PostgresqlConfig16, _Mapping]] = ..., public_access: bool = ...) -> None: ...
+    template: _template_pb2.TemplateSpec
+    def __init__(self, version: _Optional[str] = ..., pooler_config: _Optional[_Union[ConnectionPoolerConfig, _Mapping]] = ..., resources: _Optional[_Union[_preset_pb2.PresetSpec, _Mapping]] = ..., postgresql_config_16: _Optional[_Union[_postgresql_pb2.PostgresqlConfig16, _Mapping]] = ..., public_access: bool = ..., template: _Optional[_Union[_template_pb2.TemplateSpec, _Mapping]] = ...) -> None: ...
 
 class BootstrapSpec(_message.Message):
     __slots__ = ("user_name", "user_password", "db_name")

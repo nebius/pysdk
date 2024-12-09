@@ -8,6 +8,13 @@ import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import builtins as builtins
+import nebius.api.nebius.msp.v1alpha1.resource.preset_pb2 as preset_pb2
+import nebius.api.nebius.msp.v1alpha1.resource.preset_service_pb2 as preset_service_pb2
+import collections.abc as abc
+import nebius.aio.client as client
+import grpc as grpc
+import nebius.aio.request as request
+import nebius.api.nebius.msp.v1alpha1.resource.template_service_pb2 as template_service_pb2
 #@ local imports here @#
 
 # file: nebius/msp/v1alpha1/resource/template.proto
@@ -28,7 +35,7 @@ class Template(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def status(self) -> "TemplateStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=TemplateStatus,
@@ -38,7 +45,7 @@ class Template(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "TemplateSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=TemplateSpec,
@@ -62,7 +69,7 @@ class TemplateStatus(pb_classes.Message):
         if preset_details is not None:
             self.preset_details = preset_details
     
-    @property
+    @builtins.property
     def preset_details(self) -> "PresetDetails":
         return super()._get_field("preset_details", explicit_presence=False,
         wrap=PresetDetails,
@@ -95,7 +102,7 @@ class TemplateSpec(pb_classes.Message):
         if role is not None:
             self.role = role
     
-    @property
+    @builtins.property
     def resources(self) -> "ResourcesSpec":
         return super()._get_field("resources", explicit_presence=False,
         wrap=ResourcesSpec,
@@ -105,7 +112,7 @@ class TemplateSpec(pb_classes.Message):
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def hosts(self) -> "Host":
         return super()._get_field("hosts", explicit_presence=False,
         wrap=Host,
@@ -115,7 +122,7 @@ class TemplateSpec(pb_classes.Message):
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def disk(self) -> "Disk":
         return super()._get_field("disk", explicit_presence=False,
         wrap=Disk,
@@ -125,7 +132,7 @@ class TemplateSpec(pb_classes.Message):
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def role(self) -> "builtins.str":
         return super()._get_field("role", explicit_presence=False,
         )
@@ -151,7 +158,7 @@ class ResourcesSpec(pb_classes.Message):
         if preset is not None:
             self.preset = preset
     
-    @property
+    @builtins.property
     def platform(self) -> "builtins.str":
         return super()._get_field("platform", explicit_presence=False,
         )
@@ -160,7 +167,7 @@ class ResourcesSpec(pb_classes.Message):
         return super()._set_field("platform",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def preset(self) -> "builtins.str":
         return super()._get_field("preset", explicit_presence=False,
         )
@@ -186,7 +193,7 @@ class PresetDetails(pb_classes.Message):
         if memory_gibibytes is not None:
             self.memory_gibibytes = memory_gibibytes
     
-    @property
+    @builtins.property
     def cpu_count(self) -> "builtins.int":
         return super()._get_field("cpu_count", explicit_presence=False,
         )
@@ -195,7 +202,7 @@ class PresetDetails(pb_classes.Message):
         return super()._set_field("cpu_count",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def memory_gibibytes(self) -> "builtins.int":
         return super()._get_field("memory_gibibytes", explicit_presence=False,
         )
@@ -227,7 +234,7 @@ class Range(pb_classes.Message):
         if value is not None:
             self.value = value
     
-    @property
+    @builtins.property
     def min(self) -> "builtins.int":
         return super()._get_field("min", explicit_presence=False,
         )
@@ -236,7 +243,7 @@ class Range(pb_classes.Message):
         return super()._set_field("min",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def max(self) -> "builtins.int":
         return super()._get_field("max", explicit_presence=False,
         )
@@ -245,7 +252,7 @@ class Range(pb_classes.Message):
         return super()._set_field("max",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def step(self) -> "builtins.int":
         return super()._get_field("step", explicit_presence=False,
         )
@@ -254,7 +261,7 @@ class Range(pb_classes.Message):
         return super()._set_field("step",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def value(self) -> "builtins.int":
         return super()._get_field("value", explicit_presence=False,
         )
@@ -280,7 +287,7 @@ class Disk(pb_classes.Message):
         if size_gibibytes is not None:
             self.size_gibibytes = size_gibibytes
     
-    @property
+    @builtins.property
     def type(self) -> "builtins.str":
         return super()._get_field("type", explicit_presence=False,
         )
@@ -289,7 +296,7 @@ class Disk(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def size_gibibytes(self) -> "Range":
         return super()._get_field("size_gibibytes", explicit_presence=False,
         wrap=Range,
@@ -316,7 +323,7 @@ class DiskSpec(pb_classes.Message):
         if size_gibibytes is not None:
             self.size_gibibytes = size_gibibytes
     
-    @property
+    @builtins.property
     def type(self) -> "builtins.str":
         return super()._get_field("type", explicit_presence=False,
         )
@@ -325,7 +332,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def size_gibibytes(self) -> "builtins.int":
         return super()._get_field("size_gibibytes", explicit_presence=False,
         )
@@ -348,7 +355,7 @@ class Host(pb_classes.Message):
         if count is not None:
             self.count = count
     
-    @property
+    @builtins.property
     def count(self) -> "Range":
         return super()._get_field("count", explicit_presence=False,
         wrap=Range,
@@ -372,7 +379,7 @@ class HostSpec(pb_classes.Message):
         if count is not None:
             self.count = count
     
-    @property
+    @builtins.property
     def count(self) -> "builtins.int":
         return super()._get_field("count", explicit_presence=False,
         )
@@ -381,6 +388,382 @@ class HostSpec(pb_classes.Message):
         return super()._set_field("count",value,explicit_presence=False,
         )
     
+# file: nebius/msp/v1alpha1/resource/preset.proto
+class Preset(pb_classes.Message):
+    __PB2_CLASS__ = preset_pb2.Preset
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.Preset",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        spec: "PresetSpec|preset_pb2.PresetSpec|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if spec is not None:
+            self.spec = spec
+    
+    @builtins.property
+    def spec(self) -> "PresetSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=PresetSpec,
+        )
+    @spec.setter
+    def spec(self, value: "PresetSpec|preset_pb2.PresetSpec") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+class PresetSpec(pb_classes.Message):
+    __PB2_CLASS__ = preset_pb2.PresetSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.PresetSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        flavor: "FlavorSpec|preset_pb2.FlavorSpec|None" = None,
+        hosts: "Host|template_pb2.Host|None" = None,
+        disk: "Disk|template_pb2.Disk|None" = None,
+        role: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if flavor is not None:
+            self.flavor = flavor
+        if hosts is not None:
+            self.hosts = hosts
+        if disk is not None:
+            self.disk = disk
+        if role is not None:
+            self.role = role
+    
+    @builtins.property
+    def flavor(self) -> "FlavorSpec":
+        return super()._get_field("flavor", explicit_presence=False,
+        wrap=FlavorSpec,
+        )
+    @flavor.setter
+    def flavor(self, value: "FlavorSpec|preset_pb2.FlavorSpec") -> None:
+        return super()._set_field("flavor",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def hosts(self) -> "Host":
+        return super()._get_field("hosts", explicit_presence=False,
+        wrap=Host,
+        )
+    @hosts.setter
+    def hosts(self, value: "Host|template_pb2.Host") -> None:
+        return super()._set_field("hosts",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def disk(self) -> "Disk":
+        return super()._get_field("disk", explicit_presence=False,
+        wrap=Disk,
+        )
+    @disk.setter
+    def disk(self, value: "Disk|template_pb2.Disk") -> None:
+        return super()._set_field("disk",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def role(self) -> "builtins.str":
+        return super()._get_field("role", explicit_presence=False,
+        )
+    @role.setter
+    def role(self, value: "builtins.str") -> None:
+        return super()._set_field("role",value,explicit_presence=False,
+        )
+    
+class FlavorSpec(pb_classes.Message):
+    __PB2_CLASS__ = preset_pb2.FlavorSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.FlavorSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cpu: "CpuSpec|preset_pb2.CpuSpec|None" = None,
+        memory: "MemorySpec|preset_pb2.MemorySpec|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if cpu is not None:
+            self.cpu = cpu
+        if memory is not None:
+            self.memory = memory
+    
+    @builtins.property
+    def cpu(self) -> "CpuSpec":
+        return super()._get_field("cpu", explicit_presence=False,
+        wrap=CpuSpec,
+        )
+    @cpu.setter
+    def cpu(self, value: "CpuSpec|preset_pb2.CpuSpec") -> None:
+        return super()._set_field("cpu",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def memory(self) -> "MemorySpec":
+        return super()._get_field("memory", explicit_presence=False,
+        wrap=MemorySpec,
+        )
+    @memory.setter
+    def memory(self, value: "MemorySpec|preset_pb2.MemorySpec") -> None:
+        return super()._set_field("memory",value,explicit_presence=False,
+        )
+    
+class CpuSpec(pb_classes.Message):
+    __PB2_CLASS__ = preset_pb2.CpuSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.CpuSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        count: "builtins.int|None" = None,
+        generation: "builtins.int|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if count is not None:
+            self.count = count
+        if generation is not None:
+            self.generation = generation
+    
+    @builtins.property
+    def count(self) -> "builtins.int":
+        return super()._get_field("count", explicit_presence=False,
+        )
+    @count.setter
+    def count(self, value: "builtins.int") -> None:
+        return super()._set_field("count",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def generation(self) -> "builtins.int":
+        return super()._get_field("generation", explicit_presence=False,
+        )
+    @generation.setter
+    def generation(self, value: "builtins.int") -> None:
+        return super()._set_field("generation",value,explicit_presence=False,
+        )
+    
+class MemorySpec(pb_classes.Message):
+    __PB2_CLASS__ = preset_pb2.MemorySpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.MemorySpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        limit_gibibytes: "builtins.int|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if limit_gibibytes is not None:
+            self.limit_gibibytes = limit_gibibytes
+    
+    @builtins.property
+    def limit_gibibytes(self) -> "builtins.int":
+        return super()._get_field("limit_gibibytes", explicit_presence=False,
+        )
+    @limit_gibibytes.setter
+    def limit_gibibytes(self, value: "builtins.int") -> None:
+        return super()._set_field("limit_gibibytes",value,explicit_presence=False,
+        )
+    
+# file: nebius/msp/v1alpha1/resource/preset_service.proto
+class ListPresetsRequest(pb_classes.Message):
+    __PB2_CLASS__ = preset_service_pb2.ListPresetsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ListPresetsRequest",preset_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        page_size: "builtins.int|None" = None,
+        page_token: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if page_size is not None:
+            self.page_size = page_size
+        if page_token is not None:
+            self.page_token = page_token
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+class ListPresetsResponse(pb_classes.Message):
+    __PB2_CLASS__ = preset_service_pb2.ListPresetsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ListPresetsResponse",preset_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[Preset]|None" = None,
+        next_page_token: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if items is not None:
+            self.items = items
+        if next_page_token is not None:
+            self.next_page_token = next_page_token
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[Preset]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Preset,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[Preset]") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+
+class PresetServiceClient(client.Client):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.v1alpha1.resource.PresetService",preset_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.msp.v1alpha1.resource.PresetService"
+    
+    def list(self,
+        request: "ListPresetsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request.Request["ListPresetsRequest","ListPresetsResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=preset_service_pb2.ListPresetsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+    
+
+# file: nebius/msp/v1alpha1/resource/template_service.proto
+class ListTemplatesRequest(pb_classes.Message):
+    __PB2_CLASS__ = template_service_pb2.ListTemplatesRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ListTemplatesRequest",template_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        page_size: "builtins.int|None" = None,
+        page_token: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if page_size is not None:
+            self.page_size = page_size
+        if page_token is not None:
+            self.page_token = page_token
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+class ListTemplatesResponse(pb_classes.Message):
+    __PB2_CLASS__ = template_service_pb2.ListTemplatesResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ListTemplatesResponse",template_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[Template]|None" = None,
+        next_page_token: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if items is not None:
+            self.items = items
+        if next_page_token is not None:
+            self.next_page_token = next_page_token
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[Template]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Template,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[Template]") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+
+class TemplateServiceClient(client.Client):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.v1alpha1.resource.TemplateService",template_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.msp.v1alpha1.resource.TemplateService"
+    
+    def list(self,
+        request: "ListTemplatesRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request.Request["ListTemplatesRequest","ListTemplatesResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=template_service_pb2.ListTemplatesResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+    
+
 __all__ = [
     #@ local import names here @#
     "Template",
@@ -393,4 +776,15 @@ __all__ = [
     "DiskSpec",
     "Host",
     "HostSpec",
+    "Preset",
+    "PresetSpec",
+    "FlavorSpec",
+    "CpuSpec",
+    "MemorySpec",
+    "ListPresetsRequest",
+    "ListPresetsResponse",
+    "PresetServiceClient",
+    "ListTemplatesRequest",
+    "ListTemplatesResponse",
+    "TemplateServiceClient",
 ]

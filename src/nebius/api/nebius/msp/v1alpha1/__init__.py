@@ -53,7 +53,7 @@ class ClusterStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
-    @property
+    @builtins.property
     def phase(self) -> "ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
         wrap=ClusterStatus.Phase,
@@ -63,7 +63,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state(self) -> "ClusterStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=ClusterStatus.State,
@@ -73,7 +73,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         return super()._get_field("reconciling", explicit_presence=False,
         )

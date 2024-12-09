@@ -139,6 +139,23 @@ class Field(Descriptor):
         self.containing_message = containing_message
         self._pythonic_name = ""
         self._containing_file = containing_file
+        self._oneof: "OneOf|None|bool" = None
+
+    def is_in_oneof(self) -> bool:
+        return self.descriptor.HasField("oneof_index")
+
+    @property
+    def containing_oneof(self) -> "OneOf":
+        if self._oneof is None:
+            if not self.is_in_oneof():
+                self._oneof = False
+            else:
+                self._oneof = self.containing_message.oneofs[
+                    self.descriptor.oneof_index
+                ]
+        if isinstance(self._oneof, OneOf):
+            return self._oneof
+        raise ValueError("not in OneOf")
 
     @property
     def full_type_name(self) -> str:
@@ -270,6 +287,53 @@ class Field(Descriptor):
         return False
 
 
+class OneOf(Descriptor):
+    def __init__(
+        self,
+        descriptor: pb.OneofDescriptorProto,
+        index: int,
+        containing_message: "Message",
+        containing_file: "File",
+    ) -> None:
+        self.descriptor = descriptor
+        self.containing_message = containing_message
+        self._index = index
+        self._pythonic_name = ""
+        self._containing_file = containing_file
+        self._fields: "list[Field]|None" = None
+
+    @property
+    def fields(self) -> list[Field]:
+        if self._fields is None:
+            self._fields = [
+                f
+                for f in self.containing_message.fields()
+                if (
+                    f.descriptor.HasField("oneof_index")
+                    and f.descriptor.oneof_index == self._index
+                )
+            ]
+        return self._fields
+
+    @property
+    def full_type_name(self) -> str:
+        return self.containing_message.full_type_name + "." + self.name
+
+    def __repr__(self) -> str:
+        return f"OneOf({self.full_type_name})"
+
+    @property
+    def pythonic_name(self) -> str:
+        if self._pythonic_name == "":
+            self._pythonic_name = names.one_of(self.name, self.containing_message.name)
+        return self._pythonic_name
+
+    @property
+    def export_path(self) -> ImportedSymbol:
+        msg = self.containing_message.export_path
+        return ImportedSymbol(msg.name + "." + self.pythonic_name, msg.import_path)
+
+
 class Message(Descriptor):
     def __init__(
         self,
@@ -285,6 +349,8 @@ class Message(Descriptor):
         self._fields: list[Field] | None = None
         self._fields_dict: dict[str, Field] | None = None
         self._enums_dict: dict[str, Enum] | None = None
+        self._oneofs: list[OneOf] | None = None
+        self._oneofs_dict: dict[str, OneOf] | None = None
         self.attached_names = dict[str, str]()
         self._pythonic_name = ""
 
@@ -305,6 +371,21 @@ class Message(Descriptor):
                 for e in self.descriptor.enum_type
             }
         return self._enums_dict
+
+    @property
+    def oneofs(self) -> list[OneOf]:
+        if self._oneofs is None:
+            self._oneofs = [
+                OneOf(o, i, self, self.containing_file)
+                for i, o in enumerate(self.descriptor.oneof_decl)
+            ]
+        return self._oneofs
+
+    @property
+    def oneofs_dict(self) -> dict[str, OneOf]:
+        if self._oneofs_dict is None:
+            self._oneofs_dict = {o.name: o for o in self.oneofs}
+        return self._oneofs_dict
 
     @property
     def enums(self) -> Iterable[Enum]:
@@ -418,6 +499,8 @@ class Message(Descriptor):
         for enum in self.enums:
             ret.add(enum.pythonic_name)
             ret = ret.union([v.pythonic_name for v in enum.values])
+        for oneof in self.oneofs:
+            ret.add(oneof.pythonic_name)
         return ret
 
 
@@ -514,9 +597,11 @@ class File(Descriptor):
         self,
         descriptor: pb.FileDescriptorProto,
         file_set: "FileSet",
+        is_generated: bool,
     ) -> None:
         self.descriptor = descriptor
         self.global_set = file_set
+        self.is_generated = is_generated
         import_path = (
             self.descriptor.name.removesuffix(".proto").replace("/", ".") + "_pb2"
         )
@@ -718,6 +803,7 @@ class FileSet(Descriptor):
     def __init__(
         self,
         file_set: Sequence[pb.FileDescriptorProto],
+        files_to_generate: Iterable[str],
         import_substitutions: dict[str, str] | None = None,
         export_substitutions: dict[str, str] | None = None,
         skip_packages: list[str] | None = None,
@@ -732,8 +818,11 @@ class FileSet(Descriptor):
         self.import_substitutions = import_substitutions
         self.export_substitutions = export_substitutions
         self.skip_packages = set(skip_packages)
+        self.files_to_generate = frozenset(files_to_generate)
 
-        self._file_set = [File(file, self) for file in file_set]
+        self._file_set = [
+            File(file, self, file.name in self.files_to_generate) for file in file_set
+        ]
         self._files_dict: dict[str, File] | None = None
 
     def is_package_skipped(self, package: str) -> bool:
@@ -761,3 +850,7 @@ class FileSet(Descriptor):
     @property
     def files(self) -> Sequence[File]:
         return self._file_set
+
+    @property
+    def files_generated(self) -> Sequence[File]:
+        return [f for f in self.files if f.is_generated]

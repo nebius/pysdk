@@ -6,14 +6,339 @@ import nebius.base.protos.pb_classes as pb_classes
 import nebius.api.nebius.msp.postgresql.v1alpha1.config.postgresql_pb2 as postgresql_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
-import google.protobuf.message as message_1
 import builtins as builtins
+import typing as typing
+import google.protobuf.message as message_1
 #@ local imports here @#
 
 # file: nebius/msp/postgresql/v1alpha1/config/postgresql.proto
 class PostgresqlConfig16(pb_classes.Message):
     __PB2_CLASS__ = postgresql_pb2.PostgresqlConfig16
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.config.PostgresqlConfig16",postgresql_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__autovacuum_work_mem__(pb_classes.OneOf):
+        name: builtins.str= "_autovacuum_work_mem"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__autovacuum_work_mem_autovacuum_work_mem__(__OneOfClass__autovacuum_work_mem__):
+        field: typing.Literal["autovacuum_work_mem"] = "autovacuum_work_mem"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.autovacuum_work_mem
+    
+    @builtins.property
+    def _autovacuum_work_mem(self) -> __OneOfClass__autovacuum_work_mem_autovacuum_work_mem__|None:
+        field_name: str|None = super().which_field_in_oneof("_autovacuum_work_mem")
+        match field_name:
+            case "autovacuum_work_mem":
+                return self.__OneOfClass__autovacuum_work_mem_autovacuum_work_mem__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__statement_timeout__(pb_classes.OneOf):
+        name: builtins.str= "_statement_timeout"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__statement_timeout_statement_timeout__(__OneOfClass__statement_timeout__):
+        field: typing.Literal["statement_timeout"] = "statement_timeout"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.statement_timeout
+    
+    @builtins.property
+    def _statement_timeout(self) -> __OneOfClass__statement_timeout_statement_timeout__|None:
+        field_name: str|None = super().which_field_in_oneof("_statement_timeout")
+        match field_name:
+            case "statement_timeout":
+                return self.__OneOfClass__statement_timeout_statement_timeout__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__idle_in_transaction_session_timeout__(pb_classes.OneOf):
+        name: builtins.str= "_idle_in_transaction_session_timeout"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__idle_in_transaction_session_timeout_idle_in_transaction_session_timeout__(__OneOfClass__idle_in_transaction_session_timeout__):
+        field: typing.Literal["idle_in_transaction_session_timeout"] = "idle_in_transaction_session_timeout"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.idle_in_transaction_session_timeout
+    
+    @builtins.property
+    def _idle_in_transaction_session_timeout(self) -> __OneOfClass__idle_in_transaction_session_timeout_idle_in_transaction_session_timeout__|None:
+        field_name: str|None = super().which_field_in_oneof("_idle_in_transaction_session_timeout")
+        match field_name:
+            case "idle_in_transaction_session_timeout":
+                return self.__OneOfClass__idle_in_transaction_session_timeout_idle_in_transaction_session_timeout__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__autovacuum_vacuum_cost_delay__(pb_classes.OneOf):
+        name: builtins.str= "_autovacuum_vacuum_cost_delay"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__autovacuum_vacuum_cost_delay_autovacuum_vacuum_cost_delay__(__OneOfClass__autovacuum_vacuum_cost_delay__):
+        field: typing.Literal["autovacuum_vacuum_cost_delay"] = "autovacuum_vacuum_cost_delay"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.autovacuum_vacuum_cost_delay
+    
+    @builtins.property
+    def _autovacuum_vacuum_cost_delay(self) -> __OneOfClass__autovacuum_vacuum_cost_delay_autovacuum_vacuum_cost_delay__|None:
+        field_name: str|None = super().which_field_in_oneof("_autovacuum_vacuum_cost_delay")
+        match field_name:
+            case "autovacuum_vacuum_cost_delay":
+                return self.__OneOfClass__autovacuum_vacuum_cost_delay_autovacuum_vacuum_cost_delay__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__autovacuum_vacuum_cost_limit__(pb_classes.OneOf):
+        name: builtins.str= "_autovacuum_vacuum_cost_limit"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__autovacuum_vacuum_cost_limit_autovacuum_vacuum_cost_limit__(__OneOfClass__autovacuum_vacuum_cost_limit__):
+        field: typing.Literal["autovacuum_vacuum_cost_limit"] = "autovacuum_vacuum_cost_limit"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.autovacuum_vacuum_cost_limit
+    
+    @builtins.property
+    def _autovacuum_vacuum_cost_limit(self) -> __OneOfClass__autovacuum_vacuum_cost_limit_autovacuum_vacuum_cost_limit__|None:
+        field_name: str|None = super().which_field_in_oneof("_autovacuum_vacuum_cost_limit")
+        match field_name:
+            case "autovacuum_vacuum_cost_limit":
+                return self.__OneOfClass__autovacuum_vacuum_cost_limit_autovacuum_vacuum_cost_limit__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__autovacuum_naptime__(pb_classes.OneOf):
+        name: builtins.str= "_autovacuum_naptime"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__autovacuum_naptime_autovacuum_naptime__(__OneOfClass__autovacuum_naptime__):
+        field: typing.Literal["autovacuum_naptime"] = "autovacuum_naptime"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.autovacuum_naptime
+    
+    @builtins.property
+    def _autovacuum_naptime(self) -> __OneOfClass__autovacuum_naptime_autovacuum_naptime__|None:
+        field_name: str|None = super().which_field_in_oneof("_autovacuum_naptime")
+        match field_name:
+            case "autovacuum_naptime":
+                return self.__OneOfClass__autovacuum_naptime_autovacuum_naptime__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__autovacuum_vacuum_scale_factor__(pb_classes.OneOf):
+        name: builtins.str= "_autovacuum_vacuum_scale_factor"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__autovacuum_vacuum_scale_factor_autovacuum_vacuum_scale_factor__(__OneOfClass__autovacuum_vacuum_scale_factor__):
+        field: typing.Literal["autovacuum_vacuum_scale_factor"] = "autovacuum_vacuum_scale_factor"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.float":
+            return self._message.autovacuum_vacuum_scale_factor
+    
+    @builtins.property
+    def _autovacuum_vacuum_scale_factor(self) -> __OneOfClass__autovacuum_vacuum_scale_factor_autovacuum_vacuum_scale_factor__|None:
+        field_name: str|None = super().which_field_in_oneof("_autovacuum_vacuum_scale_factor")
+        match field_name:
+            case "autovacuum_vacuum_scale_factor":
+                return self.__OneOfClass__autovacuum_vacuum_scale_factor_autovacuum_vacuum_scale_factor__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__autovacuum_analyze_scale_factor__(pb_classes.OneOf):
+        name: builtins.str= "_autovacuum_analyze_scale_factor"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__autovacuum_analyze_scale_factor_autovacuum_analyze_scale_factor__(__OneOfClass__autovacuum_analyze_scale_factor__):
+        field: typing.Literal["autovacuum_analyze_scale_factor"] = "autovacuum_analyze_scale_factor"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.float":
+            return self._message.autovacuum_analyze_scale_factor
+    
+    @builtins.property
+    def _autovacuum_analyze_scale_factor(self) -> __OneOfClass__autovacuum_analyze_scale_factor_autovacuum_analyze_scale_factor__|None:
+        field_name: str|None = super().which_field_in_oneof("_autovacuum_analyze_scale_factor")
+        match field_name:
+            case "autovacuum_analyze_scale_factor":
+                return self.__OneOfClass__autovacuum_analyze_scale_factor_autovacuum_analyze_scale_factor__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__default_transaction_read_only__(pb_classes.OneOf):
+        name: builtins.str= "_default_transaction_read_only"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__default_transaction_read_only_default_transaction_read_only__(__OneOfClass__default_transaction_read_only__):
+        field: typing.Literal["default_transaction_read_only"] = "default_transaction_read_only"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.default_transaction_read_only
+    
+    @builtins.property
+    def _default_transaction_read_only(self) -> __OneOfClass__default_transaction_read_only_default_transaction_read_only__|None:
+        field_name: str|None = super().which_field_in_oneof("_default_transaction_read_only")
+        match field_name:
+            case "default_transaction_read_only":
+                return self.__OneOfClass__default_transaction_read_only_default_transaction_read_only__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__search_path__(pb_classes.OneOf):
+        name: builtins.str= "_search_path"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__search_path_search_path__(__OneOfClass__search_path__):
+        field: typing.Literal["search_path"] = "search_path"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.search_path
+    
+    @builtins.property
+    def _search_path(self) -> __OneOfClass__search_path_search_path__|None:
+        field_name: str|None = super().which_field_in_oneof("_search_path")
+        match field_name:
+            case "search_path":
+                return self.__OneOfClass__search_path_search_path__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__max_connections__(pb_classes.OneOf):
+        name: builtins.str= "_max_connections"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__max_connections_max_connections__(__OneOfClass__max_connections__):
+        field: typing.Literal["max_connections"] = "max_connections"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.max_connections
+    
+    @builtins.property
+    def _max_connections(self) -> __OneOfClass__max_connections_max_connections__|None:
+        field_name: str|None = super().which_field_in_oneof("_max_connections")
+        match field_name:
+            case "max_connections":
+                return self.__OneOfClass__max_connections_max_connections__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__shared_buffers__(pb_classes.OneOf):
+        name: builtins.str= "_shared_buffers"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__()
+            self._message: "PostgresqlConfig16" = msg
+    
+    class __OneOfClass__shared_buffers_shared_buffers__(__OneOfClass__shared_buffers__):
+        field: typing.Literal["shared_buffers"] = "shared_buffers"
+        
+        def __init__(self, msg: "PostgresqlConfig16") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.shared_buffers
+    
+    @builtins.property
+    def _shared_buffers(self) -> __OneOfClass__shared_buffers_shared_buffers__|None:
+        field_name: str|None = super().which_field_in_oneof("_shared_buffers")
+        match field_name:
+            case "shared_buffers":
+                return self.__OneOfClass__shared_buffers_shared_buffers__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -58,7 +383,7 @@ class PostgresqlConfig16(pb_classes.Message):
         if shared_buffers is not None:
             self.shared_buffers = shared_buffers
     
-    @property
+    @builtins.property
     def autovacuum_work_mem(self) -> "builtins.int|None":
         return super()._get_field("autovacuum_work_mem", explicit_presence=True,
         )
@@ -67,7 +392,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("autovacuum_work_mem",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def statement_timeout(self) -> "builtins.int|None":
         return super()._get_field("statement_timeout", explicit_presence=True,
         )
@@ -76,7 +401,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("statement_timeout",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def idle_in_transaction_session_timeout(self) -> "builtins.int|None":
         return super()._get_field("idle_in_transaction_session_timeout", explicit_presence=True,
         )
@@ -85,7 +410,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("idle_in_transaction_session_timeout",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def autovacuum_vacuum_cost_delay(self) -> "builtins.int|None":
         return super()._get_field("autovacuum_vacuum_cost_delay", explicit_presence=True,
         )
@@ -94,7 +419,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("autovacuum_vacuum_cost_delay",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def autovacuum_vacuum_cost_limit(self) -> "builtins.int|None":
         return super()._get_field("autovacuum_vacuum_cost_limit", explicit_presence=True,
         )
@@ -103,7 +428,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("autovacuum_vacuum_cost_limit",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def autovacuum_naptime(self) -> "builtins.int|None":
         return super()._get_field("autovacuum_naptime", explicit_presence=True,
         )
@@ -112,7 +437,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("autovacuum_naptime",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def autovacuum_vacuum_scale_factor(self) -> "builtins.float|None":
         return super()._get_field("autovacuum_vacuum_scale_factor", explicit_presence=True,
         )
@@ -121,7 +446,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("autovacuum_vacuum_scale_factor",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def autovacuum_analyze_scale_factor(self) -> "builtins.float|None":
         return super()._get_field("autovacuum_analyze_scale_factor", explicit_presence=True,
         )
@@ -130,7 +455,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("autovacuum_analyze_scale_factor",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def default_transaction_read_only(self) -> "builtins.bool|None":
         return super()._get_field("default_transaction_read_only", explicit_presence=True,
         )
@@ -139,7 +464,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("default_transaction_read_only",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def search_path(self) -> "builtins.str|None":
         return super()._get_field("search_path", explicit_presence=True,
         )
@@ -148,7 +473,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("search_path",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def max_connections(self) -> "builtins.int|None":
         return super()._get_field("max_connections", explicit_presence=True,
         )
@@ -157,7 +482,7 @@ class PostgresqlConfig16(pb_classes.Message):
         return super()._set_field("max_connections",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def shared_buffers(self) -> "builtins.int|None":
         return super()._get_field("shared_buffers", explicit_presence=True,
         )

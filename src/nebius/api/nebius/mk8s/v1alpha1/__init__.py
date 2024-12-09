@@ -20,12 +20,14 @@ import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.api.nebius.mk8s.v1alpha1.instance_template_pb2 as instance_template_pb2
+import typing as typing
 import nebius.api.nebius.mk8s.v1alpha1.node_group_pb2 as node_group_pb2
 import google.protobuf.duration_pb2 as duration_pb2
 import datetime as datetime
-import nebius.base.protos.well_known as well_known
+import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.mk8s.v1alpha1.node_group_service_pb2 as node_group_service_pb2
 import google.protobuf.empty_pb2 as empty_pb2
+import nebius.api.nebius.mk8s.v1alpha1.progress_data_pb2 as progress_data_pb2
 #@ local imports here @#
 
 # file: nebius/mk8s/v1alpha1/cluster.proto
@@ -49,7 +51,7 @@ class Cluster(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -59,7 +61,7 @@ class Cluster(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -69,7 +71,7 @@ class Cluster(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "ClusterStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=ClusterStatus,
@@ -96,7 +98,7 @@ class ClusterSpec(pb_classes.Message):
         if kube_network is not None:
             self.kube_network = kube_network
     
-    @property
+    @builtins.property
     def control_plane(self) -> "ControlPlaneSpec":
         return super()._get_field("control_plane", explicit_presence=False,
         wrap=ControlPlaneSpec,
@@ -106,7 +108,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("control_plane",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def kube_network(self) -> "KubeNetworkSpec":
         return super()._get_field("kube_network", explicit_presence=False,
         wrap=KubeNetworkSpec,
@@ -139,7 +141,7 @@ class ControlPlaneSpec(pb_classes.Message):
         if etcd_cluster_size is not None:
             self.etcd_cluster_size = etcd_cluster_size
     
-    @property
+    @builtins.property
     def version(self) -> "builtins.str":
         return super()._get_field("version", explicit_presence=False,
         )
@@ -148,7 +150,7 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def subnet_id(self) -> "builtins.str":
         return super()._get_field("subnet_id", explicit_presence=False,
         )
@@ -157,7 +159,7 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._set_field("subnet_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def endpoints(self) -> "ControlPlaneEndpointsSpec":
         return super()._get_field("endpoints", explicit_presence=False,
         wrap=ControlPlaneEndpointsSpec,
@@ -167,7 +169,7 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._set_field("endpoints",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def etcd_cluster_size(self) -> "builtins.int":
         return super()._get_field("etcd_cluster_size", explicit_presence=False,
         )
@@ -190,7 +192,7 @@ class ControlPlaneEndpointsSpec(pb_classes.Message):
         if public_endpoint is not None:
             self.public_endpoint = public_endpoint
     
-    @property
+    @builtins.property
     def public_endpoint(self) -> "PublicEndpointSpec|None":
         return super()._get_field("public_endpoint", explicit_presence=True,
         wrap=PublicEndpointSpec,
@@ -224,7 +226,7 @@ class KubeNetworkSpec(pb_classes.Message):
         if service_cidrs is not None:
             self.service_cidrs = service_cidrs
     
-    @property
+    @builtins.property
     def service_cidrs(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("service_cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -261,7 +263,7 @@ class ClusterStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
-    @property
+    @builtins.property
     def state(self) -> "ClusterStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=ClusterStatus.State,
@@ -271,7 +273,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def control_plane(self) -> "ControlPlaneStatus":
         return super()._get_field("control_plane", explicit_presence=False,
         wrap=ControlPlaneStatus,
@@ -281,7 +283,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("control_plane",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         return super()._get_field("reconciling", explicit_presence=False,
         )
@@ -300,6 +302,7 @@ class ControlPlaneStatus(pb_classes.Message):
         *,
         version: "builtins.str|None" = None,
         endpoints: "ControlPlaneStatusEndpoints|cluster_pb2.ControlPlaneStatusEndpoints|None" = None,
+        etcd_cluster_size: "builtins.int|None" = None,
         auth: "ControlPlaneStatusAuth|cluster_pb2.ControlPlaneStatusAuth|None" = None,
     ) -> None:
         super().__init__(initial_message)
@@ -307,10 +310,12 @@ class ControlPlaneStatus(pb_classes.Message):
             self.version = version
         if endpoints is not None:
             self.endpoints = endpoints
+        if etcd_cluster_size is not None:
+            self.etcd_cluster_size = etcd_cluster_size
         if auth is not None:
             self.auth = auth
     
-    @property
+    @builtins.property
     def version(self) -> "builtins.str":
         return super()._get_field("version", explicit_presence=False,
         )
@@ -319,7 +324,7 @@ class ControlPlaneStatus(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def endpoints(self) -> "ControlPlaneStatusEndpoints":
         return super()._get_field("endpoints", explicit_presence=False,
         wrap=ControlPlaneStatusEndpoints,
@@ -329,7 +334,16 @@ class ControlPlaneStatus(pb_classes.Message):
         return super()._set_field("endpoints",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
+    def etcd_cluster_size(self) -> "builtins.int":
+        return super()._get_field("etcd_cluster_size", explicit_presence=False,
+        )
+    @etcd_cluster_size.setter
+    def etcd_cluster_size(self, value: "builtins.int") -> None:
+        return super()._set_field("etcd_cluster_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def auth(self) -> "ControlPlaneStatusAuth":
         return super()._get_field("auth", explicit_presence=False,
         wrap=ControlPlaneStatusAuth,
@@ -356,7 +370,7 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
         if private_endpoint is not None:
             self.private_endpoint = private_endpoint
     
-    @property
+    @builtins.property
     def public_endpoint(self) -> "builtins.str":
         return super()._get_field("public_endpoint", explicit_presence=False,
         )
@@ -365,7 +379,7 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
         return super()._set_field("public_endpoint",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def private_endpoint(self) -> "builtins.str":
         return super()._get_field("private_endpoint", explicit_presence=False,
         )
@@ -388,7 +402,7 @@ class ControlPlaneStatusAuth(pb_classes.Message):
         if cluster_ca_certificate is not None:
             self.cluster_ca_certificate = cluster_ca_certificate
     
-    @property
+    @builtins.property
     def cluster_ca_certificate(self) -> "builtins.str":
         return super()._get_field("cluster_ca_certificate", explicit_presence=False,
         )
@@ -415,7 +429,7 @@ class CreateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -425,7 +439,7 @@ class CreateClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -452,7 +466,7 @@ class GetClusterRequest(pb_classes.Message):
         if resource_version is not None:
             self.resource_version = resource_version
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -461,7 +475,7 @@ class GetClusterRequest(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_version(self) -> "builtins.str":
         return super()._get_field("resource_version", explicit_presence=False,
         )
@@ -487,7 +501,7 @@ class GetClusterByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -496,7 +510,7 @@ class GetClusterByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -525,7 +539,7 @@ class ListClustersRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -534,7 +548,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -543,7 +557,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -569,7 +583,7 @@ class ListClustersResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Cluster,None),
@@ -579,7 +593,7 @@ class ListClustersResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -605,7 +619,7 @@ class UpdateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -615,7 +629,7 @@ class UpdateClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -639,7 +653,7 @@ class DeleteClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -785,6 +799,66 @@ class DiskSpec(pb_classes.Message):
         NETWORK_SSD_IO_M3 = 3
         NETWORK_SSD_NON_REPLICATED = 4
     
+    class __OneOfClass_size__(pb_classes.OneOf):
+        name: builtins.str= "size"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__()
+            self._message: "DiskSpec" = msg
+    
+    class __OneOfClass_size_size_bytes__(__OneOfClass_size__):
+        field: typing.Literal["size_bytes"] = "size_bytes"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_bytes
+    
+    class __OneOfClass_size_size_kibibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_kibibytes"] = "size_kibibytes"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_kibibytes
+    
+    class __OneOfClass_size_size_mebibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_mebibytes"] = "size_mebibytes"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_mebibytes
+    
+    class __OneOfClass_size_size_gibibytes__(__OneOfClass_size__):
+        field: typing.Literal["size_gibibytes"] = "size_gibibytes"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.size_gibibytes
+    
+    @builtins.property
+    def size(self) -> __OneOfClass_size_size_bytes__|__OneOfClass_size_size_kibibytes__|__OneOfClass_size_size_mebibytes__|__OneOfClass_size_size_gibibytes__|None:
+        field_name: str|None = super().which_field_in_oneof("size")
+        match field_name:
+            case "size_bytes":
+                return self.__OneOfClass_size_size_bytes__(self)
+            case "size_kibibytes":
+                return self.__OneOfClass_size_size_kibibytes__(self)
+            case "size_mebibytes":
+                return self.__OneOfClass_size_size_mebibytes__(self)
+            case "size_gibibytes":
+                return self.__OneOfClass_size_size_gibibytes__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -810,7 +884,7 @@ class DiskSpec(pb_classes.Message):
         if type is not None:
             self.type = type
     
-    @property
+    @builtins.property
     def size_bytes(self) -> "builtins.int|None":
         return super()._get_field("size_bytes", explicit_presence=True,
         )
@@ -819,7 +893,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("size_bytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_kibibytes(self) -> "builtins.int|None":
         return super()._get_field("size_kibibytes", explicit_presence=True,
         )
@@ -828,7 +902,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("size_kibibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_mebibytes(self) -> "builtins.int|None":
         return super()._get_field("size_mebibytes", explicit_presence=True,
         )
@@ -837,7 +911,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("size_mebibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def size_gibibytes(self) -> "builtins.int|None":
         return super()._get_field("size_gibibytes", explicit_presence=True,
         )
@@ -846,7 +920,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("size_gibibytes",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def block_size_bytes(self) -> "builtins.int":
         return super()._get_field("block_size_bytes", explicit_presence=False,
         )
@@ -855,7 +929,7 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("block_size_bytes",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def type(self) -> "DiskSpec.DiskType":
         return super()._get_field("type", explicit_presence=False,
         wrap=DiskSpec.DiskType,
@@ -868,6 +942,33 @@ class DiskSpec(pb_classes.Message):
 class ResourcesSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_template_pb2.ResourcesSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ResourcesSpec",instance_template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_size__(pb_classes.OneOf):
+        name: builtins.str= "size"
+        
+        def __init__(self, msg: "ResourcesSpec") -> None:
+            super().__init__()
+            self._message: "ResourcesSpec" = msg
+    
+    class __OneOfClass_size_preset__(__OneOfClass_size__):
+        field: typing.Literal["preset"] = "preset"
+        
+        def __init__(self, msg: "ResourcesSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.preset
+    
+    @builtins.property
+    def size(self) -> __OneOfClass_size_preset__|None:
+        field_name: str|None = super().which_field_in_oneof("size")
+        match field_name:
+            case "preset":
+                return self.__OneOfClass_size_preset__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -882,7 +983,7 @@ class ResourcesSpec(pb_classes.Message):
         if preset is not None:
             self.preset = preset
     
-    @property
+    @builtins.property
     def platform(self) -> "builtins.str":
         return super()._get_field("platform", explicit_presence=False,
         )
@@ -891,7 +992,7 @@ class ResourcesSpec(pb_classes.Message):
         return super()._set_field("platform",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def preset(self) -> "builtins.str|None":
         return super()._get_field("preset", explicit_presence=True,
         )
@@ -921,7 +1022,7 @@ class NodeGroup(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -931,7 +1032,7 @@ class NodeGroup(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "NodeGroupSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=NodeGroupSpec,
@@ -941,7 +1042,7 @@ class NodeGroup(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "NodeGroupStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=NodeGroupStatus,
@@ -954,6 +1055,44 @@ class NodeGroup(pb_classes.Message):
 class NodeGroupSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeGroupSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_size__(pb_classes.OneOf):
+        name: builtins.str= "size"
+        
+        def __init__(self, msg: "NodeGroupSpec") -> None:
+            super().__init__()
+            self._message: "NodeGroupSpec" = msg
+    
+    class __OneOfClass_size_fixed_node_count__(__OneOfClass_size__):
+        field: typing.Literal["fixed_node_count"] = "fixed_node_count"
+        
+        def __init__(self, msg: "NodeGroupSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.fixed_node_count
+    
+    class __OneOfClass_size_autoscaling__(__OneOfClass_size__):
+        field: typing.Literal["autoscaling"] = "autoscaling"
+        
+        def __init__(self, msg: "NodeGroupSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "NodeGroupAutoscalingSpec":
+            return self._message.autoscaling
+    
+    @builtins.property
+    def size(self) -> __OneOfClass_size_fixed_node_count__|__OneOfClass_size_autoscaling__|None:
+        field_name: str|None = super().which_field_in_oneof("size")
+        match field_name:
+            case "fixed_node_count":
+                return self.__OneOfClass_size_fixed_node_count__(self)
+            case "autoscaling":
+                return self.__OneOfClass_size_autoscaling__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -977,7 +1116,7 @@ class NodeGroupSpec(pb_classes.Message):
         if strategy is not None:
             self.strategy = strategy
     
-    @property
+    @builtins.property
     def version(self) -> "builtins.str":
         return super()._get_field("version", explicit_presence=False,
         )
@@ -986,7 +1125,7 @@ class NodeGroupSpec(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def fixed_node_count(self) -> "builtins.int|None":
         return super()._get_field("fixed_node_count", explicit_presence=True,
         )
@@ -995,7 +1134,7 @@ class NodeGroupSpec(pb_classes.Message):
         return super()._set_field("fixed_node_count",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def autoscaling(self) -> "NodeGroupAutoscalingSpec":
         return super()._get_field("autoscaling", explicit_presence=False,
         wrap=NodeGroupAutoscalingSpec,
@@ -1005,7 +1144,7 @@ class NodeGroupSpec(pb_classes.Message):
         return super()._set_field("autoscaling",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def template(self) -> "NodeTemplate":
         return super()._get_field("template", explicit_presence=False,
         wrap=NodeTemplate,
@@ -1015,7 +1154,7 @@ class NodeGroupSpec(pb_classes.Message):
         return super()._set_field("template",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def strategy(self) -> "NodeGroupDeploymentStrategy":
         return super()._get_field("strategy", explicit_presence=False,
         wrap=NodeGroupDeploymentStrategy,
@@ -1063,7 +1202,7 @@ class NodeTemplate(pb_classes.Message):
         if service_account_id is not None:
             self.service_account_id = service_account_id
     
-    @property
+    @builtins.property
     def metadata(self) -> "NodeMetadataTemplate":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=NodeMetadataTemplate,
@@ -1073,7 +1212,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def taints(self) -> "abc.MutableSequence[NodeTaint]":
         return super()._get_field("taints", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(NodeTaint,None),
@@ -1083,7 +1222,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("taints",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resources(self) -> "ResourcesSpec":
         return super()._get_field("resources", explicit_presence=False,
         wrap=ResourcesSpec,
@@ -1093,7 +1232,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def boot_disk(self) -> "DiskSpec":
         return super()._get_field("boot_disk", explicit_presence=False,
         wrap=DiskSpec,
@@ -1103,7 +1242,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("boot_disk",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def gpu_cluster(self) -> "GpuClusterSpec":
         return super()._get_field("gpu_cluster", explicit_presence=False,
         wrap=GpuClusterSpec,
@@ -1113,7 +1252,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("gpu_cluster",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def network_interfaces(self) -> "abc.MutableSequence[NetworkInterfaceTemplate]":
         return super()._get_field("network_interfaces", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(NetworkInterfaceTemplate,None),
@@ -1123,7 +1262,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("network_interfaces",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filesystems(self) -> "abc.MutableSequence[AttachedFilesystemSpec]":
         return super()._get_field("filesystems", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None),
@@ -1133,7 +1272,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("filesystems",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def cloud_init_user_data(self) -> "builtins.str":
         return super()._get_field("cloud_init_user_data", explicit_presence=False,
         )
@@ -1142,7 +1281,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("cloud_init_user_data",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def service_account_id(self) -> "builtins.str":
         return super()._get_field("service_account_id", explicit_presence=False,
         )
@@ -1172,7 +1311,7 @@ class NodeMetadataTemplate(pb_classes.Message):
             if value is not None:
                 self.value = value
         
-        @property
+        @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
             )
@@ -1181,7 +1320,7 @@ class NodeMetadataTemplate(pb_classes.Message):
             return super()._set_field("key",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def value(self) -> "builtins.str":
             return super()._get_field("value", explicit_presence=False,
             )
@@ -1201,7 +1340,7 @@ class NodeMetadataTemplate(pb_classes.Message):
         if labels is not None:
             self.labels = labels
     
-    @property
+    @builtins.property
     def labels(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         return super()._get_field("labels", explicit_presence=False,
         wrap=pb_classes.Map,
@@ -1225,7 +1364,7 @@ class GpuClusterSpec(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1251,7 +1390,7 @@ class NetworkInterfaceTemplate(pb_classes.Message):
         if subnet_id is not None:
             self.subnet_id = subnet_id
     
-    @property
+    @builtins.property
     def public_ip_address(self) -> "PublicIPAddress|None":
         return super()._get_field("public_ip_address", explicit_presence=True,
         wrap=PublicIPAddress,
@@ -1261,7 +1400,7 @@ class NetworkInterfaceTemplate(pb_classes.Message):
         return super()._set_field("public_ip_address",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def subnet_id(self) -> "builtins.str":
         return super()._get_field("subnet_id", explicit_presence=False,
         )
@@ -1290,6 +1429,33 @@ class AttachedFilesystemSpec(pb_classes.Message):
         READ_ONLY = 1
         READ_WRITE = 2
     
+    class __OneOfClass_type__(pb_classes.OneOf):
+        name: builtins.str= "type"
+        
+        def __init__(self, msg: "AttachedFilesystemSpec") -> None:
+            super().__init__()
+            self._message: "AttachedFilesystemSpec" = msg
+    
+    class __OneOfClass_type_existing_filesystem__(__OneOfClass_type__):
+        field: typing.Literal["existing_filesystem"] = "existing_filesystem"
+        
+        def __init__(self, msg: "AttachedFilesystemSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ExistingFilesystem":
+            return self._message.existing_filesystem
+    
+    @builtins.property
+    def type(self) -> __OneOfClass_type_existing_filesystem__|None:
+        field_name: str|None = super().which_field_in_oneof("type")
+        match field_name:
+            case "existing_filesystem":
+                return self.__OneOfClass_type_existing_filesystem__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -1306,7 +1472,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         if existing_filesystem is not None:
             self.existing_filesystem = existing_filesystem
     
-    @property
+    @builtins.property
     def attach_mode(self) -> "AttachedFilesystemSpec.AttachMode":
         return super()._get_field("attach_mode", explicit_presence=False,
         wrap=AttachedFilesystemSpec.AttachMode,
@@ -1316,7 +1482,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         return super()._set_field("attach_mode",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def device_name(self) -> "builtins.str":
         return super()._get_field("device_name", explicit_presence=False,
         )
@@ -1325,7 +1491,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         return super()._set_field("device_name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def existing_filesystem(self) -> "ExistingFilesystem":
         return super()._get_field("existing_filesystem", explicit_presence=False,
         wrap=ExistingFilesystem,
@@ -1349,7 +1515,7 @@ class ExistingFilesystem(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1375,7 +1541,7 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
         if max_node_count is not None:
             self.max_node_count = max_node_count
     
-    @property
+    @builtins.property
     def min_node_count(self) -> "builtins.int":
         return super()._get_field("min_node_count", explicit_presence=False,
         )
@@ -1384,7 +1550,7 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
         return super()._set_field("min_node_count",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def max_node_count(self) -> "builtins.int":
         return super()._get_field("max_node_count", explicit_presence=False,
         )
@@ -1420,7 +1586,7 @@ class NodeTaint(pb_classes.Message):
         if effect is not None:
             self.effect = effect
     
-    @property
+    @builtins.property
     def key(self) -> "builtins.str":
         return super()._get_field("key", explicit_presence=False,
         )
@@ -1429,7 +1595,7 @@ class NodeTaint(pb_classes.Message):
         return super()._set_field("key",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def value(self) -> "builtins.str":
         return super()._get_field("value", explicit_presence=False,
         )
@@ -1438,7 +1604,7 @@ class NodeTaint(pb_classes.Message):
         return super()._set_field("value",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def effect(self) -> "NodeTaint.Effect":
         return super()._get_field("effect", explicit_presence=False,
         wrap=NodeTaint.Effect,
@@ -1468,7 +1634,7 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         if drain_timeout is not None:
             self.drain_timeout = drain_timeout
     
-    @property
+    @builtins.property
     def max_unavailable(self) -> "PercentOrCount":
         return super()._get_field("max_unavailable", explicit_presence=False,
         wrap=PercentOrCount,
@@ -1478,7 +1644,7 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         return super()._set_field("max_unavailable",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def max_surge(self) -> "PercentOrCount":
         return super()._get_field("max_surge", explicit_presence=False,
         wrap=PercentOrCount,
@@ -1488,20 +1654,58 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         return super()._set_field("max_surge",value,explicit_presence=False,
         )
     
-    @property
-    def drain_timeout(self) -> "datetime.timedelta":
-        return super()._get_field("drain_timeout", explicit_presence=False,
-        wrap=well_known.from_duration
+    @builtins.property
+    def drain_timeout(self) -> "datetime.timedelta|None":
+        return super()._get_field("drain_timeout", explicit_presence=True,
+        wrap=well_known_1.from_duration
         )
     @drain_timeout.setter
-    def drain_timeout(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
-        return super()._set_field("drain_timeout",value,explicit_presence=False,
-        unwrap=well_known.to_duration
+    def drain_timeout(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("drain_timeout",value,explicit_presence=True,
+        unwrap=well_known_1.to_duration
         )
     
 class PercentOrCount(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.PercentOrCount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.PercentOrCount",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_value__(pb_classes.OneOf):
+        name: builtins.str= "value"
+        
+        def __init__(self, msg: "PercentOrCount") -> None:
+            super().__init__()
+            self._message: "PercentOrCount" = msg
+    
+    class __OneOfClass_value_percent__(__OneOfClass_value__):
+        field: typing.Literal["percent"] = "percent"
+        
+        def __init__(self, msg: "PercentOrCount") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.percent
+    
+    class __OneOfClass_value_count__(__OneOfClass_value__):
+        field: typing.Literal["count"] = "count"
+        
+        def __init__(self, msg: "PercentOrCount") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.count
+    
+    @builtins.property
+    def value(self) -> __OneOfClass_value_percent__|__OneOfClass_value_count__|None:
+        field_name: str|None = super().which_field_in_oneof("value")
+        match field_name:
+            case "percent":
+                return self.__OneOfClass_value_percent__(self)
+            case "count":
+                return self.__OneOfClass_value_count__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1516,7 +1720,7 @@ class PercentOrCount(pb_classes.Message):
         if count is not None:
             self.count = count
     
-    @property
+    @builtins.property
     def percent(self) -> "builtins.int|None":
         return super()._get_field("percent", explicit_presence=True,
         )
@@ -1525,7 +1729,7 @@ class PercentOrCount(pb_classes.Message):
         return super()._set_field("percent",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def count(self) -> "builtins.int|None":
         return super()._get_field("count", explicit_presence=True,
         )
@@ -1573,7 +1777,7 @@ class NodeGroupStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
-    @property
+    @builtins.property
     def state(self) -> "NodeGroupStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=NodeGroupStatus.State,
@@ -1583,7 +1787,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def version(self) -> "builtins.str":
         return super()._get_field("version", explicit_presence=False,
         )
@@ -1592,7 +1796,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def target_node_count(self) -> "builtins.int":
         return super()._get_field("target_node_count", explicit_presence=False,
         )
@@ -1601,7 +1805,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._set_field("target_node_count",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def node_count(self) -> "builtins.int":
         return super()._get_field("node_count", explicit_presence=False,
         )
@@ -1610,7 +1814,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._set_field("node_count",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def outdated_node_count(self) -> "builtins.int":
         return super()._get_field("outdated_node_count", explicit_presence=False,
         )
@@ -1619,7 +1823,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._set_field("outdated_node_count",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def ready_node_count(self) -> "builtins.int":
         return super()._get_field("ready_node_count", explicit_presence=False,
         )
@@ -1628,7 +1832,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._set_field("ready_node_count",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         return super()._get_field("reconciling", explicit_presence=False,
         )
@@ -1655,7 +1859,7 @@ class CreateNodeGroupRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1665,7 +1869,7 @@ class CreateNodeGroupRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "NodeGroupSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=NodeGroupSpec,
@@ -1692,7 +1896,7 @@ class GetNodeGroupRequest(pb_classes.Message):
         if resource_version is not None:
             self.resource_version = resource_version
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1701,7 +1905,7 @@ class GetNodeGroupRequest(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resource_version(self) -> "builtins.str":
         return super()._get_field("resource_version", explicit_presence=False,
         )
@@ -1727,7 +1931,7 @@ class GetNodeGroupByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1736,7 +1940,7 @@ class GetNodeGroupByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -1765,7 +1969,7 @@ class ListNodeGroupsRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1774,7 +1978,7 @@ class ListNodeGroupsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1783,7 +1987,7 @@ class ListNodeGroupsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1809,7 +2013,7 @@ class ListNodeGroupsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[NodeGroup]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(NodeGroup,None),
@@ -1819,7 +2023,7 @@ class ListNodeGroupsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -1845,7 +2049,7 @@ class UpdateNodeGroupRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1855,7 +2059,7 @@ class UpdateNodeGroupRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "NodeGroupSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=NodeGroupSpec,
@@ -1879,7 +2083,7 @@ class DeleteNodeGroupRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1891,6 +2095,33 @@ class DeleteNodeGroupRequest(pb_classes.Message):
 class UpgradeNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.UpgradeNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.UpgradeNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_upgrade_type__(pb_classes.OneOf):
+        name: builtins.str= "upgrade_type"
+        
+        def __init__(self, msg: "UpgradeNodeGroupRequest") -> None:
+            super().__init__()
+            self._message: "UpgradeNodeGroupRequest" = msg
+    
+    class __OneOfClass_upgrade_type_latest_infra_version__(__OneOfClass_upgrade_type__):
+        field: typing.Literal["latest_infra_version"] = "latest_infra_version"
+        
+        def __init__(self, msg: "UpgradeNodeGroupRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "empty_pb2.Empty":
+            return self._message.latest_infra_version
+    
+    @builtins.property
+    def upgrade_type(self) -> __OneOfClass_upgrade_type_latest_infra_version__|None:
+        field_name: str|None = super().which_field_in_oneof("upgrade_type")
+        match field_name:
+            case "latest_infra_version":
+                return self.__OneOfClass_upgrade_type_latest_infra_version__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1905,7 +2136,7 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
         if latest_infra_version is not None:
             self.latest_infra_version = latest_infra_version
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1914,7 +2145,7 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def latest_infra_version(self) -> "empty_pb2.Empty|None":
         return super()._get_field("latest_infra_version", explicit_presence=True,
         )
@@ -2067,6 +2298,66 @@ class NodeGroupServiceClient(client.Client):
         )
     
 
+# file: nebius/mk8s/v1alpha1/progress_data.proto
+class ProgressData(pb_classes.Message):
+    __PB2_CLASS__ = progress_data_pb2.ProgressData
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ProgressData",progress_data_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        problems: "abc.Iterable[Problem]|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if problems is not None:
+            self.problems = problems
+    
+    @builtins.property
+    def problems(self) -> "abc.MutableSequence[Problem]":
+        return super()._get_field("problems", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Problem,None),
+        )
+    @problems.setter
+    def problems(self, value: "abc.Iterable[Problem]") -> None:
+        return super()._set_field("problems",value,explicit_presence=False,
+        )
+    
+class Problem(pb_classes.Message):
+    __PB2_CLASS__ = progress_data_pb2.Problem
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.Problem",progress_data_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        stage: "builtins.str|None" = None,
+        message: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if stage is not None:
+            self.stage = stage
+        if message is not None:
+            self.message = message
+    
+    @builtins.property
+    def stage(self) -> "builtins.str":
+        return super()._get_field("stage", explicit_presence=False,
+        )
+    @stage.setter
+    def stage(self, value: "builtins.str") -> None:
+        return super()._set_field("stage",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def message(self) -> "builtins.str":
+        return super()._get_field("message", explicit_presence=False,
+        )
+    @message.setter
+    def message(self, value: "builtins.str") -> None:
+        return super()._set_field("message",value,explicit_presence=False,
+        )
+    
 __all__ = [
     #@ local import names here @#
     "Cluster",
@@ -2112,4 +2403,6 @@ __all__ = [
     "DeleteNodeGroupRequest",
     "UpgradeNodeGroupRequest",
     "NodeGroupServiceClient",
+    "ProgressData",
+    "Problem",
 ]

@@ -41,7 +41,7 @@ class K8sRelease(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -51,7 +51,7 @@ class K8sRelease(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "K8sReleaseSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=K8sReleaseSpec,
@@ -61,7 +61,7 @@ class K8sRelease(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "K8sReleaseStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=K8sReleaseStatus,
@@ -92,7 +92,7 @@ class K8sReleaseSpec(pb_classes.Message):
             if value is not None:
                 self.value = value
         
-        @property
+        @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
             )
@@ -101,7 +101,7 @@ class K8sReleaseSpec(pb_classes.Message):
             return super()._set_field("key",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def value(self) -> "builtins.str":
             return super()._get_field("value", explicit_presence=False,
             )
@@ -136,7 +136,7 @@ class K8sReleaseSpec(pb_classes.Message):
         if set is not None:
             self.set = set
     
-    @property
+    @builtins.property
     def cluster_id(self) -> "builtins.str":
         return super()._get_field("cluster_id", explicit_presence=False,
         )
@@ -145,7 +145,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._set_field("cluster_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def product_slug(self) -> "builtins.str":
         return super()._get_field("product_slug", explicit_presence=False,
         )
@@ -154,7 +154,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._set_field("product_slug",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def namespace(self) -> "builtins.str":
         return super()._get_field("namespace", explicit_presence=False,
         )
@@ -163,7 +163,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._set_field("namespace",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def application_name(self) -> "builtins.str":
         return super()._get_field("application_name", explicit_presence=False,
         )
@@ -172,7 +172,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._set_field("application_name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def values(self) -> "builtins.str":
         return super()._get_field("values", explicit_presence=False,
         )
@@ -181,7 +181,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._set_field("values",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def set(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         return super()._get_field("set", explicit_presence=False,
         wrap=pb_classes.Map,
@@ -202,6 +202,7 @@ class K8sReleaseStatus(pb_classes.Message):
         RUNNING = 2
         DEPLOYED = 3
         FAILED = 4
+        INSTALLING = 5
     
     def __init__(
         self,
@@ -216,7 +217,7 @@ class K8sReleaseStatus(pb_classes.Message):
         if error_message is not None:
             self.error_message = error_message
     
-    @property
+    @builtins.property
     def state(self) -> "K8sReleaseStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=K8sReleaseStatus.State,
@@ -226,7 +227,7 @@ class K8sReleaseStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def error_message(self) -> "builtins.str":
         return super()._get_field("error_message", explicit_presence=False,
         )
@@ -250,7 +251,7 @@ class GetK8sReleaseRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -285,7 +286,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         if cluster_id is not None:
             self.cluster_id = cluster_id
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -294,7 +295,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -303,7 +304,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -312,7 +313,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -321,7 +322,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def cluster_id(self) -> "builtins.str":
         return super()._get_field("cluster_id", explicit_presence=False,
         )
@@ -347,7 +348,7 @@ class CreateK8sReleaseRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -357,7 +358,7 @@ class CreateK8sReleaseRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "K8sReleaseSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=K8sReleaseSpec,
@@ -381,7 +382,7 @@ class DeleteK8sReleaseRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -407,7 +408,7 @@ class ListK8sReleasesResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[K8sRelease]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(K8sRelease,None),
@@ -417,7 +418,7 @@ class ListK8sReleasesResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )

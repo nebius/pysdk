@@ -2,6 +2,7 @@ from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.compute.v1 import network_interface_pb2 as _network_interface_pb2
+from nebius.api.nebius.compute.v1 import maintenance_event_pb2 as _maintenance_event_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -114,7 +115,7 @@ class AttachedFilesystemSpec(_message.Message):
     def __init__(self, attach_mode: _Optional[_Union[AttachedFilesystemSpec.AttachMode, str]] = ..., mount_tag: _Optional[str] = ..., existing_filesystem: _Optional[_Union[ExistingFilesystem, _Mapping]] = ...) -> None: ...
 
 class InstanceStatus(_message.Message):
-    __slots__ = ("state", "network_interfaces", "reconciling")
+    __slots__ = ("state", "network_interfaces", "reconciling", "maintenance_event")
     class InstanceState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         UNSPECIFIED: _ClassVar[InstanceStatus.InstanceState]
@@ -138,7 +139,9 @@ class InstanceStatus(_message.Message):
     STATE_FIELD_NUMBER: _ClassVar[int]
     NETWORK_INTERFACES_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
+    MAINTENANCE_EVENT_FIELD_NUMBER: _ClassVar[int]
     state: InstanceStatus.InstanceState
     network_interfaces: _containers.RepeatedCompositeFieldContainer[_network_interface_pb2.NetworkInterfaceStatus]
     reconciling: bool
-    def __init__(self, state: _Optional[_Union[InstanceStatus.InstanceState, str]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceStatus, _Mapping]]] = ..., reconciling: bool = ...) -> None: ...
+    maintenance_event: _maintenance_event_pb2.MaintenanceEventStatus
+    def __init__(self, state: _Optional[_Union[InstanceStatus.InstanceState, str]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceStatus, _Mapping]]] = ..., reconciling: bool = ..., maintenance_event: _Optional[_Union[_maintenance_event_pb2.MaintenanceEventStatus, _Mapping]] = ...) -> None: ...

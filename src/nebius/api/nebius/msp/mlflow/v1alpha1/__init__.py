@@ -43,7 +43,7 @@ class Cluster(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -53,7 +53,7 @@ class Cluster(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -63,7 +63,7 @@ class Cluster(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "MlflowClusterStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=MlflowClusterStatus,
@@ -105,7 +105,7 @@ class ClusterSpec(pb_classes.Message):
         if network_id is not None:
             self.network_id = network_id
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -114,7 +114,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def public_access(self) -> "builtins.bool":
         return super()._get_field("public_access", explicit_presence=False,
         )
@@ -123,7 +123,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("public_access",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def admin_username(self) -> "builtins.str":
         return super()._get_field("admin_username", explicit_presence=False,
         )
@@ -132,7 +132,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("admin_username",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def admin_password(self) -> "builtins.str":
         return super()._get_field("admin_password", explicit_presence=False,
         )
@@ -141,7 +141,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("admin_password",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def service_account_id(self) -> "builtins.str":
         return super()._get_field("service_account_id", explicit_presence=False,
         )
@@ -150,7 +150,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("service_account_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def storage_bucket_name(self) -> "builtins.str":
         return super()._get_field("storage_bucket_name", explicit_presence=False,
         )
@@ -159,7 +159,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("storage_bucket_name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def network_id(self) -> "builtins.str":
         return super()._get_field("network_id", explicit_presence=False,
         )
@@ -182,6 +182,7 @@ class MlflowClusterStatus(pb_classes.Message):
         effective_storage_bucket_name: "builtins.str|None" = None,
         experiments_count: "builtins.int|None" = None,
         mlflow_version: "builtins.str|None" = None,
+        tracking_endpoints: "Endpoints|cluster_pb2.Endpoints|None" = None,
     ) -> None:
         super().__init__(initial_message)
         if phase is not None:
@@ -196,8 +197,10 @@ class MlflowClusterStatus(pb_classes.Message):
             self.experiments_count = experiments_count
         if mlflow_version is not None:
             self.mlflow_version = mlflow_version
+        if tracking_endpoints is not None:
+            self.tracking_endpoints = tracking_endpoints
     
-    @property
+    @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
@@ -207,7 +210,7 @@ class MlflowClusterStatus(pb_classes.Message):
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
@@ -217,7 +220,7 @@ class MlflowClusterStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def tracking_endpoint(self) -> "builtins.str":
         return super()._get_field("tracking_endpoint", explicit_presence=False,
         )
@@ -226,7 +229,7 @@ class MlflowClusterStatus(pb_classes.Message):
         return super()._set_field("tracking_endpoint",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def effective_storage_bucket_name(self) -> "builtins.str":
         return super()._get_field("effective_storage_bucket_name", explicit_presence=False,
         )
@@ -235,7 +238,7 @@ class MlflowClusterStatus(pb_classes.Message):
         return super()._set_field("effective_storage_bucket_name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def experiments_count(self) -> "builtins.int":
         return super()._get_field("experiments_count", explicit_presence=False,
         )
@@ -244,13 +247,58 @@ class MlflowClusterStatus(pb_classes.Message):
         return super()._set_field("experiments_count",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def mlflow_version(self) -> "builtins.str":
         return super()._get_field("mlflow_version", explicit_presence=False,
         )
     @mlflow_version.setter
     def mlflow_version(self, value: "builtins.str") -> None:
         return super()._set_field("mlflow_version",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def tracking_endpoints(self) -> "Endpoints":
+        return super()._get_field("tracking_endpoints", explicit_presence=False,
+        wrap=Endpoints,
+        )
+    @tracking_endpoints.setter
+    def tracking_endpoints(self, value: "Endpoints|cluster_pb2.Endpoints") -> None:
+        return super()._set_field("tracking_endpoints",value,explicit_presence=False,
+        )
+    
+class Endpoints(pb_classes.Message):
+    __PB2_CLASS__ = cluster_pb2.Endpoints
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.mlflow.v1alpha1.Endpoints",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        private: "builtins.str|None" = None,
+        public: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if private is not None:
+            self.private = private
+        if public is not None:
+            self.public = public
+    
+    @builtins.property
+    def private(self) -> "builtins.str":
+        return super()._get_field("private", explicit_presence=False,
+        )
+    @private.setter
+    def private(self, value: "builtins.str") -> None:
+        return super()._set_field("private",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def public(self) -> "builtins.str":
+        return super()._get_field("public", explicit_presence=False,
+        )
+    @public.setter
+    def public(self, value: "builtins.str") -> None:
+        return super()._set_field("public",value,explicit_presence=False,
         )
     
 # file: nebius/msp/mlflow/v1alpha1/cluster_service.proto
@@ -268,7 +316,7 @@ class GetClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -294,7 +342,7 @@ class GetClusterByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -303,7 +351,7 @@ class GetClusterByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -332,7 +380,7 @@ class ListClustersRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -341,7 +389,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -350,7 +398,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -376,7 +424,7 @@ class ListClustersResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Cluster,None),
@@ -386,7 +434,7 @@ class ListClustersResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -412,7 +460,7 @@ class CreateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -422,7 +470,7 @@ class CreateClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -446,7 +494,7 @@ class DeleteClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -564,6 +612,7 @@ __all__ = [
     "Cluster",
     "ClusterSpec",
     "MlflowClusterStatus",
+    "Endpoints",
     "GetClusterRequest",
     "GetClusterByNameRequest",
     "ListClustersRequest",

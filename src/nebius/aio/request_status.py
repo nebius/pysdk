@@ -28,7 +28,9 @@ class RequestStatus:
 
 
 def request_status_from_rpc_status(status: StatusPb) -> RequestStatus:  # type: ignore[unused-ignore]
-    return RequestStatus.from_rpc_status(status)  # type: ignore[unused-ignore]
+    from .service_error import RequestStatusExtended
+
+    return RequestStatusExtended.from_rpc_status(status)  # type: ignore[unused-ignore]
 
 
 def request_status_to_rpc_status(status: RequestStatus) -> StatusPb:  # type: ignore[unused-ignore]

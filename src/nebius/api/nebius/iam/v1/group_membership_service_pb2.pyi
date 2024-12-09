@@ -65,6 +65,14 @@ class ListGroupMembershipsResponse(_message.Message):
     next_page_token: str
     def __init__(self, memberships: _Optional[_Iterable[_Union[_group_membership_pb2.GroupMembership, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
 
+class ListGroupMembershipsWithAttributesResponse(_message.Message):
+    __slots__ = ("memberships", "next_page_token")
+    MEMBERSHIPS_FIELD_NUMBER: _ClassVar[int]
+    NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    memberships: _containers.RepeatedCompositeFieldContainer[_group_membership_pb2.GroupMembershipWithAttributes]
+    next_page_token: str
+    def __init__(self, memberships: _Optional[_Iterable[_Union[_group_membership_pb2.GroupMembershipWithAttributes, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
+
 class ListMemberOfResponse(_message.Message):
     __slots__ = ("items", "next_page_token")
     ITEMS_FIELD_NUMBER: _ClassVar[int]

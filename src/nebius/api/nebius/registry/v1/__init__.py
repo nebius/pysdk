@@ -11,7 +11,7 @@ import google.protobuf.message as message_1
 import builtins as builtins
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
-import nebius.base.protos.well_known as well_known
+import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.registry.v1.artifact_service_pb2 as artifact_service_pb2
 import collections.abc as abc
 import nebius.aio.client as client
@@ -80,7 +80,7 @@ class Artifact(pb_classes.Message):
         if updated_at is not None:
             self.updated_at = updated_at
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -89,7 +89,7 @@ class Artifact(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -98,7 +98,7 @@ class Artifact(pb_classes.Message):
         return super()._set_field("name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def media_type(self) -> "builtins.str":
         return super()._get_field("media_type", explicit_presence=False,
         )
@@ -107,7 +107,7 @@ class Artifact(pb_classes.Message):
         return super()._set_field("media_type",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def digest(self) -> "builtins.str":
         return super()._get_field("digest", explicit_presence=False,
         )
@@ -116,7 +116,7 @@ class Artifact(pb_classes.Message):
         return super()._set_field("digest",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def size(self) -> "builtins.int":
         return super()._get_field("size", explicit_presence=False,
         )
@@ -125,7 +125,7 @@ class Artifact(pb_classes.Message):
         return super()._set_field("size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "Artifact.Status":
         return super()._get_field("status", explicit_presence=False,
         wrap=Artifact.Status,
@@ -135,7 +135,7 @@ class Artifact(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def type(self) -> "Artifact.Type":
         return super()._get_field("type", explicit_presence=False,
         wrap=Artifact.Type,
@@ -145,26 +145,26 @@ class Artifact(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
-    @property
-    def created_at(self) -> "datetime.datetime":
-        return super()._get_field("created_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def created_at(self) -> "datetime.datetime|None":
+        return super()._get_field("created_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("created_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("created_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
-    @property
-    def updated_at(self) -> "datetime.datetime":
-        return super()._get_field("updated_at", explicit_presence=False,
-        wrap=well_known.from_timestamp
+    @builtins.property
+    def updated_at(self) -> "datetime.datetime|None":
+        return super()._get_field("updated_at", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
         )
     @updated_at.setter
-    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("updated_at",value,explicit_presence=False,
-        unwrap=well_known.to_timestamp
+    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("updated_at",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
         )
     
 # file: nebius/registry/v1/artifact_service.proto
@@ -182,7 +182,7 @@ class GetArtifactRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -214,7 +214,7 @@ class ListArtifactsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -223,7 +223,7 @@ class ListArtifactsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -232,7 +232,7 @@ class ListArtifactsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -241,7 +241,7 @@ class ListArtifactsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -267,7 +267,7 @@ class ListArtifactsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Artifact]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Artifact,None),
@@ -277,7 +277,7 @@ class ListArtifactsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -300,7 +300,7 @@ class DeleteArtifactRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -395,7 +395,7 @@ class Registry(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -405,7 +405,7 @@ class Registry(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "RegistrySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=RegistrySpec,
@@ -415,7 +415,7 @@ class Registry(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "RegistryStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=RegistryStatus,
@@ -442,7 +442,7 @@ class RegistrySpec(pb_classes.Message):
         if images_count is not None:
             self.images_count = images_count
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -451,7 +451,7 @@ class RegistrySpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def images_count(self) -> "builtins.int":
         return super()._get_field("images_count", explicit_presence=False,
         )
@@ -476,12 +476,15 @@ class RegistryStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         state: "RegistryStatus.State|registry_pb2.RegistryStatus.State|None" = None,
+        images_count: "builtins.int|None" = None,
     ) -> None:
         super().__init__(initial_message)
         if state is not None:
             self.state = state
+        if images_count is not None:
+            self.images_count = images_count
     
-    @property
+    @builtins.property
     def state(self) -> "RegistryStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=RegistryStatus.State,
@@ -489,6 +492,15 @@ class RegistryStatus(pb_classes.Message):
     @state.setter
     def state(self, value: "RegistryStatus.State|registry_pb2.RegistryStatus.State") -> None:
         return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def images_count(self) -> "builtins.int":
+        return super()._get_field("images_count", explicit_presence=False,
+        )
+    @images_count.setter
+    def images_count(self, value: "builtins.int") -> None:
+        return super()._set_field("images_count",value,explicit_presence=False,
         )
     
 # file: nebius/registry/v1/registry_service.proto
@@ -506,7 +518,7 @@ class GetRegistryRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -538,7 +550,7 @@ class ListRegistriesRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -547,7 +559,7 @@ class ListRegistriesRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -556,7 +568,7 @@ class ListRegistriesRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -565,7 +577,7 @@ class ListRegistriesRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def filter(self) -> "builtins.str":
         return super()._get_field("filter", explicit_presence=False,
         )
@@ -591,7 +603,7 @@ class ListRegistriesResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Registry]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Registry,None),
@@ -601,7 +613,7 @@ class ListRegistriesResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -627,7 +639,7 @@ class CreateRegistryRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -637,7 +649,7 @@ class CreateRegistryRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "RegistrySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=RegistrySpec,
@@ -664,7 +676,7 @@ class UpdateRegistryRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -674,7 +686,7 @@ class UpdateRegistryRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "RegistrySpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=RegistrySpec,
@@ -698,7 +710,7 @@ class DeleteRegistryRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )

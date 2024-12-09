@@ -25,7 +25,7 @@ def _modify_name(
     else:
         first_container_letter = first_container_letter.upper()
 
-    # if suggested name is reserved, prefix it
+    # if suggested name is reserved or conflicts with getter, prefix it
     if is_reserved_name(suggested_name):
         return f"{first_container_letter}_{suggested_name}"
 
@@ -72,8 +72,8 @@ def message(full_enum_name: str) -> str:
 
 
 # canonical one-of names are already pythonic, we have to only check for conflicts
-def one_of(full_enum_name: str) -> str:
-    return _class_name(full_enum_name)
+def one_of(field_name: str, message_name: str) -> str:
+    return _modify_name(field_name, message_name)
 
 
 def service(full_service_name: str) -> str:

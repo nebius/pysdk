@@ -13,6 +13,7 @@ import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import builtins as builtins
 import collections.abc as abc
 import nebius.api.nebius.vpc.v1.allocation_pb2 as allocation_pb2
+import typing as typing
 import nebius.api.nebius.vpc.v1.allocation_service_pb2 as allocation_service_pb2
 import nebius.aio.client as client
 import grpc as grpc
@@ -65,7 +66,7 @@ class Pool(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -75,7 +76,7 @@ class Pool(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "PoolSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=PoolSpec,
@@ -85,7 +86,7 @@ class Pool(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "PoolStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=PoolStatus,
@@ -118,7 +119,7 @@ class PoolSpec(pb_classes.Message):
         if cidrs is not None:
             self.cidrs = cidrs
     
-    @property
+    @builtins.property
     def source_pool_id(self) -> "builtins.str":
         return super()._get_field("source_pool_id", explicit_presence=False,
         )
@@ -127,7 +128,7 @@ class PoolSpec(pb_classes.Message):
         return super()._set_field("source_pool_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def version(self) -> "IpVersion":
         return super()._get_field("version", explicit_presence=False,
         wrap=IpVersion,
@@ -137,7 +138,7 @@ class PoolSpec(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def visibility(self) -> "IpVisibility":
         return super()._get_field("visibility", explicit_presence=False,
         wrap=IpVisibility,
@@ -147,7 +148,7 @@ class PoolSpec(pb_classes.Message):
         return super()._set_field("visibility",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def cidrs(self) -> "abc.MutableSequence[PoolCidr]":
         return super()._get_field("cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(PoolCidr,None),
@@ -177,7 +178,7 @@ class PoolCidr(pb_classes.Message):
         if max_mask_length is not None:
             self.max_mask_length = max_mask_length
     
-    @property
+    @builtins.property
     def cidr(self) -> "builtins.str":
         return super()._get_field("cidr", explicit_presence=False,
         )
@@ -186,7 +187,7 @@ class PoolCidr(pb_classes.Message):
         return super()._set_field("cidr",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state(self) -> "AddressBlockState":
         return super()._get_field("state", explicit_presence=False,
         wrap=AddressBlockState,
@@ -196,7 +197,7 @@ class PoolCidr(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def max_mask_length(self) -> "builtins.int":
         return super()._get_field("max_mask_length", explicit_presence=False,
         )
@@ -232,7 +233,7 @@ class PoolStatus(pb_classes.Message):
         if scope_id is not None:
             self.scope_id = scope_id
     
-    @property
+    @builtins.property
     def state(self) -> "PoolStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=PoolStatus.State,
@@ -242,7 +243,7 @@ class PoolStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def cidrs(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -252,7 +253,7 @@ class PoolStatus(pb_classes.Message):
         return super()._set_field("cidrs",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def scope_id(self) -> "builtins.str":
         return super()._get_field("scope_id", explicit_presence=False,
         )
@@ -282,7 +283,7 @@ class Allocation(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -292,7 +293,7 @@ class Allocation(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AllocationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AllocationSpec,
@@ -302,7 +303,7 @@ class Allocation(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "AllocationStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=AllocationStatus,
@@ -315,6 +316,44 @@ class Allocation(pb_classes.Message):
 class AllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_ip_spec__(pb_classes.OneOf):
+        name: builtins.str= "ip_spec"
+        
+        def __init__(self, msg: "AllocationSpec") -> None:
+            super().__init__()
+            self._message: "AllocationSpec" = msg
+    
+    class __OneOfClass_ip_spec_ipv4_private__(__OneOfClass_ip_spec__):
+        field: typing.Literal["ipv4_private"] = "ipv4_private"
+        
+        def __init__(self, msg: "AllocationSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "IPv4PrivateAllocationSpec":
+            return self._message.ipv4_private
+    
+    class __OneOfClass_ip_spec_ipv4_public__(__OneOfClass_ip_spec__):
+        field: typing.Literal["ipv4_public"] = "ipv4_public"
+        
+        def __init__(self, msg: "AllocationSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "IPv4PublicAllocationSpec":
+            return self._message.ipv4_public
+    
+    @builtins.property
+    def ip_spec(self) -> __OneOfClass_ip_spec_ipv4_private__|__OneOfClass_ip_spec_ipv4_public__|None:
+        field_name: str|None = super().which_field_in_oneof("ip_spec")
+        match field_name:
+            case "ipv4_private":
+                return self.__OneOfClass_ip_spec_ipv4_private__(self)
+            case "ipv4_public":
+                return self.__OneOfClass_ip_spec_ipv4_public__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -329,7 +368,7 @@ class AllocationSpec(pb_classes.Message):
         if ipv4_public is not None:
             self.ipv4_public = ipv4_public
     
-    @property
+    @builtins.property
     def ipv4_private(self) -> "IPv4PrivateAllocationSpec|None":
         return super()._get_field("ipv4_private", explicit_presence=True,
         wrap=IPv4PrivateAllocationSpec,
@@ -339,7 +378,7 @@ class AllocationSpec(pb_classes.Message):
         return super()._set_field("ipv4_private",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def ipv4_public(self) -> "IPv4PublicAllocationSpec|None":
         return super()._get_field("ipv4_public", explicit_presence=True,
         wrap=IPv4PublicAllocationSpec,
@@ -353,6 +392,44 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.IPv4PrivateAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PrivateAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
+    class __OneOfClass_pool__(pb_classes.OneOf):
+        name: builtins.str= "pool"
+        
+        def __init__(self, msg: "IPv4PrivateAllocationSpec") -> None:
+            super().__init__()
+            self._message: "IPv4PrivateAllocationSpec" = msg
+    
+    class __OneOfClass_pool_subnet_id__(__OneOfClass_pool__):
+        field: typing.Literal["subnet_id"] = "subnet_id"
+        
+        def __init__(self, msg: "IPv4PrivateAllocationSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.subnet_id
+    
+    class __OneOfClass_pool_pool_id__(__OneOfClass_pool__):
+        field: typing.Literal["pool_id"] = "pool_id"
+        
+        def __init__(self, msg: "IPv4PrivateAllocationSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.pool_id
+    
+    @builtins.property
+    def pool(self) -> __OneOfClass_pool_subnet_id__|__OneOfClass_pool_pool_id__|None:
+        field_name: str|None = super().which_field_in_oneof("pool")
+        match field_name:
+            case "subnet_id":
+                return self.__OneOfClass_pool_subnet_id__(self)
+            case "pool_id":
+                return self.__OneOfClass_pool_pool_id__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -369,7 +446,7 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
         if pool_id is not None:
             self.pool_id = pool_id
     
-    @property
+    @builtins.property
     def cidr(self) -> "builtins.str":
         return super()._get_field("cidr", explicit_presence=False,
         )
@@ -378,7 +455,7 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
         return super()._set_field("cidr",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def subnet_id(self) -> "builtins.str|None":
         return super()._get_field("subnet_id", explicit_presence=True,
         )
@@ -387,7 +464,7 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
         return super()._set_field("subnet_id",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def pool_id(self) -> "builtins.str|None":
         return super()._get_field("pool_id", explicit_presence=True,
         )
@@ -400,6 +477,44 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.IPv4PublicAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PublicAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
+    class __OneOfClass_pool__(pb_classes.OneOf):
+        name: builtins.str= "pool"
+        
+        def __init__(self, msg: "IPv4PublicAllocationSpec") -> None:
+            super().__init__()
+            self._message: "IPv4PublicAllocationSpec" = msg
+    
+    class __OneOfClass_pool_subnet_id__(__OneOfClass_pool__):
+        field: typing.Literal["subnet_id"] = "subnet_id"
+        
+        def __init__(self, msg: "IPv4PublicAllocationSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.subnet_id
+    
+    class __OneOfClass_pool_pool_id__(__OneOfClass_pool__):
+        field: typing.Literal["pool_id"] = "pool_id"
+        
+        def __init__(self, msg: "IPv4PublicAllocationSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.pool_id
+    
+    @builtins.property
+    def pool(self) -> __OneOfClass_pool_subnet_id__|__OneOfClass_pool_pool_id__|None:
+        field_name: str|None = super().which_field_in_oneof("pool")
+        match field_name:
+            case "subnet_id":
+                return self.__OneOfClass_pool_subnet_id__(self)
+            case "pool_id":
+                return self.__OneOfClass_pool_pool_id__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -416,7 +531,7 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
         if pool_id is not None:
             self.pool_id = pool_id
     
-    @property
+    @builtins.property
     def cidr(self) -> "builtins.str":
         return super()._get_field("cidr", explicit_presence=False,
         )
@@ -425,7 +540,7 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
         return super()._set_field("cidr",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def subnet_id(self) -> "builtins.str|None":
         return super()._get_field("subnet_id", explicit_presence=True,
         )
@@ -434,7 +549,7 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
         return super()._set_field("subnet_id",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def pool_id(self) -> "builtins.str|None":
         return super()._get_field("pool_id", explicit_presence=True,
         )
@@ -474,7 +589,7 @@ class AllocationStatus(pb_classes.Message):
         if static is not None:
             self.static = static
     
-    @property
+    @builtins.property
     def state(self) -> "AllocationStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=AllocationStatus.State,
@@ -484,7 +599,7 @@ class AllocationStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def details(self) -> "AllocationDetails":
         return super()._get_field("details", explicit_presence=False,
         wrap=AllocationDetails,
@@ -494,7 +609,7 @@ class AllocationStatus(pb_classes.Message):
         return super()._set_field("details",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def assignment(self) -> "Assignment":
         return super()._get_field("assignment", explicit_presence=False,
         wrap=Assignment,
@@ -504,7 +619,7 @@ class AllocationStatus(pb_classes.Message):
         return super()._set_field("assignment",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def static(self) -> "builtins.bool":
         return super()._get_field("static", explicit_presence=False,
         )
@@ -533,7 +648,7 @@ class AllocationDetails(pb_classes.Message):
         if version is not None:
             self.version = version
     
-    @property
+    @builtins.property
     def allocated_cidr(self) -> "builtins.str":
         return super()._get_field("allocated_cidr", explicit_presence=False,
         )
@@ -542,7 +657,7 @@ class AllocationDetails(pb_classes.Message):
         return super()._set_field("allocated_cidr",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def pool_id(self) -> "builtins.str":
         return super()._get_field("pool_id", explicit_presence=False,
         )
@@ -551,7 +666,7 @@ class AllocationDetails(pb_classes.Message):
         return super()._set_field("pool_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def version(self) -> "IpVersion":
         return super()._get_field("version", explicit_presence=False,
         wrap=IpVersion,
@@ -564,6 +679,44 @@ class AllocationDetails(pb_classes.Message):
 class Assignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.Assignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Assignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_type__(pb_classes.OneOf):
+        name: builtins.str= "type"
+        
+        def __init__(self, msg: "Assignment") -> None:
+            super().__init__()
+            self._message: "Assignment" = msg
+    
+    class __OneOfClass_type_network_interface__(__OneOfClass_type__):
+        field: typing.Literal["network_interface"] = "network_interface"
+        
+        def __init__(self, msg: "Assignment") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "NetworkInterfaceAssignment":
+            return self._message.network_interface
+    
+    class __OneOfClass_type_load_balancer__(__OneOfClass_type__):
+        field: typing.Literal["load_balancer"] = "load_balancer"
+        
+        def __init__(self, msg: "Assignment") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "LoadBalancerAssignment":
+            return self._message.load_balancer
+    
+    @builtins.property
+    def type(self) -> __OneOfClass_type_network_interface__|__OneOfClass_type_load_balancer__|None:
+        field_name: str|None = super().which_field_in_oneof("type")
+        match field_name:
+            case "network_interface":
+                return self.__OneOfClass_type_network_interface__(self)
+            case "load_balancer":
+                return self.__OneOfClass_type_load_balancer__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -578,7 +731,7 @@ class Assignment(pb_classes.Message):
         if load_balancer is not None:
             self.load_balancer = load_balancer
     
-    @property
+    @builtins.property
     def network_interface(self) -> "NetworkInterfaceAssignment":
         return super()._get_field("network_interface", explicit_presence=False,
         wrap=NetworkInterfaceAssignment,
@@ -588,7 +741,7 @@ class Assignment(pb_classes.Message):
         return super()._set_field("network_interface",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def load_balancer(self) -> "LoadBalancerAssignment":
         return super()._get_field("load_balancer", explicit_presence=False,
         wrap=LoadBalancerAssignment,
@@ -615,7 +768,7 @@ class NetworkInterfaceAssignment(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def instance_id(self) -> "builtins.str":
         return super()._get_field("instance_id", explicit_presence=False,
         )
@@ -624,7 +777,7 @@ class NetworkInterfaceAssignment(pb_classes.Message):
         return super()._set_field("instance_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -647,7 +800,7 @@ class LoadBalancerAssignment(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -671,7 +824,7 @@ class GetAllocationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -697,7 +850,7 @@ class GetAllocationByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -706,7 +859,7 @@ class GetAllocationByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -735,7 +888,7 @@ class ListAllocationsRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -744,7 +897,7 @@ class ListAllocationsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -753,7 +906,54 @@ class ListAllocationsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+class ListAllocationsByPoolRequest(pb_classes.Message):
+    __PB2_CLASS__ = allocation_service_pb2.ListAllocationsByPoolRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsByPoolRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        pool_id: "builtins.str|None" = None,
+        page_size: "builtins.int|None" = None,
+        page_token: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if pool_id is not None:
+            self.pool_id = pool_id
+        if page_size is not None:
+            self.page_size = page_size
+        if page_token is not None:
+            self.page_token = page_token
+    
+    @builtins.property
+    def pool_id(self) -> "builtins.str":
+        return super()._get_field("pool_id", explicit_presence=False,
+        )
+    @pool_id.setter
+    def pool_id(self, value: "builtins.str") -> None:
+        return super()._set_field("pool_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -779,7 +979,7 @@ class ListAllocationsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Allocation]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Allocation,None),
@@ -789,7 +989,7 @@ class ListAllocationsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -815,7 +1015,7 @@ class CreateAllocationRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -825,7 +1025,7 @@ class CreateAllocationRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AllocationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AllocationSpec,
@@ -852,7 +1052,7 @@ class UpdateAllocationRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -862,7 +1062,7 @@ class UpdateAllocationRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "AllocationSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=AllocationSpec,
@@ -886,7 +1086,7 @@ class DeleteAllocationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -949,6 +1149,25 @@ class AllocationServiceClient(client.Client):
     ) -> request_1.Request["ListAllocationsRequest","ListAllocationsResponse"]:
         return super().request(
             method="List",
+            request=request,
+            result_pb2_class=allocation_service_pb2.ListAllocationsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+    
+    def list_by_pool(self,
+        request: "ListAllocationsByPoolRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["ListAllocationsByPoolRequest","ListAllocationsResponse"]:
+        return super().request(
+            method="ListByPool",
             request=request,
             result_pb2_class=allocation_service_pb2.ListAllocationsResponse,
             metadata=metadata,
@@ -1040,7 +1259,7 @@ class Network(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1050,7 +1269,7 @@ class Network(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "NetworkSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=NetworkSpec,
@@ -1060,7 +1279,7 @@ class Network(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "NetworkStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=NetworkStatus,
@@ -1087,7 +1306,7 @@ class NetworkSpec(pb_classes.Message):
         if ipv4_public_pools is not None:
             self.ipv4_public_pools = ipv4_public_pools
     
-    @property
+    @builtins.property
     def ipv4_private_pools(self) -> "IPv4PrivateNetworkPools":
         return super()._get_field("ipv4_private_pools", explicit_presence=False,
         wrap=IPv4PrivateNetworkPools,
@@ -1097,7 +1316,7 @@ class NetworkSpec(pb_classes.Message):
         return super()._set_field("ipv4_private_pools",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def ipv4_public_pools(self) -> "IPv4PublicNetworkPools":
         return super()._get_field("ipv4_public_pools", explicit_presence=False,
         wrap=IPv4PublicNetworkPools,
@@ -1121,7 +1340,7 @@ class IPv4PrivateNetworkPools(pb_classes.Message):
         if pools is not None:
             self.pools = pools
     
-    @property
+    @builtins.property
     def pools(self) -> "abc.MutableSequence[NetworkPool]":
         return super()._get_field("pools", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(NetworkPool,None),
@@ -1145,7 +1364,7 @@ class IPv4PublicNetworkPools(pb_classes.Message):
         if pools is not None:
             self.pools = pools
     
-    @property
+    @builtins.property
     def pools(self) -> "abc.MutableSequence[NetworkPool]":
         return super()._get_field("pools", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(NetworkPool,None),
@@ -1169,7 +1388,7 @@ class NetworkPool(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1199,7 +1418,7 @@ class NetworkStatus(pb_classes.Message):
         if state is not None:
             self.state = state
     
-    @property
+    @builtins.property
     def state(self) -> "NetworkStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=NetworkStatus.State,
@@ -1224,7 +1443,7 @@ class GetNetworkRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1250,7 +1469,7 @@ class GetNetworkByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1259,7 +1478,7 @@ class GetNetworkByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -1288,7 +1507,7 @@ class ListNetworksRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1297,7 +1516,7 @@ class ListNetworksRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1306,7 +1525,7 @@ class ListNetworksRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1332,7 +1551,7 @@ class ListNetworksResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Network]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Network,None),
@@ -1342,7 +1561,7 @@ class ListNetworksResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -1429,7 +1648,7 @@ class GetPoolRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1455,7 +1674,7 @@ class GetPoolByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1464,7 +1683,7 @@ class GetPoolByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -1493,7 +1712,7 @@ class ListPoolsRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1502,7 +1721,7 @@ class ListPoolsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1511,7 +1730,54 @@ class ListPoolsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+class ListPoolsBySourcePoolRequest(pb_classes.Message):
+    __PB2_CLASS__ = pool_service_pb2.ListPoolsBySourcePoolRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListPoolsBySourcePoolRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        pool_id: "builtins.str|None" = None,
+        page_size: "builtins.int|None" = None,
+        page_token: "builtins.str|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if pool_id is not None:
+            self.pool_id = pool_id
+        if page_size is not None:
+            self.page_size = page_size
+        if page_token is not None:
+            self.page_token = page_token
+    
+    @builtins.property
+    def pool_id(self) -> "builtins.str":
+        return super()._get_field("pool_id", explicit_presence=False,
+        )
+    @pool_id.setter
+    def pool_id(self, value: "builtins.str") -> None:
+        return super()._set_field("pool_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1537,7 +1803,7 @@ class ListPoolsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Pool]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Pool,None),
@@ -1547,7 +1813,7 @@ class ListPoolsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -1573,7 +1839,7 @@ class UpdatePoolRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1583,7 +1849,7 @@ class UpdatePoolRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "PoolSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=PoolSpec,
@@ -1656,6 +1922,25 @@ class PoolServiceClient(client.Client):
             compression=compression,
         )
     
+    def list_by_source_pool(self,
+        request: "ListPoolsBySourcePoolRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["ListPoolsBySourcePoolRequest","ListPoolsResponse"]:
+        return super().request(
+            method="ListBySourcePool",
+            request=request,
+            result_pb2_class=pool_service_pb2.ListPoolsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+        )
+    
     def update(self,
         request: "UpdatePoolRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
@@ -1698,7 +1983,7 @@ class Subnet(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1708,7 +1993,7 @@ class Subnet(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "SubnetSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=SubnetSpec,
@@ -1718,7 +2003,7 @@ class Subnet(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "SubnetStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=SubnetStatus,
@@ -1748,7 +2033,7 @@ class SubnetSpec(pb_classes.Message):
         if ipv4_public_pools is not None:
             self.ipv4_public_pools = ipv4_public_pools
     
-    @property
+    @builtins.property
     def network_id(self) -> "builtins.str":
         return super()._get_field("network_id", explicit_presence=False,
         )
@@ -1757,7 +2042,7 @@ class SubnetSpec(pb_classes.Message):
         return super()._set_field("network_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def ipv4_private_pools(self) -> "IPv4PrivateSubnetPools|None":
         return super()._get_field("ipv4_private_pools", explicit_presence=True,
         wrap=IPv4PrivateSubnetPools,
@@ -1767,7 +2052,7 @@ class SubnetSpec(pb_classes.Message):
         return super()._set_field("ipv4_private_pools",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def ipv4_public_pools(self) -> "IPv4PublicSubnetPools|None":
         return super()._get_field("ipv4_public_pools", explicit_presence=True,
         wrap=IPv4PublicSubnetPools,
@@ -1794,7 +2079,7 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
         if use_network_pools is not None:
             self.use_network_pools = use_network_pools
     
-    @property
+    @builtins.property
     def pools(self) -> "abc.MutableSequence[SubnetPool]":
         return super()._get_field("pools", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(SubnetPool,None),
@@ -1804,7 +2089,7 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
         return super()._set_field("pools",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def use_network_pools(self) -> "builtins.bool":
         return super()._get_field("use_network_pools", explicit_presence=False,
         )
@@ -1830,7 +2115,7 @@ class IPv4PublicSubnetPools(pb_classes.Message):
         if use_network_pools is not None:
             self.use_network_pools = use_network_pools
     
-    @property
+    @builtins.property
     def pools(self) -> "abc.MutableSequence[SubnetPool]":
         return super()._get_field("pools", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(SubnetPool,None),
@@ -1840,7 +2125,7 @@ class IPv4PublicSubnetPools(pb_classes.Message):
         return super()._set_field("pools",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def use_network_pools(self) -> "builtins.bool":
         return super()._get_field("use_network_pools", explicit_presence=False,
         )
@@ -1863,7 +2148,7 @@ class SubnetPool(pb_classes.Message):
         if cidrs is not None:
             self.cidrs = cidrs
     
-    @property
+    @builtins.property
     def cidrs(self) -> "abc.MutableSequence[SubnetCidr]":
         return super()._get_field("cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(SubnetCidr,None),
@@ -1893,7 +2178,7 @@ class SubnetCidr(pb_classes.Message):
         if max_mask_length is not None:
             self.max_mask_length = max_mask_length
     
-    @property
+    @builtins.property
     def cidr(self) -> "builtins.str":
         return super()._get_field("cidr", explicit_presence=False,
         )
@@ -1902,7 +2187,7 @@ class SubnetCidr(pb_classes.Message):
         return super()._set_field("cidr",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state(self) -> "AddressBlockState":
         return super()._get_field("state", explicit_presence=False,
         wrap=AddressBlockState,
@@ -1912,7 +2197,7 @@ class SubnetCidr(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def max_mask_length(self) -> "builtins.int":
         return super()._get_field("max_mask_length", explicit_presence=False,
         )
@@ -1948,7 +2233,7 @@ class SubnetStatus(pb_classes.Message):
         if ipv4_public_cidrs is not None:
             self.ipv4_public_cidrs = ipv4_public_cidrs
     
-    @property
+    @builtins.property
     def state(self) -> "SubnetStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=SubnetStatus.State,
@@ -1958,7 +2243,7 @@ class SubnetStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def ipv4_private_cidrs(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("ipv4_private_cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1968,7 +2253,7 @@ class SubnetStatus(pb_classes.Message):
         return super()._set_field("ipv4_private_cidrs",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def ipv4_public_cidrs(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("ipv4_public_cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1993,7 +2278,7 @@ class GetSubnetRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2019,7 +2304,7 @@ class GetSubnetByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -2028,7 +2313,7 @@ class GetSubnetByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -2057,7 +2342,7 @@ class ListSubnetsRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -2066,7 +2351,7 @@ class ListSubnetsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -2075,7 +2360,7 @@ class ListSubnetsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -2104,7 +2389,7 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def network_id(self) -> "builtins.str":
         return super()._get_field("network_id", explicit_presence=False,
         )
@@ -2113,7 +2398,7 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
         return super()._set_field("network_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -2122,7 +2407,7 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -2148,7 +2433,7 @@ class ListSubnetsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Subnet]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Subnet,None),
@@ -2158,7 +2443,7 @@ class ListSubnetsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -2270,6 +2555,7 @@ __all__ = [
     "GetAllocationRequest",
     "GetAllocationByNameRequest",
     "ListAllocationsRequest",
+    "ListAllocationsByPoolRequest",
     "ListAllocationsResponse",
     "CreateAllocationRequest",
     "UpdateAllocationRequest",
@@ -2289,6 +2575,7 @@ __all__ = [
     "GetPoolRequest",
     "GetPoolByNameRequest",
     "ListPoolsRequest",
+    "ListPoolsBySourcePoolRequest",
     "ListPoolsResponse",
     "UpdatePoolRequest",
     "PoolServiceClient",

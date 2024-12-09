@@ -9,11 +9,13 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.msp.v1alpha1.resource as resource_1
 import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2
+import builtins as builtins
+import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_pb2 as cluster_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.base.protos.pb_enum as pb_enum
-import builtins as builtins
+import typing as typing
 import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
 import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config as config_1
@@ -29,9 +31,9 @@ import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 #@ local imports here @#
 
 # file: nebius/msp/postgresql/v1alpha1/preset.proto
-class TemplateSpec(pb_classes.Message):
-    __PB2_CLASS__ = preset_pb2.TemplateSpec
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.TemplateSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+class PresetSpec(pb_classes.Message):
+    __PB2_CLASS__ = preset_pb2.PresetSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.PresetSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
     def __init__(
         self,
@@ -49,7 +51,7 @@ class TemplateSpec(pb_classes.Message):
         if resources is not None:
             self.resources = resources
     
-    @property
+    @builtins.property
     def hosts(self) -> "resource_1.HostSpec":
         return super()._get_field("hosts", explicit_presence=False,
         wrap=resource_1.HostSpec,
@@ -59,7 +61,7 @@ class TemplateSpec(pb_classes.Message):
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def disk(self) -> "resource_1.DiskSpec":
         return super()._get_field("disk", explicit_presence=False,
         wrap=resource_1.DiskSpec,
@@ -69,7 +71,7 @@ class TemplateSpec(pb_classes.Message):
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resources(self) -> "resource_1.ResourcesSpec":
         return super()._get_field("resources", explicit_presence=False,
         wrap=resource_1.ResourcesSpec,
@@ -77,6 +79,57 @@ class TemplateSpec(pb_classes.Message):
     @resources.setter
     def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
+        )
+    
+# file: nebius/msp/postgresql/v1alpha1/template.proto
+class TemplateSpec(pb_classes.Message):
+    __PB2_CLASS__ = template_pb2_1.TemplateSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.TemplateSpec",template_pb2_1.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None" = None,
+        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None" = None,
+        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if resources is not None:
+            self.resources = resources
+        if hosts is not None:
+            self.hosts = hosts
+        if disk is not None:
+            self.disk = disk
+    
+    @builtins.property
+    def resources(self) -> "resource_1.ResourcesSpec":
+        return super()._get_field("resources", explicit_presence=False,
+        wrap=resource_1.ResourcesSpec,
+        )
+    @resources.setter
+    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec") -> None:
+        return super()._set_field("resources",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def hosts(self) -> "resource_1.HostSpec":
+        return super()._get_field("hosts", explicit_presence=False,
+        wrap=resource_1.HostSpec,
+        )
+    @hosts.setter
+    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec") -> None:
+        return super()._set_field("hosts",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def disk(self) -> "resource_1.DiskSpec":
+        return super()._get_field("disk", explicit_presence=False,
+        wrap=resource_1.DiskSpec,
+        )
+    @disk.setter
+    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec") -> None:
+        return super()._set_field("disk",value,explicit_presence=False,
         )
     
 # file: nebius/msp/postgresql/v1alpha1/cluster.proto
@@ -100,7 +153,7 @@ class Cluster(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -110,7 +163,7 @@ class Cluster(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -120,7 +173,7 @@ class Cluster(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "ClusterStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=ClusterStatus,
@@ -140,6 +193,33 @@ class ConnectionPoolerConfig(pb_classes.Message):
         SESSION = 1
         TRANSACTION = 2
     
+    class __OneOfClass__max_pool_size__(pb_classes.OneOf):
+        name: builtins.str= "_max_pool_size"
+        
+        def __init__(self, msg: "ConnectionPoolerConfig") -> None:
+            super().__init__()
+            self._message: "ConnectionPoolerConfig" = msg
+    
+    class __OneOfClass__max_pool_size_max_pool_size__(__OneOfClass__max_pool_size__):
+        field: typing.Literal["max_pool_size"] = "max_pool_size"
+        
+        def __init__(self, msg: "ConnectionPoolerConfig") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.max_pool_size
+    
+    @builtins.property
+    def _max_pool_size(self) -> __OneOfClass__max_pool_size_max_pool_size__|None:
+        field_name: str|None = super().which_field_in_oneof("_max_pool_size")
+        match field_name:
+            case "max_pool_size":
+                return self.__OneOfClass__max_pool_size_max_pool_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -153,7 +233,7 @@ class ConnectionPoolerConfig(pb_classes.Message):
         if max_pool_size is not None:
             self.max_pool_size = max_pool_size
     
-    @property
+    @builtins.property
     def pooling_mode(self) -> "ConnectionPoolerConfig.PoolingMode":
         return super()._get_field("pooling_mode", explicit_presence=False,
         wrap=ConnectionPoolerConfig.PoolingMode,
@@ -163,7 +243,7 @@ class ConnectionPoolerConfig(pb_classes.Message):
         return super()._set_field("pooling_mode",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def max_pool_size(self) -> "builtins.int|None":
         return super()._get_field("max_pool_size", explicit_presence=True,
         )
@@ -198,7 +278,7 @@ class ClusterSpec(pb_classes.Message):
         if backup is not None:
             self.backup = backup
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
         )
@@ -207,7 +287,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def network_id(self) -> "builtins.str":
         return super()._get_field("network_id", explicit_presence=False,
         )
@@ -216,7 +296,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("network_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def config(self) -> "ConfigSpec":
         return super()._get_field("config", explicit_presence=False,
         wrap=ConfigSpec,
@@ -226,7 +306,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("config",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def bootstrap(self) -> "BootstrapSpec":
         return super()._get_field("bootstrap", explicit_presence=False,
         wrap=BootstrapSpec,
@@ -236,7 +316,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("bootstrap",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def backup(self) -> "BackupSpec":
         return super()._get_field("backup", explicit_presence=False,
         wrap=BackupSpec,
@@ -256,7 +336,6 @@ class ClusterStatus(pb_classes.Message):
         *,
         phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
         state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
-        endpoints: "EndpointsSpec|cluster_pb2.EndpointsSpec|None" = None,
         preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
         connection_endpoints: "Endpoints|cluster_pb2.Endpoints|None" = None,
     ) -> None:
@@ -265,14 +344,12 @@ class ClusterStatus(pb_classes.Message):
             self.phase = phase
         if state is not None:
             self.state = state
-        if endpoints is not None:
-            self.endpoints = endpoints
         if preset_details is not None:
             self.preset_details = preset_details
         if connection_endpoints is not None:
             self.connection_endpoints = connection_endpoints
     
-    @property
+    @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
@@ -282,7 +359,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
@@ -292,17 +369,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
-    def endpoints(self) -> "EndpointsSpec":
-        return super()._get_field("endpoints", explicit_presence=False,
-        wrap=EndpointsSpec,
-        )
-    @endpoints.setter
-    def endpoints(self, value: "EndpointsSpec|cluster_pb2.EndpointsSpec") -> None:
-        return super()._set_field("endpoints",value,explicit_presence=False,
-        )
-    
-    @property
+    @builtins.property
     def preset_details(self) -> "resource_1.PresetDetails":
         return super()._get_field("preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
@@ -312,7 +379,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("preset_details",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def connection_endpoints(self) -> "Endpoints":
         return super()._get_field("connection_endpoints", explicit_presence=False,
         wrap=Endpoints,
@@ -320,41 +387,6 @@ class ClusterStatus(pb_classes.Message):
     @connection_endpoints.setter
     def connection_endpoints(self, value: "Endpoints|cluster_pb2.Endpoints") -> None:
         return super()._set_field("connection_endpoints",value,explicit_presence=False,
-        )
-    
-class EndpointsSpec(pb_classes.Message):
-    __PB2_CLASS__ = cluster_pb2.EndpointsSpec
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.EndpointsSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        read_write_endpoint: "builtins.str|None" = None,
-        read_only_endpoint: "builtins.str|None" = None,
-    ) -> None:
-        super().__init__(initial_message)
-        if read_write_endpoint is not None:
-            self.read_write_endpoint = read_write_endpoint
-        if read_only_endpoint is not None:
-            self.read_only_endpoint = read_only_endpoint
-    
-    @property
-    def read_write_endpoint(self) -> "builtins.str":
-        return super()._get_field("read_write_endpoint", explicit_presence=False,
-        )
-    @read_write_endpoint.setter
-    def read_write_endpoint(self, value: "builtins.str") -> None:
-        return super()._set_field("read_write_endpoint",value,explicit_presence=False,
-        )
-    
-    @property
-    def read_only_endpoint(self) -> "builtins.str|None":
-        return super()._get_field("read_only_endpoint", explicit_presence=True,
-        )
-    @read_only_endpoint.setter
-    def read_only_endpoint(self, value: "builtins.str|None") -> None:
-        return super()._set_field("read_only_endpoint",value,explicit_presence=True,
         )
     
 class Endpoints(pb_classes.Message):
@@ -380,7 +412,7 @@ class Endpoints(pb_classes.Message):
         if public_read_only is not None:
             self.public_read_only = public_read_only
     
-    @property
+    @builtins.property
     def private_read_write(self) -> "builtins.str":
         return super()._get_field("private_read_write", explicit_presence=False,
         )
@@ -389,7 +421,7 @@ class Endpoints(pb_classes.Message):
         return super()._set_field("private_read_write",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def private_read_only(self) -> "builtins.str":
         return super()._get_field("private_read_only", explicit_presence=False,
         )
@@ -398,7 +430,7 @@ class Endpoints(pb_classes.Message):
         return super()._set_field("private_read_only",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def public_read_write(self) -> "builtins.str":
         return super()._get_field("public_read_write", explicit_presence=False,
         )
@@ -407,7 +439,7 @@ class Endpoints(pb_classes.Message):
         return super()._set_field("public_read_write",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def public_read_only(self) -> "builtins.str":
         return super()._get_field("public_read_only", explicit_presence=False,
         )
@@ -420,15 +452,43 @@ class ConfigSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ConfigSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ConfigSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     
+    class __OneOfClass_config__(pb_classes.OneOf):
+        name: builtins.str= "config"
+        
+        def __init__(self, msg: "ConfigSpec") -> None:
+            super().__init__()
+            self._message: "ConfigSpec" = msg
+    
+    class __OneOfClass_config_postgresql_config_16__(__OneOfClass_config__):
+        field: typing.Literal["postgresql_config_16"] = "postgresql_config_16"
+        
+        def __init__(self, msg: "ConfigSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "config_1.PostgresqlConfig16":
+            return self._message.postgresql_config_16
+    
+    @builtins.property
+    def config(self) -> __OneOfClass_config_postgresql_config_16__|None:
+        field_name: str|None = super().which_field_in_oneof("config")
+        match field_name:
+            case "postgresql_config_16":
+                return self.__OneOfClass_config_postgresql_config_16__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
         version: "builtins.str|None" = None,
         pooler_config: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|None" = None,
-        resources: "TemplateSpec|preset_pb2.TemplateSpec|None" = None,
+        resources: "PresetSpec|preset_pb2.PresetSpec|None" = None,
         postgresql_config_16: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None" = None,
         public_access: "builtins.bool|None" = None,
+        template: "TemplateSpec|template_pb2_1.TemplateSpec|None" = None,
     ) -> None:
         super().__init__(initial_message)
         if version is not None:
@@ -441,8 +501,10 @@ class ConfigSpec(pb_classes.Message):
             self.postgresql_config_16 = postgresql_config_16
         if public_access is not None:
             self.public_access = public_access
+        if template is not None:
+            self.template = template
     
-    @property
+    @builtins.property
     def version(self) -> "builtins.str":
         return super()._get_field("version", explicit_presence=False,
         )
@@ -451,7 +513,7 @@ class ConfigSpec(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def pooler_config(self) -> "ConnectionPoolerConfig":
         return super()._get_field("pooler_config", explicit_presence=False,
         wrap=ConnectionPoolerConfig,
@@ -461,17 +523,17 @@ class ConfigSpec(pb_classes.Message):
         return super()._set_field("pooler_config",value,explicit_presence=False,
         )
     
-    @property
-    def resources(self) -> "TemplateSpec":
+    @builtins.property
+    def resources(self) -> "PresetSpec":
         return super()._get_field("resources", explicit_presence=False,
-        wrap=TemplateSpec,
+        wrap=PresetSpec,
         )
     @resources.setter
-    def resources(self, value: "TemplateSpec|preset_pb2.TemplateSpec") -> None:
+    def resources(self, value: "PresetSpec|preset_pb2.PresetSpec") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def postgresql_config_16(self) -> "config_1.PostgresqlConfig16":
         return super()._get_field("postgresql_config_16", explicit_presence=False,
         wrap=config_1.PostgresqlConfig16,
@@ -481,13 +543,23 @@ class ConfigSpec(pb_classes.Message):
         return super()._set_field("postgresql_config_16",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def public_access(self) -> "builtins.bool":
         return super()._get_field("public_access", explicit_presence=False,
         )
     @public_access.setter
     def public_access(self, value: "builtins.bool") -> None:
         return super()._set_field("public_access",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def template(self) -> "TemplateSpec":
+        return super()._get_field("template", explicit_presence=False,
+        wrap=TemplateSpec,
+        )
+    @template.setter
+    def template(self, value: "TemplateSpec|template_pb2_1.TemplateSpec") -> None:
+        return super()._set_field("template",value,explicit_presence=False,
         )
     
 class BootstrapSpec(pb_classes.Message):
@@ -510,7 +582,7 @@ class BootstrapSpec(pb_classes.Message):
         if db_name is not None:
             self.db_name = db_name
     
-    @property
+    @builtins.property
     def user_name(self) -> "builtins.str":
         return super()._get_field("user_name", explicit_presence=False,
         )
@@ -519,7 +591,7 @@ class BootstrapSpec(pb_classes.Message):
         return super()._set_field("user_name",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def user_password(self) -> "builtins.str":
         return super()._get_field("user_password", explicit_presence=False,
         )
@@ -528,7 +600,7 @@ class BootstrapSpec(pb_classes.Message):
         return super()._set_field("user_password",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def db_name(self) -> "builtins.str":
         return super()._get_field("db_name", explicit_presence=False,
         )
@@ -554,7 +626,7 @@ class BackupSpec(pb_classes.Message):
         if retention_policy is not None:
             self.retention_policy = retention_policy
     
-    @property
+    @builtins.property
     def backup_window_start(self) -> "builtins.str":
         return super()._get_field("backup_window_start", explicit_presence=False,
         )
@@ -563,7 +635,7 @@ class BackupSpec(pb_classes.Message):
         return super()._set_field("backup_window_start",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def retention_policy(self) -> "builtins.str":
         return super()._get_field("retention_policy", explicit_presence=False,
         )
@@ -587,7 +659,7 @@ class GetClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -616,7 +688,7 @@ class ListClustersRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -625,7 +697,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -634,7 +706,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -660,7 +732,7 @@ class ListClustersResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def clusters(self) -> "abc.MutableSequence[Cluster]":
         return super()._get_field("clusters", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Cluster,None),
@@ -670,7 +742,7 @@ class ListClustersResponse(pb_classes.Message):
         return super()._set_field("clusters",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str":
         return super()._get_field("next_page_token", explicit_presence=False,
         )
@@ -696,7 +768,7 @@ class CreateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -706,7 +778,7 @@ class CreateClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -730,7 +802,7 @@ class DeleteClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -756,7 +828,7 @@ class UpdateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -766,7 +838,7 @@ class UpdateClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -902,12 +974,12 @@ class ClusterServiceClient(client.Client):
 
 __all__ = [
     #@ local import names here @#
+    "PresetSpec",
     "TemplateSpec",
     "Cluster",
     "ConnectionPoolerConfig",
     "ClusterSpec",
     "ClusterStatus",
-    "EndpointsSpec",
     "Endpoints",
     "ConfigSpec",
     "BootstrapSpec",

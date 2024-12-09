@@ -1,5 +1,5 @@
 from asyncio import sleep
-from collections.abc import Iterable
+from collections.abc import Awaitable, Iterable
 from datetime import datetime, timedelta
 from time import time
 from typing import Generic, TypeVar
@@ -7,7 +7,7 @@ from typing import Generic, TypeVar
 from grpc import CallCredentials, Compression, StatusCode
 from grpc.aio import Channel as GRPCChannel
 
-from nebius.aio.abc import ClientChannelInterface
+from nebius.aio.abc import ClientChannelInterface, SyncronizerInterface
 from nebius.base.error import SDKError
 from nebius.base.protos.well_known import local_timezone
 
@@ -15,17 +15,32 @@ from .request_status import RequestStatus
 
 OperationPb = TypeVar("OperationPb")
 
+T = TypeVar("T")
+
 
 class Static(ClientChannelInterface):
-    def __init__(self, channel: GRPCChannel) -> None:
+    def __init__(
+        self,
+        channel: GRPCChannel,
+        syncronizer: SyncronizerInterface,
+    ) -> None:
         self._channel = channel
+        self._syncronizer = syncronizer
 
     def get_channel_by_method(self, method_name: str) -> GRPCChannel:
         return self._channel
 
+    def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
+        return self._syncronizer.run_sync(awaitable, timeout)
+
 
 class Operation(Generic[OperationPb]):
-    def __init__(self, channel: GRPCChannel, operation: OperationPb):
+    def __init__(
+        self,
+        channel: GRPCChannel,
+        syncronizer: SyncronizerInterface,
+        operation: OperationPb,
+    ) -> None:
         from nebius.api.nebius.common.v1 import (
             GetOperationRequest,
             Operation,
@@ -41,21 +56,34 @@ class Operation(Generic[OperationPb]):
             OperationServiceClient as OldClient,
         )
 
-        if isinstance(operation, Operation):
+        self._syncronizer = syncronizer
+        _operation: OperationPb | Operation | Old = operation
+        if isinstance(_operation, Operation.__PB2_CLASS__):
+            _operation = Operation(_operation)
+        if isinstance(_operation, Old.__PB2_CLASS__):
+            _operation = Old(_operation)
+
+        if isinstance(_operation, Operation):
             self._service: OperationServiceClient | OldClient = OperationServiceClient(
-                Static(channel)
+                Static(channel, syncronizer)
             )
             self._get_request_obj: type[GetOperationRequest | OldGet] = (
                 GetOperationRequest
             )
-        elif isinstance(operation, Old):
-            self._service = OldClient(Static(channel))
+        elif isinstance(_operation, Old):
+            self._service = OldClient(Static(channel, syncronizer))
             self._get_request_obj = OldGet
         else:
-            raise SDKError(f"Operation type {type(operation)} not supported.")
+            raise SDKError(f"Operation type {type(_operation)} not supported.")
 
-        self._operation: Operation | Old = operation  # type: ignore
+        self._operation: Operation | Old = _operation
         self._channel = channel
+
+    def __repr__(self) -> str:
+        return (
+            f"Operation({self.id}, resource_id: {self.resource_id}, "
+            f"status: {self.status()})"
+        )
 
     def status(self) -> RequestStatus | None:
         return self._operation.status
@@ -84,6 +112,12 @@ class Operation(Generic[OperationPb]):
         )
         new_op = await req
         self._set_new_operation(new_op._operation)  # type: ignore
+
+    def sync_wait(self, timeout: float | None = None) -> None:
+        return self._syncronizer.run_sync(self.wait(), timeout)
+
+    def sync_update(self, timeout: float | None = None) -> None:
+        return self._syncronizer.run_sync(self.update(), timeout)
 
     async def wait(
         self,

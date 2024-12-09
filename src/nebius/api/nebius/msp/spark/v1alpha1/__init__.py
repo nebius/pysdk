@@ -10,6 +10,7 @@ import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import builtins as builtins
+import typing as typing
 import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
 import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.spark.v1alpha1.cluster_service_pb2 as cluster_service_pb2
@@ -23,6 +24,7 @@ import nebius.api.nebius.msp.spark.v1alpha1.common_pb2 as common_pb2
 import nebius.api.nebius.msp.spark.v1alpha1.preset_pb2 as preset_pb2
 import nebius.api.nebius.msp.v1alpha1.resource as resource_1
 import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2
+import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.msp.spark.v1alpha1.job_pb2 as job_pb2
 import nebius.api.nebius.msp.spark.v1alpha1.job_service_pb2 as job_service_pb2
 import nebius.api.nebius.msp.spark.v1alpha1.session_pb2 as session_pb2
@@ -50,7 +52,7 @@ class Cluster(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -60,7 +62,7 @@ class Cluster(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -70,7 +72,7 @@ class Cluster(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "ClusterStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=ClusterStatus,
@@ -83,6 +85,33 @@ class Cluster(pb_classes.Message):
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__description__(pb_classes.OneOf):
+        name: builtins.str= "_description"
+        
+        def __init__(self, msg: "ClusterSpec") -> None:
+            super().__init__()
+            self._message: "ClusterSpec" = msg
+    
+    class __OneOfClass__description_description__(__OneOfClass__description__):
+        field: typing.Literal["description"] = "description"
+        
+        def __init__(self, msg: "ClusterSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.description
+    
+    @builtins.property
+    def _description(self) -> __OneOfClass__description_description__|None:
+        field_name: str|None = super().which_field_in_oneof("_description")
+        match field_name:
+            case "description":
+                return self.__OneOfClass__description_description__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -106,7 +135,7 @@ class ClusterSpec(pb_classes.Message):
         if network_id is not None:
             self.network_id = network_id
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str|None":
         return super()._get_field("description", explicit_presence=True,
         )
@@ -115,7 +144,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def limits(self) -> "Limits":
         return super()._get_field("limits", explicit_presence=False,
         wrap=Limits,
@@ -125,7 +154,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("limits",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def authorization(self) -> "Password":
         return super()._get_field("authorization", explicit_presence=False,
         wrap=Password,
@@ -135,7 +164,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("authorization",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def service_account_id(self) -> "builtins.str":
         return super()._get_field("service_account_id", explicit_presence=False,
         )
@@ -144,7 +173,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("service_account_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def network_id(self) -> "builtins.str":
         return super()._get_field("network_id", explicit_presence=False,
         )
@@ -156,6 +185,33 @@ class ClusterSpec(pb_classes.Message):
 class ClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ClusterStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__history_server_endpoint__(pb_classes.OneOf):
+        name: builtins.str= "_history_server_endpoint"
+        
+        def __init__(self, msg: "ClusterStatus") -> None:
+            super().__init__()
+            self._message: "ClusterStatus" = msg
+    
+    class __OneOfClass__history_server_endpoint_history_server_endpoint__(__OneOfClass__history_server_endpoint__):
+        field: typing.Literal["history_server_endpoint"] = "history_server_endpoint"
+        
+        def __init__(self, msg: "ClusterStatus") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.history_server_endpoint
+    
+    @builtins.property
+    def _history_server_endpoint(self) -> __OneOfClass__history_server_endpoint_history_server_endpoint__|None:
+        field_name: str|None = super().which_field_in_oneof("_history_server_endpoint")
+        match field_name:
+            case "history_server_endpoint":
+                return self.__OneOfClass__history_server_endpoint_history_server_endpoint__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -173,7 +229,7 @@ class ClusterStatus(pb_classes.Message):
         if history_server_endpoint is not None:
             self.history_server_endpoint = history_server_endpoint
     
-    @property
+    @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
@@ -183,7 +239,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
@@ -193,7 +249,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def history_server_endpoint(self) -> "builtins.str|None":
         return super()._get_field("history_server_endpoint", explicit_presence=True,
         )
@@ -219,7 +275,7 @@ class Limits(pb_classes.Message):
         if memory_gibibytes is not None:
             self.memory_gibibytes = memory_gibibytes
     
-    @property
+    @builtins.property
     def cpu(self) -> "builtins.int":
         return super()._get_field("cpu", explicit_presence=False,
         )
@@ -228,7 +284,7 @@ class Limits(pb_classes.Message):
         return super()._set_field("cpu",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def memory_gibibytes(self) -> "builtins.int":
         return super()._get_field("memory_gibibytes", explicit_presence=False,
         )
@@ -251,7 +307,7 @@ class Password(pb_classes.Message):
         if password is not None:
             self.password = password
     
-    @property
+    @builtins.property
     def password(self) -> "builtins.str":
         return super()._get_field("password", explicit_presence=False,
         )
@@ -275,7 +331,7 @@ class GetClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -301,7 +357,7 @@ class GetClusterByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -310,7 +366,7 @@ class GetClusterByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -339,7 +395,7 @@ class ListClustersRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -348,7 +404,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -357,7 +413,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -369,6 +425,33 @@ class ListClustersRequest(pb_classes.Message):
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__next_page_token__(pb_classes.OneOf):
+        name: builtins.str= "_next_page_token"
+        
+        def __init__(self, msg: "ListClustersResponse") -> None:
+            super().__init__()
+            self._message: "ListClustersResponse" = msg
+    
+    class __OneOfClass__next_page_token_next_page_token__(__OneOfClass__next_page_token__):
+        field: typing.Literal["next_page_token"] = "next_page_token"
+        
+        def __init__(self, msg: "ListClustersResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.next_page_token
+    
+    @builtins.property
+    def _next_page_token(self) -> __OneOfClass__next_page_token_next_page_token__|None:
+        field_name: str|None = super().which_field_in_oneof("_next_page_token")
+        match field_name:
+            case "next_page_token":
+                return self.__OneOfClass__next_page_token_next_page_token__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -383,7 +466,7 @@ class ListClustersResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Cluster,None),
@@ -393,7 +476,7 @@ class ListClustersResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str|None":
         return super()._get_field("next_page_token", explicit_presence=True,
         )
@@ -419,7 +502,7 @@ class CreateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -429,7 +512,7 @@ class CreateClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -456,7 +539,7 @@ class UpdateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -466,7 +549,7 @@ class UpdateClusterRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "ClusterSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
@@ -490,7 +573,7 @@ class DeleteClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -641,7 +724,7 @@ class PythonConfig(pb_classes.Message):
         if file_uris is not None:
             self.file_uris = file_uris
     
-    @property
+    @builtins.property
     def requirements(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("requirements", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -651,7 +734,7 @@ class PythonConfig(pb_classes.Message):
         return super()._set_field("requirements",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("file_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -675,7 +758,7 @@ class JavaConfig(pb_classes.Message):
         if entrypoint_class is not None:
             self.entrypoint_class = entrypoint_class
     
-    @property
+    @builtins.property
     def entrypoint_class(self) -> "builtins.str":
         return super()._get_field("entrypoint_class", explicit_presence=False,
         )
@@ -702,7 +785,7 @@ class DriverTemplateSpec(pb_classes.Message):
         if resources is not None:
             self.resources = resources
     
-    @property
+    @builtins.property
     def disk(self) -> "resource_1.DiskSpec":
         return super()._get_field("disk", explicit_presence=False,
         wrap=resource_1.DiskSpec,
@@ -712,7 +795,7 @@ class DriverTemplateSpec(pb_classes.Message):
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resources(self) -> "resource_1.ResourcesSpec":
         return super()._get_field("resources", explicit_presence=False,
         wrap=resource_1.ResourcesSpec,
@@ -739,7 +822,7 @@ class DynamicAllocationSpec(pb_classes.Message):
         if max is not None:
             self.max = max
     
-    @property
+    @builtins.property
     def min(self) -> "builtins.int":
         return super()._get_field("min", explicit_presence=False,
         )
@@ -748,7 +831,7 @@ class DynamicAllocationSpec(pb_classes.Message):
         return super()._set_field("min",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def max(self) -> "builtins.int":
         return super()._get_field("max", explicit_presence=False,
         )
@@ -760,6 +843,44 @@ class DynamicAllocationSpec(pb_classes.Message):
 class ExecutorTemplateSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.ExecutorTemplateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ExecutorTemplateSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass_hosts_spec__(pb_classes.OneOf):
+        name: builtins.str= "hosts_spec"
+        
+        def __init__(self, msg: "ExecutorTemplateSpec") -> None:
+            super().__init__()
+            self._message: "ExecutorTemplateSpec" = msg
+    
+    class __OneOfClass_hosts_spec_hosts__(__OneOfClass_hosts_spec__):
+        field: typing.Literal["hosts"] = "hosts"
+        
+        def __init__(self, msg: "ExecutorTemplateSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "resource_1.HostSpec":
+            return self._message.hosts
+    
+    class __OneOfClass_hosts_spec_hosts_dynamic_allocation__(__OneOfClass_hosts_spec__):
+        field: typing.Literal["hosts_dynamic_allocation"] = "hosts_dynamic_allocation"
+        
+        def __init__(self, msg: "ExecutorTemplateSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "DynamicAllocationSpec":
+            return self._message.hosts_dynamic_allocation
+    
+    @builtins.property
+    def hosts_spec(self) -> __OneOfClass_hosts_spec_hosts__|__OneOfClass_hosts_spec_hosts_dynamic_allocation__|None:
+        field_name: str|None = super().which_field_in_oneof("hosts_spec")
+        match field_name:
+            case "hosts":
+                return self.__OneOfClass_hosts_spec_hosts__(self)
+            case "hosts_dynamic_allocation":
+                return self.__OneOfClass_hosts_spec_hosts_dynamic_allocation__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -780,7 +901,7 @@ class ExecutorTemplateSpec(pb_classes.Message):
         if hosts_dynamic_allocation is not None:
             self.hosts_dynamic_allocation = hosts_dynamic_allocation
     
-    @property
+    @builtins.property
     def disk(self) -> "resource_1.DiskSpec":
         return super()._get_field("disk", explicit_presence=False,
         wrap=resource_1.DiskSpec,
@@ -790,7 +911,7 @@ class ExecutorTemplateSpec(pb_classes.Message):
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def resources(self) -> "resource_1.ResourcesSpec":
         return super()._get_field("resources", explicit_presence=False,
         wrap=resource_1.ResourcesSpec,
@@ -800,7 +921,7 @@ class ExecutorTemplateSpec(pb_classes.Message):
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def hosts(self) -> "resource_1.HostSpec":
         return super()._get_field("hosts", explicit_presence=False,
         wrap=resource_1.HostSpec,
@@ -810,7 +931,7 @@ class ExecutorTemplateSpec(pb_classes.Message):
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def hosts_dynamic_allocation(self) -> "DynamicAllocationSpec":
         return super()._get_field("hosts_dynamic_allocation", explicit_presence=False,
         wrap=DynamicAllocationSpec,
@@ -821,6 +942,12 @@ class ExecutorTemplateSpec(pb_classes.Message):
         )
     
 # file: nebius/msp/spark/v1alpha1/job.proto
+class JobResultCode(pb_enum.Enum):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.spark.v1alpha1.JobResultCode",job_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    JOB_RESULT_CODE_UNSPECIFIED = 0
+    SUCCEEDED = 1
+    ERROR = 2
+
 class Job(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.Job
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.Job",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -841,7 +968,7 @@ class Job(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -851,7 +978,7 @@ class Job(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "JobSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=JobSpec,
@@ -861,7 +988,7 @@ class Job(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "JobStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=JobStatus,
@@ -892,7 +1019,7 @@ class JobSpec(pb_classes.Message):
             if value is not None:
                 self.value = value
         
-        @property
+        @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
             )
@@ -901,7 +1028,7 @@ class JobSpec(pb_classes.Message):
             return super()._set_field("key",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def value(self) -> "builtins.str":
             return super()._get_field("value", explicit_presence=False,
             )
@@ -910,6 +1037,71 @@ class JobSpec(pb_classes.Message):
             return super()._set_field("value",value,explicit_presence=False,
             )
         
+    
+    class __OneOfClass_runtime_config__(pb_classes.OneOf):
+        name: builtins.str= "runtime_config"
+        
+        def __init__(self, msg: "JobSpec") -> None:
+            super().__init__()
+            self._message: "JobSpec" = msg
+    
+    class __OneOfClass_runtime_config_python__(__OneOfClass_runtime_config__):
+        field: typing.Literal["python"] = "python"
+        
+        def __init__(self, msg: "JobSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "PythonConfig":
+            return self._message.python
+    
+    class __OneOfClass_runtime_config_java__(__OneOfClass_runtime_config__):
+        field: typing.Literal["java"] = "java"
+        
+        def __init__(self, msg: "JobSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "JavaConfig":
+            return self._message.java
+    
+    @builtins.property
+    def runtime_config(self) -> __OneOfClass_runtime_config_python__|__OneOfClass_runtime_config_java__|None:
+        field_name: str|None = super().which_field_in_oneof("runtime_config")
+        match field_name:
+            case "python":
+                return self.__OneOfClass_runtime_config_python__(self)
+            case "java":
+                return self.__OneOfClass_runtime_config_java__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    class __OneOfClass__description__(pb_classes.OneOf):
+        name: builtins.str= "_description"
+        
+        def __init__(self, msg: "JobSpec") -> None:
+            super().__init__()
+            self._message: "JobSpec" = msg
+    
+    class __OneOfClass__description_description__(__OneOfClass__description__):
+        field: typing.Literal["description"] = "description"
+        
+        def __init__(self, msg: "JobSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.description
+    
+    @builtins.property
+    def _description(self) -> __OneOfClass__description_description__|None:
+        field_name: str|None = super().which_field_in_oneof("_description")
+        match field_name:
+            case "description":
+                return self.__OneOfClass__description_description__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -954,7 +1146,7 @@ class JobSpec(pb_classes.Message):
         if java is not None:
             self.java = java
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str|None":
         return super()._get_field("description", explicit_presence=True,
         )
@@ -963,7 +1155,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def application_file_uri(self) -> "builtins.str":
         return super()._get_field("application_file_uri", explicit_presence=False,
         )
@@ -972,7 +1164,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("application_file_uri",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def driver(self) -> "DriverTemplateSpec":
         return super()._get_field("driver", explicit_presence=False,
         wrap=DriverTemplateSpec,
@@ -982,7 +1174,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("driver",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def executor(self) -> "ExecutorTemplateSpec":
         return super()._get_field("executor", explicit_presence=False,
         wrap=ExecutorTemplateSpec,
@@ -992,7 +1184,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("executor",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spark_version(self) -> "builtins.str":
         return super()._get_field("spark_version", explicit_presence=False,
         )
@@ -1001,7 +1193,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("spark_version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def application_args(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("application_args", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1011,7 +1203,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("application_args",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("file_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1021,7 +1213,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("file_uris",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def jar_uris(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("jar_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1031,7 +1223,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("jar_uris",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def packages(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("packages", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1041,7 +1233,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("packages",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spark_conf(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         return super()._get_field("spark_conf", explicit_presence=False,
         wrap=pb_classes.Map,
@@ -1051,7 +1243,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("spark_conf",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def python(self) -> "PythonConfig":
         return super()._get_field("python", explicit_presence=False,
         wrap=PythonConfig,
@@ -1061,7 +1253,7 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("python",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def java(self) -> "JavaConfig":
         return super()._get_field("java", explicit_presence=False,
         wrap=JavaConfig,
@@ -1071,9 +1263,60 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("java",value,explicit_presence=False,
         )
     
+class JobResultDetails(pb_classes.Message):
+    __PB2_CLASS__ = job_pb2.JobResultDetails
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobResultDetails",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        code: "JobResultCode|job_pb2.JobResultCode|None" = None,
+    ) -> None:
+        super().__init__(initial_message)
+        if code is not None:
+            self.code = code
+    
+    @builtins.property
+    def code(self) -> "JobResultCode":
+        return super()._get_field("code", explicit_presence=False,
+        wrap=JobResultCode,
+        )
+    @code.setter
+    def code(self, value: "JobResultCode|job_pb2.JobResultCode") -> None:
+        return super()._set_field("code",value,explicit_presence=False,
+        )
+    
 class JobStatus(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.JobStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobStatus",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__driver_endpoint__(pb_classes.OneOf):
+        name: builtins.str= "_driver_endpoint"
+        
+        def __init__(self, msg: "JobStatus") -> None:
+            super().__init__()
+            self._message: "JobStatus" = msg
+    
+    class __OneOfClass__driver_endpoint_driver_endpoint__(__OneOfClass__driver_endpoint__):
+        field: typing.Literal["driver_endpoint"] = "driver_endpoint"
+        
+        def __init__(self, msg: "JobStatus") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.driver_endpoint
+    
+    @builtins.property
+    def _driver_endpoint(self) -> __OneOfClass__driver_endpoint_driver_endpoint__|None:
+        field_name: str|None = super().which_field_in_oneof("_driver_endpoint")
+        match field_name:
+            case "driver_endpoint":
+                return self.__OneOfClass__driver_endpoint_driver_endpoint__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1084,6 +1327,7 @@ class JobStatus(pb_classes.Message):
         driver_endpoint: "builtins.str|None" = None,
         driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
         executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
+        result_details: "JobResultDetails|job_pb2.JobResultDetails|None" = None,
     ) -> None:
         super().__init__(initial_message)
         if phase is not None:
@@ -1096,8 +1340,10 @@ class JobStatus(pb_classes.Message):
             self.driver_preset_details = driver_preset_details
         if executor_preset_details is not None:
             self.executor_preset_details = executor_preset_details
+        if result_details is not None:
+            self.result_details = result_details
     
-    @property
+    @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
@@ -1107,7 +1353,7 @@ class JobStatus(pb_classes.Message):
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
@@ -1117,7 +1363,7 @@ class JobStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def driver_endpoint(self) -> "builtins.str|None":
         return super()._get_field("driver_endpoint", explicit_presence=True,
         )
@@ -1126,7 +1372,7 @@ class JobStatus(pb_classes.Message):
         return super()._set_field("driver_endpoint",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def driver_preset_details(self) -> "resource_1.PresetDetails":
         return super()._get_field("driver_preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
@@ -1136,7 +1382,7 @@ class JobStatus(pb_classes.Message):
         return super()._set_field("driver_preset_details",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def executor_preset_details(self) -> "resource_1.PresetDetails":
         return super()._get_field("executor_preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
@@ -1144,6 +1390,16 @@ class JobStatus(pb_classes.Message):
     @executor_preset_details.setter
     def executor_preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails") -> None:
         return super()._set_field("executor_preset_details",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def result_details(self) -> "JobResultDetails":
+        return super()._get_field("result_details", explicit_presence=False,
+        wrap=JobResultDetails,
+        )
+    @result_details.setter
+    def result_details(self, value: "JobResultDetails|job_pb2.JobResultDetails") -> None:
+        return super()._set_field("result_details",value,explicit_presence=False,
         )
     
 # file: nebius/msp/spark/v1alpha1/job_service.proto
@@ -1161,7 +1417,7 @@ class GetJobRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1190,7 +1446,7 @@ class ListJobsRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1199,7 +1455,7 @@ class ListJobsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1208,7 +1464,7 @@ class ListJobsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1220,6 +1476,33 @@ class ListJobsRequest(pb_classes.Message):
 class ListJobsResponse(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.ListJobsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListJobsResponse",job_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__next_page_token__(pb_classes.OneOf):
+        name: builtins.str= "_next_page_token"
+        
+        def __init__(self, msg: "ListJobsResponse") -> None:
+            super().__init__()
+            self._message: "ListJobsResponse" = msg
+    
+    class __OneOfClass__next_page_token_next_page_token__(__OneOfClass__next_page_token__):
+        field: typing.Literal["next_page_token"] = "next_page_token"
+        
+        def __init__(self, msg: "ListJobsResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.next_page_token
+    
+    @builtins.property
+    def _next_page_token(self) -> __OneOfClass__next_page_token_next_page_token__|None:
+        field_name: str|None = super().which_field_in_oneof("_next_page_token")
+        match field_name:
+            case "next_page_token":
+                return self.__OneOfClass__next_page_token_next_page_token__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1234,7 +1517,7 @@ class ListJobsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Job]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Job,None),
@@ -1244,7 +1527,7 @@ class ListJobsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str|None":
         return super()._get_field("next_page_token", explicit_presence=True,
         )
@@ -1270,7 +1553,7 @@ class CreateJobRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1280,7 +1563,7 @@ class CreateJobRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "JobSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=JobSpec,
@@ -1304,7 +1587,7 @@ class CancelJobRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1419,7 +1702,7 @@ class Session(pb_classes.Message):
         if status is not None:
             self.status = status
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1429,7 +1712,7 @@ class Session(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "SessionSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=SessionSpec,
@@ -1439,7 +1722,7 @@ class Session(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def status(self) -> "SessionStatus":
         return super()._get_field("status", explicit_presence=False,
         wrap=SessionStatus,
@@ -1470,7 +1753,7 @@ class SessionSpec(pb_classes.Message):
             if value is not None:
                 self.value = value
         
-        @property
+        @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
             )
@@ -1479,7 +1762,7 @@ class SessionSpec(pb_classes.Message):
             return super()._set_field("key",value,explicit_presence=False,
             )
         
-        @property
+        @builtins.property
         def value(self) -> "builtins.str":
             return super()._get_field("value", explicit_presence=False,
             )
@@ -1488,6 +1771,33 @@ class SessionSpec(pb_classes.Message):
             return super()._set_field("value",value,explicit_presence=False,
             )
         
+    
+    class __OneOfClass__description__(pb_classes.OneOf):
+        name: builtins.str= "_description"
+        
+        def __init__(self, msg: "SessionSpec") -> None:
+            super().__init__()
+            self._message: "SessionSpec" = msg
+    
+    class __OneOfClass__description_description__(__OneOfClass__description__):
+        field: typing.Literal["description"] = "description"
+        
+        def __init__(self, msg: "SessionSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.description
+    
+    @builtins.property
+    def _description(self) -> __OneOfClass__description_description__|None:
+        field_name: str|None = super().which_field_in_oneof("_description")
+        match field_name:
+            case "description":
+                return self.__OneOfClass__description_description__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1523,7 +1833,7 @@ class SessionSpec(pb_classes.Message):
         if python is not None:
             self.python = python
     
-    @property
+    @builtins.property
     def description(self) -> "builtins.str|None":
         return super()._get_field("description", explicit_presence=True,
         )
@@ -1532,7 +1842,7 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def driver(self) -> "DriverTemplateSpec":
         return super()._get_field("driver", explicit_presence=False,
         wrap=DriverTemplateSpec,
@@ -1542,7 +1852,7 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("driver",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def executor(self) -> "ExecutorTemplateSpec":
         return super()._get_field("executor", explicit_presence=False,
         wrap=ExecutorTemplateSpec,
@@ -1552,7 +1862,7 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("executor",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spark_version(self) -> "builtins.str":
         return super()._get_field("spark_version", explicit_presence=False,
         )
@@ -1561,7 +1871,7 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("spark_version",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("file_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1571,7 +1881,7 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("file_uris",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def jar_uris(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("jar_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1581,7 +1891,7 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("jar_uris",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def packages(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("packages", explicit_presence=False,
         wrap=pb_classes.Repeated,
@@ -1591,7 +1901,7 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("packages",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spark_conf(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         return super()._get_field("spark_conf", explicit_presence=False,
         wrap=pb_classes.Map,
@@ -1601,7 +1911,7 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("spark_conf",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def python(self) -> "PythonConfig":
         return super()._get_field("python", explicit_presence=False,
         wrap=PythonConfig,
@@ -1614,6 +1924,33 @@ class SessionSpec(pb_classes.Message):
 class SessionStatus(pb_classes.Message):
     __PB2_CLASS__ = session_pb2.SessionStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.SessionStatus",session_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__spark_connect_endpoint__(pb_classes.OneOf):
+        name: builtins.str= "_spark_connect_endpoint"
+        
+        def __init__(self, msg: "SessionStatus") -> None:
+            super().__init__()
+            self._message: "SessionStatus" = msg
+    
+    class __OneOfClass__spark_connect_endpoint_spark_connect_endpoint__(__OneOfClass__spark_connect_endpoint__):
+        field: typing.Literal["spark_connect_endpoint"] = "spark_connect_endpoint"
+        
+        def __init__(self, msg: "SessionStatus") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.spark_connect_endpoint
+    
+    @builtins.property
+    def _spark_connect_endpoint(self) -> __OneOfClass__spark_connect_endpoint_spark_connect_endpoint__|None:
+        field_name: str|None = super().which_field_in_oneof("_spark_connect_endpoint")
+        match field_name:
+            case "spark_connect_endpoint":
+                return self.__OneOfClass__spark_connect_endpoint_spark_connect_endpoint__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1637,7 +1974,7 @@ class SessionStatus(pb_classes.Message):
         if executor_preset_details is not None:
             self.executor_preset_details = executor_preset_details
     
-    @property
+    @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
@@ -1647,7 +1984,7 @@ class SessionStatus(pb_classes.Message):
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
@@ -1657,7 +1994,7 @@ class SessionStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spark_connect_endpoint(self) -> "builtins.str|None":
         return super()._get_field("spark_connect_endpoint", explicit_presence=True,
         )
@@ -1666,7 +2003,7 @@ class SessionStatus(pb_classes.Message):
         return super()._set_field("spark_connect_endpoint",value,explicit_presence=True,
         )
     
-    @property
+    @builtins.property
     def driver_preset_details(self) -> "resource_1.PresetDetails":
         return super()._get_field("driver_preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
@@ -1676,7 +2013,7 @@ class SessionStatus(pb_classes.Message):
         return super()._set_field("driver_preset_details",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def executor_preset_details(self) -> "resource_1.PresetDetails":
         return super()._get_field("executor_preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
@@ -1701,7 +2038,7 @@ class GetSessionRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -1727,7 +2064,7 @@ class GetSessionByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1736,7 +2073,7 @@ class GetSessionByNameRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
         )
@@ -1765,7 +2102,7 @@ class ListSessionsRequest(pb_classes.Message):
         if page_token is not None:
             self.page_token = page_token
     
-    @property
+    @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
         )
@@ -1774,7 +2111,7 @@ class ListSessionsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_size(self) -> "builtins.int":
         return super()._get_field("page_size", explicit_presence=False,
         )
@@ -1783,7 +2120,7 @@ class ListSessionsRequest(pb_classes.Message):
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def page_token(self) -> "builtins.str":
         return super()._get_field("page_token", explicit_presence=False,
         )
@@ -1795,6 +2132,33 @@ class ListSessionsRequest(pb_classes.Message):
 class ListSessionsResponse(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.ListSessionsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListSessionsResponse",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    
+    class __OneOfClass__next_page_token__(pb_classes.OneOf):
+        name: builtins.str= "_next_page_token"
+        
+        def __init__(self, msg: "ListSessionsResponse") -> None:
+            super().__init__()
+            self._message: "ListSessionsResponse" = msg
+    
+    class __OneOfClass__next_page_token_next_page_token__(__OneOfClass__next_page_token__):
+        field: typing.Literal["next_page_token"] = "next_page_token"
+        
+        def __init__(self, msg: "ListSessionsResponse") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.next_page_token
+    
+    @builtins.property
+    def _next_page_token(self) -> __OneOfClass__next_page_token_next_page_token__|None:
+        field_name: str|None = super().which_field_in_oneof("_next_page_token")
+        match field_name:
+            case "next_page_token":
+                return self.__OneOfClass__next_page_token_next_page_token__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
     
     def __init__(
         self,
@@ -1809,7 +2173,7 @@ class ListSessionsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
-    @property
+    @builtins.property
     def items(self) -> "abc.MutableSequence[Session]":
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Session,None),
@@ -1819,7 +2183,7 @@ class ListSessionsResponse(pb_classes.Message):
         return super()._set_field("items",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def next_page_token(self) -> "builtins.str|None":
         return super()._get_field("next_page_token", explicit_presence=True,
         )
@@ -1845,7 +2209,7 @@ class CreateSessionRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
-    @property
+    @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
@@ -1855,7 +2219,7 @@ class CreateSessionRequest(pb_classes.Message):
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
-    @property
+    @builtins.property
     def spec(self) -> "SessionSpec":
         return super()._get_field("spec", explicit_presence=False,
         wrap=SessionSpec,
@@ -1879,7 +2243,7 @@ class DeleteSessionRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
-    @property
+    @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
         )
@@ -2012,8 +2376,10 @@ __all__ = [
     "DriverTemplateSpec",
     "DynamicAllocationSpec",
     "ExecutorTemplateSpec",
+    "JobResultCode",
     "Job",
     "JobSpec",
+    "JobResultDetails",
     "JobStatus",
     "GetJobRequest",
     "ListJobsRequest",
