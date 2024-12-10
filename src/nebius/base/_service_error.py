@@ -2,7 +2,7 @@ from collections.abc import Iterable
 
 from google.protobuf.any_pb2 import Any as AnyPb
 from google.rpc.status_pb2 import Status as StatusPb  # type: ignore
-from grpc import RpcError, Status
+from grpc import RpcError, Status, StatusCode
 from grpc_status import rpc_status
 
 from nebius.api.nebius.common.v1.error_pb2 import ServiceError as ServiceErrorPb
@@ -49,7 +49,12 @@ def pbrpc_status_of_errors(  # type: ignore[unused-ignore]
         errors = [errors]
     pbs = [to_anypb(err) for err in errors]
     ret = StatusPb()  # type: ignore[unused-ignore]
-    ret.code = code
+    if isinstance(code, StatusCode):
+        ret.code = code[0]  # type: ignore
+    elif isinstance(code, tuple) and isinstance(code[0], int):
+        ret.code = code[0]
+    else:
+        ret.code = code
     ret.message = message
     ret.details.extend(pbs)  # type: ignore[unused-ignore]
     return ret  # type: ignore[unused-ignore]
@@ -71,5 +76,7 @@ Metadata = tuple[
 
 def trailing_metadata_of_errors(
     errors: ServiceErrorPb | Iterable[ServiceErrorPb],
+    status_code: int = 1,
+    status_message: str = "",
 ) -> Metadata:
-    return grpc_status_of_errors(1, "_", errors).trailing_metadata
+    return grpc_status_of_errors(status_code, status_message, errors).trailing_metadata

@@ -1,4 +1,5 @@
 from collections.abc import Callable, Generator, Iterable
+from logging import getLogger
 from typing import Any, Generic, TypeVar
 
 from google.protobuf.message import Message as PMessage
@@ -13,11 +14,13 @@ from nebius.aio.abc import SyncronizerInterface
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata
 
-from .request_status import RequestStatus
+from .request_status import RequestStatus, UnfinishedRequestStatus
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
 Err = TypeVar("Err")
+
+log = getLogger(__name__)
 
 
 class RequestError(SDKError):
@@ -77,6 +80,16 @@ class Request(Generic[Req, Res]):
 
         self._error_wrapper = error_wrapper if error_wrapper is not None else RSError
         self._status: RequestStatusExtended | None = None
+        self._initial_metadata: Metadata | None = None
+        self._trailing_metadata: Metadata | None = None
+        self._trace_id: str | None = None
+        self._request_id: str | None = None
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}({self._service}.{self._method}, "
+            f"{self.current_status()})"
+        )
 
     def done(self) -> bool:
         if self._call is None:
@@ -181,56 +194,152 @@ class Request(Generic[Req, Res]):
         return self._channel.run_sync(self, timeout=self._timeout)
 
     def initial_metadata_sync(self) -> Metadata:
+        if self._initial_metadata is not None:
+            return self._initial_metadata
         return self._channel.run_sync(self.initial_metadata(), timeout=self._timeout)
 
     def trailing_metadata_sync(self) -> Metadata:
+        if self._trailing_metadata is not None:
+            return self._trailing_metadata
         return self._channel.run_sync(self.trailing_metadata(), timeout=self._timeout)
 
-    def status_sync(self) -> RequestStatus:
+    def current_status(self) -> RequestStatus | UnfinishedRequestStatus:
         if self._status is not None:
             return self._status
-        return self._channel.run_sync(self.status(), timeout=self._timeout)
+        if self._call is None:
+            return UnfinishedRequestStatus.INITIALIZED
+        return UnfinishedRequestStatus.SENT
+
+    async def _get_request_id(self) -> tuple[str, str]:
+        if self._request_id is not None and self._trace_id is not None:
+            return (self._request_id, self._trace_id)
+        await self.initial_metadata()
+        return (self._request_id, self._trace_id)  # type: ignore[return-value] # should be set after receiving md
+
+    async def request_id(self) -> str:
+        ret = await self._get_request_id()
+        return ret[0]
+
+    async def trace_id(self) -> str:
+        ret = await self._get_request_id()
+        return ret[1]
+
+    def request_id_sync(self) -> str:
+        if self._request_id is not None:
+            return self._request_id
+        return self._channel.run_sync(self.request_id(), timeout=self._timeout)
+
+    def trace_id_sync(self) -> str:
+        if self._trace_id is not None:
+            return self._trace_id
+        return self._channel.run_sync(self.trace_id(), timeout=self._timeout)
 
     async def initial_metadata(self) -> Metadata:
-        if self._call is None:
-            self.send()
-        if self._call is None:
-            raise RequestSentNoCallError()
-        md = await self._call.initial_metadata()
-        return Metadata(md)
+        from .service_error import RequestError
+
+        if self._initial_metadata is None:
+            if self._call is None:
+                self.send()
+            if self._call is None:
+                raise RequestSentNoCallError()
+            try:
+                md = await self._call.initial_metadata()
+                self._initial_metadata = Metadata(md)
+                self._parse_request_id()
+            except AioRpcError as e:
+                self._raise_request_error(e)
+            except RequestError:
+                pass
+        return self._initial_metadata  # type: ignore[return-value] # _raise_request_error sets it
 
     async def trailing_metadata(self) -> Metadata:
-        if self._call is None:
-            self.send()
-        if self._call is None:
-            raise RequestSentNoCallError()
-        md = await self._call.trailing_metadata()
-        return Metadata(md)
+        from .service_error import RequestError
+
+        if self._trailing_metadata is None:
+            if self._call is None:
+                self.send()
+            if self._call is None:
+                raise RequestSentNoCallError()
+            try:
+                md = await self._call.trailing_metadata()
+                self._trailing_metadata = Metadata(md)
+            except AioRpcError as e:
+                self._raise_request_error(e)
+            except RequestError:
+                pass
+        return self._trailing_metadata  # type: ignore[return-value] # _raise_request_error sets it
+
+    def _parse_request_id(self) -> None:
+        if self._initial_metadata is None:
+            raise RequestError("no initial metadata")
+        self._request_id = self._initial_metadata.get_one("x-request-id", "")
+        self._trace_id = self._initial_metadata.get_one("x-trace-id", "")
 
     async def status(self) -> RequestStatus:
+        from .service_error import RequestError, RequestStatusExtended
+
+        e: AioRpcError
         if self._status is not None:
             return self._status
         if self._call is None:
             self.send()
         if self._call is None:
             raise RequestSentNoCallError()
-        code = await self._call.code()
-        msg = await self._call.details()
-        mdi = await self._call.initial_metadata()
-        mdt = await self._call.trailing_metadata()
-        e = AioRpcError(code, mdi, mdt, msg, None)  # type: ignore
+        try:
+            code = await self._call.code()
+            msg = await self._call.details()
+            mdi = await self._call.initial_metadata()
+            mdt = await self._call.trailing_metadata()
+            e = AioRpcError(code, mdi, mdt, msg, None)  # type: ignore
+        except AioRpcError as e:
+            self._raise_request_error(e)
+        except RequestError:
+            return self._status  # type: ignore # set by _raise_request_error
         status = rpc_status.from_call(e)  # type: ignore
-        from .service_error import RequestStatusExtended
 
         if status is None:
             self._status = RequestStatusExtended(
-                code=e.code(), message=e.details(), details=[], service_errors=[]
+                code=e.code(),  # type: ignore[misc] # when unbound, flow returns early
+                message=e.details(),  # type: ignore[misc] # when unbound, flow returns early
+                details=[],
+                service_errors=[],
+                request_id=self._request_id,  # type: ignore[arg-type] # should be strings by now
+                trace_id=self._trace_id,  # type: ignore[arg-type] # should be strings by now
             )
         else:
-            self._status = RequestStatusExtended.from_rpc_status(status)  # type: ignore[unused-ignore]
+            self._status = RequestStatusExtended.from_rpc_status(  # type: ignore[unused-ignore]
+                status,
+                trace_id=self._trace_id,  # type: ignore[arg-type] # should be known by now
+                request_id=self._request_id,  # type: ignore[arg-type] # should be known by now
+            )
         return self._status
 
-    def __await__(self) -> Generator[Any, None, Res]:
+    def _raise_request_error(self, err: AioRpcError) -> None:
+        self._initial_metadata = Metadata(err.initial_metadata())
+        self._trailing_metadata = Metadata(err.trailing_metadata())  # type: ignore
+        self._parse_request_id()
+        status = rpc_status.from_call(err)  # type: ignore
+        from .service_error import RequestError, RequestStatusExtended
+
+        if status is None:
+            self._status = RequestStatusExtended(
+                code=err.code(),
+                message=err.details(),
+                details=[],
+                service_errors=[],
+                request_id=self._request_id,  # type: ignore[arg-type] # should be strings by now
+                trace_id=self._trace_id,  # type: ignore[arg-type] # should be strings by now
+            )
+            raise RequestError(self._status)
+
+        self._status = RequestStatusExtended.from_rpc_status(  # type: ignore[unused-ignore]
+            status,
+            trace_id=self._trace_id,  # type: ignore[arg-type] # should be strings by now
+            request_id=self._request_id,  # type: ignore[arg-type] # should be known by now
+        )
+        raise RequestError(self._status)
+
+    def __await__(self) -> Generator[Any, None, Res]:  # type: ignore[return] # it returns or raises
         if self._call is None:
             self.send()
         if self._call is None:
@@ -241,17 +350,4 @@ class Request(Generic[Req, Res]):
                 return self._result_wrapper(self._grpc_channel, self._channel, ret)  # type: ignore
             return ret  # type: ignore
         except AioRpcError as e:
-            status = rpc_status.from_call(e)  # type: ignore
-            from .service_error import RequestError, RequestStatusExtended
-
-            if status is None:
-                self._status = RequestStatusExtended(
-                    code=e.code(),
-                    message=e.details(),
-                    details=[],
-                    service_errors=[],
-                )
-                raise RequestError(self._status)
-
-            self._status = RequestStatusExtended.from_rpc_status(status)  # type: ignore[unused-ignore]
-            raise RequestError(self._status)
+            self._raise_request_error(e)

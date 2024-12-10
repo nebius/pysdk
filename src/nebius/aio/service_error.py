@@ -124,6 +124,8 @@ class RequestStatusExtended(RequestStatus):
     message: str | None
     details: list[AnyPb]
     service_errors: list[ServiceError]
+    request_id: str
+    trace_id: str
 
     def __str__(self) -> str:
         ret = StringIO()
@@ -131,6 +133,12 @@ class RequestStatusExtended(RequestStatus):
         if self.message is not None:
             ret.write(": ")
             ret.write(self.message)
+        if self.request_id != "":
+            ret.write("; request_id: ")
+            ret.write(self.request_id)
+        if self.trace_id != "":
+            ret.write("; trace_id: ")
+            ret.write(self.trace_id)
         if len(self.service_errors) > 0:
             ret.write("; Caused by error")
             if len(self.service_errors) > 1:
@@ -154,11 +162,18 @@ class RequestStatusExtended(RequestStatus):
         return ret  # type: ignore[unused-ignore]
 
     @classmethod
-    def from_rpc_status(cls, status: StatusPb) -> "RequestStatusExtended":  # type: ignore[unused-ignore]
+    def from_rpc_status(
+        cls,
+        status: StatusPb,  # type: ignore[unused-ignore]
+        request_id: str,
+        trace_id: str,
+    ) -> "RequestStatusExtended":
         errors = pb2_from_status(status, remove_from_details=True)  # type: ignore[unused-ignore]
         return cls(
             code=int_to_status_code(status.code),  # type: ignore[unused-ignore]
             message=status.message,  # type: ignore[unused-ignore]
             details=[d for d in status.details],  # type: ignore[unused-ignore]
             service_errors=[ServiceError(err) for err in errors],
+            request_id=request_id,
+            trace_id=trace_id,
         )

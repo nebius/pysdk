@@ -34,6 +34,22 @@ class Metadata(MutableSequence[tuple[str, str]]):
     def clean(self) -> "Metadata":
         return Metadata([v for v in self if v[0].startswith(Internal.PREFIX.lower())])
 
+    @overload
+    def get_one(
+        self,
+        index: str,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
+
+    @overload
+    def get_one(
+        self,
+        index: str,
+        default: None = None,
+        first: bool = False,
+    ) -> str | None: ...
+
     def get_one(
         self,
         index: str,
