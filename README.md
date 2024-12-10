@@ -155,7 +155,6 @@ Assuming, we are already in async context:
 from nebius.api.nebius.storage.v1 import CreateBucketRequest
 
 service = BucketServiceStub(sdk)
-op_service = sdk.get_corresponding_operation_service(BucketServiceStub)
 operation = await service.create(CreateBucketRequest(
     # fill-in necessary fields
 ))
@@ -168,7 +167,6 @@ Or synchronously:
 from nebius.api.nebius.storage.v1 import CreateBucketRequest
 
 service = BucketServiceStub(sdk)
-op_service = sdk.get_corresponding_operation_service(BucketServiceStub)
 operation = service.create(CreateBucketRequest(
     # fill-in necessary fields
 )).wait()
