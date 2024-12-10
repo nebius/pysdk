@@ -31,6 +31,11 @@ class AllocationServiceStub(object):
                 request_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
                 _registered_method=True)
+        self.ListByPool = channel.unary_unary(
+                '/nebius.vpc.v1.AllocationService/ListByPool',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsByPoolRequest.SerializeToString,
+                response_deserializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
+                _registered_method=True)
         self.Create = channel.unary_unary(
                 '/nebius.vpc.v1.AllocationService/Create',
                 request_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.CreateAllocationRequest.SerializeToString,
@@ -64,6 +69,12 @@ class AllocationServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def List(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListByPool(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -103,6 +114,11 @@ def add_AllocationServiceServicer_to_server(servicer, server):
             'List': grpc.unary_unary_rpc_method_handler(
                     servicer.List,
                     request_deserializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsRequest.FromString,
+                    response_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.SerializeToString,
+            ),
+            'ListByPool': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListByPool,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsByPoolRequest.FromString,
                     response_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.SerializeToString,
             ),
             'Create': grpc.unary_unary_rpc_method_handler(
@@ -201,6 +217,33 @@ class AllocationService(object):
             target,
             '/nebius.vpc.v1.AllocationService/List',
             nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsRequest.SerializeToString,
+            nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListByPool(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/nebius.vpc.v1.AllocationService/ListByPool',
+            nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsByPoolRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
             options,
             channel_credentials,

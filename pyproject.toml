@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nebius"
-version = "0.1.0"
+version = "0.2.0"
 description = "Nebius Python SDK"
 authors = [
     { name = "Daniil Drizhuk", email = "d.drizhuk@gmail.com" }
@@ -12,13 +12,11 @@ authors = [
 license = { text = "MIT" }
 dependencies = [
     "cryptography>=43.0.3",
-    "grpcio>=1.68.0",
+    "grpcio>=1.68.1",
     "PyJWT>=2.9.0",
-    "grpc-stubs>=1.53",  # For mypy
     "certifi>=2024.8.30",
-    "protobuf>=5.28.3",
-    "types-protobuf>=5.28.3", # for mypy
-    "grpcio-status>=1.68.0",
+    "protobuf>=5.29.1",
+    "grpcio-status>=1.68.1",
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -32,12 +30,13 @@ dev = [ # don't forget to mirror some of these to tox.ini
     "mypy>=1.13",    # For type checking
     "black>=24.10",  # For code formatting
     "ruff>=0.7",   # For linting
+    "grpc-stubs>=1.53",  # For mypy
+    "types-protobuf>=5.28.3", # for mypy
 ]
 genproto = [
-    "grpcio-tools>=1.67.1",
+    "grpcio-tools>=1.68.1",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
-    "betterproto[compiler]>=1.2.5",
 ]
 
 [tool.setuptools]
@@ -118,3 +117,49 @@ load-plugins = ["pylint.extensions.mccabe"]
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
+
+[tool.tox]
+requires = ["tox>=4.23"]
+env_list = ["test", "lint", "type", "format"]
+isolated_build = true
+
+[tool.tox.env]
+[tool.tox.env.test]
+description = "Run tests with pytest"
+deps = [
+    "pytest",
+    "pytest-cov",
+    "pytest-asyncio",
+    "grpcio",
+    "protobuf",
+    "types-protobuf",
+]
+commands = [["pytest","-vv"]]
+
+[tool.tox.env.lint]
+description = "Run linter checks"
+package = "skip"  # Skip installing the package
+deps = ["ruff"]
+commands = [["ruff","check","src/","tests/"]]
+
+[tool.tox.env.format]
+description = "Run code formatting checks"
+package = "skip"
+deps = ["black"]
+commands = [["black","--check","src/"]]
+
+[tool.tox.env.type]
+description = "Run type-checking"
+package = "skip"
+deps = [
+    "mypy",
+    "cryptography>=43.0.3",
+    "grpcio>=1.68.1",
+    "PyJWT>=2.9.0",
+    "certifi>=2024.8.30",
+    "protobuf>=5.29.1",
+    "grpcio-status>=1.68.1",
+    "grpc-stubs>=1.53",  # For mypy
+    "types-protobuf>=5.28.3", # for mypy
+]
+commands = [["mypy","src/"]]

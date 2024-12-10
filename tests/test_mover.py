@@ -2,15 +2,14 @@ import os
 import subprocess
 import sys
 import tempfile
-from typing import Tuple
 
 # Define the path to the mover script
-MOVER_SCRIPT_PATH = "./src/mover/mover.py"
+MOVER_SCRIPT_PATH = "./src/nebius/base/protos/compiler/mover.py"
 
 
 def run_mover(
     input_code: str, prefix_args: list[str]
-) -> Tuple[subprocess.CompletedProcess[str], str]:
+) -> tuple[subprocess.CompletedProcess[str], str]:
     """
     Helper function to run the mover script with given input code and prefix arguments
     """

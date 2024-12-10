@@ -36,6 +36,11 @@ class GroupMembershipServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsResponse.FromString,
                 _registered_method=True)
+        self.ListMembersWithAttributes = channel.unary_unary(
+                '/nebius.iam.v1.GroupMembershipService/ListMembersWithAttributes',
+                request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.SerializeToString,
+                response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsWithAttributesResponse.FromString,
+                _registered_method=True)
         self.ListMemberOf = channel.unary_unary(
                 '/nebius.iam.v1.GroupMembershipService/ListMemberOf',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListMemberOfRequest.SerializeToString,
@@ -70,6 +75,12 @@ class GroupMembershipServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListMembersWithAttributes(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def ListMemberOf(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -98,6 +109,11 @@ def add_GroupMembershipServiceServicer_to_server(servicer, server):
                     servicer.ListMembers,
                     request_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.FromString,
                     response_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsResponse.SerializeToString,
+            ),
+            'ListMembersWithAttributes': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListMembersWithAttributes,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.FromString,
+                    response_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsWithAttributesResponse.SerializeToString,
             ),
             'ListMemberOf': grpc.unary_unary_rpc_method_handler(
                     servicer.ListMemberOf,
@@ -213,6 +229,33 @@ class GroupMembershipService(object):
             '/nebius.iam.v1.GroupMembershipService/ListMembers',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListMembersWithAttributes(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/nebius.iam.v1.GroupMembershipService/ListMembersWithAttributes',
+            nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.SerializeToString,
+            nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsWithAttributesResponse.FromString,
             options,
             channel_credentials,
             insecure,

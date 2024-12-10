@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from logging import getLogger
-from typing import Dict
 
 from .error import SDKError
 
@@ -149,7 +148,7 @@ class Cached(Resolver):
 
 
 class TemplateExpander(Resolver):
-    def __init__(self, substitutions: Dict[str, str], next: Resolver) -> None:
+    def __init__(self, substitutions: dict[str, str], next: Resolver) -> None:
         super().__init__()
         self._substitutions = substitutions
         self._next = next

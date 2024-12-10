@@ -1,10 +1,5 @@
-from typing import Any, Protocol, Type, TypeVar
+from typing import Any, Protocol, TypeVar
 
-from google.protobuf.descriptor import MethodDescriptor, ServiceDescriptor
-from google.protobuf.descriptor_pool import (
-    Default,  # type: ignore[unused-ignore]
-    DescriptorPool,
-)
 from google.protobuf.message import Message
 from grpc import (
     CallCredentials,
@@ -32,7 +27,7 @@ from grpc.aio._typing import (
 )
 
 from nebius.base.error import SDKError
-from nebius.base.methods import fix_name
+from nebius.base.methods import service_from_method_name
 
 Req = TypeVar("Req", bound=Message)
 Res = TypeVar("Res", bound=Message)
@@ -107,20 +102,18 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         super().__init__()
         self._last_method = ""
 
-    def get_service_descriptor(self) -> ServiceDescriptor:
+    def get_service_name(self) -> str:
         if self._last_method == "":
             raise NoMethodsInServiceError()
-        pool: DescriptorPool = Default()  # type: ignore[unused-ignore,no-untyped-call]
-        method: MethodDescriptor = pool.FindMethodByName(fix_name(self._last_method))  # type: ignore[unused-ignore,no-untyped-call]
-        return method.containing_service  # type: ignore[unused-ignore,no-any-return]
+        return service_from_method_name(self._last_method)
 
-    def unary_unary(  # type: ignore[unused-ignore,override]
+    def unary_unary(  # type: ignore[unused-ignore, override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
         _registered_method: bool | None = False,
-    ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore,override]
+    ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore, override]
         self._last_method = method
         return StubUU()
 
@@ -145,7 +138,7 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
     async def channel_ready(self) -> None:
         return
 
-    def unary_stream(  # type: ignore[unused-ignore,override]
+    def unary_stream(  # type: ignore[override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
@@ -153,9 +146,9 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
         self._last_method = method
-        raise StubUS()  # type: ignore[unused-ignore,misc]
+        raise StubUS()  # type: ignore[misc]
 
-    def stream_unary(  # type: ignore[unused-ignore,override]
+    def stream_unary(  # type: ignore[override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
@@ -163,9 +156,9 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> StreamUnaryMultiCallable:
         self._last_method = method
-        raise StubSU()  # type: ignore[unused-ignore,misc]
+        raise StubSU()  # type: ignore[misc]
 
-    def stream_stream(  # type: ignore[unused-ignore,override]
+    def stream_stream(  # type: ignore[override]
         self,
         method: str,
         request_serializer: SerializingFunction | None = None,
@@ -173,18 +166,18 @@ class ExtractorChannel(GRPCChannel):  # type: ignore[unused-ignore,misc]
         _registered_method: bool | None = None,
     ) -> StreamStreamMultiCallable:
         self._last_method = method
-        raise StubSS()  # type: ignore[unused-ignore,misc]
+        raise StubSS()  # type: ignore[misc]
 
 
 class ServiceStub(Protocol):
     def __init__(self, channel: GRPCChannel) -> None: ...
 
 
-def from_stub_class(stub: Type[ServiceStub]) -> ServiceDescriptor:
-    if hasattr(stub, "DESCRIPTOR"):
-        return getattr(stub, "DESCRIPTOR")  # type: ignore[no-any-return,unused-ignore]
+def from_stub_class(stub: type[ServiceStub]) -> str:
+    if hasattr(stub, "__PB2_NAME__"):
+        return getattr(stub, "__PB2_NAME__")  # type: ignore[no-any-return]
     extractor = ExtractorChannel()
     _ = stub(extractor)
-    ret = extractor.get_service_descriptor()
-    setattr(stub, "DESCRIPTOR", ret)
+    ret = extractor.get_service_name()
+    setattr(stub, "__PB2_NAME__", ret)
     return ret

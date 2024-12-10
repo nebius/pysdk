@@ -33,6 +33,16 @@ class ListPoolsRequest(_message.Message):
     page_token: str
     def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
 
+class ListPoolsBySourcePoolRequest(_message.Message):
+    __slots__ = ("pool_id", "page_size", "page_token")
+    POOL_ID_FIELD_NUMBER: _ClassVar[int]
+    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    pool_id: str
+    page_size: int
+    page_token: str
+    def __init__(self, pool_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
+
 class ListPoolsResponse(_message.Message):
     __slots__ = ("items", "next_page_token")
     ITEMS_FIELD_NUMBER: _ClassVar[int]

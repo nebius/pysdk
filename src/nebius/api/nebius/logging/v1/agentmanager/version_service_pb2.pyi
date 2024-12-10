@@ -36,7 +36,7 @@ UPDATE: Action
 RESTART: Action
 
 class GetVersionRequest(_message.Message):
-    __slots__ = ("type", "agent_version", "updater_version", "parent_id", "instance_id", "os_info", "agent_state", "agent_uptime", "system_uptime", "updater_uptime", "agent_state_messages", "last_update_error")
+    __slots__ = ("type", "agent_version", "updater_version", "parent_id", "instance_id", "os_info", "agent_state", "agent_uptime", "system_uptime", "updater_uptime", "agent_state_messages", "last_update_error", "mk8s_cluster_id")
     TYPE_FIELD_NUMBER: _ClassVar[int]
     AGENT_VERSION_FIELD_NUMBER: _ClassVar[int]
     UPDATER_VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -49,6 +49,7 @@ class GetVersionRequest(_message.Message):
     UPDATER_UPTIME_FIELD_NUMBER: _ClassVar[int]
     AGENT_STATE_MESSAGES_FIELD_NUMBER: _ClassVar[int]
     LAST_UPDATE_ERROR_FIELD_NUMBER: _ClassVar[int]
+    MK8S_CLUSTER_ID_FIELD_NUMBER: _ClassVar[int]
     type: AgentType
     agent_version: str
     updater_version: str
@@ -61,7 +62,8 @@ class GetVersionRequest(_message.Message):
     updater_uptime: _duration_pb2.Duration
     agent_state_messages: _containers.RepeatedScalarFieldContainer[str]
     last_update_error: str
-    def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ...) -> None: ...
+    mk8s_cluster_id: str
+    def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ..., mk8s_cluster_id: _Optional[str] = ...) -> None: ...
 
 class OSInfo(_message.Message):
     __slots__ = ("name", "uname", "architecture")

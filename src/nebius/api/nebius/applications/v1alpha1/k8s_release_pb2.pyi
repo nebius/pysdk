@@ -51,11 +51,13 @@ class K8sReleaseStatus(_message.Message):
         RUNNING: _ClassVar[K8sReleaseStatus.State]
         DEPLOYED: _ClassVar[K8sReleaseStatus.State]
         FAILED: _ClassVar[K8sReleaseStatus.State]
+        INSTALLING: _ClassVar[K8sReleaseStatus.State]
     UNSPECIFIED: K8sReleaseStatus.State
     CREATED: K8sReleaseStatus.State
     RUNNING: K8sReleaseStatus.State
     DEPLOYED: K8sReleaseStatus.State
     FAILED: K8sReleaseStatus.State
+    INSTALLING: K8sReleaseStatus.State
     STATE_FIELD_NUMBER: _ClassVar[int]
     ERROR_MESSAGE_FIELD_NUMBER: _ClassVar[int]
     state: K8sReleaseStatus.State

@@ -37,17 +37,27 @@ class ClusterSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., public_access: bool = ..., admin_username: _Optional[str] = ..., admin_password: _Optional[str] = ..., service_account_id: _Optional[str] = ..., storage_bucket_name: _Optional[str] = ..., network_id: _Optional[str] = ...) -> None: ...
 
 class MlflowClusterStatus(_message.Message):
-    __slots__ = ("phase", "state", "tracking_endpoint", "effective_storage_bucket_name", "experiments_count", "mlflow_version")
+    __slots__ = ("phase", "state", "tracking_endpoint", "effective_storage_bucket_name", "experiments_count", "mlflow_version", "tracking_endpoints")
     PHASE_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     TRACKING_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
     EFFECTIVE_STORAGE_BUCKET_NAME_FIELD_NUMBER: _ClassVar[int]
     EXPERIMENTS_COUNT_FIELD_NUMBER: _ClassVar[int]
     MLFLOW_VERSION_FIELD_NUMBER: _ClassVar[int]
+    TRACKING_ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     phase: _cluster_pb2.ClusterStatus.Phase
     state: _cluster_pb2.ClusterStatus.State
     tracking_endpoint: str
     effective_storage_bucket_name: str
     experiments_count: int
     mlflow_version: str
-    def __init__(self, phase: _Optional[_Union[_cluster_pb2.ClusterStatus.Phase, str]] = ..., state: _Optional[_Union[_cluster_pb2.ClusterStatus.State, str]] = ..., tracking_endpoint: _Optional[str] = ..., effective_storage_bucket_name: _Optional[str] = ..., experiments_count: _Optional[int] = ..., mlflow_version: _Optional[str] = ...) -> None: ...
+    tracking_endpoints: Endpoints
+    def __init__(self, phase: _Optional[_Union[_cluster_pb2.ClusterStatus.Phase, str]] = ..., state: _Optional[_Union[_cluster_pb2.ClusterStatus.State, str]] = ..., tracking_endpoint: _Optional[str] = ..., effective_storage_bucket_name: _Optional[str] = ..., experiments_count: _Optional[int] = ..., mlflow_version: _Optional[str] = ..., tracking_endpoints: _Optional[_Union[Endpoints, _Mapping]] = ...) -> None: ...
+
+class Endpoints(_message.Message):
+    __slots__ = ("private", "public")
+    PRIVATE_FIELD_NUMBER: _ClassVar[int]
+    PUBLIC_FIELD_NUMBER: _ClassVar[int]
+    private: str
+    public: str
+    def __init__(self, private: _Optional[str] = ..., public: _Optional[str] = ...) -> None: ...

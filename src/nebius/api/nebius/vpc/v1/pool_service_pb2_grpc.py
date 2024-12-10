@@ -31,6 +31,11 @@ class PoolServiceStub(object):
                 request_serializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsResponse.FromString,
                 _registered_method=True)
+        self.ListBySourcePool = channel.unary_unary(
+                '/nebius.vpc.v1.PoolService/ListBySourcePool',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsBySourcePoolRequest.SerializeToString,
+                response_deserializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsResponse.FromString,
+                _registered_method=True)
         self.Update = channel.unary_unary(
                 '/nebius.vpc.v1.PoolService/Update',
                 request_serializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.UpdatePoolRequest.SerializeToString,
@@ -59,6 +64,12 @@ class PoolServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListBySourcePool(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Update(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -81,6 +92,11 @@ def add_PoolServiceServicer_to_server(servicer, server):
             'List': grpc.unary_unary_rpc_method_handler(
                     servicer.List,
                     request_deserializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsRequest.FromString,
+                    response_serializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsResponse.SerializeToString,
+            ),
+            'ListBySourcePool': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListBySourcePool,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsBySourcePoolRequest.FromString,
                     response_serializer=nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsResponse.SerializeToString,
             ),
             'Update': grpc.unary_unary_rpc_method_handler(
@@ -169,6 +185,33 @@ class PoolService(object):
             target,
             '/nebius.vpc.v1.PoolService/List',
             nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsRequest.SerializeToString,
+            nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListBySourcePool(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/nebius.vpc.v1.PoolService/ListBySourcePool',
+            nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsBySourcePoolRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_pool__service__pb2.ListPoolsResponse.FromString,
             options,
             channel_credentials,

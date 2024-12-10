@@ -34,7 +34,7 @@ class BucketSpec(_message.Message):
     def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ...) -> None: ...
 
 class BucketStatus(_message.Message):
-    __slots__ = ("counters", "state", "suspension_state", "deleted_at", "purge_at")
+    __slots__ = ("counters", "state", "suspension_state", "deleted_at", "purge_at", "domain_name")
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         STATE_UNSPECIFIED: _ClassVar[BucketStatus.State]
@@ -60,9 +60,11 @@ class BucketStatus(_message.Message):
     SUSPENSION_STATE_FIELD_NUMBER: _ClassVar[int]
     DELETED_AT_FIELD_NUMBER: _ClassVar[int]
     PURGE_AT_FIELD_NUMBER: _ClassVar[int]
+    DOMAIN_NAME_FIELD_NUMBER: _ClassVar[int]
     counters: _containers.RepeatedCompositeFieldContainer[_bucket_counters_pb2.BucketCounters]
     state: BucketStatus.State
     suspension_state: BucketStatus.SuspensionState
     deleted_at: _timestamp_pb2.Timestamp
     purge_at: _timestamp_pb2.Timestamp
-    def __init__(self, counters: _Optional[_Iterable[_Union[_bucket_counters_pb2.BucketCounters, _Mapping]]] = ..., state: _Optional[_Union[BucketStatus.State, str]] = ..., suspension_state: _Optional[_Union[BucketStatus.SuspensionState, str]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., purge_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    domain_name: str
+    def __init__(self, counters: _Optional[_Iterable[_Union[_bucket_counters_pb2.BucketCounters, _Mapping]]] = ..., state: _Optional[_Union[BucketStatus.State, str]] = ..., suspension_state: _Optional[_Union[BucketStatus.SuspensionState, str]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., purge_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., domain_name: _Optional[str] = ...) -> None: ...
