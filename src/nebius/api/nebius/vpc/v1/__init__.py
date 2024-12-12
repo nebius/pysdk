@@ -1118,6 +1118,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Allocation),
         )
     
     def get_by_name(self,
@@ -1137,6 +1138,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Allocation),
         )
     
     def list(self,
@@ -1156,6 +1158,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListAllocationsResponse),
         )
     
     def list_by_pool(self,
@@ -1175,6 +1178,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListAllocationsResponse),
         )
     
     def create(self,
@@ -1592,6 +1596,7 @@ class NetworkServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Network),
         )
     
     def get_by_name(self,
@@ -1611,6 +1616,7 @@ class NetworkServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Network),
         )
     
     def list(self,
@@ -1630,6 +1636,7 @@ class NetworkServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListNetworksResponse),
         )
     
 
@@ -1882,6 +1889,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Pool),
         )
     
     def get_by_name(self,
@@ -1901,6 +1909,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Pool),
         )
     
     def list(self,
@@ -1920,6 +1929,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListPoolsResponse),
         )
     
     def list_by_source_pool(self,
@@ -1939,6 +1949,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListPoolsResponse),
         )
     
     def update(self,
@@ -2474,6 +2485,7 @@ class SubnetServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Subnet),
         )
     
     def get_by_name(self,
@@ -2493,6 +2505,7 @@ class SubnetServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Subnet),
         )
     
     def list(self,
@@ -2512,6 +2525,7 @@ class SubnetServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListSubnetsResponse),
         )
     
     def list_by_network(self,
@@ -2531,6 +2545,7 @@ class SubnetServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListSubnetsResponse),
         )
     
 

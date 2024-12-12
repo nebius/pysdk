@@ -330,14 +330,14 @@ class Request(Generic[Req, Res]):
                 request_id=self._request_id,  # type: ignore[arg-type] # should be strings by now
                 trace_id=self._trace_id,  # type: ignore[arg-type] # should be strings by now
             )
-            raise RequestError(self._status)
+            raise RequestError(self._status) from None
 
         self._status = RequestStatusExtended.from_rpc_status(  # type: ignore[unused-ignore]
             status,
             trace_id=self._trace_id,  # type: ignore[arg-type] # should be strings by now
             request_id=self._request_id,  # type: ignore[arg-type] # should be known by now
         )
-        raise RequestError(self._status)
+        raise RequestError(self._status) from None
 
     def __await__(self) -> Generator[Any, None, Res]:  # type: ignore[return] # it returns or raises
         if self._call is None:

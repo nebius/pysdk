@@ -451,6 +451,7 @@ class VersionServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(GetVersionResponse),
         )
     
 

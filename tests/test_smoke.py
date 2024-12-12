@@ -340,14 +340,14 @@ async def test_get_instance_v2() -> None:
     try:
         # Set up the client channel
         channel = Channel(domain=address, options=[(INSECURE, True)])
-        from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
+        from nebius.api.nebius.compute.v1 import Disk, DiskServiceClient, GetDiskRequest
 
         client = DiskServiceClient(channel)
         req = client.get(GetDiskRequest(id="foo-bar"))
 
         # Await response and metadata
         ret = await req
-
+        assert isinstance(ret, Disk)
         # Assertions to validate behavior
         assert ret.metadata.id == "foo-bar"
         assert ret.metadata.name == "MockDisk"

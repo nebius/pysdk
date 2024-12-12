@@ -14,7 +14,9 @@ from typing import (
 
 from google.protobuf.descriptor import Descriptor
 from google.protobuf.message import Message as PMessage
+from grpc.aio import Channel as GRPCChannel
 
+from nebius.aio.abc import SyncronizerInterface
 from nebius.base.error import SDKError
 
 from .descriptor import DescriptorWrap
@@ -22,6 +24,15 @@ from .pb_enum import Enum
 
 T = TypeVar("T")
 R = TypeVar("R")
+
+
+def simple_wrapper(
+    wrap: Callable[[T], R],
+) -> Callable[[GRPCChannel, SyncronizerInterface, T], R]:
+    def wrapper(_: GRPCChannel, __: SyncronizerInterface, obj: T) -> R:
+        return wrap(obj)
+
+    return wrapper
 
 
 def wrap_type(obj: T, wrap: Callable[[T], R] | None = None) -> R | T:

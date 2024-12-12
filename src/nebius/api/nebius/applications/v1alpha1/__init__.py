@@ -450,6 +450,7 @@ class K8sReleaseServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(K8sRelease),
         )
     
     def list(self,
@@ -469,6 +470,7 @@ class K8sReleaseServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListK8sReleasesResponse),
         )
     
     def create(self,
