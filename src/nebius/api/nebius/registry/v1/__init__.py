@@ -332,6 +332,7 @@ class ArtifactServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Artifact),
         )
     
     def list(self,
@@ -351,6 +352,7 @@ class ArtifactServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListArtifactsResponse),
         )
     
     def delete(self,
@@ -742,6 +744,7 @@ class RegistryServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Registry),
         )
     
     def list(self,
@@ -761,6 +764,7 @@ class RegistryServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListRegistriesResponse),
         )
     
     def create(self,

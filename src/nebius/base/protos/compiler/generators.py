@@ -545,6 +545,27 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                             ImportedSymbol("Operation", "nebius.aio.operation"),
                             ",",
                         )
+                    elif method.output.full_type_name in converter_dict:
+                        wrap = converter_dict[method.output.full_type_name].from_func
+                        g.p(
+                            "result_wrapper=",
+                            ImportedSymbol(
+                                "simple_wrapper", "nebius.base.protos.pb_classes"
+                            ),
+                            "(",
+                            wrap,
+                            "),",
+                        )
+                    elif not method.output.no_wrap:
+                        g.p(
+                            "result_wrapper=",
+                            ImportedSymbol(
+                                "simple_wrapper", "nebius.base.protos.pb_classes"
+                            ),
+                            "(",
+                            method.output.export_path,
+                            "),",
+                        )
                 g.p(")")
             g.p()
     g.p()

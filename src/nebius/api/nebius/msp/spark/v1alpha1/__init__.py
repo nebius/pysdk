@@ -605,6 +605,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
     def get_by_name(self,
@@ -624,6 +625,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
     def list(self,
@@ -643,6 +645,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListClustersResponse),
         )
     
     def create(self,
@@ -1619,6 +1622,7 @@ class JobServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Job),
         )
     
     def list(self,
@@ -1638,6 +1642,7 @@ class JobServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListJobsResponse),
         )
     
     def create(self,
@@ -2275,6 +2280,7 @@ class SessionServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Session),
         )
     
     def get_by_name(self,
@@ -2294,6 +2300,7 @@ class SessionServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Session),
         )
     
     def list(self,
@@ -2313,6 +2320,7 @@ class SessionServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListSessionsResponse),
         )
     
     def create(self,

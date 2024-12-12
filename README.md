@@ -31,24 +31,28 @@ from nebius.sdk import SDK
 sdk = SDK()
 ```
 
-This will initialize the SDK, however you won't be able to use it unless you are authenticated.
+This will initialize the SDK with IAM token from `NEBIUS_IAM_TOKEN` env var.
+If you want to use different ways of authorization, see next.
 
 See the following how-to's on how to provide your crerentials.
 
 ##### Initialize using IAM Token
 
+You can also initialize the same token these ways:
+
 ```python
+import os
 from nebius.sdk import SDK
-from nebius.aio.token.static import Bearer
+from nebius.aio.token.static import Bearer, EnvBearer
 from nebius.aio.token.token import Token
 
-sdk = SDK(
-    credentials=Bearer(
-        Token(
-            os.environ.get("NEBIUS_IAM_TOKEN", ""),
-        )
-    ),
-)
+sdk = SDK(credentials=os.environ.get("NEBIUS_IAM_TOKEN", ""))
+#or
+sdk = SDK(credentials=Bearer(os.environ.get("NEBIUS_IAM_TOKEN", "")))
+#or
+sdk = SDK(credentials=EnvBearer("NEBIUS_IAM_TOKEN"))
+#or
+sdk = SDK(credentials=Bearer(Token(os.environ.get("NEBIUS_IAM_TOKEN", ""))))
 ```
 
 Now, your application will get token from the local Env variable, as in the example above.
@@ -69,6 +73,12 @@ sdk = SDK(
         service_account_id="your-service-account-id",
     ),
 )
+#or without importing PKReader:
+sdk = SDK(
+    service_account_private_key_file_name="location/of/your/private_key.pem",
+    service_account_public_key_id="public-key-id",
+    service_account_id="your-service-account-id",
+)
 ```
 
 ##### Initialize with credentials
@@ -83,6 +93,10 @@ sdk = SDK(
     credentials=CredentialsReader(
         filename="location/of/your/credentials.json",
     ),
+)
+#or without importing CredentialsReader:
+sdk = SDK(
+    credentials_file_name="location/of/your/credentials.json",
 )
 ```
 

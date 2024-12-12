@@ -45,7 +45,9 @@ from nebius.aio.authorization.token import TokenProvider
 from nebius.aio.idempotency import IdempotencyKeyInterceptor
 from nebius.aio.service_descriptor import ServiceStub, from_stub_class
 from nebius.aio.token import exchangeable, renewable
+from nebius.aio.token.static import Bearer as StaticTokenBearer
 from nebius.aio.token.token import Bearer as TokenBearer
+from nebius.aio.token.token import Token
 from nebius.api.nebius.common.v1.operation_service_pb2_grpc import (
     OperationServiceStub,
 )
@@ -121,7 +123,19 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         )
 
 
-Credentials = AuthorizationProvider | TokenBearer | ServiceAccountReader | None
+class NoCredentials:
+    pass
+
+
+Credentials = (
+    AuthorizationProvider
+    | TokenBearer
+    | ServiceAccountReader
+    | NoCredentials
+    | Token
+    | str
+    | None
+)
 
 
 class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
@@ -136,6 +150,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         address_options: dict[str, ChannelArgumentType] | None = None,
         address_interceptors: dict[str, Sequence[ClientInterceptor]] | None = None,
         credentials: Credentials = None,
+        service_account_id: str | None = None,
+        service_account_public_key_id: str | None = None,
+        service_account_private_key_file_name: str | None = None,
+        credentials_file_name: str | None = None,
         tls_credentials: ChannelCredentials | None = None,
         event_loop: AbstractEventLoop | None = None,
     ) -> None:
@@ -180,6 +198,28 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._global_interceptors_inner: list[ClientInterceptor] = []
 
+        if credentials is None:
+            if credentials_file_name is not None:
+                from nebius.base.service_account.credentials_file import (
+                    Reader as CredentialsFileReader,
+                )
+
+                credentials = CredentialsFileReader(credentials_file_name)
+            elif (
+                service_account_id is not None
+                and service_account_private_key_file_name is not None
+                and service_account_public_key_id is not None
+            ):
+                from nebius.base.service_account.pk_file import Reader as PKFileReader
+
+                credentials = PKFileReader(
+                    service_account_private_key_file_name,
+                    service_account_public_key_id,
+                    service_account_id,
+                )
+
+        if isinstance(credentials, str) or isinstance(credentials, Token):
+            credentials = StaticTokenBearer(credentials)
         if isinstance(credentials, ServiceAccountReader):
             exchange = exchangeable.Bearer(credentials, self)
             cache = renewable.Bearer(exchange)

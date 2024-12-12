@@ -690,6 +690,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Disk),
         )
     
     def get_by_name(self,
@@ -709,6 +710,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Disk),
         )
     
     def list(self,
@@ -728,6 +730,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListDisksResponse),
         )
     
     def create(self,
@@ -807,6 +810,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
 
@@ -1345,6 +1349,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Filesystem),
         )
     
     def get_by_name(self,
@@ -1364,6 +1369,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Filesystem),
         )
     
     def list(self,
@@ -1383,6 +1389,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListFilesystemsResponse),
         )
     
     def create(self,
@@ -1462,6 +1469,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
 
@@ -1814,6 +1822,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(GpuCluster),
         )
     
     def get_by_name(self,
@@ -1833,6 +1842,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(GpuCluster),
         )
     
     def list(self,
@@ -1852,6 +1862,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListGpuClustersResponse),
         )
     
     def create(self,
@@ -1931,6 +1942,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
 
@@ -2316,6 +2328,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Image),
         )
     
     def get_by_name(self,
@@ -2335,6 +2348,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Image),
         )
     
     def get_latest_by_family(self,
@@ -2354,6 +2368,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Image),
         )
     
     def list(self,
@@ -2373,6 +2388,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListImagesResponse),
         )
     
     def list_operations_by_parent(self,
@@ -2392,6 +2408,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
 
@@ -3218,6 +3235,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Instance),
         )
     
     def get_by_name(self,
@@ -3237,6 +3255,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Instance),
         )
     
     def list(self,
@@ -3256,6 +3275,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListInstancesResponse),
         )
     
     def create(self,
@@ -3375,6 +3395,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
 

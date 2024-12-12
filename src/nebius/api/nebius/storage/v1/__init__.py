@@ -1210,6 +1210,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Bucket),
         )
     
     def get_by_name(self,
@@ -1229,6 +1230,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Bucket),
         )
     
     def list(self,
@@ -1248,6 +1250,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListBucketsResponse),
         )
     
     def create(self,

@@ -943,6 +943,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListAccessKeysResponse),
         )
     
     def list_by_account(self,
@@ -962,6 +963,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListAccessKeysResponse),
         )
     
     def update(self,
@@ -1001,6 +1003,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(AccessKey),
         )
     
     def get_by_aws_id(self,
@@ -1020,6 +1023,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(AccessKey),
         )
     
     def get_secret_once(self,
@@ -1039,6 +1043,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(GetAccessKeySecretOnceResponse),
         )
     
     def activate(self,
@@ -1676,6 +1681,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(AuthPublicKey),
         )
     
     def list(self,
@@ -1695,6 +1701,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListAuthPublicKeyResponse),
         )
     
     def list_by_account(self,
@@ -1714,6 +1721,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListAuthPublicKeyResponse),
         )
     
     def update(self,
@@ -2504,6 +2512,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(FederationCertificate),
         )
     
     def list_by_federation(self,
@@ -2523,6 +2532,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListFederationCertificateResponse),
         )
     
     def update(self,
@@ -2838,6 +2848,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Federation),
         )
     
     def get_by_name(self,
@@ -2857,6 +2868,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Federation),
         )
     
     def list(self,
@@ -2876,6 +2888,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListFederationsResponse),
         )
     
     def update(self,
@@ -4527,6 +4540,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(GroupMembership),
         )
     
     def delete(self,
@@ -4566,6 +4580,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListGroupMembershipsResponse),
         )
     
     def list_members_with_attributes(self,
@@ -4585,6 +4600,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListGroupMembershipsWithAttributesResponse),
         )
     
     def list_member_of(self,
@@ -4604,6 +4620,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListMemberOfResponse),
         )
     
 
@@ -4810,6 +4827,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Group),
         )
     
     def get_by_name(self,
@@ -4829,6 +4847,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Group),
         )
     
     def list(self,
@@ -4848,6 +4867,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListGroupsResponse),
         )
     
 
@@ -5068,6 +5088,7 @@ class IdentityServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(CreateTokenResponse),
         )
     
 
@@ -5537,6 +5558,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Invitation),
         )
     
     def list(self,
@@ -5556,6 +5578,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListInvitationsResponse),
         )
     
     def delete(self,
@@ -5969,6 +5992,7 @@ class ProfileServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(GetProfileResponse),
         )
     
 
@@ -6175,6 +6199,7 @@ class ProjectServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Container),
         )
     
     def get_by_name(self,
@@ -6194,6 +6219,7 @@ class ProjectServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Container),
         )
     
     def list(self,
@@ -6213,6 +6239,7 @@ class ProjectServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListProjectsResponse),
         )
     
 
@@ -6537,6 +6564,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ServiceAccount),
         )
     
     def get_by_name(self,
@@ -6556,6 +6584,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ServiceAccount),
         )
     
     def list(self,
@@ -6575,6 +6604,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListServiceAccountResponse),
         )
     
     def update(self,
@@ -6747,6 +6777,7 @@ class SessionManagementServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(RevokeSessionResponse),
         )
     
 
@@ -6906,6 +6937,7 @@ class TenantServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(Container),
         )
     
     def list(self,
@@ -6925,6 +6957,7 @@ class TenantServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListTenantsResponse),
         )
     
 
@@ -7143,6 +7176,7 @@ class TenantUserAccountServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(TenantUserAccount),
         )
     
     def list(self,
@@ -7162,6 +7196,7 @@ class TenantUserAccountServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListTenantUserAccountsResponse),
         )
     
     def block(self,
@@ -7373,6 +7408,7 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(TenantUserAccountWithAttributes),
         )
     
     def list(self,
@@ -7392,6 +7428,7 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(ListTenantUserAccountsWithAttributesResponse),
         )
     
 
@@ -7418,6 +7455,7 @@ class TokenExchangeServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(CreateTokenResponse),
         )
     
 
