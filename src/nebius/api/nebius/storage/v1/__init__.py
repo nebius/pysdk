@@ -471,13 +471,13 @@ class LifecycleExpiration(pb_classes.Message):
             self.expired_object_delete_marker = expired_object_delete_marker
     
     @builtins.property
-    def date(self) -> "datetime.datetime|None":
-        return super()._get_field("date", explicit_presence=True,
+    def date(self) -> "datetime.datetime":
+        return super()._get_field("date", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @date.setter
-    def date(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("date",value,explicit_presence=True,
+    def date(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("date",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -758,24 +758,24 @@ class BucketStatus(pb_classes.Message):
         )
     
     @builtins.property
-    def deleted_at(self) -> "datetime.datetime|None":
-        return super()._get_field("deleted_at", explicit_presence=True,
+    def deleted_at(self) -> "datetime.datetime":
+        return super()._get_field("deleted_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @deleted_at.setter
-    def deleted_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("deleted_at",value,explicit_presence=True,
+    def deleted_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("deleted_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
     @builtins.property
-    def purge_at(self) -> "datetime.datetime|None":
-        return super()._get_field("purge_at", explicit_presence=True,
+    def purge_at(self) -> "datetime.datetime":
+        return super()._get_field("purge_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @purge_at.setter
-    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("purge_at",value,explicit_presence=True,
+    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("purge_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -1013,24 +1013,24 @@ class DeleteBucketRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def purge_at(self) -> "datetime.datetime|None":
-        return super()._get_field("purge_at", explicit_presence=True,
+    def purge_at(self) -> "datetime.datetime":
+        return super()._get_field("purge_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @purge_at.setter
-    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("purge_at",value,explicit_presence=True,
+    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("purge_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
     @builtins.property
-    def ttl(self) -> "datetime.timedelta|None":
-        return super()._get_field("ttl", explicit_presence=True,
+    def ttl(self) -> "datetime.timedelta":
+        return super()._get_field("ttl", explicit_presence=False,
         wrap=well_known_1.from_duration
         )
     @ttl.setter
-    def ttl(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
-        return super()._set_field("ttl",value,explicit_presence=True,
+    def ttl(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+        return super()._set_field("ttl",value,explicit_presence=False,
         unwrap=well_known_1.to_duration
         )
     

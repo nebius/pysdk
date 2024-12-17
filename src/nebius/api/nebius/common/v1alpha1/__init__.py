@@ -148,13 +148,13 @@ class Operation(pb_classes.Message):
         )
     
     @builtins.property
-    def created_at(self) -> "datetime.datetime|None":
-        return super()._get_field("created_at", explicit_presence=True,
+    def created_at(self) -> "datetime.datetime":
+        return super()._get_field("created_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("created_at",value,explicit_presence=True,
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("created_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -168,23 +168,23 @@ class Operation(pb_classes.Message):
         )
     
     @builtins.property
-    def finished_at(self) -> "datetime.datetime|None":
-        return super()._get_field("finished_at", explicit_presence=True,
+    def finished_at(self) -> "datetime.datetime":
+        return super()._get_field("finished_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @finished_at.setter
-    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("finished_at",value,explicit_presence=True,
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("finished_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
     @builtins.property
-    def request(self) -> "any_pb2.Any|None":
-        return super()._get_field("request", explicit_presence=True,
+    def request(self) -> "any_pb2.Any":
+        return super()._get_field("request", explicit_presence=False,
         )
     @request.setter
-    def request(self, value: "any_pb2.Any|None") -> None:
-        return super()._set_field("request",value,explicit_presence=True,
+    def request(self, value: "any_pb2.Any") -> None:
+        return super()._set_field("request",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -207,21 +207,21 @@ class Operation(pb_classes.Message):
         )
     
     @builtins.property
-    def resource(self) -> "any_pb2.Any|None":
-        return super()._get_field("resource", explicit_presence=True,
+    def resource(self) -> "any_pb2.Any":
+        return super()._get_field("resource", explicit_presence=False,
         )
     @resource.setter
-    def resource(self, value: "any_pb2.Any|None") -> None:
-        return super()._set_field("resource",value,explicit_presence=True,
+    def resource(self, value: "any_pb2.Any") -> None:
+        return super()._set_field("resource",value,explicit_presence=False,
         )
     
     @builtins.property
-    def progress_data(self) -> "any_pb2.Any|None":
-        return super()._get_field("progress_data", explicit_presence=True,
+    def progress_data(self) -> "any_pb2.Any":
+        return super()._get_field("progress_data", explicit_presence=False,
         )
     @progress_data.setter
-    def progress_data(self, value: "any_pb2.Any|None") -> None:
-        return super()._set_field("progress_data",value,explicit_presence=True,
+    def progress_data(self, value: "any_pb2.Any") -> None:
+        return super()._set_field("progress_data",value,explicit_presence=False,
         )
     
     @builtins.property

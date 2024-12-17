@@ -2858,24 +2858,24 @@ class MaintenanceEventStatus(pb_classes.Message):
         )
     
     @builtins.property
-    def finished_at(self) -> "datetime.datetime|None":
-        return super()._get_field("finished_at", explicit_presence=True,
+    def finished_at(self) -> "datetime.datetime":
+        return super()._get_field("finished_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @finished_at.setter
-    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("finished_at",value,explicit_presence=True,
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("finished_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
     @builtins.property
-    def sla_deadline_ts(self) -> "datetime.datetime|None":
-        return super()._get_field("sla_deadline_ts", explicit_presence=True,
+    def sla_deadline_ts(self) -> "datetime.datetime":
+        return super()._get_field("sla_deadline_ts", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @sla_deadline_ts.setter
-    def sla_deadline_ts(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("sla_deadline_ts",value,explicit_presence=True,
+    def sla_deadline_ts(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("sla_deadline_ts",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     

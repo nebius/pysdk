@@ -155,35 +155,35 @@ class GetVersionRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def agent_uptime(self) -> "datetime.timedelta|None":
-        return super()._get_field("agent_uptime", explicit_presence=True,
+    def agent_uptime(self) -> "datetime.timedelta":
+        return super()._get_field("agent_uptime", explicit_presence=False,
         wrap=well_known.from_duration
         )
     @agent_uptime.setter
-    def agent_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
-        return super()._set_field("agent_uptime",value,explicit_presence=True,
+    def agent_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+        return super()._set_field("agent_uptime",value,explicit_presence=False,
         unwrap=well_known.to_duration
         )
     
     @builtins.property
-    def system_uptime(self) -> "datetime.timedelta|None":
-        return super()._get_field("system_uptime", explicit_presence=True,
+    def system_uptime(self) -> "datetime.timedelta":
+        return super()._get_field("system_uptime", explicit_presence=False,
         wrap=well_known.from_duration
         )
     @system_uptime.setter
-    def system_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
-        return super()._set_field("system_uptime",value,explicit_presence=True,
+    def system_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+        return super()._set_field("system_uptime",value,explicit_presence=False,
         unwrap=well_known.to_duration
         )
     
     @builtins.property
-    def updater_uptime(self) -> "datetime.timedelta|None":
-        return super()._get_field("updater_uptime", explicit_presence=True,
+    def updater_uptime(self) -> "datetime.timedelta":
+        return super()._get_field("updater_uptime", explicit_presence=False,
         wrap=well_known.from_duration
         )
     @updater_uptime.setter
-    def updater_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
-        return super()._set_field("updater_uptime",value,explicit_presence=True,
+    def updater_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+        return super()._set_field("updater_uptime",value,explicit_presence=False,
         unwrap=well_known.to_duration
         )
     

@@ -146,24 +146,24 @@ class Artifact(pb_classes.Message):
         )
     
     @builtins.property
-    def created_at(self) -> "datetime.datetime|None":
-        return super()._get_field("created_at", explicit_presence=True,
+    def created_at(self) -> "datetime.datetime":
+        return super()._get_field("created_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("created_at",value,explicit_presence=True,
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("created_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
     @builtins.property
-    def updated_at(self) -> "datetime.datetime|None":
-        return super()._get_field("updated_at", explicit_presence=True,
+    def updated_at(self) -> "datetime.datetime":
+        return super()._get_field("updated_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @updated_at.setter
-    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("updated_at",value,explicit_presence=True,
+    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("updated_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
