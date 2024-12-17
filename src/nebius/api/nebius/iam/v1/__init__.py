@@ -294,13 +294,13 @@ class AccessKeySpec(pb_classes.Message):
         )
     
     @builtins.property
-    def expires_at(self) -> "datetime.datetime|None":
-        return super()._get_field("expires_at", explicit_presence=True,
+    def expires_at(self) -> "datetime.datetime":
+        return super()._get_field("expires_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("expires_at",value,explicit_presence=True,
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("expires_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -1192,13 +1192,13 @@ class AuthPublicKeySpec(pb_classes.Message):
         )
     
     @builtins.property
-    def expires_at(self) -> "datetime.datetime|None":
-        return super()._get_field("expires_at", explicit_presence=True,
+    def expires_at(self) -> "datetime.datetime":
+        return super()._get_field("expires_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("expires_at",value,explicit_presence=True,
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("expires_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -2244,24 +2244,24 @@ class FederationCertificateStatus(pb_classes.Message):
         )
     
     @builtins.property
-    def not_before(self) -> "datetime.datetime|None":
-        return super()._get_field("not_before", explicit_presence=True,
+    def not_before(self) -> "datetime.datetime":
+        return super()._get_field("not_before", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @not_before.setter
-    def not_before(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("not_before",value,explicit_presence=True,
+    def not_before(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("not_before",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
     @builtins.property
-    def not_after(self) -> "datetime.datetime|None":
-        return super()._get_field("not_after", explicit_presence=True,
+    def not_after(self) -> "datetime.datetime":
+        return super()._get_field("not_after", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @not_after.setter
-    def not_after(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("not_after",value,explicit_presence=True,
+    def not_after(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("not_after",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -3966,13 +3966,13 @@ class GroupMembership(pb_classes.Message):
         )
     
     @builtins.property
-    def revoke_at(self) -> "datetime.datetime|None":
-        return super()._get_field("revoke_at", explicit_presence=True,
+    def revoke_at(self) -> "datetime.datetime":
+        return super()._get_field("revoke_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @revoke_at.setter
-    def revoke_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("revoke_at",value,explicit_presence=True,
+    def revoke_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("revoke_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -5244,13 +5244,13 @@ class InvitationStatus(pb_classes.Message):
         )
     
     @builtins.property
-    def expires_at(self) -> "datetime.datetime|None":
-        return super()._get_field("expires_at", explicit_presence=True,
+    def expires_at(self) -> "datetime.datetime":
+        return super()._get_field("expires_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("expires_at",value,explicit_presence=True,
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+        return super()._set_field("expires_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
     

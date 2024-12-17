@@ -1658,13 +1658,13 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         )
     
     @builtins.property
-    def drain_timeout(self) -> "datetime.timedelta|None":
-        return super()._get_field("drain_timeout", explicit_presence=True,
+    def drain_timeout(self) -> "datetime.timedelta":
+        return super()._get_field("drain_timeout", explicit_presence=False,
         wrap=well_known_1.from_duration
         )
     @drain_timeout.setter
-    def drain_timeout(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
-        return super()._set_field("drain_timeout",value,explicit_presence=True,
+    def drain_timeout(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+        return super()._set_field("drain_timeout",value,explicit_presence=False,
         unwrap=well_known_1.to_duration
         )
     

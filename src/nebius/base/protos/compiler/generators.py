@@ -19,7 +19,7 @@ def py_symbol(field: Field) -> ImportedSymbol:
 
 
 def tracks_presence(field: Field) -> bool:
-    if field.is_message() and field.message.full_type_name.startswith(".nebius."):
+    if field.is_message():
         behavior = field_behavior(field)
         if FieldBehavior.MEANINGFUL_EMPTY_VALUE in behavior:
             return True
