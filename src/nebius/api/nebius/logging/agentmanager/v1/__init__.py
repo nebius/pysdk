@@ -88,6 +88,23 @@ class GetVersionRequest(pb_classes.Message):
         if mk8s_cluster_id is not None:
             self.mk8s_cluster_id = mk8s_cluster_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "type",
+            "agent_version",
+            "updater_version",
+            "parent_id",
+            "instance_id",
+            "os_info",
+            "agent_state",
+            "agent_uptime",
+            "system_uptime",
+            "updater_uptime",
+            "agent_state_messages",
+            "last_update_error",
+            "mk8s_cluster_id",
+        ]
+    
     @builtins.property
     def type(self) -> "AgentType":
         return super()._get_field("type", explicit_presence=False,
@@ -215,6 +232,22 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("mk8s_cluster_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "type":"type",
+        "agent_version":"agent_version",
+        "updater_version":"updater_version",
+        "parent_id":"parent_id",
+        "instance_id":"instance_id",
+        "os_info":"os_info",
+        "agent_state":"agent_state",
+        "agent_uptime":"agent_uptime",
+        "system_uptime":"system_uptime",
+        "updater_uptime":"updater_uptime",
+        "agent_state_messages":"agent_state_messages",
+        "last_update_error":"last_update_error",
+        "mk8s_cluster_id":"mk8s_cluster_id",
+    }
+    
 class OSInfo(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.OSInfo
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.OSInfo",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -234,6 +267,13 @@ class OSInfo(pb_classes.Message):
             self.uname = uname
         if architecture is not None:
             self.architecture = architecture
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+            "uname",
+            "architecture",
+        ]
     
     @builtins.property
     def name(self) -> "builtins.str":
@@ -261,6 +301,12 @@ class OSInfo(pb_classes.Message):
     def architecture(self, value: "builtins.str") -> None:
         return super()._set_field("architecture",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+        "uname":"uname",
+        "architecture":"architecture",
+    }
     
 class GetVersionResponse(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.GetVersionResponse
@@ -334,6 +380,15 @@ class GetVersionResponse(pb_classes.Message):
         if restart is not None:
             self.restart = restart
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "action",
+            "nop",
+            "update",
+            "restart",
+            "response",
+        ]
+    
     @builtins.property
     def action(self) -> "Action":
         return super()._get_field("action", explicit_presence=False,
@@ -374,6 +429,14 @@ class GetVersionResponse(pb_classes.Message):
         return super()._set_field("restart",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "action":"action",
+        "nop":"nop",
+        "update":"update",
+        "restart":"restart",
+        "response":"response",
+    }
+    
 class NopActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.NopActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.NopActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -383,6 +446,13 @@ class NopActionParams(pb_classes.Message):
         initial_message: message.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 class UpdateActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.UpdateActionParams
@@ -400,6 +470,12 @@ class UpdateActionParams(pb_classes.Message):
             self.version = version
         if repo_url is not None:
             self.repo_url = repo_url
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "version",
+            "repo_url",
+        ]
     
     @builtins.property
     def version(self) -> "builtins.str":
@@ -419,6 +495,11 @@ class UpdateActionParams(pb_classes.Message):
         return super()._set_field("repo_url",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "version":"version",
+        "repo_url":"repo_url",
+    }
+    
 class RestartActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.RestartActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.RestartActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -428,6 +509,13 @@ class RestartActionParams(pb_classes.Message):
         initial_message: message.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 
 class VersionServiceClient(client.Client):

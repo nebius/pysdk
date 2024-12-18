@@ -50,6 +50,13 @@ class RegionRouting(pb_classes.Message):
         if strict is not None:
             self.strict = strict
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "nid",
+            "disabled",
+            "strict",
+        ]
+    
     @builtins.property
     def nid(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("nid", explicit_presence=False,
@@ -77,6 +84,12 @@ class RegionRouting(pb_classes.Message):
     def strict(self, value: "builtins.bool") -> None:
         return super()._set_field("strict",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "nid":"nid",
+        "disabled":"disabled",
+        "strict":"strict",
+    }
     
 unstable = annotations_pb2.unstable
 api_service_name = annotations_pb2.api_service_name

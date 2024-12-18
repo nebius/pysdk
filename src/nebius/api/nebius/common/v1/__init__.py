@@ -238,6 +238,27 @@ class ServiceError(pb_classes.Message):
         if retry_type is not None:
             self.retry_type = retry_type
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "service",
+            "code",
+            "bad_request",
+            "bad_resource_state",
+            "resource_not_found",
+            "resource_already_exists",
+            "out_of_range",
+            "permission_denied",
+            "resource_conflict",
+            "operation_aborted",
+            "too_many_requests",
+            "quota_failure",
+            "not_enough_resources",
+            "internal_error",
+            "retry_type",
+            "details",
+            "RetryType",
+        ]
+    
     @builtins.property
     def service(self) -> "builtins.str":
         return super()._get_field("service", explicit_presence=False,
@@ -386,6 +407,26 @@ class ServiceError(pb_classes.Message):
         return super()._set_field("retry_type",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "service":"service",
+        "code":"code",
+        "bad_request":"bad_request",
+        "bad_resource_state":"bad_resource_state",
+        "resource_not_found":"resource_not_found",
+        "resource_already_exists":"resource_already_exists",
+        "out_of_range":"out_of_range",
+        "permission_denied":"permission_denied",
+        "resource_conflict":"resource_conflict",
+        "operation_aborted":"operation_aborted",
+        "too_many_requests":"too_many_requests",
+        "quota_failure":"quota_failure",
+        "not_enough_resources":"not_enough_resources",
+        "internal_error":"internal_error",
+        "retry_type":"retry_type",
+        "details":"details",
+        "RetryType":"RetryType",
+    }
+    
 class BadRequest(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.BadRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.BadRequest",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -407,6 +448,12 @@ class BadRequest(pb_classes.Message):
             if message is not None:
                 self.message = message
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "field",
+                "message",
+            ]
+        
         @builtins.property
         def field(self) -> "builtins.str":
             return super()._get_field("field", explicit_presence=False,
@@ -425,6 +472,11 @@ class BadRequest(pb_classes.Message):
             return super()._set_field("message",value,explicit_presence=False,
             )
         
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "field":"field",
+            "message":"message",
+        }
+        
     
     def __init__(
         self,
@@ -436,6 +488,12 @@ class BadRequest(pb_classes.Message):
         if violations is not None:
             self.violations = violations
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "violations",
+            "Violation",
+        ]
+    
     @builtins.property
     def violations(self) -> "abc.MutableSequence[BadRequest.Violation]":
         return super()._get_field("violations", explicit_presence=False,
@@ -445,6 +503,11 @@ class BadRequest(pb_classes.Message):
     def violations(self, value: "abc.Iterable[BadRequest.Violation]") -> None:
         return super()._set_field("violations",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "violations":"violations",
+        "Violation":"Violation",
+    }
     
 class BadResourceState(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.BadResourceState
@@ -463,6 +526,12 @@ class BadResourceState(pb_classes.Message):
         if message is not None:
             self.message = message
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_id",
+            "message",
+        ]
+    
     @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
@@ -481,6 +550,11 @@ class BadResourceState(pb_classes.Message):
         return super()._set_field("message",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_id":"resource_id",
+        "message":"message",
+    }
+    
 class ResourceNotFound(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceNotFound
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceNotFound",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -495,6 +569,11 @@ class ResourceNotFound(pb_classes.Message):
         if resource_id is not None:
             self.resource_id = resource_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_id",
+        ]
+    
     @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
@@ -503,6 +582,10 @@ class ResourceNotFound(pb_classes.Message):
     def resource_id(self, value: "builtins.str") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_id":"resource_id",
+    }
     
 class ResourceAlreadyExists(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceAlreadyExists
@@ -518,6 +601,11 @@ class ResourceAlreadyExists(pb_classes.Message):
         if resource_id is not None:
             self.resource_id = resource_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_id",
+        ]
+    
     @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
@@ -526,6 +614,10 @@ class ResourceAlreadyExists(pb_classes.Message):
     def resource_id(self, value: "builtins.str") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_id":"resource_id",
+    }
     
 class ResourceConflict(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceConflict
@@ -544,6 +636,12 @@ class ResourceConflict(pb_classes.Message):
         if message is not None:
             self.message = message
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_id",
+            "message",
+        ]
+    
     @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
@@ -561,6 +659,11 @@ class ResourceConflict(pb_classes.Message):
     def message(self, value: "builtins.str") -> None:
         return super()._set_field("message",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_id":"resource_id",
+        "message":"message",
+    }
     
 class OperationAborted(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.OperationAborted
@@ -581,6 +684,13 @@ class OperationAborted(pb_classes.Message):
             self.aborted_by_operation_id = aborted_by_operation_id
         if resource_id is not None:
             self.resource_id = resource_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "operation_id",
+            "aborted_by_operation_id",
+            "resource_id",
+        ]
     
     @builtins.property
     def operation_id(self) -> "builtins.str":
@@ -609,6 +719,12 @@ class OperationAborted(pb_classes.Message):
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "operation_id":"operation_id",
+        "aborted_by_operation_id":"aborted_by_operation_id",
+        "resource_id":"resource_id",
+    }
+    
 class OutOfRange(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.OutOfRange
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.OutOfRange",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -625,6 +741,12 @@ class OutOfRange(pb_classes.Message):
             self.requested = requested
         if limit is not None:
             self.limit = limit
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "requested",
+            "limit",
+        ]
     
     @builtins.property
     def requested(self) -> "builtins.str":
@@ -644,6 +766,11 @@ class OutOfRange(pb_classes.Message):
         return super()._set_field("limit",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "requested":"requested",
+        "limit":"limit",
+    }
+    
 class PermissionDenied(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.PermissionDenied
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.PermissionDenied",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -658,6 +785,11 @@ class PermissionDenied(pb_classes.Message):
         if resource_id is not None:
             self.resource_id = resource_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_id",
+        ]
+    
     @builtins.property
     def resource_id(self) -> "builtins.str":
         return super()._get_field("resource_id", explicit_presence=False,
@@ -666,6 +798,10 @@ class PermissionDenied(pb_classes.Message):
     def resource_id(self, value: "builtins.str") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_id":"resource_id",
+    }
     
 class InternalError(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.InternalError
@@ -683,6 +819,12 @@ class InternalError(pb_classes.Message):
             self.request_id = request_id
         if trace_id is not None:
             self.trace_id = trace_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "request_id",
+            "trace_id",
+        ]
     
     @builtins.property
     def request_id(self) -> "builtins.str":
@@ -702,6 +844,11 @@ class InternalError(pb_classes.Message):
         return super()._set_field("trace_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "request_id":"request_id",
+        "trace_id":"trace_id",
+    }
+    
 class TooManyRequests(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.TooManyRequests
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.TooManyRequests",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -716,6 +863,11 @@ class TooManyRequests(pb_classes.Message):
         if violation is not None:
             self.violation = violation
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "violation",
+        ]
+    
     @builtins.property
     def violation(self) -> "builtins.str":
         return super()._get_field("violation", explicit_presence=False,
@@ -724,6 +876,10 @@ class TooManyRequests(pb_classes.Message):
     def violation(self, value: "builtins.str") -> None:
         return super()._set_field("violation",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "violation":"violation",
+    }
     
 class QuotaFailure(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.QuotaFailure
@@ -751,6 +907,14 @@ class QuotaFailure(pb_classes.Message):
                 self.limit = limit
             if requested is not None:
                 self.requested = requested
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "quota",
+                "message",
+                "limit",
+                "requested",
+            ]
         
         @builtins.property
         def quota(self) -> "builtins.str":
@@ -788,6 +952,13 @@ class QuotaFailure(pb_classes.Message):
             return super()._set_field("requested",value,explicit_presence=False,
             )
         
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "quota":"quota",
+            "message":"message",
+            "limit":"limit",
+            "requested":"requested",
+        }
+        
     
     def __init__(
         self,
@@ -799,6 +970,12 @@ class QuotaFailure(pb_classes.Message):
         if violations is not None:
             self.violations = violations
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "violations",
+            "Violation",
+        ]
+    
     @builtins.property
     def violations(self) -> "abc.MutableSequence[QuotaFailure.Violation]":
         return super()._get_field("violations", explicit_presence=False,
@@ -808,6 +985,11 @@ class QuotaFailure(pb_classes.Message):
     def violations(self, value: "abc.Iterable[QuotaFailure.Violation]") -> None:
         return super()._set_field("violations",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "violations":"violations",
+        "Violation":"Violation",
+    }
     
 class NotEnoughResources(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.NotEnoughResources
@@ -832,6 +1014,13 @@ class NotEnoughResources(pb_classes.Message):
                 self.message = message
             if requested is not None:
                 self.requested = requested
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "resource_type",
+                "message",
+                "requested",
+            ]
         
         @builtins.property
         def resource_type(self) -> "builtins.str":
@@ -860,6 +1049,12 @@ class NotEnoughResources(pb_classes.Message):
             return super()._set_field("requested",value,explicit_presence=False,
             )
         
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "resource_type":"resource_type",
+            "message":"message",
+            "requested":"requested",
+        }
+        
     
     def __init__(
         self,
@@ -871,6 +1066,12 @@ class NotEnoughResources(pb_classes.Message):
         if violations is not None:
             self.violations = violations
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "violations",
+            "Violation",
+        ]
+    
     @builtins.property
     def violations(self) -> "abc.MutableSequence[NotEnoughResources.Violation]":
         return super()._get_field("violations", explicit_presence=False,
@@ -880,6 +1081,11 @@ class NotEnoughResources(pb_classes.Message):
     def violations(self, value: "abc.Iterable[NotEnoughResources.Violation]") -> None:
         return super()._set_field("violations",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "violations":"violations",
+        "Violation":"Violation",
+    }
     
 # file: nebius/common/v1/metadata.proto
 class ResourceMetadata(pb_classes.Message):
@@ -903,6 +1109,12 @@ class ResourceMetadata(pb_classes.Message):
             if value is not None:
                 self.value = value
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
         @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
@@ -920,6 +1132,11 @@ class ResourceMetadata(pb_classes.Message):
         def value(self, value: "builtins.str") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
         
     
     def __init__(
@@ -949,6 +1166,18 @@ class ResourceMetadata(pb_classes.Message):
             self.updated_at = updated_at
         if labels is not None:
             self.labels = labels
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "parent_id",
+            "name",
+            "resource_version",
+            "created_at",
+            "updated_at",
+            "labels",
+            "LabelsEntry",
+        ]
     
     @builtins.property
     def id(self) -> "builtins.str":
@@ -1018,6 +1247,17 @@ class ResourceMetadata(pb_classes.Message):
         return super()._set_field("labels",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "parent_id":"parent_id",
+        "name":"name",
+        "resource_version":"resource_version",
+        "created_at":"created_at",
+        "updated_at":"updated_at",
+        "labels":"labels",
+        "LabelsEntry":"LabelsEntry",
+    }
+    
 class GetByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = metadata_pb2.GetByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.GetByNameRequest",metadata_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1034,6 +1274,12 @@ class GetByNameRequest(pb_classes.Message):
             self.parent_id = parent_id
         if name is not None:
             self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -1052,6 +1298,11 @@ class GetByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 # file: nebius/common/v1/operation.proto
 class Operation(pb_classes.Message):
@@ -1072,6 +1323,11 @@ class Operation(pb_classes.Message):
             if values is not None:
                 self.values = values
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "values",
+            ]
+        
         @builtins.property
         def values(self) -> "abc.MutableSequence[builtins.str]":
             return super()._get_field("values", explicit_presence=False,
@@ -1081,6 +1337,10 @@ class Operation(pb_classes.Message):
         def values(self, value: "abc.Iterable[builtins.str]") -> None:
             return super()._set_field("values",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "values":"values",
+        }
         
     
     class RequestHeadersEntry(pb_classes.Message):
@@ -1100,6 +1360,12 @@ class Operation(pb_classes.Message):
             if value is not None:
                 self.value = value
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
         @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
@@ -1118,6 +1384,11 @@ class Operation(pb_classes.Message):
         def value(self, value: "Operation.RequestHeader|operation_pb2.Operation.RequestHeader") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
         
     
     def __init__(
@@ -1156,6 +1427,22 @@ class Operation(pb_classes.Message):
             self.progress_data = progress_data
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "description",
+            "created_at",
+            "created_by",
+            "finished_at",
+            "request",
+            "request_headers",
+            "resource_id",
+            "progress_data",
+            "status",
+            "RequestHeader",
+            "RequestHeadersEntry",
+        ]
     
     @builtins.property
     def id(self) -> "builtins.str":
@@ -1254,6 +1541,21 @@ class Operation(pb_classes.Message):
         unwrap=request_status.request_status_to_rpc_status
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "description":"description",
+        "created_at":"created_at",
+        "created_by":"created_by",
+        "finished_at":"finished_at",
+        "request":"request",
+        "request_headers":"request_headers",
+        "resource_id":"resource_id",
+        "progress_data":"progress_data",
+        "status":"status",
+        "RequestHeader":"RequestHeader",
+        "RequestHeadersEntry":"RequestHeadersEntry",
+    }
+    
 # file: nebius/common/v1/operation_service.proto
 class GetOperationRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.GetOperationRequest
@@ -1269,6 +1571,11 @@ class GetOperationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1277,6 +1584,10 @@ class GetOperationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListOperationsRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsRequest
@@ -1297,6 +1608,13 @@ class ListOperationsRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
@@ -1325,6 +1643,12 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_id":"resource_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class ListOperationsResponse(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ListOperationsResponse",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1341,6 +1665,12 @@ class ListOperationsResponse(pb_classes.Message):
             self.operations = operations
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "operations",
+            "next_page_token",
+        ]
     
     @builtins.property
     def operations(self) -> "abc.MutableSequence[Operation]":
@@ -1360,6 +1690,11 @@ class ListOperationsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "operations":"operations",
+        "next_page_token":"next_page_token",
+    }
     
 
 class OperationServiceClient(client.Client):

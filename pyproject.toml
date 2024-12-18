@@ -7,7 +7,10 @@ name = "nebius"
 version = "0.2.0"
 description = "Nebius Python SDK"
 authors = [
-    { name = "Daniil Drizhuk", email = "d.drizhuk@gmail.com" }
+    { name = "Daniil Drizhuk", email = "complynx@nebius.com" },
+    { name = "Ivan Kornilov", email = "ivan.kornilov@nebius.com"},
+    { name = "Marat Reymers", email = "marat-reymers@nebius.com"},
+    { name = "Andrei Zenkov", email = "andrei.zenkov@nebius.com"}
 ]
 license = { text = "MIT" }
 dependencies = [

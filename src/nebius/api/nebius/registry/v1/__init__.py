@@ -11,9 +11,9 @@ import google.protobuf.message as message_1
 import builtins as builtins
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
+import collections.abc as abc
 import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.registry.v1.artifact_service_pb2 as artifact_service_pb2
-import collections.abc as abc
 import nebius.aio.client as client
 import nebius.api.nebius.common.v1 as v1_1
 import grpc as grpc
@@ -79,6 +79,21 @@ class Artifact(pb_classes.Message):
             self.created_at = created_at
         if updated_at is not None:
             self.updated_at = updated_at
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "name",
+            "media_type",
+            "digest",
+            "size",
+            "status",
+            "type",
+            "created_at",
+            "updated_at",
+            "Status",
+            "Type",
+        ]
     
     @builtins.property
     def id(self) -> "builtins.str":
@@ -167,6 +182,20 @@ class Artifact(pb_classes.Message):
         unwrap=well_known_1.to_timestamp
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "name":"name",
+        "media_type":"media_type",
+        "digest":"digest",
+        "size":"size",
+        "status":"status",
+        "type":"type",
+        "created_at":"created_at",
+        "updated_at":"updated_at",
+        "Status":"Status",
+        "Type":"Type",
+    }
+    
 # file: nebius/registry/v1/artifact_service.proto
 class GetArtifactRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.GetArtifactRequest
@@ -182,6 +211,11 @@ class GetArtifactRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -190,6 +224,10 @@ class GetArtifactRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListArtifactsRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.ListArtifactsRequest
@@ -213,6 +251,14 @@ class ListArtifactsRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -250,6 +296,13 @@ class ListArtifactsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListArtifactsResponse(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.ListArtifactsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListArtifactsResponse",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -266,6 +319,12 @@ class ListArtifactsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Artifact]":
@@ -286,6 +345,11 @@ class ListArtifactsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class DeleteArtifactRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.DeleteArtifactRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.DeleteArtifactRequest",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -300,6 +364,11 @@ class DeleteArtifactRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -308,6 +377,10 @@ class DeleteArtifactRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class ArtifactServiceClient(client.Client):
@@ -397,6 +470,13 @@ class Registry(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -427,6 +507,12 @@ class Registry(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class RegistrySpec(pb_classes.Message):
     __PB2_CLASS__ = registry_pb2.RegistrySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.RegistrySpec",registry_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -443,6 +529,12 @@ class RegistrySpec(pb_classes.Message):
             self.description = description
         if images_count is not None:
             self.images_count = images_count
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "images_count",
+        ]
     
     @builtins.property
     def description(self) -> "builtins.str":
@@ -461,6 +553,11 @@ class RegistrySpec(pb_classes.Message):
     def images_count(self, value: "builtins.int") -> None:
         return super()._set_field("images_count",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "images_count":"images_count",
+    }
     
 class RegistryStatus(pb_classes.Message):
     __PB2_CLASS__ = registry_pb2.RegistryStatus
@@ -486,6 +583,13 @@ class RegistryStatus(pb_classes.Message):
         if images_count is not None:
             self.images_count = images_count
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "images_count",
+            "State",
+        ]
+    
     @builtins.property
     def state(self) -> "RegistryStatus.State":
         return super()._get_field("state", explicit_presence=False,
@@ -505,6 +609,12 @@ class RegistryStatus(pb_classes.Message):
         return super()._set_field("images_count",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "images_count":"images_count",
+        "State":"State",
+    }
+    
 # file: nebius/registry/v1/registry_service.proto
 class GetRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.GetRegistryRequest
@@ -520,6 +630,11 @@ class GetRegistryRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -528,6 +643,10 @@ class GetRegistryRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListRegistriesRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.ListRegistriesRequest
@@ -551,6 +670,14 @@ class ListRegistriesRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -588,6 +715,13 @@ class ListRegistriesRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListRegistriesResponse(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.ListRegistriesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListRegistriesResponse",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -604,6 +738,12 @@ class ListRegistriesResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Registry]":
@@ -624,6 +764,11 @@ class ListRegistriesResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class CreateRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.CreateRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.CreateRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -640,6 +785,12 @@ class CreateRegistryRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -660,6 +811,11 @@ class CreateRegistryRequest(pb_classes.Message):
     def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 class UpdateRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.UpdateRegistryRequest
@@ -678,6 +834,12 @@ class UpdateRegistryRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -698,6 +860,11 @@ class UpdateRegistryRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.DeleteRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.DeleteRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -712,6 +879,11 @@ class DeleteRegistryRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -720,6 +892,10 @@ class DeleteRegistryRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class RegistryServiceClient(client.Client):

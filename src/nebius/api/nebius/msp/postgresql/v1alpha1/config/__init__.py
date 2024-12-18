@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import builtins as builtins
 import typing as typing
 import google.protobuf.message as message_1
+import collections.abc as abc
 #@ local imports here @#
 
 # file: nebius/msp/postgresql/v1alpha1/config/postgresql.proto
@@ -383,6 +384,34 @@ class PostgresqlConfig16(pb_classes.Message):
         if shared_buffers is not None:
             self.shared_buffers = shared_buffers
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "autovacuum_work_mem",
+            "statement_timeout",
+            "idle_in_transaction_session_timeout",
+            "autovacuum_vacuum_cost_delay",
+            "autovacuum_vacuum_cost_limit",
+            "autovacuum_naptime",
+            "autovacuum_vacuum_scale_factor",
+            "autovacuum_analyze_scale_factor",
+            "default_transaction_read_only",
+            "search_path",
+            "max_connections",
+            "shared_buffers",
+            "_autovacuum_work_mem",
+            "_statement_timeout",
+            "_idle_in_transaction_session_timeout",
+            "_autovacuum_vacuum_cost_delay",
+            "_autovacuum_vacuum_cost_limit",
+            "_autovacuum_naptime",
+            "_autovacuum_vacuum_scale_factor",
+            "_autovacuum_analyze_scale_factor",
+            "_default_transaction_read_only",
+            "_search_path",
+            "_max_connections",
+            "_shared_buffers",
+        ]
+    
     @builtins.property
     def autovacuum_work_mem(self) -> "builtins.int|None":
         return super()._get_field("autovacuum_work_mem", explicit_presence=True,
@@ -490,6 +519,33 @@ class PostgresqlConfig16(pb_classes.Message):
     def shared_buffers(self, value: "builtins.int|None") -> None:
         return super()._set_field("shared_buffers",value,explicit_presence=True,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "autovacuum_work_mem":"autovacuum_work_mem",
+        "statement_timeout":"statement_timeout",
+        "idle_in_transaction_session_timeout":"idle_in_transaction_session_timeout",
+        "autovacuum_vacuum_cost_delay":"autovacuum_vacuum_cost_delay",
+        "autovacuum_vacuum_cost_limit":"autovacuum_vacuum_cost_limit",
+        "autovacuum_naptime":"autovacuum_naptime",
+        "autovacuum_vacuum_scale_factor":"autovacuum_vacuum_scale_factor",
+        "autovacuum_analyze_scale_factor":"autovacuum_analyze_scale_factor",
+        "default_transaction_read_only":"default_transaction_read_only",
+        "search_path":"search_path",
+        "max_connections":"max_connections",
+        "shared_buffers":"shared_buffers",
+        "_autovacuum_work_mem":"_autovacuum_work_mem",
+        "_statement_timeout":"_statement_timeout",
+        "_idle_in_transaction_session_timeout":"_idle_in_transaction_session_timeout",
+        "_autovacuum_vacuum_cost_delay":"_autovacuum_vacuum_cost_delay",
+        "_autovacuum_vacuum_cost_limit":"_autovacuum_vacuum_cost_limit",
+        "_autovacuum_naptime":"_autovacuum_naptime",
+        "_autovacuum_vacuum_scale_factor":"_autovacuum_vacuum_scale_factor",
+        "_autovacuum_analyze_scale_factor":"_autovacuum_analyze_scale_factor",
+        "_default_transaction_read_only":"_default_transaction_read_only",
+        "_search_path":"_search_path",
+        "_max_connections":"_max_connections",
+        "_shared_buffers":"_shared_buffers",
+    }
     
 __all__ = [
     #@ local import names here @#
