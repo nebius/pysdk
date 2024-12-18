@@ -8,6 +8,7 @@ import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import builtins as builtins
+import collections.abc as abc
 import typing as typing
 import nebius.api.nebius.iam.v1.access_key_pb2 as access_key_pb2
 import nebius.api.nebius.common.v1 as v1_1
@@ -17,7 +18,6 @@ import datetime as datetime
 import nebius.base.protos.well_known as well_known_1
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.iam.v1.access_key_service_pb2 as access_key_service_pb2
-import collections.abc as abc
 import nebius.aio.client as client
 import grpc as grpc
 import nebius.aio.request as request_1
@@ -72,6 +72,11 @@ class Account(pb_classes.Message):
             if id is not None:
                 self.id = id
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "id",
+            ]
+        
         @builtins.property
         def id(self) -> "builtins.str":
             return super()._get_field("id", explicit_presence=False,
@@ -80,6 +85,10 @@ class Account(pb_classes.Message):
         def id(self, value: "builtins.str") -> None:
             return super()._set_field("id",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "id":"id",
+        }
         
     
     class ServiceAccount(pb_classes.Message):
@@ -96,6 +105,11 @@ class Account(pb_classes.Message):
             if id is not None:
                 self.id = id
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "id",
+            ]
+        
         @builtins.property
         def id(self) -> "builtins.str":
             return super()._get_field("id", explicit_presence=False,
@@ -104,6 +118,10 @@ class Account(pb_classes.Message):
         def id(self, value: "builtins.str") -> None:
             return super()._set_field("id",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "id":"id",
+        }
         
     
     class AnonymousAccount(pb_classes.Message):
@@ -115,6 +133,13 @@ class Account(pb_classes.Message):
             initial_message: message_1.Message|None = None,
         ) -> None:
             super().__init__(initial_message)
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+            ]
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        }
         
     
     class __OneOfClass_type__(pb_classes.OneOf):
@@ -182,6 +207,17 @@ class Account(pb_classes.Message):
         if anonymous_account is not None:
             self.anonymous_account = anonymous_account
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "user_account",
+            "service_account",
+            "anonymous_account",
+            "UserAccount",
+            "ServiceAccount",
+            "AnonymousAccount",
+            "type",
+        ]
+    
     @builtins.property
     def user_account(self) -> "Account.UserAccount":
         return super()._get_field("user_account", explicit_presence=False,
@@ -212,6 +248,16 @@ class Account(pb_classes.Message):
         return super()._set_field("anonymous_account",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "user_account":"user_account",
+        "service_account":"service_account",
+        "anonymous_account":"anonymous_account",
+        "UserAccount":"UserAccount",
+        "ServiceAccount":"ServiceAccount",
+        "AnonymousAccount":"AnonymousAccount",
+        "type":"type",
+    }
+    
 # file: nebius/iam/v1/access_key.proto
 class AccessKey(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKey
@@ -232,6 +278,13 @@ class AccessKey(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -263,6 +316,12 @@ class AccessKey(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class AccessKeySpec(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKeySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessKeySpec",access_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -282,6 +341,13 @@ class AccessKeySpec(pb_classes.Message):
             self.expires_at = expires_at
         if description is not None:
             self.description = description
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "account",
+            "expires_at",
+            "description",
+        ]
     
     @builtins.property
     def account(self) -> "Account":
@@ -312,6 +378,12 @@ class AccessKeySpec(pb_classes.Message):
     def description(self, value: "builtins.str") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "account":"account",
+        "expires_at":"expires_at",
+        "description":"description",
+    }
     
 class AccessKeyStatus(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKeyStatus
@@ -350,6 +422,17 @@ class AccessKeyStatus(pb_classes.Message):
             self.aws_access_key_id = aws_access_key_id
         if secret is not None:
             self.secret = secret
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "fingerprint",
+            "algorithm",
+            "key_size",
+            "aws_access_key_id",
+            "secret",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "AccessKeyStatus.State":
@@ -406,6 +489,16 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._set_field("secret",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "fingerprint":"fingerprint",
+        "algorithm":"algorithm",
+        "key_size":"key_size",
+        "aws_access_key_id":"aws_access_key_id",
+        "secret":"secret",
+        "State":"State",
+    }
+    
 # file: nebius/iam/v1/access_key_service.proto
 class CreateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.CreateAccessKeyRequest
@@ -423,6 +516,12 @@ class CreateAccessKeyRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -443,6 +542,11 @@ class CreateAccessKeyRequest(pb_classes.Message):
     def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 class KeyIdentity(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.KeyIdentity
@@ -499,6 +603,13 @@ class KeyIdentity(pb_classes.Message):
         if aws_access_key_id is not None:
             self.aws_access_key_id = aws_access_key_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "aws_access_key_id",
+            "identity",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str|None":
         return super()._get_field("id", explicit_presence=True,
@@ -517,6 +628,12 @@ class KeyIdentity(pb_classes.Message):
         return super()._set_field("aws_access_key_id",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "aws_access_key_id":"aws_access_key_id",
+        "identity":"identity",
+    }
+    
 class GetAccessKeySecretOnceRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeySecretOnceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeySecretOnceRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -531,6 +648,11 @@ class GetAccessKeySecretOnceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -539,6 +661,10 @@ class GetAccessKeySecretOnceRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetAccessKeyByIdRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeyByIdRequest
@@ -554,6 +680,11 @@ class GetAccessKeyByIdRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -562,6 +693,10 @@ class GetAccessKeyByIdRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetAccessKeyByAwsIdRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeyByAwsIdRequest
@@ -577,6 +712,11 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
         if aws_access_key_id is not None:
             self.aws_access_key_id = aws_access_key_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "aws_access_key_id",
+        ]
+    
     @builtins.property
     def aws_access_key_id(self) -> "builtins.str":
         return super()._get_field("aws_access_key_id", explicit_presence=False,
@@ -585,6 +725,10 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
     def aws_access_key_id(self, value: "builtins.str") -> None:
         return super()._set_field("aws_access_key_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "aws_access_key_id":"aws_access_key_id",
+    }
     
 class ListAccessKeysRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysRequest
@@ -636,6 +780,15 @@ class ListAccessKeysRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -672,6 +825,14 @@ class ListAccessKeysRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class ListAccessKeysByAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysByAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessKeysByAccountRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -694,6 +855,14 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "account",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def account(self) -> "Account":
@@ -732,6 +901,13 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "account":"account",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class UpdateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.UpdateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -748,6 +924,12 @@ class UpdateAccessKeyRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -769,6 +951,11 @@ class UpdateAccessKeyRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class ActivateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ActivateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ActivateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -783,6 +970,11 @@ class ActivateAccessKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "KeyIdentity":
         return super()._get_field("id", explicit_presence=False,
@@ -792,6 +984,10 @@ class ActivateAccessKeyRequest(pb_classes.Message):
     def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class DeactivateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.DeactivateAccessKeyRequest
@@ -807,6 +1003,11 @@ class DeactivateAccessKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "KeyIdentity":
         return super()._get_field("id", explicit_presence=False,
@@ -816,6 +1017,10 @@ class DeactivateAccessKeyRequest(pb_classes.Message):
     def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class DeleteAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.DeleteAccessKeyRequest
@@ -831,6 +1036,11 @@ class DeleteAccessKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "KeyIdentity":
         return super()._get_field("id", explicit_presence=False,
@@ -840,6 +1050,10 @@ class DeleteAccessKeyRequest(pb_classes.Message):
     def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetAccessKeySecretOnceResponse(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeySecretOnceResponse
@@ -855,6 +1069,11 @@ class GetAccessKeySecretOnceResponse(pb_classes.Message):
         if secret is not None:
             self.secret = secret
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "secret",
+        ]
+    
     @builtins.property
     def secret(self) -> "builtins.str":
         return super()._get_field("secret", explicit_presence=False,
@@ -863,6 +1082,10 @@ class GetAccessKeySecretOnceResponse(pb_classes.Message):
     def secret(self, value: "builtins.str") -> None:
         return super()._set_field("secret",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "secret":"secret",
+    }
     
 class ListAccessKeysResponse(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysResponse
@@ -880,6 +1103,12 @@ class ListAccessKeysResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[AccessKey]":
@@ -899,6 +1128,11 @@ class ListAccessKeysResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class AccessKeyServiceClient(client.Client):
@@ -1128,6 +1362,13 @@ class AuthPublicKey(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -1158,6 +1399,12 @@ class AuthPublicKey(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class AuthPublicKeySpec(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_pb2.AuthPublicKeySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AuthPublicKeySpec",auth_public_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1180,6 +1427,14 @@ class AuthPublicKeySpec(pb_classes.Message):
             self.description = description
         if data is not None:
             self.data = data
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "account",
+            "expires_at",
+            "description",
+            "data",
+        ]
     
     @builtins.property
     def account(self) -> "Account":
@@ -1220,6 +1475,13 @@ class AuthPublicKeySpec(pb_classes.Message):
         return super()._set_field("data",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "account":"account",
+        "expires_at":"expires_at",
+        "description":"description",
+        "data":"data",
+    }
+    
 class AuthPublicKeyStatus(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_pb2.AuthPublicKeyStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AuthPublicKeyStatus",auth_public_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1251,6 +1513,15 @@ class AuthPublicKeyStatus(pb_classes.Message):
             self.algorithm = algorithm
         if key_size is not None:
             self.key_size = key_size
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "fingerprint",
+            "algorithm",
+            "key_size",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "AuthPublicKeyStatus.State":
@@ -1289,6 +1560,14 @@ class AuthPublicKeyStatus(pb_classes.Message):
         return super()._set_field("key_size",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "fingerprint":"fingerprint",
+        "algorithm":"algorithm",
+        "key_size":"key_size",
+        "State":"State",
+    }
+    
 # file: nebius/iam/v1/auth_public_key_service.proto
 class CreateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.CreateAuthPublicKeyRequest
@@ -1306,6 +1585,12 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1327,6 +1612,11 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.GetAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1341,6 +1631,11 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1349,6 +1644,10 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyRequest
@@ -1400,6 +1699,15 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -1436,6 +1744,14 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyByAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAuthPublicKeyByAccountRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1458,6 +1774,14 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "account",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def account(self) -> "Account":
@@ -1496,6 +1820,13 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "account":"account",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class UpdateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.UpdateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1512,6 +1843,12 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1533,6 +1870,11 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class ActivateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ActivateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ActivateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1547,6 +1889,11 @@ class ActivateAuthPublicKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1555,6 +1902,10 @@ class ActivateAuthPublicKeyRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class DeactivateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.DeactivateAuthPublicKeyRequest
@@ -1570,6 +1921,11 @@ class DeactivateAuthPublicKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1578,6 +1934,10 @@ class DeactivateAuthPublicKeyRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class DeleteAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.DeleteAuthPublicKeyRequest
@@ -1593,6 +1953,11 @@ class DeleteAuthPublicKeyRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1601,6 +1966,10 @@ class DeleteAuthPublicKeyRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListAuthPublicKeyResponse(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyResponse
@@ -1618,6 +1987,12 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[AuthPublicKey]":
@@ -1637,6 +2012,11 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class AuthPublicKeyServiceClient(client.Client):
@@ -1849,6 +2229,13 @@ class Container(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -1879,6 +2266,12 @@ class Container(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class ContainerSpec(pb_classes.Message):
     __PB2_CLASS__ = container_pb2.ContainerSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ContainerSpec",container_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1888,6 +2281,13 @@ class ContainerSpec(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 class ContainerStatus(pb_classes.Message):
     __PB2_CLASS__ = container_pb2.ContainerStatus
@@ -1905,6 +2305,12 @@ class ContainerStatus(pb_classes.Message):
             self.suspension_state = suspension_state
         if container_state is not None:
             self.container_state = container_state
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "suspension_state",
+            "container_state",
+        ]
     
     @builtins.property
     def suspension_state(self) -> "SuspensionState":
@@ -1926,6 +2332,11 @@ class ContainerStatus(pb_classes.Message):
         return super()._set_field("container_state",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "suspension_state":"suspension_state",
+        "container_state":"container_state",
+    }
+    
 # file: nebius/iam/v1/federation.proto
 class Federation(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.Federation
@@ -1946,6 +2357,13 @@ class Federation(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1976,6 +2394,12 @@ class Federation(pb_classes.Message):
     def status(self, value: "FederationStatus|federation_pb2.FederationStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class FederationSpec(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.FederationSpec
@@ -2024,6 +2448,14 @@ class FederationSpec(pb_classes.Message):
         if saml_settings is not None:
             self.saml_settings = saml_settings
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "user_account_auto_creation",
+            "active",
+            "saml_settings",
+            "settings",
+        ]
+    
     @builtins.property
     def user_account_auto_creation(self) -> "builtins.bool":
         return super()._get_field("user_account_auto_creation", explicit_presence=False,
@@ -2052,6 +2484,13 @@ class FederationSpec(pb_classes.Message):
         return super()._set_field("saml_settings",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "user_account_auto_creation":"user_account_auto_creation",
+        "active":"active",
+        "saml_settings":"saml_settings",
+        "settings":"settings",
+    }
+    
 class SamlSettings(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.SamlSettings
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.SamlSettings",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2068,6 +2507,12 @@ class SamlSettings(pb_classes.Message):
             self.idp_issuer = idp_issuer
         if sso_url is not None:
             self.sso_url = sso_url
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "idp_issuer",
+            "sso_url",
+        ]
     
     @builtins.property
     def idp_issuer(self) -> "builtins.str":
@@ -2087,6 +2532,11 @@ class SamlSettings(pb_classes.Message):
         return super()._set_field("sso_url",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "idp_issuer":"idp_issuer",
+        "sso_url":"sso_url",
+    }
+    
 class FederationStatus(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.FederationStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationStatus",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2096,6 +2546,13 @@ class FederationStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 # file: nebius/iam/v1/federation_certificate.proto
 class FederationCertificate(pb_classes.Message):
@@ -2117,6 +2574,13 @@ class FederationCertificate(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -2148,6 +2612,12 @@ class FederationCertificate(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class FederationCertificateSpec(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_pb2.FederationCertificateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationCertificateSpec",federation_certificate_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2164,6 +2634,12 @@ class FederationCertificateSpec(pb_classes.Message):
             self.description = description
         if data is not None:
             self.data = data
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "data",
+        ]
     
     @builtins.property
     def description(self) -> "builtins.str":
@@ -2182,6 +2658,11 @@ class FederationCertificateSpec(pb_classes.Message):
     def data(self, value: "builtins.str") -> None:
         return super()._set_field("data",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "data":"data",
+    }
     
 class FederationCertificateStatus(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_pb2.FederationCertificateStatus
@@ -2214,6 +2695,16 @@ class FederationCertificateStatus(pb_classes.Message):
             self.not_before = not_before
         if not_after is not None:
             self.not_after = not_after
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "algorithm",
+            "key_size",
+            "not_before",
+            "not_after",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "FederationCertificateStatus.State":
@@ -2265,6 +2756,15 @@ class FederationCertificateStatus(pb_classes.Message):
         unwrap=well_known_1.to_timestamp
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "algorithm":"algorithm",
+        "key_size":"key_size",
+        "not_before":"not_before",
+        "not_after":"not_after",
+        "State":"State",
+    }
+    
 # file: nebius/iam/v1/federation_certificate_service.proto
 class CreateFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.CreateFederationCertificateRequest
@@ -2282,6 +2782,12 @@ class CreateFederationCertificateRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -2303,6 +2809,11 @@ class CreateFederationCertificateRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.GetFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2317,6 +2828,11 @@ class GetFederationCertificateRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2325,6 +2841,10 @@ class GetFederationCertificateRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListFederationCertificateByFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.ListFederationCertificateByFederationRequest
@@ -2345,6 +2865,13 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "federation_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def federation_id(self) -> "builtins.str":
@@ -2373,6 +2900,12 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "federation_id":"federation_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class UpdateFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.UpdateFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2389,6 +2922,12 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -2410,6 +2949,11 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.DeleteFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2424,6 +2968,11 @@ class DeleteFederationCertificateRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2432,6 +2981,10 @@ class DeleteFederationCertificateRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListFederationCertificateResponse(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.ListFederationCertificateResponse
@@ -2449,6 +3002,12 @@ class ListFederationCertificateResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[FederationCertificate]":
@@ -2468,6 +3027,11 @@ class ListFederationCertificateResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class FederationCertificateServiceClient(client.Client):
@@ -2594,6 +3158,12 @@ class CreateFederationRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -2614,6 +3184,11 @@ class CreateFederationRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.GetFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2628,6 +3203,11 @@ class GetFederationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2636,6 +3216,10 @@ class GetFederationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListFederationsRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.ListFederationsRequest
@@ -2659,6 +3243,14 @@ class ListFederationsRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -2696,6 +3288,13 @@ class ListFederationsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListFederationsResponse(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.ListFederationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationsResponse",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2712,6 +3311,12 @@ class ListFederationsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Federation]":
@@ -2732,6 +3337,11 @@ class ListFederationsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class UpdateFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.UpdateFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2751,6 +3361,13 @@ class UpdateFederationRequest(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -2782,6 +3399,12 @@ class UpdateFederationRequest(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class DeleteFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.DeleteFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2796,6 +3419,11 @@ class DeleteFederationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2804,6 +3432,10 @@ class DeleteFederationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class FederationServiceClient(client.Client):
@@ -2953,6 +3585,13 @@ class Group(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -2983,6 +3622,12 @@ class Group(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class GroupSpec(pb_classes.Message):
     __PB2_CLASS__ = group_pb2.GroupSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupSpec",group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2992,6 +3637,13 @@ class GroupSpec(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 class GroupStatus(pb_classes.Message):
     __PB2_CLASS__ = group_pb2.GroupStatus
@@ -3015,6 +3667,13 @@ class GroupStatus(pb_classes.Message):
         if members_count is not None:
             self.members_count = members_count
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "members_count",
+            "State",
+        ]
+    
     @builtins.property
     def state(self) -> "GroupStatus.State":
         return super()._get_field("state", explicit_presence=False,
@@ -3033,6 +3692,12 @@ class GroupStatus(pb_classes.Message):
     def members_count(self, value: "builtins.int") -> None:
         return super()._set_field("members_count",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "members_count":"members_count",
+        "State":"State",
+    }
     
 # file: nebius/iam/v1/service_account.proto
 class ServiceAccount(pb_classes.Message):
@@ -3054,6 +3719,13 @@ class ServiceAccount(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -3085,6 +3757,12 @@ class ServiceAccount(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class ServiceAccountSpec(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountSpec",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3099,6 +3777,11 @@ class ServiceAccountSpec(pb_classes.Message):
         if description is not None:
             self.description = description
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+        ]
+    
     @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
@@ -3107,6 +3790,10 @@ class ServiceAccountSpec(pb_classes.Message):
     def description(self, value: "builtins.str") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+    }
     
 class ServiceAccountStatus(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountStatus
@@ -3122,6 +3809,11 @@ class ServiceAccountStatus(pb_classes.Message):
         if active is not None:
             self.active = active
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "active",
+        ]
+    
     @builtins.property
     def active(self) -> "builtins.bool":
         return super()._get_field("active", explicit_presence=False,
@@ -3130,6 +3822,10 @@ class ServiceAccountStatus(pb_classes.Message):
     def active(self, value: "builtins.bool") -> None:
         return super()._set_field("active",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "active":"active",
+    }
     
 class ServiceAccountAttributes(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountAttributes
@@ -3148,6 +3844,12 @@ class ServiceAccountAttributes(pb_classes.Message):
         if description is not None:
             self.description = description
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+            "description",
+        ]
+    
     @builtins.property
     def name(self) -> "builtins.str":
         return super()._get_field("name", explicit_presence=False,
@@ -3165,6 +3867,11 @@ class ServiceAccountAttributes(pb_classes.Message):
     def description(self, value: "builtins.str") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+        "description":"description",
+    }
     
 # file: nebius/iam/v1/tenant_user_account.proto
 class TenantUserAccount(pb_classes.Message):
@@ -3186,6 +3893,13 @@ class TenantUserAccount(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -3216,6 +3930,12 @@ class TenantUserAccount(pb_classes.Message):
     def status(self, value: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class TenantUserAccountWithAttributes(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountWithAttributes
@@ -3275,6 +3995,14 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
         if error is not None:
             self.error = error
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "tenant_user_account",
+            "attributes",
+            "error",
+            "attributesOptional",
+        ]
+    
     @builtins.property
     def tenant_user_account(self) -> "TenantUserAccount":
         return super()._get_field("tenant_user_account", explicit_presence=False,
@@ -3304,6 +4032,13 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
     def error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
         return super()._set_field("error",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "tenant_user_account":"tenant_user_account",
+        "attributes":"attributes",
+        "error":"error",
+        "attributesOptional":"attributesOptional",
+    }
     
 class UserAttributes(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.UserAttributes
@@ -3676,6 +4411,34 @@ class UserAttributes(pb_classes.Message):
         if phone_number_verified is not None:
             self.phone_number_verified = phone_number_verified
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "sub",
+            "name",
+            "given_name",
+            "family_name",
+            "preferred_username",
+            "picture",
+            "email",
+            "email_verified",
+            "zoneinfo",
+            "locale",
+            "phone_number",
+            "phone_number_verified",
+            "_sub",
+            "_name",
+            "_given_name",
+            "_family_name",
+            "_preferred_username",
+            "_picture",
+            "_email",
+            "_email_verified",
+            "_zoneinfo",
+            "_locale",
+            "_phone_number",
+            "_phone_number_verified",
+        ]
+    
     @builtins.property
     def sub(self) -> "builtins.str|None":
         return super()._get_field("sub", explicit_presence=True,
@@ -3784,6 +4547,33 @@ class UserAttributes(pb_classes.Message):
         return super()._set_field("phone_number_verified",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "sub":"sub",
+        "name":"name",
+        "given_name":"given_name",
+        "family_name":"family_name",
+        "preferred_username":"preferred_username",
+        "picture":"picture",
+        "email":"email",
+        "email_verified":"email_verified",
+        "zoneinfo":"zoneinfo",
+        "locale":"locale",
+        "phone_number":"phone_number",
+        "phone_number_verified":"phone_number_verified",
+        "_sub":"_sub",
+        "_name":"_name",
+        "_given_name":"_given_name",
+        "_family_name":"_family_name",
+        "_preferred_username":"_preferred_username",
+        "_picture":"_picture",
+        "_email":"_email",
+        "_email_verified":"_email_verified",
+        "_zoneinfo":"_zoneinfo",
+        "_locale":"_locale",
+        "_phone_number":"_phone_number",
+        "_phone_number_verified":"_phone_number_verified",
+    }
+    
 class Error(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.Error
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Error",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3798,6 +4588,11 @@ class Error(pb_classes.Message):
         if message is not None:
             self.message = message
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "message",
+        ]
+    
     @builtins.property
     def message(self) -> "builtins.str":
         return super()._get_field("message", explicit_presence=False,
@@ -3806,6 +4601,10 @@ class Error(pb_classes.Message):
     def message(self, value: "builtins.str") -> None:
         return super()._set_field("message",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "message":"message",
+    }
     
 class TenantUserAccountSpec(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec
@@ -3825,6 +4624,11 @@ class TenantUserAccountSpec(pb_classes.Message):
             if attribute is not None:
                 self.attribute = attribute
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "attribute",
+            ]
+        
         @builtins.property
         def attribute(self) -> "abc.MutableSequence[builtins.str]":
             return super()._get_field("attribute", explicit_presence=False,
@@ -3834,6 +4638,10 @@ class TenantUserAccountSpec(pb_classes.Message):
         def attribute(self, value: "abc.Iterable[builtins.str]") -> None:
             return super()._set_field("attribute",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "attribute":"attribute",
+        }
         
     
     def __init__(
@@ -3846,6 +4654,12 @@ class TenantUserAccountSpec(pb_classes.Message):
         if visible_attributes is not None:
             self.visible_attributes = visible_attributes
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "visible_attributes",
+            "VisibleAttributes",
+        ]
+    
     @builtins.property
     def visible_attributes(self) -> "TenantUserAccountSpec.VisibleAttributes":
         return super()._get_field("visible_attributes", explicit_presence=False,
@@ -3855,6 +4669,11 @@ class TenantUserAccountSpec(pb_classes.Message):
     def visible_attributes(self, value: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes") -> None:
         return super()._set_field("visible_attributes",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "visible_attributes":"visible_attributes",
+        "VisibleAttributes":"VisibleAttributes",
+    }
     
 class TenantUserAccountStatus(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountStatus
@@ -3882,6 +4701,14 @@ class TenantUserAccountStatus(pb_classes.Message):
             self.invitation_id = invitation_id
         if federation_id is not None:
             self.federation_id = federation_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "invitation_id",
+            "federation_id",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "TenantUserAccountStatus.State":
@@ -3911,6 +4738,13 @@ class TenantUserAccountStatus(pb_classes.Message):
         return super()._set_field("federation_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "invitation_id":"invitation_id",
+        "federation_id":"federation_id",
+        "State":"State",
+    }
+    
 # file: nebius/iam/v1/group_membership.proto
 class GroupMembership(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembership
@@ -3934,6 +4768,14 @@ class GroupMembership(pb_classes.Message):
             self.status = status
         if revoke_at is not None:
             self.revoke_at = revoke_at
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+            "revoke_at",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -3976,6 +4818,13 @@ class GroupMembership(pb_classes.Message):
         unwrap=well_known_1.to_timestamp
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+        "revoke_at":"revoke_at",
+    }
+    
 class GroupMembershipSpec(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipSpec",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3990,6 +4839,11 @@ class GroupMembershipSpec(pb_classes.Message):
         if member_id is not None:
             self.member_id = member_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "member_id",
+        ]
+    
     @builtins.property
     def member_id(self) -> "builtins.str":
         return super()._get_field("member_id", explicit_presence=False,
@@ -3998,6 +4852,10 @@ class GroupMembershipSpec(pb_classes.Message):
     def member_id(self, value: "builtins.str") -> None:
         return super()._set_field("member_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "member_id":"member_id",
+    }
     
 class GroupMembershipStatus(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipStatus
@@ -4008,6 +4866,13 @@ class GroupMembershipStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 class GroupMembershipWithAttributes(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipWithAttributes
@@ -4081,6 +4946,15 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         if error is not None:
             self.error = error
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "group_membership",
+            "user_attributes",
+            "service_account_attributes",
+            "error",
+            "attributesOptional",
+        ]
+    
     @builtins.property
     def group_membership(self) -> "GroupMembership":
         return super()._get_field("group_membership", explicit_presence=False,
@@ -4121,6 +4995,14 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         return super()._set_field("error",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "group_membership":"group_membership",
+        "user_attributes":"user_attributes",
+        "service_account_attributes":"service_account_attributes",
+        "error":"error",
+        "attributesOptional":"attributesOptional",
+    }
+    
 # file: nebius/iam/v1/group_membership_service.proto
 class CreateGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.CreateGroupMembershipRequest
@@ -4141,6 +5023,13 @@ class CreateGroupMembershipRequest(pb_classes.Message):
             self.spec = spec
         if revoke_after_hours is not None:
             self.revoke_after_hours = revoke_after_hours
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "revoke_after_hours",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -4171,6 +5060,12 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         return super()._set_field("revoke_after_hours",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "revoke_after_hours":"revoke_after_hours",
+    }
+    
 class DeleteGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.DeleteGroupMembershipRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4185,6 +5080,11 @@ class DeleteGroupMembershipRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -4193,6 +5093,10 @@ class DeleteGroupMembershipRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.GetGroupMembershipRequest
@@ -4208,6 +5112,11 @@ class GetGroupMembershipRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -4216,6 +5125,10 @@ class GetGroupMembershipRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListGroupMembershipsRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsRequest
@@ -4267,6 +5180,15 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -4302,6 +5224,14 @@ class ListGroupMembershipsRequest(pb_classes.Message):
     def filter(self, value: "builtins.str") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
     
 class ListMemberOfRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListMemberOfRequest
@@ -4353,6 +5283,15 @@ class ListMemberOfRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "subject_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def subject_id(self) -> "builtins.str":
         return super()._get_field("subject_id", explicit_presence=False,
@@ -4389,6 +5328,14 @@ class ListMemberOfRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "subject_id":"subject_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class ListGroupMembershipsResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4405,6 +5352,12 @@ class ListGroupMembershipsResponse(pb_classes.Message):
             self.memberships = memberships
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "memberships",
+            "next_page_token",
+        ]
     
     @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembership]":
@@ -4425,6 +5378,11 @@ class ListGroupMembershipsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "memberships":"memberships",
+        "next_page_token":"next_page_token",
+    }
+    
 class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsWithAttributesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsWithAttributesResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4441,6 +5399,12 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
             self.memberships = memberships
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "memberships",
+            "next_page_token",
+        ]
     
     @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembershipWithAttributes]":
@@ -4461,6 +5425,11 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "memberships":"memberships",
+        "next_page_token":"next_page_token",
+    }
+    
 class ListMemberOfResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListMemberOfResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListMemberOfResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4477,6 +5446,12 @@ class ListMemberOfResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
@@ -4496,6 +5471,11 @@ class ListMemberOfResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class GroupMembershipServiceClient(client.Client):
@@ -4639,6 +5619,11 @@ class GetGroupRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -4647,6 +5632,10 @@ class GetGroupRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetGroupByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.GetGroupByNameRequest
@@ -4665,6 +5654,12 @@ class GetGroupByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -4682,6 +5677,11 @@ class GetGroupByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListGroupsRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.ListGroupsRequest
@@ -4733,6 +5733,15 @@ class ListGroupsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -4769,6 +5778,14 @@ class ListGroupsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class ListGroupsResponse(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.ListGroupsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupsResponse",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4785,6 +5802,12 @@ class ListGroupsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
@@ -4804,6 +5827,11 @@ class ListGroupsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class GroupServiceClient(client.Client):
@@ -4910,6 +5938,19 @@ class ExchangeTokenRequest(pb_classes.Message):
         if resource is not None:
             self.resource = resource
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "grant_type",
+            "requested_token_type",
+            "subject_token",
+            "subject_token_type",
+            "scopes",
+            "audience",
+            "actor_token",
+            "actor_token_type",
+            "resource",
+        ]
+    
     @builtins.property
     def grant_type(self) -> "builtins.str":
         return super()._get_field("grant_type", explicit_presence=False,
@@ -4993,6 +6034,18 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._set_field("resource",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "grant_type":"grant_type",
+        "requested_token_type":"requested_token_type",
+        "subject_token":"subject_token",
+        "subject_token_type":"subject_token_type",
+        "scopes":"scopes",
+        "audience":"audience",
+        "actor_token":"actor_token",
+        "actor_token_type":"actor_token_type",
+        "resource":"resource",
+    }
+    
 class CreateTokenResponse(pb_classes.Message):
     __PB2_CLASS__ = token_service_pb2.CreateTokenResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateTokenResponse",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5018,6 +6071,15 @@ class CreateTokenResponse(pb_classes.Message):
             self.expires_in = expires_in
         if scopes is not None:
             self.scopes = scopes
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "access_token",
+            "issued_token_type",
+            "token_type",
+            "expires_in",
+            "scopes",
+        ]
     
     @builtins.property
     def access_token(self) -> "builtins.str":
@@ -5064,6 +6126,14 @@ class CreateTokenResponse(pb_classes.Message):
     def scopes(self, value: "abc.Iterable[builtins.str]") -> None:
         return super()._set_field("scopes",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "access_token":"access_token",
+        "issued_token_type":"issued_token_type",
+        "token_type":"token_type",
+        "expires_in":"expires_in",
+        "scopes":"scopes",
+    }
     
 # file: nebius/iam/v1/identity_service.proto
 
@@ -5113,6 +6183,13 @@ class Invitation(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -5142,6 +6219,12 @@ class Invitation(pb_classes.Message):
     def status(self, value: "InvitationStatus|invitation_pb2.InvitationStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class InvitationSpec(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.InvitationSpec
@@ -5187,6 +6270,13 @@ class InvitationSpec(pb_classes.Message):
         if email is not None:
             self.email = email
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "email",
+            "contact",
+        ]
+    
     @builtins.property
     def description(self) -> "builtins.str":
         return super()._get_field("description", explicit_presence=False,
@@ -5204,6 +6294,12 @@ class InvitationSpec(pb_classes.Message):
     def email(self, value: "builtins.str|None") -> None:
         return super()._set_field("email",value,explicit_presence=True,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "email":"email",
+        "contact":"contact",
+    }
     
 class InvitationStatus(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.InvitationStatus
@@ -5233,6 +6329,14 @@ class InvitationStatus(pb_classes.Message):
             self.expires_at = expires_at
         if state is not None:
             self.state = state
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "tenant_user_account_id",
+            "expires_at",
+            "state",
+            "State",
+        ]
     
     @builtins.property
     def tenant_user_account_id(self) -> "builtins.str":
@@ -5264,6 +6368,13 @@ class InvitationStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "tenant_user_account_id":"tenant_user_account_id",
+        "expires_at":"expires_at",
+        "state":"state",
+        "State":"State",
+    }
+    
 # file: nebius/iam/v1/invitation_service.proto
 class CreateInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.CreateInvitationRequest
@@ -5284,6 +6395,13 @@ class CreateInvitationRequest(pb_classes.Message):
             self.spec = spec
         if no_send is not None:
             self.no_send = no_send
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "no_send",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -5314,6 +6432,12 @@ class CreateInvitationRequest(pb_classes.Message):
         return super()._set_field("no_send",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "no_send":"no_send",
+    }
+    
 class GetInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.GetInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5328,6 +6452,11 @@ class GetInvitationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -5336,6 +6465,10 @@ class GetInvitationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListInvitationsRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ListInvitationsRequest
@@ -5359,6 +6492,14 @@ class ListInvitationsRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -5396,6 +6537,13 @@ class ListInvitationsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListInvitationsResponse(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ListInvitationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListInvitationsResponse",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5412,6 +6560,12 @@ class ListInvitationsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Invitation]":
@@ -5432,6 +6586,11 @@ class ListInvitationsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class DeleteInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.DeleteInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5446,6 +6605,11 @@ class DeleteInvitationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -5454,6 +6618,10 @@ class DeleteInvitationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class UpdateInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.UpdateInvitationRequest
@@ -5471,6 +6639,12 @@ class UpdateInvitationRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -5492,6 +6666,11 @@ class UpdateInvitationRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class ResendInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ResendInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ResendInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5506,6 +6685,11 @@ class ResendInvitationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -5514,6 +6698,10 @@ class ResendInvitationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class InvitationServiceClient(client.Client):
@@ -5660,6 +6848,12 @@ class UserAccountExternalId(pb_classes.Message):
         if federation_id is not None:
             self.federation_id = federation_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "federation_user_account_id",
+            "federation_id",
+        ]
+    
     @builtins.property
     def federation_user_account_id(self) -> "builtins.str":
         return super()._get_field("federation_user_account_id", explicit_presence=False,
@@ -5678,6 +6872,11 @@ class UserAccountExternalId(pb_classes.Message):
         return super()._set_field("federation_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "federation_user_account_id":"federation_user_account_id",
+        "federation_id":"federation_id",
+    }
+    
 # file: nebius/iam/v1/profile_service.proto
 class GetProfileRequest(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.GetProfileRequest
@@ -5688,6 +6887,13 @@ class GetProfileRequest(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 class GetProfileResponse(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.GetProfileResponse
@@ -5758,6 +6964,14 @@ class GetProfileResponse(pb_classes.Message):
         if anonymous_profile is not None:
             self.anonymous_profile = anonymous_profile
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "user_profile",
+            "service_account_profile",
+            "anonymous_profile",
+            "profile",
+        ]
+    
     @builtins.property
     def user_profile(self) -> "UserProfile":
         return super()._get_field("user_profile", explicit_presence=False,
@@ -5787,6 +7001,13 @@ class GetProfileResponse(pb_classes.Message):
     def anonymous_profile(self, value: "AnonymousAccount|profile_service_pb2.AnonymousAccount") -> None:
         return super()._set_field("anonymous_profile",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "user_profile":"user_profile",
+        "service_account_profile":"service_account_profile",
+        "anonymous_profile":"anonymous_profile",
+        "profile":"profile",
+    }
     
 class UserProfile(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.UserProfile
@@ -5852,6 +7073,16 @@ class UserProfile(pb_classes.Message):
         if tenants is not None:
             self.tenants = tenants
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "federation_info",
+            "attributes",
+            "retrieving_error",
+            "tenants",
+            "attributes_optional",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -5901,6 +7132,15 @@ class UserProfile(pb_classes.Message):
         return super()._set_field("tenants",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "federation_info":"federation_info",
+        "attributes":"attributes",
+        "retrieving_error":"retrieving_error",
+        "tenants":"tenants",
+        "attributes_optional":"attributes_optional",
+    }
+    
 class UserTenantInfo(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.UserTenantInfo
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserTenantInfo",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5917,6 +7157,12 @@ class UserTenantInfo(pb_classes.Message):
             self.tenant_id = tenant_id
         if tenant_user_account_id is not None:
             self.tenant_user_account_id = tenant_user_account_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "tenant_id",
+            "tenant_user_account_id",
+        ]
     
     @builtins.property
     def tenant_id(self) -> "builtins.str":
@@ -5936,6 +7182,11 @@ class UserTenantInfo(pb_classes.Message):
         return super()._set_field("tenant_user_account_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "tenant_id":"tenant_id",
+        "tenant_user_account_id":"tenant_user_account_id",
+    }
+    
 class ServiceAccountProfile(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.ServiceAccountProfile
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountProfile",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5950,6 +7201,11 @@ class ServiceAccountProfile(pb_classes.Message):
         if info is not None:
             self.info = info
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "info",
+        ]
+    
     @builtins.property
     def info(self) -> "ServiceAccount":
         return super()._get_field("info", explicit_presence=False,
@@ -5960,6 +7216,10 @@ class ServiceAccountProfile(pb_classes.Message):
         return super()._set_field("info",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "info":"info",
+    }
+    
 class AnonymousAccount(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.AnonymousAccount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AnonymousAccount",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5969,6 +7229,13 @@ class AnonymousAccount(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 
 class ProfileServiceClient(client.Client):
@@ -6011,6 +7278,11 @@ class GetProjectRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -6019,6 +7291,10 @@ class GetProjectRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetProjectByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.GetProjectByNameRequest
@@ -6037,6 +7313,12 @@ class GetProjectByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -6054,6 +7336,11 @@ class GetProjectByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListProjectsRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsRequest
@@ -6105,6 +7392,15 @@ class ListProjectsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -6141,6 +7437,14 @@ class ListProjectsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class ListProjectsResponse(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListProjectsResponse",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -6157,6 +7461,12 @@ class ListProjectsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Container]":
@@ -6176,6 +7486,11 @@ class ListProjectsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class ProjectServiceClient(client.Client):
@@ -6261,6 +7576,12 @@ class CreateServiceAccountRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -6281,6 +7602,11 @@ class CreateServiceAccountRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.GetServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -6295,6 +7621,11 @@ class GetServiceAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -6303,6 +7634,10 @@ class GetServiceAccountRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetServiceAccountByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.GetServiceAccountByNameRequest
@@ -6321,6 +7656,12 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -6338,6 +7679,11 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.ListServiceAccountRequest
@@ -6389,6 +7735,15 @@ class ListServiceAccountRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -6425,6 +7780,14 @@ class ListServiceAccountRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class UpdateServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.UpdateServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -6441,6 +7804,12 @@ class UpdateServiceAccountRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -6462,6 +7831,11 @@ class UpdateServiceAccountRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.DeleteServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -6476,6 +7850,11 @@ class DeleteServiceAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -6484,6 +7863,10 @@ class DeleteServiceAccountRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListServiceAccountResponse(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.ListServiceAccountResponse
@@ -6501,6 +7884,12 @@ class ListServiceAccountResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[ServiceAccount]":
@@ -6520,6 +7909,11 @@ class ListServiceAccountResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class ServiceAccountServiceClient(client.Client):
@@ -6718,6 +8112,14 @@ class RevokeSessionRequest(pb_classes.Message):
         if tenant_user_account_id is not None:
             self.tenant_user_account_id = tenant_user_account_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "service_account_id",
+            "all_my_active",
+            "tenant_user_account_id",
+            "revoke",
+        ]
+    
     @builtins.property
     def service_account_id(self) -> "builtins.str|None":
         return super()._get_field("service_account_id", explicit_presence=True,
@@ -6745,6 +8147,13 @@ class RevokeSessionRequest(pb_classes.Message):
         return super()._set_field("tenant_user_account_id",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "service_account_id":"service_account_id",
+        "all_my_active":"all_my_active",
+        "tenant_user_account_id":"tenant_user_account_id",
+        "revoke":"revoke",
+    }
+    
 class RevokeSessionResponse(pb_classes.Message):
     __PB2_CLASS__ = session_management_service_pb2.RevokeSessionResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.RevokeSessionResponse",session_management_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -6754,6 +8163,13 @@ class RevokeSessionResponse(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 
 class SessionManagementServiceClient(client.Client):
@@ -6796,6 +8212,11 @@ class GetTenantRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -6804,6 +8225,10 @@ class GetTenantRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListTenantsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.ListTenantsRequest
@@ -6852,6 +8277,14 @@ class ListTenantsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def page_size(self) -> "builtins.int|None":
         return super()._get_field("page_size", explicit_presence=True,
@@ -6879,6 +8312,13 @@ class ListTenantsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class ListTenantsResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.ListTenantsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantsResponse",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -6895,6 +8335,12 @@ class ListTenantsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Container]":
@@ -6914,6 +8360,11 @@ class ListTenantsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class TenantServiceClient(client.Client):
@@ -6976,6 +8427,11 @@ class GetTenantUserAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -6984,6 +8440,10 @@ class GetTenantUserAccountRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListTenantUserAccountsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.ListTenantUserAccountsRequest
@@ -7035,6 +8495,15 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -7071,6 +8540,14 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class ListTenantUserAccountsResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.ListTenantUserAccountsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsResponse",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -7087,6 +8564,12 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccount]":
@@ -7107,6 +8590,11 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class BlockTenantUserAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.BlockTenantUserAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.BlockTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -7121,6 +8609,11 @@ class BlockTenantUserAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -7129,6 +8622,10 @@ class BlockTenantUserAccountRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class UnblockTenantUserAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.UnblockTenantUserAccountRequest
@@ -7144,6 +8641,11 @@ class UnblockTenantUserAccountRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -7152,6 +8654,10 @@ class UnblockTenantUserAccountRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class TenantUserAccountServiceClient(client.Client):
@@ -7255,6 +8761,11 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -7263,6 +8774,10 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesRequest
@@ -7314,6 +8829,15 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         if filter is not None:
             self.filter = filter
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -7350,6 +8874,14 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
 class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsWithAttributesResponse",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -7366,6 +8898,12 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccountWithAttributes]":
@@ -7385,6 +8923,11 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class TenantUserAccountWithAttributesServiceClient(client.Client):

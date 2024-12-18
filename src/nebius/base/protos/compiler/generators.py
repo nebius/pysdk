@@ -374,7 +374,6 @@ def generate_oneof(oneof: OneOf, g: PyGenFile) -> None:
                     field_name,
                     ")",
                 )
-
     g.p()
 
 
@@ -437,8 +436,52 @@ def generate_message(message: Message, g: PyGenFile) -> None:
                 generate_field_init_setter(field, g, self_name)
         g.p()
 
+        g.p(
+            "def __dir__(",
+            self_name,
+            ") ->",
+            ImportedSymbol("Iterable", "collections.abc"),
+            "[",
+            ImportedSymbol("str", "builtins"),
+            "]:",
+        )
+        with g:
+            g.p("return [")
+            with g:
+                for f in message.fields():
+                    g.p('"', f.pythonic_name, '",')
+                for m in message.messages():
+                    g.p('"', m.pythonic_name, '",')
+                for o in message.oneofs:
+                    g.p('"', o.pythonic_name, '",')
+                for e in message.enums:
+                    g.p('"', e.pythonic_name, '",')
+            g.p("]")
+        g.p()
+
         for field in message.fields():
             generate_field(field, g, self_name)
+
+        g.p(
+            "__PY_TO_PB2__: ",
+            ImportedSymbol("dict", "builtins"),
+            "[",
+            ImportedSymbol("str", "builtins"),
+            ",",
+            ImportedSymbol("str", "builtins"),
+            "] = {",
+        )
+        with g:
+            for f in message.fields():
+                g.p('"', f.pythonic_name, '":"', f.name, '",')
+            for m in message.messages():
+                g.p('"', m.pythonic_name, '":"', m.name, '",')
+            for o in message.oneofs:
+                g.p('"', o.pythonic_name, '":"', o.name, '",')
+            for e in message.enums:
+                g.p('"', e.pythonic_name, '":"', e.name, '",')
+        g.p("}")
+        g.p()
 
 
 def is_operation_output(method: Method) -> bool:

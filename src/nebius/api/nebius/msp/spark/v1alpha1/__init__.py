@@ -9,12 +9,12 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import collections.abc as abc
 import builtins as builtins
 import typing as typing
 import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
 import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.spark.v1alpha1.cluster_service_pb2 as cluster_service_pb2
-import collections.abc as abc
 import nebius.aio.client as client
 import grpc as grpc
 import nebius.aio.request as request_1
@@ -52,6 +52,13 @@ class Cluster(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -81,6 +88,12 @@ class Cluster(pb_classes.Message):
     def status(self, value: "ClusterStatus|cluster_pb2.ClusterStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
@@ -135,6 +148,16 @@ class ClusterSpec(pb_classes.Message):
         if network_id is not None:
             self.network_id = network_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "limits",
+            "authorization",
+            "service_account_id",
+            "network_id",
+            "_description",
+        ]
+    
     @builtins.property
     def description(self) -> "builtins.str|None":
         return super()._get_field("description", explicit_presence=True,
@@ -181,6 +204,15 @@ class ClusterSpec(pb_classes.Message):
     def network_id(self, value: "builtins.str") -> None:
         return super()._set_field("network_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "limits":"limits",
+        "authorization":"authorization",
+        "service_account_id":"service_account_id",
+        "network_id":"network_id",
+        "_description":"_description",
+    }
     
 class ClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterStatus
@@ -229,6 +261,14 @@ class ClusterStatus(pb_classes.Message):
         if history_server_endpoint is not None:
             self.history_server_endpoint = history_server_endpoint
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "phase",
+            "state",
+            "history_server_endpoint",
+            "_history_server_endpoint",
+        ]
+    
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
@@ -258,6 +298,13 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("history_server_endpoint",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "phase":"phase",
+        "state":"state",
+        "history_server_endpoint":"history_server_endpoint",
+        "_history_server_endpoint":"_history_server_endpoint",
+    }
+    
 class Limits(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Limits
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.Limits",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -274,6 +321,12 @@ class Limits(pb_classes.Message):
             self.cpu = cpu
         if memory_gibibytes is not None:
             self.memory_gibibytes = memory_gibibytes
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cpu",
+            "memory_gibibytes",
+        ]
     
     @builtins.property
     def cpu(self) -> "builtins.int":
@@ -293,6 +346,11 @@ class Limits(pb_classes.Message):
         return super()._set_field("memory_gibibytes",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cpu":"cpu",
+        "memory_gibibytes":"memory_gibibytes",
+    }
+    
 class Password(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Password
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.Password",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -307,6 +365,11 @@ class Password(pb_classes.Message):
         if password is not None:
             self.password = password
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "password",
+        ]
+    
     @builtins.property
     def password(self) -> "builtins.str":
         return super()._get_field("password", explicit_presence=False,
@@ -315,6 +378,10 @@ class Password(pb_classes.Message):
     def password(self, value: "builtins.str") -> None:
         return super()._set_field("password",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "password":"password",
+    }
     
 # file: nebius/msp/spark/v1alpha1/cluster_service.proto
 class GetClusterRequest(pb_classes.Message):
@@ -331,6 +398,11 @@ class GetClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -339,6 +411,10 @@ class GetClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetClusterByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterByNameRequest
@@ -357,6 +433,12 @@ class GetClusterByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -374,6 +456,11 @@ class GetClusterByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
@@ -394,6 +481,13 @@ class ListClustersRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -421,6 +515,12 @@ class ListClustersRequest(pb_classes.Message):
     def page_token(self, value: "builtins.str") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
     
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
@@ -466,6 +566,13 @@ class ListClustersResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+            "_next_page_token",
+        ]
+    
     @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
         return super()._get_field("items", explicit_presence=False,
@@ -485,6 +592,12 @@ class ListClustersResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+        "_next_page_token":"_next_page_token",
+    }
+    
 class CreateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.CreateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -501,6 +614,12 @@ class CreateClusterRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -521,6 +640,11 @@ class CreateClusterRequest(pb_classes.Message):
     def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 class UpdateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.UpdateClusterRequest
@@ -539,6 +663,12 @@ class UpdateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -559,6 +689,11 @@ class UpdateClusterRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -573,6 +708,11 @@ class DeleteClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -581,6 +721,10 @@ class DeleteClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class ClusterServiceClient(client.Client):
@@ -727,6 +871,12 @@ class PythonConfig(pb_classes.Message):
         if file_uris is not None:
             self.file_uris = file_uris
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "requirements",
+            "file_uris",
+        ]
+    
     @builtins.property
     def requirements(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("requirements", explicit_presence=False,
@@ -747,6 +897,11 @@ class PythonConfig(pb_classes.Message):
         return super()._set_field("file_uris",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "requirements":"requirements",
+        "file_uris":"file_uris",
+    }
+    
 class JavaConfig(pb_classes.Message):
     __PB2_CLASS__ = common_pb2.JavaConfig
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JavaConfig",common_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -761,6 +916,11 @@ class JavaConfig(pb_classes.Message):
         if entrypoint_class is not None:
             self.entrypoint_class = entrypoint_class
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "entrypoint_class",
+        ]
+    
     @builtins.property
     def entrypoint_class(self) -> "builtins.str":
         return super()._get_field("entrypoint_class", explicit_presence=False,
@@ -769,6 +929,10 @@ class JavaConfig(pb_classes.Message):
     def entrypoint_class(self, value: "builtins.str") -> None:
         return super()._set_field("entrypoint_class",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "entrypoint_class":"entrypoint_class",
+    }
     
 # file: nebius/msp/spark/v1alpha1/preset.proto
 class DriverTemplateSpec(pb_classes.Message):
@@ -787,6 +951,12 @@ class DriverTemplateSpec(pb_classes.Message):
             self.disk = disk
         if resources is not None:
             self.resources = resources
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "disk",
+            "resources",
+        ]
     
     @builtins.property
     def disk(self) -> "resource_1.DiskSpec":
@@ -808,6 +978,11 @@ class DriverTemplateSpec(pb_classes.Message):
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "disk":"disk",
+        "resources":"resources",
+    }
+    
 class DynamicAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.DynamicAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.DynamicAllocationSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -824,6 +999,12 @@ class DynamicAllocationSpec(pb_classes.Message):
             self.min = min
         if max is not None:
             self.max = max
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "min",
+            "max",
+        ]
     
     @builtins.property
     def min(self) -> "builtins.int":
@@ -842,6 +1023,11 @@ class DynamicAllocationSpec(pb_classes.Message):
     def max(self, value: "builtins.int") -> None:
         return super()._set_field("max",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "min":"min",
+        "max":"max",
+    }
     
 class ExecutorTemplateSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.ExecutorTemplateSpec
@@ -904,6 +1090,15 @@ class ExecutorTemplateSpec(pb_classes.Message):
         if hosts_dynamic_allocation is not None:
             self.hosts_dynamic_allocation = hosts_dynamic_allocation
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "disk",
+            "resources",
+            "hosts",
+            "hosts_dynamic_allocation",
+            "hosts_spec",
+        ]
+    
     @builtins.property
     def disk(self) -> "resource_1.DiskSpec":
         return super()._get_field("disk", explicit_presence=False,
@@ -944,6 +1139,14 @@ class ExecutorTemplateSpec(pb_classes.Message):
         return super()._set_field("hosts_dynamic_allocation",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "disk":"disk",
+        "resources":"resources",
+        "hosts":"hosts",
+        "hosts_dynamic_allocation":"hosts_dynamic_allocation",
+        "hosts_spec":"hosts_spec",
+    }
+    
 # file: nebius/msp/spark/v1alpha1/job.proto
 class JobResultCode(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.spark.v1alpha1.JobResultCode",job_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -970,6 +1173,13 @@ class Job(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1001,6 +1211,12 @@ class Job(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class JobSpec(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.JobSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobSpec",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1022,6 +1238,12 @@ class JobSpec(pb_classes.Message):
             if value is not None:
                 self.value = value
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
         @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
@@ -1039,6 +1261,11 @@ class JobSpec(pb_classes.Message):
         def value(self, value: "builtins.str") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
         
     
     class __OneOfClass_runtime_config__(pb_classes.OneOf):
@@ -1148,6 +1375,25 @@ class JobSpec(pb_classes.Message):
             self.python = python
         if java is not None:
             self.java = java
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "application_file_uri",
+            "driver",
+            "executor",
+            "spark_version",
+            "application_args",
+            "file_uris",
+            "jar_uris",
+            "packages",
+            "spark_conf",
+            "python",
+            "java",
+            "SparkConfEntry",
+            "runtime_config",
+            "_description",
+        ]
     
     @builtins.property
     def description(self) -> "builtins.str|None":
@@ -1266,6 +1512,24 @@ class JobSpec(pb_classes.Message):
         return super()._set_field("java",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "application_file_uri":"application_file_uri",
+        "driver":"driver",
+        "executor":"executor",
+        "spark_version":"spark_version",
+        "application_args":"application_args",
+        "file_uris":"file_uris",
+        "jar_uris":"jar_uris",
+        "packages":"packages",
+        "spark_conf":"spark_conf",
+        "python":"python",
+        "java":"java",
+        "SparkConfEntry":"SparkConfEntry",
+        "runtime_config":"runtime_config",
+        "_description":"_description",
+    }
+    
 class JobResultDetails(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.JobResultDetails
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobResultDetails",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1280,6 +1544,11 @@ class JobResultDetails(pb_classes.Message):
         if code is not None:
             self.code = code
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "code",
+        ]
+    
     @builtins.property
     def code(self) -> "JobResultCode":
         return super()._get_field("code", explicit_presence=False,
@@ -1289,6 +1558,10 @@ class JobResultDetails(pb_classes.Message):
     def code(self, value: "JobResultCode|job_pb2.JobResultCode") -> None:
         return super()._set_field("code",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "code":"code",
+    }
     
 class JobStatus(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.JobStatus
@@ -1345,6 +1618,17 @@ class JobStatus(pb_classes.Message):
             self.executor_preset_details = executor_preset_details
         if result_details is not None:
             self.result_details = result_details
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "phase",
+            "state",
+            "driver_endpoint",
+            "driver_preset_details",
+            "executor_preset_details",
+            "result_details",
+            "_driver_endpoint",
+        ]
     
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
@@ -1405,6 +1689,16 @@ class JobStatus(pb_classes.Message):
         return super()._set_field("result_details",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "phase":"phase",
+        "state":"state",
+        "driver_endpoint":"driver_endpoint",
+        "driver_preset_details":"driver_preset_details",
+        "executor_preset_details":"executor_preset_details",
+        "result_details":"result_details",
+        "_driver_endpoint":"_driver_endpoint",
+    }
+    
 # file: nebius/msp/spark/v1alpha1/job_service.proto
 class GetJobRequest(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.GetJobRequest
@@ -1420,6 +1714,11 @@ class GetJobRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1428,6 +1727,10 @@ class GetJobRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListJobsRequest(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.ListJobsRequest
@@ -1448,6 +1751,13 @@ class ListJobsRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -1475,6 +1785,12 @@ class ListJobsRequest(pb_classes.Message):
     def page_token(self, value: "builtins.str") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
     
 class ListJobsResponse(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.ListJobsResponse
@@ -1520,6 +1836,13 @@ class ListJobsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+            "_next_page_token",
+        ]
+    
     @builtins.property
     def items(self) -> "abc.MutableSequence[Job]":
         return super()._get_field("items", explicit_presence=False,
@@ -1539,6 +1862,12 @@ class ListJobsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+        "_next_page_token":"_next_page_token",
+    }
+    
 class CreateJobRequest(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.CreateJobRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.CreateJobRequest",job_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1555,6 +1884,12 @@ class CreateJobRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1576,6 +1911,11 @@ class CreateJobRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class CancelJobRequest(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.CancelJobRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.CancelJobRequest",job_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1590,6 +1930,11 @@ class CancelJobRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1598,6 +1943,10 @@ class CancelJobRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class JobServiceClient(client.Client):
@@ -1707,6 +2056,13 @@ class Session(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -1737,6 +2093,12 @@ class Session(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class SessionSpec(pb_classes.Message):
     __PB2_CLASS__ = session_pb2.SessionSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.SessionSpec",session_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1758,6 +2120,12 @@ class SessionSpec(pb_classes.Message):
             if value is not None:
                 self.value = value
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
         @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
@@ -1775,6 +2143,11 @@ class SessionSpec(pb_classes.Message):
         def value(self, value: "builtins.str") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
         
     
     class __OneOfClass__description__(pb_classes.OneOf):
@@ -1837,6 +2210,21 @@ class SessionSpec(pb_classes.Message):
             self.spark_conf = spark_conf
         if python is not None:
             self.python = python
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "driver",
+            "executor",
+            "spark_version",
+            "file_uris",
+            "jar_uris",
+            "packages",
+            "spark_conf",
+            "python",
+            "SparkConfEntry",
+            "_description",
+        ]
     
     @builtins.property
     def description(self) -> "builtins.str|None":
@@ -1926,6 +2314,20 @@ class SessionSpec(pb_classes.Message):
         return super()._set_field("python",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "driver":"driver",
+        "executor":"executor",
+        "spark_version":"spark_version",
+        "file_uris":"file_uris",
+        "jar_uris":"jar_uris",
+        "packages":"packages",
+        "spark_conf":"spark_conf",
+        "python":"python",
+        "SparkConfEntry":"SparkConfEntry",
+        "_description":"_description",
+    }
+    
 class SessionStatus(pb_classes.Message):
     __PB2_CLASS__ = session_pb2.SessionStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.SessionStatus",session_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1979,6 +2381,16 @@ class SessionStatus(pb_classes.Message):
         if executor_preset_details is not None:
             self.executor_preset_details = executor_preset_details
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "phase",
+            "state",
+            "spark_connect_endpoint",
+            "driver_preset_details",
+            "executor_preset_details",
+            "_spark_connect_endpoint",
+        ]
+    
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
@@ -2028,6 +2440,15 @@ class SessionStatus(pb_classes.Message):
         return super()._set_field("executor_preset_details",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "phase":"phase",
+        "state":"state",
+        "spark_connect_endpoint":"spark_connect_endpoint",
+        "driver_preset_details":"driver_preset_details",
+        "executor_preset_details":"executor_preset_details",
+        "_spark_connect_endpoint":"_spark_connect_endpoint",
+    }
+    
 # file: nebius/msp/spark/v1alpha1/session_service.proto
 class GetSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.GetSessionRequest
@@ -2043,6 +2464,11 @@ class GetSessionRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2051,6 +2477,10 @@ class GetSessionRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetSessionByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.GetSessionByNameRequest
@@ -2069,6 +2499,12 @@ class GetSessionByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -2086,6 +2522,11 @@ class GetSessionByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListSessionsRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.ListSessionsRequest
@@ -2106,6 +2547,13 @@ class ListSessionsRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -2133,6 +2581,12 @@ class ListSessionsRequest(pb_classes.Message):
     def page_token(self, value: "builtins.str") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
     
 class ListSessionsResponse(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.ListSessionsResponse
@@ -2178,6 +2632,13 @@ class ListSessionsResponse(pb_classes.Message):
         if next_page_token is not None:
             self.next_page_token = next_page_token
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+            "_next_page_token",
+        ]
+    
     @builtins.property
     def items(self) -> "abc.MutableSequence[Session]":
         return super()._get_field("items", explicit_presence=False,
@@ -2197,6 +2658,12 @@ class ListSessionsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+        "_next_page_token":"_next_page_token",
+    }
+    
 class CreateSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.CreateSessionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.CreateSessionRequest",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2213,6 +2680,12 @@ class CreateSessionRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -2234,6 +2707,11 @@ class CreateSessionRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.DeleteSessionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.DeleteSessionRequest",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2248,6 +2726,11 @@ class DeleteSessionRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2256,6 +2739,10 @@ class DeleteSessionRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class SessionServiceClient(client.Client):

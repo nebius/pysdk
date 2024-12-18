@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.msp.v1alpha1.resource as resource_1
 import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2
+import collections.abc as abc
 import builtins as builtins
 import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_pb2 as cluster_pb2
@@ -21,7 +22,6 @@ import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config as config_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config.postgresql_pb2 as postgresql_pb2
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_service_pb2 as cluster_service_pb2
-import collections.abc as abc
 import nebius.aio.client as client
 import nebius.api.nebius.common.v1alpha1 as v1alpha1_2
 import grpc as grpc
@@ -51,6 +51,13 @@ class PresetSpec(pb_classes.Message):
         if resources is not None:
             self.resources = resources
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "hosts",
+            "disk",
+            "resources",
+        ]
+    
     @builtins.property
     def hosts(self) -> "resource_1.HostSpec":
         return super()._get_field("hosts", explicit_presence=False,
@@ -80,6 +87,12 @@ class PresetSpec(pb_classes.Message):
     def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "hosts":"hosts",
+        "disk":"disk",
+        "resources":"resources",
+    }
     
 # file: nebius/msp/postgresql/v1alpha1/template.proto
 class TemplateSpec(pb_classes.Message):
@@ -102,6 +115,13 @@ class TemplateSpec(pb_classes.Message):
         if disk is not None:
             self.disk = disk
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resources",
+            "hosts",
+            "disk",
+        ]
+    
     @builtins.property
     def resources(self) -> "resource_1.ResourcesSpec":
         return super()._get_field("resources", explicit_presence=False,
@@ -132,6 +152,12 @@ class TemplateSpec(pb_classes.Message):
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resources":"resources",
+        "hosts":"hosts",
+        "disk":"disk",
+    }
+    
 # file: nebius/msp/postgresql/v1alpha1/cluster.proto
 class Cluster(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Cluster
@@ -152,6 +178,13 @@ class Cluster(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -182,6 +215,12 @@ class Cluster(pb_classes.Message):
     def status(self, value: "ClusterStatus|cluster_pb2.ClusterStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class ConnectionPoolerConfig(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ConnectionPoolerConfig
@@ -233,6 +272,14 @@ class ConnectionPoolerConfig(pb_classes.Message):
         if max_pool_size is not None:
             self.max_pool_size = max_pool_size
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "pooling_mode",
+            "max_pool_size",
+            "_max_pool_size",
+            "PoolingMode",
+        ]
+    
     @builtins.property
     def pooling_mode(self) -> "ConnectionPoolerConfig.PoolingMode":
         return super()._get_field("pooling_mode", explicit_presence=False,
@@ -251,6 +298,13 @@ class ConnectionPoolerConfig(pb_classes.Message):
     def max_pool_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("max_pool_size",value,explicit_presence=True,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "pooling_mode":"pooling_mode",
+        "max_pool_size":"max_pool_size",
+        "_max_pool_size":"_max_pool_size",
+        "PoolingMode":"PoolingMode",
+    }
     
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
@@ -277,6 +331,15 @@ class ClusterSpec(pb_classes.Message):
             self.bootstrap = bootstrap
         if backup is not None:
             self.backup = backup
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "network_id",
+            "config",
+            "bootstrap",
+            "backup",
+        ]
     
     @builtins.property
     def description(self) -> "builtins.str":
@@ -326,6 +389,14 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("backup",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "network_id":"network_id",
+        "config":"config",
+        "bootstrap":"bootstrap",
+        "backup":"backup",
+    }
+    
 class ClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ClusterStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -348,6 +419,14 @@ class ClusterStatus(pb_classes.Message):
             self.preset_details = preset_details
         if connection_endpoints is not None:
             self.connection_endpoints = connection_endpoints
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "phase",
+            "state",
+            "preset_details",
+            "connection_endpoints",
+        ]
     
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
@@ -389,6 +468,13 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("connection_endpoints",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "phase":"phase",
+        "state":"state",
+        "preset_details":"preset_details",
+        "connection_endpoints":"connection_endpoints",
+    }
+    
 class Endpoints(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Endpoints
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.Endpoints",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -411,6 +497,14 @@ class Endpoints(pb_classes.Message):
             self.public_read_write = public_read_write
         if public_read_only is not None:
             self.public_read_only = public_read_only
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "private_read_write",
+            "private_read_only",
+            "public_read_write",
+            "public_read_only",
+        ]
     
     @builtins.property
     def private_read_write(self) -> "builtins.str":
@@ -447,6 +541,13 @@ class Endpoints(pb_classes.Message):
     def public_read_only(self, value: "builtins.str") -> None:
         return super()._set_field("public_read_only",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "private_read_write":"private_read_write",
+        "private_read_only":"private_read_only",
+        "public_read_write":"public_read_write",
+        "public_read_only":"public_read_only",
+    }
     
 class ConfigSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ConfigSpec
@@ -503,6 +604,17 @@ class ConfigSpec(pb_classes.Message):
             self.public_access = public_access
         if template is not None:
             self.template = template
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "version",
+            "pooler_config",
+            "resources",
+            "postgresql_config_16",
+            "public_access",
+            "template",
+            "config",
+        ]
     
     @builtins.property
     def version(self) -> "builtins.str":
@@ -562,6 +674,16 @@ class ConfigSpec(pb_classes.Message):
         return super()._set_field("template",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "version":"version",
+        "pooler_config":"pooler_config",
+        "resources":"resources",
+        "postgresql_config_16":"postgresql_config_16",
+        "public_access":"public_access",
+        "template":"template",
+        "config":"config",
+    }
+    
 class BootstrapSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.BootstrapSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.BootstrapSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -581,6 +703,13 @@ class BootstrapSpec(pb_classes.Message):
             self.user_password = user_password
         if db_name is not None:
             self.db_name = db_name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "user_name",
+            "user_password",
+            "db_name",
+        ]
     
     @builtins.property
     def user_name(self) -> "builtins.str":
@@ -609,6 +738,12 @@ class BootstrapSpec(pb_classes.Message):
         return super()._set_field("db_name",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "user_name":"user_name",
+        "user_password":"user_password",
+        "db_name":"db_name",
+    }
+    
 class BackupSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.BackupSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.BackupSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -625,6 +760,12 @@ class BackupSpec(pb_classes.Message):
             self.backup_window_start = backup_window_start
         if retention_policy is not None:
             self.retention_policy = retention_policy
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "backup_window_start",
+            "retention_policy",
+        ]
     
     @builtins.property
     def backup_window_start(self) -> "builtins.str":
@@ -644,6 +785,11 @@ class BackupSpec(pb_classes.Message):
         return super()._set_field("retention_policy",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "backup_window_start":"backup_window_start",
+        "retention_policy":"retention_policy",
+    }
+    
 # file: nebius/msp/postgresql/v1alpha1/cluster_service.proto
 class GetClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterRequest
@@ -659,6 +805,11 @@ class GetClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -667,6 +818,10 @@ class GetClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
@@ -687,6 +842,13 @@ class ListClustersRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -715,6 +877,12 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -731,6 +899,12 @@ class ListClustersResponse(pb_classes.Message):
             self.clusters = clusters
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "clusters",
+            "next_page_token",
+        ]
     
     @builtins.property
     def clusters(self) -> "abc.MutableSequence[Cluster]":
@@ -751,6 +925,11 @@ class ListClustersResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "clusters":"clusters",
+        "next_page_token":"next_page_token",
+    }
+    
 class CreateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.CreateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -767,6 +946,12 @@ class CreateClusterRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -788,6 +973,11 @@ class CreateClusterRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -802,6 +992,11 @@ class DeleteClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -810,6 +1005,10 @@ class DeleteClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class UpdateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.UpdateClusterRequest
@@ -828,6 +1027,12 @@ class UpdateClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -847,6 +1052,11 @@ class UpdateClusterRequest(pb_classes.Message):
     def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 
 class ClusterServiceClient(client.Client):

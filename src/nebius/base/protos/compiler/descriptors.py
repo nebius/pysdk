@@ -226,6 +226,10 @@ class Field(Descriptor):
             return ImportedSymbol(msg.name + "." + self.pythonic_name, msg.import_path)
 
     @property
+    def number(self) -> int:
+        return self.descriptor.number
+
+    @property
     def map_key(self) -> "Field":
         return self.message.field_by_name("key")
 

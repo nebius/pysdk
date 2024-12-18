@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import nebius.base.protos.pb_enum as pb_enum
 import google.protobuf.message as message
 import builtins as builtins
+import collections.abc as abc
 #@ local imports here @#
 
 # file: nebius/msp/v1alpha1/cluster.proto
@@ -53,6 +54,15 @@ class ClusterStatus(pb_classes.Message):
         if reconciling is not None:
             self.reconciling = reconciling
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "phase",
+            "state",
+            "reconciling",
+            "Phase",
+            "State",
+        ]
+    
     @builtins.property
     def phase(self) -> "ClusterStatus.Phase":
         return super()._get_field("phase", explicit_presence=False,
@@ -81,6 +91,14 @@ class ClusterStatus(pb_classes.Message):
     def reconciling(self, value: "builtins.bool") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "phase":"phase",
+        "state":"state",
+        "reconciling":"reconciling",
+        "Phase":"Phase",
+        "State":"State",
+    }
     
 __all__ = [
     #@ local import names here @#

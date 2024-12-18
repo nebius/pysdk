@@ -10,9 +10,9 @@ import nebius.base.protos.pb_classes as pb_classes
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import collections.abc as abc
 import builtins as builtins
 import typing as typing
-import collections.abc as abc
 import nebius.api.nebius.vpc.v1alpha1.allocation_pb2 as allocation_pb2
 import nebius.api.nebius.vpc.v1alpha1.allocation_service_pb2 as allocation_service_pb2
 import nebius.aio.client as client
@@ -64,6 +64,13 @@ class Pool(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -93,6 +100,12 @@ class Pool(pb_classes.Message):
     def status(self, value: "PoolStatus|pool_pb2.PoolStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class PoolSpec(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolSpec
@@ -155,6 +168,15 @@ class PoolSpec(pb_classes.Message):
         if cidrs is not None:
             self.cidrs = cidrs
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "source_pool_id",
+            "source_scope_id",
+            "version",
+            "cidrs",
+            "source",
+        ]
+    
     @builtins.property
     def source_pool_id(self) -> "builtins.str|None":
         return super()._get_field("source_pool_id", explicit_presence=True,
@@ -193,6 +215,14 @@ class PoolSpec(pb_classes.Message):
         return super()._set_field("cidrs",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "source_pool_id":"source_pool_id",
+        "source_scope_id":"source_scope_id",
+        "version":"version",
+        "cidrs":"cidrs",
+        "source":"source",
+    }
+    
 class PoolCidr(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolCidr
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.PoolCidr",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -212,6 +242,13 @@ class PoolCidr(pb_classes.Message):
             self.state = state
         if allowed_mask is not None:
             self.allowed_mask = allowed_mask
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cidr",
+            "state",
+            "allowed_mask",
+        ]
     
     @builtins.property
     def cidr(self) -> "builtins.str":
@@ -241,6 +278,12 @@ class PoolCidr(pb_classes.Message):
         return super()._set_field("allowed_mask",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cidr":"cidr",
+        "state":"state",
+        "allowed_mask":"allowed_mask",
+    }
+    
 class PoolStatus(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.PoolStatus",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -267,6 +310,14 @@ class PoolStatus(pb_classes.Message):
             self.cidrs = cidrs
         if scope_id is not None:
             self.scope_id = scope_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "cidrs",
+            "scope_id",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "PoolStatus.State":
@@ -297,6 +348,13 @@ class PoolStatus(pb_classes.Message):
         return super()._set_field("scope_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "cidrs":"cidrs",
+        "scope_id":"scope_id",
+        "State":"State",
+    }
+    
 # file: nebius/vpc/v1alpha1/allocation.proto
 class Allocation(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.Allocation
@@ -317,6 +375,13 @@ class Allocation(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -347,6 +412,12 @@ class Allocation(pb_classes.Message):
     def status(self, value: "AllocationStatus|allocation_pb2.AllocationStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class AllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationSpec
@@ -403,6 +474,13 @@ class AllocationSpec(pb_classes.Message):
         if ipv4_public is not None:
             self.ipv4_public = ipv4_public
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "ipv4_private",
+            "ipv4_public",
+            "ip_spec",
+        ]
+    
     @builtins.property
     def ipv4_private(self) -> "IPv4PrivateAllocationSpec|None":
         return super()._get_field("ipv4_private", explicit_presence=True,
@@ -422,6 +500,12 @@ class AllocationSpec(pb_classes.Message):
     def ipv4_public(self, value: "IPv4PublicAllocationSpec|allocation_pb2.IPv4PublicAllocationSpec|None") -> None:
         return super()._set_field("ipv4_public",value,explicit_presence=True,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "ipv4_private":"ipv4_private",
+        "ipv4_public":"ipv4_public",
+        "ip_spec":"ip_spec",
+    }
     
 class IPv4PrivateAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.IPv4PrivateAllocationSpec
@@ -481,6 +565,14 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
         if pool_id is not None:
             self.pool_id = pool_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cidr",
+            "subnet_id",
+            "pool_id",
+            "pool",
+        ]
+    
     @builtins.property
     def cidr(self) -> "builtins.str":
         return super()._get_field("cidr", explicit_presence=False,
@@ -508,6 +600,13 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
         return super()._set_field("pool_id",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cidr":"cidr",
+        "subnet_id":"subnet_id",
+        "pool_id":"pool_id",
+        "pool":"pool",
+    }
+    
 class IPv4PublicAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.IPv4PublicAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.IPv4PublicAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -524,6 +623,12 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
             self.cidr = cidr
         if pool_id is not None:
             self.pool_id = pool_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cidr",
+            "pool_id",
+        ]
     
     @builtins.property
     def cidr(self) -> "builtins.str":
@@ -542,6 +647,11 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
     def pool_id(self, value: "builtins.str") -> None:
         return super()._set_field("pool_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cidr":"cidr",
+        "pool_id":"pool_id",
+    }
     
 class AllocationStatus(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationStatus
@@ -573,6 +683,15 @@ class AllocationStatus(pb_classes.Message):
             self.assignment = assignment
         if static is not None:
             self.static = static
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "details",
+            "assignment",
+            "static",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "AllocationStatus.State":
@@ -613,6 +732,14 @@ class AllocationStatus(pb_classes.Message):
         return super()._set_field("static",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "details":"details",
+        "assignment":"assignment",
+        "static":"static",
+        "State":"State",
+    }
+    
 class AllocationDetails(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationDetails
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.AllocationDetails",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -632,6 +759,13 @@ class AllocationDetails(pb_classes.Message):
             self.pool_id = pool_id
         if version is not None:
             self.version = version
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "allocated_cidr",
+            "pool_id",
+            "version",
+        ]
     
     @builtins.property
     def allocated_cidr(self) -> "builtins.str":
@@ -660,6 +794,12 @@ class AllocationDetails(pb_classes.Message):
     def version(self, value: "IpVersion|pool_pb2.IpVersion") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allocated_cidr":"allocated_cidr",
+        "pool_id":"pool_id",
+        "version":"version",
+    }
     
 class Assignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.Assignment
@@ -716,6 +856,13 @@ class Assignment(pb_classes.Message):
         if load_balancer is not None:
             self.load_balancer = load_balancer
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "network_interface",
+            "load_balancer",
+            "type",
+        ]
+    
     @builtins.property
     def network_interface(self) -> "NetworkInterfaceAssignment":
         return super()._get_field("network_interface", explicit_presence=False,
@@ -736,6 +883,12 @@ class Assignment(pb_classes.Message):
         return super()._set_field("load_balancer",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "network_interface":"network_interface",
+        "load_balancer":"load_balancer",
+        "type":"type",
+    }
+    
 class NetworkInterfaceAssignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.NetworkInterfaceAssignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.NetworkInterfaceAssignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -752,6 +905,12 @@ class NetworkInterfaceAssignment(pb_classes.Message):
             self.instance_id = instance_id
         if name is not None:
             self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "instance_id",
+            "name",
+        ]
     
     @builtins.property
     def instance_id(self) -> "builtins.str":
@@ -771,6 +930,11 @@ class NetworkInterfaceAssignment(pb_classes.Message):
         return super()._set_field("name",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "instance_id":"instance_id",
+        "name":"name",
+    }
+    
 class LoadBalancerAssignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.LoadBalancerAssignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.LoadBalancerAssignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -785,6 +949,11 @@ class LoadBalancerAssignment(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -793,6 +962,10 @@ class LoadBalancerAssignment(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 # file: nebius/vpc/v1alpha1/allocation_service.proto
 class GetAllocationRequest(pb_classes.Message):
@@ -809,6 +982,11 @@ class GetAllocationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -817,6 +995,10 @@ class GetAllocationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetAllocationByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.GetAllocationByNameRequest
@@ -835,6 +1017,12 @@ class GetAllocationByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -852,6 +1040,11 @@ class GetAllocationByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListAllocationsRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsRequest
@@ -875,6 +1068,14 @@ class ListAllocationsRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -912,6 +1113,13 @@ class ListAllocationsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListAllocationsResponse(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.ListAllocationsResponse",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -928,6 +1136,12 @@ class ListAllocationsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Allocation]":
@@ -948,6 +1162,11 @@ class ListAllocationsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class CreateAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.CreateAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.CreateAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -964,6 +1183,12 @@ class CreateAllocationRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -984,6 +1209,11 @@ class CreateAllocationRequest(pb_classes.Message):
     def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 class UpdateAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.UpdateAllocationRequest
@@ -1002,6 +1232,12 @@ class UpdateAllocationRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -1022,6 +1258,11 @@ class UpdateAllocationRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.DeleteAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.DeleteAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1036,6 +1277,11 @@ class DeleteAllocationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1044,6 +1290,10 @@ class DeleteAllocationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class AllocationServiceClient(client.Client):
@@ -1193,6 +1443,13 @@ class Network(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -1223,6 +1480,12 @@ class Network(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class NetworkSpec(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.NetworkSpec",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1237,6 +1500,11 @@ class NetworkSpec(pb_classes.Message):
         if pools is not None:
             self.pools = pools
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "pools",
+        ]
+    
     @builtins.property
     def pools(self) -> "abc.MutableSequence[NetworkPool]":
         return super()._get_field("pools", explicit_presence=False,
@@ -1246,6 +1514,10 @@ class NetworkSpec(pb_classes.Message):
     def pools(self, value: "abc.Iterable[NetworkPool]") -> None:
         return super()._set_field("pools",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "pools":"pools",
+    }
     
 class NetworkPool(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkPool
@@ -1261,6 +1533,11 @@ class NetworkPool(pb_classes.Message):
         if pool_id is not None:
             self.pool_id = pool_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "pool_id",
+        ]
+    
     @builtins.property
     def pool_id(self) -> "builtins.str":
         return super()._get_field("pool_id", explicit_presence=False,
@@ -1269,6 +1546,10 @@ class NetworkPool(pb_classes.Message):
     def pool_id(self, value: "builtins.str") -> None:
         return super()._set_field("pool_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "pool_id":"pool_id",
+    }
     
 class NetworkStatus(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkStatus
@@ -1294,6 +1575,13 @@ class NetworkStatus(pb_classes.Message):
         if scope_id is not None:
             self.scope_id = scope_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "scope_id",
+            "State",
+        ]
+    
     @builtins.property
     def state(self) -> "NetworkStatus.State":
         return super()._get_field("state", explicit_presence=False,
@@ -1312,6 +1600,12 @@ class NetworkStatus(pb_classes.Message):
     def scope_id(self, value: "builtins.str") -> None:
         return super()._set_field("scope_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "scope_id":"scope_id",
+        "State":"State",
+    }
     
 # file: nebius/vpc/v1alpha1/network_interface.proto
 class NetworkInterfaceSpec(pb_classes.Message):
@@ -1336,6 +1630,14 @@ class NetworkInterfaceSpec(pb_classes.Message):
             self.ip_address = ip_address
         if public_ip_address is not None:
             self.public_ip_address = public_ip_address
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "subnet_id",
+            "name",
+            "ip_address",
+            "public_ip_address",
+        ]
     
     @builtins.property
     def subnet_id(self) -> "builtins.str":
@@ -1375,6 +1677,13 @@ class NetworkInterfaceSpec(pb_classes.Message):
         return super()._set_field("public_ip_address",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "subnet_id":"subnet_id",
+        "name":"name",
+        "ip_address":"ip_address",
+        "public_ip_address":"public_ip_address",
+    }
+    
 class IPAddress(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.IPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.IPAddress",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1389,6 +1698,11 @@ class IPAddress(pb_classes.Message):
         if allocation_id is not None:
             self.allocation_id = allocation_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "allocation_id",
+        ]
+    
     @builtins.property
     def allocation_id(self) -> "builtins.str":
         return super()._get_field("allocation_id", explicit_presence=False,
@@ -1397,6 +1711,10 @@ class IPAddress(pb_classes.Message):
     def allocation_id(self, value: "builtins.str") -> None:
         return super()._set_field("allocation_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allocation_id":"allocation_id",
+    }
     
 class PublicIPAddress(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.PublicIPAddress
@@ -1442,6 +1760,13 @@ class PublicIPAddress(pb_classes.Message):
         if static is not None:
             self.static = static
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "allocation_id",
+            "static",
+            "allocation",
+        ]
+    
     @builtins.property
     def allocation_id(self) -> "builtins.str|None":
         return super()._get_field("allocation_id", explicit_presence=True,
@@ -1459,6 +1784,12 @@ class PublicIPAddress(pb_classes.Message):
     def static(self, value: "builtins.bool") -> None:
         return super()._set_field("static",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allocation_id":"allocation_id",
+        "static":"static",
+        "allocation":"allocation",
+    }
     
 class NetworkInterfaceStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.NetworkInterfaceStatus
@@ -1485,6 +1816,15 @@ class NetworkInterfaceStatus(pb_classes.Message):
             self.public_ip_address = public_ip_address
         if mac_address is not None:
             self.mac_address = mac_address
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "index",
+            "name",
+            "ip_address",
+            "public_ip_address",
+            "mac_address",
+        ]
     
     @builtins.property
     def index(self) -> "builtins.int":
@@ -1533,6 +1873,14 @@ class NetworkInterfaceStatus(pb_classes.Message):
         return super()._set_field("mac_address",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "index":"index",
+        "name":"name",
+        "ip_address":"ip_address",
+        "public_ip_address":"public_ip_address",
+        "mac_address":"mac_address",
+    }
+    
 class IPAddressStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.IPAddressStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.IPAddressStatus",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1549,6 +1897,12 @@ class IPAddressStatus(pb_classes.Message):
             self.address = address
         if allocation_id is not None:
             self.allocation_id = allocation_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "address",
+            "allocation_id",
+        ]
     
     @builtins.property
     def address(self) -> "builtins.str":
@@ -1567,6 +1921,11 @@ class IPAddressStatus(pb_classes.Message):
     def allocation_id(self, value: "builtins.str") -> None:
         return super()._set_field("allocation_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "address":"address",
+        "allocation_id":"allocation_id",
+    }
     
 class PublicIPAddressStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.PublicIPAddressStatus
@@ -1585,6 +1944,12 @@ class PublicIPAddressStatus(pb_classes.Message):
         if allocation_id is not None:
             self.allocation_id = allocation_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "address",
+            "allocation_id",
+        ]
+    
     @builtins.property
     def address(self) -> "builtins.str":
         return super()._get_field("address", explicit_presence=False,
@@ -1603,6 +1968,11 @@ class PublicIPAddressStatus(pb_classes.Message):
         return super()._set_field("allocation_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "address":"address",
+        "allocation_id":"allocation_id",
+    }
+    
 # file: nebius/vpc/v1alpha1/network_service.proto
 class GetNetworkRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.GetNetworkRequest
@@ -1618,6 +1988,11 @@ class GetNetworkRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1626,6 +2001,10 @@ class GetNetworkRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetNetworkByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.GetNetworkByNameRequest
@@ -1644,6 +2023,12 @@ class GetNetworkByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -1661,6 +2046,11 @@ class GetNetworkByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListNetworksRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.ListNetworksRequest
@@ -1684,6 +2074,14 @@ class ListNetworksRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -1721,6 +2119,13 @@ class ListNetworksRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListNetworksResponse(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.ListNetworksResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.ListNetworksResponse",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1737,6 +2142,12 @@ class ListNetworksResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Network]":
@@ -1756,6 +2167,11 @@ class ListNetworksResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class NetworkServiceClient(client.Client):
@@ -1838,6 +2254,11 @@ class GetPoolRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1846,6 +2267,10 @@ class GetPoolRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetPoolByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.GetPoolByNameRequest
@@ -1864,6 +2289,12 @@ class GetPoolByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -1881,6 +2312,11 @@ class GetPoolByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListPoolsRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.ListPoolsRequest
@@ -1904,6 +2340,14 @@ class ListPoolsRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -1941,6 +2385,13 @@ class ListPoolsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListPoolsResponse(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.ListPoolsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.ListPoolsResponse",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1957,6 +2408,12 @@ class ListPoolsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Pool]":
@@ -1976,6 +2433,11 @@ class ListPoolsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class PoolServiceClient(client.Client):
@@ -2064,6 +2526,13 @@ class Scope(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -2094,6 +2563,12 @@ class Scope(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class ScopeSpec(pb_classes.Message):
     __PB2_CLASS__ = scope_pb2.ScopeSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.ScopeSpec",scope_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2114,6 +2589,12 @@ class ScopeSpec(pb_classes.Message):
         if type is not None:
             self.type = type
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "type",
+            "Type",
+        ]
+    
     @builtins.property
     def type(self) -> "ScopeSpec.Type":
         return super()._get_field("type", explicit_presence=False,
@@ -2123,6 +2604,11 @@ class ScopeSpec(pb_classes.Message):
     def type(self, value: "ScopeSpec.Type|scope_pb2.ScopeSpec.Type") -> None:
         return super()._set_field("type",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "type":"type",
+        "Type":"Type",
+    }
     
 class ScopeStatus(pb_classes.Message):
     __PB2_CLASS__ = scope_pb2.ScopeStatus
@@ -2145,6 +2631,12 @@ class ScopeStatus(pb_classes.Message):
         if state is not None:
             self.state = state
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "State",
+        ]
+    
     @builtins.property
     def state(self) -> "ScopeStatus.State":
         return super()._get_field("state", explicit_presence=False,
@@ -2154,6 +2646,11 @@ class ScopeStatus(pb_classes.Message):
     def state(self, value: "ScopeStatus.State|scope_pb2.ScopeStatus.State") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "State":"State",
+    }
     
 # file: nebius/vpc/v1alpha1/scope_service.proto
 class GetScopeRequest(pb_classes.Message):
@@ -2170,6 +2667,11 @@ class GetScopeRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2178,6 +2680,10 @@ class GetScopeRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetScopeByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = scope_service_pb2.GetScopeByNameRequest
@@ -2196,6 +2702,12 @@ class GetScopeByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -2213,6 +2725,11 @@ class GetScopeByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListScopesRequest(pb_classes.Message):
     __PB2_CLASS__ = scope_service_pb2.ListScopesRequest
@@ -2236,6 +2753,14 @@ class ListScopesRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -2273,6 +2798,13 @@ class ListScopesRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListScopesResponse(pb_classes.Message):
     __PB2_CLASS__ = scope_service_pb2.ListScopesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.ListScopesResponse",scope_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2289,6 +2821,12 @@ class ListScopesResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Scope]":
@@ -2308,6 +2846,11 @@ class ListScopesResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class ScopeServiceClient(client.Client):
@@ -2396,6 +2939,13 @@ class Subnet(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -2426,6 +2976,12 @@ class Subnet(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class SubnetSpec(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.SubnetSpec",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2445,6 +3001,13 @@ class SubnetSpec(pb_classes.Message):
             self.pools = pools
         if enable_egress_nat is not None:
             self.enable_egress_nat = enable_egress_nat
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "network_id",
+            "pools",
+            "enable_egress_nat",
+        ]
     
     @builtins.property
     def network_id(self) -> "builtins.str":
@@ -2473,6 +3036,12 @@ class SubnetSpec(pb_classes.Message):
     def enable_egress_nat(self, value: "builtins.bool") -> None:
         return super()._set_field("enable_egress_nat",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "network_id":"network_id",
+        "pools":"pools",
+        "enable_egress_nat":"enable_egress_nat",
+    }
     
 class SubnetPool(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetPool
@@ -2529,6 +3098,13 @@ class SubnetPool(pb_classes.Message):
         if pool_id is not None:
             self.pool_id = pool_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "spec",
+            "pool_id",
+            "pool",
+        ]
+    
     @builtins.property
     def spec(self) -> "SubnetPoolSpec":
         return super()._get_field("spec", explicit_presence=False,
@@ -2548,6 +3124,12 @@ class SubnetPool(pb_classes.Message):
         return super()._set_field("pool_id",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "spec":"spec",
+        "pool_id":"pool_id",
+        "pool":"pool",
+    }
+    
 class SubnetPoolSpec(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetPoolSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.SubnetPoolSpec",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2564,6 +3146,12 @@ class SubnetPoolSpec(pb_classes.Message):
             self.version = version
         if cidrs is not None:
             self.cidrs = cidrs
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "version",
+            "cidrs",
+        ]
     
     @builtins.property
     def version(self) -> "IpVersion":
@@ -2585,6 +3173,11 @@ class SubnetPoolSpec(pb_classes.Message):
         return super()._set_field("cidrs",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "version":"version",
+        "cidrs":"cidrs",
+    }
+    
 class SubnetCidr(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetCidr
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.SubnetCidr",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2604,6 +3197,13 @@ class SubnetCidr(pb_classes.Message):
             self.state = state
         if allowed_mask is not None:
             self.allowed_mask = allowed_mask
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cidr",
+            "state",
+            "allowed_mask",
+        ]
     
     @builtins.property
     def cidr(self) -> "builtins.str":
@@ -2633,6 +3233,12 @@ class SubnetCidr(pb_classes.Message):
         return super()._set_field("allowed_mask",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cidr":"cidr",
+        "state":"state",
+        "allowed_mask":"allowed_mask",
+    }
+    
 class SubnetStatus(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.SubnetStatus",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2657,6 +3263,13 @@ class SubnetStatus(pb_classes.Message):
         if ipv4_cidrs is not None:
             self.ipv4_cidrs = ipv4_cidrs
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "ipv4_cidrs",
+            "State",
+        ]
+    
     @builtins.property
     def state(self) -> "SubnetStatus.State":
         return super()._get_field("state", explicit_presence=False,
@@ -2677,6 +3290,12 @@ class SubnetStatus(pb_classes.Message):
         return super()._set_field("ipv4_cidrs",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "ipv4_cidrs":"ipv4_cidrs",
+        "State":"State",
+    }
+    
 # file: nebius/vpc/v1alpha1/subnet_service.proto
 class GetSubnetRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.GetSubnetRequest
@@ -2692,6 +3311,11 @@ class GetSubnetRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2700,6 +3324,10 @@ class GetSubnetRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetSubnetByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.GetSubnetByNameRequest
@@ -2718,6 +3346,12 @@ class GetSubnetByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -2735,6 +3369,11 @@ class GetSubnetByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListSubnetsRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsRequest
@@ -2758,6 +3397,14 @@ class ListSubnetsRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -2795,6 +3442,13 @@ class ListSubnetsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListSubnetsByNetworkRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsByNetworkRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.ListSubnetsByNetworkRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2817,6 +3471,14 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "network_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def network_id(self) -> "builtins.str":
@@ -2854,6 +3516,13 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "network_id":"network_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListSubnetsResponse(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1alpha1.ListSubnetsResponse",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2870,6 +3539,12 @@ class ListSubnetsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Subnet]":
@@ -2889,6 +3564,11 @@ class ListSubnetsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class SubnetServiceClient(client.Client):

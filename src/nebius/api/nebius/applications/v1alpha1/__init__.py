@@ -9,8 +9,8 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
-import builtins as builtins
 import collections.abc as abc
+import builtins as builtins
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.applications.v1alpha1.k8s_release_service_pb2 as k8s_release_service_pb2
 import nebius.aio.client as client
@@ -40,6 +40,13 @@ class K8sRelease(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -71,6 +78,12 @@ class K8sRelease(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class K8sReleaseSpec(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_pb2.K8sReleaseSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sReleaseSpec",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -92,6 +105,12 @@ class K8sReleaseSpec(pb_classes.Message):
             if value is not None:
                 self.value = value
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
         @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
@@ -109,6 +128,11 @@ class K8sReleaseSpec(pb_classes.Message):
         def value(self, value: "builtins.str") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
         
     
     def __init__(
@@ -135,6 +159,17 @@ class K8sReleaseSpec(pb_classes.Message):
             self.values = values
         if set is not None:
             self.set = set
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cluster_id",
+            "product_slug",
+            "namespace",
+            "application_name",
+            "values",
+            "set",
+            "SetEntry",
+        ]
     
     @builtins.property
     def cluster_id(self) -> "builtins.str":
@@ -191,6 +226,16 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._set_field("set",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cluster_id":"cluster_id",
+        "product_slug":"product_slug",
+        "namespace":"namespace",
+        "application_name":"application_name",
+        "values":"values",
+        "set":"set",
+        "SetEntry":"SetEntry",
+    }
+    
 class K8sReleaseStatus(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_pb2.K8sReleaseStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sReleaseStatus",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -217,6 +262,13 @@ class K8sReleaseStatus(pb_classes.Message):
         if error_message is not None:
             self.error_message = error_message
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "error_message",
+            "State",
+        ]
+    
     @builtins.property
     def state(self) -> "K8sReleaseStatus.State":
         return super()._get_field("state", explicit_presence=False,
@@ -236,6 +288,12 @@ class K8sReleaseStatus(pb_classes.Message):
         return super()._set_field("error_message",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "error_message":"error_message",
+        "State":"State",
+    }
+    
 # file: nebius/applications/v1alpha1/k8s_release_service.proto
 class GetK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.GetK8sReleaseRequest
@@ -251,6 +309,11 @@ class GetK8sReleaseRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -259,6 +322,10 @@ class GetK8sReleaseRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListK8sReleasesRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.ListK8sReleasesRequest
@@ -285,6 +352,15 @@ class ListK8sReleasesRequest(pb_classes.Message):
             self.filter = filter
         if cluster_id is not None:
             self.cluster_id = cluster_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+            "cluster_id",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -331,6 +407,14 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._set_field("cluster_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "cluster_id":"cluster_id",
+    }
+    
 class CreateK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.CreateK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.CreateK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -347,6 +431,12 @@ class CreateK8sReleaseRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -368,6 +458,11 @@ class CreateK8sReleaseRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.DeleteK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.DeleteK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -382,6 +477,11 @@ class DeleteK8sReleaseRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -390,6 +490,10 @@ class DeleteK8sReleaseRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListK8sReleasesResponse(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.ListK8sReleasesResponse
@@ -407,6 +511,12 @@ class ListK8sReleasesResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[K8sRelease]":
@@ -426,6 +536,11 @@ class ListK8sReleasesResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class K8sReleaseServiceClient(client.Client):

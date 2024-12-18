@@ -9,11 +9,11 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import collections.abc as abc
 import builtins as builtins
 import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
 import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.mlflow.v1alpha1.cluster_service_pb2 as cluster_service_pb2
-import collections.abc as abc
 import nebius.aio.client as client
 import nebius.api.nebius.common.v1alpha1 as v1alpha1_2
 import grpc as grpc
@@ -42,6 +42,13 @@ class Cluster(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -72,6 +79,12 @@ class Cluster(pb_classes.Message):
     def status(self, value: "MlflowClusterStatus|cluster_pb2.MlflowClusterStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
@@ -104,6 +117,17 @@ class ClusterSpec(pb_classes.Message):
             self.storage_bucket_name = storage_bucket_name
         if network_id is not None:
             self.network_id = network_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "public_access",
+            "admin_username",
+            "admin_password",
+            "service_account_id",
+            "storage_bucket_name",
+            "network_id",
+        ]
     
     @builtins.property
     def description(self) -> "builtins.str":
@@ -168,6 +192,16 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("network_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "public_access":"public_access",
+        "admin_username":"admin_username",
+        "admin_password":"admin_password",
+        "service_account_id":"service_account_id",
+        "storage_bucket_name":"storage_bucket_name",
+        "network_id":"network_id",
+    }
+    
 class MlflowClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.MlflowClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.mlflow.v1alpha1.MlflowClusterStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -199,6 +233,17 @@ class MlflowClusterStatus(pb_classes.Message):
             self.mlflow_version = mlflow_version
         if tracking_endpoints is not None:
             self.tracking_endpoints = tracking_endpoints
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "phase",
+            "state",
+            "tracking_endpoint",
+            "effective_storage_bucket_name",
+            "experiments_count",
+            "mlflow_version",
+            "tracking_endpoints",
+        ]
     
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
@@ -266,6 +311,16 @@ class MlflowClusterStatus(pb_classes.Message):
         return super()._set_field("tracking_endpoints",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "phase":"phase",
+        "state":"state",
+        "tracking_endpoint":"tracking_endpoint",
+        "effective_storage_bucket_name":"effective_storage_bucket_name",
+        "experiments_count":"experiments_count",
+        "mlflow_version":"mlflow_version",
+        "tracking_endpoints":"tracking_endpoints",
+    }
+    
 class Endpoints(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Endpoints
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.mlflow.v1alpha1.Endpoints",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -282,6 +337,12 @@ class Endpoints(pb_classes.Message):
             self.private = private
         if public is not None:
             self.public = public
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "private",
+            "public",
+        ]
     
     @builtins.property
     def private(self) -> "builtins.str":
@@ -301,6 +362,11 @@ class Endpoints(pb_classes.Message):
         return super()._set_field("public",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "private":"private",
+        "public":"public",
+    }
+    
 # file: nebius/msp/mlflow/v1alpha1/cluster_service.proto
 class GetClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterRequest
@@ -316,6 +382,11 @@ class GetClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -324,6 +395,10 @@ class GetClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetClusterByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterByNameRequest
@@ -342,6 +417,12 @@ class GetClusterByNameRequest(pb_classes.Message):
         if name is not None:
             self.name = name
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
     @builtins.property
     def parent_id(self) -> "builtins.str":
         return super()._get_field("parent_id", explicit_presence=False,
@@ -359,6 +440,11 @@ class GetClusterByNameRequest(pb_classes.Message):
     def name(self, value: "builtins.str") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
     
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
@@ -379,6 +465,13 @@ class ListClustersRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -407,6 +500,12 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.mlflow.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -423,6 +522,12 @@ class ListClustersResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
@@ -443,6 +548,11 @@ class ListClustersResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class CreateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.CreateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.mlflow.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -459,6 +569,12 @@ class CreateClusterRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -480,6 +596,11 @@ class CreateClusterRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.mlflow.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -494,6 +615,11 @@ class DeleteClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -502,6 +628,10 @@ class DeleteClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class ClusterServiceClient(client.Client):

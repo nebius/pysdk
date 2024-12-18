@@ -9,10 +9,10 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import collections.abc as abc
 import builtins as builtins
 import nebius.base.protos.pb_enum as pb_enum
 import typing as typing
-import collections.abc as abc
 import nebius.api.nebius.compute.v1.operation_service_pb2 as operation_service_pb2
 import nebius.api.nebius.compute.v1.disk_service_pb2 as disk_service_pb2
 import nebius.aio.client as client
@@ -59,6 +59,13 @@ class Disk(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -88,6 +95,12 @@ class Disk(pb_classes.Message):
     def status(self, value: "DiskStatus|disk_pb2.DiskStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class DiskSpec(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskSpec
@@ -233,6 +246,22 @@ class DiskSpec(pb_classes.Message):
         if source_image_family is not None:
             self.source_image_family = source_image_family
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "size_bytes",
+            "size_kibibytes",
+            "size_mebibytes",
+            "size_gibibytes",
+            "block_size_bytes",
+            "type",
+            "placement_policy",
+            "source_image_id",
+            "source_image_family",
+            "size",
+            "source",
+            "DiskType",
+        ]
+    
     @builtins.property
     def size_bytes(self) -> "builtins.int|None":
         return super()._get_field("size_bytes", explicit_presence=True,
@@ -317,6 +346,21 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("source_image_family",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "size_bytes":"size_bytes",
+        "size_kibibytes":"size_kibibytes",
+        "size_mebibytes":"size_mebibytes",
+        "size_gibibytes":"size_gibibytes",
+        "block_size_bytes":"block_size_bytes",
+        "type":"type",
+        "placement_policy":"placement_policy",
+        "source_image_id":"source_image_id",
+        "source_image_family":"source_image_family",
+        "size":"size",
+        "source":"source",
+        "DiskType":"DiskType",
+    }
+    
 class SourceImageFamily(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.SourceImageFamily
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.SourceImageFamily",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -333,6 +377,12 @@ class SourceImageFamily(pb_classes.Message):
             self.image_family = image_family
         if parent_id is not None:
             self.parent_id = parent_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "image_family",
+            "parent_id",
+        ]
     
     @builtins.property
     def image_family(self) -> "builtins.str":
@@ -352,6 +402,11 @@ class SourceImageFamily(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "image_family":"image_family",
+        "parent_id":"parent_id",
+    }
+    
 class DiskPlacementPolicy(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskPlacementPolicy
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskPlacementPolicy",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -368,6 +423,12 @@ class DiskPlacementPolicy(pb_classes.Message):
             self.placement_group_id = placement_group_id
         if placement_group_partition is not None:
             self.placement_group_partition = placement_group_partition
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "placement_group_id",
+            "placement_group_partition",
+        ]
     
     @builtins.property
     def placement_group_id(self) -> "builtins.str":
@@ -386,6 +447,11 @@ class DiskPlacementPolicy(pb_classes.Message):
     def placement_group_partition(self, value: "builtins.int") -> None:
         return super()._set_field("placement_group_partition",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "placement_group_id":"placement_group_id",
+        "placement_group_partition":"placement_group_partition",
+    }
     
 class DiskStatus(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskStatus
@@ -427,6 +493,18 @@ class DiskStatus(pb_classes.Message):
             self.size_bytes = size_bytes
         if reconciling is not None:
             self.reconciling = reconciling
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "state_description",
+            "read_write_attachment",
+            "read_only_attachments",
+            "source_image_id",
+            "size_bytes",
+            "reconciling",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "DiskStatus.State":
@@ -493,6 +571,17 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "state_description":"state_description",
+        "read_write_attachment":"read_write_attachment",
+        "read_only_attachments":"read_only_attachments",
+        "source_image_id":"source_image_id",
+        "size_bytes":"size_bytes",
+        "reconciling":"reconciling",
+        "State":"State",
+    }
+    
 # file: nebius/compute/v1/operation_service.proto
 class ListOperationsByParentRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsByParentRequest
@@ -513,6 +602,13 @@ class ListOperationsByParentRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -541,6 +637,12 @@ class ListOperationsByParentRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 # file: nebius/compute/v1/disk_service.proto
 class GetDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.GetDiskRequest
@@ -556,6 +658,11 @@ class GetDiskRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -564,6 +671,10 @@ class GetDiskRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListDisksRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.ListDisksRequest
@@ -587,6 +698,14 @@ class ListDisksRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -624,6 +743,13 @@ class ListDisksRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class CreateDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.CreateDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -640,6 +766,12 @@ class CreateDiskRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -660,6 +792,11 @@ class CreateDiskRequest(pb_classes.Message):
     def spec(self, value: "DiskSpec|disk_pb2.DiskSpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 class UpdateDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.UpdateDiskRequest
@@ -678,6 +815,12 @@ class UpdateDiskRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -698,6 +841,11 @@ class UpdateDiskRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.DeleteDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -712,6 +860,11 @@ class DeleteDiskRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -720,6 +873,10 @@ class DeleteDiskRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListDisksResponse(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.ListDisksResponse
@@ -737,6 +894,12 @@ class ListDisksResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Disk]":
@@ -756,6 +919,11 @@ class ListDisksResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class DiskServiceClient(client.Client):
@@ -925,6 +1093,13 @@ class Filesystem(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -954,6 +1129,12 @@ class Filesystem(pb_classes.Message):
     def status(self, value: "FilesystemStatus|filesystem_pb2.FilesystemStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class FilesystemSpec(pb_classes.Message):
     __PB2_CLASS__ = filesystem_pb2.FilesystemSpec
@@ -1050,6 +1231,18 @@ class FilesystemSpec(pb_classes.Message):
         if type is not None:
             self.type = type
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "size_bytes",
+            "size_kibibytes",
+            "size_mebibytes",
+            "size_gibibytes",
+            "block_size_bytes",
+            "type",
+            "size",
+            "FilesystemType",
+        ]
+    
     @builtins.property
     def size_bytes(self) -> "builtins.int|None":
         return super()._get_field("size_bytes", explicit_presence=True,
@@ -1105,6 +1298,17 @@ class FilesystemSpec(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "size_bytes":"size_bytes",
+        "size_kibibytes":"size_kibibytes",
+        "size_mebibytes":"size_mebibytes",
+        "size_gibibytes":"size_gibibytes",
+        "block_size_bytes":"block_size_bytes",
+        "type":"type",
+        "size":"size",
+        "FilesystemType":"FilesystemType",
+    }
+    
 class FilesystemStatus(pb_classes.Message):
     __PB2_CLASS__ = filesystem_pb2.FilesystemStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.FilesystemStatus",filesystem_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1142,6 +1346,17 @@ class FilesystemStatus(pb_classes.Message):
             self.size_bytes = size_bytes
         if reconciling is not None:
             self.reconciling = reconciling
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "state_description",
+            "read_write_attachments",
+            "read_only_attachments",
+            "size_bytes",
+            "reconciling",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "FilesystemStatus.State":
@@ -1200,6 +1415,16 @@ class FilesystemStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "state_description":"state_description",
+        "read_write_attachments":"read_write_attachments",
+        "read_only_attachments":"read_only_attachments",
+        "size_bytes":"size_bytes",
+        "reconciling":"reconciling",
+        "State":"State",
+    }
+    
 # file: nebius/compute/v1/filesystem_service.proto
 class GetFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.GetFilesystemRequest
@@ -1215,6 +1440,11 @@ class GetFilesystemRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1223,6 +1453,10 @@ class GetFilesystemRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListFilesystemsRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.ListFilesystemsRequest
@@ -1246,6 +1480,14 @@ class ListFilesystemsRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -1283,6 +1525,13 @@ class ListFilesystemsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class CreateFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.CreateFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1299,6 +1548,12 @@ class CreateFilesystemRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1319,6 +1574,11 @@ class CreateFilesystemRequest(pb_classes.Message):
     def spec(self, value: "FilesystemSpec|filesystem_pb2.FilesystemSpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 class UpdateFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.UpdateFilesystemRequest
@@ -1337,6 +1597,12 @@ class UpdateFilesystemRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -1357,6 +1623,11 @@ class UpdateFilesystemRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.DeleteFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1371,6 +1642,11 @@ class DeleteFilesystemRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1379,6 +1655,10 @@ class DeleteFilesystemRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListFilesystemsResponse(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.ListFilesystemsResponse
@@ -1396,6 +1676,12 @@ class ListFilesystemsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Filesystem]":
@@ -1415,6 +1701,11 @@ class ListFilesystemsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class FilesystemServiceClient(client.Client):
@@ -1584,6 +1875,13 @@ class GpuCluster(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -1614,6 +1912,12 @@ class GpuCluster(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class GpuClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_pb2.GpuClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GpuClusterSpec",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1628,6 +1932,11 @@ class GpuClusterSpec(pb_classes.Message):
         if infiniband_fabric is not None:
             self.infiniband_fabric = infiniband_fabric
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "infiniband_fabric",
+        ]
+    
     @builtins.property
     def infiniband_fabric(self) -> "builtins.str":
         return super()._get_field("infiniband_fabric", explicit_presence=False,
@@ -1636,6 +1945,10 @@ class GpuClusterSpec(pb_classes.Message):
     def infiniband_fabric(self, value: "builtins.str") -> None:
         return super()._set_field("infiniband_fabric",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "infiniband_fabric":"infiniband_fabric",
+    }
     
 class GpuClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_pb2.GpuClusterStatus
@@ -1653,6 +1966,12 @@ class GpuClusterStatus(pb_classes.Message):
             self.instances = instances
         if reconciling is not None:
             self.reconciling = reconciling
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "instances",
+            "reconciling",
+        ]
     
     @builtins.property
     def instances(self) -> "abc.MutableSequence[builtins.str]":
@@ -1673,6 +1992,11 @@ class GpuClusterStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "instances":"instances",
+        "reconciling":"reconciling",
+    }
+    
 # file: nebius/compute/v1/gpu_cluster_service.proto
 class GetGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.GetGpuClusterRequest
@@ -1688,6 +2012,11 @@ class GetGpuClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1696,6 +2025,10 @@ class GetGpuClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListGpuClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.ListGpuClustersRequest
@@ -1719,6 +2052,14 @@ class ListGpuClustersRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -1756,6 +2097,13 @@ class ListGpuClustersRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class CreateGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.CreateGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1772,6 +2120,12 @@ class CreateGpuClusterRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1792,6 +2146,11 @@ class CreateGpuClusterRequest(pb_classes.Message):
     def spec(self, value: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 class UpdateGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.UpdateGpuClusterRequest
@@ -1810,6 +2169,12 @@ class UpdateGpuClusterRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -1830,6 +2195,11 @@ class UpdateGpuClusterRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.DeleteGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1844,6 +2214,11 @@ class DeleteGpuClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1852,6 +2227,10 @@ class DeleteGpuClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListGpuClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.ListGpuClustersResponse
@@ -1869,6 +2248,12 @@ class ListGpuClustersResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[GpuCluster]":
@@ -1888,6 +2273,11 @@ class ListGpuClustersResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class GpuClusterServiceClient(client.Client):
@@ -2057,6 +2447,13 @@ class Image(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -2086,6 +2483,12 @@ class Image(pb_classes.Message):
     def status(self, value: "ImageStatus|image_pb2.ImageStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class ImageSpec(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.ImageSpec
@@ -2134,6 +2537,14 @@ class ImageSpec(pb_classes.Message):
         if version is not None:
             self.version = version
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "image_family",
+            "version",
+            "_description",
+        ]
+    
     @builtins.property
     def description(self) -> "builtins.str|None":
         return super()._get_field("description", explicit_presence=True,
@@ -2160,6 +2571,13 @@ class ImageSpec(pb_classes.Message):
     def version(self, value: "builtins.str") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "image_family":"image_family",
+        "version":"version",
+        "_description":"_description",
+    }
     
 class ImageStatus(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.ImageStatus
@@ -2195,6 +2613,16 @@ class ImageStatus(pb_classes.Message):
             self.min_disk_size_bytes = min_disk_size_bytes
         if reconciling is not None:
             self.reconciling = reconciling
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "state_description",
+            "storage_size_bytes",
+            "min_disk_size_bytes",
+            "reconciling",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "ImageStatus.State":
@@ -2242,6 +2670,15 @@ class ImageStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "state_description":"state_description",
+        "storage_size_bytes":"storage_size_bytes",
+        "min_disk_size_bytes":"min_disk_size_bytes",
+        "reconciling":"reconciling",
+        "State":"State",
+    }
+    
 # file: nebius/compute/v1/image_service.proto
 class GetImageRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.GetImageRequest
@@ -2257,6 +2694,11 @@ class GetImageRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2265,6 +2707,10 @@ class GetImageRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class GetImageLatestByFamilyRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.GetImageLatestByFamilyRequest
@@ -2283,6 +2729,12 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
         if parent_id is not None:
             self.parent_id = parent_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "image_family",
+            "parent_id",
+        ]
+    
     @builtins.property
     def image_family(self) -> "builtins.str":
         return super()._get_field("image_family", explicit_presence=False,
@@ -2300,6 +2752,11 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
     def parent_id(self, value: "builtins.str") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "image_family":"image_family",
+        "parent_id":"parent_id",
+    }
     
 class ListImagesRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.ListImagesRequest
@@ -2323,6 +2780,14 @@ class ListImagesRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -2360,6 +2825,13 @@ class ListImagesRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListImagesResponse(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.ListImagesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListImagesResponse",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2376,6 +2848,12 @@ class ListImagesResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Image]":
@@ -2395,6 +2873,11 @@ class ListImagesResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class ImageServiceClient(client.Client):
@@ -2526,6 +3009,14 @@ class NetworkInterfaceSpec(pb_classes.Message):
         if public_ip_address is not None:
             self.public_ip_address = public_ip_address
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "subnet_id",
+            "name",
+            "ip_address",
+            "public_ip_address",
+        ]
+    
     @builtins.property
     def subnet_id(self) -> "builtins.str":
         return super()._get_field("subnet_id", explicit_presence=False,
@@ -2564,6 +3055,13 @@ class NetworkInterfaceSpec(pb_classes.Message):
         return super()._set_field("public_ip_address",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "subnet_id":"subnet_id",
+        "name":"name",
+        "ip_address":"ip_address",
+        "public_ip_address":"public_ip_address",
+    }
+    
 class IPAddress(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.IPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.IPAddress",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2578,6 +3076,11 @@ class IPAddress(pb_classes.Message):
         if allocation_id is not None:
             self.allocation_id = allocation_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "allocation_id",
+        ]
+    
     @builtins.property
     def allocation_id(self) -> "builtins.str":
         return super()._get_field("allocation_id", explicit_presence=False,
@@ -2586,6 +3089,10 @@ class IPAddress(pb_classes.Message):
     def allocation_id(self, value: "builtins.str") -> None:
         return super()._set_field("allocation_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allocation_id":"allocation_id",
+    }
     
 class PublicIPAddress(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.PublicIPAddress
@@ -2631,6 +3138,13 @@ class PublicIPAddress(pb_classes.Message):
         if static is not None:
             self.static = static
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "allocation_id",
+            "static",
+            "allocation",
+        ]
+    
     @builtins.property
     def allocation_id(self) -> "builtins.str|None":
         return super()._get_field("allocation_id", explicit_presence=True,
@@ -2648,6 +3162,12 @@ class PublicIPAddress(pb_classes.Message):
     def static(self, value: "builtins.bool") -> None:
         return super()._set_field("static",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allocation_id":"allocation_id",
+        "static":"static",
+        "allocation":"allocation",
+    }
     
 class NetworkInterfaceStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.NetworkInterfaceStatus
@@ -2674,6 +3194,15 @@ class NetworkInterfaceStatus(pb_classes.Message):
             self.public_ip_address = public_ip_address
         if mac_address is not None:
             self.mac_address = mac_address
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "index",
+            "name",
+            "ip_address",
+            "public_ip_address",
+            "mac_address",
+        ]
     
     @builtins.property
     def index(self) -> "builtins.int":
@@ -2722,6 +3251,14 @@ class NetworkInterfaceStatus(pb_classes.Message):
         return super()._set_field("mac_address",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "index":"index",
+        "name":"name",
+        "ip_address":"ip_address",
+        "public_ip_address":"public_ip_address",
+        "mac_address":"mac_address",
+    }
+    
 class IPAddressStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.IPAddressStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.IPAddressStatus",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2738,6 +3275,12 @@ class IPAddressStatus(pb_classes.Message):
             self.address = address
         if allocation_id is not None:
             self.allocation_id = allocation_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "address",
+            "allocation_id",
+        ]
     
     @builtins.property
     def address(self) -> "builtins.str":
@@ -2756,6 +3299,11 @@ class IPAddressStatus(pb_classes.Message):
     def allocation_id(self, value: "builtins.str") -> None:
         return super()._set_field("allocation_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "address":"address",
+        "allocation_id":"allocation_id",
+    }
     
 class PublicIPAddressStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.PublicIPAddressStatus
@@ -2774,6 +3322,12 @@ class PublicIPAddressStatus(pb_classes.Message):
         if allocation_id is not None:
             self.allocation_id = allocation_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "address",
+            "allocation_id",
+        ]
+    
     @builtins.property
     def address(self) -> "builtins.str":
         return super()._get_field("address", explicit_presence=False,
@@ -2791,6 +3345,11 @@ class PublicIPAddressStatus(pb_classes.Message):
     def allocation_id(self, value: "builtins.str") -> None:
         return super()._set_field("allocation_id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "address":"address",
+        "allocation_id":"allocation_id",
+    }
     
 # file: nebius/compute/v1/maintenance_event.proto
 class MaintenanceEventStatus(pb_classes.Message):
@@ -2828,6 +3387,17 @@ class MaintenanceEventStatus(pb_classes.Message):
             self.sla_deadline_ts = sla_deadline_ts
         if ticket_id is not None:
             self.ticket_id = ticket_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "maintenance_id",
+            "state",
+            "operation_id",
+            "finished_at",
+            "sla_deadline_ts",
+            "ticket_id",
+            "State",
+        ]
     
     @builtins.property
     def maintenance_id(self) -> "builtins.str":
@@ -2888,6 +3458,16 @@ class MaintenanceEventStatus(pb_classes.Message):
         return super()._set_field("ticket_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "maintenance_id":"maintenance_id",
+        "state":"state",
+        "operation_id":"operation_id",
+        "finished_at":"finished_at",
+        "sla_deadline_ts":"sla_deadline_ts",
+        "ticket_id":"ticket_id",
+        "State":"State",
+    }
+    
 # file: nebius/compute/v1/instance.proto
 class InstanceRecoveryPolicy(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.InstanceRecoveryPolicy",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -2913,6 +3493,13 @@ class Instance(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -2943,6 +3530,12 @@ class Instance(pb_classes.Message):
     def status(self, value: "InstanceStatus|instance_pb2.InstanceStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class InstanceSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceSpec
@@ -2984,6 +3577,20 @@ class InstanceSpec(pb_classes.Message):
             self.stopped = stopped
         if recovery_policy is not None:
             self.recovery_policy = recovery_policy
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "service_account_id",
+            "resources",
+            "gpu_cluster",
+            "network_interfaces",
+            "boot_disk",
+            "secondary_disks",
+            "filesystems",
+            "cloud_init_user_data",
+            "stopped",
+            "recovery_policy",
+        ]
     
     @builtins.property
     def service_account_id(self) -> "builtins.str":
@@ -3082,6 +3689,19 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("recovery_policy",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "service_account_id":"service_account_id",
+        "resources":"resources",
+        "gpu_cluster":"gpu_cluster",
+        "network_interfaces":"network_interfaces",
+        "boot_disk":"boot_disk",
+        "secondary_disks":"secondary_disks",
+        "filesystems":"filesystems",
+        "cloud_init_user_data":"cloud_init_user_data",
+        "stopped":"stopped",
+        "recovery_policy":"recovery_policy",
+    }
+    
 class ResourcesSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ResourcesSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ResourcesSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3126,6 +3746,13 @@ class ResourcesSpec(pb_classes.Message):
         if preset is not None:
             self.preset = preset
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "platform",
+            "preset",
+            "size",
+        ]
+    
     @builtins.property
     def platform(self) -> "builtins.str":
         return super()._get_field("platform", explicit_presence=False,
@@ -3144,6 +3771,12 @@ class ResourcesSpec(pb_classes.Message):
         return super()._set_field("preset",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "platform":"platform",
+        "preset":"preset",
+        "size":"size",
+    }
+    
 class InstanceGpuClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceGpuClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.InstanceGpuClusterSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3158,6 +3791,11 @@ class InstanceGpuClusterSpec(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -3166,6 +3804,10 @@ class InstanceGpuClusterSpec(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class AttachedDiskSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.AttachedDiskSpec
@@ -3220,6 +3862,15 @@ class AttachedDiskSpec(pb_classes.Message):
         if device_id is not None:
             self.device_id = device_id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "attach_mode",
+            "existing_disk",
+            "device_id",
+            "type",
+            "AttachMode",
+        ]
+    
     @builtins.property
     def attach_mode(self) -> "AttachedDiskSpec.AttachMode":
         return super()._get_field("attach_mode", explicit_presence=False,
@@ -3249,6 +3900,14 @@ class AttachedDiskSpec(pb_classes.Message):
         return super()._set_field("device_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "attach_mode":"attach_mode",
+        "existing_disk":"existing_disk",
+        "device_id":"device_id",
+        "type":"type",
+        "AttachMode":"AttachMode",
+    }
+    
 class ExistingDisk(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ExistingDisk
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ExistingDisk",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3263,6 +3922,11 @@ class ExistingDisk(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -3271,6 +3935,10 @@ class ExistingDisk(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ExistingFilesystem(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ExistingFilesystem
@@ -3286,6 +3954,11 @@ class ExistingFilesystem(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -3294,6 +3967,10 @@ class ExistingFilesystem(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class AttachedFilesystemSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.AttachedFilesystemSpec
@@ -3348,6 +4025,15 @@ class AttachedFilesystemSpec(pb_classes.Message):
         if existing_filesystem is not None:
             self.existing_filesystem = existing_filesystem
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "attach_mode",
+            "mount_tag",
+            "existing_filesystem",
+            "type",
+            "AttachMode",
+        ]
+    
     @builtins.property
     def attach_mode(self) -> "AttachedFilesystemSpec.AttachMode":
         return super()._get_field("attach_mode", explicit_presence=False,
@@ -3376,6 +4062,14 @@ class AttachedFilesystemSpec(pb_classes.Message):
     def existing_filesystem(self, value: "ExistingFilesystem|instance_pb2.ExistingFilesystem") -> None:
         return super()._set_field("existing_filesystem",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "attach_mode":"attach_mode",
+        "mount_tag":"mount_tag",
+        "existing_filesystem":"existing_filesystem",
+        "type":"type",
+        "AttachMode":"AttachMode",
+    }
     
 class InstanceStatus(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceStatus
@@ -3411,6 +4105,15 @@ class InstanceStatus(pb_classes.Message):
             self.reconciling = reconciling
         if maintenance_event is not None:
             self.maintenance_event = maintenance_event
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "network_interfaces",
+            "reconciling",
+            "maintenance_event",
+            "InstanceState",
+        ]
     
     @builtins.property
     def state(self) -> "InstanceStatus.InstanceState":
@@ -3451,6 +4154,14 @@ class InstanceStatus(pb_classes.Message):
         return super()._set_field("maintenance_event",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "network_interfaces":"network_interfaces",
+        "reconciling":"reconciling",
+        "maintenance_event":"maintenance_event",
+        "InstanceState":"InstanceState",
+    }
+    
 # file: nebius/compute/v1/instance_service.proto
 class GetInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.GetInstanceRequest
@@ -3466,6 +4177,11 @@ class GetInstanceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -3474,6 +4190,10 @@ class GetInstanceRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListInstancesRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.ListInstancesRequest
@@ -3494,6 +4214,13 @@ class ListInstancesRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -3522,6 +4249,12 @@ class ListInstancesRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class CreateInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.CreateInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3538,6 +4271,12 @@ class CreateInstanceRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -3558,6 +4297,11 @@ class CreateInstanceRequest(pb_classes.Message):
     def spec(self, value: "InstanceSpec|instance_pb2.InstanceSpec") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
     
 class UpdateInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.UpdateInstanceRequest
@@ -3576,6 +4320,12 @@ class UpdateInstanceRequest(pb_classes.Message):
         if spec is not None:
             self.spec = spec
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -3596,6 +4346,11 @@ class UpdateInstanceRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.DeleteInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3610,6 +4365,11 @@ class DeleteInstanceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -3618,6 +4378,10 @@ class DeleteInstanceRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListInstancesResponse(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.ListInstancesResponse
@@ -3635,6 +4399,12 @@ class ListInstancesResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Instance]":
@@ -3655,6 +4425,11 @@ class ListInstancesResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class StartInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.StartInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.StartInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3669,6 +4444,11 @@ class StartInstanceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -3677,6 +4457,10 @@ class StartInstanceRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class StopInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.StopInstanceRequest
@@ -3692,6 +4476,11 @@ class StopInstanceRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -3700,6 +4489,10 @@ class StopInstanceRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class InstanceServiceClient(client.Client):
@@ -3909,6 +4702,13 @@ class Platform(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -3939,6 +4739,12 @@ class Platform(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class PlatformSpec(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.PlatformSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PlatformSpec",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3958,6 +4764,13 @@ class PlatformSpec(pb_classes.Message):
             self.gpu_count_quota_type = gpu_count_quota_type
         if human_readable_name is not None:
             self.human_readable_name = human_readable_name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "presets",
+            "gpu_count_quota_type",
+            "human_readable_name",
+        ]
     
     @builtins.property
     def presets(self) -> "abc.MutableSequence[Preset]":
@@ -3987,6 +4800,12 @@ class PlatformSpec(pb_classes.Message):
         return super()._set_field("human_readable_name",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "presets":"presets",
+        "gpu_count_quota_type":"gpu_count_quota_type",
+        "human_readable_name":"human_readable_name",
+    }
+    
 class Preset(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.Preset
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.Preset",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4006,6 +4825,13 @@ class Preset(pb_classes.Message):
             self.resources = resources
         if allow_gpu_clustering is not None:
             self.allow_gpu_clustering = allow_gpu_clustering
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+            "resources",
+            "allow_gpu_clustering",
+        ]
     
     @builtins.property
     def name(self) -> "builtins.str":
@@ -4035,6 +4861,12 @@ class Preset(pb_classes.Message):
         return super()._set_field("allow_gpu_clustering",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+        "resources":"resources",
+        "allow_gpu_clustering":"allow_gpu_clustering",
+    }
+    
 class PresetResources(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.PresetResources
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PresetResources",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4054,6 +4886,13 @@ class PresetResources(pb_classes.Message):
             self.memory_gibibytes = memory_gibibytes
         if gpu_count is not None:
             self.gpu_count = gpu_count
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "vcpu_count",
+            "memory_gibibytes",
+            "gpu_count",
+        ]
     
     @builtins.property
     def vcpu_count(self) -> "builtins.int":
@@ -4082,6 +4921,12 @@ class PresetResources(pb_classes.Message):
         return super()._set_field("gpu_count",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "vcpu_count":"vcpu_count",
+        "memory_gibibytes":"memory_gibibytes",
+        "gpu_count":"gpu_count",
+    }
+    
 class PlatformStatus(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.PlatformStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PlatformStatus",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4091,6 +4936,13 @@ class PlatformStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 # file: nebius/compute/v1/platform_service.proto
 class ListPlatformsRequest(pb_classes.Message):
@@ -4112,6 +4964,13 @@ class ListPlatformsRequest(pb_classes.Message):
             self.page_token = page_token
         if parent_id is not None:
             self.parent_id = parent_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "page_size",
+            "page_token",
+            "parent_id",
+        ]
     
     @builtins.property
     def page_size(self) -> "builtins.int":
@@ -4140,6 +4999,12 @@ class ListPlatformsRequest(pb_classes.Message):
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "parent_id":"parent_id",
+    }
+    
 class ListPlatformsResponse(pb_classes.Message):
     __PB2_CLASS__ = platform_service_pb2.ListPlatformsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListPlatformsResponse",platform_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4156,6 +5021,12 @@ class ListPlatformsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Platform]":
@@ -4175,6 +5046,11 @@ class ListPlatformsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
     
 
 class PlatformServiceClient(client.Client):

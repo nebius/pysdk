@@ -41,6 +41,11 @@ class Operation(pb_classes.Message):
             if values is not None:
                 self.values = values
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "values",
+            ]
+        
         @builtins.property
         def values(self) -> "abc.MutableSequence[builtins.str]":
             return super()._get_field("values", explicit_presence=False,
@@ -50,6 +55,10 @@ class Operation(pb_classes.Message):
         def values(self, value: "abc.Iterable[builtins.str]") -> None:
             return super()._set_field("values",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "values":"values",
+        }
         
     
     class RequestHeadersEntry(pb_classes.Message):
@@ -69,6 +78,12 @@ class Operation(pb_classes.Message):
             if value is not None:
                 self.value = value
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
         @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
@@ -87,6 +102,11 @@ class Operation(pb_classes.Message):
         def value(self, value: "Operation.request_header|operation_pb2.Operation.request_header") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
         
     
     def __init__(
@@ -128,6 +148,23 @@ class Operation(pb_classes.Message):
             self.progress_data = progress_data
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "description",
+            "created_at",
+            "created_by",
+            "finished_at",
+            "request",
+            "request_headers",
+            "resource_id",
+            "resource",
+            "progress_data",
+            "status",
+            "request_header",
+            "RequestHeadersEntry",
+        ]
     
     @builtins.property
     def id(self) -> "builtins.str":
@@ -235,6 +272,22 @@ class Operation(pb_classes.Message):
         unwrap=request_status.request_status_to_rpc_status
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "description":"description",
+        "created_at":"created_at",
+        "created_by":"created_by",
+        "finished_at":"finished_at",
+        "request":"request",
+        "request_headers":"request_headers",
+        "resource_id":"resource_id",
+        "resource":"resource",
+        "progress_data":"progress_data",
+        "status":"status",
+        "request_header":"request_header",
+        "RequestHeadersEntry":"RequestHeadersEntry",
+    }
+    
 # file: nebius/common/v1alpha1/operation_service.proto
 class GetOperationRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.GetOperationRequest
@@ -250,6 +303,11 @@ class GetOperationRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -258,6 +316,10 @@ class GetOperationRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class ListOperationsRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsRequest
@@ -281,6 +343,14 @@ class ListOperationsRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
@@ -318,6 +388,13 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_id":"resource_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
 class ListOperationsResponse(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.ListOperationsResponse",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -334,6 +411,12 @@ class ListOperationsResponse(pb_classes.Message):
             self.operations = operations
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "operations",
+            "next_page_token",
+        ]
     
     @builtins.property
     def operations(self) -> "abc.MutableSequence[Operation]":
@@ -353,6 +436,11 @@ class ListOperationsResponse(pb_classes.Message):
     def next_page_token(self, value: "builtins.str") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "operations":"operations",
+        "next_page_token":"next_page_token",
+    }
     
 class ListOperationsByParentRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsByParentRequest
@@ -376,6 +464,14 @@ class ListOperationsByParentRequest(pb_classes.Message):
             self.page_token = page_token
         if filter is not None:
             self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -412,6 +508,13 @@ class ListOperationsByParentRequest(pb_classes.Message):
     def filter(self, value: "builtins.str") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
     
 
 class OperationServiceClient(client.Client):

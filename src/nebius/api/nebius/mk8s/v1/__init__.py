@@ -9,8 +9,8 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
-import builtins as builtins
 import collections.abc as abc
+import builtins as builtins
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.mk8s.v1.cluster_service_pb2 as cluster_service_pb2
 import nebius.aio.client as client
@@ -50,6 +50,13 @@ class Cluster(pb_classes.Message):
         if status is not None:
             self.status = status
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         return super()._get_field("metadata", explicit_presence=False,
@@ -80,6 +87,12 @@ class Cluster(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ClusterSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -96,6 +109,12 @@ class ClusterSpec(pb_classes.Message):
             self.control_plane = control_plane
         if kube_network is not None:
             self.kube_network = kube_network
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "control_plane",
+            "kube_network",
+        ]
     
     @builtins.property
     def control_plane(self) -> "ControlPlaneSpec":
@@ -116,6 +135,11 @@ class ClusterSpec(pb_classes.Message):
     def kube_network(self, value: "KubeNetworkSpec|cluster_pb2.KubeNetworkSpec") -> None:
         return super()._set_field("kube_network",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "control_plane":"control_plane",
+        "kube_network":"kube_network",
+    }
     
 class ControlPlaneSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneSpec
@@ -139,6 +163,14 @@ class ControlPlaneSpec(pb_classes.Message):
             self.endpoints = endpoints
         if etcd_cluster_size is not None:
             self.etcd_cluster_size = etcd_cluster_size
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "version",
+            "subnet_id",
+            "endpoints",
+            "etcd_cluster_size",
+        ]
     
     @builtins.property
     def version(self) -> "builtins.str":
@@ -177,6 +209,13 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._set_field("etcd_cluster_size",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "version":"version",
+        "subnet_id":"subnet_id",
+        "endpoints":"endpoints",
+        "etcd_cluster_size":"etcd_cluster_size",
+    }
+    
 class ControlPlaneEndpointsSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneEndpointsSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ControlPlaneEndpointsSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -191,6 +230,11 @@ class ControlPlaneEndpointsSpec(pb_classes.Message):
         if public_endpoint is not None:
             self.public_endpoint = public_endpoint
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "public_endpoint",
+        ]
+    
     @builtins.property
     def public_endpoint(self) -> "PublicEndpointSpec|None":
         return super()._get_field("public_endpoint", explicit_presence=True,
@@ -201,6 +245,10 @@ class ControlPlaneEndpointsSpec(pb_classes.Message):
         return super()._set_field("public_endpoint",value,explicit_presence=True,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "public_endpoint":"public_endpoint",
+    }
+    
 class PublicEndpointSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.PublicEndpointSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.PublicEndpointSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -210,6 +258,13 @@ class PublicEndpointSpec(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 class KubeNetworkSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.KubeNetworkSpec
@@ -225,6 +280,11 @@ class KubeNetworkSpec(pb_classes.Message):
         if service_cidrs is not None:
             self.service_cidrs = service_cidrs
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "service_cidrs",
+        ]
+    
     @builtins.property
     def service_cidrs(self) -> "abc.MutableSequence[builtins.str]":
         return super()._get_field("service_cidrs", explicit_presence=False,
@@ -234,6 +294,10 @@ class KubeNetworkSpec(pb_classes.Message):
     def service_cidrs(self, value: "abc.Iterable[builtins.str]") -> None:
         return super()._set_field("service_cidrs",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "service_cidrs":"service_cidrs",
+    }
     
 class ClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterStatus
@@ -261,6 +325,14 @@ class ClusterStatus(pb_classes.Message):
             self.control_plane = control_plane
         if reconciling is not None:
             self.reconciling = reconciling
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "control_plane",
+            "reconciling",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "ClusterStatus.State":
@@ -291,6 +363,13 @@ class ClusterStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "control_plane":"control_plane",
+        "reconciling":"reconciling",
+        "State":"State",
+    }
+    
 class ControlPlaneStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ControlPlaneStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -313,6 +392,14 @@ class ControlPlaneStatus(pb_classes.Message):
             self.etcd_cluster_size = etcd_cluster_size
         if auth is not None:
             self.auth = auth
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "version",
+            "endpoints",
+            "etcd_cluster_size",
+            "auth",
+        ]
     
     @builtins.property
     def version(self) -> "builtins.str":
@@ -352,6 +439,13 @@ class ControlPlaneStatus(pb_classes.Message):
         return super()._set_field("auth",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "version":"version",
+        "endpoints":"endpoints",
+        "etcd_cluster_size":"etcd_cluster_size",
+        "auth":"auth",
+    }
+    
 class ControlPlaneStatusEndpoints(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneStatusEndpoints
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ControlPlaneStatusEndpoints",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -368,6 +462,12 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
             self.public_endpoint = public_endpoint
         if private_endpoint is not None:
             self.private_endpoint = private_endpoint
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "public_endpoint",
+            "private_endpoint",
+        ]
     
     @builtins.property
     def public_endpoint(self) -> "builtins.str":
@@ -387,6 +487,11 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
         return super()._set_field("private_endpoint",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "public_endpoint":"public_endpoint",
+        "private_endpoint":"private_endpoint",
+    }
+    
 class ControlPlaneStatusAuth(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneStatusAuth
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ControlPlaneStatusAuth",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -401,6 +506,11 @@ class ControlPlaneStatusAuth(pb_classes.Message):
         if cluster_ca_certificate is not None:
             self.cluster_ca_certificate = cluster_ca_certificate
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cluster_ca_certificate",
+        ]
+    
     @builtins.property
     def cluster_ca_certificate(self) -> "builtins.str":
         return super()._get_field("cluster_ca_certificate", explicit_presence=False,
@@ -409,6 +519,10 @@ class ControlPlaneStatusAuth(pb_classes.Message):
     def cluster_ca_certificate(self, value: "builtins.str") -> None:
         return super()._set_field("cluster_ca_certificate",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cluster_ca_certificate":"cluster_ca_certificate",
+    }
     
 # file: nebius/mk8s/v1/cluster_service.proto
 class CreateClusterRequest(pb_classes.Message):
@@ -427,6 +541,12 @@ class CreateClusterRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -448,6 +568,11 @@ class CreateClusterRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.GetClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -464,6 +589,12 @@ class GetClusterRequest(pb_classes.Message):
             self.id = id
         if resource_version is not None:
             self.resource_version = resource_version
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "resource_version",
+        ]
     
     @builtins.property
     def id(self) -> "builtins.str":
@@ -482,6 +613,11 @@ class GetClusterRequest(pb_classes.Message):
     def resource_version(self, value: "builtins.str") -> None:
         return super()._set_field("resource_version",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "resource_version":"resource_version",
+    }
     
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
@@ -502,6 +638,13 @@ class ListClustersRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -530,6 +673,12 @@ class ListClustersRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -546,6 +695,12 @@ class ListClustersResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
@@ -566,6 +721,11 @@ class ListClustersResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class UpdateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.UpdateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.UpdateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -582,6 +742,12 @@ class UpdateClusterRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -603,6 +769,11 @@ class UpdateClusterRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -617,6 +788,11 @@ class DeleteClusterRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -625,6 +801,10 @@ class DeleteClusterRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 
 class ClusterServiceClient(client.Client):
@@ -851,6 +1031,18 @@ class DiskSpec(pb_classes.Message):
         if type is not None:
             self.type = type
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "size_bytes",
+            "size_kibibytes",
+            "size_mebibytes",
+            "size_gibibytes",
+            "block_size_bytes",
+            "type",
+            "size",
+            "DiskType",
+        ]
+    
     @builtins.property
     def size_bytes(self) -> "builtins.int|None":
         return super()._get_field("size_bytes", explicit_presence=True,
@@ -906,6 +1098,17 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "size_bytes":"size_bytes",
+        "size_kibibytes":"size_kibibytes",
+        "size_mebibytes":"size_mebibytes",
+        "size_gibibytes":"size_gibibytes",
+        "block_size_bytes":"block_size_bytes",
+        "type":"type",
+        "size":"size",
+        "DiskType":"DiskType",
+    }
+    
 class ResourcesSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_template_pb2.ResourcesSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ResourcesSpec",instance_template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -950,6 +1153,13 @@ class ResourcesSpec(pb_classes.Message):
         if preset is not None:
             self.preset = preset
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "platform",
+            "preset",
+            "size",
+        ]
+    
     @builtins.property
     def platform(self) -> "builtins.str":
         return super()._get_field("platform", explicit_presence=False,
@@ -967,6 +1177,12 @@ class ResourcesSpec(pb_classes.Message):
     def preset(self, value: "builtins.str|None") -> None:
         return super()._set_field("preset",value,explicit_presence=True,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "platform":"platform",
+        "preset":"preset",
+        "size":"size",
+    }
     
 # file: nebius/mk8s/v1/node_group.proto
 class NodeGroup(pb_classes.Message):
@@ -988,6 +1204,13 @@ class NodeGroup(pb_classes.Message):
             self.spec = spec
         if status is not None:
             self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1018,6 +1241,12 @@ class NodeGroup(pb_classes.Message):
     def status(self, value: "NodeGroupStatus|node_group_pb2.NodeGroupStatus") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
     
 class NodeGroupSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupSpec
@@ -1083,6 +1312,16 @@ class NodeGroupSpec(pb_classes.Message):
         if strategy is not None:
             self.strategy = strategy
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "version",
+            "fixed_node_count",
+            "autoscaling",
+            "template",
+            "strategy",
+            "size",
+        ]
+    
     @builtins.property
     def version(self) -> "builtins.str":
         return super()._get_field("version", explicit_presence=False,
@@ -1131,6 +1370,15 @@ class NodeGroupSpec(pb_classes.Message):
         return super()._set_field("strategy",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "version":"version",
+        "fixed_node_count":"fixed_node_count",
+        "autoscaling":"autoscaling",
+        "template":"template",
+        "strategy":"strategy",
+        "size":"size",
+    }
+    
 class NodeTemplate(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeTemplate
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeTemplate",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1168,6 +1416,19 @@ class NodeTemplate(pb_classes.Message):
             self.cloud_init_user_data = cloud_init_user_data
         if service_account_id is not None:
             self.service_account_id = service_account_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "taints",
+            "resources",
+            "boot_disk",
+            "gpu_cluster",
+            "network_interfaces",
+            "filesystems",
+            "cloud_init_user_data",
+            "service_account_id",
+        ]
     
     @builtins.property
     def metadata(self) -> "NodeMetadataTemplate":
@@ -1257,6 +1518,18 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("service_account_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "taints":"taints",
+        "resources":"resources",
+        "boot_disk":"boot_disk",
+        "gpu_cluster":"gpu_cluster",
+        "network_interfaces":"network_interfaces",
+        "filesystems":"filesystems",
+        "cloud_init_user_data":"cloud_init_user_data",
+        "service_account_id":"service_account_id",
+    }
+    
 class NodeMetadataTemplate(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeMetadataTemplate
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeMetadataTemplate",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1278,6 +1551,12 @@ class NodeMetadataTemplate(pb_classes.Message):
             if value is not None:
                 self.value = value
         
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
         @builtins.property
         def key(self) -> "builtins.str":
             return super()._get_field("key", explicit_presence=False,
@@ -1296,6 +1575,11 @@ class NodeMetadataTemplate(pb_classes.Message):
             return super()._set_field("value",value,explicit_presence=False,
             )
         
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
+        
     
     def __init__(
         self,
@@ -1307,6 +1591,12 @@ class NodeMetadataTemplate(pb_classes.Message):
         if labels is not None:
             self.labels = labels
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "labels",
+            "LabelsEntry",
+        ]
+    
     @builtins.property
     def labels(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         return super()._get_field("labels", explicit_presence=False,
@@ -1316,6 +1606,11 @@ class NodeMetadataTemplate(pb_classes.Message):
     def labels(self, value: "abc.Mapping[builtins.str,builtins.str]") -> None:
         return super()._set_field("labels",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "labels":"labels",
+        "LabelsEntry":"LabelsEntry",
+    }
     
 class GpuClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.GpuClusterSpec
@@ -1331,6 +1626,11 @@ class GpuClusterSpec(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1339,6 +1639,10 @@ class GpuClusterSpec(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class NetworkInterfaceTemplate(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NetworkInterfaceTemplate
@@ -1356,6 +1660,12 @@ class NetworkInterfaceTemplate(pb_classes.Message):
             self.public_ip_address = public_ip_address
         if subnet_id is not None:
             self.subnet_id = subnet_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "public_ip_address",
+            "subnet_id",
+        ]
     
     @builtins.property
     def public_ip_address(self) -> "PublicIPAddress|None":
@@ -1376,6 +1686,11 @@ class NetworkInterfaceTemplate(pb_classes.Message):
         return super()._set_field("subnet_id",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "public_ip_address":"public_ip_address",
+        "subnet_id":"subnet_id",
+    }
+    
 class PublicIPAddress(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.PublicIPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.PublicIPAddress",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1385,6 +1700,13 @@ class PublicIPAddress(pb_classes.Message):
         initial_message: message_1.Message|None = None,
     ) -> None:
         super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
     
 class AttachedFilesystemSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.AttachedFilesystemSpec
@@ -1439,6 +1761,15 @@ class AttachedFilesystemSpec(pb_classes.Message):
         if existing_filesystem is not None:
             self.existing_filesystem = existing_filesystem
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "attach_mode",
+            "mount_tag",
+            "existing_filesystem",
+            "type",
+            "AttachMode",
+        ]
+    
     @builtins.property
     def attach_mode(self) -> "AttachedFilesystemSpec.AttachMode":
         return super()._get_field("attach_mode", explicit_presence=False,
@@ -1468,6 +1799,14 @@ class AttachedFilesystemSpec(pb_classes.Message):
         return super()._set_field("existing_filesystem",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "attach_mode":"attach_mode",
+        "mount_tag":"mount_tag",
+        "existing_filesystem":"existing_filesystem",
+        "type":"type",
+        "AttachMode":"AttachMode",
+    }
+    
 class ExistingFilesystem(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.ExistingFilesystem
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ExistingFilesystem",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1482,6 +1821,11 @@ class ExistingFilesystem(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -1490,6 +1834,10 @@ class ExistingFilesystem(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class NodeGroupAutoscalingSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupAutoscalingSpec
@@ -1508,6 +1856,12 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
         if max_node_count is not None:
             self.max_node_count = max_node_count
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "min_node_count",
+            "max_node_count",
+        ]
+    
     @builtins.property
     def min_node_count(self) -> "builtins.int":
         return super()._get_field("min_node_count", explicit_presence=False,
@@ -1525,6 +1879,11 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
     def max_node_count(self, value: "builtins.int") -> None:
         return super()._set_field("max_node_count",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "min_node_count":"min_node_count",
+        "max_node_count":"max_node_count",
+    }
     
 class NodeTaint(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeTaint
@@ -1552,6 +1911,14 @@ class NodeTaint(pb_classes.Message):
             self.value = value
         if effect is not None:
             self.effect = effect
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "key",
+            "value",
+            "effect",
+            "Effect",
+        ]
     
     @builtins.property
     def key(self) -> "builtins.str":
@@ -1581,6 +1948,13 @@ class NodeTaint(pb_classes.Message):
         return super()._set_field("effect",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "key":"key",
+        "value":"value",
+        "effect":"effect",
+        "Effect":"Effect",
+    }
+    
 class NodeGroupDeploymentStrategy(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupDeploymentStrategy
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeGroupDeploymentStrategy",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1600,6 +1974,13 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
             self.max_surge = max_surge
         if drain_timeout is not None:
             self.drain_timeout = drain_timeout
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "max_unavailable",
+            "max_surge",
+            "drain_timeout",
+        ]
     
     @builtins.property
     def max_unavailable(self) -> "PercentOrCount":
@@ -1631,6 +2012,12 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         return super()._set_field("drain_timeout",value,explicit_presence=False,
         unwrap=well_known_1.to_duration
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "max_unavailable":"max_unavailable",
+        "max_surge":"max_surge",
+        "drain_timeout":"drain_timeout",
+    }
     
 class PercentOrCount(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.PercentOrCount
@@ -1687,6 +2074,13 @@ class PercentOrCount(pb_classes.Message):
         if count is not None:
             self.count = count
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "percent",
+            "count",
+            "value",
+        ]
+    
     @builtins.property
     def percent(self) -> "builtins.int|None":
         return super()._get_field("percent", explicit_presence=True,
@@ -1704,6 +2098,12 @@ class PercentOrCount(pb_classes.Message):
     def count(self, value: "builtins.int|None") -> None:
         return super()._set_field("count",value,explicit_presence=True,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "percent":"percent",
+        "count":"count",
+        "value":"value",
+    }
     
 class NodeGroupStatus(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupStatus
@@ -1743,6 +2143,18 @@ class NodeGroupStatus(pb_classes.Message):
             self.ready_node_count = ready_node_count
         if reconciling is not None:
             self.reconciling = reconciling
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "version",
+            "target_node_count",
+            "node_count",
+            "outdated_node_count",
+            "ready_node_count",
+            "reconciling",
+            "State",
+        ]
     
     @builtins.property
     def state(self) -> "NodeGroupStatus.State":
@@ -1808,6 +2220,17 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "version":"version",
+        "target_node_count":"target_node_count",
+        "node_count":"node_count",
+        "outdated_node_count":"outdated_node_count",
+        "ready_node_count":"ready_node_count",
+        "reconciling":"reconciling",
+        "State":"State",
+    }
+    
 # file: nebius/mk8s/v1/node_group_service.proto
 class CreateNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.CreateNodeGroupRequest
@@ -1825,6 +2248,12 @@ class CreateNodeGroupRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -1846,6 +2275,11 @@ class CreateNodeGroupRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.GetNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.GetNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1862,6 +2296,12 @@ class GetNodeGroupRequest(pb_classes.Message):
             self.id = id
         if resource_version is not None:
             self.resource_version = resource_version
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "resource_version",
+        ]
     
     @builtins.property
     def id(self) -> "builtins.str":
@@ -1880,6 +2320,11 @@ class GetNodeGroupRequest(pb_classes.Message):
     def resource_version(self, value: "builtins.str") -> None:
         return super()._set_field("resource_version",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "resource_version":"resource_version",
+    }
     
 class ListNodeGroupsRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.ListNodeGroupsRequest
@@ -1900,6 +2345,13 @@ class ListNodeGroupsRequest(pb_classes.Message):
             self.page_size = page_size
         if page_token is not None:
             self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
@@ -1928,6 +2380,12 @@ class ListNodeGroupsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class ListNodeGroupsResponse(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.ListNodeGroupsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ListNodeGroupsResponse",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1944,6 +2402,12 @@ class ListNodeGroupsResponse(pb_classes.Message):
             self.items = items
         if next_page_token is not None:
             self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[NodeGroup]":
@@ -1964,6 +2428,11 @@ class ListNodeGroupsResponse(pb_classes.Message):
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
 class UpdateNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.UpdateNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.UpdateNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1980,6 +2449,12 @@ class UpdateNodeGroupRequest(pb_classes.Message):
             self.metadata = metadata
         if spec is not None:
             self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
@@ -2001,6 +2476,11 @@ class UpdateNodeGroupRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.DeleteNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.DeleteNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -2015,6 +2495,11 @@ class DeleteNodeGroupRequest(pb_classes.Message):
         if id is not None:
             self.id = id
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2023,6 +2508,10 @@ class DeleteNodeGroupRequest(pb_classes.Message):
     def id(self, value: "builtins.str") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
     
 class UpgradeNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.UpgradeNodeGroupRequest
@@ -2068,6 +2557,13 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
         if latest_infra_version is not None:
             self.latest_infra_version = latest_infra_version
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "latest_infra_version",
+            "upgrade_type",
+        ]
+    
     @builtins.property
     def id(self) -> "builtins.str":
         return super()._get_field("id", explicit_presence=False,
@@ -2085,6 +2581,12 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
     def latest_infra_version(self, value: "empty_pb2.Empty|None") -> None:
         return super()._set_field("latest_infra_version",value,explicit_presence=True,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "latest_infra_version":"latest_infra_version",
+        "upgrade_type":"upgrade_type",
+    }
     
 
 class NodeGroupServiceClient(client.Client):
@@ -2248,6 +2750,11 @@ class ProgressData(pb_classes.Message):
         if problems is not None:
             self.problems = problems
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "problems",
+        ]
+    
     @builtins.property
     def problems(self) -> "abc.MutableSequence[Problem]":
         return super()._get_field("problems", explicit_presence=False,
@@ -2257,6 +2764,10 @@ class ProgressData(pb_classes.Message):
     def problems(self, value: "abc.Iterable[Problem]") -> None:
         return super()._set_field("problems",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "problems":"problems",
+    }
     
 class Problem(pb_classes.Message):
     __PB2_CLASS__ = progress_data_pb2.Problem
@@ -2275,6 +2786,12 @@ class Problem(pb_classes.Message):
         if message is not None:
             self.message = message
     
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "stage",
+            "message",
+        ]
+    
     @builtins.property
     def stage(self) -> "builtins.str":
         return super()._get_field("stage", explicit_presence=False,
@@ -2292,6 +2809,11 @@ class Problem(pb_classes.Message):
     def message(self, value: "builtins.str") -> None:
         return super()._set_field("message",value,explicit_presence=False,
         )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "stage":"stage",
+        "message":"message",
+    }
     
 __all__ = [
     #@ local import names here @#

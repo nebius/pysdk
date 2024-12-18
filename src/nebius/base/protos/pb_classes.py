@@ -18,6 +18,7 @@ from grpc.aio import Channel as GRPCChannel
 
 from nebius.aio.abc import SyncronizerInterface
 from nebius.base.error import SDKError
+from nebius.base.token_sanitizer import TokenSanitizer
 
 from .descriptor import DescriptorWrap
 from .pb_enum import Enum
@@ -68,9 +69,33 @@ class OneOfMatchError(SDKError):
         super().__init__(f"Unexpected oneof field name {name} returned.")
 
 
+def repr_field(key: str, attr: Any, indent: str = "") -> str:
+    ret = ""
+    el_repr = repr(attr).split("\n")
+    if isinstance(attr, Message):
+        ret += indent + key + " " + el_repr[0] + "\n"
+        for line in el_repr[1:]:
+            ret += indent + line + "\n"
+    else:
+        if len(el_repr) == 1:
+            ret += indent + key + ": " + el_repr[0] + "\n"
+        else:
+            ret += indent + key + ": |\n"
+            for line in el_repr:
+                ret += indent + "  " + line + "\n"
+    return ret
+
+
+credentials_sanitizer = TokenSanitizer.credentials_sanitizer()
+
+
 class Message:
     __PB2_CLASS__: type[PMessage]
     __PB2_DESCRIPTOR__: DescriptorWrap[Descriptor] | Descriptor
+    __PY_TO_PB2__: dict[str, str]
+    __default: "Message|None" = None
+    __sensitive_fields = dict[str, bool]()
+    __credentials_fields = dict[str, bool]()
 
     def __init__(self, initial_message: PMessage | None):
         if not hasattr(self, "__PB2_CLASS__"):
@@ -86,6 +111,73 @@ class Message:
             )
         else:
             self.__pb2_message__ = self.__PB2_CLASS__()  # type: ignore[unused-ignore]
+
+    @classmethod
+    def is_sensitive(cls, field_name: str) -> bool:
+        # if field_name in cls.__sensitive_fields:
+        # return cls.__sensitive_fields[field_name]
+        from google.protobuf.descriptor import FieldDescriptor
+
+        from nebius.api.nebius import sensitive
+
+        fn_pb2 = cls.__PY_TO_PB2__[field_name]
+        desc = cls.get_descriptor()
+        field_desc: FieldDescriptor = desc.fields_by_name[fn_pb2]
+        try:
+            is_sensitive = bool(field_desc.GetOptions().Extensions[sensitive])  # type: ignore
+        except AttributeError:
+            is_sensitive = False
+        cls.__sensitive_fields[field_name] = is_sensitive
+        return is_sensitive
+
+    @classmethod
+    def is_credentials(cls, field_name: str) -> bool:
+        # if field_name in cls.__credentials_fields:
+        # return cls.__credentials_fields[field_name]
+        from google.protobuf.descriptor import FieldDescriptor
+
+        from nebius.api.nebius import credentials
+
+        fn_pb2 = cls.__PY_TO_PB2__[field_name]
+        desc = cls.get_descriptor()
+        field_desc: FieldDescriptor = desc.fields_by_name[fn_pb2]
+        try:
+            is_creds = bool(field_desc.GetOptions().Extensions[credentials])  # type: ignore
+        except AttributeError:
+            is_creds = False
+        cls.__credentials_fields[field_name] = is_creds
+        return is_creds
+
+    def __repr__(self) -> str:
+        ret = self.__class__.__name__ + ":\n"
+        desc = self.__class__.get_descriptor()
+        for el in dir(self):
+            el_pb2 = self.__class__.__PY_TO_PB2__[el]
+            try:
+                _ = desc.fields_by_name[el_pb2]
+            except KeyError:
+                continue
+            if not Message.is_default(self, el):
+                if self.__class__.is_sensitive(el):
+                    ret += "  " + el + ": **HIDDEN**\n"
+                    continue
+                el_attr = getattr(self, el)
+                if self.__class__.is_credentials(el):
+                    if not isinstance(el_attr, str):
+                        el_attr = repr(el_attr)
+                    if credentials_sanitizer.is_supported(el_attr):
+                        el_attr = credentials_sanitizer.sanitize(el_attr)
+                    else:
+                        el_attr = "**HIDDEN**"
+                ret += repr_field(el, el_attr, "  ")
+        return ret[:-1]
+
+    def is_default(self, pythonic_name: str) -> bool:
+        if self.__class__.__default is None:
+            self.__class__.__default = self.__class__(None)
+        return getattr(self, pythonic_name) == getattr(  # type: ignore[no-any-return]
+            self.__class__.__default, pythonic_name
+        )
 
     @classmethod
     def get_descriptor(cls) -> Descriptor:
@@ -199,6 +291,14 @@ class Repeated(MutableSequence[CollectibleOuter]):
             value = value.__pb2_message__  # type: ignore
         self._source.insert(index, value)  # type: ignore[unused-ignore]
 
+    def __repr__(self) -> str:
+        if len(self) == 0:
+            return " []"
+        ret = ""
+        for i in self:
+            ret += repr_field("-", i)
+        return ret
+
     @overload
     def __getitem__(self, index: int) -> CollectibleOuter: ...
     @overload
@@ -266,6 +366,14 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
         self._source: MutableMapping[MapKey, CollectibleInner] = source  # type: ignore[assignment]
         self._wrap: Callable[[CollectibleInner], CollectibleOuter] = wrap  # type: ignore[assignment]
         self._unwrap: Callable[[CollectibleOuter], CollectibleInner] = unwrap  # type: ignore[assignment]
+
+    def __repr__(self) -> str:
+        if len(self) == 0:
+            return " {}"
+        ret = ""
+        for k, v in self.items():
+            ret += repr_field(repr(k), v)
+        return ret
 
     def __getitem__(self, key: MapKey) -> CollectibleOuter:
         ret = self._source[key]  # type: ignore[assignment,unused-ignore]
