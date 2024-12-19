@@ -1,9 +1,8 @@
-Nebius Python SDK
-=================
+# Nebius Python SDK
 
-Issues and TODOs:
-
- * Fieldmasks not implemented (Update requests have to be manually filled)
+The Nebius Python SDK is a comprehensive client library for interacting with [nebius.com](https://nebius.com) services.
+Built on gRPC, it supports all APIs defined in the [Nebius API repository](https://github.com/nebius/api).
+This SDK simplifies resource management, authentication, and communication with Nebius services, making it a valuable tool for developers.
 
 ### Installation
 
@@ -20,6 +19,10 @@ Try it out as follows:
 ```bash
 NEBIUS_IAM_TOKEN=$(nebius iam get-access-token) python -m ./path/to/your/pysdk/src/examples/basic.py your-project-id
 ```
+
+### TODOs
+
+ * Fieldmasks not implemented (Update requests have to be manually filled)
 
 ### How-to
 
@@ -251,3 +254,13 @@ operation = await service.update(
 You can use `nebius.base.metadata.Metadata` container to work with metadata, it gives some helper functions and conveniences, as well as automatically converts all the headers from http-like to grpc-compliant lowercase.
 
 **Note**: Our internal field masks have more granularity than google ones, so they are incompatible.
+
+### Contributing
+
+Contributions are welcome! Please refer to the [contributing guidelines](CONTRIBUTING.md) for more information.
+
+### License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2024 Nebius B.V.
