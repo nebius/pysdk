@@ -2,11 +2,13 @@ from asyncio import (
     AbstractEventLoop,
     gather,
     get_event_loop,
+    iscoroutine,
     new_event_loop,
     run_coroutine_threadsafe,
     wait_for,
 )
 from collections.abc import Awaitable, Coroutine, Sequence
+from inspect import isawaitable
 from logging import getLogger
 from typing import Any, TypeVar
 
@@ -138,6 +140,21 @@ Credentials = (
 )
 
 
+def _wrap_awaitable(awaitable: Awaitable[T]) -> Coroutine[Any, Any, T]:
+    if iscoroutine(awaitable):
+        return awaitable
+    if not isawaitable(awaitable):
+        raise TypeError(
+            "An asyncio.Future, a coroutine or an awaitable is "
+            + f"required, {type(awaitable)} given"
+        )
+
+    async def wrap() -> T:
+        return await awaitable
+
+    return wrap()
+
+
 class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def __init__(
         self,
@@ -253,6 +270,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                         )
                 except RuntimeError:
                     pass
+                awaitable = _wrap_awaitable(awaitable)
                 return run_coroutine_threadsafe(awaitable, self._event_loop).result(
                     timeout
                 )
