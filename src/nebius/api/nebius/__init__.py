@@ -10,6 +10,7 @@ import nebius.base.protos.pb_classes as pb_classes
 import google.protobuf.message as message
 import collections.abc as abc
 import builtins as builtins
+import nebius.base.protos.unset as unset
 #@ local imports here @#
 
 # file: nebius/annotations.proto
@@ -38,16 +39,16 @@ class RegionRouting(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        nid: "abc.Iterable[builtins.str]|None" = None,
-        disabled: "builtins.bool|None" = None,
-        strict: "builtins.bool|None" = None,
+        nid: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        disabled: "builtins.bool|unset.UnsetType" = unset.Unset,
+        strict: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if nid is not None:
+        if not isinstance(nid, unset.UnsetType):
             self.nid = nid
-        if disabled is not None:
+        if not isinstance(disabled, unset.UnsetType):
             self.disabled = disabled
-        if strict is not None:
+        if not isinstance(strict, unset.UnsetType):
             self.strict = strict
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
 import typing as typing
@@ -40,16 +41,16 @@ class Cluster(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
-        status: "ClusterStatus|cluster_pb2.ClusterStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
+        status: "ClusterStatus|cluster_pb2.ClusterStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -130,22 +131,22 @@ class ClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        limits: "Limits|cluster_pb2.Limits|None" = None,
-        authorization: "Password|cluster_pb2.Password|None" = None,
-        service_account_id: "builtins.str|None" = None,
-        network_id: "builtins.str|None" = None,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        limits: "Limits|cluster_pb2.Limits|unset.UnsetType" = unset.Unset,
+        authorization: "Password|cluster_pb2.Password|unset.UnsetType" = unset.Unset,
+        service_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        network_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if limits is not None:
+        if not isinstance(limits, unset.UnsetType):
             self.limits = limits
-        if authorization is not None:
+        if not isinstance(authorization, unset.UnsetType):
             self.authorization = authorization
-        if service_account_id is not None:
+        if not isinstance(service_account_id, unset.UnsetType):
             self.service_account_id = service_account_id
-        if network_id is not None:
+        if not isinstance(network_id, unset.UnsetType):
             self.network_id = network_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -249,16 +250,16 @@ class ClusterStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
-        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
-        history_server_endpoint: "builtins.str|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|unset.UnsetType" = unset.Unset,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|unset.UnsetType" = unset.Unset,
+        history_server_endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if phase is not None:
+        if not isinstance(phase, unset.UnsetType):
             self.phase = phase
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if history_server_endpoint is not None:
+        if not isinstance(history_server_endpoint, unset.UnsetType):
             self.history_server_endpoint = history_server_endpoint
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -313,13 +314,13 @@ class Limits(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cpu: "builtins.int|None" = None,
-        memory_gibibytes: "builtins.int|None" = None,
+        cpu: "builtins.int|unset.UnsetType" = unset.Unset,
+        memory_gibibytes: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cpu is not None:
+        if not isinstance(cpu, unset.UnsetType):
             self.cpu = cpu
-        if memory_gibibytes is not None:
+        if not isinstance(memory_gibibytes, unset.UnsetType):
             self.memory_gibibytes = memory_gibibytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -359,10 +360,10 @@ class Password(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        password: "builtins.str|None" = None,
+        password: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if password is not None:
+        if not isinstance(password, unset.UnsetType):
             self.password = password
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -392,10 +393,10 @@ class GetClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -424,13 +425,13 @@ class GetClusterByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -470,16 +471,16 @@ class ListClustersRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -557,13 +558,13 @@ class ListClustersResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Cluster]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Cluster]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -606,13 +607,13 @@ class CreateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -654,13 +655,13 @@ class UpdateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -702,10 +703,10 @@ class DeleteClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -862,13 +863,13 @@ class PythonConfig(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        requirements: "abc.Iterable[builtins.str]|None" = None,
-        file_uris: "abc.Iterable[builtins.str]|None" = None,
+        requirements: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        file_uris: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if requirements is not None:
+        if not isinstance(requirements, unset.UnsetType):
             self.requirements = requirements
-        if file_uris is not None:
+        if not isinstance(file_uris, unset.UnsetType):
             self.file_uris = file_uris
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -910,10 +911,10 @@ class JavaConfig(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        entrypoint_class: "builtins.str|None" = None,
+        entrypoint_class: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if entrypoint_class is not None:
+        if not isinstance(entrypoint_class, unset.UnsetType):
             self.entrypoint_class = entrypoint_class
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -943,13 +944,13 @@ class DriverTemplateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None" = None,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None" = None,
+        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
+        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if disk is not None:
+        if not isinstance(disk, unset.UnsetType):
             self.disk = disk
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -991,13 +992,13 @@ class DynamicAllocationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        min: "builtins.int|None" = None,
-        max: "builtins.int|None" = None,
+        min: "builtins.int|unset.UnsetType" = unset.Unset,
+        max: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if min is not None:
+        if not isinstance(min, unset.UnsetType):
             self.min = min
-        if max is not None:
+        if not isinstance(max, unset.UnsetType):
             self.max = max
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1075,19 +1076,19 @@ class ExecutorTemplateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None" = None,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None" = None,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None" = None,
-        hosts_dynamic_allocation: "DynamicAllocationSpec|preset_pb2.DynamicAllocationSpec|None" = None,
+        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
+        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
+        hosts: "resource_1.HostSpec|template_pb2.HostSpec|unset.UnsetType" = unset.Unset,
+        hosts_dynamic_allocation: "DynamicAllocationSpec|preset_pb2.DynamicAllocationSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if disk is not None:
+        if not isinstance(disk, unset.UnsetType):
             self.disk = disk
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
-        if hosts is not None:
+        if not isinstance(hosts, unset.UnsetType):
             self.hosts = hosts
-        if hosts_dynamic_allocation is not None:
+        if not isinstance(hosts_dynamic_allocation, unset.UnsetType):
             self.hosts_dynamic_allocation = hosts_dynamic_allocation
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1162,16 +1163,16 @@ class Job(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "JobSpec|job_pb2.JobSpec|None" = None,
-        status: "JobStatus|job_pb2.JobStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "JobSpec|job_pb2.JobSpec|unset.UnsetType" = unset.Unset,
+        status: "JobStatus|job_pb2.JobStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1229,13 +1230,13 @@ class JobSpec(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|None" = None,
-            value: "builtins.str|None" = None,
+            key: "builtins.str|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if key is not None:
+            if not isinstance(key, unset.UnsetType):
                 self.key = key
-            if value is not None:
+            if not isinstance(value, unset.UnsetType):
                 self.value = value
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1337,43 +1338,43 @@ class JobSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        application_file_uri: "builtins.str|None" = None,
-        driver: "DriverTemplateSpec|preset_pb2.DriverTemplateSpec|None" = None,
-        executor: "ExecutorTemplateSpec|preset_pb2.ExecutorTemplateSpec|None" = None,
-        spark_version: "builtins.str|None" = None,
-        application_args: "abc.Iterable[builtins.str]|None" = None,
-        file_uris: "abc.Iterable[builtins.str]|None" = None,
-        jar_uris: "abc.Iterable[builtins.str]|None" = None,
-        packages: "abc.Iterable[builtins.str]|None" = None,
-        spark_conf: "abc.Mapping[builtins.str,builtins.str]|None" = None,
-        python: "PythonConfig|common_pb2.PythonConfig|None" = None,
-        java: "JavaConfig|common_pb2.JavaConfig|None" = None,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        application_file_uri: "builtins.str|unset.UnsetType" = unset.Unset,
+        driver: "DriverTemplateSpec|preset_pb2.DriverTemplateSpec|unset.UnsetType" = unset.Unset,
+        executor: "ExecutorTemplateSpec|preset_pb2.ExecutorTemplateSpec|unset.UnsetType" = unset.Unset,
+        spark_version: "builtins.str|unset.UnsetType" = unset.Unset,
+        application_args: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        file_uris: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        jar_uris: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        packages: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        spark_conf: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
+        python: "PythonConfig|common_pb2.PythonConfig|unset.UnsetType" = unset.Unset,
+        java: "JavaConfig|common_pb2.JavaConfig|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if application_file_uri is not None:
+        if not isinstance(application_file_uri, unset.UnsetType):
             self.application_file_uri = application_file_uri
-        if driver is not None:
+        if not isinstance(driver, unset.UnsetType):
             self.driver = driver
-        if executor is not None:
+        if not isinstance(executor, unset.UnsetType):
             self.executor = executor
-        if spark_version is not None:
+        if not isinstance(spark_version, unset.UnsetType):
             self.spark_version = spark_version
-        if application_args is not None:
+        if not isinstance(application_args, unset.UnsetType):
             self.application_args = application_args
-        if file_uris is not None:
+        if not isinstance(file_uris, unset.UnsetType):
             self.file_uris = file_uris
-        if jar_uris is not None:
+        if not isinstance(jar_uris, unset.UnsetType):
             self.jar_uris = jar_uris
-        if packages is not None:
+        if not isinstance(packages, unset.UnsetType):
             self.packages = packages
-        if spark_conf is not None:
+        if not isinstance(spark_conf, unset.UnsetType):
             self.spark_conf = spark_conf
-        if python is not None:
+        if not isinstance(python, unset.UnsetType):
             self.python = python
-        if java is not None:
+        if not isinstance(java, unset.UnsetType):
             self.java = java
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1538,10 +1539,10 @@ class JobResultDetails(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        code: "JobResultCode|job_pb2.JobResultCode|None" = None,
+        code: "JobResultCode|job_pb2.JobResultCode|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if code is not None:
+        if not isinstance(code, unset.UnsetType):
             self.code = code
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1598,25 +1599,25 @@ class JobStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
-        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
-        driver_endpoint: "builtins.str|None" = None,
-        driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
-        executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
-        result_details: "JobResultDetails|job_pb2.JobResultDetails|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|unset.UnsetType" = unset.Unset,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|unset.UnsetType" = unset.Unset,
+        driver_endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|unset.UnsetType" = unset.Unset,
+        executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|unset.UnsetType" = unset.Unset,
+        result_details: "JobResultDetails|job_pb2.JobResultDetails|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if phase is not None:
+        if not isinstance(phase, unset.UnsetType):
             self.phase = phase
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if driver_endpoint is not None:
+        if not isinstance(driver_endpoint, unset.UnsetType):
             self.driver_endpoint = driver_endpoint
-        if driver_preset_details is not None:
+        if not isinstance(driver_preset_details, unset.UnsetType):
             self.driver_preset_details = driver_preset_details
-        if executor_preset_details is not None:
+        if not isinstance(executor_preset_details, unset.UnsetType):
             self.executor_preset_details = executor_preset_details
-        if result_details is not None:
+        if not isinstance(result_details, unset.UnsetType):
             self.result_details = result_details
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1708,10 +1709,10 @@ class GetJobRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1740,16 +1741,16 @@ class ListJobsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1827,13 +1828,13 @@ class ListJobsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Job]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Job]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1876,13 +1877,13 @@ class CreateJobRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "JobSpec|job_pb2.JobSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "JobSpec|job_pb2.JobSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1924,10 +1925,10 @@ class CancelJobRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2044,16 +2045,16 @@ class Session(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "SessionSpec|session_pb2.SessionSpec|None" = None,
-        status: "SessionStatus|session_pb2.SessionStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "SessionSpec|session_pb2.SessionSpec|unset.UnsetType" = unset.Unset,
+        status: "SessionStatus|session_pb2.SessionStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2111,13 +2112,13 @@ class SessionSpec(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|None" = None,
-            value: "builtins.str|None" = None,
+            key: "builtins.str|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if key is not None:
+            if not isinstance(key, unset.UnsetType):
                 self.key = key
-            if value is not None:
+            if not isinstance(value, unset.UnsetType):
                 self.value = value
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2181,34 +2182,34 @@ class SessionSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        driver: "DriverTemplateSpec|preset_pb2.DriverTemplateSpec|None" = None,
-        executor: "ExecutorTemplateSpec|preset_pb2.ExecutorTemplateSpec|None" = None,
-        spark_version: "builtins.str|None" = None,
-        file_uris: "abc.Iterable[builtins.str]|None" = None,
-        jar_uris: "abc.Iterable[builtins.str]|None" = None,
-        packages: "abc.Iterable[builtins.str]|None" = None,
-        spark_conf: "abc.Mapping[builtins.str,builtins.str]|None" = None,
-        python: "PythonConfig|common_pb2.PythonConfig|None" = None,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        driver: "DriverTemplateSpec|preset_pb2.DriverTemplateSpec|unset.UnsetType" = unset.Unset,
+        executor: "ExecutorTemplateSpec|preset_pb2.ExecutorTemplateSpec|unset.UnsetType" = unset.Unset,
+        spark_version: "builtins.str|unset.UnsetType" = unset.Unset,
+        file_uris: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        jar_uris: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        packages: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        spark_conf: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
+        python: "PythonConfig|common_pb2.PythonConfig|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if driver is not None:
+        if not isinstance(driver, unset.UnsetType):
             self.driver = driver
-        if executor is not None:
+        if not isinstance(executor, unset.UnsetType):
             self.executor = executor
-        if spark_version is not None:
+        if not isinstance(spark_version, unset.UnsetType):
             self.spark_version = spark_version
-        if file_uris is not None:
+        if not isinstance(file_uris, unset.UnsetType):
             self.file_uris = file_uris
-        if jar_uris is not None:
+        if not isinstance(jar_uris, unset.UnsetType):
             self.jar_uris = jar_uris
-        if packages is not None:
+        if not isinstance(packages, unset.UnsetType):
             self.packages = packages
-        if spark_conf is not None:
+        if not isinstance(spark_conf, unset.UnsetType):
             self.spark_conf = spark_conf
-        if python is not None:
+        if not isinstance(python, unset.UnsetType):
             self.python = python
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2363,22 +2364,22 @@ class SessionStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
-        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
-        spark_connect_endpoint: "builtins.str|None" = None,
-        driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
-        executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|unset.UnsetType" = unset.Unset,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|unset.UnsetType" = unset.Unset,
+        spark_connect_endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        driver_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|unset.UnsetType" = unset.Unset,
+        executor_preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if phase is not None:
+        if not isinstance(phase, unset.UnsetType):
             self.phase = phase
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if spark_connect_endpoint is not None:
+        if not isinstance(spark_connect_endpoint, unset.UnsetType):
             self.spark_connect_endpoint = spark_connect_endpoint
-        if driver_preset_details is not None:
+        if not isinstance(driver_preset_details, unset.UnsetType):
             self.driver_preset_details = driver_preset_details
-        if executor_preset_details is not None:
+        if not isinstance(executor_preset_details, unset.UnsetType):
             self.executor_preset_details = executor_preset_details
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2458,10 +2459,10 @@ class GetSessionRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2490,13 +2491,13 @@ class GetSessionByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2536,16 +2537,16 @@ class ListSessionsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2623,13 +2624,13 @@ class ListSessionsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Session]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Session]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2672,13 +2673,13 @@ class CreateSessionRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "SessionSpec|session_pb2.SessionSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "SessionSpec|session_pb2.SessionSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2720,10 +2721,10 @@ class DeleteSessionRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
 import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
@@ -31,16 +32,16 @@ class Cluster(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
-        status: "MlflowClusterStatus|cluster_pb2.MlflowClusterStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
+        status: "MlflowClusterStatus|cluster_pb2.MlflowClusterStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -94,28 +95,28 @@ class ClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        public_access: "builtins.bool|None" = None,
-        admin_username: "builtins.str|None" = None,
-        admin_password: "builtins.str|None" = None,
-        service_account_id: "builtins.str|None" = None,
-        storage_bucket_name: "builtins.str|None" = None,
-        network_id: "builtins.str|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        public_access: "builtins.bool|unset.UnsetType" = unset.Unset,
+        admin_username: "builtins.str|unset.UnsetType" = unset.Unset,
+        admin_password: "builtins.str|unset.UnsetType" = unset.Unset,
+        service_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        storage_bucket_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        network_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if public_access is not None:
+        if not isinstance(public_access, unset.UnsetType):
             self.public_access = public_access
-        if admin_username is not None:
+        if not isinstance(admin_username, unset.UnsetType):
             self.admin_username = admin_username
-        if admin_password is not None:
+        if not isinstance(admin_password, unset.UnsetType):
             self.admin_password = admin_password
-        if service_account_id is not None:
+        if not isinstance(service_account_id, unset.UnsetType):
             self.service_account_id = service_account_id
-        if storage_bucket_name is not None:
+        if not isinstance(storage_bucket_name, unset.UnsetType):
             self.storage_bucket_name = storage_bucket_name
-        if network_id is not None:
+        if not isinstance(network_id, unset.UnsetType):
             self.network_id = network_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -210,28 +211,28 @@ class MlflowClusterStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
-        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
-        tracking_endpoint: "builtins.str|None" = None,
-        effective_storage_bucket_name: "builtins.str|None" = None,
-        experiments_count: "builtins.int|None" = None,
-        mlflow_version: "builtins.str|None" = None,
-        tracking_endpoints: "Endpoints|cluster_pb2.Endpoints|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|unset.UnsetType" = unset.Unset,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|unset.UnsetType" = unset.Unset,
+        tracking_endpoint: "builtins.str|unset.UnsetType" = unset.Unset,
+        effective_storage_bucket_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        experiments_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        mlflow_version: "builtins.str|unset.UnsetType" = unset.Unset,
+        tracking_endpoints: "Endpoints|cluster_pb2.Endpoints|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if phase is not None:
+        if not isinstance(phase, unset.UnsetType):
             self.phase = phase
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if tracking_endpoint is not None:
+        if not isinstance(tracking_endpoint, unset.UnsetType):
             self.tracking_endpoint = tracking_endpoint
-        if effective_storage_bucket_name is not None:
+        if not isinstance(effective_storage_bucket_name, unset.UnsetType):
             self.effective_storage_bucket_name = effective_storage_bucket_name
-        if experiments_count is not None:
+        if not isinstance(experiments_count, unset.UnsetType):
             self.experiments_count = experiments_count
-        if mlflow_version is not None:
+        if not isinstance(mlflow_version, unset.UnsetType):
             self.mlflow_version = mlflow_version
-        if tracking_endpoints is not None:
+        if not isinstance(tracking_endpoints, unset.UnsetType):
             self.tracking_endpoints = tracking_endpoints
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -329,13 +330,13 @@ class Endpoints(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        private: "builtins.str|None" = None,
-        public: "builtins.str|None" = None,
+        private: "builtins.str|unset.UnsetType" = unset.Unset,
+        public: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if private is not None:
+        if not isinstance(private, unset.UnsetType):
             self.private = private
-        if public is not None:
+        if not isinstance(public, unset.UnsetType):
             self.public = public
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -376,10 +377,10 @@ class GetClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -408,13 +409,13 @@ class GetClusterByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -454,16 +455,16 @@ class ListClustersRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -514,13 +515,13 @@ class ListClustersResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Cluster]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Cluster]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -561,13 +562,13 @@ class CreateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -609,10 +610,10 @@ class DeleteClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

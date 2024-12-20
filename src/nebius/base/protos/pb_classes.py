@@ -18,6 +18,7 @@ from grpc.aio import Channel as GRPCChannel
 
 from nebius.aio.abc import SyncronizerInterface
 from nebius.base.error import SDKError
+from nebius.base.fieldmask import FieldKey, Mask
 from nebius.base.token_sanitizer import TokenSanitizer
 
 from .descriptor import DescriptorWrap
@@ -89,6 +90,10 @@ def repr_field(key: str, attr: Any, indent: str = "") -> str:
 credentials_sanitizer = TokenSanitizer.credentials_sanitizer()
 
 
+def has_method(obj: Any, method: str) -> bool:
+    return hasattr(obj, method) and callable(getattr(obj, method))
+
+
 class Message:
     __PB2_CLASS__: type[PMessage]
     __PB2_DESCRIPTOR__: DescriptorWrap[Descriptor] | Descriptor
@@ -98,6 +103,7 @@ class Message:
     __credentials_fields = dict[str, bool]()
 
     def __init__(self, initial_message: PMessage | None):
+        self.__recorded_reset_mask = Mask()
         if not hasattr(self, "__PB2_CLASS__"):
             raise AttributeError(
                 f"Proto Class not set for message {self.__class__.__name__}"
@@ -112,10 +118,16 @@ class Message:
         else:
             self.__pb2_message__ = self.__PB2_CLASS__()  # type: ignore[unused-ignore]
 
+    def set_mask(self, new_mask: Mask) -> None:
+        self.__recorded_reset_mask = new_mask
+
+    def get_mask(self) -> Mask:
+        return self.__recorded_reset_mask
+
     @classmethod
     def is_sensitive(cls, field_name: str) -> bool:
-        # if field_name in cls.__sensitive_fields:
-        # return cls.__sensitive_fields[field_name]
+        if field_name in cls.__sensitive_fields:
+            return cls.__sensitive_fields[field_name]
         from google.protobuf.descriptor import FieldDescriptor
 
         from nebius.api.nebius import sensitive
@@ -132,8 +144,8 @@ class Message:
 
     @classmethod
     def is_credentials(cls, field_name: str) -> bool:
-        # if field_name in cls.__credentials_fields:
-        # return cls.__credentials_fields[field_name]
+        if field_name in cls.__credentials_fields:
+            return cls.__credentials_fields[field_name]
         from google.protobuf.descriptor import FieldDescriptor
 
         from nebius.api.nebius import credentials
@@ -190,16 +202,21 @@ class Message:
         raise ValueError(f"Descriptor not found for message {cls.__name__}.")
 
     def check_presence(self, name: str) -> bool:
-        return self.__pb2_message__.HasField(name)  # type: ignore[unused-ignore,no-any-return]
+        el_pb2 = self.__class__.__PY_TO_PB2__[name]
+        return self.__pb2_message__.HasField(el_pb2)  # type: ignore[unused-ignore,no-any-return]
 
-    def which_field_in_oneof(self, name: str) -> str | None:
-        return self.__pb2_message__.WhichOneof(name)  # type: ignore[no-any-return]
+    def which_field_in_oneof(self, pb2_name: str) -> str | None:
+        return self.__pb2_message__.WhichOneof(pb2_name)  # type: ignore[no-any-return]
 
     def _clear_field(
         self,
         name: str,
     ) -> None:
-        return self.__pb2_message__.ClearField(name)  # type: ignore[unused-ignore]
+        el_pb2 = self.__class__.__PY_TO_PB2__[name]
+        fk = FieldKey(el_pb2)
+        if fk not in self.__recorded_reset_mask.field_parts:
+            self.__recorded_reset_mask.field_parts[fk] = Mask()
+        return self.__pb2_message__.ClearField(el_pb2)  # type: ignore[unused-ignore]
 
     def _get_field(
         self,
@@ -207,10 +224,20 @@ class Message:
         explicit_presence: bool = False,
         wrap: Callable[[Any], Any] | None = None,
     ) -> Any:
-        if explicit_presence and not self.__pb2_message__.HasField(name):  # type: ignore[unused-ignore]
+        el_pb2 = self.__class__.__PY_TO_PB2__[name]
+        if explicit_presence and not self.__pb2_message__.HasField(el_pb2):  # type: ignore[unused-ignore]
             return None
-        ret = getattr(self.__pb2_message__, name)  # type: ignore[unused-ignore]
-        return wrap_type(ret, wrap)
+        ret = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
+        ret = wrap_type(ret, wrap)
+        if has_method(ret, "set_mask"):
+            el_key = FieldKey(el_pb2)
+            if el_key not in self.__recorded_reset_mask.field_parts:
+                self.__recorded_reset_mask.field_parts[el_key] = Mask()
+            if isinstance(ret, Message):  # may be overwritten
+                Message.set_mask(ret, self.__recorded_reset_mask.field_parts[el_key])
+            else:
+                ret.set_mask(self.__recorded_reset_mask.field_parts[el_key])
+        return ret
 
     def _set_field(
         self,
@@ -219,13 +246,27 @@ class Message:
         unwrap: Callable[[Any], Any] | None = None,
         explicit_presence: bool = False,
     ) -> None:
-        self.__pb2_message__.ClearField(name)  # type: ignore[unused-ignore]
+        el_pb2 = self.__class__.__PY_TO_PB2__[name]
+        self.__pb2_message__.ClearField(el_pb2)  # type: ignore[unused-ignore]
+        fk = FieldKey(el_pb2)
         if explicit_presence and value is None:
+            if fk not in self.__recorded_reset_mask.field_parts:
+                self.__recorded_reset_mask.field_parts[fk] = Mask()
             return
 
         value = unwrap_type(value, unwrap)
+
+        if self.__class__.__default is None:
+            self.__class__.__default = self.__class__(None)
+        if (
+            not explicit_presence
+            and getattr(self.__class__.__default.__pb2_message__, el_pb2) == value
+        ):
+            if fk not in self.__recorded_reset_mask.field_parts:
+                self.__recorded_reset_mask.field_parts[fk] = Mask()
+
         if isinstance(value, Mapping):  # type: ignore[unused-ignore]
-            pb_arr = getattr(self.__pb2_message__, name)  # type: ignore[unused-ignore]
+            pb_arr = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
             for k, v in value.items():  # type: ignore[unused-ignore]
                 if isinstance(v, PMessage):  # type: ignore[unused-ignore]
                     pb_arr[k].MergeFrom(v)
@@ -237,11 +278,11 @@ class Message:
             and not isinstance(value, str)
             and not isinstance(value, bytes)
         ):
-            pb_arr = getattr(self.__pb2_message__, name)  # type: ignore[unused-ignore]
+            pb_arr = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
             pb_arr.extend(value)
             return
         elif isinstance(value, PMessage):
-            sub_msg = getattr(self.__pb2_message__, name)  # type: ignore[unused-ignore]
+            sub_msg = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
             if not isinstance(sub_msg, PMessage):
                 raise AttributeError(
                     f"Attribute {name} of message {self.__class__.__name__} is not "
@@ -249,7 +290,7 @@ class Message:
                 )
             sub_msg.MergeFrom(value)
             return
-        return setattr(self.__pb2_message__, name, value)  # type: ignore[unused-ignore]
+        return setattr(self.__pb2_message__, el_pb2, value)  # type: ignore[unused-ignore]
 
 
 MapKey = TypeVar("MapKey", int, str, bool)
@@ -298,6 +339,11 @@ class Repeated(MutableSequence[CollectibleOuter]):
         for i in self:
             ret += repr_field("-", i)
         return ret
+
+    def get_mask(self) -> Mask | None:
+        if len(self) == 0:
+            return Mask()
+        return None
 
     @overload
     def __getitem__(self, index: int) -> CollectibleOuter: ...

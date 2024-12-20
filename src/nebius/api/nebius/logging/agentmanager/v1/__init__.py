@@ -8,6 +8,7 @@ import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.logging.v1.agentmanager.version_service_pb2 as version_service_pb2
 import nebius.base.protos.pb_classes as pb_classes
 import google.protobuf.message as message
+import nebius.base.protos.unset as unset
 import builtins as builtins
 import google.protobuf.duration_pb2 as duration_pb2
 import datetime as datetime
@@ -46,46 +47,46 @@ class GetVersionRequest(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        type: "AgentType|version_service_pb2.AgentType|None" = None,
-        agent_version: "builtins.str|None" = None,
-        updater_version: "builtins.str|None" = None,
-        parent_id: "builtins.str|None" = None,
-        instance_id: "builtins.str|None" = None,
-        os_info: "OSInfo|version_service_pb2.OSInfo|None" = None,
-        agent_state: "AgentState|version_service_pb2.AgentState|None" = None,
-        agent_uptime: "duration_pb2.Duration|datetime.timedelta|None" = None,
-        system_uptime: "duration_pb2.Duration|datetime.timedelta|None" = None,
-        updater_uptime: "duration_pb2.Duration|datetime.timedelta|None" = None,
-        agent_state_messages: "abc.Iterable[builtins.str]|None" = None,
-        last_update_error: "builtins.str|None" = None,
-        mk8s_cluster_id: "builtins.str|None" = None,
+        type: "AgentType|version_service_pb2.AgentType|unset.UnsetType" = unset.Unset,
+        agent_version: "builtins.str|unset.UnsetType" = unset.Unset,
+        updater_version: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        instance_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        os_info: "OSInfo|version_service_pb2.OSInfo|unset.UnsetType" = unset.Unset,
+        agent_state: "AgentState|version_service_pb2.AgentState|unset.UnsetType" = unset.Unset,
+        agent_uptime: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
+        system_uptime: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
+        updater_uptime: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
+        agent_state_messages: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        last_update_error: "builtins.str|unset.UnsetType" = unset.Unset,
+        mk8s_cluster_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if type is not None:
+        if not isinstance(type, unset.UnsetType):
             self.type = type
-        if agent_version is not None:
+        if not isinstance(agent_version, unset.UnsetType):
             self.agent_version = agent_version
-        if updater_version is not None:
+        if not isinstance(updater_version, unset.UnsetType):
             self.updater_version = updater_version
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if instance_id is not None:
+        if not isinstance(instance_id, unset.UnsetType):
             self.instance_id = instance_id
-        if os_info is not None:
+        if not isinstance(os_info, unset.UnsetType):
             self.os_info = os_info
-        if agent_state is not None:
+        if not isinstance(agent_state, unset.UnsetType):
             self.agent_state = agent_state
-        if agent_uptime is not None:
+        if not isinstance(agent_uptime, unset.UnsetType):
             self.agent_uptime = agent_uptime
-        if system_uptime is not None:
+        if not isinstance(system_uptime, unset.UnsetType):
             self.system_uptime = system_uptime
-        if updater_uptime is not None:
+        if not isinstance(updater_uptime, unset.UnsetType):
             self.updater_uptime = updater_uptime
-        if agent_state_messages is not None:
+        if not isinstance(agent_state_messages, unset.UnsetType):
             self.agent_state_messages = agent_state_messages
-        if last_update_error is not None:
+        if not isinstance(last_update_error, unset.UnsetType):
             self.last_update_error = last_update_error
-        if mk8s_cluster_id is not None:
+        if not isinstance(mk8s_cluster_id, unset.UnsetType):
             self.mk8s_cluster_id = mk8s_cluster_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -256,16 +257,16 @@ class OSInfo(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        name: "builtins.str|None" = None,
-        uname: "builtins.str|None" = None,
-        architecture: "builtins.str|None" = None,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        uname: "builtins.str|unset.UnsetType" = unset.Unset,
+        architecture: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if uname is not None:
+        if not isinstance(uname, unset.UnsetType):
             self.uname = uname
-        if architecture is not None:
+        if not isinstance(architecture, unset.UnsetType):
             self.architecture = architecture
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -365,19 +366,19 @@ class GetVersionResponse(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        action: "Action|version_service_pb2.Action|None" = None,
-        nop: "NopActionParams|version_service_pb2.NopActionParams|None" = None,
-        update: "UpdateActionParams|version_service_pb2.UpdateActionParams|None" = None,
-        restart: "RestartActionParams|version_service_pb2.RestartActionParams|None" = None,
+        action: "Action|version_service_pb2.Action|unset.UnsetType" = unset.Unset,
+        nop: "NopActionParams|version_service_pb2.NopActionParams|unset.UnsetType" = unset.Unset,
+        update: "UpdateActionParams|version_service_pb2.UpdateActionParams|unset.UnsetType" = unset.Unset,
+        restart: "RestartActionParams|version_service_pb2.RestartActionParams|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if action is not None:
+        if not isinstance(action, unset.UnsetType):
             self.action = action
-        if nop is not None:
+        if not isinstance(nop, unset.UnsetType):
             self.nop = nop
-        if update is not None:
+        if not isinstance(update, unset.UnsetType):
             self.update = update
-        if restart is not None:
+        if not isinstance(restart, unset.UnsetType):
             self.restart = restart
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -462,13 +463,13 @@ class UpdateActionParams(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        version: "builtins.str|None" = None,
-        repo_url: "builtins.str|None" = None,
+        version: "builtins.str|unset.UnsetType" = unset.Unset,
+        repo_url: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
-        if repo_url is not None:
+        if not isinstance(repo_url, unset.UnsetType):
             self.repo_url = repo_url
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

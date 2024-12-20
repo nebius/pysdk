@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
 import nebius.base.protos.pb_enum as pb_enum
@@ -38,16 +39,16 @@ class Cluster(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
-        status: "ClusterStatus|cluster_pb2.ClusterStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
+        status: "ClusterStatus|cluster_pb2.ClusterStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -101,13 +102,13 @@ class ClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        control_plane: "ControlPlaneSpec|cluster_pb2.ControlPlaneSpec|None" = None,
-        kube_network: "KubeNetworkSpec|cluster_pb2.KubeNetworkSpec|None" = None,
+        control_plane: "ControlPlaneSpec|cluster_pb2.ControlPlaneSpec|unset.UnsetType" = unset.Unset,
+        kube_network: "KubeNetworkSpec|cluster_pb2.KubeNetworkSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if control_plane is not None:
+        if not isinstance(control_plane, unset.UnsetType):
             self.control_plane = control_plane
-        if kube_network is not None:
+        if not isinstance(kube_network, unset.UnsetType):
             self.kube_network = kube_network
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -149,19 +150,19 @@ class ControlPlaneSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        version: "builtins.str|None" = None,
-        subnet_id: "builtins.str|None" = None,
-        endpoints: "ControlPlaneEndpointsSpec|cluster_pb2.ControlPlaneEndpointsSpec|None" = None,
-        etcd_cluster_size: "builtins.int|None" = None,
+        version: "builtins.str|unset.UnsetType" = unset.Unset,
+        subnet_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        endpoints: "ControlPlaneEndpointsSpec|cluster_pb2.ControlPlaneEndpointsSpec|unset.UnsetType" = unset.Unset,
+        etcd_cluster_size: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
-        if subnet_id is not None:
+        if not isinstance(subnet_id, unset.UnsetType):
             self.subnet_id = subnet_id
-        if endpoints is not None:
+        if not isinstance(endpoints, unset.UnsetType):
             self.endpoints = endpoints
-        if etcd_cluster_size is not None:
+        if not isinstance(etcd_cluster_size, unset.UnsetType):
             self.etcd_cluster_size = etcd_cluster_size
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -224,10 +225,10 @@ class ControlPlaneEndpointsSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        public_endpoint: "PublicEndpointSpec|cluster_pb2.PublicEndpointSpec|None" = None,
+        public_endpoint: "PublicEndpointSpec|cluster_pb2.PublicEndpointSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if public_endpoint is not None:
+        if not isinstance(public_endpoint, unset.UnsetType):
             self.public_endpoint = public_endpoint
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -274,10 +275,10 @@ class KubeNetworkSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        service_cidrs: "abc.Iterable[builtins.str]|None" = None,
+        service_cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if service_cidrs is not None:
+        if not isinstance(service_cidrs, unset.UnsetType):
             self.service_cidrs = service_cidrs
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -314,16 +315,16 @@ class ClusterStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None" = None,
-        control_plane: "ControlPlaneStatus|cluster_pb2.ControlPlaneStatus|None" = None,
-        reconciling: "builtins.bool|None" = None,
+        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|unset.UnsetType" = unset.Unset,
+        control_plane: "ControlPlaneStatus|cluster_pb2.ControlPlaneStatus|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if control_plane is not None:
+        if not isinstance(control_plane, unset.UnsetType):
             self.control_plane = control_plane
-        if reconciling is not None:
+        if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -378,19 +379,19 @@ class ControlPlaneStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        version: "builtins.str|None" = None,
-        endpoints: "ControlPlaneStatusEndpoints|cluster_pb2.ControlPlaneStatusEndpoints|None" = None,
-        etcd_cluster_size: "builtins.int|None" = None,
-        auth: "ControlPlaneStatusAuth|cluster_pb2.ControlPlaneStatusAuth|None" = None,
+        version: "builtins.str|unset.UnsetType" = unset.Unset,
+        endpoints: "ControlPlaneStatusEndpoints|cluster_pb2.ControlPlaneStatusEndpoints|unset.UnsetType" = unset.Unset,
+        etcd_cluster_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        auth: "ControlPlaneStatusAuth|cluster_pb2.ControlPlaneStatusAuth|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
-        if endpoints is not None:
+        if not isinstance(endpoints, unset.UnsetType):
             self.endpoints = endpoints
-        if etcd_cluster_size is not None:
+        if not isinstance(etcd_cluster_size, unset.UnsetType):
             self.etcd_cluster_size = etcd_cluster_size
-        if auth is not None:
+        if not isinstance(auth, unset.UnsetType):
             self.auth = auth
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -454,13 +455,13 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        public_endpoint: "builtins.str|None" = None,
-        private_endpoint: "builtins.str|None" = None,
+        public_endpoint: "builtins.str|unset.UnsetType" = unset.Unset,
+        private_endpoint: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if public_endpoint is not None:
+        if not isinstance(public_endpoint, unset.UnsetType):
             self.public_endpoint = public_endpoint
-        if private_endpoint is not None:
+        if not isinstance(private_endpoint, unset.UnsetType):
             self.private_endpoint = private_endpoint
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -500,10 +501,10 @@ class ControlPlaneStatusAuth(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cluster_ca_certificate: "builtins.str|None" = None,
+        cluster_ca_certificate: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cluster_ca_certificate is not None:
+        if not isinstance(cluster_ca_certificate, unset.UnsetType):
             self.cluster_ca_certificate = cluster_ca_certificate
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -533,13 +534,13 @@ class CreateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -581,13 +582,13 @@ class GetClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        resource_version: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if resource_version is not None:
+        if not isinstance(resource_version, unset.UnsetType):
             self.resource_version = resource_version
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -627,16 +628,16 @@ class ListClustersRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -687,13 +688,13 @@ class ListClustersResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Cluster]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Cluster]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -734,13 +735,13 @@ class UpdateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -782,10 +783,10 @@ class DeleteClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1010,25 +1011,25 @@ class DiskSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        size_bytes: "builtins.int|None" = None,
-        size_kibibytes: "builtins.int|None" = None,
-        size_mebibytes: "builtins.int|None" = None,
-        size_gibibytes: "builtins.int|None" = None,
-        block_size_bytes: "builtins.int|None" = None,
-        type: "DiskSpec.DiskType|instance_template_pb2.DiskSpec.DiskType|None" = None,
+        size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_kibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_mebibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        block_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        type: "DiskSpec.DiskType|instance_template_pb2.DiskSpec.DiskType|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if size_bytes is not None:
+        if not isinstance(size_bytes, unset.UnsetType):
             self.size_bytes = size_bytes
-        if size_kibibytes is not None:
+        if not isinstance(size_kibibytes, unset.UnsetType):
             self.size_kibibytes = size_kibibytes
-        if size_mebibytes is not None:
+        if not isinstance(size_mebibytes, unset.UnsetType):
             self.size_mebibytes = size_mebibytes
-        if size_gibibytes is not None:
+        if not isinstance(size_gibibytes, unset.UnsetType):
             self.size_gibibytes = size_gibibytes
-        if block_size_bytes is not None:
+        if not isinstance(block_size_bytes, unset.UnsetType):
             self.block_size_bytes = block_size_bytes
-        if type is not None:
+        if not isinstance(type, unset.UnsetType):
             self.type = type
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1144,13 +1145,13 @@ class ResourcesSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        platform: "builtins.str|None" = None,
-        preset: "builtins.str|None" = None,
+        platform: "builtins.str|unset.UnsetType" = unset.Unset,
+        preset: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if platform is not None:
+        if not isinstance(platform, unset.UnsetType):
             self.platform = platform
-        if preset is not None:
+        if not isinstance(preset, unset.UnsetType):
             self.preset = preset
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1193,16 +1194,16 @@ class NodeGroup(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None" = None,
-        status: "NodeGroupStatus|node_group_pb2.NodeGroupStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|unset.UnsetType" = unset.Unset,
+        status: "NodeGroupStatus|node_group_pb2.NodeGroupStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1294,22 +1295,22 @@ class NodeGroupSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        version: "builtins.str|None" = None,
-        fixed_node_count: "builtins.int|None" = None,
-        autoscaling: "NodeGroupAutoscalingSpec|node_group_pb2.NodeGroupAutoscalingSpec|None" = None,
-        template: "NodeTemplate|node_group_pb2.NodeTemplate|None" = None,
-        strategy: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy|None" = None,
+        version: "builtins.str|unset.UnsetType" = unset.Unset,
+        fixed_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        autoscaling: "NodeGroupAutoscalingSpec|node_group_pb2.NodeGroupAutoscalingSpec|unset.UnsetType" = unset.Unset,
+        template: "NodeTemplate|node_group_pb2.NodeTemplate|unset.UnsetType" = unset.Unset,
+        strategy: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
-        if fixed_node_count is not None:
+        if not isinstance(fixed_node_count, unset.UnsetType):
             self.fixed_node_count = fixed_node_count
-        if autoscaling is not None:
+        if not isinstance(autoscaling, unset.UnsetType):
             self.autoscaling = autoscaling
-        if template is not None:
+        if not isinstance(template, unset.UnsetType):
             self.template = template
-        if strategy is not None:
+        if not isinstance(strategy, unset.UnsetType):
             self.strategy = strategy
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1387,34 +1388,34 @@ class NodeTemplate(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "NodeMetadataTemplate|node_group_pb2.NodeMetadataTemplate|None" = None,
-        taints: "abc.Iterable[NodeTaint]|None" = None,
-        resources: "ResourcesSpec|instance_template_pb2.ResourcesSpec|None" = None,
-        boot_disk: "DiskSpec|instance_template_pb2.DiskSpec|None" = None,
-        gpu_cluster: "GpuClusterSpec|node_group_pb2.GpuClusterSpec|None" = None,
-        network_interfaces: "abc.Iterable[NetworkInterfaceTemplate]|None" = None,
-        filesystems: "abc.Iterable[AttachedFilesystemSpec]|None" = None,
-        cloud_init_user_data: "builtins.str|None" = None,
-        service_account_id: "builtins.str|None" = None,
+        metadata: "NodeMetadataTemplate|node_group_pb2.NodeMetadataTemplate|unset.UnsetType" = unset.Unset,
+        taints: "abc.Iterable[NodeTaint]|unset.UnsetType" = unset.Unset,
+        resources: "ResourcesSpec|instance_template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
+        boot_disk: "DiskSpec|instance_template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
+        gpu_cluster: "GpuClusterSpec|node_group_pb2.GpuClusterSpec|unset.UnsetType" = unset.Unset,
+        network_interfaces: "abc.Iterable[NetworkInterfaceTemplate]|unset.UnsetType" = unset.Unset,
+        filesystems: "abc.Iterable[AttachedFilesystemSpec]|unset.UnsetType" = unset.Unset,
+        cloud_init_user_data: "builtins.str|unset.UnsetType" = unset.Unset,
+        service_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if taints is not None:
+        if not isinstance(taints, unset.UnsetType):
             self.taints = taints
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
-        if boot_disk is not None:
+        if not isinstance(boot_disk, unset.UnsetType):
             self.boot_disk = boot_disk
-        if gpu_cluster is not None:
+        if not isinstance(gpu_cluster, unset.UnsetType):
             self.gpu_cluster = gpu_cluster
-        if network_interfaces is not None:
+        if not isinstance(network_interfaces, unset.UnsetType):
             self.network_interfaces = network_interfaces
-        if filesystems is not None:
+        if not isinstance(filesystems, unset.UnsetType):
             self.filesystems = filesystems
-        if cloud_init_user_data is not None:
+        if not isinstance(cloud_init_user_data, unset.UnsetType):
             self.cloud_init_user_data = cloud_init_user_data
-        if service_account_id is not None:
+        if not isinstance(service_account_id, unset.UnsetType):
             self.service_account_id = service_account_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1542,13 +1543,13 @@ class NodeMetadataTemplate(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|None" = None,
-            value: "builtins.str|None" = None,
+            key: "builtins.str|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if key is not None:
+            if not isinstance(key, unset.UnsetType):
                 self.key = key
-            if value is not None:
+            if not isinstance(value, unset.UnsetType):
                 self.value = value
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1585,10 +1586,10 @@ class NodeMetadataTemplate(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        labels: "abc.Mapping[builtins.str,builtins.str]|None" = None,
+        labels: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if labels is not None:
+        if not isinstance(labels, unset.UnsetType):
             self.labels = labels
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1620,10 +1621,10 @@ class GpuClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1652,13 +1653,13 @@ class NetworkInterfaceTemplate(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        public_ip_address: "PublicIPAddress|node_group_pb2.PublicIPAddress|None" = None,
-        subnet_id: "builtins.str|None" = None,
+        public_ip_address: "PublicIPAddress|node_group_pb2.PublicIPAddress|None|unset.UnsetType" = unset.Unset,
+        subnet_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if public_ip_address is not None:
+        if not isinstance(public_ip_address, unset.UnsetType):
             self.public_ip_address = public_ip_address
-        if subnet_id is not None:
+        if not isinstance(subnet_id, unset.UnsetType):
             self.subnet_id = subnet_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1749,16 +1750,16 @@ class AttachedFilesystemSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        attach_mode: "AttachedFilesystemSpec.AttachMode|node_group_pb2.AttachedFilesystemSpec.AttachMode|None" = None,
-        mount_tag: "builtins.str|None" = None,
-        existing_filesystem: "ExistingFilesystem|node_group_pb2.ExistingFilesystem|None" = None,
+        attach_mode: "AttachedFilesystemSpec.AttachMode|node_group_pb2.AttachedFilesystemSpec.AttachMode|unset.UnsetType" = unset.Unset,
+        mount_tag: "builtins.str|unset.UnsetType" = unset.Unset,
+        existing_filesystem: "ExistingFilesystem|node_group_pb2.ExistingFilesystem|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if attach_mode is not None:
+        if not isinstance(attach_mode, unset.UnsetType):
             self.attach_mode = attach_mode
-        if mount_tag is not None:
+        if not isinstance(mount_tag, unset.UnsetType):
             self.mount_tag = mount_tag
-        if existing_filesystem is not None:
+        if not isinstance(existing_filesystem, unset.UnsetType):
             self.existing_filesystem = existing_filesystem
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1815,10 +1816,10 @@ class ExistingFilesystem(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1847,13 +1848,13 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        min_node_count: "builtins.int|None" = None,
-        max_node_count: "builtins.int|None" = None,
+        min_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        max_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if min_node_count is not None:
+        if not isinstance(min_node_count, unset.UnsetType):
             self.min_node_count = min_node_count
-        if max_node_count is not None:
+        if not isinstance(max_node_count, unset.UnsetType):
             self.max_node_count = max_node_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1900,16 +1901,16 @@ class NodeTaint(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        key: "builtins.str|None" = None,
-        value: "builtins.str|None" = None,
-        effect: "NodeTaint.Effect|node_group_pb2.NodeTaint.Effect|None" = None,
+        key: "builtins.str|unset.UnsetType" = unset.Unset,
+        value: "builtins.str|unset.UnsetType" = unset.Unset,
+        effect: "NodeTaint.Effect|node_group_pb2.NodeTaint.Effect|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if key is not None:
+        if not isinstance(key, unset.UnsetType):
             self.key = key
-        if value is not None:
+        if not isinstance(value, unset.UnsetType):
             self.value = value
-        if effect is not None:
+        if not isinstance(effect, unset.UnsetType):
             self.effect = effect
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1963,16 +1964,16 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        max_unavailable: "PercentOrCount|node_group_pb2.PercentOrCount|None" = None,
-        max_surge: "PercentOrCount|node_group_pb2.PercentOrCount|None" = None,
-        drain_timeout: "duration_pb2.Duration|datetime.timedelta|None" = None,
+        max_unavailable: "PercentOrCount|node_group_pb2.PercentOrCount|unset.UnsetType" = unset.Unset,
+        max_surge: "PercentOrCount|node_group_pb2.PercentOrCount|unset.UnsetType" = unset.Unset,
+        drain_timeout: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if max_unavailable is not None:
+        if not isinstance(max_unavailable, unset.UnsetType):
             self.max_unavailable = max_unavailable
-        if max_surge is not None:
+        if not isinstance(max_surge, unset.UnsetType):
             self.max_surge = max_surge
-        if drain_timeout is not None:
+        if not isinstance(drain_timeout, unset.UnsetType):
             self.drain_timeout = drain_timeout
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2065,13 +2066,13 @@ class PercentOrCount(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        percent: "builtins.int|None" = None,
-        count: "builtins.int|None" = None,
+        percent: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if percent is not None:
+        if not isinstance(percent, unset.UnsetType):
             self.percent = percent
-        if count is not None:
+        if not isinstance(count, unset.UnsetType):
             self.count = count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2120,28 +2121,28 @@ class NodeGroupStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "NodeGroupStatus.State|node_group_pb2.NodeGroupStatus.State|None" = None,
-        version: "builtins.str|None" = None,
-        target_node_count: "builtins.int|None" = None,
-        node_count: "builtins.int|None" = None,
-        outdated_node_count: "builtins.int|None" = None,
-        ready_node_count: "builtins.int|None" = None,
-        reconciling: "builtins.bool|None" = None,
+        state: "NodeGroupStatus.State|node_group_pb2.NodeGroupStatus.State|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|unset.UnsetType" = unset.Unset,
+        target_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        node_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        outdated_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        ready_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
-        if target_node_count is not None:
+        if not isinstance(target_node_count, unset.UnsetType):
             self.target_node_count = target_node_count
-        if node_count is not None:
+        if not isinstance(node_count, unset.UnsetType):
             self.node_count = node_count
-        if outdated_node_count is not None:
+        if not isinstance(outdated_node_count, unset.UnsetType):
             self.outdated_node_count = outdated_node_count
-        if ready_node_count is not None:
+        if not isinstance(ready_node_count, unset.UnsetType):
             self.ready_node_count = ready_node_count
-        if reconciling is not None:
+        if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2240,13 +2241,13 @@ class CreateNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2288,13 +2289,13 @@ class GetNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        resource_version: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if resource_version is not None:
+        if not isinstance(resource_version, unset.UnsetType):
             self.resource_version = resource_version
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2334,16 +2335,16 @@ class ListNodeGroupsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2394,13 +2395,13 @@ class ListNodeGroupsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[NodeGroup]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[NodeGroup]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2441,13 +2442,13 @@ class UpdateNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2489,10 +2490,10 @@ class DeleteNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2548,13 +2549,13 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        latest_infra_version: "empty_pb2.Empty|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        latest_infra_version: "empty_pb2.Empty|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if latest_infra_version is not None:
+        if not isinstance(latest_infra_version, unset.UnsetType):
             self.latest_infra_version = latest_infra_version
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2744,10 +2745,10 @@ class ProgressData(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        problems: "abc.Iterable[Problem]|None" = None,
+        problems: "abc.Iterable[Problem]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if problems is not None:
+        if not isinstance(problems, unset.UnsetType):
             self.problems = problems
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2777,13 +2778,13 @@ class Problem(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        stage: "builtins.str|None" = None,
-        message: "builtins.str|None" = None,
+        stage: "builtins.str|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if stage is not None:
+        if not isinstance(stage, unset.UnsetType):
             self.stage = stage
-        if message is not None:
+        if not isinstance(message, unset.UnsetType):
             self.message = message
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

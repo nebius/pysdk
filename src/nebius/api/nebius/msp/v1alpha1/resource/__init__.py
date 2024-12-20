@@ -7,6 +7,7 @@ import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
 import nebius.api.nebius.msp.v1alpha1.resource.preset_pb2 as preset_pb2
@@ -26,13 +27,13 @@ class Template(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        status: "TemplateStatus|template_pb2.TemplateStatus|None" = None,
-        spec: "TemplateSpec|template_pb2.TemplateSpec|None" = None,
+        status: "TemplateStatus|template_pb2.TemplateStatus|unset.UnsetType" = unset.Unset,
+        spec: "TemplateSpec|template_pb2.TemplateSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -74,10 +75,10 @@ class TemplateStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        preset_details: "PresetDetails|template_pb2.PresetDetails|None" = None,
+        preset_details: "PresetDetails|template_pb2.PresetDetails|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if preset_details is not None:
+        if not isinstance(preset_details, unset.UnsetType):
             self.preset_details = preset_details
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -107,19 +108,19 @@ class TemplateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resources: "ResourcesSpec|template_pb2.ResourcesSpec|None" = None,
-        hosts: "Host|template_pb2.Host|None" = None,
-        disk: "Disk|template_pb2.Disk|None" = None,
-        role: "builtins.str|None" = None,
+        resources: "ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
+        hosts: "Host|template_pb2.Host|unset.UnsetType" = unset.Unset,
+        disk: "Disk|template_pb2.Disk|unset.UnsetType" = unset.Unset,
+        role: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
-        if hosts is not None:
+        if not isinstance(hosts, unset.UnsetType):
             self.hosts = hosts
-        if disk is not None:
+        if not isinstance(disk, unset.UnsetType):
             self.disk = disk
-        if role is not None:
+        if not isinstance(role, unset.UnsetType):
             self.role = role
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -184,13 +185,13 @@ class ResourcesSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        platform: "builtins.str|None" = None,
-        preset: "builtins.str|None" = None,
+        platform: "builtins.str|unset.UnsetType" = unset.Unset,
+        preset: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if platform is not None:
+        if not isinstance(platform, unset.UnsetType):
             self.platform = platform
-        if preset is not None:
+        if not isinstance(preset, unset.UnsetType):
             self.preset = preset
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -230,13 +231,13 @@ class PresetDetails(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cpu_count: "builtins.int|None" = None,
-        memory_gibibytes: "builtins.int|None" = None,
+        cpu_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        memory_gibibytes: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cpu_count is not None:
+        if not isinstance(cpu_count, unset.UnsetType):
             self.cpu_count = cpu_count
-        if memory_gibibytes is not None:
+        if not isinstance(memory_gibibytes, unset.UnsetType):
             self.memory_gibibytes = memory_gibibytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -276,19 +277,19 @@ class Range(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        min: "builtins.int|None" = None,
-        max: "builtins.int|None" = None,
-        step: "builtins.int|None" = None,
-        value: "builtins.int|None" = None,
+        min: "builtins.int|unset.UnsetType" = unset.Unset,
+        max: "builtins.int|unset.UnsetType" = unset.Unset,
+        step: "builtins.int|unset.UnsetType" = unset.Unset,
+        value: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if min is not None:
+        if not isinstance(min, unset.UnsetType):
             self.min = min
-        if max is not None:
+        if not isinstance(max, unset.UnsetType):
             self.max = max
-        if step is not None:
+        if not isinstance(step, unset.UnsetType):
             self.step = step
-        if value is not None:
+        if not isinstance(value, unset.UnsetType):
             self.value = value
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -350,13 +351,13 @@ class Disk(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        type: "builtins.str|None" = None,
-        size_gibibytes: "Range|template_pb2.Range|None" = None,
+        type: "builtins.str|unset.UnsetType" = unset.Unset,
+        size_gibibytes: "Range|template_pb2.Range|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if type is not None:
+        if not isinstance(type, unset.UnsetType):
             self.type = type
-        if size_gibibytes is not None:
+        if not isinstance(size_gibibytes, unset.UnsetType):
             self.size_gibibytes = size_gibibytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -397,13 +398,13 @@ class DiskSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        type: "builtins.str|None" = None,
-        size_gibibytes: "builtins.int|None" = None,
+        type: "builtins.str|unset.UnsetType" = unset.Unset,
+        size_gibibytes: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if type is not None:
+        if not isinstance(type, unset.UnsetType):
             self.type = type
-        if size_gibibytes is not None:
+        if not isinstance(size_gibibytes, unset.UnsetType):
             self.size_gibibytes = size_gibibytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -443,10 +444,10 @@ class Host(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        count: "Range|template_pb2.Range|None" = None,
+        count: "Range|template_pb2.Range|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if count is not None:
+        if not isinstance(count, unset.UnsetType):
             self.count = count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -476,10 +477,10 @@ class HostSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        count: "builtins.int|None" = None,
+        count: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if count is not None:
+        if not isinstance(count, unset.UnsetType):
             self.count = count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -509,10 +510,10 @@ class Preset(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        spec: "PresetSpec|preset_pb2.PresetSpec|None" = None,
+        spec: "PresetSpec|preset_pb2.PresetSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -542,19 +543,19 @@ class PresetSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        flavor: "FlavorSpec|preset_pb2.FlavorSpec|None" = None,
-        hosts: "Host|template_pb2.Host|None" = None,
-        disk: "Disk|template_pb2.Disk|None" = None,
-        role: "builtins.str|None" = None,
+        flavor: "FlavorSpec|preset_pb2.FlavorSpec|unset.UnsetType" = unset.Unset,
+        hosts: "Host|template_pb2.Host|unset.UnsetType" = unset.Unset,
+        disk: "Disk|template_pb2.Disk|unset.UnsetType" = unset.Unset,
+        role: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if flavor is not None:
+        if not isinstance(flavor, unset.UnsetType):
             self.flavor = flavor
-        if hosts is not None:
+        if not isinstance(hosts, unset.UnsetType):
             self.hosts = hosts
-        if disk is not None:
+        if not isinstance(disk, unset.UnsetType):
             self.disk = disk
-        if role is not None:
+        if not isinstance(role, unset.UnsetType):
             self.role = role
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -619,13 +620,13 @@ class FlavorSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cpu: "CpuSpec|preset_pb2.CpuSpec|None" = None,
-        memory: "MemorySpec|preset_pb2.MemorySpec|None" = None,
+        cpu: "CpuSpec|preset_pb2.CpuSpec|unset.UnsetType" = unset.Unset,
+        memory: "MemorySpec|preset_pb2.MemorySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cpu is not None:
+        if not isinstance(cpu, unset.UnsetType):
             self.cpu = cpu
-        if memory is not None:
+        if not isinstance(memory, unset.UnsetType):
             self.memory = memory
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -667,13 +668,13 @@ class CpuSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        count: "builtins.int|None" = None,
-        generation: "builtins.int|None" = None,
+        count: "builtins.int|unset.UnsetType" = unset.Unset,
+        generation: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if count is not None:
+        if not isinstance(count, unset.UnsetType):
             self.count = count
-        if generation is not None:
+        if not isinstance(generation, unset.UnsetType):
             self.generation = generation
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -713,10 +714,10 @@ class MemorySpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        limit_gibibytes: "builtins.int|None" = None,
+        limit_gibibytes: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if limit_gibibytes is not None:
+        if not isinstance(limit_gibibytes, unset.UnsetType):
             self.limit_gibibytes = limit_gibibytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -746,13 +747,13 @@ class ListPresetsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -792,13 +793,13 @@ class ListPresetsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Preset]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Preset]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -866,13 +867,13 @@ class ListTemplatesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -912,13 +913,13 @@ class ListTemplatesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Template]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Template]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

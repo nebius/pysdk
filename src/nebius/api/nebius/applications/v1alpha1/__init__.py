@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
 import nebius.base.protos.pb_enum as pb_enum
@@ -29,16 +30,16 @@ class K8sRelease(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None" = None,
-        status: "K8sReleaseStatus|k8s_release_pb2.K8sReleaseStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|unset.UnsetType" = unset.Unset,
+        status: "K8sReleaseStatus|k8s_release_pb2.K8sReleaseStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -96,13 +97,13 @@ class K8sReleaseSpec(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|None" = None,
-            value: "builtins.str|None" = None,
+            key: "builtins.str|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if key is not None:
+            if not isinstance(key, unset.UnsetType):
                 self.key = key
-            if value is not None:
+            if not isinstance(value, unset.UnsetType):
                 self.value = value
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -139,25 +140,25 @@ class K8sReleaseSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cluster_id: "builtins.str|None" = None,
-        product_slug: "builtins.str|None" = None,
-        namespace: "builtins.str|None" = None,
-        application_name: "builtins.str|None" = None,
-        values: "builtins.str|None" = None,
-        set: "abc.Mapping[builtins.str,builtins.str]|None" = None,
+        cluster_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        product_slug: "builtins.str|unset.UnsetType" = unset.Unset,
+        namespace: "builtins.str|unset.UnsetType" = unset.Unset,
+        application_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        values: "builtins.str|unset.UnsetType" = unset.Unset,
+        set: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cluster_id is not None:
+        if not isinstance(cluster_id, unset.UnsetType):
             self.cluster_id = cluster_id
-        if product_slug is not None:
+        if not isinstance(product_slug, unset.UnsetType):
             self.product_slug = product_slug
-        if namespace is not None:
+        if not isinstance(namespace, unset.UnsetType):
             self.namespace = namespace
-        if application_name is not None:
+        if not isinstance(application_name, unset.UnsetType):
             self.application_name = application_name
-        if values is not None:
+        if not isinstance(values, unset.UnsetType):
             self.values = values
-        if set is not None:
+        if not isinstance(set, unset.UnsetType):
             self.set = set
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -253,13 +254,13 @@ class K8sReleaseStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State|None" = None,
-        error_message: "builtins.str|None" = None,
+        state: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State|unset.UnsetType" = unset.Unset,
+        error_message: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if error_message is not None:
+        if not isinstance(error_message, unset.UnsetType):
             self.error_message = error_message
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -303,10 +304,10 @@ class GetK8sReleaseRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -335,22 +336,22 @@ class ListK8sReleasesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
-        cluster_id: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        cluster_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
-        if cluster_id is not None:
+        if not isinstance(cluster_id, unset.UnsetType):
             self.cluster_id = cluster_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -423,13 +424,13 @@ class CreateK8sReleaseRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -471,10 +472,10 @@ class DeleteK8sReleaseRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -503,13 +504,13 @@ class ListK8sReleasesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[K8sRelease]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[K8sRelease]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

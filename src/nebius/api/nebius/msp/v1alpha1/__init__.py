@@ -8,6 +8,7 @@ import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import nebius.base.protos.pb_enum as pb_enum
 import google.protobuf.message as message
+import nebius.base.protos.unset as unset
 import builtins as builtins
 import collections.abc as abc
 #@ local imports here @#
@@ -42,16 +43,16 @@ class ClusterStatus(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        phase: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase|None" = None,
-        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None" = None,
-        reconciling: "builtins.bool|None" = None,
+        phase: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase|unset.UnsetType" = unset.Unset,
+        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if phase is not None:
+        if not isinstance(phase, unset.UnsetType):
             self.phase = phase
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if reconciling is not None:
+        if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

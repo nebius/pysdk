@@ -8,6 +8,7 @@ import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import builtins as builtins
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import typing as typing
 import nebius.api.nebius.iam.v1.access_key_pb2 as access_key_pb2
@@ -66,10 +67,10 @@ class Account(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            id: "builtins.str|None" = None,
+            id: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if id is not None:
+            if not isinstance(id, unset.UnsetType):
                 self.id = id
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -99,10 +100,10 @@ class Account(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            id: "builtins.str|None" = None,
+            id: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if id is not None:
+            if not isinstance(id, unset.UnsetType):
                 self.id = id
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -195,16 +196,16 @@ class Account(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_account: "Account.UserAccount|access_pb2.Account.UserAccount|None" = None,
-        service_account: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|None" = None,
-        anonymous_account: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|None" = None,
+        user_account: "Account.UserAccount|access_pb2.Account.UserAccount|unset.UnsetType" = unset.Unset,
+        service_account: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|unset.UnsetType" = unset.Unset,
+        anonymous_account: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if user_account is not None:
+        if not isinstance(user_account, unset.UnsetType):
             self.user_account = user_account
-        if service_account is not None:
+        if not isinstance(service_account, unset.UnsetType):
             self.service_account = service_account
-        if anonymous_account is not None:
+        if not isinstance(anonymous_account, unset.UnsetType):
             self.anonymous_account = anonymous_account
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -267,16 +268,16 @@ class AccessKey(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
-        status: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
+        status: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -330,16 +331,16 @@ class AccessKeySpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        description: "builtins.str|None" = None,
+        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if account is not None:
+        if not isinstance(account, unset.UnsetType):
             self.account = account
-        if expires_at is not None:
+        if not isinstance(expires_at, unset.UnsetType):
             self.expires_at = expires_at
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -402,25 +403,25 @@ class AccessKeyStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State|None" = None,
-        fingerprint: "builtins.str|None" = None,
-        algorithm: "builtins.str|None" = None,
-        key_size: "builtins.int|None" = None,
-        aws_access_key_id: "builtins.str|None" = None,
-        secret: "builtins.str|None" = None,
+        state: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State|unset.UnsetType" = unset.Unset,
+        fingerprint: "builtins.str|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        aws_access_key_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        secret: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if fingerprint is not None:
+        if not isinstance(fingerprint, unset.UnsetType):
             self.fingerprint = fingerprint
-        if algorithm is not None:
+        if not isinstance(algorithm, unset.UnsetType):
             self.algorithm = algorithm
-        if key_size is not None:
+        if not isinstance(key_size, unset.UnsetType):
             self.key_size = key_size
-        if aws_access_key_id is not None:
+        if not isinstance(aws_access_key_id, unset.UnsetType):
             self.aws_access_key_id = aws_access_key_id
-        if secret is not None:
+        if not isinstance(secret, unset.UnsetType):
             self.secret = secret
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -508,13 +509,13 @@ class CreateAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -594,13 +595,13 @@ class KeyIdentity(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        aws_access_key_id: "builtins.str|None" = None,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        aws_access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if aws_access_key_id is not None:
+        if not isinstance(aws_access_key_id, unset.UnsetType):
             self.aws_access_key_id = aws_access_key_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -642,10 +643,10 @@ class GetAccessKeySecretOnceRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -674,10 +675,10 @@ class GetAccessKeyByIdRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -706,10 +707,10 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        aws_access_key_id: "builtins.str|None" = None,
+        aws_access_key_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if aws_access_key_id is not None:
+        if not isinstance(aws_access_key_id, unset.UnsetType):
             self.aws_access_key_id = aws_access_key_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -765,19 +766,19 @@ class ListAccessKeysRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -841,19 +842,19 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if account is not None:
+        if not isinstance(account, unset.UnsetType):
             self.account = account
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -916,13 +917,13 @@ class UpdateAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -964,10 +965,10 @@ class ActivateAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -997,10 +998,10 @@ class DeactivateAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1030,10 +1031,10 @@ class DeleteAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1063,10 +1064,10 @@ class GetAccessKeySecretOnceResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        secret: "builtins.str|None" = None,
+        secret: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if secret is not None:
+        if not isinstance(secret, unset.UnsetType):
             self.secret = secret
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1095,13 +1096,13 @@ class ListAccessKeysResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[AccessKey]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[AccessKey]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1350,16 +1351,16 @@ class AuthPublicKey(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
-        status: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
+        status: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1413,19 +1414,19 @@ class AuthPublicKeySpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        description: "builtins.str|None" = None,
-        data: "builtins.str|None" = None,
+        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        data: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if account is not None:
+        if not isinstance(account, unset.UnsetType):
             self.account = account
-        if expires_at is not None:
+        if not isinstance(expires_at, unset.UnsetType):
             self.expires_at = expires_at
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if data is not None:
+        if not isinstance(data, unset.UnsetType):
             self.data = data
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1499,19 +1500,19 @@ class AuthPublicKeyStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State|None" = None,
-        fingerprint: "builtins.str|None" = None,
-        algorithm: "builtins.str|None" = None,
-        key_size: "builtins.int|None" = None,
+        state: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State|unset.UnsetType" = unset.Unset,
+        fingerprint: "builtins.str|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if fingerprint is not None:
+        if not isinstance(fingerprint, unset.UnsetType):
             self.fingerprint = fingerprint
-        if algorithm is not None:
+        if not isinstance(algorithm, unset.UnsetType):
             self.algorithm = algorithm
-        if key_size is not None:
+        if not isinstance(key_size, unset.UnsetType):
             self.key_size = key_size
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1577,13 +1578,13 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1625,10 +1626,10 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1684,19 +1685,19 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1760,19 +1761,19 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if account is not None:
+        if not isinstance(account, unset.UnsetType):
             self.account = account
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1835,13 +1836,13 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1883,10 +1884,10 @@ class ActivateAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1915,10 +1916,10 @@ class DeactivateAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1947,10 +1948,10 @@ class DeleteAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1979,13 +1980,13 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[AuthPublicKey]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[AuthPublicKey]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2217,16 +2218,16 @@ class Container(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ContainerSpec|container_pb2.ContainerSpec|None" = None,
-        status: "ContainerStatus|container_pb2.ContainerStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ContainerSpec|container_pb2.ContainerSpec|unset.UnsetType" = unset.Unset,
+        status: "ContainerStatus|container_pb2.ContainerStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2297,13 +2298,13 @@ class ContainerStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|None" = None,
-        container_state: "State|state_pb2.State|None" = None,
+        suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|unset.UnsetType" = unset.Unset,
+        container_state: "State|state_pb2.State|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if suspension_state is not None:
+        if not isinstance(suspension_state, unset.UnsetType):
             self.suspension_state = suspension_state
-        if container_state is not None:
+        if not isinstance(container_state, unset.UnsetType):
             self.container_state = container_state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2346,16 +2347,16 @@ class Federation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
-        status: "FederationStatus|federation_pb2.FederationStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
+        status: "FederationStatus|federation_pb2.FederationStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2436,16 +2437,16 @@ class FederationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_account_auto_creation: "builtins.bool|None" = None,
-        active: "builtins.bool|None" = None,
-        saml_settings: "SamlSettings|federation_pb2.SamlSettings|None" = None,
+        user_account_auto_creation: "builtins.bool|unset.UnsetType" = unset.Unset,
+        active: "builtins.bool|unset.UnsetType" = unset.Unset,
+        saml_settings: "SamlSettings|federation_pb2.SamlSettings|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if user_account_auto_creation is not None:
+        if not isinstance(user_account_auto_creation, unset.UnsetType):
             self.user_account_auto_creation = user_account_auto_creation
-        if active is not None:
+        if not isinstance(active, unset.UnsetType):
             self.active = active
-        if saml_settings is not None:
+        if not isinstance(saml_settings, unset.UnsetType):
             self.saml_settings = saml_settings
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2499,13 +2500,13 @@ class SamlSettings(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        idp_issuer: "builtins.str|None" = None,
-        sso_url: "builtins.str|None" = None,
+        idp_issuer: "builtins.str|unset.UnsetType" = unset.Unset,
+        sso_url: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if idp_issuer is not None:
+        if not isinstance(idp_issuer, unset.UnsetType):
             self.idp_issuer = idp_issuer
-        if sso_url is not None:
+        if not isinstance(sso_url, unset.UnsetType):
             self.sso_url = sso_url
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2563,16 +2564,16 @@ class FederationCertificate(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
-        status: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
+        status: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2626,13 +2627,13 @@ class FederationCertificateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        data: "builtins.str|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        data: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if data is not None:
+        if not isinstance(data, unset.UnsetType):
             self.data = data
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2678,22 +2679,22 @@ class FederationCertificateStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|None" = None,
-        algorithm: "builtins.str|None" = None,
-        key_size: "builtins.int|None" = None,
-        not_before: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        not_after: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
+        state: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        not_before: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        not_after: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if algorithm is not None:
+        if not isinstance(algorithm, unset.UnsetType):
             self.algorithm = algorithm
-        if key_size is not None:
+        if not isinstance(key_size, unset.UnsetType):
             self.key_size = key_size
-        if not_before is not None:
+        if not isinstance(not_before, unset.UnsetType):
             self.not_before = not_before
-        if not_after is not None:
+        if not isinstance(not_after, unset.UnsetType):
             self.not_after = not_after
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2774,13 +2775,13 @@ class CreateFederationCertificateRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2822,10 +2823,10 @@ class GetFederationCertificateRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2854,16 +2855,16 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        federation_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if federation_id is not None:
+        if not isinstance(federation_id, unset.UnsetType):
             self.federation_id = federation_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2914,13 +2915,13 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2962,10 +2963,10 @@ class DeleteFederationCertificateRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2994,13 +2995,13 @@ class ListFederationCertificateResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[FederationCertificate]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[FederationCertificate]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3149,13 +3150,13 @@ class CreateFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3197,10 +3198,10 @@ class GetFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3229,19 +3230,19 @@ class ListFederationsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3303,13 +3304,13 @@ class ListFederationsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Federation]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Federation]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3350,16 +3351,16 @@ class UpdateFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
-        status: "FederationStatus|federation_pb2.FederationStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
+        status: "FederationStatus|federation_pb2.FederationStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3413,10 +3414,10 @@ class DeleteFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3573,16 +3574,16 @@ class Group(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GroupSpec|group_pb2.GroupSpec|None" = None,
-        status: "GroupStatus|group_pb2.GroupStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GroupSpec|group_pb2.GroupSpec|unset.UnsetType" = unset.Unset,
+        status: "GroupStatus|group_pb2.GroupStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3658,13 +3659,13 @@ class GroupStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "GroupStatus.State|group_pb2.GroupStatus.State|None" = None,
-        members_count: "builtins.int|None" = None,
+        state: "GroupStatus.State|group_pb2.GroupStatus.State|unset.UnsetType" = unset.Unset,
+        members_count: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if members_count is not None:
+        if not isinstance(members_count, unset.UnsetType):
             self.members_count = members_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3708,16 +3709,16 @@ class ServiceAccount(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
-        status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
+        status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3771,10 +3772,10 @@ class ServiceAccountSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3803,10 +3804,10 @@ class ServiceAccountStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        active: "builtins.bool|None" = None,
+        active: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if active is not None:
+        if not isinstance(active, unset.UnsetType):
             self.active = active
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3835,13 +3836,13 @@ class ServiceAccountAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        name: "builtins.str|None" = None,
-        description: "builtins.str|None" = None,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3882,16 +3883,16 @@ class TenantUserAccount(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|None" = None,
-        status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|unset.UnsetType" = unset.Unset,
+        status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3983,16 +3984,16 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|None" = None,
-        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
-        error: "Error|tenant_user_account_pb2.Error|None" = None,
+        tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|unset.UnsetType" = unset.Unset,
+        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|unset.UnsetType" = unset.Unset,
+        error: "Error|tenant_user_account_pb2.Error|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if tenant_user_account is not None:
+        if not isinstance(tenant_user_account, unset.UnsetType):
             self.tenant_user_account = tenant_user_account
-        if attributes is not None:
+        if not isinstance(attributes, unset.UnsetType):
             self.attributes = attributes
-        if error is not None:
+        if not isinstance(error, unset.UnsetType):
             self.error = error
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4372,43 +4373,43 @@ class UserAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        sub: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
-        given_name: "builtins.str|None" = None,
-        family_name: "builtins.str|None" = None,
-        preferred_username: "builtins.str|None" = None,
-        picture: "builtins.str|None" = None,
-        email: "builtins.str|None" = None,
-        email_verified: "builtins.bool|None" = None,
-        zoneinfo: "builtins.str|None" = None,
-        locale: "builtins.str|None" = None,
-        phone_number: "builtins.str|None" = None,
-        phone_number_verified: "builtins.bool|None" = None,
+        sub: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        given_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        family_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        preferred_username: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        picture: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        email: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        email_verified: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        zoneinfo: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        locale: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        phone_number: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        phone_number_verified: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if sub is not None:
+        if not isinstance(sub, unset.UnsetType):
             self.sub = sub
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if given_name is not None:
+        if not isinstance(given_name, unset.UnsetType):
             self.given_name = given_name
-        if family_name is not None:
+        if not isinstance(family_name, unset.UnsetType):
             self.family_name = family_name
-        if preferred_username is not None:
+        if not isinstance(preferred_username, unset.UnsetType):
             self.preferred_username = preferred_username
-        if picture is not None:
+        if not isinstance(picture, unset.UnsetType):
             self.picture = picture
-        if email is not None:
+        if not isinstance(email, unset.UnsetType):
             self.email = email
-        if email_verified is not None:
+        if not isinstance(email_verified, unset.UnsetType):
             self.email_verified = email_verified
-        if zoneinfo is not None:
+        if not isinstance(zoneinfo, unset.UnsetType):
             self.zoneinfo = zoneinfo
-        if locale is not None:
+        if not isinstance(locale, unset.UnsetType):
             self.locale = locale
-        if phone_number is not None:
+        if not isinstance(phone_number, unset.UnsetType):
             self.phone_number = phone_number
-        if phone_number_verified is not None:
+        if not isinstance(phone_number_verified, unset.UnsetType):
             self.phone_number_verified = phone_number_verified
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4582,10 +4583,10 @@ class Error(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        message: "builtins.str|None" = None,
+        message: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if message is not None:
+        if not isinstance(message, unset.UnsetType):
             self.message = message
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4618,10 +4619,10 @@ class TenantUserAccountSpec(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            attribute: "abc.Iterable[builtins.str]|None" = None,
+            attribute: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if attribute is not None:
+            if not isinstance(attribute, unset.UnsetType):
                 self.attribute = attribute
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4648,10 +4649,10 @@ class TenantUserAccountSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|None" = None,
+        visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if visible_attributes is not None:
+        if not isinstance(visible_attributes, unset.UnsetType):
             self.visible_attributes = visible_attributes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4690,16 +4691,16 @@ class TenantUserAccountStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None" = None,
-        invitation_id: "builtins.str|None" = None,
-        federation_id: "builtins.str|None" = None,
+        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|unset.UnsetType" = unset.Unset,
+        invitation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if invitation_id is not None:
+        if not isinstance(invitation_id, unset.UnsetType):
             self.invitation_id = invitation_id
-        if federation_id is not None:
+        if not isinstance(federation_id, unset.UnsetType):
             self.federation_id = federation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4754,19 +4755,19 @@ class GroupMembership(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None" = None,
-        status: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|None" = None,
-        revoke_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|unset.UnsetType" = unset.Unset,
+        status: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|unset.UnsetType" = unset.Unset,
+        revoke_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
-        if revoke_at is not None:
+        if not isinstance(revoke_at, unset.UnsetType):
             self.revoke_at = revoke_at
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4833,10 +4834,10 @@ class GroupMembershipSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        member_id: "builtins.str|None" = None,
+        member_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if member_id is not None:
+        if not isinstance(member_id, unset.UnsetType):
             self.member_id = member_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4931,19 +4932,19 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        group_membership: "GroupMembership|group_membership_pb2.GroupMembership|None" = None,
-        user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
-        service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None" = None,
-        error: "Error|tenant_user_account_pb2.Error|None" = None,
+        group_membership: "GroupMembership|group_membership_pb2.GroupMembership|unset.UnsetType" = unset.Unset,
+        user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|unset.UnsetType" = unset.Unset,
+        service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|unset.UnsetType" = unset.Unset,
+        error: "Error|tenant_user_account_pb2.Error|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if group_membership is not None:
+        if not isinstance(group_membership, unset.UnsetType):
             self.group_membership = group_membership
-        if user_attributes is not None:
+        if not isinstance(user_attributes, unset.UnsetType):
             self.user_attributes = user_attributes
-        if service_account_attributes is not None:
+        if not isinstance(service_account_attributes, unset.UnsetType):
             self.service_account_attributes = service_account_attributes
-        if error is not None:
+        if not isinstance(error, unset.UnsetType):
             self.error = error
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5012,16 +5013,16 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None" = None,
-        revoke_after_hours: "builtins.int|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|unset.UnsetType" = unset.Unset,
+        revoke_after_hours: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if revoke_after_hours is not None:
+        if not isinstance(revoke_after_hours, unset.UnsetType):
             self.revoke_after_hours = revoke_after_hours
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5074,10 +5075,10 @@ class DeleteGroupMembershipRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5106,10 +5107,10 @@ class GetGroupMembershipRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5165,19 +5166,19 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5268,19 +5269,19 @@ class ListMemberOfRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        subject_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        subject_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if subject_id is not None:
+        if not isinstance(subject_id, unset.UnsetType):
             self.subject_id = subject_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5344,13 +5345,13 @@ class ListGroupMembershipsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        memberships: "abc.Iterable[GroupMembership]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        memberships: "abc.Iterable[GroupMembership]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if memberships is not None:
+        if not isinstance(memberships, unset.UnsetType):
             self.memberships = memberships
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5391,13 +5392,13 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        memberships: "abc.Iterable[GroupMembershipWithAttributes]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        memberships: "abc.Iterable[GroupMembershipWithAttributes]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if memberships is not None:
+        if not isinstance(memberships, unset.UnsetType):
             self.memberships = memberships
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5438,13 +5439,13 @@ class ListMemberOfResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Group]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Group]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5613,10 +5614,10 @@ class GetGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5645,13 +5646,13 @@ class GetGroupByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5718,19 +5719,19 @@ class ListGroupsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5794,13 +5795,13 @@ class ListGroupsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Group]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Group]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5908,34 +5909,34 @@ class ExchangeTokenRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        grant_type: "builtins.str|None" = None,
-        requested_token_type: "builtins.str|None" = None,
-        subject_token: "builtins.str|None" = None,
-        subject_token_type: "builtins.str|None" = None,
-        scopes: "abc.Iterable[builtins.str]|None" = None,
-        audience: "builtins.str|None" = None,
-        actor_token: "builtins.str|None" = None,
-        actor_token_type: "builtins.str|None" = None,
-        resource: "abc.Iterable[builtins.str]|None" = None,
+        grant_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        requested_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        subject_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        subject_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        scopes: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        audience: "builtins.str|unset.UnsetType" = unset.Unset,
+        actor_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        actor_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if grant_type is not None:
+        if not isinstance(grant_type, unset.UnsetType):
             self.grant_type = grant_type
-        if requested_token_type is not None:
+        if not isinstance(requested_token_type, unset.UnsetType):
             self.requested_token_type = requested_token_type
-        if subject_token is not None:
+        if not isinstance(subject_token, unset.UnsetType):
             self.subject_token = subject_token
-        if subject_token_type is not None:
+        if not isinstance(subject_token_type, unset.UnsetType):
             self.subject_token_type = subject_token_type
-        if scopes is not None:
+        if not isinstance(scopes, unset.UnsetType):
             self.scopes = scopes
-        if audience is not None:
+        if not isinstance(audience, unset.UnsetType):
             self.audience = audience
-        if actor_token is not None:
+        if not isinstance(actor_token, unset.UnsetType):
             self.actor_token = actor_token
-        if actor_token_type is not None:
+        if not isinstance(actor_token_type, unset.UnsetType):
             self.actor_token_type = actor_token_type
-        if resource is not None:
+        if not isinstance(resource, unset.UnsetType):
             self.resource = resource
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6054,22 +6055,22 @@ class CreateTokenResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        access_token: "builtins.str|None" = None,
-        issued_token_type: "builtins.str|None" = None,
-        token_type: "builtins.str|None" = None,
-        expires_in: "builtins.int|None" = None,
-        scopes: "abc.Iterable[builtins.str]|None" = None,
+        access_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        issued_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        expires_in: "builtins.int|unset.UnsetType" = unset.Unset,
+        scopes: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if access_token is not None:
+        if not isinstance(access_token, unset.UnsetType):
             self.access_token = access_token
-        if issued_token_type is not None:
+        if not isinstance(issued_token_type, unset.UnsetType):
             self.issued_token_type = issued_token_type
-        if token_type is not None:
+        if not isinstance(token_type, unset.UnsetType):
             self.token_type = token_type
-        if expires_in is not None:
+        if not isinstance(expires_in, unset.UnsetType):
             self.expires_in = expires_in
-        if scopes is not None:
+        if not isinstance(scopes, unset.UnsetType):
             self.scopes = scopes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6171,16 +6172,16 @@ class Invitation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
-        status: "InvitationStatus|invitation_pb2.InvitationStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
+        status: "InvitationStatus|invitation_pb2.InvitationStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6261,13 +6262,13 @@ class InvitationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        email: "builtins.str|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        email: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if email is not None:
+        if not isinstance(email, unset.UnsetType):
             self.email = email
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6318,16 +6319,16 @@ class InvitationStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_user_account_id: "builtins.str|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        state: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|None" = None,
+        tenant_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        state: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if tenant_user_account_id is not None:
+        if not isinstance(tenant_user_account_id, unset.UnsetType):
             self.tenant_user_account_id = tenant_user_account_id
-        if expires_at is not None:
+        if not isinstance(expires_at, unset.UnsetType):
             self.expires_at = expires_at
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6384,16 +6385,16 @@ class CreateInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
-        no_send: "builtins.bool|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
+        no_send: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if no_send is not None:
+        if not isinstance(no_send, unset.UnsetType):
             self.no_send = no_send
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6446,10 +6447,10 @@ class GetInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6478,19 +6479,19 @@ class ListInvitationsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6552,13 +6553,13 @@ class ListInvitationsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Invitation]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Invitation]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6599,10 +6600,10 @@ class DeleteInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6631,13 +6632,13 @@ class UpdateInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6679,10 +6680,10 @@ class ResendInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6839,13 +6840,13 @@ class UserAccountExternalId(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        federation_user_account_id: "builtins.str|None" = None,
-        federation_id: "builtins.str|None" = None,
+        federation_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if federation_user_account_id is not None:
+        if not isinstance(federation_user_account_id, unset.UnsetType):
             self.federation_user_account_id = federation_user_account_id
-        if federation_id is not None:
+        if not isinstance(federation_id, unset.UnsetType):
             self.federation_id = federation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6952,16 +6953,16 @@ class GetProfileResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_profile: "UserProfile|profile_service_pb2.UserProfile|None" = None,
-        service_account_profile: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|None" = None,
-        anonymous_profile: "AnonymousAccount|profile_service_pb2.AnonymousAccount|None" = None,
+        user_profile: "UserProfile|profile_service_pb2.UserProfile|unset.UnsetType" = unset.Unset,
+        service_account_profile: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|unset.UnsetType" = unset.Unset,
+        anonymous_profile: "AnonymousAccount|profile_service_pb2.AnonymousAccount|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if user_profile is not None:
+        if not isinstance(user_profile, unset.UnsetType):
             self.user_profile = user_profile
-        if service_account_profile is not None:
+        if not isinstance(service_account_profile, unset.UnsetType):
             self.service_account_profile = service_account_profile
-        if anonymous_profile is not None:
+        if not isinstance(anonymous_profile, unset.UnsetType):
             self.anonymous_profile = anonymous_profile
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7055,22 +7056,22 @@ class UserProfile(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        federation_info: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|None" = None,
-        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
-        retrieving_error: "Error|tenant_user_account_pb2.Error|None" = None,
-        tenants: "abc.Iterable[UserTenantInfo]|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        federation_info: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|unset.UnsetType" = unset.Unset,
+        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|unset.UnsetType" = unset.Unset,
+        retrieving_error: "Error|tenant_user_account_pb2.Error|unset.UnsetType" = unset.Unset,
+        tenants: "abc.Iterable[UserTenantInfo]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if federation_info is not None:
+        if not isinstance(federation_info, unset.UnsetType):
             self.federation_info = federation_info
-        if attributes is not None:
+        if not isinstance(attributes, unset.UnsetType):
             self.attributes = attributes
-        if retrieving_error is not None:
+        if not isinstance(retrieving_error, unset.UnsetType):
             self.retrieving_error = retrieving_error
-        if tenants is not None:
+        if not isinstance(tenants, unset.UnsetType):
             self.tenants = tenants
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7149,13 +7150,13 @@ class UserTenantInfo(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_id: "builtins.str|None" = None,
-        tenant_user_account_id: "builtins.str|None" = None,
+        tenant_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        tenant_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if tenant_id is not None:
+        if not isinstance(tenant_id, unset.UnsetType):
             self.tenant_id = tenant_id
-        if tenant_user_account_id is not None:
+        if not isinstance(tenant_user_account_id, unset.UnsetType):
             self.tenant_user_account_id = tenant_user_account_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7195,10 +7196,10 @@ class ServiceAccountProfile(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        info: "ServiceAccount|service_account_pb2.ServiceAccount|None" = None,
+        info: "ServiceAccount|service_account_pb2.ServiceAccount|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if info is not None:
+        if not isinstance(info, unset.UnsetType):
             self.info = info
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7272,10 +7273,10 @@ class GetProjectRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7304,13 +7305,13 @@ class GetProjectByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7377,19 +7378,19 @@ class ListProjectsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7453,13 +7454,13 @@ class ListProjectsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Container]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Container]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7567,13 +7568,13 @@ class CreateServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7615,10 +7616,10 @@ class GetServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7647,13 +7648,13 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7720,19 +7721,19 @@ class ListServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7796,13 +7797,13 @@ class UpdateServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7844,10 +7845,10 @@ class DeleteServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7876,13 +7877,13 @@ class ListServiceAccountResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[ServiceAccount]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[ServiceAccount]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8100,16 +8101,16 @@ class RevokeSessionRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        service_account_id: "builtins.str|None" = None,
-        all_my_active: "builtins.bool|None" = None,
-        tenant_user_account_id: "builtins.str|None" = None,
+        service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        all_my_active: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        tenant_user_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if service_account_id is not None:
+        if not isinstance(service_account_id, unset.UnsetType):
             self.service_account_id = service_account_id
-        if all_my_active is not None:
+        if not isinstance(all_my_active, unset.UnsetType):
             self.all_my_active = all_my_active
-        if tenant_user_account_id is not None:
+        if not isinstance(tenant_user_account_id, unset.UnsetType):
             self.tenant_user_account_id = tenant_user_account_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8206,10 +8207,10 @@ class GetTenantRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8265,16 +8266,16 @@ class ListTenantsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8327,13 +8328,13 @@ class ListTenantsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Container]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Container]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8421,10 +8422,10 @@ class GetTenantUserAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8480,19 +8481,19 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8556,13 +8557,13 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[TenantUserAccount]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[TenantUserAccount]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8603,10 +8604,10 @@ class BlockTenantUserAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8635,10 +8636,10 @@ class UnblockTenantUserAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8755,10 +8756,10 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8814,19 +8815,19 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8890,13 +8891,13 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[TenantUserAccountWithAttributes]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[TenantUserAccountWithAttributes]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

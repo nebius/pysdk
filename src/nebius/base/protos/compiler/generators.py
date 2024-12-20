@@ -141,7 +141,7 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
         g.p(
             "return super()._get_field(",
             '"',
-            field.name,
+            field.pythonic_name,
             '", explicit_presence=',
             tracks_presence(field),
             ",",
@@ -208,7 +208,7 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
         g.p(
             "return super()._set_field(",
             '"',
-            field.name,
+            field.pythonic_name,
             '",value,explicit_presence=',
             tracks_presence(field),
             ",",
@@ -226,12 +226,25 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
 
 def generate_field_init_arg(field: Field, g: PyGenFile) -> None:
     g.p(field.pythonic_name, ': "', add_eol=False)
-    setter_type(field, g, always_none=True)
-    g.p('" = None,', noindent=True)
+    setter_type(field, g)
+    g.p(
+        "|",
+        ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
+        '" = ',
+        ImportedSymbol("Unset", "nebius.base.protos.unset"),
+        ",",
+        noindent=True,
+    )
 
 
 def generate_field_init_setter(field: Field, g: PyGenFile, self_name: str) -> None:
-    g.p("if ", field.pythonic_name, " is not None:")
+    g.p(
+        "if not isinstance(",
+        field.pythonic_name,
+        ", ",
+        ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
+        "):",
+    )
     with g:
         g.p(self_name, ".", field.pythonic_name, " = ", field.pythonic_name)
 

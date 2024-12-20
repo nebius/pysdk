@@ -10,6 +10,7 @@ import nebius.base.protos.pb_enum as pb_enum
 import builtins as builtins
 import typing as typing
 import google.protobuf.message as message_1
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import google.protobuf.timestamp_pb2 as timestamp_pb2
@@ -190,52 +191,52 @@ class ServiceError(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        service: "builtins.str|None" = None,
-        code: "builtins.str|None" = None,
-        bad_request: "BadRequest|error_pb2.BadRequest|None" = None,
-        bad_resource_state: "BadResourceState|error_pb2.BadResourceState|None" = None,
-        resource_not_found: "ResourceNotFound|error_pb2.ResourceNotFound|None" = None,
-        resource_already_exists: "ResourceAlreadyExists|error_pb2.ResourceAlreadyExists|None" = None,
-        out_of_range: "OutOfRange|error_pb2.OutOfRange|None" = None,
-        permission_denied: "PermissionDenied|error_pb2.PermissionDenied|None" = None,
-        resource_conflict: "ResourceConflict|error_pb2.ResourceConflict|None" = None,
-        operation_aborted: "OperationAborted|error_pb2.OperationAborted|None" = None,
-        too_many_requests: "TooManyRequests|error_pb2.TooManyRequests|None" = None,
-        quota_failure: "QuotaFailure|error_pb2.QuotaFailure|None" = None,
-        not_enough_resources: "NotEnoughResources|error_pb2.NotEnoughResources|None" = None,
-        internal_error: "InternalError|error_pb2.InternalError|None" = None,
-        retry_type: "ServiceError.RetryType|error_pb2.ServiceError.RetryType|None" = None,
+        service: "builtins.str|unset.UnsetType" = unset.Unset,
+        code: "builtins.str|unset.UnsetType" = unset.Unset,
+        bad_request: "BadRequest|error_pb2.BadRequest|unset.UnsetType" = unset.Unset,
+        bad_resource_state: "BadResourceState|error_pb2.BadResourceState|unset.UnsetType" = unset.Unset,
+        resource_not_found: "ResourceNotFound|error_pb2.ResourceNotFound|unset.UnsetType" = unset.Unset,
+        resource_already_exists: "ResourceAlreadyExists|error_pb2.ResourceAlreadyExists|unset.UnsetType" = unset.Unset,
+        out_of_range: "OutOfRange|error_pb2.OutOfRange|unset.UnsetType" = unset.Unset,
+        permission_denied: "PermissionDenied|error_pb2.PermissionDenied|unset.UnsetType" = unset.Unset,
+        resource_conflict: "ResourceConflict|error_pb2.ResourceConflict|unset.UnsetType" = unset.Unset,
+        operation_aborted: "OperationAborted|error_pb2.OperationAborted|unset.UnsetType" = unset.Unset,
+        too_many_requests: "TooManyRequests|error_pb2.TooManyRequests|unset.UnsetType" = unset.Unset,
+        quota_failure: "QuotaFailure|error_pb2.QuotaFailure|unset.UnsetType" = unset.Unset,
+        not_enough_resources: "NotEnoughResources|error_pb2.NotEnoughResources|unset.UnsetType" = unset.Unset,
+        internal_error: "InternalError|error_pb2.InternalError|unset.UnsetType" = unset.Unset,
+        retry_type: "ServiceError.RetryType|error_pb2.ServiceError.RetryType|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if service is not None:
+        if not isinstance(service, unset.UnsetType):
             self.service = service
-        if code is not None:
+        if not isinstance(code, unset.UnsetType):
             self.code = code
-        if bad_request is not None:
+        if not isinstance(bad_request, unset.UnsetType):
             self.bad_request = bad_request
-        if bad_resource_state is not None:
+        if not isinstance(bad_resource_state, unset.UnsetType):
             self.bad_resource_state = bad_resource_state
-        if resource_not_found is not None:
+        if not isinstance(resource_not_found, unset.UnsetType):
             self.resource_not_found = resource_not_found
-        if resource_already_exists is not None:
+        if not isinstance(resource_already_exists, unset.UnsetType):
             self.resource_already_exists = resource_already_exists
-        if out_of_range is not None:
+        if not isinstance(out_of_range, unset.UnsetType):
             self.out_of_range = out_of_range
-        if permission_denied is not None:
+        if not isinstance(permission_denied, unset.UnsetType):
             self.permission_denied = permission_denied
-        if resource_conflict is not None:
+        if not isinstance(resource_conflict, unset.UnsetType):
             self.resource_conflict = resource_conflict
-        if operation_aborted is not None:
+        if not isinstance(operation_aborted, unset.UnsetType):
             self.operation_aborted = operation_aborted
-        if too_many_requests is not None:
+        if not isinstance(too_many_requests, unset.UnsetType):
             self.too_many_requests = too_many_requests
-        if quota_failure is not None:
+        if not isinstance(quota_failure, unset.UnsetType):
             self.quota_failure = quota_failure
-        if not_enough_resources is not None:
+        if not isinstance(not_enough_resources, unset.UnsetType):
             self.not_enough_resources = not_enough_resources
-        if internal_error is not None:
+        if not isinstance(internal_error, unset.UnsetType):
             self.internal_error = internal_error
-        if retry_type is not None:
+        if not isinstance(retry_type, unset.UnsetType):
             self.retry_type = retry_type
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -439,13 +440,13 @@ class BadRequest(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            field: "builtins.str|None" = None,
-            message: "builtins.str|None" = None,
+            field: "builtins.str|unset.UnsetType" = unset.Unset,
+            message: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if field is not None:
+            if not isinstance(field, unset.UnsetType):
                 self.field = field
-            if message is not None:
+            if not isinstance(message, unset.UnsetType):
                 self.message = message
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -482,10 +483,10 @@ class BadRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        violations: "abc.Iterable[BadRequest.Violation]|None" = None,
+        violations: "abc.Iterable[BadRequest.Violation]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if violations is not None:
+        if not isinstance(violations, unset.UnsetType):
             self.violations = violations
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -517,13 +518,13 @@ class BadResourceState(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|None" = None,
-        message: "builtins.str|None" = None,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
-        if message is not None:
+        if not isinstance(message, unset.UnsetType):
             self.message = message
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -563,10 +564,10 @@ class ResourceNotFound(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|None" = None,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -595,10 +596,10 @@ class ResourceAlreadyExists(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|None" = None,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -627,13 +628,13 @@ class ResourceConflict(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|None" = None,
-        message: "builtins.str|None" = None,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
-        if message is not None:
+        if not isinstance(message, unset.UnsetType):
             self.message = message
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -673,16 +674,16 @@ class OperationAborted(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        operation_id: "builtins.str|None" = None,
-        aborted_by_operation_id: "builtins.str|None" = None,
-        resource_id: "builtins.str|None" = None,
+        operation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        aborted_by_operation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if operation_id is not None:
+        if not isinstance(operation_id, unset.UnsetType):
             self.operation_id = operation_id
-        if aborted_by_operation_id is not None:
+        if not isinstance(aborted_by_operation_id, unset.UnsetType):
             self.aborted_by_operation_id = aborted_by_operation_id
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -733,13 +734,13 @@ class OutOfRange(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        requested: "builtins.str|None" = None,
-        limit: "builtins.str|None" = None,
+        requested: "builtins.str|unset.UnsetType" = unset.Unset,
+        limit: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if requested is not None:
+        if not isinstance(requested, unset.UnsetType):
             self.requested = requested
-        if limit is not None:
+        if not isinstance(limit, unset.UnsetType):
             self.limit = limit
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -779,10 +780,10 @@ class PermissionDenied(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|None" = None,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -811,13 +812,13 @@ class InternalError(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        request_id: "builtins.str|None" = None,
-        trace_id: "builtins.str|None" = None,
+        request_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        trace_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if request_id is not None:
+        if not isinstance(request_id, unset.UnsetType):
             self.request_id = request_id
-        if trace_id is not None:
+        if not isinstance(trace_id, unset.UnsetType):
             self.trace_id = trace_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -857,10 +858,10 @@ class TooManyRequests(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        violation: "builtins.str|None" = None,
+        violation: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if violation is not None:
+        if not isinstance(violation, unset.UnsetType):
             self.violation = violation
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -893,19 +894,19 @@ class QuotaFailure(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            quota: "builtins.str|None" = None,
-            message: "builtins.str|None" = None,
-            limit: "builtins.str|None" = None,
-            requested: "builtins.str|None" = None,
+            quota: "builtins.str|unset.UnsetType" = unset.Unset,
+            message: "builtins.str|unset.UnsetType" = unset.Unset,
+            limit: "builtins.str|unset.UnsetType" = unset.Unset,
+            requested: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if quota is not None:
+            if not isinstance(quota, unset.UnsetType):
                 self.quota = quota
-            if message is not None:
+            if not isinstance(message, unset.UnsetType):
                 self.message = message
-            if limit is not None:
+            if not isinstance(limit, unset.UnsetType):
                 self.limit = limit
-            if requested is not None:
+            if not isinstance(requested, unset.UnsetType):
                 self.requested = requested
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -964,10 +965,10 @@ class QuotaFailure(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        violations: "abc.Iterable[QuotaFailure.Violation]|None" = None,
+        violations: "abc.Iterable[QuotaFailure.Violation]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if violations is not None:
+        if not isinstance(violations, unset.UnsetType):
             self.violations = violations
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1003,16 +1004,16 @@ class NotEnoughResources(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            resource_type: "builtins.str|None" = None,
-            message: "builtins.str|None" = None,
-            requested: "builtins.str|None" = None,
+            resource_type: "builtins.str|unset.UnsetType" = unset.Unset,
+            message: "builtins.str|unset.UnsetType" = unset.Unset,
+            requested: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if resource_type is not None:
+            if not isinstance(resource_type, unset.UnsetType):
                 self.resource_type = resource_type
-            if message is not None:
+            if not isinstance(message, unset.UnsetType):
                 self.message = message
-            if requested is not None:
+            if not isinstance(requested, unset.UnsetType):
                 self.requested = requested
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1060,10 +1061,10 @@ class NotEnoughResources(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        violations: "abc.Iterable[NotEnoughResources.Violation]|None" = None,
+        violations: "abc.Iterable[NotEnoughResources.Violation]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if violations is not None:
+        if not isinstance(violations, unset.UnsetType):
             self.violations = violations
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1100,13 +1101,13 @@ class ResourceMetadata(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|None" = None,
-            value: "builtins.str|None" = None,
+            key: "builtins.str|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if key is not None:
+            if not isinstance(key, unset.UnsetType):
                 self.key = key
-            if value is not None:
+            if not isinstance(value, unset.UnsetType):
                 self.value = value
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1143,28 +1144,28 @@ class ResourceMetadata(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
-        resource_version: "builtins.int|None" = None,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        updated_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        labels: "abc.Mapping[builtins.str,builtins.str]|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.int|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        updated_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        labels: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if resource_version is not None:
+        if not isinstance(resource_version, unset.UnsetType):
             self.resource_version = resource_version
-        if created_at is not None:
+        if not isinstance(created_at, unset.UnsetType):
             self.created_at = created_at
-        if updated_at is not None:
+        if not isinstance(updated_at, unset.UnsetType):
             self.updated_at = updated_at
-        if labels is not None:
+        if not isinstance(labels, unset.UnsetType):
             self.labels = labels
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1266,13 +1267,13 @@ class GetByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1317,10 +1318,10 @@ class Operation(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            values: "abc.Iterable[builtins.str]|None" = None,
+            values: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if values is not None:
+            if not isinstance(values, unset.UnsetType):
                 self.values = values
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1351,13 +1352,13 @@ class Operation(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|None" = None,
-            value: "Operation.RequestHeader|operation_pb2.Operation.RequestHeader|None" = None,
+            key: "builtins.str|unset.UnsetType" = unset.Unset,
+            value: "Operation.RequestHeader|operation_pb2.Operation.RequestHeader|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if key is not None:
+            if not isinstance(key, unset.UnsetType):
                 self.key = key
-            if value is not None:
+            if not isinstance(value, unset.UnsetType):
                 self.value = value
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1395,37 +1396,37 @@ class Operation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        description: "builtins.str|None" = None,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        created_by: "builtins.str|None" = None,
-        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        request: "any_pb2.Any|None" = None,
-        request_headers: "abc.Mapping[builtins.str,Operation.RequestHeader]|None" = None,
-        resource_id: "builtins.str|None" = None,
-        progress_data: "any_pb2.Any|None" = None,
-        status: "status_pb2.Status|request_status.RequestStatus|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        created_by: "builtins.str|unset.UnsetType" = unset.Unset,
+        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        request: "any_pb2.Any|unset.UnsetType" = unset.Unset,
+        request_headers: "abc.Mapping[builtins.str,Operation.RequestHeader]|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        progress_data: "any_pb2.Any|unset.UnsetType" = unset.Unset,
+        status: "status_pb2.Status|request_status.RequestStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if created_at is not None:
+        if not isinstance(created_at, unset.UnsetType):
             self.created_at = created_at
-        if created_by is not None:
+        if not isinstance(created_by, unset.UnsetType):
             self.created_by = created_by
-        if finished_at is not None:
+        if not isinstance(finished_at, unset.UnsetType):
             self.finished_at = finished_at
-        if request is not None:
+        if not isinstance(request, unset.UnsetType):
             self.request = request
-        if request_headers is not None:
+        if not isinstance(request_headers, unset.UnsetType):
             self.request_headers = request_headers
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
-        if progress_data is not None:
+        if not isinstance(progress_data, unset.UnsetType):
             self.progress_data = progress_data
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1565,10 +1566,10 @@ class GetOperationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1597,16 +1598,16 @@ class ListOperationsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1657,13 +1658,13 @@ class ListOperationsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        operations: "abc.Iterable[Operation]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        operations: "abc.Iterable[Operation]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if operations is not None:
+        if not isinstance(operations, unset.UnsetType):
             self.operations = operations
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
