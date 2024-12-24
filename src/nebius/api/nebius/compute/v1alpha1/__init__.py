@@ -37,6 +37,8 @@ import nebius.api.nebius.compute.v1alpha1.instance_service_pb2 as instance_servi
 class Disk(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.Disk
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.Disk",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -100,6 +102,8 @@ class Disk(pb_classes.Message):
 class DiskSpec(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.DiskSpec",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class DiskType(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.DiskSpec.DiskType",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -358,6 +362,8 @@ class DiskSpec(pb_classes.Message):
 class DiskPlacementPolicy(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskPlacementPolicy
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.DiskPlacementPolicy",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -404,6 +410,8 @@ class DiskPlacementPolicy(pb_classes.Message):
 class DiskStatus(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.DiskStatus",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.DiskStatus.State",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -534,6 +542,8 @@ class DiskStatus(pb_classes.Message):
 class GetDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.GetDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GetDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -566,6 +576,8 @@ class GetDiskRequest(pb_classes.Message):
 class ListDisksRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.ListDisksRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListDisksRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -640,6 +652,8 @@ class ListDisksRequest(pb_classes.Message):
 class CreateDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.CreateDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.CreateDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -688,6 +702,8 @@ class CreateDiskRequest(pb_classes.Message):
 class UpdateDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.UpdateDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.UpdateDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -736,6 +752,8 @@ class UpdateDiskRequest(pb_classes.Message):
 class DeleteDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.DeleteDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.DeleteDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -768,6 +786,8 @@ class DeleteDiskRequest(pb_classes.Message):
 class ListDisksResponse(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.ListDisksResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListDisksResponse",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -791,7 +811,7 @@ class ListDisksResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Disk]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Disk,None),
+        wrap=pb_classes.Repeated.with_wrap(Disk,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Disk]") -> None:
@@ -963,6 +983,8 @@ class DiskServiceClient(client.Client):
 class Filesystem(pb_classes.Message):
     __PB2_CLASS__ = filesystem_pb2.Filesystem
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.Filesystem",filesystem_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1026,6 +1048,8 @@ class Filesystem(pb_classes.Message):
 class FilesystemSpec(pb_classes.Message):
     __PB2_CLASS__ = filesystem_pb2.FilesystemSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.FilesystemSpec",filesystem_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class FilesystemType(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.FilesystemSpec.FilesystemType",filesystem_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1199,6 +1223,8 @@ class FilesystemSpec(pb_classes.Message):
 class FilesystemStatus(pb_classes.Message):
     __PB2_CLASS__ = filesystem_pb2.FilesystemStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.FilesystemStatus",filesystem_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.FilesystemStatus.State",filesystem_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1316,6 +1342,8 @@ class FilesystemStatus(pb_classes.Message):
 class GetFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.GetFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GetFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1348,6 +1376,8 @@ class GetFilesystemRequest(pb_classes.Message):
 class ListFilesystemsRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.ListFilesystemsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListFilesystemsRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1422,6 +1452,8 @@ class ListFilesystemsRequest(pb_classes.Message):
 class CreateFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.CreateFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.CreateFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1470,6 +1502,8 @@ class CreateFilesystemRequest(pb_classes.Message):
 class UpdateFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.UpdateFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.UpdateFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1518,6 +1552,8 @@ class UpdateFilesystemRequest(pb_classes.Message):
 class DeleteFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.DeleteFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.DeleteFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1550,6 +1586,8 @@ class DeleteFilesystemRequest(pb_classes.Message):
 class ListFilesystemsResponse(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.ListFilesystemsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListFilesystemsResponse",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1573,7 +1611,7 @@ class ListFilesystemsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Filesystem]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Filesystem,None),
+        wrap=pb_classes.Repeated.with_wrap(Filesystem,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Filesystem]") -> None:
@@ -1745,6 +1783,8 @@ class FilesystemServiceClient(client.Client):
 class GpuCluster(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_pb2.GpuCluster
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GpuCluster",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1808,6 +1848,8 @@ class GpuCluster(pb_classes.Message):
 class GpuClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_pb2.GpuClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GpuClusterSpec",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1840,6 +1882,8 @@ class GpuClusterSpec(pb_classes.Message):
 class GpuClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_pb2.GpuClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GpuClusterStatus",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1888,6 +1932,8 @@ class GpuClusterStatus(pb_classes.Message):
 class GetGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.GetGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GetGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1920,6 +1966,8 @@ class GetGpuClusterRequest(pb_classes.Message):
 class ListGpuClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.ListGpuClustersRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListGpuClustersRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1994,6 +2042,8 @@ class ListGpuClustersRequest(pb_classes.Message):
 class CreateGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.CreateGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.CreateGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2042,6 +2092,8 @@ class CreateGpuClusterRequest(pb_classes.Message):
 class UpdateGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.UpdateGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.UpdateGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2090,6 +2142,8 @@ class UpdateGpuClusterRequest(pb_classes.Message):
 class DeleteGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.DeleteGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.DeleteGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2122,6 +2176,8 @@ class DeleteGpuClusterRequest(pb_classes.Message):
 class ListGpuClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.ListGpuClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListGpuClustersResponse",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2145,7 +2201,7 @@ class ListGpuClustersResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[GpuCluster]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(GpuCluster,None),
+        wrap=pb_classes.Repeated.with_wrap(GpuCluster,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[GpuCluster]") -> None:
@@ -2317,6 +2373,8 @@ class GpuClusterServiceClient(client.Client):
 class Image(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.Image
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.Image",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2380,6 +2438,8 @@ class Image(pb_classes.Message):
 class ImageSpec(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.ImageSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ImageSpec",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__description__(pb_classes.OneOf):
         name: builtins.str= "_description"
@@ -2469,6 +2529,8 @@ class ImageSpec(pb_classes.Message):
 class ImageStatus(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.ImageStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ImageStatus",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.ImageStatus.State",image_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -2570,6 +2632,8 @@ class ImageStatus(pb_classes.Message):
 class GetImageRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.GetImageRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GetImageRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2602,6 +2666,8 @@ class GetImageRequest(pb_classes.Message):
 class GetImageLatestByFamilyRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.GetImageLatestByFamilyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GetImageLatestByFamilyRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2648,6 +2714,8 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
 class ListImagesRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.ListImagesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListImagesRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2722,6 +2790,8 @@ class ListImagesRequest(pb_classes.Message):
 class ListImagesResponse(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.ListImagesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListImagesResponse",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2745,7 +2815,7 @@ class ListImagesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Image]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Image,None),
+        wrap=pb_classes.Repeated.with_wrap(Image,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Image]") -> None:
@@ -2881,6 +2951,8 @@ class InstanceRecoveryPolicy(pb_enum.Enum):
 class Instance(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.Instance
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.Instance",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2944,6 +3016,8 @@ class Instance(pb_classes.Message):
 class InstanceSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.InstanceSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3028,7 +3102,7 @@ class InstanceSpec(pb_classes.Message):
     @builtins.property
     def network_interfaces(self) -> "abc.MutableSequence[v1alpha1_2.NetworkInterfaceSpec]":
         return super()._get_field("network_interfaces", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(v1alpha1_2.NetworkInterfaceSpec,None),
+        wrap=pb_classes.Repeated.with_wrap(v1alpha1_2.NetworkInterfaceSpec,None,None),
         )
     @network_interfaces.setter
     def network_interfaces(self, value: "abc.Iterable[v1alpha1_2.NetworkInterfaceSpec]") -> None:
@@ -3048,7 +3122,7 @@ class InstanceSpec(pb_classes.Message):
     @builtins.property
     def secondary_disks(self) -> "abc.MutableSequence[AttachedDiskSpec]":
         return super()._get_field("secondary_disks", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(AttachedDiskSpec,None),
+        wrap=pb_classes.Repeated.with_wrap(AttachedDiskSpec,None,None),
         )
     @secondary_disks.setter
     def secondary_disks(self, value: "abc.Iterable[AttachedDiskSpec]") -> None:
@@ -3058,7 +3132,7 @@ class InstanceSpec(pb_classes.Message):
     @builtins.property
     def filesystems(self) -> "abc.MutableSequence[AttachedFilesystemSpec]":
         return super()._get_field("filesystems", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None),
+        wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None,None),
         )
     @filesystems.setter
     def filesystems(self, value: "abc.Iterable[AttachedFilesystemSpec]") -> None:
@@ -3109,6 +3183,8 @@ class InstanceSpec(pb_classes.Message):
 class ResourcesSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ResourcesSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ResourcesSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_size__(pb_classes.OneOf):
         name: builtins.str= "size"
@@ -3184,6 +3260,8 @@ class ResourcesSpec(pb_classes.Message):
 class InstanceGpuClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceGpuClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.InstanceGpuClusterSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3216,6 +3294,8 @@ class InstanceGpuClusterSpec(pb_classes.Message):
 class AttachedDiskSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.AttachedDiskSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.AttachedDiskSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class AttachMode(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.AttachedDiskSpec.AttachMode",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -3255,7 +3335,7 @@ class AttachedDiskSpec(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         attach_mode: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode|unset.UnsetType" = unset.Unset,
-        existing_disk: "ExistingDisk|instance_pb2.ExistingDisk|unset.UnsetType" = unset.Unset,
+        existing_disk: "ExistingDisk|instance_pb2.ExistingDisk|None|unset.UnsetType" = unset.Unset,
         device_name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -3286,13 +3366,13 @@ class AttachedDiskSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def existing_disk(self) -> "ExistingDisk":
-        return super()._get_field("existing_disk", explicit_presence=False,
+    def existing_disk(self) -> "ExistingDisk|None":
+        return super()._get_field("existing_disk", explicit_presence=True,
         wrap=ExistingDisk,
         )
     @existing_disk.setter
-    def existing_disk(self, value: "ExistingDisk|instance_pb2.ExistingDisk") -> None:
-        return super()._set_field("existing_disk",value,explicit_presence=False,
+    def existing_disk(self, value: "ExistingDisk|instance_pb2.ExistingDisk|None") -> None:
+        return super()._set_field("existing_disk",value,explicit_presence=True,
         )
     
     @builtins.property
@@ -3315,6 +3395,8 @@ class AttachedDiskSpec(pb_classes.Message):
 class ExistingDisk(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ExistingDisk
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ExistingDisk",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3347,6 +3429,8 @@ class ExistingDisk(pb_classes.Message):
 class ExistingFilesystem(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ExistingFilesystem
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ExistingFilesystem",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3379,6 +3463,8 @@ class ExistingFilesystem(pb_classes.Message):
 class AttachedFilesystemSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.AttachedFilesystemSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.AttachedFilesystemSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class AttachMode(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.AttachedFilesystemSpec.AttachMode",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -3419,7 +3505,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         *,
         attach_mode: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode|unset.UnsetType" = unset.Unset,
         device_name: "builtins.str|unset.UnsetType" = unset.Unset,
-        existing_filesystem: "ExistingFilesystem|instance_pb2.ExistingFilesystem|unset.UnsetType" = unset.Unset,
+        existing_filesystem: "ExistingFilesystem|instance_pb2.ExistingFilesystem|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(attach_mode, unset.UnsetType):
@@ -3458,13 +3544,13 @@ class AttachedFilesystemSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def existing_filesystem(self) -> "ExistingFilesystem":
-        return super()._get_field("existing_filesystem", explicit_presence=False,
+    def existing_filesystem(self) -> "ExistingFilesystem|None":
+        return super()._get_field("existing_filesystem", explicit_presence=True,
         wrap=ExistingFilesystem,
         )
     @existing_filesystem.setter
-    def existing_filesystem(self, value: "ExistingFilesystem|instance_pb2.ExistingFilesystem") -> None:
-        return super()._set_field("existing_filesystem",value,explicit_presence=False,
+    def existing_filesystem(self, value: "ExistingFilesystem|instance_pb2.ExistingFilesystem|None") -> None:
+        return super()._set_field("existing_filesystem",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -3478,6 +3564,8 @@ class AttachedFilesystemSpec(pb_classes.Message):
 class InstanceStatus(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.InstanceStatus",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class InstanceState(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.InstanceStatus.InstanceState",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -3528,7 +3616,7 @@ class InstanceStatus(pb_classes.Message):
     @builtins.property
     def network_interfaces(self) -> "abc.MutableSequence[v1alpha1_2.NetworkInterfaceStatus]":
         return super()._get_field("network_interfaces", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(v1alpha1_2.NetworkInterfaceStatus,None),
+        wrap=pb_classes.Repeated.with_wrap(v1alpha1_2.NetworkInterfaceStatus,None,None),
         )
     @network_interfaces.setter
     def network_interfaces(self, value: "abc.Iterable[v1alpha1_2.NetworkInterfaceStatus]") -> None:
@@ -3555,6 +3643,8 @@ class InstanceStatus(pb_classes.Message):
 class GetInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.GetInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.GetInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3587,6 +3677,8 @@ class GetInstanceRequest(pb_classes.Message):
 class ListInstancesRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.ListInstancesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListInstancesRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3647,6 +3739,8 @@ class ListInstancesRequest(pb_classes.Message):
 class CreateInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.CreateInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.CreateInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3695,6 +3789,8 @@ class CreateInstanceRequest(pb_classes.Message):
 class UpdateInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.UpdateInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.UpdateInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3743,6 +3839,8 @@ class UpdateInstanceRequest(pb_classes.Message):
 class DeleteInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.DeleteInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.DeleteInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3775,6 +3873,8 @@ class DeleteInstanceRequest(pb_classes.Message):
 class ListInstancesResponse(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.ListInstancesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.ListInstancesResponse",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3798,7 +3898,7 @@ class ListInstancesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Instance]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Instance,None),
+        wrap=pb_classes.Repeated.with_wrap(Instance,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Instance]") -> None:
@@ -3822,6 +3922,8 @@ class ListInstancesResponse(pb_classes.Message):
 class StartInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.StartInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.StartInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3854,6 +3956,8 @@ class StartInstanceRequest(pb_classes.Message):
 class StopInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.StopInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.StopInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,

@@ -14,9 +14,9 @@ import typing as typing
 import nebius.api.nebius.iam.v1.access_key_pb2 as access_key_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.well_known as well_known_1
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
-import nebius.base.protos.well_known as well_known_1
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.iam.v1.access_key_service_pb2 as access_key_service_pb2
 import nebius.aio.client as client
@@ -58,10 +58,14 @@ import nebius.api.nebius.iam.v1.token_exchange_service_pb2 as token_exchange_ser
 class Account(pb_classes.Message):
     __PB2_CLASS__ = access_pb2.Account
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Account",access_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class UserAccount(pb_classes.Message):
         __PB2_CLASS__ = access_pb2.Account.UserAccount
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Account.UserAccount",access_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -95,6 +99,8 @@ class Account(pb_classes.Message):
     class ServiceAccount(pb_classes.Message):
         __PB2_CLASS__ = access_pb2.Account.ServiceAccount
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Account.ServiceAccount",access_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -128,6 +134,8 @@ class Account(pb_classes.Message):
     class AnonymousAccount(pb_classes.Message):
         __PB2_CLASS__ = access_pb2.Account.AnonymousAccount
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Account.AnonymousAccount",access_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -196,9 +204,9 @@ class Account(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_account: "Account.UserAccount|access_pb2.Account.UserAccount|unset.UnsetType" = unset.Unset,
-        service_account: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|unset.UnsetType" = unset.Unset,
-        anonymous_account: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|unset.UnsetType" = unset.Unset,
+        user_account: "Account.UserAccount|access_pb2.Account.UserAccount|None|unset.UnsetType" = unset.Unset,
+        service_account: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|None|unset.UnsetType" = unset.Unset,
+        anonymous_account: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(user_account, unset.UnsetType):
@@ -220,33 +228,33 @@ class Account(pb_classes.Message):
         ]
     
     @builtins.property
-    def user_account(self) -> "Account.UserAccount":
-        return super()._get_field("user_account", explicit_presence=False,
+    def user_account(self) -> "Account.UserAccount|None":
+        return super()._get_field("user_account", explicit_presence=True,
         wrap=Account.UserAccount,
         )
     @user_account.setter
-    def user_account(self, value: "Account.UserAccount|access_pb2.Account.UserAccount") -> None:
-        return super()._set_field("user_account",value,explicit_presence=False,
+    def user_account(self, value: "Account.UserAccount|access_pb2.Account.UserAccount|None") -> None:
+        return super()._set_field("user_account",value,explicit_presence=True,
         )
     
     @builtins.property
-    def service_account(self) -> "Account.ServiceAccount":
-        return super()._get_field("service_account", explicit_presence=False,
+    def service_account(self) -> "Account.ServiceAccount|None":
+        return super()._get_field("service_account", explicit_presence=True,
         wrap=Account.ServiceAccount,
         )
     @service_account.setter
-    def service_account(self, value: "Account.ServiceAccount|access_pb2.Account.ServiceAccount") -> None:
-        return super()._set_field("service_account",value,explicit_presence=False,
+    def service_account(self, value: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|None") -> None:
+        return super()._set_field("service_account",value,explicit_presence=True,
         )
     
     @builtins.property
-    def anonymous_account(self) -> "Account.AnonymousAccount":
-        return super()._get_field("anonymous_account", explicit_presence=False,
+    def anonymous_account(self) -> "Account.AnonymousAccount|None":
+        return super()._get_field("anonymous_account", explicit_presence=True,
         wrap=Account.AnonymousAccount,
         )
     @anonymous_account.setter
-    def anonymous_account(self, value: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount") -> None:
-        return super()._set_field("anonymous_account",value,explicit_presence=False,
+    def anonymous_account(self, value: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|None") -> None:
+        return super()._set_field("anonymous_account",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -263,6 +271,8 @@ class Account(pb_classes.Message):
 class AccessKey(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKey
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessKey",access_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -326,6 +336,9 @@ class AccessKey(pb_classes.Message):
 class AccessKeySpec(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKeySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessKeySpec",access_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "expires_at": well_known_1.ts_mask,
+    }
     
     def __init__(
         self,
@@ -389,6 +402,8 @@ class AccessKeySpec(pb_classes.Message):
 class AccessKeyStatus(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKeyStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessKeyStatus",access_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AccessKeyStatus.State",access_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -504,6 +519,8 @@ class AccessKeyStatus(pb_classes.Message):
 class CreateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.CreateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -552,6 +569,8 @@ class CreateAccessKeyRequest(pb_classes.Message):
 class KeyIdentity(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.KeyIdentity
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.KeyIdentity",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_identity__(pb_classes.OneOf):
         name: builtins.str= "identity"
@@ -638,6 +657,8 @@ class KeyIdentity(pb_classes.Message):
 class GetAccessKeySecretOnceRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeySecretOnceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeySecretOnceRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -670,6 +691,8 @@ class GetAccessKeySecretOnceRequest(pb_classes.Message):
 class GetAccessKeyByIdRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeyByIdRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeyByIdRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -702,6 +725,8 @@ class GetAccessKeyByIdRequest(pb_classes.Message):
 class GetAccessKeyByAwsIdRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeyByAwsIdRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeyByAwsIdRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -734,6 +759,8 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
 class ListAccessKeysRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessKeysRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -837,6 +864,8 @@ class ListAccessKeysRequest(pb_classes.Message):
 class ListAccessKeysByAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysByAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessKeysByAccountRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -912,6 +941,8 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
 class UpdateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.UpdateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -960,6 +991,8 @@ class UpdateAccessKeyRequest(pb_classes.Message):
 class ActivateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ActivateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ActivateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -993,6 +1026,8 @@ class ActivateAccessKeyRequest(pb_classes.Message):
 class DeactivateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.DeactivateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeactivateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1026,6 +1061,8 @@ class DeactivateAccessKeyRequest(pb_classes.Message):
 class DeleteAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.DeleteAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1059,6 +1096,8 @@ class DeleteAccessKeyRequest(pb_classes.Message):
 class GetAccessKeySecretOnceResponse(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeySecretOnceResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeySecretOnceResponse",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1091,6 +1130,8 @@ class GetAccessKeySecretOnceResponse(pb_classes.Message):
 class ListAccessKeysResponse(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessKeysResponse",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1114,7 +1155,7 @@ class ListAccessKeysResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[AccessKey]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(AccessKey,None),
+        wrap=pb_classes.Repeated.with_wrap(AccessKey,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[AccessKey]") -> None:
@@ -1346,6 +1387,8 @@ class AccessKeyServiceClient(client.Client):
 class AuthPublicKey(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_pb2.AuthPublicKey
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AuthPublicKey",auth_public_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1409,6 +1452,9 @@ class AuthPublicKey(pb_classes.Message):
 class AuthPublicKeySpec(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_pb2.AuthPublicKeySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AuthPublicKeySpec",auth_public_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "expires_at": well_known_1.ts_mask,
+    }
     
     def __init__(
         self,
@@ -1486,6 +1532,8 @@ class AuthPublicKeySpec(pb_classes.Message):
 class AuthPublicKeyStatus(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_pb2.AuthPublicKeyStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AuthPublicKeyStatus",auth_public_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AuthPublicKeyStatus.State",auth_public_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1573,6 +1621,8 @@ class AuthPublicKeyStatus(pb_classes.Message):
 class CreateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.CreateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1621,6 +1671,8 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
 class GetAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.GetAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1653,6 +1705,8 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
 class ListAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -1756,6 +1810,8 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
 class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyByAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAuthPublicKeyByAccountRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1831,6 +1887,8 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
 class UpdateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.UpdateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1879,6 +1937,8 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
 class ActivateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ActivateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ActivateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1911,6 +1971,8 @@ class ActivateAuthPublicKeyRequest(pb_classes.Message):
 class DeactivateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.DeactivateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeactivateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1943,6 +2005,8 @@ class DeactivateAuthPublicKeyRequest(pb_classes.Message):
 class DeleteAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.DeleteAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1975,6 +2039,8 @@ class DeleteAuthPublicKeyRequest(pb_classes.Message):
 class ListAuthPublicKeyResponse(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAuthPublicKeyResponse",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1998,7 +2064,7 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[AuthPublicKey]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(AuthPublicKey,None),
+        wrap=pb_classes.Repeated.with_wrap(AuthPublicKey,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[AuthPublicKey]") -> None:
@@ -2213,6 +2279,8 @@ class SuspensionState(pb_enum.Enum):
 class Container(pb_classes.Message):
     __PB2_CLASS__ = container_pb2.Container
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Container",container_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2276,6 +2344,8 @@ class Container(pb_classes.Message):
 class ContainerSpec(pb_classes.Message):
     __PB2_CLASS__ = container_pb2.ContainerSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ContainerSpec",container_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2293,6 +2363,8 @@ class ContainerSpec(pb_classes.Message):
 class ContainerStatus(pb_classes.Message):
     __PB2_CLASS__ = container_pb2.ContainerStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ContainerStatus",container_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2342,6 +2414,8 @@ class ContainerStatus(pb_classes.Message):
 class Federation(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.Federation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Federation",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2405,6 +2479,8 @@ class Federation(pb_classes.Message):
 class FederationSpec(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.FederationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationSpec",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_settings__(pb_classes.OneOf):
         name: builtins.str= "settings"
@@ -2439,7 +2515,7 @@ class FederationSpec(pb_classes.Message):
         *,
         user_account_auto_creation: "builtins.bool|unset.UnsetType" = unset.Unset,
         active: "builtins.bool|unset.UnsetType" = unset.Unset,
-        saml_settings: "SamlSettings|federation_pb2.SamlSettings|unset.UnsetType" = unset.Unset,
+        saml_settings: "SamlSettings|federation_pb2.SamlSettings|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(user_account_auto_creation, unset.UnsetType):
@@ -2476,13 +2552,13 @@ class FederationSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def saml_settings(self) -> "SamlSettings":
-        return super()._get_field("saml_settings", explicit_presence=False,
+    def saml_settings(self) -> "SamlSettings|None":
+        return super()._get_field("saml_settings", explicit_presence=True,
         wrap=SamlSettings,
         )
     @saml_settings.setter
-    def saml_settings(self, value: "SamlSettings|federation_pb2.SamlSettings") -> None:
-        return super()._set_field("saml_settings",value,explicit_presence=False,
+    def saml_settings(self, value: "SamlSettings|federation_pb2.SamlSettings|None") -> None:
+        return super()._set_field("saml_settings",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -2495,6 +2571,8 @@ class FederationSpec(pb_classes.Message):
 class SamlSettings(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.SamlSettings
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.SamlSettings",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2541,6 +2619,8 @@ class SamlSettings(pb_classes.Message):
 class FederationStatus(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.FederationStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationStatus",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2559,6 +2639,8 @@ class FederationStatus(pb_classes.Message):
 class FederationCertificate(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_pb2.FederationCertificate
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationCertificate",federation_certificate_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2622,6 +2704,8 @@ class FederationCertificate(pb_classes.Message):
 class FederationCertificateSpec(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_pb2.FederationCertificateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationCertificateSpec",federation_certificate_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2668,6 +2752,10 @@ class FederationCertificateSpec(pb_classes.Message):
 class FederationCertificateStatus(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_pb2.FederationCertificateStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationCertificateStatus",federation_certificate_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "not_before": well_known_1.ts_mask,
+        "not_after": well_known_1.ts_mask,
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.FederationCertificateStatus.State",federation_certificate_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -2770,6 +2858,8 @@ class FederationCertificateStatus(pb_classes.Message):
 class CreateFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.CreateFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2818,6 +2908,8 @@ class CreateFederationCertificateRequest(pb_classes.Message):
 class GetFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.GetFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2850,6 +2942,8 @@ class GetFederationCertificateRequest(pb_classes.Message):
 class ListFederationCertificateByFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.ListFederationCertificateByFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationCertificateByFederationRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2910,6 +3004,8 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
 class UpdateFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.UpdateFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2958,6 +3054,8 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
 class DeleteFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.DeleteFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2990,6 +3088,8 @@ class DeleteFederationCertificateRequest(pb_classes.Message):
 class ListFederationCertificateResponse(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.ListFederationCertificateResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationCertificateResponse",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3013,7 +3113,7 @@ class ListFederationCertificateResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[FederationCertificate]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(FederationCertificate,None),
+        wrap=pb_classes.Repeated.with_wrap(FederationCertificate,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[FederationCertificate]") -> None:
@@ -3145,6 +3245,8 @@ class FederationCertificateServiceClient(client.Client):
 class CreateFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.CreateFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3193,6 +3295,8 @@ class CreateFederationRequest(pb_classes.Message):
 class GetFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.GetFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3225,6 +3329,8 @@ class GetFederationRequest(pb_classes.Message):
 class ListFederationsRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.ListFederationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationsRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3299,6 +3405,8 @@ class ListFederationsRequest(pb_classes.Message):
 class ListFederationsResponse(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.ListFederationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationsResponse",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3322,7 +3430,7 @@ class ListFederationsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Federation]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Federation,None),
+        wrap=pb_classes.Repeated.with_wrap(Federation,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Federation]") -> None:
@@ -3346,6 +3454,8 @@ class ListFederationsResponse(pb_classes.Message):
 class UpdateFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.UpdateFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3409,6 +3519,8 @@ class UpdateFederationRequest(pb_classes.Message):
 class DeleteFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.DeleteFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3569,6 +3681,8 @@ class FederationServiceClient(client.Client):
 class Group(pb_classes.Message):
     __PB2_CLASS__ = group_pb2.Group
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Group",group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3632,6 +3746,8 @@ class Group(pb_classes.Message):
 class GroupSpec(pb_classes.Message):
     __PB2_CLASS__ = group_pb2.GroupSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupSpec",group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3649,6 +3765,8 @@ class GroupSpec(pb_classes.Message):
 class GroupStatus(pb_classes.Message):
     __PB2_CLASS__ = group_pb2.GroupStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupStatus",group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.GroupStatus.State",group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -3704,6 +3822,8 @@ class GroupStatus(pb_classes.Message):
 class ServiceAccount(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccount",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3767,6 +3887,8 @@ class ServiceAccount(pb_classes.Message):
 class ServiceAccountSpec(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountSpec",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3799,6 +3921,8 @@ class ServiceAccountSpec(pb_classes.Message):
 class ServiceAccountStatus(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountStatus",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3831,6 +3955,8 @@ class ServiceAccountStatus(pb_classes.Message):
 class ServiceAccountAttributes(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountAttributes",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3878,6 +4004,8 @@ class ServiceAccountAttributes(pb_classes.Message):
 class TenantUserAccount(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccount",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -3941,6 +4069,8 @@ class TenantUserAccount(pb_classes.Message):
 class TenantUserAccountWithAttributes(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountWithAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountWithAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_attributesOptional__(pb_classes.OneOf):
         name: builtins.str= "attributesOptional"
@@ -3985,8 +4115,8 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|unset.UnsetType" = unset.Unset,
-        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|unset.UnsetType" = unset.Unset,
-        error: "Error|tenant_user_account_pb2.Error|unset.UnsetType" = unset.Unset,
+        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
+        error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(tenant_user_account, unset.UnsetType):
@@ -4015,23 +4145,23 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
         )
     
     @builtins.property
-    def attributes(self) -> "UserAttributes":
-        return super()._get_field("attributes", explicit_presence=False,
+    def attributes(self) -> "UserAttributes|None":
+        return super()._get_field("attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
     @attributes.setter
-    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
-        return super()._set_field("attributes",value,explicit_presence=False,
+    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes|None") -> None:
+        return super()._set_field("attributes",value,explicit_presence=True,
         )
     
     @builtins.property
-    def error(self) -> "Error":
-        return super()._get_field("error", explicit_presence=False,
+    def error(self) -> "Error|None":
+        return super()._get_field("error", explicit_presence=True,
         wrap=Error,
         )
     @error.setter
-    def error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
-        return super()._set_field("error",value,explicit_presence=False,
+    def error(self, value: "Error|tenant_user_account_pb2.Error|None") -> None:
+        return super()._set_field("error",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -4044,6 +4174,8 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
 class UserAttributes(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.UserAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__sub__(pb_classes.OneOf):
         name: builtins.str= "_sub"
@@ -4578,6 +4710,8 @@ class UserAttributes(pb_classes.Message):
 class Error(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.Error
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Error",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -4610,10 +4744,14 @@ class Error(pb_classes.Message):
 class TenantUserAccountSpec(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class VisibleAttributes(pb_classes.Message):
         __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec.VisibleAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -4679,6 +4817,8 @@ class TenantUserAccountSpec(pb_classes.Message):
 class TenantUserAccountStatus(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountStatus",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.TenantUserAccountStatus.State",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -4750,6 +4890,9 @@ class TenantUserAccountStatus(pb_classes.Message):
 class GroupMembership(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembership
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembership",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "revoke_at": well_known_1.ts_mask,
+    }
     
     def __init__(
         self,
@@ -4829,6 +4972,8 @@ class GroupMembership(pb_classes.Message):
 class GroupMembershipSpec(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipSpec",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -4861,6 +5006,8 @@ class GroupMembershipSpec(pb_classes.Message):
 class GroupMembershipStatus(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipStatus",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -4878,6 +5025,8 @@ class GroupMembershipStatus(pb_classes.Message):
 class GroupMembershipWithAttributes(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipWithAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipWithAttributes",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_attributesOptional__(pb_classes.OneOf):
         name: builtins.str= "attributesOptional"
@@ -4933,9 +5082,9 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         group_membership: "GroupMembership|group_membership_pb2.GroupMembership|unset.UnsetType" = unset.Unset,
-        user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|unset.UnsetType" = unset.Unset,
-        service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|unset.UnsetType" = unset.Unset,
-        error: "Error|tenant_user_account_pb2.Error|unset.UnsetType" = unset.Unset,
+        user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
+        service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None|unset.UnsetType" = unset.Unset,
+        error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(group_membership, unset.UnsetType):
@@ -4967,33 +5116,33 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         )
     
     @builtins.property
-    def user_attributes(self) -> "UserAttributes":
-        return super()._get_field("user_attributes", explicit_presence=False,
+    def user_attributes(self) -> "UserAttributes|None":
+        return super()._get_field("user_attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
     @user_attributes.setter
-    def user_attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
-        return super()._set_field("user_attributes",value,explicit_presence=False,
+    def user_attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes|None") -> None:
+        return super()._set_field("user_attributes",value,explicit_presence=True,
         )
     
     @builtins.property
-    def service_account_attributes(self) -> "ServiceAccountAttributes":
-        return super()._get_field("service_account_attributes", explicit_presence=False,
+    def service_account_attributes(self) -> "ServiceAccountAttributes|None":
+        return super()._get_field("service_account_attributes", explicit_presence=True,
         wrap=ServiceAccountAttributes,
         )
     @service_account_attributes.setter
-    def service_account_attributes(self, value: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes") -> None:
-        return super()._set_field("service_account_attributes",value,explicit_presence=False,
+    def service_account_attributes(self, value: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None") -> None:
+        return super()._set_field("service_account_attributes",value,explicit_presence=True,
         )
     
     @builtins.property
-    def error(self) -> "Error":
-        return super()._get_field("error", explicit_presence=False,
+    def error(self) -> "Error|None":
+        return super()._get_field("error", explicit_presence=True,
         wrap=Error,
         )
     @error.setter
-    def error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
-        return super()._set_field("error",value,explicit_presence=False,
+    def error(self, value: "Error|tenant_user_account_pb2.Error|None") -> None:
+        return super()._set_field("error",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -5008,6 +5157,8 @@ class GroupMembershipWithAttributes(pb_classes.Message):
 class CreateGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.CreateGroupMembershipRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5070,6 +5221,8 @@ class CreateGroupMembershipRequest(pb_classes.Message):
 class DeleteGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.DeleteGroupMembershipRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5102,6 +5255,8 @@ class DeleteGroupMembershipRequest(pb_classes.Message):
 class GetGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.GetGroupMembershipRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5134,6 +5289,8 @@ class GetGroupMembershipRequest(pb_classes.Message):
 class ListGroupMembershipsRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -5237,6 +5394,8 @@ class ListGroupMembershipsRequest(pb_classes.Message):
 class ListMemberOfRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListMemberOfRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListMemberOfRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -5340,6 +5499,8 @@ class ListMemberOfRequest(pb_classes.Message):
 class ListGroupMembershipsResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5363,7 +5524,7 @@ class ListGroupMembershipsResponse(pb_classes.Message):
     @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembership]":
         return super()._get_field("memberships", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(GroupMembership,None),
+        wrap=pb_classes.Repeated.with_wrap(GroupMembership,None,None),
         )
     @memberships.setter
     def memberships(self, value: "abc.Iterable[GroupMembership]") -> None:
@@ -5387,6 +5548,8 @@ class ListGroupMembershipsResponse(pb_classes.Message):
 class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsWithAttributesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsWithAttributesResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5410,7 +5573,7 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
     @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembershipWithAttributes]":
         return super()._get_field("memberships", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(GroupMembershipWithAttributes,None),
+        wrap=pb_classes.Repeated.with_wrap(GroupMembershipWithAttributes,None,None),
         )
     @memberships.setter
     def memberships(self, value: "abc.Iterable[GroupMembershipWithAttributes]") -> None:
@@ -5434,6 +5597,8 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
 class ListMemberOfResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListMemberOfResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListMemberOfResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5457,7 +5622,7 @@ class ListMemberOfResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Group,None),
+        wrap=pb_classes.Repeated.with_wrap(Group,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Group]") -> None:
@@ -5609,6 +5774,8 @@ class GroupMembershipServiceClient(client.Client):
 class GetGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.GetGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetGroupRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5641,6 +5808,8 @@ class GetGroupRequest(pb_classes.Message):
 class GetGroupByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.GetGroupByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetGroupByNameRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5687,6 +5856,8 @@ class GetGroupByNameRequest(pb_classes.Message):
 class ListGroupsRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.ListGroupsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupsRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -5790,6 +5961,8 @@ class ListGroupsRequest(pb_classes.Message):
 class ListGroupsResponse(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.ListGroupsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupsResponse",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -5813,7 +5986,7 @@ class ListGroupsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Group,None),
+        wrap=pb_classes.Repeated.with_wrap(Group,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Group]") -> None:
@@ -5904,6 +6077,8 @@ class GroupServiceClient(client.Client):
 class ExchangeTokenRequest(pb_classes.Message):
     __PB2_CLASS__ = token_service_pb2.ExchangeTokenRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ExchangeTokenRequest",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6050,6 +6225,8 @@ class ExchangeTokenRequest(pb_classes.Message):
 class CreateTokenResponse(pb_classes.Message):
     __PB2_CLASS__ = token_service_pb2.CreateTokenResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateTokenResponse",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6167,6 +6344,8 @@ class IdentityServiceClient(client.Client):
 class Invitation(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.Invitation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Invitation",invitation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6230,6 +6409,8 @@ class Invitation(pb_classes.Message):
 class InvitationSpec(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.InvitationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.InvitationSpec",invitation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_contact__(pb_classes.OneOf):
         name: builtins.str= "contact"
@@ -6305,6 +6486,9 @@ class InvitationSpec(pb_classes.Message):
 class InvitationStatus(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.InvitationStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.InvitationStatus",invitation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "expires_at": well_known_1.ts_mask,
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.InvitationStatus.State",invitation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -6380,6 +6564,8 @@ class InvitationStatus(pb_classes.Message):
 class CreateInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.CreateInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6442,6 +6628,8 @@ class CreateInvitationRequest(pb_classes.Message):
 class GetInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.GetInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6474,6 +6662,8 @@ class GetInvitationRequest(pb_classes.Message):
 class ListInvitationsRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ListInvitationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListInvitationsRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6548,6 +6738,8 @@ class ListInvitationsRequest(pb_classes.Message):
 class ListInvitationsResponse(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ListInvitationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListInvitationsResponse",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6571,7 +6763,7 @@ class ListInvitationsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Invitation]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Invitation,None),
+        wrap=pb_classes.Repeated.with_wrap(Invitation,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Invitation]") -> None:
@@ -6595,6 +6787,8 @@ class ListInvitationsResponse(pb_classes.Message):
 class DeleteInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.DeleteInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6627,6 +6821,8 @@ class DeleteInvitationRequest(pb_classes.Message):
 class UpdateInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.UpdateInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6675,6 +6871,8 @@ class UpdateInvitationRequest(pb_classes.Message):
 class ResendInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ResendInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ResendInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6835,6 +7033,8 @@ class InvitationServiceClient(client.Client):
 class UserAccountExternalId(pb_classes.Message):
     __PB2_CLASS__ = user_account_pb2.UserAccountExternalId
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAccountExternalId",user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6882,6 +7082,8 @@ class UserAccountExternalId(pb_classes.Message):
 class GetProfileRequest(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.GetProfileRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProfileRequest",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -6899,6 +7101,8 @@ class GetProfileRequest(pb_classes.Message):
 class GetProfileResponse(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.GetProfileResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProfileResponse",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_profile__(pb_classes.OneOf):
         name: builtins.str= "profile"
@@ -6953,9 +7157,9 @@ class GetProfileResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_profile: "UserProfile|profile_service_pb2.UserProfile|unset.UnsetType" = unset.Unset,
-        service_account_profile: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|unset.UnsetType" = unset.Unset,
-        anonymous_profile: "AnonymousAccount|profile_service_pb2.AnonymousAccount|unset.UnsetType" = unset.Unset,
+        user_profile: "UserProfile|profile_service_pb2.UserProfile|None|unset.UnsetType" = unset.Unset,
+        service_account_profile: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|None|unset.UnsetType" = unset.Unset,
+        anonymous_profile: "AnonymousAccount|profile_service_pb2.AnonymousAccount|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(user_profile, unset.UnsetType):
@@ -6974,33 +7178,33 @@ class GetProfileResponse(pb_classes.Message):
         ]
     
     @builtins.property
-    def user_profile(self) -> "UserProfile":
-        return super()._get_field("user_profile", explicit_presence=False,
+    def user_profile(self) -> "UserProfile|None":
+        return super()._get_field("user_profile", explicit_presence=True,
         wrap=UserProfile,
         )
     @user_profile.setter
-    def user_profile(self, value: "UserProfile|profile_service_pb2.UserProfile") -> None:
-        return super()._set_field("user_profile",value,explicit_presence=False,
+    def user_profile(self, value: "UserProfile|profile_service_pb2.UserProfile|None") -> None:
+        return super()._set_field("user_profile",value,explicit_presence=True,
         )
     
     @builtins.property
-    def service_account_profile(self) -> "ServiceAccountProfile":
-        return super()._get_field("service_account_profile", explicit_presence=False,
+    def service_account_profile(self) -> "ServiceAccountProfile|None":
+        return super()._get_field("service_account_profile", explicit_presence=True,
         wrap=ServiceAccountProfile,
         )
     @service_account_profile.setter
-    def service_account_profile(self, value: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile") -> None:
-        return super()._set_field("service_account_profile",value,explicit_presence=False,
+    def service_account_profile(self, value: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|None") -> None:
+        return super()._set_field("service_account_profile",value,explicit_presence=True,
         )
     
     @builtins.property
-    def anonymous_profile(self) -> "AnonymousAccount":
-        return super()._get_field("anonymous_profile", explicit_presence=False,
+    def anonymous_profile(self) -> "AnonymousAccount|None":
+        return super()._get_field("anonymous_profile", explicit_presence=True,
         wrap=AnonymousAccount,
         )
     @anonymous_profile.setter
-    def anonymous_profile(self, value: "AnonymousAccount|profile_service_pb2.AnonymousAccount") -> None:
-        return super()._set_field("anonymous_profile",value,explicit_presence=False,
+    def anonymous_profile(self, value: "AnonymousAccount|profile_service_pb2.AnonymousAccount|None") -> None:
+        return super()._set_field("anonymous_profile",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -7013,6 +7217,8 @@ class GetProfileResponse(pb_classes.Message):
 class UserProfile(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.UserProfile
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserProfile",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_attributes_optional__(pb_classes.OneOf):
         name: builtins.str= "attributes_optional"
@@ -7058,8 +7264,8 @@ class UserProfile(pb_classes.Message):
         *,
         id: "builtins.str|unset.UnsetType" = unset.Unset,
         federation_info: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|unset.UnsetType" = unset.Unset,
-        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|unset.UnsetType" = unset.Unset,
-        retrieving_error: "Error|tenant_user_account_pb2.Error|unset.UnsetType" = unset.Unset,
+        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
+        retrieving_error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
         tenants: "abc.Iterable[UserTenantInfo]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -7104,29 +7310,29 @@ class UserProfile(pb_classes.Message):
         )
     
     @builtins.property
-    def attributes(self) -> "UserAttributes":
-        return super()._get_field("attributes", explicit_presence=False,
+    def attributes(self) -> "UserAttributes|None":
+        return super()._get_field("attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
     @attributes.setter
-    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
-        return super()._set_field("attributes",value,explicit_presence=False,
+    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes|None") -> None:
+        return super()._set_field("attributes",value,explicit_presence=True,
         )
     
     @builtins.property
-    def retrieving_error(self) -> "Error":
-        return super()._get_field("retrieving_error", explicit_presence=False,
+    def retrieving_error(self) -> "Error|None":
+        return super()._get_field("retrieving_error", explicit_presence=True,
         wrap=Error,
         )
     @retrieving_error.setter
-    def retrieving_error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
-        return super()._set_field("retrieving_error",value,explicit_presence=False,
+    def retrieving_error(self, value: "Error|tenant_user_account_pb2.Error|None") -> None:
+        return super()._set_field("retrieving_error",value,explicit_presence=True,
         )
     
     @builtins.property
     def tenants(self) -> "abc.MutableSequence[UserTenantInfo]":
         return super()._get_field("tenants", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(UserTenantInfo,None),
+        wrap=pb_classes.Repeated.with_wrap(UserTenantInfo,None,None),
         )
     @tenants.setter
     def tenants(self, value: "abc.Iterable[UserTenantInfo]") -> None:
@@ -7145,6 +7351,8 @@ class UserProfile(pb_classes.Message):
 class UserTenantInfo(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.UserTenantInfo
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserTenantInfo",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7191,6 +7399,8 @@ class UserTenantInfo(pb_classes.Message):
 class ServiceAccountProfile(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.ServiceAccountProfile
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountProfile",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7224,6 +7434,8 @@ class ServiceAccountProfile(pb_classes.Message):
 class AnonymousAccount(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.AnonymousAccount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AnonymousAccount",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7268,6 +7480,8 @@ class ProfileServiceClient(client.Client):
 class GetProjectRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.GetProjectRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7300,6 +7514,8 @@ class GetProjectRequest(pb_classes.Message):
 class GetProjectByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.GetProjectByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProjectByNameRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7346,6 +7562,8 @@ class GetProjectByNameRequest(pb_classes.Message):
 class ListProjectsRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListProjectsRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -7449,6 +7667,8 @@ class ListProjectsRequest(pb_classes.Message):
 class ListProjectsResponse(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListProjectsResponse",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7472,7 +7692,7 @@ class ListProjectsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Container]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Container,None),
+        wrap=pb_classes.Repeated.with_wrap(Container,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Container]") -> None:
@@ -7563,6 +7783,8 @@ class ProjectServiceClient(client.Client):
 class CreateServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.CreateServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7611,6 +7833,8 @@ class CreateServiceAccountRequest(pb_classes.Message):
 class GetServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.GetServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7643,6 +7867,8 @@ class GetServiceAccountRequest(pb_classes.Message):
 class GetServiceAccountByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.GetServiceAccountByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetServiceAccountByNameRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7689,6 +7915,8 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
 class ListServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.ListServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -7792,6 +8020,8 @@ class ListServiceAccountRequest(pb_classes.Message):
 class UpdateServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.UpdateServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7840,6 +8070,8 @@ class UpdateServiceAccountRequest(pb_classes.Message):
 class DeleteServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.DeleteServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7872,6 +8104,8 @@ class DeleteServiceAccountRequest(pb_classes.Message):
 class ListServiceAccountResponse(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.ListServiceAccountResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListServiceAccountResponse",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -7895,7 +8129,7 @@ class ListServiceAccountResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[ServiceAccount]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(ServiceAccount,None),
+        wrap=pb_classes.Repeated.with_wrap(ServiceAccount,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[ServiceAccount]") -> None:
@@ -8047,6 +8281,8 @@ class ServiceAccountServiceClient(client.Client):
 class RevokeSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_management_service_pb2.RevokeSessionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.RevokeSessionRequest",session_management_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_revoke__(pb_classes.OneOf):
         name: builtins.str= "revoke"
@@ -8158,6 +8394,8 @@ class RevokeSessionRequest(pb_classes.Message):
 class RevokeSessionResponse(pb_classes.Message):
     __PB2_CLASS__ = session_management_service_pb2.RevokeSessionResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.RevokeSessionResponse",session_management_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8202,6 +8440,8 @@ class SessionManagementServiceClient(client.Client):
 class GetTenantRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.GetTenantRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetTenantRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8234,6 +8474,8 @@ class GetTenantRequest(pb_classes.Message):
 class ListTenantsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.ListTenantsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantsRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -8323,6 +8565,8 @@ class ListTenantsRequest(pb_classes.Message):
 class ListTenantsResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.ListTenantsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantsResponse",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8346,7 +8590,7 @@ class ListTenantsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Container]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Container,None),
+        wrap=pb_classes.Repeated.with_wrap(Container,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Container]") -> None:
@@ -8417,6 +8661,8 @@ class TenantServiceClient(client.Client):
 class GetTenantUserAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.GetTenantUserAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8449,6 +8695,8 @@ class GetTenantUserAccountRequest(pb_classes.Message):
 class ListTenantUserAccountsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.ListTenantUserAccountsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -8552,6 +8800,8 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
 class ListTenantUserAccountsResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.ListTenantUserAccountsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsResponse",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8575,7 +8825,7 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccount]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(TenantUserAccount,None),
+        wrap=pb_classes.Repeated.with_wrap(TenantUserAccount,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[TenantUserAccount]") -> None:
@@ -8599,6 +8849,8 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
 class BlockTenantUserAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.BlockTenantUserAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.BlockTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8631,6 +8883,8 @@ class BlockTenantUserAccountRequest(pb_classes.Message):
 class UnblockTenantUserAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.UnblockTenantUserAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UnblockTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8751,6 +9005,8 @@ class TenantUserAccountServiceClient(client.Client):
 class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.GetTenantUserAccountWithAttributesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetTenantUserAccountWithAttributesRequest",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8783,6 +9039,8 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
 class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsWithAttributesRequest",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -8886,6 +9144,8 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
 class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsWithAttributesResponse",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -8909,7 +9169,7 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccountWithAttributes]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(TenantUserAccountWithAttributes,None),
+        wrap=pb_classes.Repeated.with_wrap(TenantUserAccountWithAttributes,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[TenantUserAccountWithAttributes]") -> None:

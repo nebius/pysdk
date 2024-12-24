@@ -17,6 +17,8 @@ import collections.abc as abc
 class PostgresqlConfig16(pb_classes.Message):
     __PB2_CLASS__ = postgresql_pb2.PostgresqlConfig16
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.config.PostgresqlConfig16",postgresql_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__autovacuum_work_mem__(pb_classes.OneOf):
         name: builtins.str= "_autovacuum_work_mem"

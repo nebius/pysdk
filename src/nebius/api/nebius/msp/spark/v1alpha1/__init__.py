@@ -36,6 +36,8 @@ import nebius.api.nebius.msp.spark.v1alpha1.session_service_pb2 as session_servi
 class Cluster(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Cluster
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.Cluster",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -99,6 +101,8 @@ class Cluster(pb_classes.Message):
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__description__(pb_classes.OneOf):
         name: builtins.str= "_description"
@@ -218,6 +222,8 @@ class ClusterSpec(pb_classes.Message):
 class ClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ClusterStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__history_server_endpoint__(pb_classes.OneOf):
         name: builtins.str= "_history_server_endpoint"
@@ -309,6 +315,8 @@ class ClusterStatus(pb_classes.Message):
 class Limits(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Limits
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.Limits",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -355,6 +363,8 @@ class Limits(pb_classes.Message):
 class Password(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Password
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.Password",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -388,6 +398,8 @@ class Password(pb_classes.Message):
 class GetClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.GetClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -420,6 +432,8 @@ class GetClusterRequest(pb_classes.Message):
 class GetClusterByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.GetClusterByNameRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -466,6 +480,8 @@ class GetClusterByNameRequest(pb_classes.Message):
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListClustersRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -526,6 +542,8 @@ class ListClustersRequest(pb_classes.Message):
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__next_page_token__(pb_classes.OneOf):
         name: builtins.str= "_next_page_token"
@@ -577,7 +595,7 @@ class ListClustersResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Cluster,None),
+        wrap=pb_classes.Repeated.with_wrap(Cluster,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Cluster]") -> None:
@@ -602,6 +620,8 @@ class ListClustersResponse(pb_classes.Message):
 class CreateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.CreateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -650,6 +670,8 @@ class CreateClusterRequest(pb_classes.Message):
 class UpdateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.UpdateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.UpdateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -698,6 +720,8 @@ class UpdateClusterRequest(pb_classes.Message):
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -858,6 +882,8 @@ class ClusterServiceClient(client.Client):
 class PythonConfig(pb_classes.Message):
     __PB2_CLASS__ = common_pb2.PythonConfig
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.PythonConfig",common_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -906,6 +932,8 @@ class PythonConfig(pb_classes.Message):
 class JavaConfig(pb_classes.Message):
     __PB2_CLASS__ = common_pb2.JavaConfig
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JavaConfig",common_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -939,6 +967,8 @@ class JavaConfig(pb_classes.Message):
 class DriverTemplateSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.DriverTemplateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.DriverTemplateSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -987,6 +1017,8 @@ class DriverTemplateSpec(pb_classes.Message):
 class DynamicAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.DynamicAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.DynamicAllocationSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1033,6 +1065,8 @@ class DynamicAllocationSpec(pb_classes.Message):
 class ExecutorTemplateSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.ExecutorTemplateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ExecutorTemplateSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_hosts_spec__(pb_classes.OneOf):
         name: builtins.str= "hosts_spec"
@@ -1078,8 +1112,8 @@ class ExecutorTemplateSpec(pb_classes.Message):
         *,
         disk: "resource_1.DiskSpec|template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
         resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|unset.UnsetType" = unset.Unset,
-        hosts_dynamic_allocation: "DynamicAllocationSpec|preset_pb2.DynamicAllocationSpec|unset.UnsetType" = unset.Unset,
+        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None|unset.UnsetType" = unset.Unset,
+        hosts_dynamic_allocation: "DynamicAllocationSpec|preset_pb2.DynamicAllocationSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(disk, unset.UnsetType):
@@ -1121,23 +1155,23 @@ class ExecutorTemplateSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def hosts(self) -> "resource_1.HostSpec":
-        return super()._get_field("hosts", explicit_presence=False,
+    def hosts(self) -> "resource_1.HostSpec|None":
+        return super()._get_field("hosts", explicit_presence=True,
         wrap=resource_1.HostSpec,
         )
     @hosts.setter
-    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec") -> None:
-        return super()._set_field("hosts",value,explicit_presence=False,
+    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec|None") -> None:
+        return super()._set_field("hosts",value,explicit_presence=True,
         )
     
     @builtins.property
-    def hosts_dynamic_allocation(self) -> "DynamicAllocationSpec":
-        return super()._get_field("hosts_dynamic_allocation", explicit_presence=False,
+    def hosts_dynamic_allocation(self) -> "DynamicAllocationSpec|None":
+        return super()._get_field("hosts_dynamic_allocation", explicit_presence=True,
         wrap=DynamicAllocationSpec,
         )
     @hosts_dynamic_allocation.setter
-    def hosts_dynamic_allocation(self, value: "DynamicAllocationSpec|preset_pb2.DynamicAllocationSpec") -> None:
-        return super()._set_field("hosts_dynamic_allocation",value,explicit_presence=False,
+    def hosts_dynamic_allocation(self, value: "DynamicAllocationSpec|preset_pb2.DynamicAllocationSpec|None") -> None:
+        return super()._set_field("hosts_dynamic_allocation",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -1158,6 +1192,8 @@ class JobResultCode(pb_enum.Enum):
 class Job(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.Job
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.Job",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1221,10 +1257,14 @@ class Job(pb_classes.Message):
 class JobSpec(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.JobSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobSpec",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class SparkConfEntry(pb_classes.Message):
         __PB2_CLASS__ = job_pb2.JobSpec.SparkConfEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobSpec.SparkConfEntry",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -1348,8 +1388,8 @@ class JobSpec(pb_classes.Message):
         jar_uris: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
         packages: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
         spark_conf: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
-        python: "PythonConfig|common_pb2.PythonConfig|unset.UnsetType" = unset.Unset,
-        java: "JavaConfig|common_pb2.JavaConfig|unset.UnsetType" = unset.Unset,
+        python: "PythonConfig|common_pb2.PythonConfig|None|unset.UnsetType" = unset.Unset,
+        java: "JavaConfig|common_pb2.JavaConfig|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -1494,23 +1534,23 @@ class JobSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def python(self) -> "PythonConfig":
-        return super()._get_field("python", explicit_presence=False,
+    def python(self) -> "PythonConfig|None":
+        return super()._get_field("python", explicit_presence=True,
         wrap=PythonConfig,
         )
     @python.setter
-    def python(self, value: "PythonConfig|common_pb2.PythonConfig") -> None:
-        return super()._set_field("python",value,explicit_presence=False,
+    def python(self, value: "PythonConfig|common_pb2.PythonConfig|None") -> None:
+        return super()._set_field("python",value,explicit_presence=True,
         )
     
     @builtins.property
-    def java(self) -> "JavaConfig":
-        return super()._get_field("java", explicit_presence=False,
+    def java(self) -> "JavaConfig|None":
+        return super()._get_field("java", explicit_presence=True,
         wrap=JavaConfig,
         )
     @java.setter
-    def java(self, value: "JavaConfig|common_pb2.JavaConfig") -> None:
-        return super()._set_field("java",value,explicit_presence=False,
+    def java(self, value: "JavaConfig|common_pb2.JavaConfig|None") -> None:
+        return super()._set_field("java",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -1534,6 +1574,8 @@ class JobSpec(pb_classes.Message):
 class JobResultDetails(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.JobResultDetails
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobResultDetails",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1567,6 +1609,8 @@ class JobResultDetails(pb_classes.Message):
 class JobStatus(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.JobStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobStatus",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__driver_endpoint__(pb_classes.OneOf):
         name: builtins.str= "_driver_endpoint"
@@ -1704,6 +1748,8 @@ class JobStatus(pb_classes.Message):
 class GetJobRequest(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.GetJobRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.GetJobRequest",job_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1736,6 +1782,8 @@ class GetJobRequest(pb_classes.Message):
 class ListJobsRequest(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.ListJobsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListJobsRequest",job_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1796,6 +1844,8 @@ class ListJobsRequest(pb_classes.Message):
 class ListJobsResponse(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.ListJobsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListJobsResponse",job_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__next_page_token__(pb_classes.OneOf):
         name: builtins.str= "_next_page_token"
@@ -1847,7 +1897,7 @@ class ListJobsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Job]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Job,None),
+        wrap=pb_classes.Repeated.with_wrap(Job,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Job]") -> None:
@@ -1872,6 +1922,8 @@ class ListJobsResponse(pb_classes.Message):
 class CreateJobRequest(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.CreateJobRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.CreateJobRequest",job_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1920,6 +1972,8 @@ class CreateJobRequest(pb_classes.Message):
 class CancelJobRequest(pb_classes.Message):
     __PB2_CLASS__ = job_service_pb2.CancelJobRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.CancelJobRequest",job_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2040,6 +2094,8 @@ class JobServiceClient(client.Client):
 class Session(pb_classes.Message):
     __PB2_CLASS__ = session_pb2.Session
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.Session",session_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2103,10 +2159,14 @@ class Session(pb_classes.Message):
 class SessionSpec(pb_classes.Message):
     __PB2_CLASS__ = session_pb2.SessionSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.SessionSpec",session_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class SparkConfEntry(pb_classes.Message):
         __PB2_CLASS__ = session_pb2.SessionSpec.SparkConfEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.SessionSpec.SparkConfEntry",session_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -2332,6 +2392,8 @@ class SessionSpec(pb_classes.Message):
 class SessionStatus(pb_classes.Message):
     __PB2_CLASS__ = session_pb2.SessionStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.SessionStatus",session_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__spark_connect_endpoint__(pb_classes.OneOf):
         name: builtins.str= "_spark_connect_endpoint"
@@ -2454,6 +2516,8 @@ class SessionStatus(pb_classes.Message):
 class GetSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.GetSessionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.GetSessionRequest",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2486,6 +2550,8 @@ class GetSessionRequest(pb_classes.Message):
 class GetSessionByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.GetSessionByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.GetSessionByNameRequest",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2532,6 +2598,8 @@ class GetSessionByNameRequest(pb_classes.Message):
 class ListSessionsRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.ListSessionsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListSessionsRequest",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2592,6 +2660,8 @@ class ListSessionsRequest(pb_classes.Message):
 class ListSessionsResponse(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.ListSessionsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ListSessionsResponse",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__next_page_token__(pb_classes.OneOf):
         name: builtins.str= "_next_page_token"
@@ -2643,7 +2713,7 @@ class ListSessionsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Session]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Session,None),
+        wrap=pb_classes.Repeated.with_wrap(Session,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Session]") -> None:
@@ -2668,6 +2738,8 @@ class ListSessionsResponse(pb_classes.Message):
 class CreateSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.CreateSessionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.CreateSessionRequest",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -2716,6 +2788,8 @@ class CreateSessionRequest(pb_classes.Message):
 class DeleteSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_service_pb2.DeleteSessionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.DeleteSessionRequest",session_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,

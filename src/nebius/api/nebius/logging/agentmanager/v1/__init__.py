@@ -7,13 +7,13 @@ import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.logging.v1.agentmanager.version_service_pb2 as version_service_pb2
 import nebius.base.protos.pb_classes as pb_classes
+import nebius.base.protos.well_known as well_known
 import google.protobuf.message as message
 import nebius.base.protos.unset as unset
 import builtins as builtins
 import google.protobuf.duration_pb2 as duration_pb2
 import datetime as datetime
 import collections.abc as abc
-import nebius.base.protos.well_known as well_known
 import typing as typing
 import nebius.aio.client as client
 import grpc as grpc
@@ -42,6 +42,11 @@ class Action(pb_enum.Enum):
 class GetVersionRequest(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.GetVersionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.GetVersionRequest",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "agent_uptime": well_known.duration_mask,
+        "system_uptime": well_known.duration_mask,
+        "updater_uptime": well_known.duration_mask,
+    }
     
     def __init__(
         self,
@@ -252,6 +257,8 @@ class GetVersionRequest(pb_classes.Message):
 class OSInfo(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.OSInfo
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.OSInfo",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -312,6 +319,8 @@ class OSInfo(pb_classes.Message):
 class GetVersionResponse(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.GetVersionResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.GetVersionResponse",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_response__(pb_classes.OneOf):
         name: builtins.str= "response"
@@ -367,9 +376,9 @@ class GetVersionResponse(pb_classes.Message):
         initial_message: message.Message|None = None,
         *,
         action: "Action|version_service_pb2.Action|unset.UnsetType" = unset.Unset,
-        nop: "NopActionParams|version_service_pb2.NopActionParams|unset.UnsetType" = unset.Unset,
-        update: "UpdateActionParams|version_service_pb2.UpdateActionParams|unset.UnsetType" = unset.Unset,
-        restart: "RestartActionParams|version_service_pb2.RestartActionParams|unset.UnsetType" = unset.Unset,
+        nop: "NopActionParams|version_service_pb2.NopActionParams|None|unset.UnsetType" = unset.Unset,
+        update: "UpdateActionParams|version_service_pb2.UpdateActionParams|None|unset.UnsetType" = unset.Unset,
+        restart: "RestartActionParams|version_service_pb2.RestartActionParams|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(action, unset.UnsetType):
@@ -401,33 +410,33 @@ class GetVersionResponse(pb_classes.Message):
         )
     
     @builtins.property
-    def nop(self) -> "NopActionParams":
-        return super()._get_field("nop", explicit_presence=False,
+    def nop(self) -> "NopActionParams|None":
+        return super()._get_field("nop", explicit_presence=True,
         wrap=NopActionParams,
         )
     @nop.setter
-    def nop(self, value: "NopActionParams|version_service_pb2.NopActionParams") -> None:
-        return super()._set_field("nop",value,explicit_presence=False,
+    def nop(self, value: "NopActionParams|version_service_pb2.NopActionParams|None") -> None:
+        return super()._set_field("nop",value,explicit_presence=True,
         )
     
     @builtins.property
-    def update(self) -> "UpdateActionParams":
-        return super()._get_field("update", explicit_presence=False,
+    def update(self) -> "UpdateActionParams|None":
+        return super()._get_field("update", explicit_presence=True,
         wrap=UpdateActionParams,
         )
     @update.setter
-    def update(self, value: "UpdateActionParams|version_service_pb2.UpdateActionParams") -> None:
-        return super()._set_field("update",value,explicit_presence=False,
+    def update(self, value: "UpdateActionParams|version_service_pb2.UpdateActionParams|None") -> None:
+        return super()._set_field("update",value,explicit_presence=True,
         )
     
     @builtins.property
-    def restart(self) -> "RestartActionParams":
-        return super()._get_field("restart", explicit_presence=False,
+    def restart(self) -> "RestartActionParams|None":
+        return super()._get_field("restart", explicit_presence=True,
         wrap=RestartActionParams,
         )
     @restart.setter
-    def restart(self, value: "RestartActionParams|version_service_pb2.RestartActionParams") -> None:
-        return super()._set_field("restart",value,explicit_presence=False,
+    def restart(self, value: "RestartActionParams|version_service_pb2.RestartActionParams|None") -> None:
+        return super()._set_field("restart",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -441,6 +450,8 @@ class GetVersionResponse(pb_classes.Message):
 class NopActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.NopActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.NopActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -458,6 +469,8 @@ class NopActionParams(pb_classes.Message):
 class UpdateActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.UpdateActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.UpdateActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -504,6 +517,8 @@ class UpdateActionParams(pb_classes.Message):
 class RestartActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.RestartActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.RestartActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,

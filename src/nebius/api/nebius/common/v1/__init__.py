@@ -13,9 +13,9 @@ import google.protobuf.message as message_1
 import nebius.base.protos.unset as unset
 import collections.abc as abc
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.well_known as well_known_1
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
-import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import google.protobuf.any_pb2 as any_pb2
 import google.rpc.status_pb2 as status_pb2
@@ -31,6 +31,8 @@ import nebius.aio.operation as operation
 class ServiceError(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ServiceError
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ServiceError",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class RetryType(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.common.v1.ServiceError.RetryType",error_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -193,18 +195,18 @@ class ServiceError(pb_classes.Message):
         *,
         service: "builtins.str|unset.UnsetType" = unset.Unset,
         code: "builtins.str|unset.UnsetType" = unset.Unset,
-        bad_request: "BadRequest|error_pb2.BadRequest|unset.UnsetType" = unset.Unset,
-        bad_resource_state: "BadResourceState|error_pb2.BadResourceState|unset.UnsetType" = unset.Unset,
-        resource_not_found: "ResourceNotFound|error_pb2.ResourceNotFound|unset.UnsetType" = unset.Unset,
-        resource_already_exists: "ResourceAlreadyExists|error_pb2.ResourceAlreadyExists|unset.UnsetType" = unset.Unset,
-        out_of_range: "OutOfRange|error_pb2.OutOfRange|unset.UnsetType" = unset.Unset,
-        permission_denied: "PermissionDenied|error_pb2.PermissionDenied|unset.UnsetType" = unset.Unset,
-        resource_conflict: "ResourceConflict|error_pb2.ResourceConflict|unset.UnsetType" = unset.Unset,
-        operation_aborted: "OperationAborted|error_pb2.OperationAborted|unset.UnsetType" = unset.Unset,
-        too_many_requests: "TooManyRequests|error_pb2.TooManyRequests|unset.UnsetType" = unset.Unset,
-        quota_failure: "QuotaFailure|error_pb2.QuotaFailure|unset.UnsetType" = unset.Unset,
-        not_enough_resources: "NotEnoughResources|error_pb2.NotEnoughResources|unset.UnsetType" = unset.Unset,
-        internal_error: "InternalError|error_pb2.InternalError|unset.UnsetType" = unset.Unset,
+        bad_request: "BadRequest|error_pb2.BadRequest|None|unset.UnsetType" = unset.Unset,
+        bad_resource_state: "BadResourceState|error_pb2.BadResourceState|None|unset.UnsetType" = unset.Unset,
+        resource_not_found: "ResourceNotFound|error_pb2.ResourceNotFound|None|unset.UnsetType" = unset.Unset,
+        resource_already_exists: "ResourceAlreadyExists|error_pb2.ResourceAlreadyExists|None|unset.UnsetType" = unset.Unset,
+        out_of_range: "OutOfRange|error_pb2.OutOfRange|None|unset.UnsetType" = unset.Unset,
+        permission_denied: "PermissionDenied|error_pb2.PermissionDenied|None|unset.UnsetType" = unset.Unset,
+        resource_conflict: "ResourceConflict|error_pb2.ResourceConflict|None|unset.UnsetType" = unset.Unset,
+        operation_aborted: "OperationAborted|error_pb2.OperationAborted|None|unset.UnsetType" = unset.Unset,
+        too_many_requests: "TooManyRequests|error_pb2.TooManyRequests|None|unset.UnsetType" = unset.Unset,
+        quota_failure: "QuotaFailure|error_pb2.QuotaFailure|None|unset.UnsetType" = unset.Unset,
+        not_enough_resources: "NotEnoughResources|error_pb2.NotEnoughResources|None|unset.UnsetType" = unset.Unset,
+        internal_error: "InternalError|error_pb2.InternalError|None|unset.UnsetType" = unset.Unset,
         retry_type: "ServiceError.RetryType|error_pb2.ServiceError.RetryType|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -279,123 +281,123 @@ class ServiceError(pb_classes.Message):
         )
     
     @builtins.property
-    def bad_request(self) -> "BadRequest":
-        return super()._get_field("bad_request", explicit_presence=False,
+    def bad_request(self) -> "BadRequest|None":
+        return super()._get_field("bad_request", explicit_presence=True,
         wrap=BadRequest,
         )
     @bad_request.setter
-    def bad_request(self, value: "BadRequest|error_pb2.BadRequest") -> None:
-        return super()._set_field("bad_request",value,explicit_presence=False,
+    def bad_request(self, value: "BadRequest|error_pb2.BadRequest|None") -> None:
+        return super()._set_field("bad_request",value,explicit_presence=True,
         )
     
     @builtins.property
-    def bad_resource_state(self) -> "BadResourceState":
-        return super()._get_field("bad_resource_state", explicit_presence=False,
+    def bad_resource_state(self) -> "BadResourceState|None":
+        return super()._get_field("bad_resource_state", explicit_presence=True,
         wrap=BadResourceState,
         )
     @bad_resource_state.setter
-    def bad_resource_state(self, value: "BadResourceState|error_pb2.BadResourceState") -> None:
-        return super()._set_field("bad_resource_state",value,explicit_presence=False,
+    def bad_resource_state(self, value: "BadResourceState|error_pb2.BadResourceState|None") -> None:
+        return super()._set_field("bad_resource_state",value,explicit_presence=True,
         )
     
     @builtins.property
-    def resource_not_found(self) -> "ResourceNotFound":
-        return super()._get_field("resource_not_found", explicit_presence=False,
+    def resource_not_found(self) -> "ResourceNotFound|None":
+        return super()._get_field("resource_not_found", explicit_presence=True,
         wrap=ResourceNotFound,
         )
     @resource_not_found.setter
-    def resource_not_found(self, value: "ResourceNotFound|error_pb2.ResourceNotFound") -> None:
-        return super()._set_field("resource_not_found",value,explicit_presence=False,
+    def resource_not_found(self, value: "ResourceNotFound|error_pb2.ResourceNotFound|None") -> None:
+        return super()._set_field("resource_not_found",value,explicit_presence=True,
         )
     
     @builtins.property
-    def resource_already_exists(self) -> "ResourceAlreadyExists":
-        return super()._get_field("resource_already_exists", explicit_presence=False,
+    def resource_already_exists(self) -> "ResourceAlreadyExists|None":
+        return super()._get_field("resource_already_exists", explicit_presence=True,
         wrap=ResourceAlreadyExists,
         )
     @resource_already_exists.setter
-    def resource_already_exists(self, value: "ResourceAlreadyExists|error_pb2.ResourceAlreadyExists") -> None:
-        return super()._set_field("resource_already_exists",value,explicit_presence=False,
+    def resource_already_exists(self, value: "ResourceAlreadyExists|error_pb2.ResourceAlreadyExists|None") -> None:
+        return super()._set_field("resource_already_exists",value,explicit_presence=True,
         )
     
     @builtins.property
-    def out_of_range(self) -> "OutOfRange":
-        return super()._get_field("out_of_range", explicit_presence=False,
+    def out_of_range(self) -> "OutOfRange|None":
+        return super()._get_field("out_of_range", explicit_presence=True,
         wrap=OutOfRange,
         )
     @out_of_range.setter
-    def out_of_range(self, value: "OutOfRange|error_pb2.OutOfRange") -> None:
-        return super()._set_field("out_of_range",value,explicit_presence=False,
+    def out_of_range(self, value: "OutOfRange|error_pb2.OutOfRange|None") -> None:
+        return super()._set_field("out_of_range",value,explicit_presence=True,
         )
     
     @builtins.property
-    def permission_denied(self) -> "PermissionDenied":
-        return super()._get_field("permission_denied", explicit_presence=False,
+    def permission_denied(self) -> "PermissionDenied|None":
+        return super()._get_field("permission_denied", explicit_presence=True,
         wrap=PermissionDenied,
         )
     @permission_denied.setter
-    def permission_denied(self, value: "PermissionDenied|error_pb2.PermissionDenied") -> None:
-        return super()._set_field("permission_denied",value,explicit_presence=False,
+    def permission_denied(self, value: "PermissionDenied|error_pb2.PermissionDenied|None") -> None:
+        return super()._set_field("permission_denied",value,explicit_presence=True,
         )
     
     @builtins.property
-    def resource_conflict(self) -> "ResourceConflict":
-        return super()._get_field("resource_conflict", explicit_presence=False,
+    def resource_conflict(self) -> "ResourceConflict|None":
+        return super()._get_field("resource_conflict", explicit_presence=True,
         wrap=ResourceConflict,
         )
     @resource_conflict.setter
-    def resource_conflict(self, value: "ResourceConflict|error_pb2.ResourceConflict") -> None:
-        return super()._set_field("resource_conflict",value,explicit_presence=False,
+    def resource_conflict(self, value: "ResourceConflict|error_pb2.ResourceConflict|None") -> None:
+        return super()._set_field("resource_conflict",value,explicit_presence=True,
         )
     
     @builtins.property
-    def operation_aborted(self) -> "OperationAborted":
-        return super()._get_field("operation_aborted", explicit_presence=False,
+    def operation_aborted(self) -> "OperationAborted|None":
+        return super()._get_field("operation_aborted", explicit_presence=True,
         wrap=OperationAborted,
         )
     @operation_aborted.setter
-    def operation_aborted(self, value: "OperationAborted|error_pb2.OperationAborted") -> None:
-        return super()._set_field("operation_aborted",value,explicit_presence=False,
+    def operation_aborted(self, value: "OperationAborted|error_pb2.OperationAborted|None") -> None:
+        return super()._set_field("operation_aborted",value,explicit_presence=True,
         )
     
     @builtins.property
-    def too_many_requests(self) -> "TooManyRequests":
-        return super()._get_field("too_many_requests", explicit_presence=False,
+    def too_many_requests(self) -> "TooManyRequests|None":
+        return super()._get_field("too_many_requests", explicit_presence=True,
         wrap=TooManyRequests,
         )
     @too_many_requests.setter
-    def too_many_requests(self, value: "TooManyRequests|error_pb2.TooManyRequests") -> None:
-        return super()._set_field("too_many_requests",value,explicit_presence=False,
+    def too_many_requests(self, value: "TooManyRequests|error_pb2.TooManyRequests|None") -> None:
+        return super()._set_field("too_many_requests",value,explicit_presence=True,
         )
     
     @builtins.property
-    def quota_failure(self) -> "QuotaFailure":
-        return super()._get_field("quota_failure", explicit_presence=False,
+    def quota_failure(self) -> "QuotaFailure|None":
+        return super()._get_field("quota_failure", explicit_presence=True,
         wrap=QuotaFailure,
         )
     @quota_failure.setter
-    def quota_failure(self, value: "QuotaFailure|error_pb2.QuotaFailure") -> None:
-        return super()._set_field("quota_failure",value,explicit_presence=False,
+    def quota_failure(self, value: "QuotaFailure|error_pb2.QuotaFailure|None") -> None:
+        return super()._set_field("quota_failure",value,explicit_presence=True,
         )
     
     @builtins.property
-    def not_enough_resources(self) -> "NotEnoughResources":
-        return super()._get_field("not_enough_resources", explicit_presence=False,
+    def not_enough_resources(self) -> "NotEnoughResources|None":
+        return super()._get_field("not_enough_resources", explicit_presence=True,
         wrap=NotEnoughResources,
         )
     @not_enough_resources.setter
-    def not_enough_resources(self, value: "NotEnoughResources|error_pb2.NotEnoughResources") -> None:
-        return super()._set_field("not_enough_resources",value,explicit_presence=False,
+    def not_enough_resources(self, value: "NotEnoughResources|error_pb2.NotEnoughResources|None") -> None:
+        return super()._set_field("not_enough_resources",value,explicit_presence=True,
         )
     
     @builtins.property
-    def internal_error(self) -> "InternalError":
-        return super()._get_field("internal_error", explicit_presence=False,
+    def internal_error(self) -> "InternalError|None":
+        return super()._get_field("internal_error", explicit_presence=True,
         wrap=InternalError,
         )
     @internal_error.setter
-    def internal_error(self, value: "InternalError|error_pb2.InternalError") -> None:
-        return super()._set_field("internal_error",value,explicit_presence=False,
+    def internal_error(self, value: "InternalError|error_pb2.InternalError|None") -> None:
+        return super()._set_field("internal_error",value,explicit_presence=True,
         )
     
     @builtins.property
@@ -431,10 +433,14 @@ class ServiceError(pb_classes.Message):
 class BadRequest(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.BadRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.BadRequest",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class Violation(pb_classes.Message):
         __PB2_CLASS__ = error_pb2.BadRequest.Violation
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.BadRequest.Violation",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -498,7 +504,7 @@ class BadRequest(pb_classes.Message):
     @builtins.property
     def violations(self) -> "abc.MutableSequence[BadRequest.Violation]":
         return super()._get_field("violations", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(BadRequest.Violation,None),
+        wrap=pb_classes.Repeated.with_wrap(BadRequest.Violation,None,None),
         )
     @violations.setter
     def violations(self, value: "abc.Iterable[BadRequest.Violation]") -> None:
@@ -513,6 +519,8 @@ class BadRequest(pb_classes.Message):
 class BadResourceState(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.BadResourceState
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.BadResourceState",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -559,6 +567,8 @@ class BadResourceState(pb_classes.Message):
 class ResourceNotFound(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceNotFound
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceNotFound",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -591,6 +601,8 @@ class ResourceNotFound(pb_classes.Message):
 class ResourceAlreadyExists(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceAlreadyExists
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceAlreadyExists",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -623,6 +635,8 @@ class ResourceAlreadyExists(pb_classes.Message):
 class ResourceConflict(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceConflict
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceConflict",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -669,6 +683,8 @@ class ResourceConflict(pb_classes.Message):
 class OperationAborted(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.OperationAborted
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.OperationAborted",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -729,6 +745,8 @@ class OperationAborted(pb_classes.Message):
 class OutOfRange(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.OutOfRange
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.OutOfRange",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -775,6 +793,8 @@ class OutOfRange(pb_classes.Message):
 class PermissionDenied(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.PermissionDenied
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.PermissionDenied",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -807,6 +827,8 @@ class PermissionDenied(pb_classes.Message):
 class InternalError(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.InternalError
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.InternalError",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -853,6 +875,8 @@ class InternalError(pb_classes.Message):
 class TooManyRequests(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.TooManyRequests
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.TooManyRequests",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -885,10 +909,14 @@ class TooManyRequests(pb_classes.Message):
 class QuotaFailure(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.QuotaFailure
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.QuotaFailure",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class Violation(pb_classes.Message):
         __PB2_CLASS__ = error_pb2.QuotaFailure.Violation
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.QuotaFailure.Violation",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -980,7 +1008,7 @@ class QuotaFailure(pb_classes.Message):
     @builtins.property
     def violations(self) -> "abc.MutableSequence[QuotaFailure.Violation]":
         return super()._get_field("violations", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(QuotaFailure.Violation,None),
+        wrap=pb_classes.Repeated.with_wrap(QuotaFailure.Violation,None,None),
         )
     @violations.setter
     def violations(self, value: "abc.Iterable[QuotaFailure.Violation]") -> None:
@@ -995,10 +1023,14 @@ class QuotaFailure(pb_classes.Message):
 class NotEnoughResources(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.NotEnoughResources
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.NotEnoughResources",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class Violation(pb_classes.Message):
         __PB2_CLASS__ = error_pb2.NotEnoughResources.Violation
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.NotEnoughResources.Violation",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -1076,7 +1108,7 @@ class NotEnoughResources(pb_classes.Message):
     @builtins.property
     def violations(self) -> "abc.MutableSequence[NotEnoughResources.Violation]":
         return super()._get_field("violations", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(NotEnoughResources.Violation,None),
+        wrap=pb_classes.Repeated.with_wrap(NotEnoughResources.Violation,None,None),
         )
     @violations.setter
     def violations(self, value: "abc.Iterable[NotEnoughResources.Violation]") -> None:
@@ -1092,10 +1124,16 @@ class NotEnoughResources(pb_classes.Message):
 class ResourceMetadata(pb_classes.Message):
     __PB2_CLASS__ = metadata_pb2.ResourceMetadata
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceMetadata",metadata_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "created_at": well_known_1.ts_mask,
+        "updated_at": well_known_1.ts_mask,
+    }
     
     class LabelsEntry(pb_classes.Message):
         __PB2_CLASS__ = metadata_pb2.ResourceMetadata.LabelsEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceMetadata.LabelsEntry",metadata_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -1262,6 +1300,8 @@ class ResourceMetadata(pb_classes.Message):
 class GetByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = metadata_pb2.GetByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.GetByNameRequest",metadata_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1309,10 +1349,17 @@ class GetByNameRequest(pb_classes.Message):
 class Operation(pb_classes.Message):
     __PB2_CLASS__ = operation_pb2.Operation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.Operation",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "created_at": well_known_1.ts_mask,
+        "finished_at": well_known_1.ts_mask,
+        "status": well_known_1.status_mask,
+    }
     
     class RequestHeader(pb_classes.Message):
         __PB2_CLASS__ = operation_pb2.Operation.RequestHeader
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.Operation.RequestHeader",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -1347,6 +1394,8 @@ class Operation(pb_classes.Message):
     class RequestHeadersEntry(pb_classes.Message):
         __PB2_CLASS__ = operation_pb2.Operation.RequestHeadersEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.Operation.RequestHeadersEntry",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -1506,7 +1555,7 @@ class Operation(pb_classes.Message):
     @builtins.property
     def request_headers(self) -> "abc.MutableMapping[builtins.str,Operation.RequestHeader]":
         return super()._get_field("request_headers", explicit_presence=False,
-        wrap=pb_classes.Map.with_wrap(Operation.RequestHeader,None),
+        wrap=pb_classes.Map.with_wrap(Operation.RequestHeader,None,None),
         )
     @request_headers.setter
     def request_headers(self, value: "abc.Mapping[builtins.str,Operation.RequestHeader]") -> None:
@@ -1561,6 +1610,8 @@ class Operation(pb_classes.Message):
 class GetOperationRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.GetOperationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.GetOperationRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1593,6 +1644,8 @@ class GetOperationRequest(pb_classes.Message):
 class ListOperationsRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ListOperationsRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1653,6 +1706,8 @@ class ListOperationsRequest(pb_classes.Message):
 class ListOperationsResponse(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ListOperationsResponse",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1676,7 +1731,7 @@ class ListOperationsResponse(pb_classes.Message):
     @builtins.property
     def operations(self) -> "abc.MutableSequence[Operation]":
         return super()._get_field("operations", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Operation,None),
+        wrap=pb_classes.Repeated.with_wrap(Operation,None,None),
         )
     @operations.setter
     def operations(self, value: "abc.Iterable[Operation]") -> None:

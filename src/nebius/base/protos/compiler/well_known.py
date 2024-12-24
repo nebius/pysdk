@@ -10,6 +10,7 @@ class WellKnown:
     to_func: ImportedSymbol
     proto_class: ImportedSymbol
     python_class: ImportedSymbol
+    mask_func: ImportedSymbol
 
 
 converter_list = [
@@ -19,6 +20,7 @@ converter_list = [
         python_class=ImportedSymbol("datetime", "datetime"),
         from_func=ImportedSymbol("from_timestamp", "nebius.base.protos.well_known"),
         to_func=ImportedSymbol("to_timestamp", "nebius.base.protos.well_known"),
+        mask_func=ImportedSymbol("ts_mask", "nebius.base.protos.well_known"),
     ),
     WellKnown(
         proto_name=".google.protobuf.Duration",
@@ -26,6 +28,7 @@ converter_list = [
         python_class=ImportedSymbol("timedelta", "datetime"),
         from_func=ImportedSymbol("from_duration", "nebius.base.protos.well_known"),
         to_func=ImportedSymbol("to_duration", "nebius.base.protos.well_known"),
+        mask_func=ImportedSymbol("duration_mask", "nebius.base.protos.well_known"),
     ),
     WellKnown(
         proto_name=".google.rpc.Status",
@@ -37,6 +40,7 @@ converter_list = [
         to_func=ImportedSymbol(
             "request_status_to_rpc_status", "nebius.aio.request_status"
         ),
+        mask_func=ImportedSymbol("status_mask", "nebius.base.protos.well_known"),
     ),
 ]
 

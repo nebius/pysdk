@@ -20,11 +20,21 @@ def py_symbol(field: Field) -> ImportedSymbol:
 
 def tracks_presence(field: Field) -> bool:
     if field.is_message():
-        behavior = field_behavior(field)
-        if FieldBehavior.MEANINGFUL_EMPTY_VALUE in behavior:
+        try:
+            _ = field.containing_oneof
             return True
-        return is_recursive(field.message)
+        except ValueError:
+            behavior = field_behavior(field)
+            if FieldBehavior.MEANINGFUL_EMPTY_VALUE in behavior:
+                return True
+            return is_recursive(field.message)
     return field.tracks_presence()
+
+
+def mask_getter(field: Field) -> ImportedSymbol | str:
+    if field.is_message() and field.message.full_type_name in converter_dict:
+        return converter_dict[field.message.full_type_name].mask_func
+    return "None"
 
 
 def getter_type(
@@ -164,6 +174,8 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
                     wrap,
                     ",",
                     unwrap,
+                    ",",
+                    mask_getter(field.map_value),
                     "),",
                 )
             else:
@@ -184,6 +196,8 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
                     wrap,
                     ",",
                     unwrap,
+                    ",",
+                    mask_getter(field),
                     "),",
                 )
             else:
@@ -415,6 +429,15 @@ def generate_message(message: Message, g: PyGenFile) -> None:
             ImportedSymbol("Descriptor", "google.protobuf.descriptor"),
             ")",
         )
+        g.p("__mask_functions = {")
+        with g:
+            for field in message.fields():
+                if (
+                    field.is_message()
+                    and field.message.full_type_name in converter_dict
+                ):
+                    g.p('"', field.pythonic_name, '": ', mask_getter(field), ",")
+        g.p("}")
         g.p()
 
         for msg in message.messages():

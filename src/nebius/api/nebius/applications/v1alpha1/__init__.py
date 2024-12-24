@@ -25,6 +25,8 @@ import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 class K8sRelease(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_pb2.K8sRelease
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sRelease",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -88,10 +90,14 @@ class K8sRelease(pb_classes.Message):
 class K8sReleaseSpec(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_pb2.K8sReleaseSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sReleaseSpec",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class SetEntry(pb_classes.Message):
         __PB2_CLASS__ = k8s_release_pb2.K8sReleaseSpec.SetEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sReleaseSpec.SetEntry",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -240,6 +246,8 @@ class K8sReleaseSpec(pb_classes.Message):
 class K8sReleaseStatus(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_pb2.K8sReleaseStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sReleaseStatus",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.applications.v1alpha1.K8sReleaseStatus.State",k8s_release_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -299,6 +307,8 @@ class K8sReleaseStatus(pb_classes.Message):
 class GetK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.GetK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.GetK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -331,6 +341,8 @@ class GetK8sReleaseRequest(pb_classes.Message):
 class ListK8sReleasesRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.ListK8sReleasesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.ListK8sReleasesRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -419,6 +431,8 @@ class ListK8sReleasesRequest(pb_classes.Message):
 class CreateK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.CreateK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.CreateK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -467,6 +481,8 @@ class CreateK8sReleaseRequest(pb_classes.Message):
 class DeleteK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.DeleteK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.DeleteK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -499,6 +515,8 @@ class DeleteK8sReleaseRequest(pb_classes.Message):
 class ListK8sReleasesResponse(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.ListK8sReleasesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.ListK8sReleasesResponse",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -522,7 +540,7 @@ class ListK8sReleasesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[K8sRelease]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(K8sRelease,None),
+        wrap=pb_classes.Repeated.with_wrap(K8sRelease,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[K8sRelease]") -> None:

@@ -94,6 +94,9 @@ def has_method(obj: Any, method: str) -> bool:
     return hasattr(obj, method) and callable(getattr(obj, method))
 
 
+MaskFunction = Callable[[Any], Mask]
+
+
 class Message:
     __PB2_CLASS__: type[PMessage]
     __PB2_DESCRIPTOR__: DescriptorWrap[Descriptor] | Descriptor
@@ -101,6 +104,7 @@ class Message:
     __default: "Message|None" = None
     __sensitive_fields = dict[str, bool]()
     __credentials_fields = dict[str, bool]()
+    __mask_functions: dict[str, MaskFunction]
 
     def __init__(self, initial_message: PMessage | None):
         self.__recorded_reset_mask = Mask()
@@ -117,6 +121,36 @@ class Message:
             )
         else:
             self.__pb2_message__ = self.__PB2_CLASS__()  # type: ignore[unused-ignore]
+
+    def get_full_update_reset_mask(self) -> Mask:
+        desc = self.__class__.get_descriptor()
+        ret = Mask()
+        for el_key in dir(self):
+            el_pb2_key = self.__class__.__PY_TO_PB2__[el_key]
+            m_key = FieldKey(el_pb2_key)
+            try:
+                _ = desc.fields_by_name[el_pb2_key]
+            except KeyError:
+                continue
+            el = getattr(self, el_key)
+
+            m_mask = Mask()
+            if el_key in self.__mask_functions:
+                m_mask = self.__mask_functions[el_key](el)
+            elif (
+                isinstance(el, Map)
+                or isinstance(el, Repeated)
+                or isinstance(el, Message)
+            ):
+                if isinstance(el, Message):
+                    m_mask = Message.get_full_update_reset_mask(el)
+                else:
+                    m_mask = el.get_full_update_reset_mask()
+
+            # empty mask is either already set, or not necessary here
+            if not m_mask.is_empty() or Message.is_default(self, el_key):
+                ret.field_parts[m_key] = m_mask
+        return ret
 
     def set_mask(self, new_mask: Mask) -> None:
         self.__recorded_reset_mask = new_mask
@@ -306,6 +340,7 @@ class Repeated(MutableSequence[CollectibleOuter]):
         cls,
         wrap: Callable[[CollectibleInner], CollectibleOuter] | None = None,
         unwrap: Callable[[CollectibleOuter], CollectibleInner] | None = None,
+        mask_function: MaskFunction | None = None,
     ) -> Callable[
         [MutableSequence[CollectibleInner]],
         "Repeated[CollectibleOuter]",
@@ -313,7 +348,7 @@ class Repeated(MutableSequence[CollectibleOuter]):
         def ret(
             source: MutableSequence[CollectibleInner],
         ) -> "Repeated[CollectibleOuter]":
-            return cls(source, wrap=wrap, unwrap=unwrap)  # type: ignore
+            return cls(source, wrap=wrap, unwrap=unwrap, mask_function=mask_function)  # type: ignore
 
         return ret
 
@@ -322,10 +357,12 @@ class Repeated(MutableSequence[CollectibleOuter]):
         source: MutableSequence[CollectibleInner],
         wrap: Callable[[CollectibleInner], CollectibleOuter] | None = None,
         unwrap: Callable[[CollectibleOuter], CollectibleInner] | None = None,
+        mask_function: MaskFunction | None = None,
     ):
         self._source = source  # type: ignore
         self._wrap = wrap  # type: ignore
         self._unwrap = unwrap  # type: ignore
+        self._mask_function = mask_function
 
     def insert(self, index: int, value: CollectibleOuter) -> None:
         if isinstance(value, Message):
@@ -344,6 +381,20 @@ class Repeated(MutableSequence[CollectibleOuter]):
         if len(self) == 0:
             return Mask()
         return None
+
+    def get_full_update_reset_mask(self) -> Mask:
+        ret = Mask()
+        if len(self) > 0:
+            if isinstance(self[0], Message) or self._mask_function is not None:
+                func = (
+                    self._mask_function
+                    if self._mask_function is not None
+                    else Message.get_full_update_reset_mask
+                )
+                ret.any = Mask()
+                for el in self:
+                    ret.any += func(el)  # type: ignore
+        return ret
 
     @overload
     def __getitem__(self, index: int) -> CollectibleOuter: ...
@@ -392,6 +443,7 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
         cls,
         wrap: Callable[[CollectibleInner], CollectibleOuter] | None = None,
         unwrap: Callable[[CollectibleOuter], CollectibleInner] | None = None,
+        mask_function: MaskFunction | None = None,
     ) -> Callable[
         [MutableMapping[MapKey, CollectibleInner]],
         "Map[MapKey, CollectibleOuter]",
@@ -399,8 +451,22 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
         def ret(
             source: MutableMapping[MapKey, CollectibleInner],
         ) -> "Map[MapKey, CollectibleOuter]":
-            return cls(source, wrap=wrap, unwrap=unwrap)  # type: ignore[arg-type]
+            return cls(source, wrap=wrap, unwrap=unwrap, mask_function=mask_function)  # type: ignore[arg-type]
 
+        return ret
+
+    def get_full_update_reset_mask(self) -> Mask:
+        ret = Mask()
+        if len(self) > 0:
+            for k, el in self.items():
+                if not isinstance(el, Message) and self._mask_function is None:
+                    return Mask()
+                if self._mask_function is None:
+                    m_mask = Message.get_full_update_reset_mask(el)  # type: ignore
+                else:
+                    m_mask = self._mask_function(el)
+                if not m_mask.is_empty():
+                    ret.field_parts[FieldKey(str(k))] = m_mask
         return ret
 
     def __init__(
@@ -408,10 +474,12 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
         source: MutableMapping[MapKey, CollectibleInner],
         wrap: Callable[[CollectibleInner], CollectibleOuter] | None = None,
         unwrap: Callable[[CollectibleOuter], CollectibleInner] | None = None,
+        mask_function: MaskFunction | None = None,
     ):
         self._source: MutableMapping[MapKey, CollectibleInner] = source  # type: ignore[assignment]
         self._wrap: Callable[[CollectibleInner], CollectibleOuter] = wrap  # type: ignore[assignment]
         self._unwrap: Callable[[CollectibleOuter], CollectibleInner] = unwrap  # type: ignore[assignment]
+        self._mask_function = mask_function
 
     def __repr__(self) -> str:
         if len(self) == 0:

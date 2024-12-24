@@ -13,10 +13,10 @@ import builtins as builtins
 import nebius.base.protos.unset as unset
 import collections.abc as abc
 import nebius.api.nebius.storage.v1.lifecycle_pb2 as lifecycle_pb2
+import nebius.base.protos.well_known as well_known_1
 import typing as typing
 import datetime as datetime
 import google.protobuf.timestamp_pb2 as timestamp_pb2
-import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.storage.v1.bucket_pb2 as bucket_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
@@ -46,6 +46,8 @@ class VersioningPolicy(pb_enum.Enum):
 class CurrentBucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.CurrentBucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -162,6 +164,8 @@ class CurrentBucketCounters(pb_classes.Message):
 class NonCurrentBucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.NonCurrentBucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.NonCurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -236,6 +240,8 @@ class NonCurrentBucketCounters(pb_classes.Message):
 class BucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.BucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -300,6 +306,8 @@ class BucketCounters(pb_classes.Message):
 class LifecycleConfiguration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleConfiguration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleConfiguration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -319,7 +327,7 @@ class LifecycleConfiguration(pb_classes.Message):
     @builtins.property
     def rules(self) -> "abc.MutableSequence[LifecycleRule]":
         return super()._get_field("rules", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(LifecycleRule,None),
+        wrap=pb_classes.Repeated.with_wrap(LifecycleRule,None,None),
         )
     @rules.setter
     def rules(self, value: "abc.Iterable[LifecycleRule]") -> None:
@@ -333,6 +341,8 @@ class LifecycleConfiguration(pb_classes.Message):
 class LifecycleRule(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleRule
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleRule",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class Status(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.LifecycleRule.Status",lifecycle_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -448,6 +458,8 @@ class LifecycleRule(pb_classes.Message):
 class LifecycleFilter(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleFilter
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleFilter",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -508,6 +520,9 @@ class LifecycleFilter(pb_classes.Message):
 class LifecycleExpiration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleExpiration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleExpiration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "date": well_known_1.ts_mask,
+    }
     
     class __OneOfClass_expired_with__(pb_classes.OneOf):
         name: builtins.str= "expired_with"
@@ -551,7 +566,7 @@ class LifecycleExpiration(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        date: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        date: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         days: "builtins.int|None|unset.UnsetType" = unset.Unset,
         expired_object_delete_marker: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -572,13 +587,13 @@ class LifecycleExpiration(pb_classes.Message):
         ]
     
     @builtins.property
-    def date(self) -> "datetime.datetime":
-        return super()._get_field("date", explicit_presence=False,
+    def date(self) -> "datetime.datetime|None":
+        return super()._get_field("date", explicit_presence=True,
         wrap=well_known_1.from_timestamp
         )
     @date.setter
-    def date(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("date",value,explicit_presence=False,
+    def date(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("date",value,explicit_presence=True,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -610,6 +625,8 @@ class LifecycleExpiration(pb_classes.Message):
 class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleNoncurrentVersionExpiration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleNoncurrentVersionExpiration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass__newer_noncurrent_versions__(pb_classes.OneOf):
         name: builtins.str= "_newer_noncurrent_versions"
@@ -685,6 +702,8 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
 class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleAbortIncompleteMultipartUpload",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -718,6 +737,8 @@ class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
 class Bucket(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.Bucket
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.Bucket",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -781,6 +802,8 @@ class Bucket(pb_classes.Message):
 class BucketSpec(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.BucketSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketSpec",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -843,6 +866,10 @@ class BucketSpec(pb_classes.Message):
 class BucketStatus(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.BucketStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketStatus",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "deleted_at": well_known_1.ts_mask,
+        "purge_at": well_known_1.ts_mask,
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.BucketStatus.State",bucket_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -898,7 +925,7 @@ class BucketStatus(pb_classes.Message):
     @builtins.property
     def counters(self) -> "abc.MutableSequence[BucketCounters]":
         return super()._get_field("counters", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(BucketCounters,None),
+        wrap=pb_classes.Repeated.with_wrap(BucketCounters,None,None),
         )
     @counters.setter
     def counters(self, value: "abc.Iterable[BucketCounters]") -> None:
@@ -971,6 +998,8 @@ class BucketStatus(pb_classes.Message):
 class GetBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.GetBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1017,6 +1046,8 @@ class GetBucketRequest(pb_classes.Message):
 class GetBucketByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.GetBucketByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetBucketByNameRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1077,6 +1108,8 @@ class GetBucketByNameRequest(pb_classes.Message):
 class CreateBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.CreateBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CreateBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1125,6 +1158,8 @@ class CreateBucketRequest(pb_classes.Message):
 class UpdateBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.UpdateBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.UpdateBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1173,6 +1208,10 @@ class UpdateBucketRequest(pb_classes.Message):
 class DeleteBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.DeleteBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.DeleteBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "purge_at": well_known_1.ts_mask,
+        "ttl": well_known_1.duration_mask,
+    }
     
     class __OneOfClass_purge__(pb_classes.OneOf):
         name: builtins.str= "purge"
@@ -1217,8 +1256,8 @@ class DeleteBucketRequest(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         id: "builtins.str|unset.UnsetType" = unset.Unset,
-        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        ttl: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
+        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        ttl: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1246,24 +1285,24 @@ class DeleteBucketRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def purge_at(self) -> "datetime.datetime":
-        return super()._get_field("purge_at", explicit_presence=False,
+    def purge_at(self) -> "datetime.datetime|None":
+        return super()._get_field("purge_at", explicit_presence=True,
         wrap=well_known_1.from_timestamp
         )
     @purge_at.setter
-    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("purge_at",value,explicit_presence=False,
+    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("purge_at",value,explicit_presence=True,
         unwrap=well_known_1.to_timestamp
         )
     
     @builtins.property
-    def ttl(self) -> "datetime.timedelta":
-        return super()._get_field("ttl", explicit_presence=False,
+    def ttl(self) -> "datetime.timedelta|None":
+        return super()._get_field("ttl", explicit_presence=True,
         wrap=well_known_1.from_duration
         )
     @ttl.setter
-    def ttl(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
-        return super()._set_field("ttl",value,explicit_presence=False,
+    def ttl(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("ttl",value,explicit_presence=True,
         unwrap=well_known_1.to_duration
         )
     
@@ -1277,6 +1316,8 @@ class DeleteBucketRequest(pb_classes.Message):
 class PurgeBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.PurgeBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.PurgeBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1309,6 +1350,8 @@ class PurgeBucketRequest(pb_classes.Message):
 class UndeleteBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.UndeleteBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.UndeleteBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1341,6 +1384,8 @@ class UndeleteBucketRequest(pb_classes.Message):
 class ListBucketsRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.ListBucketsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListBucketsRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1429,6 +1474,8 @@ class ListBucketsRequest(pb_classes.Message):
 class ListBucketsResponse(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.ListBucketsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListBucketsResponse",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1452,7 +1499,7 @@ class ListBucketsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Bucket]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Bucket,None),
+        wrap=pb_classes.Repeated.with_wrap(Bucket,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Bucket]") -> None:

@@ -6,6 +6,7 @@ import nebius.base.protos.pb_classes as pb_classes
 import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
+import nebius.base.protos.well_known as well_known_1
 import google.protobuf.message as message_1
 import collections.abc as abc
 import builtins as builtins
@@ -15,7 +16,6 @@ import datetime as datetime
 import google.protobuf.any_pb2 as any_pb2
 import google.rpc.status_pb2 as status_pb2
 import nebius.aio.request_status as request_status
-import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.common.v1alpha1.operation_service_pb2 as operation_service_pb2
 import nebius.aio.client as client
 import grpc as grpc
@@ -27,10 +27,17 @@ import nebius.aio.operation as operation
 class Operation(pb_classes.Message):
     __PB2_CLASS__ = operation_pb2.Operation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.Operation",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+        "created_at": well_known_1.ts_mask,
+        "finished_at": well_known_1.ts_mask,
+        "status": well_known_1.status_mask,
+    }
     
     class request_header(pb_classes.Message):
         __PB2_CLASS__ = operation_pb2.Operation.request_header
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.Operation.request_header",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -65,6 +72,8 @@ class Operation(pb_classes.Message):
     class RequestHeadersEntry(pb_classes.Message):
         __PB2_CLASS__ = operation_pb2.Operation.RequestHeadersEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.Operation.RequestHeadersEntry",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions = {
+        }
         
         def __init__(
             self,
@@ -228,7 +237,7 @@ class Operation(pb_classes.Message):
     @builtins.property
     def request_headers(self) -> "abc.MutableMapping[builtins.str,Operation.request_header]":
         return super()._get_field("request_headers", explicit_presence=False,
-        wrap=pb_classes.Map.with_wrap(Operation.request_header,None),
+        wrap=pb_classes.Map.with_wrap(Operation.request_header,None,None),
         )
     @request_headers.setter
     def request_headers(self, value: "abc.Mapping[builtins.str,Operation.request_header]") -> None:
@@ -293,6 +302,8 @@ class Operation(pb_classes.Message):
 class GetOperationRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.GetOperationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.GetOperationRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -325,6 +336,8 @@ class GetOperationRequest(pb_classes.Message):
 class ListOperationsRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.ListOperationsRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -399,6 +412,8 @@ class ListOperationsRequest(pb_classes.Message):
 class ListOperationsResponse(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.ListOperationsResponse",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -422,7 +437,7 @@ class ListOperationsResponse(pb_classes.Message):
     @builtins.property
     def operations(self) -> "abc.MutableSequence[Operation]":
         return super()._get_field("operations", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Operation,None),
+        wrap=pb_classes.Repeated.with_wrap(Operation,None,None),
         )
     @operations.setter
     def operations(self, value: "abc.Iterable[Operation]") -> None:
@@ -446,6 +461,8 @@ class ListOperationsResponse(pb_classes.Message):
 class ListOperationsByParentRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsByParentRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.ListOperationsByParentRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,

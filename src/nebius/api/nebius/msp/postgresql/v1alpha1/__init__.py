@@ -35,6 +35,8 @@ import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 class PresetSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.PresetSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.PresetSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -99,6 +101,8 @@ class PresetSpec(pb_classes.Message):
 class TemplateSpec(pb_classes.Message):
     __PB2_CLASS__ = template_pb2_1.TemplateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.TemplateSpec",template_pb2_1.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -163,6 +167,8 @@ class TemplateSpec(pb_classes.Message):
 class Cluster(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Cluster
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.Cluster",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -226,6 +232,8 @@ class Cluster(pb_classes.Message):
 class ConnectionPoolerConfig(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ConnectionPoolerConfig
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class PoolingMode(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig.PoolingMode",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -310,6 +318,8 @@ class ConnectionPoolerConfig(pb_classes.Message):
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -401,6 +411,8 @@ class ClusterSpec(pb_classes.Message):
 class ClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ClusterStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -479,6 +491,8 @@ class ClusterStatus(pb_classes.Message):
 class Endpoints(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Endpoints
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.Endpoints",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -553,6 +567,8 @@ class Endpoints(pb_classes.Message):
 class ConfigSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ConfigSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ConfigSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     class __OneOfClass_config__(pb_classes.OneOf):
         name: builtins.str= "config"
@@ -588,7 +604,7 @@ class ConfigSpec(pb_classes.Message):
         version: "builtins.str|unset.UnsetType" = unset.Unset,
         pooler_config: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|unset.UnsetType" = unset.Unset,
         resources: "PresetSpec|preset_pb2.PresetSpec|unset.UnsetType" = unset.Unset,
-        postgresql_config_16: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|unset.UnsetType" = unset.Unset,
+        postgresql_config_16: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None|unset.UnsetType" = unset.Unset,
         public_access: "builtins.bool|unset.UnsetType" = unset.Unset,
         template: "TemplateSpec|template_pb2_1.TemplateSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -647,13 +663,13 @@ class ConfigSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def postgresql_config_16(self) -> "config_1.PostgresqlConfig16":
-        return super()._get_field("postgresql_config_16", explicit_presence=False,
+    def postgresql_config_16(self) -> "config_1.PostgresqlConfig16|None":
+        return super()._get_field("postgresql_config_16", explicit_presence=True,
         wrap=config_1.PostgresqlConfig16,
         )
     @postgresql_config_16.setter
-    def postgresql_config_16(self, value: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16") -> None:
-        return super()._set_field("postgresql_config_16",value,explicit_presence=False,
+    def postgresql_config_16(self, value: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None") -> None:
+        return super()._set_field("postgresql_config_16",value,explicit_presence=True,
         )
     
     @builtins.property
@@ -688,6 +704,8 @@ class ConfigSpec(pb_classes.Message):
 class BootstrapSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.BootstrapSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.BootstrapSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -748,6 +766,8 @@ class BootstrapSpec(pb_classes.Message):
 class BackupSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.BackupSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.BackupSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -795,6 +815,8 @@ class BackupSpec(pb_classes.Message):
 class GetClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.GetClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -827,6 +849,8 @@ class GetClusterRequest(pb_classes.Message):
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListClustersRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -887,6 +911,8 @@ class ListClustersRequest(pb_classes.Message):
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -910,7 +936,7 @@ class ListClustersResponse(pb_classes.Message):
     @builtins.property
     def clusters(self) -> "abc.MutableSequence[Cluster]":
         return super()._get_field("clusters", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Cluster,None),
+        wrap=pb_classes.Repeated.with_wrap(Cluster,None,None),
         )
     @clusters.setter
     def clusters(self, value: "abc.Iterable[Cluster]") -> None:
@@ -934,6 +960,8 @@ class ListClustersResponse(pb_classes.Message):
 class CreateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.CreateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -982,6 +1010,8 @@ class CreateClusterRequest(pb_classes.Message):
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
@@ -1014,6 +1044,8 @@ class DeleteClusterRequest(pb_classes.Message):
 class UpdateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.UpdateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.UpdateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions = {
+    }
     
     def __init__(
         self,
