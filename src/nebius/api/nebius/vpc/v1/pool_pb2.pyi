@@ -69,7 +69,7 @@ class PoolCidr(_message.Message):
     def __init__(self, cidr: _Optional[str] = ..., state: _Optional[_Union[AddressBlockState, str]] = ..., max_mask_length: _Optional[int] = ...) -> None: ...
 
 class PoolStatus(_message.Message):
-    __slots__ = ("state", "cidrs", "scope_id")
+    __slots__ = ("state", "cidrs", "scope_id", "assignment")
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
         STATE_UNSPECIFIED: _ClassVar[PoolStatus.State]
@@ -83,7 +83,17 @@ class PoolStatus(_message.Message):
     STATE_FIELD_NUMBER: _ClassVar[int]
     CIDRS_FIELD_NUMBER: _ClassVar[int]
     SCOPE_ID_FIELD_NUMBER: _ClassVar[int]
+    ASSIGNMENT_FIELD_NUMBER: _ClassVar[int]
     state: PoolStatus.State
     cidrs: _containers.RepeatedScalarFieldContainer[str]
     scope_id: str
-    def __init__(self, state: _Optional[_Union[PoolStatus.State, str]] = ..., cidrs: _Optional[_Iterable[str]] = ..., scope_id: _Optional[str] = ...) -> None: ...
+    assignment: PoolAssignment
+    def __init__(self, state: _Optional[_Union[PoolStatus.State, str]] = ..., cidrs: _Optional[_Iterable[str]] = ..., scope_id: _Optional[str] = ..., assignment: _Optional[_Union[PoolAssignment, _Mapping]] = ...) -> None: ...
+
+class PoolAssignment(_message.Message):
+    __slots__ = ("networks", "subnets")
+    NETWORKS_FIELD_NUMBER: _ClassVar[int]
+    SUBNETS_FIELD_NUMBER: _ClassVar[int]
+    networks: _containers.RepeatedScalarFieldContainer[str]
+    subnets: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, networks: _Optional[_Iterable[str]] = ..., subnets: _Optional[_Iterable[str]] = ...) -> None: ...

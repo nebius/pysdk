@@ -20,11 +20,21 @@ def py_symbol(field: Field) -> ImportedSymbol:
 
 def tracks_presence(field: Field) -> bool:
     if field.is_message():
-        behavior = field_behavior(field)
-        if FieldBehavior.MEANINGFUL_EMPTY_VALUE in behavior:
+        try:
+            _ = field.containing_oneof
             return True
-        return is_recursive(field.message)
+        except ValueError:
+            behavior = field_behavior(field)
+            if FieldBehavior.MEANINGFUL_EMPTY_VALUE in behavior:
+                return True
+            return is_recursive(field.message)
     return field.tracks_presence()
+
+
+def mask_getter(field: Field) -> ImportedSymbol | str:
+    if field.is_message() and field.message.full_type_name in converter_dict:
+        return converter_dict[field.message.full_type_name].mask_func
+    return "None"
 
 
 def getter_type(
@@ -141,7 +151,7 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
         g.p(
             "return super()._get_field(",
             '"',
-            field.name,
+            field.pythonic_name,
             '", explicit_presence=',
             tracks_presence(field),
             ",",
@@ -164,6 +174,8 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
                     wrap,
                     ",",
                     unwrap,
+                    ",",
+                    mask_getter(field.map_value),
                     "),",
                 )
             else:
@@ -184,6 +196,8 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
                     wrap,
                     ",",
                     unwrap,
+                    ",",
+                    mask_getter(field),
                     "),",
                 )
             else:
@@ -208,7 +222,7 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
         g.p(
             "return super()._set_field(",
             '"',
-            field.name,
+            field.pythonic_name,
             '",value,explicit_presence=',
             tracks_presence(field),
             ",",
@@ -226,12 +240,25 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
 
 def generate_field_init_arg(field: Field, g: PyGenFile) -> None:
     g.p(field.pythonic_name, ': "', add_eol=False)
-    setter_type(field, g, always_none=True)
-    g.p('" = None,', noindent=True)
+    setter_type(field, g)
+    g.p(
+        "|",
+        ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
+        '" = ',
+        ImportedSymbol("Unset", "nebius.base.protos.unset"),
+        ",",
+        noindent=True,
+    )
 
 
 def generate_field_init_setter(field: Field, g: PyGenFile, self_name: str) -> None:
-    g.p("if ", field.pythonic_name, " is not None:")
+    g.p(
+        "if not isinstance(",
+        field.pythonic_name,
+        ", ",
+        ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
+        "):",
+    )
     with g:
         g.p(self_name, ".", field.pythonic_name, " = ", field.pythonic_name)
 
@@ -402,6 +429,15 @@ def generate_message(message: Message, g: PyGenFile) -> None:
             ImportedSymbol("Descriptor", "google.protobuf.descriptor"),
             ")",
         )
+        g.p("__mask_functions__ = {")
+        with g:
+            for field in message.fields():
+                if (
+                    field.is_message()
+                    and field.message.full_type_name in converter_dict
+                ):
+                    g.p('"', field.pythonic_name, '": ', mask_getter(field), ",")
+        g.p("}")
         g.p()
 
         for msg in message.messages():
@@ -572,6 +608,15 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                 g.p(method.output.export_path, noindent=True, add_eol=False)
             g.p('"]:', noindent=True)
             with g:
+                if method.name == "Update" and is_operation_output(method):
+                    g.p(
+                        "metadata = ",
+                        ImportedSymbol(
+                            "ensure_reset_mask_in_metadata",
+                            "nebius.base.fieldmask_protobuf",
+                        ),
+                        "(request, metadata)",
+                    )
                 g.p("return super().request(")
                 with g:
                     g.p('method="', method.name, '",')

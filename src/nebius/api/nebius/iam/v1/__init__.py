@@ -8,14 +8,15 @@ import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import builtins as builtins
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import typing as typing
 import nebius.api.nebius.iam.v1.access_key_pb2 as access_key_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.well_known as well_known_1
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
-import nebius.base.protos.well_known as well_known_1
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.iam.v1.access_key_service_pb2 as access_key_service_pb2
 import nebius.aio.client as client
@@ -23,6 +24,7 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.api.nebius.iam.v1.auth_public_key_pb2 as auth_public_key_pb2
 import nebius.api.nebius.iam.v1.auth_public_key_service_pb2 as auth_public_key_service_pb2
 import nebius.api.nebius.iam.v1.state_pb2 as state_pb2
@@ -57,19 +59,23 @@ import nebius.api.nebius.iam.v1.token_exchange_service_pb2 as token_exchange_ser
 class Account(pb_classes.Message):
     __PB2_CLASS__ = access_pb2.Account
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Account",access_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class UserAccount(pb_classes.Message):
         __PB2_CLASS__ = access_pb2.Account.UserAccount
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Account.UserAccount",access_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
         
         def __init__(
             self,
             initial_message: message_1.Message|None = None,
             *,
-            id: "builtins.str|None" = None,
+            id: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if id is not None:
+            if not isinstance(id, unset.UnsetType):
                 self.id = id
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -94,15 +100,17 @@ class Account(pb_classes.Message):
     class ServiceAccount(pb_classes.Message):
         __PB2_CLASS__ = access_pb2.Account.ServiceAccount
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Account.ServiceAccount",access_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
         
         def __init__(
             self,
             initial_message: message_1.Message|None = None,
             *,
-            id: "builtins.str|None" = None,
+            id: "builtins.str|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if id is not None:
+            if not isinstance(id, unset.UnsetType):
                 self.id = id
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -127,6 +135,8 @@ class Account(pb_classes.Message):
     class AnonymousAccount(pb_classes.Message):
         __PB2_CLASS__ = access_pb2.Account.AnonymousAccount
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Account.AnonymousAccount",access_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
         
         def __init__(
             self,
@@ -195,16 +205,16 @@ class Account(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_account: "Account.UserAccount|access_pb2.Account.UserAccount|None" = None,
-        service_account: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|None" = None,
-        anonymous_account: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|None" = None,
+        user_account: "Account.UserAccount|access_pb2.Account.UserAccount|None|unset.UnsetType" = unset.Unset,
+        service_account: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|None|unset.UnsetType" = unset.Unset,
+        anonymous_account: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if user_account is not None:
+        if not isinstance(user_account, unset.UnsetType):
             self.user_account = user_account
-        if service_account is not None:
+        if not isinstance(service_account, unset.UnsetType):
             self.service_account = service_account
-        if anonymous_account is not None:
+        if not isinstance(anonymous_account, unset.UnsetType):
             self.anonymous_account = anonymous_account
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -219,33 +229,33 @@ class Account(pb_classes.Message):
         ]
     
     @builtins.property
-    def user_account(self) -> "Account.UserAccount":
-        return super()._get_field("user_account", explicit_presence=False,
+    def user_account(self) -> "Account.UserAccount|None":
+        return super()._get_field("user_account", explicit_presence=True,
         wrap=Account.UserAccount,
         )
     @user_account.setter
-    def user_account(self, value: "Account.UserAccount|access_pb2.Account.UserAccount") -> None:
-        return super()._set_field("user_account",value,explicit_presence=False,
+    def user_account(self, value: "Account.UserAccount|access_pb2.Account.UserAccount|None") -> None:
+        return super()._set_field("user_account",value,explicit_presence=True,
         )
     
     @builtins.property
-    def service_account(self) -> "Account.ServiceAccount":
-        return super()._get_field("service_account", explicit_presence=False,
+    def service_account(self) -> "Account.ServiceAccount|None":
+        return super()._get_field("service_account", explicit_presence=True,
         wrap=Account.ServiceAccount,
         )
     @service_account.setter
-    def service_account(self, value: "Account.ServiceAccount|access_pb2.Account.ServiceAccount") -> None:
-        return super()._set_field("service_account",value,explicit_presence=False,
+    def service_account(self, value: "Account.ServiceAccount|access_pb2.Account.ServiceAccount|None") -> None:
+        return super()._set_field("service_account",value,explicit_presence=True,
         )
     
     @builtins.property
-    def anonymous_account(self) -> "Account.AnonymousAccount":
-        return super()._get_field("anonymous_account", explicit_presence=False,
+    def anonymous_account(self) -> "Account.AnonymousAccount|None":
+        return super()._get_field("anonymous_account", explicit_presence=True,
         wrap=Account.AnonymousAccount,
         )
     @anonymous_account.setter
-    def anonymous_account(self, value: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount") -> None:
-        return super()._set_field("anonymous_account",value,explicit_presence=False,
+    def anonymous_account(self, value: "Account.AnonymousAccount|access_pb2.Account.AnonymousAccount|None") -> None:
+        return super()._set_field("anonymous_account",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -262,21 +272,23 @@ class Account(pb_classes.Message):
 class AccessKey(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKey
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessKey",access_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
-        status: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
+        status: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -325,21 +337,24 @@ class AccessKey(pb_classes.Message):
 class AccessKeySpec(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKeySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessKeySpec",access_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "expires_at": well_known_1.ts_mask,
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        description: "builtins.str|None" = None,
+        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if account is not None:
+        if not isinstance(account, unset.UnsetType):
             self.account = account
-        if expires_at is not None:
+        if not isinstance(expires_at, unset.UnsetType):
             self.expires_at = expires_at
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -388,6 +403,8 @@ class AccessKeySpec(pb_classes.Message):
 class AccessKeyStatus(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKeyStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessKeyStatus",access_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AccessKeyStatus.State",access_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -402,25 +419,25 @@ class AccessKeyStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State|None" = None,
-        fingerprint: "builtins.str|None" = None,
-        algorithm: "builtins.str|None" = None,
-        key_size: "builtins.int|None" = None,
-        aws_access_key_id: "builtins.str|None" = None,
-        secret: "builtins.str|None" = None,
+        state: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State|unset.UnsetType" = unset.Unset,
+        fingerprint: "builtins.str|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        aws_access_key_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        secret: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if fingerprint is not None:
+        if not isinstance(fingerprint, unset.UnsetType):
             self.fingerprint = fingerprint
-        if algorithm is not None:
+        if not isinstance(algorithm, unset.UnsetType):
             self.algorithm = algorithm
-        if key_size is not None:
+        if not isinstance(key_size, unset.UnsetType):
             self.key_size = key_size
-        if aws_access_key_id is not None:
+        if not isinstance(aws_access_key_id, unset.UnsetType):
             self.aws_access_key_id = aws_access_key_id
-        if secret is not None:
+        if not isinstance(secret, unset.UnsetType):
             self.secret = secret
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -503,18 +520,20 @@ class AccessKeyStatus(pb_classes.Message):
 class CreateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.CreateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -551,6 +570,8 @@ class CreateAccessKeyRequest(pb_classes.Message):
 class KeyIdentity(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.KeyIdentity
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.KeyIdentity",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_identity__(pb_classes.OneOf):
         name: builtins.str= "identity"
@@ -594,13 +615,13 @@ class KeyIdentity(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        aws_access_key_id: "builtins.str|None" = None,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        aws_access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if aws_access_key_id is not None:
+        if not isinstance(aws_access_key_id, unset.UnsetType):
             self.aws_access_key_id = aws_access_key_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -637,15 +658,17 @@ class KeyIdentity(pb_classes.Message):
 class GetAccessKeySecretOnceRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeySecretOnceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeySecretOnceRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -669,15 +692,17 @@ class GetAccessKeySecretOnceRequest(pb_classes.Message):
 class GetAccessKeyByIdRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeyByIdRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeyByIdRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -701,15 +726,17 @@ class GetAccessKeyByIdRequest(pb_classes.Message):
 class GetAccessKeyByAwsIdRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeyByAwsIdRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeyByAwsIdRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        aws_access_key_id: "builtins.str|None" = None,
+        aws_access_key_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if aws_access_key_id is not None:
+        if not isinstance(aws_access_key_id, unset.UnsetType):
             self.aws_access_key_id = aws_access_key_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -733,6 +760,8 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
 class ListAccessKeysRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessKeysRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -765,19 +794,19 @@ class ListAccessKeysRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -836,24 +865,26 @@ class ListAccessKeysRequest(pb_classes.Message):
 class ListAccessKeysByAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysByAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessKeysByAccountRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if account is not None:
+        if not isinstance(account, unset.UnsetType):
             self.account = account
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -911,18 +942,20 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
 class UpdateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.UpdateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -959,15 +992,17 @@ class UpdateAccessKeyRequest(pb_classes.Message):
 class ActivateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ActivateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ActivateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -992,15 +1027,17 @@ class ActivateAccessKeyRequest(pb_classes.Message):
 class DeactivateAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.DeactivateAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeactivateAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1025,15 +1062,17 @@ class DeactivateAccessKeyRequest(pb_classes.Message):
 class DeleteAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.DeleteAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None" = None,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1058,15 +1097,17 @@ class DeleteAccessKeyRequest(pb_classes.Message):
 class GetAccessKeySecretOnceResponse(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeySecretOnceResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessKeySecretOnceResponse",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        secret: "builtins.str|None" = None,
+        secret: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if secret is not None:
+        if not isinstance(secret, unset.UnsetType):
             self.secret = secret
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1090,18 +1131,20 @@ class GetAccessKeySecretOnceResponse(pb_classes.Message):
 class ListAccessKeysResponse(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessKeysResponse",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[AccessKey]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[AccessKey]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1113,7 +1156,7 @@ class ListAccessKeysResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[AccessKey]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(AccessKey,None),
+        wrap=pb_classes.Repeated.with_wrap(AccessKey,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[AccessKey]") -> None:
@@ -1208,6 +1251,7 @@ class AccessKeyServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -1345,21 +1389,23 @@ class AccessKeyServiceClient(client.Client):
 class AuthPublicKey(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_pb2.AuthPublicKey
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AuthPublicKey",auth_public_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
-        status: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
+        status: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1408,24 +1454,27 @@ class AuthPublicKey(pb_classes.Message):
 class AuthPublicKeySpec(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_pb2.AuthPublicKeySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AuthPublicKeySpec",auth_public_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "expires_at": well_known_1.ts_mask,
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        description: "builtins.str|None" = None,
-        data: "builtins.str|None" = None,
+        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        data: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if account is not None:
+        if not isinstance(account, unset.UnsetType):
             self.account = account
-        if expires_at is not None:
+        if not isinstance(expires_at, unset.UnsetType):
             self.expires_at = expires_at
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if data is not None:
+        if not isinstance(data, unset.UnsetType):
             self.data = data
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1485,6 +1534,8 @@ class AuthPublicKeySpec(pb_classes.Message):
 class AuthPublicKeyStatus(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_pb2.AuthPublicKeyStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AuthPublicKeyStatus",auth_public_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.AuthPublicKeyStatus.State",auth_public_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1499,19 +1550,19 @@ class AuthPublicKeyStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State|None" = None,
-        fingerprint: "builtins.str|None" = None,
-        algorithm: "builtins.str|None" = None,
-        key_size: "builtins.int|None" = None,
+        state: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State|unset.UnsetType" = unset.Unset,
+        fingerprint: "builtins.str|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if fingerprint is not None:
+        if not isinstance(fingerprint, unset.UnsetType):
             self.fingerprint = fingerprint
-        if algorithm is not None:
+        if not isinstance(algorithm, unset.UnsetType):
             self.algorithm = algorithm
-        if key_size is not None:
+        if not isinstance(key_size, unset.UnsetType):
             self.key_size = key_size
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1572,18 +1623,20 @@ class AuthPublicKeyStatus(pb_classes.Message):
 class CreateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.CreateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1620,15 +1673,17 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
 class GetAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.GetAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1652,6 +1707,8 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
 class ListAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -1684,19 +1741,19 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1755,24 +1812,26 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
 class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyByAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAuthPublicKeyByAccountRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if account is not None:
+        if not isinstance(account, unset.UnsetType):
             self.account = account
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1830,18 +1889,20 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
 class UpdateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.UpdateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1878,15 +1939,17 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
 class ActivateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ActivateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ActivateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1910,15 +1973,17 @@ class ActivateAuthPublicKeyRequest(pb_classes.Message):
 class DeactivateAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.DeactivateAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeactivateAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1942,15 +2007,17 @@ class DeactivateAuthPublicKeyRequest(pb_classes.Message):
 class DeleteAuthPublicKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.DeleteAuthPublicKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteAuthPublicKeyRequest",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1974,18 +2041,20 @@ class DeleteAuthPublicKeyRequest(pb_classes.Message):
 class ListAuthPublicKeyResponse(pb_classes.Message):
     __PB2_CLASS__ = auth_public_key_service_pb2.ListAuthPublicKeyResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAuthPublicKeyResponse",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[AuthPublicKey]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[AuthPublicKey]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1997,7 +2066,7 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[AuthPublicKey]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(AuthPublicKey,None),
+        wrap=pb_classes.Repeated.with_wrap(AuthPublicKey,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[AuthPublicKey]") -> None:
@@ -2112,6 +2181,7 @@ class AuthPublicKeyServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateAuthPublicKeyRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -2212,21 +2282,23 @@ class SuspensionState(pb_enum.Enum):
 class Container(pb_classes.Message):
     __PB2_CLASS__ = container_pb2.Container
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Container",container_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ContainerSpec|container_pb2.ContainerSpec|None" = None,
-        status: "ContainerStatus|container_pb2.ContainerStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ContainerSpec|container_pb2.ContainerSpec|unset.UnsetType" = unset.Unset,
+        status: "ContainerStatus|container_pb2.ContainerStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2275,6 +2347,8 @@ class Container(pb_classes.Message):
 class ContainerSpec(pb_classes.Message):
     __PB2_CLASS__ = container_pb2.ContainerSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ContainerSpec",container_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
@@ -2292,18 +2366,20 @@ class ContainerSpec(pb_classes.Message):
 class ContainerStatus(pb_classes.Message):
     __PB2_CLASS__ = container_pb2.ContainerStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ContainerStatus",container_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|None" = None,
-        container_state: "State|state_pb2.State|None" = None,
+        suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|unset.UnsetType" = unset.Unset,
+        container_state: "State|state_pb2.State|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if suspension_state is not None:
+        if not isinstance(suspension_state, unset.UnsetType):
             self.suspension_state = suspension_state
-        if container_state is not None:
+        if not isinstance(container_state, unset.UnsetType):
             self.container_state = container_state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2341,21 +2417,23 @@ class ContainerStatus(pb_classes.Message):
 class Federation(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.Federation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Federation",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
-        status: "FederationStatus|federation_pb2.FederationStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
+        status: "FederationStatus|federation_pb2.FederationStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2404,6 +2482,8 @@ class Federation(pb_classes.Message):
 class FederationSpec(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.FederationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationSpec",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_settings__(pb_classes.OneOf):
         name: builtins.str= "settings"
@@ -2436,16 +2516,16 @@ class FederationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_account_auto_creation: "builtins.bool|None" = None,
-        active: "builtins.bool|None" = None,
-        saml_settings: "SamlSettings|federation_pb2.SamlSettings|None" = None,
+        user_account_auto_creation: "builtins.bool|unset.UnsetType" = unset.Unset,
+        active: "builtins.bool|unset.UnsetType" = unset.Unset,
+        saml_settings: "SamlSettings|federation_pb2.SamlSettings|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if user_account_auto_creation is not None:
+        if not isinstance(user_account_auto_creation, unset.UnsetType):
             self.user_account_auto_creation = user_account_auto_creation
-        if active is not None:
+        if not isinstance(active, unset.UnsetType):
             self.active = active
-        if saml_settings is not None:
+        if not isinstance(saml_settings, unset.UnsetType):
             self.saml_settings = saml_settings
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2475,13 +2555,13 @@ class FederationSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def saml_settings(self) -> "SamlSettings":
-        return super()._get_field("saml_settings", explicit_presence=False,
+    def saml_settings(self) -> "SamlSettings|None":
+        return super()._get_field("saml_settings", explicit_presence=True,
         wrap=SamlSettings,
         )
     @saml_settings.setter
-    def saml_settings(self, value: "SamlSettings|federation_pb2.SamlSettings") -> None:
-        return super()._set_field("saml_settings",value,explicit_presence=False,
+    def saml_settings(self, value: "SamlSettings|federation_pb2.SamlSettings|None") -> None:
+        return super()._set_field("saml_settings",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -2494,18 +2574,20 @@ class FederationSpec(pb_classes.Message):
 class SamlSettings(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.SamlSettings
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.SamlSettings",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        idp_issuer: "builtins.str|None" = None,
-        sso_url: "builtins.str|None" = None,
+        idp_issuer: "builtins.str|unset.UnsetType" = unset.Unset,
+        sso_url: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if idp_issuer is not None:
+        if not isinstance(idp_issuer, unset.UnsetType):
             self.idp_issuer = idp_issuer
-        if sso_url is not None:
+        if not isinstance(sso_url, unset.UnsetType):
             self.sso_url = sso_url
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2540,6 +2622,8 @@ class SamlSettings(pb_classes.Message):
 class FederationStatus(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.FederationStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationStatus",federation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
@@ -2558,21 +2642,23 @@ class FederationStatus(pb_classes.Message):
 class FederationCertificate(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_pb2.FederationCertificate
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationCertificate",federation_certificate_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
-        status: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
+        status: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2621,18 +2707,20 @@ class FederationCertificate(pb_classes.Message):
 class FederationCertificateSpec(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_pb2.FederationCertificateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationCertificateSpec",federation_certificate_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        data: "builtins.str|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        data: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if data is not None:
+        if not isinstance(data, unset.UnsetType):
             self.data = data
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2667,6 +2755,10 @@ class FederationCertificateSpec(pb_classes.Message):
 class FederationCertificateStatus(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_pb2.FederationCertificateStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederationCertificateStatus",federation_certificate_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "not_before": well_known_1.ts_mask,
+        "not_after": well_known_1.ts_mask,
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.FederationCertificateStatus.State",federation_certificate_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -2678,22 +2770,22 @@ class FederationCertificateStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|None" = None,
-        algorithm: "builtins.str|None" = None,
-        key_size: "builtins.int|None" = None,
-        not_before: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        not_after: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
+        state: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        not_before: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        not_after: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if algorithm is not None:
+        if not isinstance(algorithm, unset.UnsetType):
             self.algorithm = algorithm
-        if key_size is not None:
+        if not isinstance(key_size, unset.UnsetType):
             self.key_size = key_size
-        if not_before is not None:
+        if not isinstance(not_before, unset.UnsetType):
             self.not_before = not_before
-        if not_after is not None:
+        if not isinstance(not_after, unset.UnsetType):
             self.not_after = not_after
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2769,18 +2861,20 @@ class FederationCertificateStatus(pb_classes.Message):
 class CreateFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.CreateFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2817,15 +2911,17 @@ class CreateFederationCertificateRequest(pb_classes.Message):
 class GetFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.GetFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2849,21 +2945,23 @@ class GetFederationCertificateRequest(pb_classes.Message):
 class ListFederationCertificateByFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.ListFederationCertificateByFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationCertificateByFederationRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        federation_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if federation_id is not None:
+        if not isinstance(federation_id, unset.UnsetType):
             self.federation_id = federation_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2909,18 +3007,20 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
 class UpdateFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.UpdateFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2957,15 +3057,17 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
 class DeleteFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.DeleteFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2989,18 +3091,20 @@ class DeleteFederationCertificateRequest(pb_classes.Message):
 class ListFederationCertificateResponse(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.ListFederationCertificateResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationCertificateResponse",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[FederationCertificate]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[FederationCertificate]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3012,7 +3116,7 @@ class ListFederationCertificateResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[FederationCertificate]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(FederationCertificate,None),
+        wrap=pb_classes.Repeated.with_wrap(FederationCertificate,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[FederationCertificate]") -> None:
@@ -3107,6 +3211,7 @@ class FederationCertificateServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateFederationCertificateRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -3144,18 +3249,20 @@ class FederationCertificateServiceClient(client.Client):
 class CreateFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.CreateFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3192,15 +3299,17 @@ class CreateFederationRequest(pb_classes.Message):
 class GetFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.GetFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3224,24 +3333,26 @@ class GetFederationRequest(pb_classes.Message):
 class ListFederationsRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.ListFederationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationsRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3298,18 +3409,20 @@ class ListFederationsRequest(pb_classes.Message):
 class ListFederationsResponse(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.ListFederationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederationsResponse",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Federation]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Federation]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3321,7 +3434,7 @@ class ListFederationsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Federation]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Federation,None),
+        wrap=pb_classes.Repeated.with_wrap(Federation,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Federation]") -> None:
@@ -3345,21 +3458,23 @@ class ListFederationsResponse(pb_classes.Message):
 class UpdateFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.UpdateFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FederationSpec|federation_pb2.FederationSpec|None" = None,
-        status: "FederationStatus|federation_pb2.FederationStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
+        status: "FederationStatus|federation_pb2.FederationStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3408,15 +3523,17 @@ class UpdateFederationRequest(pb_classes.Message):
 class DeleteFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.DeleteFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3531,6 +3648,7 @@ class FederationServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateFederationRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -3568,21 +3686,23 @@ class FederationServiceClient(client.Client):
 class Group(pb_classes.Message):
     __PB2_CLASS__ = group_pb2.Group
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Group",group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GroupSpec|group_pb2.GroupSpec|None" = None,
-        status: "GroupStatus|group_pb2.GroupStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GroupSpec|group_pb2.GroupSpec|unset.UnsetType" = unset.Unset,
+        status: "GroupStatus|group_pb2.GroupStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3631,6 +3751,8 @@ class Group(pb_classes.Message):
 class GroupSpec(pb_classes.Message):
     __PB2_CLASS__ = group_pb2.GroupSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupSpec",group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
@@ -3648,6 +3770,8 @@ class GroupSpec(pb_classes.Message):
 class GroupStatus(pb_classes.Message):
     __PB2_CLASS__ = group_pb2.GroupStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupStatus",group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.GroupStatus.State",group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -3658,13 +3782,13 @@ class GroupStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "GroupStatus.State|group_pb2.GroupStatus.State|None" = None,
-        members_count: "builtins.int|None" = None,
+        state: "GroupStatus.State|group_pb2.GroupStatus.State|unset.UnsetType" = unset.Unset,
+        members_count: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if members_count is not None:
+        if not isinstance(members_count, unset.UnsetType):
             self.members_count = members_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3703,21 +3827,23 @@ class GroupStatus(pb_classes.Message):
 class ServiceAccount(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccount",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
-        status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
+        status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3766,15 +3892,17 @@ class ServiceAccount(pb_classes.Message):
 class ServiceAccountSpec(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountSpec",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3798,15 +3926,17 @@ class ServiceAccountSpec(pb_classes.Message):
 class ServiceAccountStatus(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountStatus",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        active: "builtins.bool|None" = None,
+        active: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if active is not None:
+        if not isinstance(active, unset.UnsetType):
             self.active = active
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3830,18 +3960,20 @@ class ServiceAccountStatus(pb_classes.Message):
 class ServiceAccountAttributes(pb_classes.Message):
     __PB2_CLASS__ = service_account_pb2.ServiceAccountAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountAttributes",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        name: "builtins.str|None" = None,
-        description: "builtins.str|None" = None,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3877,21 +4009,23 @@ class ServiceAccountAttributes(pb_classes.Message):
 class TenantUserAccount(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccount",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|None" = None,
-        status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|unset.UnsetType" = unset.Unset,
+        status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3940,6 +4074,8 @@ class TenantUserAccount(pb_classes.Message):
 class TenantUserAccountWithAttributes(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountWithAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountWithAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_attributesOptional__(pb_classes.OneOf):
         name: builtins.str= "attributesOptional"
@@ -3983,16 +4119,16 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|None" = None,
-        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
-        error: "Error|tenant_user_account_pb2.Error|None" = None,
+        tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|unset.UnsetType" = unset.Unset,
+        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
+        error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if tenant_user_account is not None:
+        if not isinstance(tenant_user_account, unset.UnsetType):
             self.tenant_user_account = tenant_user_account
-        if attributes is not None:
+        if not isinstance(attributes, unset.UnsetType):
             self.attributes = attributes
-        if error is not None:
+        if not isinstance(error, unset.UnsetType):
             self.error = error
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4014,23 +4150,23 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
         )
     
     @builtins.property
-    def attributes(self) -> "UserAttributes":
-        return super()._get_field("attributes", explicit_presence=False,
+    def attributes(self) -> "UserAttributes|None":
+        return super()._get_field("attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
     @attributes.setter
-    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
-        return super()._set_field("attributes",value,explicit_presence=False,
+    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes|None") -> None:
+        return super()._set_field("attributes",value,explicit_presence=True,
         )
     
     @builtins.property
-    def error(self) -> "Error":
-        return super()._get_field("error", explicit_presence=False,
+    def error(self) -> "Error|None":
+        return super()._get_field("error", explicit_presence=True,
         wrap=Error,
         )
     @error.setter
-    def error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
-        return super()._set_field("error",value,explicit_presence=False,
+    def error(self, value: "Error|tenant_user_account_pb2.Error|None") -> None:
+        return super()._set_field("error",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -4043,6 +4179,8 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
 class UserAttributes(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.UserAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__sub__(pb_classes.OneOf):
         name: builtins.str= "_sub"
@@ -4372,43 +4510,43 @@ class UserAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        sub: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
-        given_name: "builtins.str|None" = None,
-        family_name: "builtins.str|None" = None,
-        preferred_username: "builtins.str|None" = None,
-        picture: "builtins.str|None" = None,
-        email: "builtins.str|None" = None,
-        email_verified: "builtins.bool|None" = None,
-        zoneinfo: "builtins.str|None" = None,
-        locale: "builtins.str|None" = None,
-        phone_number: "builtins.str|None" = None,
-        phone_number_verified: "builtins.bool|None" = None,
+        sub: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        given_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        family_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        preferred_username: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        picture: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        email: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        email_verified: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        zoneinfo: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        locale: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        phone_number: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        phone_number_verified: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if sub is not None:
+        if not isinstance(sub, unset.UnsetType):
             self.sub = sub
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if given_name is not None:
+        if not isinstance(given_name, unset.UnsetType):
             self.given_name = given_name
-        if family_name is not None:
+        if not isinstance(family_name, unset.UnsetType):
             self.family_name = family_name
-        if preferred_username is not None:
+        if not isinstance(preferred_username, unset.UnsetType):
             self.preferred_username = preferred_username
-        if picture is not None:
+        if not isinstance(picture, unset.UnsetType):
             self.picture = picture
-        if email is not None:
+        if not isinstance(email, unset.UnsetType):
             self.email = email
-        if email_verified is not None:
+        if not isinstance(email_verified, unset.UnsetType):
             self.email_verified = email_verified
-        if zoneinfo is not None:
+        if not isinstance(zoneinfo, unset.UnsetType):
             self.zoneinfo = zoneinfo
-        if locale is not None:
+        if not isinstance(locale, unset.UnsetType):
             self.locale = locale
-        if phone_number is not None:
+        if not isinstance(phone_number, unset.UnsetType):
             self.phone_number = phone_number
-        if phone_number_verified is not None:
+        if not isinstance(phone_number_verified, unset.UnsetType):
             self.phone_number_verified = phone_number_verified
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4577,15 +4715,17 @@ class UserAttributes(pb_classes.Message):
 class Error(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.Error
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Error",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        message: "builtins.str|None" = None,
+        message: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if message is not None:
+        if not isinstance(message, unset.UnsetType):
             self.message = message
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4609,19 +4749,23 @@ class Error(pb_classes.Message):
 class TenantUserAccountSpec(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class VisibleAttributes(pb_classes.Message):
         __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec.VisibleAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
         
         def __init__(
             self,
             initial_message: message_1.Message|None = None,
             *,
-            attribute: "abc.Iterable[builtins.str]|None" = None,
+            attribute: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if attribute is not None:
+            if not isinstance(attribute, unset.UnsetType):
                 self.attribute = attribute
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4648,10 +4792,10 @@ class TenantUserAccountSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|None" = None,
+        visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if visible_attributes is not None:
+        if not isinstance(visible_attributes, unset.UnsetType):
             self.visible_attributes = visible_attributes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4678,6 +4822,8 @@ class TenantUserAccountSpec(pb_classes.Message):
 class TenantUserAccountStatus(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountStatus",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.TenantUserAccountStatus.State",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -4690,16 +4836,16 @@ class TenantUserAccountStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None" = None,
-        invitation_id: "builtins.str|None" = None,
-        federation_id: "builtins.str|None" = None,
+        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|unset.UnsetType" = unset.Unset,
+        invitation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if invitation_id is not None:
+        if not isinstance(invitation_id, unset.UnsetType):
             self.invitation_id = invitation_id
-        if federation_id is not None:
+        if not isinstance(federation_id, unset.UnsetType):
             self.federation_id = federation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4749,24 +4895,27 @@ class TenantUserAccountStatus(pb_classes.Message):
 class GroupMembership(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembership
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembership",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "revoke_at": well_known_1.ts_mask,
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None" = None,
-        status: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|None" = None,
-        revoke_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|unset.UnsetType" = unset.Unset,
+        status: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|unset.UnsetType" = unset.Unset,
+        revoke_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
-        if revoke_at is not None:
+        if not isinstance(revoke_at, unset.UnsetType):
             self.revoke_at = revoke_at
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4828,15 +4977,17 @@ class GroupMembership(pb_classes.Message):
 class GroupMembershipSpec(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipSpec",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        member_id: "builtins.str|None" = None,
+        member_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if member_id is not None:
+        if not isinstance(member_id, unset.UnsetType):
             self.member_id = member_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4860,6 +5011,8 @@ class GroupMembershipSpec(pb_classes.Message):
 class GroupMembershipStatus(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipStatus",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
@@ -4877,6 +5030,8 @@ class GroupMembershipStatus(pb_classes.Message):
 class GroupMembershipWithAttributes(pb_classes.Message):
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipWithAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipWithAttributes",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_attributesOptional__(pb_classes.OneOf):
         name: builtins.str= "attributesOptional"
@@ -4931,19 +5086,19 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        group_membership: "GroupMembership|group_membership_pb2.GroupMembership|None" = None,
-        user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
-        service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None" = None,
-        error: "Error|tenant_user_account_pb2.Error|None" = None,
+        group_membership: "GroupMembership|group_membership_pb2.GroupMembership|unset.UnsetType" = unset.Unset,
+        user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
+        service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None|unset.UnsetType" = unset.Unset,
+        error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if group_membership is not None:
+        if not isinstance(group_membership, unset.UnsetType):
             self.group_membership = group_membership
-        if user_attributes is not None:
+        if not isinstance(user_attributes, unset.UnsetType):
             self.user_attributes = user_attributes
-        if service_account_attributes is not None:
+        if not isinstance(service_account_attributes, unset.UnsetType):
             self.service_account_attributes = service_account_attributes
-        if error is not None:
+        if not isinstance(error, unset.UnsetType):
             self.error = error
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4966,33 +5121,33 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         )
     
     @builtins.property
-    def user_attributes(self) -> "UserAttributes":
-        return super()._get_field("user_attributes", explicit_presence=False,
+    def user_attributes(self) -> "UserAttributes|None":
+        return super()._get_field("user_attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
     @user_attributes.setter
-    def user_attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
-        return super()._set_field("user_attributes",value,explicit_presence=False,
+    def user_attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes|None") -> None:
+        return super()._set_field("user_attributes",value,explicit_presence=True,
         )
     
     @builtins.property
-    def service_account_attributes(self) -> "ServiceAccountAttributes":
-        return super()._get_field("service_account_attributes", explicit_presence=False,
+    def service_account_attributes(self) -> "ServiceAccountAttributes|None":
+        return super()._get_field("service_account_attributes", explicit_presence=True,
         wrap=ServiceAccountAttributes,
         )
     @service_account_attributes.setter
-    def service_account_attributes(self, value: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes") -> None:
-        return super()._set_field("service_account_attributes",value,explicit_presence=False,
+    def service_account_attributes(self, value: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None") -> None:
+        return super()._set_field("service_account_attributes",value,explicit_presence=True,
         )
     
     @builtins.property
-    def error(self) -> "Error":
-        return super()._get_field("error", explicit_presence=False,
+    def error(self) -> "Error|None":
+        return super()._get_field("error", explicit_presence=True,
         wrap=Error,
         )
     @error.setter
-    def error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
-        return super()._set_field("error",value,explicit_presence=False,
+    def error(self, value: "Error|tenant_user_account_pb2.Error|None") -> None:
+        return super()._set_field("error",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -5007,21 +5162,23 @@ class GroupMembershipWithAttributes(pb_classes.Message):
 class CreateGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.CreateGroupMembershipRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None" = None,
-        revoke_after_hours: "builtins.int|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|unset.UnsetType" = unset.Unset,
+        revoke_after_hours: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if revoke_after_hours is not None:
+        if not isinstance(revoke_after_hours, unset.UnsetType):
             self.revoke_after_hours = revoke_after_hours
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5069,15 +5226,17 @@ class CreateGroupMembershipRequest(pb_classes.Message):
 class DeleteGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.DeleteGroupMembershipRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5101,15 +5260,17 @@ class DeleteGroupMembershipRequest(pb_classes.Message):
 class GetGroupMembershipRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.GetGroupMembershipRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetGroupMembershipRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5133,6 +5294,8 @@ class GetGroupMembershipRequest(pb_classes.Message):
 class ListGroupMembershipsRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -5165,19 +5328,19 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5236,6 +5399,8 @@ class ListGroupMembershipsRequest(pb_classes.Message):
 class ListMemberOfRequest(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListMemberOfRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListMemberOfRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -5268,19 +5433,19 @@ class ListMemberOfRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        subject_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        subject_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if subject_id is not None:
+        if not isinstance(subject_id, unset.UnsetType):
             self.subject_id = subject_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5339,18 +5504,20 @@ class ListMemberOfRequest(pb_classes.Message):
 class ListGroupMembershipsResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        memberships: "abc.Iterable[GroupMembership]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        memberships: "abc.Iterable[GroupMembership]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if memberships is not None:
+        if not isinstance(memberships, unset.UnsetType):
             self.memberships = memberships
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5362,7 +5529,7 @@ class ListGroupMembershipsResponse(pb_classes.Message):
     @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembership]":
         return super()._get_field("memberships", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(GroupMembership,None),
+        wrap=pb_classes.Repeated.with_wrap(GroupMembership,None,None),
         )
     @memberships.setter
     def memberships(self, value: "abc.Iterable[GroupMembership]") -> None:
@@ -5386,18 +5553,20 @@ class ListGroupMembershipsResponse(pb_classes.Message):
 class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListGroupMembershipsWithAttributesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupMembershipsWithAttributesResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        memberships: "abc.Iterable[GroupMembershipWithAttributes]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        memberships: "abc.Iterable[GroupMembershipWithAttributes]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if memberships is not None:
+        if not isinstance(memberships, unset.UnsetType):
             self.memberships = memberships
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5409,7 +5578,7 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
     @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembershipWithAttributes]":
         return super()._get_field("memberships", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(GroupMembershipWithAttributes,None),
+        wrap=pb_classes.Repeated.with_wrap(GroupMembershipWithAttributes,None,None),
         )
     @memberships.setter
     def memberships(self, value: "abc.Iterable[GroupMembershipWithAttributes]") -> None:
@@ -5433,18 +5602,20 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
 class ListMemberOfResponse(pb_classes.Message):
     __PB2_CLASS__ = group_membership_service_pb2.ListMemberOfResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListMemberOfResponse",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Group]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Group]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5456,7 +5627,7 @@ class ListMemberOfResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Group,None),
+        wrap=pb_classes.Repeated.with_wrap(Group,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Group]") -> None:
@@ -5521,6 +5692,26 @@ class GroupMembershipServiceClient(client.Client):
             wait_for_ready=wait_for_ready,
             compression=compression,
             result_wrapper=pb_classes.simple_wrapper(GroupMembership),
+        )
+    
+    def get_with_attributes(self,
+        request: "GetGroupMembershipRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        wait_for_ready: builtins.bool | None = None,
+        compression: grpc.Compression | None = None,
+    ) -> request_1.Request["GetGroupMembershipRequest","GroupMembershipWithAttributes"]:
+        return super().request(
+            method="GetWithAttributes",
+            request=request,
+            result_pb2_class=group_membership_pb2.GroupMembershipWithAttributes,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            wait_for_ready=wait_for_ready,
+            compression=compression,
+            result_wrapper=pb_classes.simple_wrapper(GroupMembershipWithAttributes),
         )
     
     def delete(self,
@@ -5608,15 +5799,17 @@ class GroupMembershipServiceClient(client.Client):
 class GetGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.GetGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetGroupRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5640,18 +5833,20 @@ class GetGroupRequest(pb_classes.Message):
 class GetGroupByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.GetGroupByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetGroupByNameRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5686,6 +5881,8 @@ class GetGroupByNameRequest(pb_classes.Message):
 class ListGroupsRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.ListGroupsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupsRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -5718,19 +5915,19 @@ class ListGroupsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5789,18 +5986,20 @@ class ListGroupsRequest(pb_classes.Message):
 class ListGroupsResponse(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.ListGroupsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListGroupsResponse",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Group]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Group]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5812,7 +6011,7 @@ class ListGroupsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Group,None),
+        wrap=pb_classes.Repeated.with_wrap(Group,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Group]") -> None:
@@ -5903,39 +6102,41 @@ class GroupServiceClient(client.Client):
 class ExchangeTokenRequest(pb_classes.Message):
     __PB2_CLASS__ = token_service_pb2.ExchangeTokenRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ExchangeTokenRequest",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        grant_type: "builtins.str|None" = None,
-        requested_token_type: "builtins.str|None" = None,
-        subject_token: "builtins.str|None" = None,
-        subject_token_type: "builtins.str|None" = None,
-        scopes: "abc.Iterable[builtins.str]|None" = None,
-        audience: "builtins.str|None" = None,
-        actor_token: "builtins.str|None" = None,
-        actor_token_type: "builtins.str|None" = None,
-        resource: "abc.Iterable[builtins.str]|None" = None,
+        grant_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        requested_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        subject_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        subject_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        scopes: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        audience: "builtins.str|unset.UnsetType" = unset.Unset,
+        actor_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        actor_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if grant_type is not None:
+        if not isinstance(grant_type, unset.UnsetType):
             self.grant_type = grant_type
-        if requested_token_type is not None:
+        if not isinstance(requested_token_type, unset.UnsetType):
             self.requested_token_type = requested_token_type
-        if subject_token is not None:
+        if not isinstance(subject_token, unset.UnsetType):
             self.subject_token = subject_token
-        if subject_token_type is not None:
+        if not isinstance(subject_token_type, unset.UnsetType):
             self.subject_token_type = subject_token_type
-        if scopes is not None:
+        if not isinstance(scopes, unset.UnsetType):
             self.scopes = scopes
-        if audience is not None:
+        if not isinstance(audience, unset.UnsetType):
             self.audience = audience
-        if actor_token is not None:
+        if not isinstance(actor_token, unset.UnsetType):
             self.actor_token = actor_token
-        if actor_token_type is not None:
+        if not isinstance(actor_token_type, unset.UnsetType):
             self.actor_token_type = actor_token_type
-        if resource is not None:
+        if not isinstance(resource, unset.UnsetType):
             self.resource = resource
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6049,27 +6250,29 @@ class ExchangeTokenRequest(pb_classes.Message):
 class CreateTokenResponse(pb_classes.Message):
     __PB2_CLASS__ = token_service_pb2.CreateTokenResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateTokenResponse",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        access_token: "builtins.str|None" = None,
-        issued_token_type: "builtins.str|None" = None,
-        token_type: "builtins.str|None" = None,
-        expires_in: "builtins.int|None" = None,
-        scopes: "abc.Iterable[builtins.str]|None" = None,
+        access_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        issued_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        token_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        expires_in: "builtins.int|unset.UnsetType" = unset.Unset,
+        scopes: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if access_token is not None:
+        if not isinstance(access_token, unset.UnsetType):
             self.access_token = access_token
-        if issued_token_type is not None:
+        if not isinstance(issued_token_type, unset.UnsetType):
             self.issued_token_type = issued_token_type
-        if token_type is not None:
+        if not isinstance(token_type, unset.UnsetType):
             self.token_type = token_type
-        if expires_in is not None:
+        if not isinstance(expires_in, unset.UnsetType):
             self.expires_in = expires_in
-        if scopes is not None:
+        if not isinstance(scopes, unset.UnsetType):
             self.scopes = scopes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6166,21 +6369,23 @@ class IdentityServiceClient(client.Client):
 class Invitation(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.Invitation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.Invitation",invitation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
-        status: "InvitationStatus|invitation_pb2.InvitationStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
+        status: "InvitationStatus|invitation_pb2.InvitationStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6229,6 +6434,8 @@ class Invitation(pb_classes.Message):
 class InvitationSpec(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.InvitationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.InvitationSpec",invitation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_contact__(pb_classes.OneOf):
         name: builtins.str= "contact"
@@ -6261,13 +6468,13 @@ class InvitationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        email: "builtins.str|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        email: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if email is not None:
+        if not isinstance(email, unset.UnsetType):
             self.email = email
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6304,6 +6511,9 @@ class InvitationSpec(pb_classes.Message):
 class InvitationStatus(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.InvitationStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.InvitationStatus",invitation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "expires_at": well_known_1.ts_mask,
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.InvitationStatus.State",invitation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -6318,16 +6528,16 @@ class InvitationStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_user_account_id: "builtins.str|None" = None,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        state: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|None" = None,
+        tenant_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        state: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if tenant_user_account_id is not None:
+        if not isinstance(tenant_user_account_id, unset.UnsetType):
             self.tenant_user_account_id = tenant_user_account_id
-        if expires_at is not None:
+        if not isinstance(expires_at, unset.UnsetType):
             self.expires_at = expires_at
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6379,21 +6589,23 @@ class InvitationStatus(pb_classes.Message):
 class CreateInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.CreateInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
-        no_send: "builtins.bool|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
+        no_send: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if no_send is not None:
+        if not isinstance(no_send, unset.UnsetType):
             self.no_send = no_send
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6441,15 +6653,17 @@ class CreateInvitationRequest(pb_classes.Message):
 class GetInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.GetInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6473,24 +6687,26 @@ class GetInvitationRequest(pb_classes.Message):
 class ListInvitationsRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ListInvitationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListInvitationsRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6547,18 +6763,20 @@ class ListInvitationsRequest(pb_classes.Message):
 class ListInvitationsResponse(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ListInvitationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListInvitationsResponse",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Invitation]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Invitation]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6570,7 +6788,7 @@ class ListInvitationsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Invitation]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Invitation,None),
+        wrap=pb_classes.Repeated.with_wrap(Invitation,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Invitation]") -> None:
@@ -6594,15 +6812,17 @@ class ListInvitationsResponse(pb_classes.Message):
 class DeleteInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.DeleteInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6626,18 +6846,20 @@ class DeleteInvitationRequest(pb_classes.Message):
 class UpdateInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.UpdateInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6674,15 +6896,17 @@ class UpdateInvitationRequest(pb_classes.Message):
 class ResendInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.ResendInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ResendInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6797,6 +7021,7 @@ class InvitationServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateInvitationRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -6834,18 +7059,20 @@ class InvitationServiceClient(client.Client):
 class UserAccountExternalId(pb_classes.Message):
     __PB2_CLASS__ = user_account_pb2.UserAccountExternalId
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAccountExternalId",user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        federation_user_account_id: "builtins.str|None" = None,
-        federation_id: "builtins.str|None" = None,
+        federation_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if federation_user_account_id is not None:
+        if not isinstance(federation_user_account_id, unset.UnsetType):
             self.federation_user_account_id = federation_user_account_id
-        if federation_id is not None:
+        if not isinstance(federation_id, unset.UnsetType):
             self.federation_id = federation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6881,6 +7108,8 @@ class UserAccountExternalId(pb_classes.Message):
 class GetProfileRequest(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.GetProfileRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProfileRequest",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
@@ -6898,6 +7127,8 @@ class GetProfileRequest(pb_classes.Message):
 class GetProfileResponse(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.GetProfileResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProfileResponse",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_profile__(pb_classes.OneOf):
         name: builtins.str= "profile"
@@ -6952,16 +7183,16 @@ class GetProfileResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_profile: "UserProfile|profile_service_pb2.UserProfile|None" = None,
-        service_account_profile: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|None" = None,
-        anonymous_profile: "AnonymousAccount|profile_service_pb2.AnonymousAccount|None" = None,
+        user_profile: "UserProfile|profile_service_pb2.UserProfile|None|unset.UnsetType" = unset.Unset,
+        service_account_profile: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|None|unset.UnsetType" = unset.Unset,
+        anonymous_profile: "AnonymousAccount|profile_service_pb2.AnonymousAccount|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if user_profile is not None:
+        if not isinstance(user_profile, unset.UnsetType):
             self.user_profile = user_profile
-        if service_account_profile is not None:
+        if not isinstance(service_account_profile, unset.UnsetType):
             self.service_account_profile = service_account_profile
-        if anonymous_profile is not None:
+        if not isinstance(anonymous_profile, unset.UnsetType):
             self.anonymous_profile = anonymous_profile
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -6973,33 +7204,33 @@ class GetProfileResponse(pb_classes.Message):
         ]
     
     @builtins.property
-    def user_profile(self) -> "UserProfile":
-        return super()._get_field("user_profile", explicit_presence=False,
+    def user_profile(self) -> "UserProfile|None":
+        return super()._get_field("user_profile", explicit_presence=True,
         wrap=UserProfile,
         )
     @user_profile.setter
-    def user_profile(self, value: "UserProfile|profile_service_pb2.UserProfile") -> None:
-        return super()._set_field("user_profile",value,explicit_presence=False,
+    def user_profile(self, value: "UserProfile|profile_service_pb2.UserProfile|None") -> None:
+        return super()._set_field("user_profile",value,explicit_presence=True,
         )
     
     @builtins.property
-    def service_account_profile(self) -> "ServiceAccountProfile":
-        return super()._get_field("service_account_profile", explicit_presence=False,
+    def service_account_profile(self) -> "ServiceAccountProfile|None":
+        return super()._get_field("service_account_profile", explicit_presence=True,
         wrap=ServiceAccountProfile,
         )
     @service_account_profile.setter
-    def service_account_profile(self, value: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile") -> None:
-        return super()._set_field("service_account_profile",value,explicit_presence=False,
+    def service_account_profile(self, value: "ServiceAccountProfile|profile_service_pb2.ServiceAccountProfile|None") -> None:
+        return super()._set_field("service_account_profile",value,explicit_presence=True,
         )
     
     @builtins.property
-    def anonymous_profile(self) -> "AnonymousAccount":
-        return super()._get_field("anonymous_profile", explicit_presence=False,
+    def anonymous_profile(self) -> "AnonymousAccount|None":
+        return super()._get_field("anonymous_profile", explicit_presence=True,
         wrap=AnonymousAccount,
         )
     @anonymous_profile.setter
-    def anonymous_profile(self, value: "AnonymousAccount|profile_service_pb2.AnonymousAccount") -> None:
-        return super()._set_field("anonymous_profile",value,explicit_presence=False,
+    def anonymous_profile(self, value: "AnonymousAccount|profile_service_pb2.AnonymousAccount|None") -> None:
+        return super()._set_field("anonymous_profile",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -7012,6 +7243,8 @@ class GetProfileResponse(pb_classes.Message):
 class UserProfile(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.UserProfile
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserProfile",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_attributes_optional__(pb_classes.OneOf):
         name: builtins.str= "attributes_optional"
@@ -7055,22 +7288,22 @@ class UserProfile(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        federation_info: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|None" = None,
-        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None" = None,
-        retrieving_error: "Error|tenant_user_account_pb2.Error|None" = None,
-        tenants: "abc.Iterable[UserTenantInfo]|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        federation_info: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|unset.UnsetType" = unset.Unset,
+        attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
+        retrieving_error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
+        tenants: "abc.Iterable[UserTenantInfo]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if federation_info is not None:
+        if not isinstance(federation_info, unset.UnsetType):
             self.federation_info = federation_info
-        if attributes is not None:
+        if not isinstance(attributes, unset.UnsetType):
             self.attributes = attributes
-        if retrieving_error is not None:
+        if not isinstance(retrieving_error, unset.UnsetType):
             self.retrieving_error = retrieving_error
-        if tenants is not None:
+        if not isinstance(tenants, unset.UnsetType):
             self.tenants = tenants
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7103,29 +7336,29 @@ class UserProfile(pb_classes.Message):
         )
     
     @builtins.property
-    def attributes(self) -> "UserAttributes":
-        return super()._get_field("attributes", explicit_presence=False,
+    def attributes(self) -> "UserAttributes|None":
+        return super()._get_field("attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
     @attributes.setter
-    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes") -> None:
-        return super()._set_field("attributes",value,explicit_presence=False,
+    def attributes(self, value: "UserAttributes|tenant_user_account_pb2.UserAttributes|None") -> None:
+        return super()._set_field("attributes",value,explicit_presence=True,
         )
     
     @builtins.property
-    def retrieving_error(self) -> "Error":
-        return super()._get_field("retrieving_error", explicit_presence=False,
+    def retrieving_error(self) -> "Error|None":
+        return super()._get_field("retrieving_error", explicit_presence=True,
         wrap=Error,
         )
     @retrieving_error.setter
-    def retrieving_error(self, value: "Error|tenant_user_account_pb2.Error") -> None:
-        return super()._set_field("retrieving_error",value,explicit_presence=False,
+    def retrieving_error(self, value: "Error|tenant_user_account_pb2.Error|None") -> None:
+        return super()._set_field("retrieving_error",value,explicit_presence=True,
         )
     
     @builtins.property
     def tenants(self) -> "abc.MutableSequence[UserTenantInfo]":
         return super()._get_field("tenants", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(UserTenantInfo,None),
+        wrap=pb_classes.Repeated.with_wrap(UserTenantInfo,None,None),
         )
     @tenants.setter
     def tenants(self, value: "abc.Iterable[UserTenantInfo]") -> None:
@@ -7144,18 +7377,20 @@ class UserProfile(pb_classes.Message):
 class UserTenantInfo(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.UserTenantInfo
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserTenantInfo",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_id: "builtins.str|None" = None,
-        tenant_user_account_id: "builtins.str|None" = None,
+        tenant_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        tenant_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if tenant_id is not None:
+        if not isinstance(tenant_id, unset.UnsetType):
             self.tenant_id = tenant_id
-        if tenant_user_account_id is not None:
+        if not isinstance(tenant_user_account_id, unset.UnsetType):
             self.tenant_user_account_id = tenant_user_account_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7190,15 +7425,17 @@ class UserTenantInfo(pb_classes.Message):
 class ServiceAccountProfile(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.ServiceAccountProfile
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountProfile",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        info: "ServiceAccount|service_account_pb2.ServiceAccount|None" = None,
+        info: "ServiceAccount|service_account_pb2.ServiceAccount|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if info is not None:
+        if not isinstance(info, unset.UnsetType):
             self.info = info
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7223,6 +7460,8 @@ class ServiceAccountProfile(pb_classes.Message):
 class AnonymousAccount(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.AnonymousAccount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AnonymousAccount",profile_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
@@ -7267,15 +7506,17 @@ class ProfileServiceClient(client.Client):
 class GetProjectRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.GetProjectRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7299,18 +7540,20 @@ class GetProjectRequest(pb_classes.Message):
 class GetProjectByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.GetProjectByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProjectByNameRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7345,6 +7588,8 @@ class GetProjectByNameRequest(pb_classes.Message):
 class ListProjectsRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListProjectsRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -7377,19 +7622,19 @@ class ListProjectsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7448,18 +7693,20 @@ class ListProjectsRequest(pb_classes.Message):
 class ListProjectsResponse(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListProjectsResponse",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Container]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Container]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7471,7 +7718,7 @@ class ListProjectsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Container]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Container,None),
+        wrap=pb_classes.Repeated.with_wrap(Container,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Container]") -> None:
@@ -7562,18 +7809,20 @@ class ProjectServiceClient(client.Client):
 class CreateServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.CreateServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7610,15 +7859,17 @@ class CreateServiceAccountRequest(pb_classes.Message):
 class GetServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.GetServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7642,18 +7893,20 @@ class GetServiceAccountRequest(pb_classes.Message):
 class GetServiceAccountByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.GetServiceAccountByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetServiceAccountByNameRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7688,6 +7941,8 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
 class ListServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.ListServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -7720,19 +7975,19 @@ class ListServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7791,18 +8046,20 @@ class ListServiceAccountRequest(pb_classes.Message):
 class UpdateServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.UpdateServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7839,15 +8096,17 @@ class UpdateServiceAccountRequest(pb_classes.Message):
 class DeleteServiceAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.DeleteServiceAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteServiceAccountRequest",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7871,18 +8130,20 @@ class DeleteServiceAccountRequest(pb_classes.Message):
 class ListServiceAccountResponse(pb_classes.Message):
     __PB2_CLASS__ = service_account_service_pb2.ListServiceAccountResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListServiceAccountResponse",service_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[ServiceAccount]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[ServiceAccount]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -7894,7 +8155,7 @@ class ListServiceAccountResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[ServiceAccount]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(ServiceAccount,None),
+        wrap=pb_classes.Repeated.with_wrap(ServiceAccount,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[ServiceAccount]") -> None:
@@ -8009,6 +8270,7 @@ class ServiceAccountServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateServiceAccountRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -8046,6 +8308,8 @@ class ServiceAccountServiceClient(client.Client):
 class RevokeSessionRequest(pb_classes.Message):
     __PB2_CLASS__ = session_management_service_pb2.RevokeSessionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.RevokeSessionRequest",session_management_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_revoke__(pb_classes.OneOf):
         name: builtins.str= "revoke"
@@ -8100,16 +8364,16 @@ class RevokeSessionRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        service_account_id: "builtins.str|None" = None,
-        all_my_active: "builtins.bool|None" = None,
-        tenant_user_account_id: "builtins.str|None" = None,
+        service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        all_my_active: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        tenant_user_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if service_account_id is not None:
+        if not isinstance(service_account_id, unset.UnsetType):
             self.service_account_id = service_account_id
-        if all_my_active is not None:
+        if not isinstance(all_my_active, unset.UnsetType):
             self.all_my_active = all_my_active
-        if tenant_user_account_id is not None:
+        if not isinstance(tenant_user_account_id, unset.UnsetType):
             self.tenant_user_account_id = tenant_user_account_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8157,6 +8421,8 @@ class RevokeSessionRequest(pb_classes.Message):
 class RevokeSessionResponse(pb_classes.Message):
     __PB2_CLASS__ = session_management_service_pb2.RevokeSessionResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.RevokeSessionResponse",session_management_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
@@ -8201,15 +8467,17 @@ class SessionManagementServiceClient(client.Client):
 class GetTenantRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.GetTenantRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetTenantRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8233,6 +8501,8 @@ class GetTenantRequest(pb_classes.Message):
 class ListTenantsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.ListTenantsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantsRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -8265,16 +8535,16 @@ class ListTenantsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8322,18 +8592,20 @@ class ListTenantsRequest(pb_classes.Message):
 class ListTenantsResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.ListTenantsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantsResponse",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Container]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Container]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8345,7 +8617,7 @@ class ListTenantsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Container]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Container,None),
+        wrap=pb_classes.Repeated.with_wrap(Container,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Container]") -> None:
@@ -8416,15 +8688,17 @@ class TenantServiceClient(client.Client):
 class GetTenantUserAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.GetTenantUserAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8448,6 +8722,8 @@ class GetTenantUserAccountRequest(pb_classes.Message):
 class ListTenantUserAccountsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.ListTenantUserAccountsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -8480,19 +8756,19 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8551,18 +8827,20 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
 class ListTenantUserAccountsResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.ListTenantUserAccountsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsResponse",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[TenantUserAccount]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[TenantUserAccount]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8574,7 +8852,7 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccount]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(TenantUserAccount,None),
+        wrap=pb_classes.Repeated.with_wrap(TenantUserAccount,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[TenantUserAccount]") -> None:
@@ -8598,15 +8876,17 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
 class BlockTenantUserAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.BlockTenantUserAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.BlockTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8630,15 +8910,17 @@ class BlockTenantUserAccountRequest(pb_classes.Message):
 class UnblockTenantUserAccountRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_service_pb2.UnblockTenantUserAccountRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UnblockTenantUserAccountRequest",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8750,15 +9032,17 @@ class TenantUserAccountServiceClient(client.Client):
 class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.GetTenantUserAccountWithAttributesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetTenantUserAccountWithAttributesRequest",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8782,6 +9066,8 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
 class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsWithAttributesRequest",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__page_size__(pb_classes.OneOf):
         name: builtins.str= "_page_size"
@@ -8814,19 +9100,19 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8885,18 +9171,20 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
 class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_with_attributes_service_pb2.ListTenantUserAccountsWithAttributesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantUserAccountsWithAttributesResponse",tenant_user_account_with_attributes_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[TenantUserAccountWithAttributes]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[TenantUserAccountWithAttributes]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -8908,7 +9196,7 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccountWithAttributes]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(TenantUserAccountWithAttributes,None),
+        wrap=pb_classes.Repeated.with_wrap(TenantUserAccountWithAttributes,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[TenantUserAccountWithAttributes]") -> None:

@@ -10,12 +10,13 @@ import nebius.base.protos.pb_classes as pb_classes
 import nebius.api.nebius.storage.v1.bucket_counters_pb2 as bucket_counters_pb2
 import google.protobuf.message as message_1
 import builtins as builtins
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import nebius.api.nebius.storage.v1.lifecycle_pb2 as lifecycle_pb2
+import nebius.base.protos.well_known as well_known_1
 import typing as typing
 import datetime as datetime
 import google.protobuf.timestamp_pb2 as timestamp_pb2
-import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.storage.v1.bucket_pb2 as bucket_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
@@ -26,6 +27,7 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
 # file: nebius/storage/v1/base.proto
@@ -45,33 +47,35 @@ class VersioningPolicy(pb_enum.Enum):
 class CurrentBucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.CurrentBucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        simple_objects_quantity: "builtins.int|None" = None,
-        simple_objects_size: "builtins.int|None" = None,
-        multipart_objects_quantity: "builtins.int|None" = None,
-        multipart_objects_size: "builtins.int|None" = None,
-        multipart_uploads_quantity: "builtins.int|None" = None,
-        inflight_parts_quantity: "builtins.int|None" = None,
-        inflight_parts_size: "builtins.int|None" = None,
+        simple_objects_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
+        simple_objects_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        multipart_objects_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
+        multipart_objects_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        multipart_uploads_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
+        inflight_parts_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
+        inflight_parts_size: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if simple_objects_quantity is not None:
+        if not isinstance(simple_objects_quantity, unset.UnsetType):
             self.simple_objects_quantity = simple_objects_quantity
-        if simple_objects_size is not None:
+        if not isinstance(simple_objects_size, unset.UnsetType):
             self.simple_objects_size = simple_objects_size
-        if multipart_objects_quantity is not None:
+        if not isinstance(multipart_objects_quantity, unset.UnsetType):
             self.multipart_objects_quantity = multipart_objects_quantity
-        if multipart_objects_size is not None:
+        if not isinstance(multipart_objects_size, unset.UnsetType):
             self.multipart_objects_size = multipart_objects_size
-        if multipart_uploads_quantity is not None:
+        if not isinstance(multipart_uploads_quantity, unset.UnsetType):
             self.multipart_uploads_quantity = multipart_uploads_quantity
-        if inflight_parts_quantity is not None:
+        if not isinstance(inflight_parts_quantity, unset.UnsetType):
             self.inflight_parts_quantity = inflight_parts_quantity
-        if inflight_parts_size is not None:
+        if not isinstance(inflight_parts_size, unset.UnsetType):
             self.inflight_parts_size = inflight_parts_size
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -161,24 +165,26 @@ class CurrentBucketCounters(pb_classes.Message):
 class NonCurrentBucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.NonCurrentBucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.NonCurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        simple_objects_quantity: "builtins.int|None" = None,
-        simple_objects_size: "builtins.int|None" = None,
-        multipart_objects_quantity: "builtins.int|None" = None,
-        multipart_objects_size: "builtins.int|None" = None,
+        simple_objects_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
+        simple_objects_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        multipart_objects_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
+        multipart_objects_size: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if simple_objects_quantity is not None:
+        if not isinstance(simple_objects_quantity, unset.UnsetType):
             self.simple_objects_quantity = simple_objects_quantity
-        if simple_objects_size is not None:
+        if not isinstance(simple_objects_size, unset.UnsetType):
             self.simple_objects_size = simple_objects_size
-        if multipart_objects_quantity is not None:
+        if not isinstance(multipart_objects_quantity, unset.UnsetType):
             self.multipart_objects_quantity = multipart_objects_quantity
-        if multipart_objects_size is not None:
+        if not isinstance(multipart_objects_size, unset.UnsetType):
             self.multipart_objects_size = multipart_objects_size
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -235,21 +241,23 @@ class NonCurrentBucketCounters(pb_classes.Message):
 class BucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.BucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        storage_class: "StorageClass|base_pb2.StorageClass|None" = None,
-        counters: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters|None" = None,
-        non_current_counters: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters|None" = None,
+        storage_class: "StorageClass|base_pb2.StorageClass|unset.UnsetType" = unset.Unset,
+        counters: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters|unset.UnsetType" = unset.Unset,
+        non_current_counters: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if storage_class is not None:
+        if not isinstance(storage_class, unset.UnsetType):
             self.storage_class = storage_class
-        if counters is not None:
+        if not isinstance(counters, unset.UnsetType):
             self.counters = counters
-        if non_current_counters is not None:
+        if not isinstance(non_current_counters, unset.UnsetType):
             self.non_current_counters = non_current_counters
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -299,15 +307,17 @@ class BucketCounters(pb_classes.Message):
 class LifecycleConfiguration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleConfiguration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleConfiguration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        rules: "abc.Iterable[LifecycleRule]|None" = None,
+        rules: "abc.Iterable[LifecycleRule]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if rules is not None:
+        if not isinstance(rules, unset.UnsetType):
             self.rules = rules
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -318,7 +328,7 @@ class LifecycleConfiguration(pb_classes.Message):
     @builtins.property
     def rules(self) -> "abc.MutableSequence[LifecycleRule]":
         return super()._get_field("rules", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(LifecycleRule,None),
+        wrap=pb_classes.Repeated.with_wrap(LifecycleRule,None,None),
         )
     @rules.setter
     def rules(self, value: "abc.Iterable[LifecycleRule]") -> None:
@@ -332,6 +342,8 @@ class LifecycleConfiguration(pb_classes.Message):
 class LifecycleRule(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleRule
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleRule",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class Status(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.LifecycleRule.Status",lifecycle_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -343,25 +355,25 @@ class LifecycleRule(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        status: "LifecycleRule.Status|lifecycle_pb2.LifecycleRule.Status|None" = None,
-        filter: "LifecycleFilter|lifecycle_pb2.LifecycleFilter|None" = None,
-        expiration: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration|None" = None,
-        noncurrent_version_expiration: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration|None" = None,
-        abort_incomplete_multipart_upload: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        status: "LifecycleRule.Status|lifecycle_pb2.LifecycleRule.Status|unset.UnsetType" = unset.Unset,
+        filter: "LifecycleFilter|lifecycle_pb2.LifecycleFilter|unset.UnsetType" = unset.Unset,
+        expiration: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration|unset.UnsetType" = unset.Unset,
+        noncurrent_version_expiration: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration|unset.UnsetType" = unset.Unset,
+        abort_incomplete_multipart_upload: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
-        if expiration is not None:
+        if not isinstance(expiration, unset.UnsetType):
             self.expiration = expiration
-        if noncurrent_version_expiration is not None:
+        if not isinstance(noncurrent_version_expiration, unset.UnsetType):
             self.noncurrent_version_expiration = noncurrent_version_expiration
-        if abort_incomplete_multipart_upload is not None:
+        if not isinstance(abort_incomplete_multipart_upload, unset.UnsetType):
             self.abort_incomplete_multipart_upload = abort_incomplete_multipart_upload
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -447,21 +459,23 @@ class LifecycleRule(pb_classes.Message):
 class LifecycleFilter(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleFilter
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleFilter",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        prefix: "builtins.str|None" = None,
-        object_size_greater_than_bytes: "builtins.int|None" = None,
-        object_size_less_than_bytes: "builtins.int|None" = None,
+        prefix: "builtins.str|unset.UnsetType" = unset.Unset,
+        object_size_greater_than_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        object_size_less_than_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if prefix is not None:
+        if not isinstance(prefix, unset.UnsetType):
             self.prefix = prefix
-        if object_size_greater_than_bytes is not None:
+        if not isinstance(object_size_greater_than_bytes, unset.UnsetType):
             self.object_size_greater_than_bytes = object_size_greater_than_bytes
-        if object_size_less_than_bytes is not None:
+        if not isinstance(object_size_less_than_bytes, unset.UnsetType):
             self.object_size_less_than_bytes = object_size_less_than_bytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -507,6 +521,9 @@ class LifecycleFilter(pb_classes.Message):
 class LifecycleExpiration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleExpiration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleExpiration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "date": well_known_1.ts_mask,
+    }
     
     class __OneOfClass_expired_with__(pb_classes.OneOf):
         name: builtins.str= "expired_with"
@@ -550,16 +567,16 @@ class LifecycleExpiration(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        date: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        days: "builtins.int|None" = None,
-        expired_object_delete_marker: "builtins.bool|None" = None,
+        date: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        days: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        expired_object_delete_marker: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if date is not None:
+        if not isinstance(date, unset.UnsetType):
             self.date = date
-        if days is not None:
+        if not isinstance(days, unset.UnsetType):
             self.days = days
-        if expired_object_delete_marker is not None:
+        if not isinstance(expired_object_delete_marker, unset.UnsetType):
             self.expired_object_delete_marker = expired_object_delete_marker
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -571,13 +588,13 @@ class LifecycleExpiration(pb_classes.Message):
         ]
     
     @builtins.property
-    def date(self) -> "datetime.datetime":
-        return super()._get_field("date", explicit_presence=False,
+    def date(self) -> "datetime.datetime|None":
+        return super()._get_field("date", explicit_presence=True,
         wrap=well_known_1.from_timestamp
         )
     @date.setter
-    def date(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("date",value,explicit_presence=False,
+    def date(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("date",value,explicit_presence=True,
         unwrap=well_known_1.to_timestamp
         )
     
@@ -609,6 +626,8 @@ class LifecycleExpiration(pb_classes.Message):
 class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleNoncurrentVersionExpiration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleNoncurrentVersionExpiration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__newer_noncurrent_versions__(pb_classes.OneOf):
         name: builtins.str= "_newer_noncurrent_versions"
@@ -641,13 +660,13 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        newer_noncurrent_versions: "builtins.int|None" = None,
-        noncurrent_days: "builtins.int|None" = None,
+        newer_noncurrent_versions: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        noncurrent_days: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if newer_noncurrent_versions is not None:
+        if not isinstance(newer_noncurrent_versions, unset.UnsetType):
             self.newer_noncurrent_versions = newer_noncurrent_versions
-        if noncurrent_days is not None:
+        if not isinstance(noncurrent_days, unset.UnsetType):
             self.noncurrent_days = noncurrent_days
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -684,15 +703,17 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
 class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleAbortIncompleteMultipartUpload",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        days_after_initiation: "builtins.int|None" = None,
+        days_after_initiation: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if days_after_initiation is not None:
+        if not isinstance(days_after_initiation, unset.UnsetType):
             self.days_after_initiation = days_after_initiation
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -717,21 +738,23 @@ class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
 class Bucket(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.Bucket
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.Bucket",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "BucketSpec|bucket_pb2.BucketSpec|None" = None,
-        status: "BucketStatus|bucket_pb2.BucketStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "BucketSpec|bucket_pb2.BucketSpec|unset.UnsetType" = unset.Unset,
+        status: "BucketStatus|bucket_pb2.BucketStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -780,21 +803,23 @@ class Bucket(pb_classes.Message):
 class BucketSpec(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.BucketSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketSpec",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        versioning_policy: "VersioningPolicy|base_pb2.VersioningPolicy|None" = None,
-        max_size_bytes: "builtins.int|None" = None,
-        lifecycle_configuration: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|None" = None,
+        versioning_policy: "VersioningPolicy|base_pb2.VersioningPolicy|unset.UnsetType" = unset.Unset,
+        max_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        lifecycle_configuration: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if versioning_policy is not None:
+        if not isinstance(versioning_policy, unset.UnsetType):
             self.versioning_policy = versioning_policy
-        if max_size_bytes is not None:
+        if not isinstance(max_size_bytes, unset.UnsetType):
             self.max_size_bytes = max_size_bytes
-        if lifecycle_configuration is not None:
+        if not isinstance(lifecycle_configuration, unset.UnsetType):
             self.lifecycle_configuration = lifecycle_configuration
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -842,6 +867,10 @@ class BucketSpec(pb_classes.Message):
 class BucketStatus(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.BucketStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketStatus",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "deleted_at": well_known_1.ts_mask,
+        "purge_at": well_known_1.ts_mask,
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.BucketStatus.State",bucket_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -861,25 +890,25 @@ class BucketStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        counters: "abc.Iterable[BucketCounters]|None" = None,
-        state: "BucketStatus.State|bucket_pb2.BucketStatus.State|None" = None,
-        suspension_state: "BucketStatus.SuspensionState|bucket_pb2.BucketStatus.SuspensionState|None" = None,
-        deleted_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        domain_name: "builtins.str|None" = None,
+        counters: "abc.Iterable[BucketCounters]|unset.UnsetType" = unset.Unset,
+        state: "BucketStatus.State|bucket_pb2.BucketStatus.State|unset.UnsetType" = unset.Unset,
+        suspension_state: "BucketStatus.SuspensionState|bucket_pb2.BucketStatus.SuspensionState|unset.UnsetType" = unset.Unset,
+        deleted_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        domain_name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if counters is not None:
+        if not isinstance(counters, unset.UnsetType):
             self.counters = counters
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if suspension_state is not None:
+        if not isinstance(suspension_state, unset.UnsetType):
             self.suspension_state = suspension_state
-        if deleted_at is not None:
+        if not isinstance(deleted_at, unset.UnsetType):
             self.deleted_at = deleted_at
-        if purge_at is not None:
+        if not isinstance(purge_at, unset.UnsetType):
             self.purge_at = purge_at
-        if domain_name is not None:
+        if not isinstance(domain_name, unset.UnsetType):
             self.domain_name = domain_name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -897,7 +926,7 @@ class BucketStatus(pb_classes.Message):
     @builtins.property
     def counters(self) -> "abc.MutableSequence[BucketCounters]":
         return super()._get_field("counters", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(BucketCounters,None),
+        wrap=pb_classes.Repeated.with_wrap(BucketCounters,None,None),
         )
     @counters.setter
     def counters(self, value: "abc.Iterable[BucketCounters]") -> None:
@@ -970,18 +999,20 @@ class BucketStatus(pb_classes.Message):
 class GetBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.GetBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        with_deleted: "builtins.bool|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        with_deleted: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if with_deleted is not None:
+        if not isinstance(with_deleted, unset.UnsetType):
             self.with_deleted = with_deleted
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1016,21 +1047,23 @@ class GetBucketRequest(pb_classes.Message):
 class GetBucketByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.GetBucketByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetBucketByNameRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
-        with_deleted: "builtins.bool|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        with_deleted: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if with_deleted is not None:
+        if not isinstance(with_deleted, unset.UnsetType):
             self.with_deleted = with_deleted
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1076,18 +1109,20 @@ class GetBucketByNameRequest(pb_classes.Message):
 class CreateBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.CreateBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CreateBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "BucketSpec|bucket_pb2.BucketSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "BucketSpec|bucket_pb2.BucketSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1124,18 +1159,20 @@ class CreateBucketRequest(pb_classes.Message):
 class UpdateBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.UpdateBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.UpdateBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "BucketSpec|bucket_pb2.BucketSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "BucketSpec|bucket_pb2.BucketSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1172,6 +1209,10 @@ class UpdateBucketRequest(pb_classes.Message):
 class DeleteBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.DeleteBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.DeleteBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "purge_at": well_known_1.ts_mask,
+        "ttl": well_known_1.duration_mask,
+    }
     
     class __OneOfClass_purge__(pb_classes.OneOf):
         name: builtins.str= "purge"
@@ -1215,16 +1256,16 @@ class DeleteBucketRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        ttl: "duration_pb2.Duration|datetime.timedelta|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        ttl: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if purge_at is not None:
+        if not isinstance(purge_at, unset.UnsetType):
             self.purge_at = purge_at
-        if ttl is not None:
+        if not isinstance(ttl, unset.UnsetType):
             self.ttl = ttl
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1245,24 +1286,24 @@ class DeleteBucketRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def purge_at(self) -> "datetime.datetime":
-        return super()._get_field("purge_at", explicit_presence=False,
+    def purge_at(self) -> "datetime.datetime|None":
+        return super()._get_field("purge_at", explicit_presence=True,
         wrap=well_known_1.from_timestamp
         )
     @purge_at.setter
-    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
-        return super()._set_field("purge_at",value,explicit_presence=False,
+    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("purge_at",value,explicit_presence=True,
         unwrap=well_known_1.to_timestamp
         )
     
     @builtins.property
-    def ttl(self) -> "datetime.timedelta":
-        return super()._get_field("ttl", explicit_presence=False,
+    def ttl(self) -> "datetime.timedelta|None":
+        return super()._get_field("ttl", explicit_presence=True,
         wrap=well_known_1.from_duration
         )
     @ttl.setter
-    def ttl(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
-        return super()._set_field("ttl",value,explicit_presence=False,
+    def ttl(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("ttl",value,explicit_presence=True,
         unwrap=well_known_1.to_duration
         )
     
@@ -1276,15 +1317,17 @@ class DeleteBucketRequest(pb_classes.Message):
 class PurgeBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.PurgeBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.PurgeBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1308,15 +1351,17 @@ class PurgeBucketRequest(pb_classes.Message):
 class UndeleteBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.UndeleteBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.UndeleteBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1340,27 +1385,29 @@ class UndeleteBucketRequest(pb_classes.Message):
 class ListBucketsRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.ListBucketsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListBucketsRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
-        with_deleted: "builtins.bool|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        with_deleted: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
-        if with_deleted is not None:
+        if not isinstance(with_deleted, unset.UnsetType):
             self.with_deleted = with_deleted
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1428,18 +1475,20 @@ class ListBucketsRequest(pb_classes.Message):
 class ListBucketsResponse(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.ListBucketsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListBucketsResponse",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Bucket]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Bucket]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1451,7 +1500,7 @@ class ListBucketsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Bucket]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Bucket,None),
+        wrap=pb_classes.Repeated.with_wrap(Bucket,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Bucket]") -> None:
@@ -1566,6 +1615,7 @@ class BucketServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateBucketRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,

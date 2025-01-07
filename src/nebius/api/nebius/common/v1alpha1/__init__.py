@@ -6,15 +6,16 @@ import nebius.base.protos.pb_classes as pb_classes
 import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
+import nebius.base.protos.well_known as well_known_1
 import google.protobuf.message as message_1
 import collections.abc as abc
 import builtins as builtins
+import nebius.base.protos.unset as unset
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
 import google.protobuf.any_pb2 as any_pb2
 import google.rpc.status_pb2 as status_pb2
 import nebius.aio.request_status as request_status
-import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.common.v1alpha1.operation_service_pb2 as operation_service_pb2
 import nebius.aio.client as client
 import grpc as grpc
@@ -26,19 +27,26 @@ import nebius.aio.operation as operation
 class Operation(pb_classes.Message):
     __PB2_CLASS__ = operation_pb2.Operation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.Operation",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "created_at": well_known_1.ts_mask,
+        "finished_at": well_known_1.ts_mask,
+        "status": well_known_1.status_mask,
+    }
     
     class request_header(pb_classes.Message):
         __PB2_CLASS__ = operation_pb2.Operation.request_header
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.Operation.request_header",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
         
         def __init__(
             self,
             initial_message: message_1.Message|None = None,
             *,
-            values: "abc.Iterable[builtins.str]|None" = None,
+            values: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if values is not None:
+            if not isinstance(values, unset.UnsetType):
                 self.values = values
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -64,18 +72,20 @@ class Operation(pb_classes.Message):
     class RequestHeadersEntry(pb_classes.Message):
         __PB2_CLASS__ = operation_pb2.Operation.RequestHeadersEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.Operation.RequestHeadersEntry",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
         
         def __init__(
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|None" = None,
-            value: "Operation.request_header|operation_pb2.Operation.request_header|None" = None,
+            key: "builtins.str|unset.UnsetType" = unset.Unset,
+            value: "Operation.request_header|operation_pb2.Operation.request_header|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
-            if key is not None:
+            if not isinstance(key, unset.UnsetType):
                 self.key = key
-            if value is not None:
+            if not isinstance(value, unset.UnsetType):
                 self.value = value
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -113,40 +123,40 @@ class Operation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        description: "builtins.str|None" = None,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        created_by: "builtins.str|None" = None,
-        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        request: "any_pb2.Any|None" = None,
-        request_headers: "abc.Mapping[builtins.str,Operation.request_header]|None" = None,
-        resource_id: "builtins.str|None" = None,
-        resource: "any_pb2.Any|None" = None,
-        progress_data: "any_pb2.Any|None" = None,
-        status: "status_pb2.Status|request_status.RequestStatus|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        created_by: "builtins.str|unset.UnsetType" = unset.Unset,
+        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        request: "any_pb2.Any|unset.UnsetType" = unset.Unset,
+        request_headers: "abc.Mapping[builtins.str,Operation.request_header]|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource: "any_pb2.Any|unset.UnsetType" = unset.Unset,
+        progress_data: "any_pb2.Any|unset.UnsetType" = unset.Unset,
+        status: "status_pb2.Status|request_status.RequestStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if created_at is not None:
+        if not isinstance(created_at, unset.UnsetType):
             self.created_at = created_at
-        if created_by is not None:
+        if not isinstance(created_by, unset.UnsetType):
             self.created_by = created_by
-        if finished_at is not None:
+        if not isinstance(finished_at, unset.UnsetType):
             self.finished_at = finished_at
-        if request is not None:
+        if not isinstance(request, unset.UnsetType):
             self.request = request
-        if request_headers is not None:
+        if not isinstance(request_headers, unset.UnsetType):
             self.request_headers = request_headers
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
-        if resource is not None:
+        if not isinstance(resource, unset.UnsetType):
             self.resource = resource
-        if progress_data is not None:
+        if not isinstance(progress_data, unset.UnsetType):
             self.progress_data = progress_data
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -227,7 +237,7 @@ class Operation(pb_classes.Message):
     @builtins.property
     def request_headers(self) -> "abc.MutableMapping[builtins.str,Operation.request_header]":
         return super()._get_field("request_headers", explicit_presence=False,
-        wrap=pb_classes.Map.with_wrap(Operation.request_header,None),
+        wrap=pb_classes.Map.with_wrap(Operation.request_header,None,None),
         )
     @request_headers.setter
     def request_headers(self, value: "abc.Mapping[builtins.str,Operation.request_header]") -> None:
@@ -292,15 +302,17 @@ class Operation(pb_classes.Message):
 class GetOperationRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.GetOperationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.GetOperationRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -324,24 +336,26 @@ class GetOperationRequest(pb_classes.Message):
 class ListOperationsRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.ListOperationsRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resource_id is not None:
+        if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -398,18 +412,20 @@ class ListOperationsRequest(pb_classes.Message):
 class ListOperationsResponse(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.ListOperationsResponse",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        operations: "abc.Iterable[Operation]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        operations: "abc.Iterable[Operation]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if operations is not None:
+        if not isinstance(operations, unset.UnsetType):
             self.operations = operations
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -421,7 +437,7 @@ class ListOperationsResponse(pb_classes.Message):
     @builtins.property
     def operations(self) -> "abc.MutableSequence[Operation]":
         return super()._get_field("operations", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Operation,None),
+        wrap=pb_classes.Repeated.with_wrap(Operation,None,None),
         )
     @operations.setter
     def operations(self, value: "abc.Iterable[Operation]") -> None:
@@ -445,24 +461,26 @@ class ListOperationsResponse(pb_classes.Message):
 class ListOperationsByParentRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsByParentRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.ListOperationsByParentRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

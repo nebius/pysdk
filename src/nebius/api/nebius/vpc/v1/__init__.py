@@ -10,6 +10,7 @@ import nebius.base.protos.pb_classes as pb_classes
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
 import nebius.api.nebius.vpc.v1.allocation_pb2 as allocation_pb2
@@ -20,6 +21,7 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.api.nebius.vpc.v1.network_pb2 as network_pb2
 import nebius.api.nebius.vpc.v1.network_service_pb2 as network_service_pb2
 import nebius.api.nebius.vpc.v1.pool_service_pb2 as pool_service_pb2
@@ -49,21 +51,23 @@ class IpVisibility(pb_enum.Enum):
 class Pool(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.Pool
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Pool",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "PoolSpec|pool_pb2.PoolSpec|None" = None,
-        status: "PoolStatus|pool_pb2.PoolStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "PoolSpec|pool_pb2.PoolSpec|unset.UnsetType" = unset.Unset,
+        status: "PoolStatus|pool_pb2.PoolStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -112,24 +116,26 @@ class Pool(pb_classes.Message):
 class PoolSpec(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.PoolSpec",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        source_pool_id: "builtins.str|None" = None,
-        version: "IpVersion|pool_pb2.IpVersion|None" = None,
-        visibility: "IpVisibility|pool_pb2.IpVisibility|None" = None,
-        cidrs: "abc.Iterable[PoolCidr]|None" = None,
+        source_pool_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        version: "IpVersion|pool_pb2.IpVersion|unset.UnsetType" = unset.Unset,
+        visibility: "IpVisibility|pool_pb2.IpVisibility|unset.UnsetType" = unset.Unset,
+        cidrs: "abc.Iterable[PoolCidr]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if source_pool_id is not None:
+        if not isinstance(source_pool_id, unset.UnsetType):
             self.source_pool_id = source_pool_id
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
-        if visibility is not None:
+        if not isinstance(visibility, unset.UnsetType):
             self.visibility = visibility
-        if cidrs is not None:
+        if not isinstance(cidrs, unset.UnsetType):
             self.cidrs = cidrs
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -172,7 +178,7 @@ class PoolSpec(pb_classes.Message):
     @builtins.property
     def cidrs(self) -> "abc.MutableSequence[PoolCidr]":
         return super()._get_field("cidrs", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(PoolCidr,None),
+        wrap=pb_classes.Repeated.with_wrap(PoolCidr,None,None),
         )
     @cidrs.setter
     def cidrs(self, value: "abc.Iterable[PoolCidr]") -> None:
@@ -189,21 +195,23 @@ class PoolSpec(pb_classes.Message):
 class PoolCidr(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolCidr
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.PoolCidr",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidr: "builtins.str|None" = None,
-        state: "AddressBlockState|pool_pb2.AddressBlockState|None" = None,
-        max_mask_length: "builtins.int|None" = None,
+        cidr: "builtins.str|unset.UnsetType" = unset.Unset,
+        state: "AddressBlockState|pool_pb2.AddressBlockState|unset.UnsetType" = unset.Unset,
+        max_mask_length: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cidr is not None:
+        if not isinstance(cidr, unset.UnsetType):
             self.cidr = cidr
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if max_mask_length is not None:
+        if not isinstance(max_mask_length, unset.UnsetType):
             self.max_mask_length = max_mask_length
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -250,6 +258,8 @@ class PoolCidr(pb_classes.Message):
 class PoolStatus(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.PoolStatus",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.PoolStatus.State",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -262,23 +272,27 @@ class PoolStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "PoolStatus.State|pool_pb2.PoolStatus.State|None" = None,
-        cidrs: "abc.Iterable[builtins.str]|None" = None,
-        scope_id: "builtins.str|None" = None,
+        state: "PoolStatus.State|pool_pb2.PoolStatus.State|unset.UnsetType" = unset.Unset,
+        cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        scope_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        assignment: "PoolAssignment|pool_pb2.PoolAssignment|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if cidrs is not None:
+        if not isinstance(cidrs, unset.UnsetType):
             self.cidrs = cidrs
-        if scope_id is not None:
+        if not isinstance(scope_id, unset.UnsetType):
             self.scope_id = scope_id
+        if not isinstance(assignment, unset.UnsetType):
+            self.assignment = assignment
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "cidrs",
             "scope_id",
+            "assignment",
             "State",
         ]
     
@@ -311,32 +325,95 @@ class PoolStatus(pb_classes.Message):
         return super()._set_field("scope_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def assignment(self) -> "PoolAssignment":
+        return super()._get_field("assignment", explicit_presence=False,
+        wrap=PoolAssignment,
+        )
+    @assignment.setter
+    def assignment(self, value: "PoolAssignment|pool_pb2.PoolAssignment") -> None:
+        return super()._set_field("assignment",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "cidrs":"cidrs",
         "scope_id":"scope_id",
+        "assignment":"assignment",
         "State":"State",
+    }
+    
+class PoolAssignment(pb_classes.Message):
+    __PB2_CLASS__ = pool_pb2.PoolAssignment
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.PoolAssignment",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        networks: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        subnets: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(networks, unset.UnsetType):
+            self.networks = networks
+        if not isinstance(subnets, unset.UnsetType):
+            self.subnets = subnets
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "networks",
+            "subnets",
+        ]
+    
+    @builtins.property
+    def networks(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("networks", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @networks.setter
+    def networks(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("networks",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def subnets(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("subnets", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @subnets.setter
+    def subnets(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("subnets",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "networks":"networks",
+        "subnets":"subnets",
     }
     
 # file: nebius/vpc/v1/allocation.proto
 class Allocation(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.Allocation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Allocation",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AllocationSpec|allocation_pb2.AllocationSpec|None" = None,
-        status: "AllocationStatus|allocation_pb2.AllocationStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AllocationSpec|allocation_pb2.AllocationSpec|unset.UnsetType" = unset.Unset,
+        status: "AllocationStatus|allocation_pb2.AllocationStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -385,6 +462,8 @@ class Allocation(pb_classes.Message):
 class AllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_ip_spec__(pb_classes.OneOf):
         name: builtins.str= "ip_spec"
@@ -428,13 +507,13 @@ class AllocationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        ipv4_private: "IPv4PrivateAllocationSpec|allocation_pb2.IPv4PrivateAllocationSpec|None" = None,
-        ipv4_public: "IPv4PublicAllocationSpec|allocation_pb2.IPv4PublicAllocationSpec|None" = None,
+        ipv4_private: "IPv4PrivateAllocationSpec|allocation_pb2.IPv4PrivateAllocationSpec|None|unset.UnsetType" = unset.Unset,
+        ipv4_public: "IPv4PublicAllocationSpec|allocation_pb2.IPv4PublicAllocationSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if ipv4_private is not None:
+        if not isinstance(ipv4_private, unset.UnsetType):
             self.ipv4_private = ipv4_private
-        if ipv4_public is not None:
+        if not isinstance(ipv4_public, unset.UnsetType):
             self.ipv4_public = ipv4_public
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -473,6 +552,8 @@ class AllocationSpec(pb_classes.Message):
 class IPv4PrivateAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.IPv4PrivateAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PrivateAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_pool__(pb_classes.OneOf):
         name: builtins.str= "pool"
@@ -516,16 +597,16 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidr: "builtins.str|None" = None,
-        subnet_id: "builtins.str|None" = None,
-        pool_id: "builtins.str|None" = None,
+        cidr: "builtins.str|unset.UnsetType" = unset.Unset,
+        subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cidr is not None:
+        if not isinstance(cidr, unset.UnsetType):
             self.cidr = cidr
-        if subnet_id is not None:
+        if not isinstance(subnet_id, unset.UnsetType):
             self.subnet_id = subnet_id
-        if pool_id is not None:
+        if not isinstance(pool_id, unset.UnsetType):
             self.pool_id = pool_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -573,6 +654,8 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
 class IPv4PublicAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.IPv4PublicAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PublicAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_pool__(pb_classes.OneOf):
         name: builtins.str= "pool"
@@ -616,16 +699,16 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidr: "builtins.str|None" = None,
-        subnet_id: "builtins.str|None" = None,
-        pool_id: "builtins.str|None" = None,
+        cidr: "builtins.str|unset.UnsetType" = unset.Unset,
+        subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cidr is not None:
+        if not isinstance(cidr, unset.UnsetType):
             self.cidr = cidr
-        if subnet_id is not None:
+        if not isinstance(subnet_id, unset.UnsetType):
             self.subnet_id = subnet_id
-        if pool_id is not None:
+        if not isinstance(pool_id, unset.UnsetType):
             self.pool_id = pool_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -673,6 +756,8 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
 class AllocationStatus(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationStatus",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.AllocationStatus.State",allocation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -686,19 +771,19 @@ class AllocationStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "AllocationStatus.State|allocation_pb2.AllocationStatus.State|None" = None,
-        details: "AllocationDetails|allocation_pb2.AllocationDetails|None" = None,
-        assignment: "Assignment|allocation_pb2.Assignment|None" = None,
-        static: "builtins.bool|None" = None,
+        state: "AllocationStatus.State|allocation_pb2.AllocationStatus.State|unset.UnsetType" = unset.Unset,
+        details: "AllocationDetails|allocation_pb2.AllocationDetails|unset.UnsetType" = unset.Unset,
+        assignment: "Assignment|allocation_pb2.Assignment|unset.UnsetType" = unset.Unset,
+        static: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if details is not None:
+        if not isinstance(details, unset.UnsetType):
             self.details = details
-        if assignment is not None:
+        if not isinstance(assignment, unset.UnsetType):
             self.assignment = assignment
-        if static is not None:
+        if not isinstance(static, unset.UnsetType):
             self.static = static
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -760,21 +845,23 @@ class AllocationStatus(pb_classes.Message):
 class AllocationDetails(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationDetails
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationDetails",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        allocated_cidr: "builtins.str|None" = None,
-        pool_id: "builtins.str|None" = None,
-        version: "IpVersion|pool_pb2.IpVersion|None" = None,
+        allocated_cidr: "builtins.str|unset.UnsetType" = unset.Unset,
+        pool_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        version: "IpVersion|pool_pb2.IpVersion|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if allocated_cidr is not None:
+        if not isinstance(allocated_cidr, unset.UnsetType):
             self.allocated_cidr = allocated_cidr
-        if pool_id is not None:
+        if not isinstance(pool_id, unset.UnsetType):
             self.pool_id = pool_id
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -821,6 +908,8 @@ class AllocationDetails(pb_classes.Message):
 class Assignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.Assignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Assignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_type__(pb_classes.OneOf):
         name: builtins.str= "type"
@@ -864,13 +953,13 @@ class Assignment(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        network_interface: "NetworkInterfaceAssignment|allocation_pb2.NetworkInterfaceAssignment|None" = None,
-        load_balancer: "LoadBalancerAssignment|allocation_pb2.LoadBalancerAssignment|None" = None,
+        network_interface: "NetworkInterfaceAssignment|allocation_pb2.NetworkInterfaceAssignment|None|unset.UnsetType" = unset.Unset,
+        load_balancer: "LoadBalancerAssignment|allocation_pb2.LoadBalancerAssignment|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if network_interface is not None:
+        if not isinstance(network_interface, unset.UnsetType):
             self.network_interface = network_interface
-        if load_balancer is not None:
+        if not isinstance(load_balancer, unset.UnsetType):
             self.load_balancer = load_balancer
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -881,23 +970,23 @@ class Assignment(pb_classes.Message):
         ]
     
     @builtins.property
-    def network_interface(self) -> "NetworkInterfaceAssignment":
-        return super()._get_field("network_interface", explicit_presence=False,
+    def network_interface(self) -> "NetworkInterfaceAssignment|None":
+        return super()._get_field("network_interface", explicit_presence=True,
         wrap=NetworkInterfaceAssignment,
         )
     @network_interface.setter
-    def network_interface(self, value: "NetworkInterfaceAssignment|allocation_pb2.NetworkInterfaceAssignment") -> None:
-        return super()._set_field("network_interface",value,explicit_presence=False,
+    def network_interface(self, value: "NetworkInterfaceAssignment|allocation_pb2.NetworkInterfaceAssignment|None") -> None:
+        return super()._set_field("network_interface",value,explicit_presence=True,
         )
     
     @builtins.property
-    def load_balancer(self) -> "LoadBalancerAssignment":
-        return super()._get_field("load_balancer", explicit_presence=False,
+    def load_balancer(self) -> "LoadBalancerAssignment|None":
+        return super()._get_field("load_balancer", explicit_presence=True,
         wrap=LoadBalancerAssignment,
         )
     @load_balancer.setter
-    def load_balancer(self, value: "LoadBalancerAssignment|allocation_pb2.LoadBalancerAssignment") -> None:
-        return super()._set_field("load_balancer",value,explicit_presence=False,
+    def load_balancer(self, value: "LoadBalancerAssignment|allocation_pb2.LoadBalancerAssignment|None") -> None:
+        return super()._set_field("load_balancer",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -909,18 +998,20 @@ class Assignment(pb_classes.Message):
 class NetworkInterfaceAssignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.NetworkInterfaceAssignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NetworkInterfaceAssignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        instance_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        instance_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if instance_id is not None:
+        if not isinstance(instance_id, unset.UnsetType):
             self.instance_id = instance_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -955,15 +1046,17 @@ class NetworkInterfaceAssignment(pb_classes.Message):
 class LoadBalancerAssignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.LoadBalancerAssignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.LoadBalancerAssignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -988,15 +1081,17 @@ class LoadBalancerAssignment(pb_classes.Message):
 class GetAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.GetAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1020,18 +1115,20 @@ class GetAllocationRequest(pb_classes.Message):
 class GetAllocationByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.GetAllocationByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetAllocationByNameRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1066,21 +1163,23 @@ class GetAllocationByNameRequest(pb_classes.Message):
 class ListAllocationsRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1126,21 +1225,23 @@ class ListAllocationsRequest(pb_classes.Message):
 class ListAllocationsByPoolRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsByPoolRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsByPoolRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pool_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        pool_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if pool_id is not None:
+        if not isinstance(pool_id, unset.UnsetType):
             self.pool_id = pool_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1186,18 +1287,20 @@ class ListAllocationsByPoolRequest(pb_classes.Message):
 class ListAllocationsResponse(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsResponse",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Allocation]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Allocation]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1209,7 +1312,7 @@ class ListAllocationsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Allocation]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Allocation,None),
+        wrap=pb_classes.Repeated.with_wrap(Allocation,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Allocation]") -> None:
@@ -1233,18 +1336,20 @@ class ListAllocationsResponse(pb_classes.Message):
 class CreateAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.CreateAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.CreateAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AllocationSpec|allocation_pb2.AllocationSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AllocationSpec|allocation_pb2.AllocationSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1281,18 +1386,20 @@ class CreateAllocationRequest(pb_classes.Message):
 class UpdateAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.UpdateAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdateAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "AllocationSpec|allocation_pb2.AllocationSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "AllocationSpec|allocation_pb2.AllocationSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1329,15 +1436,17 @@ class UpdateAllocationRequest(pb_classes.Message):
 class DeleteAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.DeleteAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.DeleteAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1472,6 +1581,7 @@ class AllocationServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateAllocationRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -1509,21 +1619,23 @@ class AllocationServiceClient(client.Client):
 class Network(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.Network
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Network",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "NetworkSpec|network_pb2.NetworkSpec|None" = None,
-        status: "NetworkStatus|network_pb2.NetworkStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "NetworkSpec|network_pb2.NetworkSpec|unset.UnsetType" = unset.Unset,
+        status: "NetworkStatus|network_pb2.NetworkStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1572,18 +1684,20 @@ class Network(pb_classes.Message):
 class NetworkSpec(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NetworkSpec",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        ipv4_private_pools: "IPv4PrivateNetworkPools|network_pb2.IPv4PrivateNetworkPools|None" = None,
-        ipv4_public_pools: "IPv4PublicNetworkPools|network_pb2.IPv4PublicNetworkPools|None" = None,
+        ipv4_private_pools: "IPv4PrivateNetworkPools|network_pb2.IPv4PrivateNetworkPools|unset.UnsetType" = unset.Unset,
+        ipv4_public_pools: "IPv4PublicNetworkPools|network_pb2.IPv4PublicNetworkPools|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if ipv4_private_pools is not None:
+        if not isinstance(ipv4_private_pools, unset.UnsetType):
             self.ipv4_private_pools = ipv4_private_pools
-        if ipv4_public_pools is not None:
+        if not isinstance(ipv4_public_pools, unset.UnsetType):
             self.ipv4_public_pools = ipv4_public_pools
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1620,15 +1734,17 @@ class NetworkSpec(pb_classes.Message):
 class IPv4PrivateNetworkPools(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.IPv4PrivateNetworkPools
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PrivateNetworkPools",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pools: "abc.Iterable[NetworkPool]|None" = None,
+        pools: "abc.Iterable[NetworkPool]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if pools is not None:
+        if not isinstance(pools, unset.UnsetType):
             self.pools = pools
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1639,7 +1755,7 @@ class IPv4PrivateNetworkPools(pb_classes.Message):
     @builtins.property
     def pools(self) -> "abc.MutableSequence[NetworkPool]":
         return super()._get_field("pools", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(NetworkPool,None),
+        wrap=pb_classes.Repeated.with_wrap(NetworkPool,None,None),
         )
     @pools.setter
     def pools(self, value: "abc.Iterable[NetworkPool]") -> None:
@@ -1653,15 +1769,17 @@ class IPv4PrivateNetworkPools(pb_classes.Message):
 class IPv4PublicNetworkPools(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.IPv4PublicNetworkPools
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PublicNetworkPools",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pools: "abc.Iterable[NetworkPool]|None" = None,
+        pools: "abc.Iterable[NetworkPool]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if pools is not None:
+        if not isinstance(pools, unset.UnsetType):
             self.pools = pools
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1672,7 +1790,7 @@ class IPv4PublicNetworkPools(pb_classes.Message):
     @builtins.property
     def pools(self) -> "abc.MutableSequence[NetworkPool]":
         return super()._get_field("pools", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(NetworkPool,None),
+        wrap=pb_classes.Repeated.with_wrap(NetworkPool,None,None),
         )
     @pools.setter
     def pools(self, value: "abc.Iterable[NetworkPool]") -> None:
@@ -1686,15 +1804,17 @@ class IPv4PublicNetworkPools(pb_classes.Message):
 class NetworkPool(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkPool
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NetworkPool",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1718,6 +1838,8 @@ class NetworkPool(pb_classes.Message):
 class NetworkStatus(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NetworkStatus",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.NetworkStatus.State",network_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1730,10 +1852,10 @@ class NetworkStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "NetworkStatus.State|network_pb2.NetworkStatus.State|None" = None,
+        state: "NetworkStatus.State|network_pb2.NetworkStatus.State|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1761,15 +1883,17 @@ class NetworkStatus(pb_classes.Message):
 class GetNetworkRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.GetNetworkRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetNetworkRequest",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1793,18 +1917,20 @@ class GetNetworkRequest(pb_classes.Message):
 class GetNetworkByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.GetNetworkByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetNetworkByNameRequest",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1839,21 +1965,23 @@ class GetNetworkByNameRequest(pb_classes.Message):
 class ListNetworksRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.ListNetworksRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListNetworksRequest",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1899,18 +2027,20 @@ class ListNetworksRequest(pb_classes.Message):
 class ListNetworksResponse(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.ListNetworksResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListNetworksResponse",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Network]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Network]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1922,7 +2052,7 @@ class ListNetworksResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Network]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Network,None),
+        wrap=pb_classes.Repeated.with_wrap(Network,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Network]") -> None:
@@ -2013,15 +2143,17 @@ class NetworkServiceClient(client.Client):
 class GetPoolRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.GetPoolRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetPoolRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2045,18 +2177,20 @@ class GetPoolRequest(pb_classes.Message):
 class GetPoolByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.GetPoolByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetPoolByNameRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2091,21 +2225,23 @@ class GetPoolByNameRequest(pb_classes.Message):
 class ListPoolsRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.ListPoolsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListPoolsRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2151,21 +2287,23 @@ class ListPoolsRequest(pb_classes.Message):
 class ListPoolsBySourcePoolRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.ListPoolsBySourcePoolRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListPoolsBySourcePoolRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pool_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        pool_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if pool_id is not None:
+        if not isinstance(pool_id, unset.UnsetType):
             self.pool_id = pool_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2211,18 +2349,20 @@ class ListPoolsBySourcePoolRequest(pb_classes.Message):
 class ListPoolsResponse(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.ListPoolsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListPoolsResponse",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Pool]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Pool]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2234,7 +2374,7 @@ class ListPoolsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Pool]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Pool,None),
+        wrap=pb_classes.Repeated.with_wrap(Pool,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Pool]") -> None:
@@ -2258,18 +2398,20 @@ class ListPoolsResponse(pb_classes.Message):
 class UpdatePoolRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.UpdatePoolRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdatePoolRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "PoolSpec|pool_pb2.PoolSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "PoolSpec|pool_pb2.PoolSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2397,6 +2539,7 @@ class PoolServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdatePoolRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -2414,21 +2557,23 @@ class PoolServiceClient(client.Client):
 class Subnet(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.Subnet
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Subnet",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "SubnetSpec|subnet_pb2.SubnetSpec|None" = None,
-        status: "SubnetStatus|subnet_pb2.SubnetStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "SubnetSpec|subnet_pb2.SubnetSpec|unset.UnsetType" = unset.Unset,
+        status: "SubnetStatus|subnet_pb2.SubnetStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2477,21 +2622,23 @@ class Subnet(pb_classes.Message):
 class SubnetSpec(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetSpec",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        network_id: "builtins.str|None" = None,
-        ipv4_private_pools: "IPv4PrivateSubnetPools|subnet_pb2.IPv4PrivateSubnetPools|None" = None,
-        ipv4_public_pools: "IPv4PublicSubnetPools|subnet_pb2.IPv4PublicSubnetPools|None" = None,
+        network_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        ipv4_private_pools: "IPv4PrivateSubnetPools|subnet_pb2.IPv4PrivateSubnetPools|None|unset.UnsetType" = unset.Unset,
+        ipv4_public_pools: "IPv4PublicSubnetPools|subnet_pb2.IPv4PublicSubnetPools|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if network_id is not None:
+        if not isinstance(network_id, unset.UnsetType):
             self.network_id = network_id
-        if ipv4_private_pools is not None:
+        if not isinstance(ipv4_private_pools, unset.UnsetType):
             self.ipv4_private_pools = ipv4_private_pools
-        if ipv4_public_pools is not None:
+        if not isinstance(ipv4_public_pools, unset.UnsetType):
             self.ipv4_public_pools = ipv4_public_pools
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2539,18 +2686,20 @@ class SubnetSpec(pb_classes.Message):
 class IPv4PrivateSubnetPools(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.IPv4PrivateSubnetPools
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PrivateSubnetPools",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pools: "abc.Iterable[SubnetPool]|None" = None,
-        use_network_pools: "builtins.bool|None" = None,
+        pools: "abc.Iterable[SubnetPool]|unset.UnsetType" = unset.Unset,
+        use_network_pools: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if pools is not None:
+        if not isinstance(pools, unset.UnsetType):
             self.pools = pools
-        if use_network_pools is not None:
+        if not isinstance(use_network_pools, unset.UnsetType):
             self.use_network_pools = use_network_pools
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2562,7 +2711,7 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
     @builtins.property
     def pools(self) -> "abc.MutableSequence[SubnetPool]":
         return super()._get_field("pools", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(SubnetPool,None),
+        wrap=pb_classes.Repeated.with_wrap(SubnetPool,None,None),
         )
     @pools.setter
     def pools(self, value: "abc.Iterable[SubnetPool]") -> None:
@@ -2586,18 +2735,20 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
 class IPv4PublicSubnetPools(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.IPv4PublicSubnetPools
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PublicSubnetPools",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pools: "abc.Iterable[SubnetPool]|None" = None,
-        use_network_pools: "builtins.bool|None" = None,
+        pools: "abc.Iterable[SubnetPool]|unset.UnsetType" = unset.Unset,
+        use_network_pools: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if pools is not None:
+        if not isinstance(pools, unset.UnsetType):
             self.pools = pools
-        if use_network_pools is not None:
+        if not isinstance(use_network_pools, unset.UnsetType):
             self.use_network_pools = use_network_pools
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2609,7 +2760,7 @@ class IPv4PublicSubnetPools(pb_classes.Message):
     @builtins.property
     def pools(self) -> "abc.MutableSequence[SubnetPool]":
         return super()._get_field("pools", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(SubnetPool,None),
+        wrap=pb_classes.Repeated.with_wrap(SubnetPool,None,None),
         )
     @pools.setter
     def pools(self, value: "abc.Iterable[SubnetPool]") -> None:
@@ -2633,15 +2784,17 @@ class IPv4PublicSubnetPools(pb_classes.Message):
 class SubnetPool(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetPool
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetPool",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidrs: "abc.Iterable[SubnetCidr]|None" = None,
+        cidrs: "abc.Iterable[SubnetCidr]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cidrs is not None:
+        if not isinstance(cidrs, unset.UnsetType):
             self.cidrs = cidrs
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2652,7 +2805,7 @@ class SubnetPool(pb_classes.Message):
     @builtins.property
     def cidrs(self) -> "abc.MutableSequence[SubnetCidr]":
         return super()._get_field("cidrs", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(SubnetCidr,None),
+        wrap=pb_classes.Repeated.with_wrap(SubnetCidr,None,None),
         )
     @cidrs.setter
     def cidrs(self, value: "abc.Iterable[SubnetCidr]") -> None:
@@ -2666,21 +2819,23 @@ class SubnetPool(pb_classes.Message):
 class SubnetCidr(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetCidr
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetCidr",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidr: "builtins.str|None" = None,
-        state: "AddressBlockState|pool_pb2.AddressBlockState|None" = None,
-        max_mask_length: "builtins.int|None" = None,
+        cidr: "builtins.str|unset.UnsetType" = unset.Unset,
+        state: "AddressBlockState|pool_pb2.AddressBlockState|unset.UnsetType" = unset.Unset,
+        max_mask_length: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if cidr is not None:
+        if not isinstance(cidr, unset.UnsetType):
             self.cidr = cidr
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if max_mask_length is not None:
+        if not isinstance(max_mask_length, unset.UnsetType):
             self.max_mask_length = max_mask_length
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2727,6 +2882,8 @@ class SubnetCidr(pb_classes.Message):
 class SubnetStatus(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetStatus",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.SubnetStatus.State",subnet_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -2739,16 +2896,16 @@ class SubnetStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "SubnetStatus.State|subnet_pb2.SubnetStatus.State|None" = None,
-        ipv4_private_cidrs: "abc.Iterable[builtins.str]|None" = None,
-        ipv4_public_cidrs: "abc.Iterable[builtins.str]|None" = None,
+        state: "SubnetStatus.State|subnet_pb2.SubnetStatus.State|unset.UnsetType" = unset.Unset,
+        ipv4_private_cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        ipv4_public_cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if ipv4_private_cidrs is not None:
+        if not isinstance(ipv4_private_cidrs, unset.UnsetType):
             self.ipv4_private_cidrs = ipv4_private_cidrs
-        if ipv4_public_cidrs is not None:
+        if not isinstance(ipv4_public_cidrs, unset.UnsetType):
             self.ipv4_public_cidrs = ipv4_public_cidrs
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2800,15 +2957,17 @@ class SubnetStatus(pb_classes.Message):
 class GetSubnetRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.GetSubnetRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetSubnetRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2832,18 +2991,20 @@ class GetSubnetRequest(pb_classes.Message):
 class GetSubnetByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.GetSubnetByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetSubnetByNameRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2878,21 +3039,23 @@ class GetSubnetByNameRequest(pb_classes.Message):
 class ListSubnetsRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSubnetsRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2938,21 +3101,23 @@ class ListSubnetsRequest(pb_classes.Message):
 class ListSubnetsByNetworkRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsByNetworkRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSubnetsByNetworkRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        network_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        network_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if network_id is not None:
+        if not isinstance(network_id, unset.UnsetType):
             self.network_id = network_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2998,18 +3163,20 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
 class ListSubnetsResponse(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSubnetsResponse",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Subnet]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Subnet]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3021,7 +3188,7 @@ class ListSubnetsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Subnet]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Subnet,None),
+        wrap=pb_classes.Repeated.with_wrap(Subnet,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Subnet]") -> None:
@@ -3137,6 +3304,7 @@ __all__ = [
     "PoolSpec",
     "PoolCidr",
     "PoolStatus",
+    "PoolAssignment",
     "Allocation",
     "AllocationSpec",
     "IPv4PrivateAllocationSpec",

@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import builtins as builtins
 import typing as typing
 import google.protobuf.message as message_1
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 #@ local imports here @#
 
@@ -16,6 +17,8 @@ import collections.abc as abc
 class PostgresqlConfig16(pb_classes.Message):
     __PB2_CLASS__ = postgresql_pb2.PostgresqlConfig16
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.config.PostgresqlConfig16",postgresql_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__autovacuum_work_mem__(pb_classes.OneOf):
         name: builtins.str= "_autovacuum_work_mem"
@@ -345,43 +348,43 @@ class PostgresqlConfig16(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        autovacuum_work_mem: "builtins.int|None" = None,
-        statement_timeout: "builtins.int|None" = None,
-        idle_in_transaction_session_timeout: "builtins.int|None" = None,
-        autovacuum_vacuum_cost_delay: "builtins.int|None" = None,
-        autovacuum_vacuum_cost_limit: "builtins.int|None" = None,
-        autovacuum_naptime: "builtins.int|None" = None,
-        autovacuum_vacuum_scale_factor: "builtins.float|None" = None,
-        autovacuum_analyze_scale_factor: "builtins.float|None" = None,
-        default_transaction_read_only: "builtins.bool|None" = None,
-        search_path: "builtins.str|None" = None,
-        max_connections: "builtins.int|None" = None,
-        shared_buffers: "builtins.int|None" = None,
+        autovacuum_work_mem: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        statement_timeout: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        idle_in_transaction_session_timeout: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        autovacuum_vacuum_cost_delay: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        autovacuum_vacuum_cost_limit: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        autovacuum_naptime: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        autovacuum_vacuum_scale_factor: "builtins.float|None|unset.UnsetType" = unset.Unset,
+        autovacuum_analyze_scale_factor: "builtins.float|None|unset.UnsetType" = unset.Unset,
+        default_transaction_read_only: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        search_path: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        max_connections: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        shared_buffers: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if autovacuum_work_mem is not None:
+        if not isinstance(autovacuum_work_mem, unset.UnsetType):
             self.autovacuum_work_mem = autovacuum_work_mem
-        if statement_timeout is not None:
+        if not isinstance(statement_timeout, unset.UnsetType):
             self.statement_timeout = statement_timeout
-        if idle_in_transaction_session_timeout is not None:
+        if not isinstance(idle_in_transaction_session_timeout, unset.UnsetType):
             self.idle_in_transaction_session_timeout = idle_in_transaction_session_timeout
-        if autovacuum_vacuum_cost_delay is not None:
+        if not isinstance(autovacuum_vacuum_cost_delay, unset.UnsetType):
             self.autovacuum_vacuum_cost_delay = autovacuum_vacuum_cost_delay
-        if autovacuum_vacuum_cost_limit is not None:
+        if not isinstance(autovacuum_vacuum_cost_limit, unset.UnsetType):
             self.autovacuum_vacuum_cost_limit = autovacuum_vacuum_cost_limit
-        if autovacuum_naptime is not None:
+        if not isinstance(autovacuum_naptime, unset.UnsetType):
             self.autovacuum_naptime = autovacuum_naptime
-        if autovacuum_vacuum_scale_factor is not None:
+        if not isinstance(autovacuum_vacuum_scale_factor, unset.UnsetType):
             self.autovacuum_vacuum_scale_factor = autovacuum_vacuum_scale_factor
-        if autovacuum_analyze_scale_factor is not None:
+        if not isinstance(autovacuum_analyze_scale_factor, unset.UnsetType):
             self.autovacuum_analyze_scale_factor = autovacuum_analyze_scale_factor
-        if default_transaction_read_only is not None:
+        if not isinstance(default_transaction_read_only, unset.UnsetType):
             self.default_transaction_read_only = default_transaction_read_only
-        if search_path is not None:
+        if not isinstance(search_path, unset.UnsetType):
             self.search_path = search_path
-        if max_connections is not None:
+        if not isinstance(max_connections, unset.UnsetType):
             self.max_connections = max_connections
-        if shared_buffers is not None:
+        if not isinstance(shared_buffers, unset.UnsetType):
             self.shared_buffers = shared_buffers
     
     def __dir__(self) ->abc.Iterable[builtins.str]:

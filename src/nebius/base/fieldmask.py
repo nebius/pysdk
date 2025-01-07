@@ -190,7 +190,7 @@ class Mask:
     def __init__(
         self,
         any: "Mask|None" = None,
-        field_parts: Mapping[FieldKey, "Mask"] | None = None,
+        field_parts: Mapping[FieldKey | str, "Mask"] | None = None,
     ) -> None:
         if any is not None and not isinstance(any, Mask):  # type: ignore[unused-ignore]
             raise ValueError(f"any should be Map or None, got {type(any)}")

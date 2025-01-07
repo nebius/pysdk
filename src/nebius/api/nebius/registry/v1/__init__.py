@@ -6,13 +6,14 @@ import nebius.base.protos.pb_classes as pb_classes
 import nebius.api.nebius.registry.v1.artifact_pb2 as artifact_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
+import nebius.base.protos.well_known as well_known_1
 import nebius.base.protos.pb_enum as pb_enum
 import google.protobuf.message as message_1
 import builtins as builtins
+import nebius.base.protos.unset as unset
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
 import collections.abc as abc
-import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.registry.v1.artifact_service_pb2 as artifact_service_pb2
 import nebius.aio.client as client
 import nebius.api.nebius.common.v1 as v1_1
@@ -23,12 +24,17 @@ import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.registry.v1.registry_pb2 as registry_pb2
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.registry.v1.registry_service_pb2 as registry_service_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
 # file: nebius/registry/v1/artifact.proto
 class Artifact(pb_classes.Message):
     __PB2_CLASS__ = artifact_pb2.Artifact
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.Artifact",artifact_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "created_at": well_known_1.ts_mask,
+        "updated_at": well_known_1.ts_mask,
+    }
     
     class Status(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.Artifact.Status",artifact_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -50,34 +56,34 @@ class Artifact(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
-        media_type: "builtins.str|None" = None,
-        digest: "builtins.str|None" = None,
-        size: "builtins.int|None" = None,
-        status: "Artifact.Status|artifact_pb2.Artifact.Status|None" = None,
-        type: "Artifact.Type|artifact_pb2.Artifact.Type|None" = None,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        updated_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        media_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        digest: "builtins.str|unset.UnsetType" = unset.Unset,
+        size: "builtins.int|unset.UnsetType" = unset.Unset,
+        status: "Artifact.Status|artifact_pb2.Artifact.Status|unset.UnsetType" = unset.Unset,
+        type: "Artifact.Type|artifact_pb2.Artifact.Type|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        updated_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if media_type is not None:
+        if not isinstance(media_type, unset.UnsetType):
             self.media_type = media_type
-        if digest is not None:
+        if not isinstance(digest, unset.UnsetType):
             self.digest = digest
-        if size is not None:
+        if not isinstance(size, unset.UnsetType):
             self.size = size
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
-        if type is not None:
+        if not isinstance(type, unset.UnsetType):
             self.type = type
-        if created_at is not None:
+        if not isinstance(created_at, unset.UnsetType):
             self.created_at = created_at
-        if updated_at is not None:
+        if not isinstance(updated_at, unset.UnsetType):
             self.updated_at = updated_at
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -200,15 +206,17 @@ class Artifact(pb_classes.Message):
 class GetArtifactRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.GetArtifactRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.GetArtifactRequest",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -232,24 +240,26 @@ class GetArtifactRequest(pb_classes.Message):
 class ListArtifactsRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.ListArtifactsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListArtifactsRequest",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -306,18 +316,20 @@ class ListArtifactsRequest(pb_classes.Message):
 class ListArtifactsResponse(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.ListArtifactsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListArtifactsResponse",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Artifact]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Artifact]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -329,7 +341,7 @@ class ListArtifactsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Artifact]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Artifact,None),
+        wrap=pb_classes.Repeated.with_wrap(Artifact,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Artifact]") -> None:
@@ -353,15 +365,17 @@ class ListArtifactsResponse(pb_classes.Message):
 class DeleteArtifactRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.DeleteArtifactRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.DeleteArtifactRequest",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -453,21 +467,23 @@ class ArtifactServiceClient(client.Client):
 class Registry(pb_classes.Message):
     __PB2_CLASS__ = registry_pb2.Registry
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.Registry",registry_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "RegistrySpec|registry_pb2.RegistrySpec|None" = None,
-        status: "RegistryStatus|registry_pb2.RegistryStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "RegistrySpec|registry_pb2.RegistrySpec|unset.UnsetType" = unset.Unset,
+        status: "RegistryStatus|registry_pb2.RegistryStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -516,18 +532,20 @@ class Registry(pb_classes.Message):
 class RegistrySpec(pb_classes.Message):
     __PB2_CLASS__ = registry_pb2.RegistrySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.RegistrySpec",registry_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        images_count: "builtins.int|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        images_count: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if images_count is not None:
+        if not isinstance(images_count, unset.UnsetType):
             self.images_count = images_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -562,6 +580,8 @@ class RegistrySpec(pb_classes.Message):
 class RegistryStatus(pb_classes.Message):
     __PB2_CLASS__ = registry_pb2.RegistryStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.RegistryStatus",registry_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.registry.v1.RegistryStatus.State",registry_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -574,13 +594,13 @@ class RegistryStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "RegistryStatus.State|registry_pb2.RegistryStatus.State|None" = None,
-        images_count: "builtins.int|None" = None,
+        state: "RegistryStatus.State|registry_pb2.RegistryStatus.State|unset.UnsetType" = unset.Unset,
+        images_count: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if images_count is not None:
+        if not isinstance(images_count, unset.UnsetType):
             self.images_count = images_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -619,15 +639,17 @@ class RegistryStatus(pb_classes.Message):
 class GetRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.GetRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.GetRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -651,24 +673,26 @@ class GetRegistryRequest(pb_classes.Message):
 class ListRegistriesRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.ListRegistriesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListRegistriesRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -725,18 +749,20 @@ class ListRegistriesRequest(pb_classes.Message):
 class ListRegistriesResponse(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.ListRegistriesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListRegistriesResponse",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Registry]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Registry]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -748,7 +774,7 @@ class ListRegistriesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Registry]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Registry,None),
+        wrap=pb_classes.Repeated.with_wrap(Registry,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Registry]") -> None:
@@ -772,18 +798,20 @@ class ListRegistriesResponse(pb_classes.Message):
 class CreateRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.CreateRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.CreateRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "RegistrySpec|registry_pb2.RegistrySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "RegistrySpec|registry_pb2.RegistrySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -820,18 +848,20 @@ class CreateRegistryRequest(pb_classes.Message):
 class UpdateRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.UpdateRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.UpdateRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "RegistrySpec|registry_pb2.RegistrySpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "RegistrySpec|registry_pb2.RegistrySpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -868,15 +898,17 @@ class UpdateRegistryRequest(pb_classes.Message):
 class DeleteRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.DeleteRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.DeleteRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -971,6 +1003,7 @@ class RegistryServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateRegistryRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,

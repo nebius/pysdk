@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.msp.v1alpha1.resource as resource_1
 import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
 import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2_1
@@ -28,27 +29,30 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
 # file: nebius/msp/postgresql/v1alpha1/preset.proto
 class PresetSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.PresetSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.PresetSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None" = None,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None" = None,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None" = None,
+        hosts: "resource_1.HostSpec|template_pb2.HostSpec|unset.UnsetType" = unset.Unset,
+        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
+        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if hosts is not None:
+        if not isinstance(hosts, unset.UnsetType):
             self.hosts = hosts
-        if disk is not None:
+        if not isinstance(disk, unset.UnsetType):
             self.disk = disk
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -98,21 +102,23 @@ class PresetSpec(pb_classes.Message):
 class TemplateSpec(pb_classes.Message):
     __PB2_CLASS__ = template_pb2_1.TemplateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.TemplateSpec",template_pb2_1.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None" = None,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None" = None,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None" = None,
+        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
+        hosts: "resource_1.HostSpec|template_pb2.HostSpec|unset.UnsetType" = unset.Unset,
+        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
-        if hosts is not None:
+        if not isinstance(hosts, unset.UnsetType):
             self.hosts = hosts
-        if disk is not None:
+        if not isinstance(disk, unset.UnsetType):
             self.disk = disk
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -162,21 +168,23 @@ class TemplateSpec(pb_classes.Message):
 class Cluster(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Cluster
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.Cluster",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
-        status: "ClusterStatus|cluster_pb2.ClusterStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
+        status: "ClusterStatus|cluster_pb2.ClusterStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -225,6 +233,8 @@ class Cluster(pb_classes.Message):
 class ConnectionPoolerConfig(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ConnectionPoolerConfig
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class PoolingMode(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig.PoolingMode",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -263,13 +273,13 @@ class ConnectionPoolerConfig(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pooling_mode: "ConnectionPoolerConfig.PoolingMode|cluster_pb2.ConnectionPoolerConfig.PoolingMode|None" = None,
-        max_pool_size: "builtins.int|None" = None,
+        pooling_mode: "ConnectionPoolerConfig.PoolingMode|cluster_pb2.ConnectionPoolerConfig.PoolingMode|unset.UnsetType" = unset.Unset,
+        max_pool_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if pooling_mode is not None:
+        if not isinstance(pooling_mode, unset.UnsetType):
             self.pooling_mode = pooling_mode
-        if max_pool_size is not None:
+        if not isinstance(max_pool_size, unset.UnsetType):
             self.max_pool_size = max_pool_size
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -309,27 +319,29 @@ class ConnectionPoolerConfig(pb_classes.Message):
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        network_id: "builtins.str|None" = None,
-        config: "ConfigSpec|cluster_pb2.ConfigSpec|None" = None,
-        bootstrap: "BootstrapSpec|cluster_pb2.BootstrapSpec|None" = None,
-        backup: "BackupSpec|cluster_pb2.BackupSpec|None" = None,
+        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        network_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        config: "ConfigSpec|cluster_pb2.ConfigSpec|unset.UnsetType" = unset.Unset,
+        bootstrap: "BootstrapSpec|cluster_pb2.BootstrapSpec|unset.UnsetType" = unset.Unset,
+        backup: "BackupSpec|cluster_pb2.BackupSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if network_id is not None:
+        if not isinstance(network_id, unset.UnsetType):
             self.network_id = network_id
-        if config is not None:
+        if not isinstance(config, unset.UnsetType):
             self.config = config
-        if bootstrap is not None:
+        if not isinstance(bootstrap, unset.UnsetType):
             self.bootstrap = bootstrap
-        if backup is not None:
+        if not isinstance(backup, unset.UnsetType):
             self.backup = backup
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -400,24 +412,26 @@ class ClusterSpec(pb_classes.Message):
 class ClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ClusterStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None" = None,
-        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None" = None,
-        preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None" = None,
-        connection_endpoints: "Endpoints|cluster_pb2.Endpoints|None" = None,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|unset.UnsetType" = unset.Unset,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|unset.UnsetType" = unset.Unset,
+        preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|unset.UnsetType" = unset.Unset,
+        connection_endpoints: "Endpoints|cluster_pb2.Endpoints|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if phase is not None:
+        if not isinstance(phase, unset.UnsetType):
             self.phase = phase
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if preset_details is not None:
+        if not isinstance(preset_details, unset.UnsetType):
             self.preset_details = preset_details
-        if connection_endpoints is not None:
+        if not isinstance(connection_endpoints, unset.UnsetType):
             self.connection_endpoints = connection_endpoints
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -478,24 +492,26 @@ class ClusterStatus(pb_classes.Message):
 class Endpoints(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Endpoints
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.Endpoints",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        private_read_write: "builtins.str|None" = None,
-        private_read_only: "builtins.str|None" = None,
-        public_read_write: "builtins.str|None" = None,
-        public_read_only: "builtins.str|None" = None,
+        private_read_write: "builtins.str|unset.UnsetType" = unset.Unset,
+        private_read_only: "builtins.str|unset.UnsetType" = unset.Unset,
+        public_read_write: "builtins.str|unset.UnsetType" = unset.Unset,
+        public_read_only: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if private_read_write is not None:
+        if not isinstance(private_read_write, unset.UnsetType):
             self.private_read_write = private_read_write
-        if private_read_only is not None:
+        if not isinstance(private_read_only, unset.UnsetType):
             self.private_read_only = private_read_only
-        if public_read_write is not None:
+        if not isinstance(public_read_write, unset.UnsetType):
             self.public_read_write = public_read_write
-        if public_read_only is not None:
+        if not isinstance(public_read_only, unset.UnsetType):
             self.public_read_only = public_read_only
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -552,6 +568,8 @@ class Endpoints(pb_classes.Message):
 class ConfigSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ConfigSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ConfigSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_config__(pb_classes.OneOf):
         name: builtins.str= "config"
@@ -584,25 +602,25 @@ class ConfigSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        version: "builtins.str|None" = None,
-        pooler_config: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|None" = None,
-        resources: "PresetSpec|preset_pb2.PresetSpec|None" = None,
-        postgresql_config_16: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None" = None,
-        public_access: "builtins.bool|None" = None,
-        template: "TemplateSpec|template_pb2_1.TemplateSpec|None" = None,
+        version: "builtins.str|unset.UnsetType" = unset.Unset,
+        pooler_config: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|unset.UnsetType" = unset.Unset,
+        resources: "PresetSpec|preset_pb2.PresetSpec|unset.UnsetType" = unset.Unset,
+        postgresql_config_16: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None|unset.UnsetType" = unset.Unset,
+        public_access: "builtins.bool|unset.UnsetType" = unset.Unset,
+        template: "TemplateSpec|template_pb2_1.TemplateSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
-        if pooler_config is not None:
+        if not isinstance(pooler_config, unset.UnsetType):
             self.pooler_config = pooler_config
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
-        if postgresql_config_16 is not None:
+        if not isinstance(postgresql_config_16, unset.UnsetType):
             self.postgresql_config_16 = postgresql_config_16
-        if public_access is not None:
+        if not isinstance(public_access, unset.UnsetType):
             self.public_access = public_access
-        if template is not None:
+        if not isinstance(template, unset.UnsetType):
             self.template = template
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -646,13 +664,13 @@ class ConfigSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def postgresql_config_16(self) -> "config_1.PostgresqlConfig16":
-        return super()._get_field("postgresql_config_16", explicit_presence=False,
+    def postgresql_config_16(self) -> "config_1.PostgresqlConfig16|None":
+        return super()._get_field("postgresql_config_16", explicit_presence=True,
         wrap=config_1.PostgresqlConfig16,
         )
     @postgresql_config_16.setter
-    def postgresql_config_16(self, value: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16") -> None:
-        return super()._set_field("postgresql_config_16",value,explicit_presence=False,
+    def postgresql_config_16(self, value: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None") -> None:
+        return super()._set_field("postgresql_config_16",value,explicit_presence=True,
         )
     
     @builtins.property
@@ -687,21 +705,23 @@ class ConfigSpec(pb_classes.Message):
 class BootstrapSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.BootstrapSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.BootstrapSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_name: "builtins.str|None" = None,
-        user_password: "builtins.str|None" = None,
-        db_name: "builtins.str|None" = None,
+        user_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        user_password: "builtins.str|unset.UnsetType" = unset.Unset,
+        db_name: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if user_name is not None:
+        if not isinstance(user_name, unset.UnsetType):
             self.user_name = user_name
-        if user_password is not None:
+        if not isinstance(user_password, unset.UnsetType):
             self.user_password = user_password
-        if db_name is not None:
+        if not isinstance(db_name, unset.UnsetType):
             self.db_name = db_name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -747,18 +767,20 @@ class BootstrapSpec(pb_classes.Message):
 class BackupSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.BackupSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.BackupSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        backup_window_start: "builtins.str|None" = None,
-        retention_policy: "builtins.str|None" = None,
+        backup_window_start: "builtins.str|unset.UnsetType" = unset.Unset,
+        retention_policy: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if backup_window_start is not None:
+        if not isinstance(backup_window_start, unset.UnsetType):
             self.backup_window_start = backup_window_start
-        if retention_policy is not None:
+        if not isinstance(retention_policy, unset.UnsetType):
             self.retention_policy = retention_policy
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -794,15 +816,17 @@ class BackupSpec(pb_classes.Message):
 class GetClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.GetClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -826,21 +850,23 @@ class GetClusterRequest(pb_classes.Message):
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListClustersRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -886,18 +912,20 @@ class ListClustersRequest(pb_classes.Message):
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        clusters: "abc.Iterable[Cluster]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        clusters: "abc.Iterable[Cluster]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if clusters is not None:
+        if not isinstance(clusters, unset.UnsetType):
             self.clusters = clusters
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -909,7 +937,7 @@ class ListClustersResponse(pb_classes.Message):
     @builtins.property
     def clusters(self) -> "abc.MutableSequence[Cluster]":
         return super()._get_field("clusters", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Cluster,None),
+        wrap=pb_classes.Repeated.with_wrap(Cluster,None,None),
         )
     @clusters.setter
     def clusters(self, value: "abc.Iterable[Cluster]") -> None:
@@ -933,18 +961,20 @@ class ListClustersResponse(pb_classes.Message):
 class CreateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.CreateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -981,15 +1011,17 @@ class CreateClusterRequest(pb_classes.Message):
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1013,18 +1045,20 @@ class DeleteClusterRequest(pb_classes.Message):
 class UpdateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.UpdateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.UpdateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1172,6 +1206,7 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,

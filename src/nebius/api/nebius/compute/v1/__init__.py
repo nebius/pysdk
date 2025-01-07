@@ -9,6 +9,7 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
 import nebius.base.protos.pb_enum as pb_enum
@@ -20,6 +21,7 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.api.nebius.common.v1.operation_service_pb2 as operation_service_pb2_1
 import nebius.api.nebius.compute.v1.filesystem_pb2 as filesystem_pb2
 import nebius.api.nebius.compute.v1.filesystem_service_pb2 as filesystem_service_pb2
@@ -29,9 +31,9 @@ import nebius.api.nebius.compute.v1.image_pb2 as image_pb2
 import nebius.api.nebius.compute.v1.image_service_pb2 as image_service_pb2
 import nebius.api.nebius.compute.v1.network_interface_pb2 as network_interface_pb2
 import nebius.api.nebius.compute.v1.maintenance_event_pb2 as maintenance_event_pb2
+import nebius.base.protos.well_known as well_known_1
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
-import nebius.base.protos.well_known as well_known_1
 import nebius.api.nebius.compute.v1.instance_pb2 as instance_pb2
 import nebius.api.nebius.compute.v1.instance_service_pb2 as instance_service_pb2
 import nebius.api.nebius.compute.v1.platform_pb2 as platform_pb2
@@ -42,21 +44,23 @@ import nebius.api.nebius.compute.v1.platform_service_pb2 as platform_service_pb2
 class Disk(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.Disk
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.Disk",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "DiskSpec|disk_pb2.DiskSpec|None" = None,
-        status: "DiskStatus|disk_pb2.DiskStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "DiskSpec|disk_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
+        status: "DiskStatus|disk_pb2.DiskStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -105,6 +109,8 @@ class Disk(pb_classes.Message):
 class DiskSpec(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskSpec",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class DiskType(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskSpec.DiskType",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -216,34 +222,34 @@ class DiskSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        size_bytes: "builtins.int|None" = None,
-        size_kibibytes: "builtins.int|None" = None,
-        size_mebibytes: "builtins.int|None" = None,
-        size_gibibytes: "builtins.int|None" = None,
-        block_size_bytes: "builtins.int|None" = None,
-        type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None" = None,
-        placement_policy: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|None" = None,
-        source_image_id: "builtins.str|None" = None,
-        source_image_family: "SourceImageFamily|disk_pb2.SourceImageFamily|None" = None,
+        size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_kibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_mebibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        block_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|unset.UnsetType" = unset.Unset,
+        placement_policy: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|unset.UnsetType" = unset.Unset,
+        source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_image_family: "SourceImageFamily|disk_pb2.SourceImageFamily|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if size_bytes is not None:
+        if not isinstance(size_bytes, unset.UnsetType):
             self.size_bytes = size_bytes
-        if size_kibibytes is not None:
+        if not isinstance(size_kibibytes, unset.UnsetType):
             self.size_kibibytes = size_kibibytes
-        if size_mebibytes is not None:
+        if not isinstance(size_mebibytes, unset.UnsetType):
             self.size_mebibytes = size_mebibytes
-        if size_gibibytes is not None:
+        if not isinstance(size_gibibytes, unset.UnsetType):
             self.size_gibibytes = size_gibibytes
-        if block_size_bytes is not None:
+        if not isinstance(block_size_bytes, unset.UnsetType):
             self.block_size_bytes = block_size_bytes
-        if type is not None:
+        if not isinstance(type, unset.UnsetType):
             self.type = type
-        if placement_policy is not None:
+        if not isinstance(placement_policy, unset.UnsetType):
             self.placement_policy = placement_policy
-        if source_image_id is not None:
+        if not isinstance(source_image_id, unset.UnsetType):
             self.source_image_id = source_image_id
-        if source_image_family is not None:
+        if not isinstance(source_image_family, unset.UnsetType):
             self.source_image_family = source_image_family
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -337,13 +343,13 @@ class DiskSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def source_image_family(self) -> "SourceImageFamily":
-        return super()._get_field("source_image_family", explicit_presence=False,
+    def source_image_family(self) -> "SourceImageFamily|None":
+        return super()._get_field("source_image_family", explicit_presence=True,
         wrap=SourceImageFamily,
         )
     @source_image_family.setter
-    def source_image_family(self, value: "SourceImageFamily|disk_pb2.SourceImageFamily") -> None:
-        return super()._set_field("source_image_family",value,explicit_presence=False,
+    def source_image_family(self, value: "SourceImageFamily|disk_pb2.SourceImageFamily|None") -> None:
+        return super()._set_field("source_image_family",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -364,18 +370,20 @@ class DiskSpec(pb_classes.Message):
 class SourceImageFamily(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.SourceImageFamily
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.SourceImageFamily",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        image_family: "builtins.str|None" = None,
-        parent_id: "builtins.str|None" = None,
+        image_family: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if image_family is not None:
+        if not isinstance(image_family, unset.UnsetType):
             self.image_family = image_family
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -410,18 +418,20 @@ class SourceImageFamily(pb_classes.Message):
 class DiskPlacementPolicy(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskPlacementPolicy
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskPlacementPolicy",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        placement_group_id: "builtins.str|None" = None,
-        placement_group_partition: "builtins.int|None" = None,
+        placement_group_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        placement_group_partition: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if placement_group_id is not None:
+        if not isinstance(placement_group_id, unset.UnsetType):
             self.placement_group_id = placement_group_id
-        if placement_group_partition is not None:
+        if not isinstance(placement_group_partition, unset.UnsetType):
             self.placement_group_partition = placement_group_partition
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -456,6 +466,8 @@ class DiskPlacementPolicy(pb_classes.Message):
 class DiskStatus(pb_classes.Message):
     __PB2_CLASS__ = disk_pb2.DiskStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskStatus",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskStatus.State",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -470,28 +482,28 @@ class DiskStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "DiskStatus.State|disk_pb2.DiskStatus.State|None" = None,
-        state_description: "builtins.str|None" = None,
-        read_write_attachment: "builtins.str|None" = None,
-        read_only_attachments: "abc.Iterable[builtins.str]|None" = None,
-        source_image_id: "builtins.str|None" = None,
-        size_bytes: "builtins.int|None" = None,
-        reconciling: "builtins.bool|None" = None,
+        state: "DiskStatus.State|disk_pb2.DiskStatus.State|unset.UnsetType" = unset.Unset,
+        state_description: "builtins.str|unset.UnsetType" = unset.Unset,
+        read_write_attachment: "builtins.str|unset.UnsetType" = unset.Unset,
+        read_only_attachments: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        source_image_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if state_description is not None:
+        if not isinstance(state_description, unset.UnsetType):
             self.state_description = state_description
-        if read_write_attachment is not None:
+        if not isinstance(read_write_attachment, unset.UnsetType):
             self.read_write_attachment = read_write_attachment
-        if read_only_attachments is not None:
+        if not isinstance(read_only_attachments, unset.UnsetType):
             self.read_only_attachments = read_only_attachments
-        if source_image_id is not None:
+        if not isinstance(source_image_id, unset.UnsetType):
             self.source_image_id = source_image_id
-        if size_bytes is not None:
+        if not isinstance(size_bytes, unset.UnsetType):
             self.size_bytes = size_bytes
-        if reconciling is not None:
+        if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -586,21 +598,23 @@ class DiskStatus(pb_classes.Message):
 class ListOperationsByParentRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsByParentRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListOperationsByParentRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -647,15 +661,17 @@ class ListOperationsByParentRequest(pb_classes.Message):
 class GetDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.GetDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -679,24 +695,26 @@ class GetDiskRequest(pb_classes.Message):
 class ListDisksRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.ListDisksRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListDisksRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -753,18 +771,20 @@ class ListDisksRequest(pb_classes.Message):
 class CreateDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.CreateDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "DiskSpec|disk_pb2.DiskSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "DiskSpec|disk_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -801,18 +821,20 @@ class CreateDiskRequest(pb_classes.Message):
 class UpdateDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.UpdateDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.UpdateDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "DiskSpec|disk_pb2.DiskSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "DiskSpec|disk_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -849,15 +871,17 @@ class UpdateDiskRequest(pb_classes.Message):
 class DeleteDiskRequest(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.DeleteDiskRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteDiskRequest",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -881,18 +905,20 @@ class DeleteDiskRequest(pb_classes.Message):
 class ListDisksResponse(pb_classes.Message):
     __PB2_CLASS__ = disk_service_pb2.ListDisksResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListDisksResponse",disk_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Disk]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Disk]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -904,7 +930,7 @@ class ListDisksResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Disk]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Disk,None),
+        wrap=pb_classes.Repeated.with_wrap(Disk,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Disk]") -> None:
@@ -1019,6 +1045,7 @@ class DiskServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateDiskRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -1076,21 +1103,23 @@ class DiskServiceClient(client.Client):
 class Filesystem(pb_classes.Message):
     __PB2_CLASS__ = filesystem_pb2.Filesystem
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.Filesystem",filesystem_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None" = None,
-        status: "FilesystemStatus|filesystem_pb2.FilesystemStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|unset.UnsetType" = unset.Unset,
+        status: "FilesystemStatus|filesystem_pb2.FilesystemStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1139,6 +1168,8 @@ class Filesystem(pb_classes.Message):
 class FilesystemSpec(pb_classes.Message):
     __PB2_CLASS__ = filesystem_pb2.FilesystemSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.FilesystemSpec",filesystem_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class FilesystemType(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.FilesystemSpec.FilesystemType",filesystem_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1210,25 +1241,25 @@ class FilesystemSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        size_bytes: "builtins.int|None" = None,
-        size_kibibytes: "builtins.int|None" = None,
-        size_mebibytes: "builtins.int|None" = None,
-        size_gibibytes: "builtins.int|None" = None,
-        block_size_bytes: "builtins.int|None" = None,
-        type: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType|None" = None,
+        size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_kibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_mebibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        block_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        type: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if size_bytes is not None:
+        if not isinstance(size_bytes, unset.UnsetType):
             self.size_bytes = size_bytes
-        if size_kibibytes is not None:
+        if not isinstance(size_kibibytes, unset.UnsetType):
             self.size_kibibytes = size_kibibytes
-        if size_mebibytes is not None:
+        if not isinstance(size_mebibytes, unset.UnsetType):
             self.size_mebibytes = size_mebibytes
-        if size_gibibytes is not None:
+        if not isinstance(size_gibibytes, unset.UnsetType):
             self.size_gibibytes = size_gibibytes
-        if block_size_bytes is not None:
+        if not isinstance(block_size_bytes, unset.UnsetType):
             self.block_size_bytes = block_size_bytes
-        if type is not None:
+        if not isinstance(type, unset.UnsetType):
             self.type = type
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1312,6 +1343,8 @@ class FilesystemSpec(pb_classes.Message):
 class FilesystemStatus(pb_classes.Message):
     __PB2_CLASS__ = filesystem_pb2.FilesystemStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.FilesystemStatus",filesystem_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.FilesystemStatus.State",filesystem_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1326,25 +1359,25 @@ class FilesystemStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "FilesystemStatus.State|filesystem_pb2.FilesystemStatus.State|None" = None,
-        state_description: "builtins.str|None" = None,
-        read_write_attachments: "abc.Iterable[builtins.str]|None" = None,
-        read_only_attachments: "abc.Iterable[builtins.str]|None" = None,
-        size_bytes: "builtins.int|None" = None,
-        reconciling: "builtins.bool|None" = None,
+        state: "FilesystemStatus.State|filesystem_pb2.FilesystemStatus.State|unset.UnsetType" = unset.Unset,
+        state_description: "builtins.str|unset.UnsetType" = unset.Unset,
+        read_write_attachments: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        read_only_attachments: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if state_description is not None:
+        if not isinstance(state_description, unset.UnsetType):
             self.state_description = state_description
-        if read_write_attachments is not None:
+        if not isinstance(read_write_attachments, unset.UnsetType):
             self.read_write_attachments = read_write_attachments
-        if read_only_attachments is not None:
+        if not isinstance(read_only_attachments, unset.UnsetType):
             self.read_only_attachments = read_only_attachments
-        if size_bytes is not None:
+        if not isinstance(size_bytes, unset.UnsetType):
             self.size_bytes = size_bytes
-        if reconciling is not None:
+        if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1429,15 +1462,17 @@ class FilesystemStatus(pb_classes.Message):
 class GetFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.GetFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1461,24 +1496,26 @@ class GetFilesystemRequest(pb_classes.Message):
 class ListFilesystemsRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.ListFilesystemsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListFilesystemsRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1535,18 +1572,20 @@ class ListFilesystemsRequest(pb_classes.Message):
 class CreateFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.CreateFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1583,18 +1622,20 @@ class CreateFilesystemRequest(pb_classes.Message):
 class UpdateFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.UpdateFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.UpdateFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1631,15 +1672,17 @@ class UpdateFilesystemRequest(pb_classes.Message):
 class DeleteFilesystemRequest(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.DeleteFilesystemRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteFilesystemRequest",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1663,18 +1706,20 @@ class DeleteFilesystemRequest(pb_classes.Message):
 class ListFilesystemsResponse(pb_classes.Message):
     __PB2_CLASS__ = filesystem_service_pb2.ListFilesystemsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListFilesystemsResponse",filesystem_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Filesystem]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Filesystem]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1686,7 +1731,7 @@ class ListFilesystemsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Filesystem]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Filesystem,None),
+        wrap=pb_classes.Repeated.with_wrap(Filesystem,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Filesystem]") -> None:
@@ -1801,6 +1846,7 @@ class FilesystemServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateFilesystemRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -1858,21 +1904,23 @@ class FilesystemServiceClient(client.Client):
 class GpuCluster(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_pb2.GpuCluster
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GpuCluster",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None" = None,
-        status: "GpuClusterStatus|gpu_cluster_pb2.GpuClusterStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|unset.UnsetType" = unset.Unset,
+        status: "GpuClusterStatus|gpu_cluster_pb2.GpuClusterStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1921,15 +1969,17 @@ class GpuCluster(pb_classes.Message):
 class GpuClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_pb2.GpuClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GpuClusterSpec",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        infiniband_fabric: "builtins.str|None" = None,
+        infiniband_fabric: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if infiniband_fabric is not None:
+        if not isinstance(infiniband_fabric, unset.UnsetType):
             self.infiniband_fabric = infiniband_fabric
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -1953,18 +2003,20 @@ class GpuClusterSpec(pb_classes.Message):
 class GpuClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_pb2.GpuClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GpuClusterStatus",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        instances: "abc.Iterable[builtins.str]|None" = None,
-        reconciling: "builtins.bool|None" = None,
+        instances: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if instances is not None:
+        if not isinstance(instances, unset.UnsetType):
             self.instances = instances
-        if reconciling is not None:
+        if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2001,15 +2053,17 @@ class GpuClusterStatus(pb_classes.Message):
 class GetGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.GetGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2033,24 +2087,26 @@ class GetGpuClusterRequest(pb_classes.Message):
 class ListGpuClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.ListGpuClustersRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListGpuClustersRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2107,18 +2163,20 @@ class ListGpuClustersRequest(pb_classes.Message):
 class CreateGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.CreateGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2155,18 +2213,20 @@ class CreateGpuClusterRequest(pb_classes.Message):
 class UpdateGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.UpdateGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.UpdateGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2203,15 +2263,17 @@ class UpdateGpuClusterRequest(pb_classes.Message):
 class DeleteGpuClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.DeleteGpuClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteGpuClusterRequest",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2235,18 +2297,20 @@ class DeleteGpuClusterRequest(pb_classes.Message):
 class ListGpuClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = gpu_cluster_service_pb2.ListGpuClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListGpuClustersResponse",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[GpuCluster]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[GpuCluster]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2258,7 +2322,7 @@ class ListGpuClustersResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[GpuCluster]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(GpuCluster,None),
+        wrap=pb_classes.Repeated.with_wrap(GpuCluster,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[GpuCluster]") -> None:
@@ -2373,6 +2437,7 @@ class GpuClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateGpuClusterRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -2430,21 +2495,23 @@ class GpuClusterServiceClient(client.Client):
 class Image(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.Image
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.Image",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "ImageSpec|image_pb2.ImageSpec|None" = None,
-        status: "ImageStatus|image_pb2.ImageStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "ImageSpec|image_pb2.ImageSpec|unset.UnsetType" = unset.Unset,
+        status: "ImageStatus|image_pb2.ImageStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2493,6 +2560,8 @@ class Image(pb_classes.Message):
 class ImageSpec(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.ImageSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ImageSpec",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass__description__(pb_classes.OneOf):
         name: builtins.str= "_description"
@@ -2525,16 +2594,16 @@ class ImageSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|None" = None,
-        image_family: "builtins.str|None" = None,
-        version: "builtins.str|None" = None,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        image_family: "builtins.str|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if description is not None:
+        if not isinstance(description, unset.UnsetType):
             self.description = description
-        if image_family is not None:
+        if not isinstance(image_family, unset.UnsetType):
             self.image_family = image_family
-        if version is not None:
+        if not isinstance(version, unset.UnsetType):
             self.version = version
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2582,6 +2651,8 @@ class ImageSpec(pb_classes.Message):
 class ImageStatus(pb_classes.Message):
     __PB2_CLASS__ = image_pb2.ImageStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ImageStatus",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.ImageStatus.State",image_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -2596,22 +2667,22 @@ class ImageStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "ImageStatus.State|image_pb2.ImageStatus.State|None" = None,
-        state_description: "builtins.str|None" = None,
-        storage_size_bytes: "builtins.int|None" = None,
-        min_disk_size_bytes: "builtins.int|None" = None,
-        reconciling: "builtins.bool|None" = None,
+        state: "ImageStatus.State|image_pb2.ImageStatus.State|unset.UnsetType" = unset.Unset,
+        state_description: "builtins.str|unset.UnsetType" = unset.Unset,
+        storage_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        min_disk_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if state_description is not None:
+        if not isinstance(state_description, unset.UnsetType):
             self.state_description = state_description
-        if storage_size_bytes is not None:
+        if not isinstance(storage_size_bytes, unset.UnsetType):
             self.storage_size_bytes = storage_size_bytes
-        if min_disk_size_bytes is not None:
+        if not isinstance(min_disk_size_bytes, unset.UnsetType):
             self.min_disk_size_bytes = min_disk_size_bytes
-        if reconciling is not None:
+        if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2683,15 +2754,17 @@ class ImageStatus(pb_classes.Message):
 class GetImageRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.GetImageRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetImageRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2715,18 +2788,20 @@ class GetImageRequest(pb_classes.Message):
 class GetImageLatestByFamilyRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.GetImageLatestByFamilyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetImageLatestByFamilyRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        image_family: "builtins.str|None" = None,
-        parent_id: "builtins.str|None" = None,
+        image_family: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if image_family is not None:
+        if not isinstance(image_family, unset.UnsetType):
             self.image_family = image_family
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2761,24 +2836,26 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
 class ListImagesRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.ListImagesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListImagesRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        filter: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if filter is not None:
+        if not isinstance(filter, unset.UnsetType):
             self.filter = filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2835,18 +2912,20 @@ class ListImagesRequest(pb_classes.Message):
 class ListImagesResponse(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.ListImagesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListImagesResponse",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Image]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Image]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -2858,7 +2937,7 @@ class ListImagesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Image]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Image,None),
+        wrap=pb_classes.Repeated.with_wrap(Image,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Image]") -> None:
@@ -2989,24 +3068,26 @@ class ImageServiceClient(client.Client):
 class NetworkInterfaceSpec(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.NetworkInterfaceSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NetworkInterfaceSpec",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        subnet_id: "builtins.str|None" = None,
-        name: "builtins.str|None" = None,
-        ip_address: "IPAddress|network_interface_pb2.IPAddress|None" = None,
-        public_ip_address: "PublicIPAddress|network_interface_pb2.PublicIPAddress|None" = None,
+        subnet_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        ip_address: "IPAddress|network_interface_pb2.IPAddress|None|unset.UnsetType" = unset.Unset,
+        public_ip_address: "PublicIPAddress|network_interface_pb2.PublicIPAddress|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if subnet_id is not None:
+        if not isinstance(subnet_id, unset.UnsetType):
             self.subnet_id = subnet_id
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if ip_address is not None:
+        if not isinstance(ip_address, unset.UnsetType):
             self.ip_address = ip_address
-        if public_ip_address is not None:
+        if not isinstance(public_ip_address, unset.UnsetType):
             self.public_ip_address = public_ip_address
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3065,15 +3146,17 @@ class NetworkInterfaceSpec(pb_classes.Message):
 class IPAddress(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.IPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.IPAddress",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        allocation_id: "builtins.str|None" = None,
+        allocation_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if allocation_id is not None:
+        if not isinstance(allocation_id, unset.UnsetType):
             self.allocation_id = allocation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3097,6 +3180,8 @@ class IPAddress(pb_classes.Message):
 class PublicIPAddress(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.PublicIPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PublicIPAddress",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_allocation__(pb_classes.OneOf):
         name: builtins.str= "allocation"
@@ -3129,13 +3214,13 @@ class PublicIPAddress(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        allocation_id: "builtins.str|None" = None,
-        static: "builtins.bool|None" = None,
+        allocation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        static: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if allocation_id is not None:
+        if not isinstance(allocation_id, unset.UnsetType):
             self.allocation_id = allocation_id
-        if static is not None:
+        if not isinstance(static, unset.UnsetType):
             self.static = static
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3172,27 +3257,29 @@ class PublicIPAddress(pb_classes.Message):
 class NetworkInterfaceStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.NetworkInterfaceStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NetworkInterfaceStatus",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        index: "builtins.int|None" = None,
-        name: "builtins.str|None" = None,
-        ip_address: "IPAddressStatus|network_interface_pb2.IPAddressStatus|None" = None,
-        public_ip_address: "PublicIPAddressStatus|network_interface_pb2.PublicIPAddressStatus|None" = None,
-        mac_address: "builtins.str|None" = None,
+        index: "builtins.int|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        ip_address: "IPAddressStatus|network_interface_pb2.IPAddressStatus|unset.UnsetType" = unset.Unset,
+        public_ip_address: "PublicIPAddressStatus|network_interface_pb2.PublicIPAddressStatus|unset.UnsetType" = unset.Unset,
+        mac_address: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if index is not None:
+        if not isinstance(index, unset.UnsetType):
             self.index = index
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if ip_address is not None:
+        if not isinstance(ip_address, unset.UnsetType):
             self.ip_address = ip_address
-        if public_ip_address is not None:
+        if not isinstance(public_ip_address, unset.UnsetType):
             self.public_ip_address = public_ip_address
-        if mac_address is not None:
+        if not isinstance(mac_address, unset.UnsetType):
             self.mac_address = mac_address
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3262,18 +3349,20 @@ class NetworkInterfaceStatus(pb_classes.Message):
 class IPAddressStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.IPAddressStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.IPAddressStatus",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        address: "builtins.str|None" = None,
-        allocation_id: "builtins.str|None" = None,
+        address: "builtins.str|unset.UnsetType" = unset.Unset,
+        allocation_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if address is not None:
+        if not isinstance(address, unset.UnsetType):
             self.address = address
-        if allocation_id is not None:
+        if not isinstance(allocation_id, unset.UnsetType):
             self.allocation_id = allocation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3308,18 +3397,20 @@ class IPAddressStatus(pb_classes.Message):
 class PublicIPAddressStatus(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.PublicIPAddressStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PublicIPAddressStatus",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        address: "builtins.str|None" = None,
-        allocation_id: "builtins.str|None" = None,
+        address: "builtins.str|unset.UnsetType" = unset.Unset,
+        allocation_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if address is not None:
+        if not isinstance(address, unset.UnsetType):
             self.address = address
-        if allocation_id is not None:
+        if not isinstance(allocation_id, unset.UnsetType):
             self.allocation_id = allocation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3355,6 +3446,10 @@ class PublicIPAddressStatus(pb_classes.Message):
 class MaintenanceEventStatus(pb_classes.Message):
     __PB2_CLASS__ = maintenance_event_pb2.MaintenanceEventStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.MaintenanceEventStatus",maintenance_event_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "finished_at": well_known_1.ts_mask,
+        "sla_deadline_ts": well_known_1.ts_mask,
+    }
     
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.MaintenanceEventStatus.State",maintenance_event_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -3367,25 +3462,25 @@ class MaintenanceEventStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        maintenance_id: "builtins.str|None" = None,
-        state: "MaintenanceEventStatus.State|maintenance_event_pb2.MaintenanceEventStatus.State|None" = None,
-        operation_id: "builtins.str|None" = None,
-        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        sla_deadline_ts: "timestamp_pb2.Timestamp|datetime.datetime|None" = None,
-        ticket_id: "builtins.str|None" = None,
+        maintenance_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        state: "MaintenanceEventStatus.State|maintenance_event_pb2.MaintenanceEventStatus.State|unset.UnsetType" = unset.Unset,
+        operation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        sla_deadline_ts: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        ticket_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if maintenance_id is not None:
+        if not isinstance(maintenance_id, unset.UnsetType):
             self.maintenance_id = maintenance_id
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if operation_id is not None:
+        if not isinstance(operation_id, unset.UnsetType):
             self.operation_id = operation_id
-        if finished_at is not None:
+        if not isinstance(finished_at, unset.UnsetType):
             self.finished_at = finished_at
-        if sla_deadline_ts is not None:
+        if not isinstance(sla_deadline_ts, unset.UnsetType):
             self.sla_deadline_ts = sla_deadline_ts
-        if ticket_id is not None:
+        if not isinstance(ticket_id, unset.UnsetType):
             self.ticket_id = ticket_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3477,21 +3572,23 @@ class InstanceRecoveryPolicy(pb_enum.Enum):
 class Instance(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.Instance
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.Instance",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InstanceSpec|instance_pb2.InstanceSpec|None" = None,
-        status: "InstanceStatus|instance_pb2.InstanceStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InstanceSpec|instance_pb2.InstanceSpec|unset.UnsetType" = unset.Unset,
+        status: "InstanceStatus|instance_pb2.InstanceStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3540,42 +3637,44 @@ class Instance(pb_classes.Message):
 class InstanceSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.InstanceSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        service_account_id: "builtins.str|None" = None,
-        resources: "ResourcesSpec|instance_pb2.ResourcesSpec|None" = None,
-        gpu_cluster: "InstanceGpuClusterSpec|instance_pb2.InstanceGpuClusterSpec|None" = None,
-        network_interfaces: "abc.Iterable[NetworkInterfaceSpec]|None" = None,
-        boot_disk: "AttachedDiskSpec|instance_pb2.AttachedDiskSpec|None" = None,
-        secondary_disks: "abc.Iterable[AttachedDiskSpec]|None" = None,
-        filesystems: "abc.Iterable[AttachedFilesystemSpec]|None" = None,
-        cloud_init_user_data: "builtins.str|None" = None,
-        stopped: "builtins.bool|None" = None,
-        recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None" = None,
+        service_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        resources: "ResourcesSpec|instance_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
+        gpu_cluster: "InstanceGpuClusterSpec|instance_pb2.InstanceGpuClusterSpec|unset.UnsetType" = unset.Unset,
+        network_interfaces: "abc.Iterable[NetworkInterfaceSpec]|unset.UnsetType" = unset.Unset,
+        boot_disk: "AttachedDiskSpec|instance_pb2.AttachedDiskSpec|unset.UnsetType" = unset.Unset,
+        secondary_disks: "abc.Iterable[AttachedDiskSpec]|unset.UnsetType" = unset.Unset,
+        filesystems: "abc.Iterable[AttachedFilesystemSpec]|unset.UnsetType" = unset.Unset,
+        cloud_init_user_data: "builtins.str|unset.UnsetType" = unset.Unset,
+        stopped: "builtins.bool|unset.UnsetType" = unset.Unset,
+        recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if service_account_id is not None:
+        if not isinstance(service_account_id, unset.UnsetType):
             self.service_account_id = service_account_id
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
-        if gpu_cluster is not None:
+        if not isinstance(gpu_cluster, unset.UnsetType):
             self.gpu_cluster = gpu_cluster
-        if network_interfaces is not None:
+        if not isinstance(network_interfaces, unset.UnsetType):
             self.network_interfaces = network_interfaces
-        if boot_disk is not None:
+        if not isinstance(boot_disk, unset.UnsetType):
             self.boot_disk = boot_disk
-        if secondary_disks is not None:
+        if not isinstance(secondary_disks, unset.UnsetType):
             self.secondary_disks = secondary_disks
-        if filesystems is not None:
+        if not isinstance(filesystems, unset.UnsetType):
             self.filesystems = filesystems
-        if cloud_init_user_data is not None:
+        if not isinstance(cloud_init_user_data, unset.UnsetType):
             self.cloud_init_user_data = cloud_init_user_data
-        if stopped is not None:
+        if not isinstance(stopped, unset.UnsetType):
             self.stopped = stopped
-        if recovery_policy is not None:
+        if not isinstance(recovery_policy, unset.UnsetType):
             self.recovery_policy = recovery_policy
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3624,7 +3723,7 @@ class InstanceSpec(pb_classes.Message):
     @builtins.property
     def network_interfaces(self) -> "abc.MutableSequence[NetworkInterfaceSpec]":
         return super()._get_field("network_interfaces", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(NetworkInterfaceSpec,None),
+        wrap=pb_classes.Repeated.with_wrap(NetworkInterfaceSpec,None,None),
         )
     @network_interfaces.setter
     def network_interfaces(self, value: "abc.Iterable[NetworkInterfaceSpec]") -> None:
@@ -3644,7 +3743,7 @@ class InstanceSpec(pb_classes.Message):
     @builtins.property
     def secondary_disks(self) -> "abc.MutableSequence[AttachedDiskSpec]":
         return super()._get_field("secondary_disks", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(AttachedDiskSpec,None),
+        wrap=pb_classes.Repeated.with_wrap(AttachedDiskSpec,None,None),
         )
     @secondary_disks.setter
     def secondary_disks(self, value: "abc.Iterable[AttachedDiskSpec]") -> None:
@@ -3654,7 +3753,7 @@ class InstanceSpec(pb_classes.Message):
     @builtins.property
     def filesystems(self) -> "abc.MutableSequence[AttachedFilesystemSpec]":
         return super()._get_field("filesystems", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None),
+        wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None,None),
         )
     @filesystems.setter
     def filesystems(self, value: "abc.Iterable[AttachedFilesystemSpec]") -> None:
@@ -3705,6 +3804,8 @@ class InstanceSpec(pb_classes.Message):
 class ResourcesSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ResourcesSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ResourcesSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class __OneOfClass_size__(pb_classes.OneOf):
         name: builtins.str= "size"
@@ -3737,13 +3838,13 @@ class ResourcesSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        platform: "builtins.str|None" = None,
-        preset: "builtins.str|None" = None,
+        platform: "builtins.str|unset.UnsetType" = unset.Unset,
+        preset: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if platform is not None:
+        if not isinstance(platform, unset.UnsetType):
             self.platform = platform
-        if preset is not None:
+        if not isinstance(preset, unset.UnsetType):
             self.preset = preset
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3780,15 +3881,17 @@ class ResourcesSpec(pb_classes.Message):
 class InstanceGpuClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceGpuClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.InstanceGpuClusterSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3812,6 +3915,8 @@ class InstanceGpuClusterSpec(pb_classes.Message):
 class AttachedDiskSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.AttachedDiskSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.AttachedDiskSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class AttachMode(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.AttachedDiskSpec.AttachMode",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -3850,16 +3955,16 @@ class AttachedDiskSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        attach_mode: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode|None" = None,
-        existing_disk: "ExistingDisk|instance_pb2.ExistingDisk|None" = None,
-        device_id: "builtins.str|None" = None,
+        attach_mode: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode|unset.UnsetType" = unset.Unset,
+        existing_disk: "ExistingDisk|instance_pb2.ExistingDisk|None|unset.UnsetType" = unset.Unset,
+        device_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if attach_mode is not None:
+        if not isinstance(attach_mode, unset.UnsetType):
             self.attach_mode = attach_mode
-        if existing_disk is not None:
+        if not isinstance(existing_disk, unset.UnsetType):
             self.existing_disk = existing_disk
-        if device_id is not None:
+        if not isinstance(device_id, unset.UnsetType):
             self.device_id = device_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3882,13 +3987,13 @@ class AttachedDiskSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def existing_disk(self) -> "ExistingDisk":
-        return super()._get_field("existing_disk", explicit_presence=False,
+    def existing_disk(self) -> "ExistingDisk|None":
+        return super()._get_field("existing_disk", explicit_presence=True,
         wrap=ExistingDisk,
         )
     @existing_disk.setter
-    def existing_disk(self, value: "ExistingDisk|instance_pb2.ExistingDisk") -> None:
-        return super()._set_field("existing_disk",value,explicit_presence=False,
+    def existing_disk(self, value: "ExistingDisk|instance_pb2.ExistingDisk|None") -> None:
+        return super()._set_field("existing_disk",value,explicit_presence=True,
         )
     
     @builtins.property
@@ -3911,15 +4016,17 @@ class AttachedDiskSpec(pb_classes.Message):
 class ExistingDisk(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ExistingDisk
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ExistingDisk",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3943,15 +4050,17 @@ class ExistingDisk(pb_classes.Message):
 class ExistingFilesystem(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.ExistingFilesystem
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ExistingFilesystem",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -3975,6 +4084,8 @@ class ExistingFilesystem(pb_classes.Message):
 class AttachedFilesystemSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.AttachedFilesystemSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.AttachedFilesystemSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class AttachMode(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.AttachedFilesystemSpec.AttachMode",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -4013,16 +4124,16 @@ class AttachedFilesystemSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        attach_mode: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode|None" = None,
-        mount_tag: "builtins.str|None" = None,
-        existing_filesystem: "ExistingFilesystem|instance_pb2.ExistingFilesystem|None" = None,
+        attach_mode: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode|unset.UnsetType" = unset.Unset,
+        mount_tag: "builtins.str|unset.UnsetType" = unset.Unset,
+        existing_filesystem: "ExistingFilesystem|instance_pb2.ExistingFilesystem|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if attach_mode is not None:
+        if not isinstance(attach_mode, unset.UnsetType):
             self.attach_mode = attach_mode
-        if mount_tag is not None:
+        if not isinstance(mount_tag, unset.UnsetType):
             self.mount_tag = mount_tag
-        if existing_filesystem is not None:
+        if not isinstance(existing_filesystem, unset.UnsetType):
             self.existing_filesystem = existing_filesystem
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4054,13 +4165,13 @@ class AttachedFilesystemSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def existing_filesystem(self) -> "ExistingFilesystem":
-        return super()._get_field("existing_filesystem", explicit_presence=False,
+    def existing_filesystem(self) -> "ExistingFilesystem|None":
+        return super()._get_field("existing_filesystem", explicit_presence=True,
         wrap=ExistingFilesystem,
         )
     @existing_filesystem.setter
-    def existing_filesystem(self, value: "ExistingFilesystem|instance_pb2.ExistingFilesystem") -> None:
-        return super()._set_field("existing_filesystem",value,explicit_presence=False,
+    def existing_filesystem(self, value: "ExistingFilesystem|instance_pb2.ExistingFilesystem|None") -> None:
+        return super()._set_field("existing_filesystem",value,explicit_presence=True,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -4074,6 +4185,8 @@ class AttachedFilesystemSpec(pb_classes.Message):
 class InstanceStatus(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.InstanceStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.InstanceStatus",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     class InstanceState(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.InstanceStatus.InstanceState",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -4091,19 +4204,19 @@ class InstanceStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|None" = None,
-        network_interfaces: "abc.Iterable[NetworkInterfaceStatus]|None" = None,
-        reconciling: "builtins.bool|None" = None,
-        maintenance_event: "MaintenanceEventStatus|maintenance_event_pb2.MaintenanceEventStatus|None" = None,
+        state: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|unset.UnsetType" = unset.Unset,
+        network_interfaces: "abc.Iterable[NetworkInterfaceStatus]|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        maintenance_event: "MaintenanceEventStatus|maintenance_event_pb2.MaintenanceEventStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if state is not None:
+        if not isinstance(state, unset.UnsetType):
             self.state = state
-        if network_interfaces is not None:
+        if not isinstance(network_interfaces, unset.UnsetType):
             self.network_interfaces = network_interfaces
-        if reconciling is not None:
+        if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
-        if maintenance_event is not None:
+        if not isinstance(maintenance_event, unset.UnsetType):
             self.maintenance_event = maintenance_event
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4128,7 +4241,7 @@ class InstanceStatus(pb_classes.Message):
     @builtins.property
     def network_interfaces(self) -> "abc.MutableSequence[NetworkInterfaceStatus]":
         return super()._get_field("network_interfaces", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(NetworkInterfaceStatus,None),
+        wrap=pb_classes.Repeated.with_wrap(NetworkInterfaceStatus,None,None),
         )
     @network_interfaces.setter
     def network_interfaces(self, value: "abc.Iterable[NetworkInterfaceStatus]") -> None:
@@ -4166,15 +4279,17 @@ class InstanceStatus(pb_classes.Message):
 class GetInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.GetInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4198,21 +4313,23 @@ class GetInstanceRequest(pb_classes.Message):
 class ListInstancesRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.ListInstancesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListInstancesRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|None" = None,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4258,18 +4375,20 @@ class ListInstancesRequest(pb_classes.Message):
 class CreateInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.CreateInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InstanceSpec|instance_pb2.InstanceSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InstanceSpec|instance_pb2.InstanceSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4306,18 +4425,20 @@ class CreateInstanceRequest(pb_classes.Message):
 class UpdateInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.UpdateInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.UpdateInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "InstanceSpec|instance_pb2.InstanceSpec|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "InstanceSpec|instance_pb2.InstanceSpec|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4354,15 +4475,17 @@ class UpdateInstanceRequest(pb_classes.Message):
 class DeleteInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.DeleteInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4386,18 +4509,20 @@ class DeleteInstanceRequest(pb_classes.Message):
 class ListInstancesResponse(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.ListInstancesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListInstancesResponse",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Instance]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Instance]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4409,7 +4534,7 @@ class ListInstancesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Instance]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Instance,None),
+        wrap=pb_classes.Repeated.with_wrap(Instance,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Instance]") -> None:
@@ -4433,15 +4558,17 @@ class ListInstancesResponse(pb_classes.Message):
 class StartInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.StartInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.StartInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4465,15 +4592,17 @@ class StartInstanceRequest(pb_classes.Message):
 class StopInstanceRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.StopInstanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.StopInstanceRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|None" = None,
+        id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if id is not None:
+        if not isinstance(id, unset.UnsetType):
             self.id = id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4588,6 +4717,7 @@ class InstanceServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateInstanceRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -4685,21 +4815,23 @@ class InstanceServiceClient(client.Client):
 class Platform(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.Platform
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.Platform",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None" = None,
-        spec: "PlatformSpec|platform_pb2.PlatformSpec|None" = None,
-        status: "PlatformStatus|platform_pb2.PlatformStatus|None" = None,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
+        spec: "PlatformSpec|platform_pb2.PlatformSpec|unset.UnsetType" = unset.Unset,
+        status: "PlatformStatus|platform_pb2.PlatformStatus|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if metadata is not None:
+        if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
-        if spec is not None:
+        if not isinstance(spec, unset.UnsetType):
             self.spec = spec
-        if status is not None:
+        if not isinstance(status, unset.UnsetType):
             self.status = status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4748,34 +4880,40 @@ class Platform(pb_classes.Message):
 class PlatformSpec(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.PlatformSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PlatformSpec",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        presets: "abc.Iterable[Preset]|None" = None,
-        gpu_count_quota_type: "builtins.str|None" = None,
-        human_readable_name: "builtins.str|None" = None,
+        presets: "abc.Iterable[Preset]|unset.UnsetType" = unset.Unset,
+        gpu_count_quota_type: "builtins.str|unset.UnsetType" = unset.Unset,
+        human_readable_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        allow_preset_change: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if presets is not None:
+        if not isinstance(presets, unset.UnsetType):
             self.presets = presets
-        if gpu_count_quota_type is not None:
+        if not isinstance(gpu_count_quota_type, unset.UnsetType):
             self.gpu_count_quota_type = gpu_count_quota_type
-        if human_readable_name is not None:
+        if not isinstance(human_readable_name, unset.UnsetType):
             self.human_readable_name = human_readable_name
+        if not isinstance(allow_preset_change, unset.UnsetType):
+            self.allow_preset_change = allow_preset_change
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "presets",
             "gpu_count_quota_type",
             "human_readable_name",
+            "allow_preset_change",
         ]
     
     @builtins.property
     def presets(self) -> "abc.MutableSequence[Preset]":
         return super()._get_field("presets", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Preset,None),
+        wrap=pb_classes.Repeated.with_wrap(Preset,None,None),
         )
     @presets.setter
     def presets(self, value: "abc.Iterable[Preset]") -> None:
@@ -4800,30 +4938,42 @@ class PlatformSpec(pb_classes.Message):
         return super()._set_field("human_readable_name",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def allow_preset_change(self) -> "builtins.bool":
+        return super()._get_field("allow_preset_change", explicit_presence=False,
+        )
+    @allow_preset_change.setter
+    def allow_preset_change(self, value: "builtins.bool") -> None:
+        return super()._set_field("allow_preset_change",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "presets":"presets",
         "gpu_count_quota_type":"gpu_count_quota_type",
         "human_readable_name":"human_readable_name",
+        "allow_preset_change":"allow_preset_change",
     }
     
 class Preset(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.Preset
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.Preset",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        name: "builtins.str|None" = None,
-        resources: "PresetResources|platform_pb2.PresetResources|None" = None,
-        allow_gpu_clustering: "builtins.bool|None" = None,
+        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        resources: "PresetResources|platform_pb2.PresetResources|unset.UnsetType" = unset.Unset,
+        allow_gpu_clustering: "builtins.bool|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if name is not None:
+        if not isinstance(name, unset.UnsetType):
             self.name = name
-        if resources is not None:
+        if not isinstance(resources, unset.UnsetType):
             self.resources = resources
-        if allow_gpu_clustering is not None:
+        if not isinstance(allow_gpu_clustering, unset.UnsetType):
             self.allow_gpu_clustering = allow_gpu_clustering
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4870,21 +5020,23 @@ class Preset(pb_classes.Message):
 class PresetResources(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.PresetResources
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PresetResources",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        vcpu_count: "builtins.int|None" = None,
-        memory_gibibytes: "builtins.int|None" = None,
-        gpu_count: "builtins.int|None" = None,
+        vcpu_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        memory_gibibytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        gpu_count: "builtins.int|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if vcpu_count is not None:
+        if not isinstance(vcpu_count, unset.UnsetType):
             self.vcpu_count = vcpu_count
-        if memory_gibibytes is not None:
+        if not isinstance(memory_gibibytes, unset.UnsetType):
             self.memory_gibibytes = memory_gibibytes
-        if gpu_count is not None:
+        if not isinstance(gpu_count, unset.UnsetType):
             self.gpu_count = gpu_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -4930,6 +5082,8 @@ class PresetResources(pb_classes.Message):
 class PlatformStatus(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.PlatformStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PlatformStatus",platform_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
@@ -4948,21 +5102,23 @@ class PlatformStatus(pb_classes.Message):
 class ListPlatformsRequest(pb_classes.Message):
     __PB2_CLASS__ = platform_service_pb2.ListPlatformsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListPlatformsRequest",platform_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        page_size: "builtins.int|None" = None,
-        page_token: "builtins.str|None" = None,
-        parent_id: "builtins.str|None" = None,
+        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if page_size is not None:
+        if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
-        if page_token is not None:
+        if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
-        if parent_id is not None:
+        if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5008,18 +5164,20 @@ class ListPlatformsRequest(pb_classes.Message):
 class ListPlatformsResponse(pb_classes.Message):
     __PB2_CLASS__ = platform_service_pb2.ListPlatformsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListPlatformsResponse",platform_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Platform]|None" = None,
-        next_page_token: "builtins.str|None" = None,
+        items: "abc.Iterable[Platform]|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if items is not None:
+        if not isinstance(items, unset.UnsetType):
             self.items = items
-        if next_page_token is not None:
+        if not isinstance(next_page_token, unset.UnsetType):
             self.next_page_token = next_page_token
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
@@ -5031,7 +5189,7 @@ class ListPlatformsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Platform]":
         return super()._get_field("items", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Platform,None),
+        wrap=pb_classes.Repeated.with_wrap(Platform,None,None),
         )
     @items.setter
     def items(self, value: "abc.Iterable[Platform]") -> None:

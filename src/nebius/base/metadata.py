@@ -80,6 +80,13 @@ class Metadata(MutableSequence[tuple[str, str]]):
             return [v for k, v in self._contents if k == index]
         raise TypeError("Index must be int, str or slice")
 
+    def __has__(self, key: str) -> bool:
+        key = key.lower()
+        for k, _ in self._contents:
+            if k == key:
+                return True
+        return False
+
     def __setitem__(
         self,
         index: int | slice | str,
