@@ -42,7 +42,7 @@ class Action(pb_enum.Enum):
 class GetVersionRequest(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.GetVersionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.GetVersionRequest",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
         "agent_uptime": well_known.duration_mask,
         "system_uptime": well_known.duration_mask,
         "updater_uptime": well_known.duration_mask,
@@ -257,7 +257,7 @@ class GetVersionRequest(pb_classes.Message):
 class OSInfo(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.OSInfo
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.OSInfo",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -319,7 +319,7 @@ class OSInfo(pb_classes.Message):
 class GetVersionResponse(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.GetVersionResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.GetVersionResponse",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_response__(pb_classes.OneOf):
@@ -450,7 +450,7 @@ class GetVersionResponse(pb_classes.Message):
 class NopActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.NopActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.NopActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -469,7 +469,7 @@ class NopActionParams(pb_classes.Message):
 class UpdateActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.UpdateActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.UpdateActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -517,7 +517,7 @@ class UpdateActionParams(pb_classes.Message):
 class RestartActionParams(pb_classes.Message):
     __PB2_CLASS__ = version_service_pb2.RestartActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.RestartActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(

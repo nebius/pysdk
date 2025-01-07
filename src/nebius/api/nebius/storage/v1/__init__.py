@@ -27,6 +27,7 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
 # file: nebius/storage/v1/base.proto
@@ -46,7 +47,7 @@ class VersioningPolicy(pb_enum.Enum):
 class CurrentBucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.CurrentBucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -164,7 +165,7 @@ class CurrentBucketCounters(pb_classes.Message):
 class NonCurrentBucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.NonCurrentBucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.NonCurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -240,7 +241,7 @@ class NonCurrentBucketCounters(pb_classes.Message):
 class BucketCounters(pb_classes.Message):
     __PB2_CLASS__ = bucket_counters_pb2.BucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -306,7 +307,7 @@ class BucketCounters(pb_classes.Message):
 class LifecycleConfiguration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleConfiguration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleConfiguration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -341,7 +342,7 @@ class LifecycleConfiguration(pb_classes.Message):
 class LifecycleRule(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleRule
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleRule",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class Status(pb_enum.Enum):
@@ -458,7 +459,7 @@ class LifecycleRule(pb_classes.Message):
 class LifecycleFilter(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleFilter
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleFilter",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -520,7 +521,7 @@ class LifecycleFilter(pb_classes.Message):
 class LifecycleExpiration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleExpiration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleExpiration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
         "date": well_known_1.ts_mask,
     }
     
@@ -625,7 +626,7 @@ class LifecycleExpiration(pb_classes.Message):
 class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleNoncurrentVersionExpiration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleNoncurrentVersionExpiration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass__newer_noncurrent_versions__(pb_classes.OneOf):
@@ -702,7 +703,7 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
 class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
     __PB2_CLASS__ = lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleAbortIncompleteMultipartUpload",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -737,7 +738,7 @@ class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
 class Bucket(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.Bucket
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.Bucket",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -802,7 +803,7 @@ class Bucket(pb_classes.Message):
 class BucketSpec(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.BucketSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketSpec",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -866,7 +867,7 @@ class BucketSpec(pb_classes.Message):
 class BucketStatus(pb_classes.Message):
     __PB2_CLASS__ = bucket_pb2.BucketStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketStatus",bucket_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
         "deleted_at": well_known_1.ts_mask,
         "purge_at": well_known_1.ts_mask,
     }
@@ -998,7 +999,7 @@ class BucketStatus(pb_classes.Message):
 class GetBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.GetBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1046,7 +1047,7 @@ class GetBucketRequest(pb_classes.Message):
 class GetBucketByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.GetBucketByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetBucketByNameRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1108,7 +1109,7 @@ class GetBucketByNameRequest(pb_classes.Message):
 class CreateBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.CreateBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CreateBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1158,7 +1159,7 @@ class CreateBucketRequest(pb_classes.Message):
 class UpdateBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.UpdateBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.UpdateBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1208,7 +1209,7 @@ class UpdateBucketRequest(pb_classes.Message):
 class DeleteBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.DeleteBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.DeleteBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
         "purge_at": well_known_1.ts_mask,
         "ttl": well_known_1.duration_mask,
     }
@@ -1316,7 +1317,7 @@ class DeleteBucketRequest(pb_classes.Message):
 class PurgeBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.PurgeBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.PurgeBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1350,7 +1351,7 @@ class PurgeBucketRequest(pb_classes.Message):
 class UndeleteBucketRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.UndeleteBucketRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.UndeleteBucketRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1384,7 +1385,7 @@ class UndeleteBucketRequest(pb_classes.Message):
 class ListBucketsRequest(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.ListBucketsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListBucketsRequest",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1474,7 +1475,7 @@ class ListBucketsRequest(pb_classes.Message):
 class ListBucketsResponse(pb_classes.Message):
     __PB2_CLASS__ = bucket_service_pb2.ListBucketsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListBucketsResponse",bucket_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1614,6 +1615,7 @@ class BucketServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateBucketRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,

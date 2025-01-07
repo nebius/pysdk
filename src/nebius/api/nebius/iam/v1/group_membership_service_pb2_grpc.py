@@ -26,6 +26,11 @@ class GroupMembershipServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembership.FromString,
                 _registered_method=True)
+        self.GetWithAttributes = channel.unary_unary(
+                '/nebius.iam.v1.GroupMembershipService/GetWithAttributes',
+                request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.SerializeToString,
+                response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembershipWithAttributes.FromString,
+                _registered_method=True)
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.GroupMembershipService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.DeleteGroupMembershipRequest.SerializeToString,
@@ -58,6 +63,12 @@ class GroupMembershipServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Get(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetWithAttributes(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -99,6 +110,11 @@ def add_GroupMembershipServiceServicer_to_server(servicer, server):
                     servicer.Get,
                     request_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.FromString,
                     response_serializer=nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembership.SerializeToString,
+            ),
+            'GetWithAttributes': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetWithAttributes,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.FromString,
+                    response_serializer=nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembershipWithAttributes.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
                     servicer.Delete,
@@ -175,6 +191,33 @@ class GroupMembershipService(object):
             '/nebius.iam.v1.GroupMembershipService/Get',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembership.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetWithAttributes(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/nebius.iam.v1.GroupMembershipService/GetWithAttributes',
+            nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.SerializeToString,
+            nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembershipWithAttributes.FromString,
             options,
             channel_credentials,
             insecure,

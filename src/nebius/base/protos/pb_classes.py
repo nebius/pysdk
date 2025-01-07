@@ -104,7 +104,7 @@ class Message:
     __default: "Message|None" = None
     __sensitive_fields = dict[str, bool]()
     __credentials_fields = dict[str, bool]()
-    __mask_functions: dict[str, MaskFunction]
+    __mask_functions__: dict[str, MaskFunction]
 
     def __init__(self, initial_message: PMessage | None):
         self.__recorded_reset_mask = Mask()
@@ -135,8 +135,8 @@ class Message:
             el = getattr(self, el_key)
 
             m_mask = Mask()
-            if el_key in self.__mask_functions:
-                m_mask = self.__mask_functions[el_key](el)
+            if el_key in self.__class__.__mask_functions__:
+                m_mask = self.__class__.__mask_functions__[el_key](el)
             elif (
                 isinstance(el, Map)
                 or isinstance(el, Repeated)
@@ -458,7 +458,7 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
     def get_full_update_reset_mask(self) -> Mask:
         ret = Mask()
         if len(self) > 0:
-            for k, el in self.items():
+            for _, el in self.items():
                 if not isinstance(el, Message) and self._mask_function is None:
                     return Mask()
                 if self._mask_function is None:
@@ -466,7 +466,9 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
                 else:
                     m_mask = self._mask_function(el)
                 if not m_mask.is_empty():
-                    ret.field_parts[FieldKey(str(k))] = m_mask
+                    if ret.any is None:
+                        ret.any = Mask()
+                    ret.any += m_mask
         return ret
 
     def __init__(

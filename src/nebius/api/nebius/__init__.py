@@ -34,7 +34,7 @@ class FieldBehavior(pb_enum.Enum):
 class RegionRouting(pb_classes.Message):
     __PB2_CLASS__ = annotations_pb2.RegionRouting
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.RegionRouting",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(

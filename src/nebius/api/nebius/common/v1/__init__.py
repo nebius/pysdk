@@ -31,7 +31,7 @@ import nebius.aio.operation as operation
 class ServiceError(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ServiceError
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ServiceError",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class RetryType(pb_enum.Enum):
@@ -433,13 +433,13 @@ class ServiceError(pb_classes.Message):
 class BadRequest(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.BadRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.BadRequest",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class Violation(pb_classes.Message):
         __PB2_CLASS__ = error_pb2.BadRequest.Violation
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.BadRequest.Violation",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -519,7 +519,7 @@ class BadRequest(pb_classes.Message):
 class BadResourceState(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.BadResourceState
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.BadResourceState",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -567,7 +567,7 @@ class BadResourceState(pb_classes.Message):
 class ResourceNotFound(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceNotFound
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceNotFound",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -601,7 +601,7 @@ class ResourceNotFound(pb_classes.Message):
 class ResourceAlreadyExists(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceAlreadyExists
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceAlreadyExists",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -635,7 +635,7 @@ class ResourceAlreadyExists(pb_classes.Message):
 class ResourceConflict(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ResourceConflict
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceConflict",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -683,7 +683,7 @@ class ResourceConflict(pb_classes.Message):
 class OperationAborted(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.OperationAborted
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.OperationAborted",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -745,7 +745,7 @@ class OperationAborted(pb_classes.Message):
 class OutOfRange(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.OutOfRange
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.OutOfRange",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -793,7 +793,7 @@ class OutOfRange(pb_classes.Message):
 class PermissionDenied(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.PermissionDenied
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.PermissionDenied",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -827,7 +827,7 @@ class PermissionDenied(pb_classes.Message):
 class InternalError(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.InternalError
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.InternalError",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -875,7 +875,7 @@ class InternalError(pb_classes.Message):
 class TooManyRequests(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.TooManyRequests
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.TooManyRequests",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -909,13 +909,13 @@ class TooManyRequests(pb_classes.Message):
 class QuotaFailure(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.QuotaFailure
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.QuotaFailure",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class Violation(pb_classes.Message):
         __PB2_CLASS__ = error_pb2.QuotaFailure.Violation
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.QuotaFailure.Violation",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -1023,13 +1023,13 @@ class QuotaFailure(pb_classes.Message):
 class NotEnoughResources(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.NotEnoughResources
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.NotEnoughResources",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class Violation(pb_classes.Message):
         __PB2_CLASS__ = error_pb2.NotEnoughResources.Violation
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.NotEnoughResources.Violation",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -1124,7 +1124,7 @@ class NotEnoughResources(pb_classes.Message):
 class ResourceMetadata(pb_classes.Message):
     __PB2_CLASS__ = metadata_pb2.ResourceMetadata
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceMetadata",metadata_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
         "created_at": well_known_1.ts_mask,
         "updated_at": well_known_1.ts_mask,
     }
@@ -1132,7 +1132,7 @@ class ResourceMetadata(pb_classes.Message):
     class LabelsEntry(pb_classes.Message):
         __PB2_CLASS__ = metadata_pb2.ResourceMetadata.LabelsEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceMetadata.LabelsEntry",metadata_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -1300,7 +1300,7 @@ class ResourceMetadata(pb_classes.Message):
 class GetByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = metadata_pb2.GetByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.GetByNameRequest",metadata_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1349,7 +1349,7 @@ class GetByNameRequest(pb_classes.Message):
 class Operation(pb_classes.Message):
     __PB2_CLASS__ = operation_pb2.Operation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.Operation",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
         "created_at": well_known_1.ts_mask,
         "finished_at": well_known_1.ts_mask,
         "status": well_known_1.status_mask,
@@ -1358,7 +1358,7 @@ class Operation(pb_classes.Message):
     class RequestHeader(pb_classes.Message):
         __PB2_CLASS__ = operation_pb2.Operation.RequestHeader
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.Operation.RequestHeader",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -1394,7 +1394,7 @@ class Operation(pb_classes.Message):
     class RequestHeadersEntry(pb_classes.Message):
         __PB2_CLASS__ = operation_pb2.Operation.RequestHeadersEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.Operation.RequestHeadersEntry",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -1610,7 +1610,7 @@ class Operation(pb_classes.Message):
 class GetOperationRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.GetOperationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.GetOperationRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1644,7 +1644,7 @@ class GetOperationRequest(pb_classes.Message):
 class ListOperationsRequest(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ListOperationsRequest",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1706,7 +1706,7 @@ class ListOperationsRequest(pb_classes.Message):
 class ListOperationsResponse(pb_classes.Message):
     __PB2_CLASS__ = operation_service_pb2.ListOperationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ListOperationsResponse",operation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(

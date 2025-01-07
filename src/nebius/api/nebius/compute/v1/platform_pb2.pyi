@@ -18,14 +18,16 @@ class Platform(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[PlatformSpec, _Mapping]] = ..., status: _Optional[_Union[PlatformStatus, _Mapping]] = ...) -> None: ...
 
 class PlatformSpec(_message.Message):
-    __slots__ = ("presets", "gpu_count_quota_type", "human_readable_name")
+    __slots__ = ("presets", "gpu_count_quota_type", "human_readable_name", "allow_preset_change")
     PRESETS_FIELD_NUMBER: _ClassVar[int]
     GPU_COUNT_QUOTA_TYPE_FIELD_NUMBER: _ClassVar[int]
     HUMAN_READABLE_NAME_FIELD_NUMBER: _ClassVar[int]
+    ALLOW_PRESET_CHANGE_FIELD_NUMBER: _ClassVar[int]
     presets: _containers.RepeatedCompositeFieldContainer[Preset]
     gpu_count_quota_type: str
     human_readable_name: str
-    def __init__(self, presets: _Optional[_Iterable[_Union[Preset, _Mapping]]] = ..., gpu_count_quota_type: _Optional[str] = ..., human_readable_name: _Optional[str] = ...) -> None: ...
+    allow_preset_change: bool
+    def __init__(self, presets: _Optional[_Iterable[_Union[Preset, _Mapping]]] = ..., gpu_count_quota_type: _Optional[str] = ..., human_readable_name: _Optional[str] = ..., allow_preset_change: bool = ...) -> None: ...
 
 class Preset(_message.Message):
     __slots__ = ("name", "resources", "allow_gpu_clustering")

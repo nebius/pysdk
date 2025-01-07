@@ -20,6 +20,7 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.api.nebius.mk8s.v1alpha1.instance_template_pb2 as instance_template_pb2
 import typing as typing
 import nebius.api.nebius.mk8s.v1alpha1.node_group_pb2 as node_group_pb2
@@ -35,7 +36,7 @@ import nebius.api.nebius.mk8s.v1alpha1.progress_data_pb2 as progress_data_pb2
 class Cluster(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.Cluster
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.Cluster",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -100,7 +101,7 @@ class Cluster(pb_classes.Message):
 class ClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -150,7 +151,7 @@ class ClusterSpec(pb_classes.Message):
 class ControlPlaneSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ControlPlaneSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -227,7 +228,7 @@ class ControlPlaneSpec(pb_classes.Message):
 class ControlPlaneEndpointsSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneEndpointsSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ControlPlaneEndpointsSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -262,7 +263,7 @@ class ControlPlaneEndpointsSpec(pb_classes.Message):
 class PublicEndpointSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.PublicEndpointSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.PublicEndpointSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -281,7 +282,7 @@ class PublicEndpointSpec(pb_classes.Message):
 class KubeNetworkSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.KubeNetworkSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.KubeNetworkSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -316,7 +317,7 @@ class KubeNetworkSpec(pb_classes.Message):
 class ClusterStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ClusterStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ClusterStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class State(pb_enum.Enum):
@@ -389,7 +390,7 @@ class ClusterStatus(pb_classes.Message):
 class ControlPlaneStatus(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ControlPlaneStatus",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -467,7 +468,7 @@ class ControlPlaneStatus(pb_classes.Message):
 class ControlPlaneStatusEndpoints(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneStatusEndpoints
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ControlPlaneStatusEndpoints",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -515,7 +516,7 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
 class ControlPlaneStatusAuth(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.ControlPlaneStatusAuth
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ControlPlaneStatusAuth",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -550,7 +551,7 @@ class ControlPlaneStatusAuth(pb_classes.Message):
 class CreateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.CreateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.CreateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -600,7 +601,7 @@ class CreateClusterRequest(pb_classes.Message):
 class GetClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.GetClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -648,7 +649,7 @@ class GetClusterRequest(pb_classes.Message):
 class GetClusterByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.GetClusterByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.GetClusterByNameRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -696,7 +697,7 @@ class GetClusterByNameRequest(pb_classes.Message):
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ListClustersRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -758,7 +759,7 @@ class ListClustersRequest(pb_classes.Message):
 class ListClustersResponse(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ListClustersResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -807,7 +808,7 @@ class ListClustersResponse(pb_classes.Message):
 class UpdateClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.UpdateClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.UpdateClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -857,7 +858,7 @@ class UpdateClusterRequest(pb_classes.Message):
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -982,6 +983,7 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -1019,7 +1021,7 @@ class ClusterServiceClient(client.Client):
 class DiskSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_template_pb2.DiskSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.DiskSpec",instance_template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class DiskType(pb_enum.Enum):
@@ -1196,7 +1198,7 @@ class DiskSpec(pb_classes.Message):
 class ResourcesSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_template_pb2.ResourcesSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ResourcesSpec",instance_template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_size__(pb_classes.OneOf):
@@ -1274,7 +1276,7 @@ class ResourcesSpec(pb_classes.Message):
 class NodeGroup(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroup
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeGroup",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1339,7 +1341,7 @@ class NodeGroup(pb_classes.Message):
 class NodeGroupSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeGroupSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_size__(pb_classes.OneOf):
@@ -1472,7 +1474,7 @@ class NodeGroupSpec(pb_classes.Message):
 class NodeTemplate(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeTemplate
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeTemplate",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1625,13 +1627,13 @@ class NodeTemplate(pb_classes.Message):
 class NodeMetadataTemplate(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeMetadataTemplate
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeMetadataTemplate",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class LabelsEntry(pb_classes.Message):
         __PB2_CLASS__ = node_group_pb2.NodeMetadataTemplate.LabelsEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeMetadataTemplate.LabelsEntry",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -1711,7 +1713,7 @@ class NodeMetadataTemplate(pb_classes.Message):
 class GpuClusterSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.GpuClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.GpuClusterSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1745,7 +1747,7 @@ class GpuClusterSpec(pb_classes.Message):
 class NetworkInterfaceTemplate(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NetworkInterfaceTemplate
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NetworkInterfaceTemplate",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1794,7 +1796,7 @@ class NetworkInterfaceTemplate(pb_classes.Message):
 class PublicIPAddress(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.PublicIPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.PublicIPAddress",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1813,7 +1815,7 @@ class PublicIPAddress(pb_classes.Message):
 class AttachedFilesystemSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.AttachedFilesystemSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.AttachedFilesystemSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class AttachMode(pb_enum.Enum):
@@ -1914,7 +1916,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
 class ExistingFilesystem(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.ExistingFilesystem
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ExistingFilesystem",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1948,7 +1950,7 @@ class ExistingFilesystem(pb_classes.Message):
 class NodeGroupAutoscalingSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupAutoscalingSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeGroupAutoscalingSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1996,7 +1998,7 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
 class NodeTaint(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeTaint
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeTaint",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class Effect(pb_enum.Enum):
@@ -2068,7 +2070,7 @@ class NodeTaint(pb_classes.Message):
 class NodeGroupDeploymentStrategy(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupDeploymentStrategy
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeGroupDeploymentStrategy",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
         "drain_timeout": well_known_1.duration_mask,
     }
     
@@ -2135,7 +2137,7 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
 class PercentOrCount(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.PercentOrCount
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.PercentOrCount",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_value__(pb_classes.OneOf):
@@ -2223,7 +2225,7 @@ class PercentOrCount(pb_classes.Message):
 class NodeGroupStatus(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.NodeGroupStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.NodeGroupStatus",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class State(pb_enum.Enum):
@@ -2352,7 +2354,7 @@ class NodeGroupStatus(pb_classes.Message):
 class CreateNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.CreateNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.CreateNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2402,7 +2404,7 @@ class CreateNodeGroupRequest(pb_classes.Message):
 class GetNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.GetNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.GetNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2450,7 +2452,7 @@ class GetNodeGroupRequest(pb_classes.Message):
 class GetNodeGroupByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.GetNodeGroupByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.GetNodeGroupByNameRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2498,7 +2500,7 @@ class GetNodeGroupByNameRequest(pb_classes.Message):
 class ListNodeGroupsRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.ListNodeGroupsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ListNodeGroupsRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2560,7 +2562,7 @@ class ListNodeGroupsRequest(pb_classes.Message):
 class ListNodeGroupsResponse(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.ListNodeGroupsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ListNodeGroupsResponse",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2609,7 +2611,7 @@ class ListNodeGroupsResponse(pb_classes.Message):
 class UpdateNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.UpdateNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.UpdateNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2659,7 +2661,7 @@ class UpdateNodeGroupRequest(pb_classes.Message):
 class DeleteNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.DeleteNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.DeleteNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2693,7 +2695,7 @@ class DeleteNodeGroupRequest(pb_classes.Message):
 class UpgradeNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.UpgradeNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.UpgradeNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_upgrade_type__(pb_classes.OneOf):
@@ -2861,6 +2863,7 @@ class NodeGroupServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateNodeGroupRequest","operation.Operation[v1alpha1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -2918,7 +2921,7 @@ class NodeGroupServiceClient(client.Client):
 class ProgressData(pb_classes.Message):
     __PB2_CLASS__ = progress_data_pb2.ProgressData
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ProgressData",progress_data_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2953,7 +2956,7 @@ class ProgressData(pb_classes.Message):
 class Problem(pb_classes.Message):
     __PB2_CLASS__ = progress_data_pb2.Problem
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.Problem",progress_data_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(

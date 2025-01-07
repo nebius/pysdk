@@ -19,13 +19,13 @@ import typing as typing
 class BadRequest(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.BadRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.BadRequest",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class Violation(pb_classes.Message):
         __PB2_CLASS__ = common_errors_pb2.BadRequest.Violation
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.BadRequest.Violation",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -105,7 +105,7 @@ class BadRequest(pb_classes.Message):
 class BadResourceState(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.BadResourceState
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.BadResourceState",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -153,7 +153,7 @@ class BadResourceState(pb_classes.Message):
 class ResourceNotFound(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.ResourceNotFound
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.ResourceNotFound",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -187,7 +187,7 @@ class ResourceNotFound(pb_classes.Message):
 class ResourceAlreadyExists(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.ResourceAlreadyExists
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.ResourceAlreadyExists",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -221,7 +221,7 @@ class ResourceAlreadyExists(pb_classes.Message):
 class ResourceConflict(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.ResourceConflict
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.ResourceConflict",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -269,7 +269,7 @@ class ResourceConflict(pb_classes.Message):
 class OperationAborted(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.OperationAborted
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.OperationAborted",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -331,7 +331,7 @@ class OperationAborted(pb_classes.Message):
 class OutOfRange(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.OutOfRange
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.OutOfRange",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -379,7 +379,7 @@ class OutOfRange(pb_classes.Message):
 class PermissionDenied(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.PermissionDenied
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.PermissionDenied",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -413,7 +413,7 @@ class PermissionDenied(pb_classes.Message):
 class InternalError(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.InternalError
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.InternalError",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -461,7 +461,7 @@ class InternalError(pb_classes.Message):
 class TooManyRequests(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.TooManyRequests
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.TooManyRequests",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -495,13 +495,13 @@ class TooManyRequests(pb_classes.Message):
 class QuotaFailure(pb_classes.Message):
     __PB2_CLASS__ = common_errors_pb2.QuotaFailure
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.QuotaFailure",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class Violation(pb_classes.Message):
         __PB2_CLASS__ = common_errors_pb2.QuotaFailure.Violation
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.QuotaFailure.Violation",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -610,7 +610,7 @@ class QuotaFailure(pb_classes.Message):
 class ServiceError(pb_classes.Message):
     __PB2_CLASS__ = error_pb2.ServiceError
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.ServiceError",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class RetryType(pb_enum.Enum):

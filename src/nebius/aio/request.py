@@ -6,6 +6,7 @@ from google.protobuf.message import Message as PMessage
 from grpc import CallCredentials, Compression
 from grpc.aio import AioRpcError
 from grpc.aio import Channel as GRPCChannel
+from grpc.aio import Metadata as GrpcMetadata
 from grpc.aio._call import UnaryUnaryCall
 from grpc_status import rpc_status
 
@@ -184,7 +185,7 @@ class Request(Generic[Req, Res]):
         )(
             req,
             timeout=self._timeout,
-            metadata=self._input_metadata,
+            metadata=GrpcMetadata(*self._input_metadata),
             credentials=self._credentials,
             wait_for_ready=self._wait_for_ready,
             compression=self._compression,

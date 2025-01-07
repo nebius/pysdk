@@ -25,7 +25,7 @@ import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 class K8sRelease(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_pb2.K8sRelease
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sRelease",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -90,13 +90,13 @@ class K8sRelease(pb_classes.Message):
 class K8sReleaseSpec(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_pb2.K8sReleaseSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sReleaseSpec",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class SetEntry(pb_classes.Message):
         __PB2_CLASS__ = k8s_release_pb2.K8sReleaseSpec.SetEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sReleaseSpec.SetEntry",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions = {
+        __mask_functions__ = {
         }
         
         def __init__(
@@ -246,7 +246,7 @@ class K8sReleaseSpec(pb_classes.Message):
 class K8sReleaseStatus(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_pb2.K8sReleaseStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.K8sReleaseStatus",k8s_release_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class State(pb_enum.Enum):
@@ -307,7 +307,7 @@ class K8sReleaseStatus(pb_classes.Message):
 class GetK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.GetK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.GetK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -341,7 +341,7 @@ class GetK8sReleaseRequest(pb_classes.Message):
 class ListK8sReleasesRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.ListK8sReleasesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.ListK8sReleasesRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -431,7 +431,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
 class CreateK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.CreateK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.CreateK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -481,7 +481,7 @@ class CreateK8sReleaseRequest(pb_classes.Message):
 class DeleteK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.DeleteK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.DeleteK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -515,7 +515,7 @@ class DeleteK8sReleaseRequest(pb_classes.Message):
 class ListK8sReleasesResponse(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.ListK8sReleasesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.ListK8sReleasesResponse",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(

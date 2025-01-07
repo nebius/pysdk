@@ -429,7 +429,7 @@ def generate_message(message: Message, g: PyGenFile) -> None:
             ImportedSymbol("Descriptor", "google.protobuf.descriptor"),
             ")",
         )
-        g.p("__mask_functions = {")
+        g.p("__mask_functions__ = {")
         with g:
             for field in message.fields():
                 if (
@@ -608,6 +608,15 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                 g.p(method.output.export_path, noindent=True, add_eol=False)
             g.p('"]:', noindent=True)
             with g:
+                if method.name == "Update" and is_operation_output(method):
+                    g.p(
+                        "metadata = ",
+                        ImportedSymbol(
+                            "ensure_reset_mask_in_metadata",
+                            "nebius.base.fieldmask_protobuf",
+                        ),
+                        "(request, metadata)",
+                    )
                 g.p("return super().request(")
                 with g:
                     g.p('method="', method.name, '",')

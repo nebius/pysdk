@@ -21,6 +21,7 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.api.nebius.vpc.v1.network_pb2 as network_pb2
 import nebius.api.nebius.vpc.v1.network_service_pb2 as network_service_pb2
 import nebius.api.nebius.vpc.v1.pool_service_pb2 as pool_service_pb2
@@ -50,7 +51,7 @@ class IpVisibility(pb_enum.Enum):
 class Pool(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.Pool
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Pool",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -115,7 +116,7 @@ class Pool(pb_classes.Message):
 class PoolSpec(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.PoolSpec",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -194,7 +195,7 @@ class PoolSpec(pb_classes.Message):
 class PoolCidr(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolCidr
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.PoolCidr",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -257,7 +258,7 @@ class PoolCidr(pb_classes.Message):
 class PoolStatus(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.PoolStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.PoolStatus",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class State(pb_enum.Enum):
@@ -274,6 +275,7 @@ class PoolStatus(pb_classes.Message):
         state: "PoolStatus.State|pool_pb2.PoolStatus.State|unset.UnsetType" = unset.Unset,
         cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
         scope_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        assignment: "PoolAssignment|pool_pb2.PoolAssignment|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -282,12 +284,15 @@ class PoolStatus(pb_classes.Message):
             self.cidrs = cidrs
         if not isinstance(scope_id, unset.UnsetType):
             self.scope_id = scope_id
+        if not isinstance(assignment, unset.UnsetType):
+            self.assignment = assignment
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "cidrs",
             "scope_id",
+            "assignment",
             "State",
         ]
     
@@ -320,18 +325,79 @@ class PoolStatus(pb_classes.Message):
         return super()._set_field("scope_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def assignment(self) -> "PoolAssignment":
+        return super()._get_field("assignment", explicit_presence=False,
+        wrap=PoolAssignment,
+        )
+    @assignment.setter
+    def assignment(self, value: "PoolAssignment|pool_pb2.PoolAssignment") -> None:
+        return super()._set_field("assignment",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "cidrs":"cidrs",
         "scope_id":"scope_id",
+        "assignment":"assignment",
         "State":"State",
+    }
+    
+class PoolAssignment(pb_classes.Message):
+    __PB2_CLASS__ = pool_pb2.PoolAssignment
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.PoolAssignment",pool_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        networks: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        subnets: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(networks, unset.UnsetType):
+            self.networks = networks
+        if not isinstance(subnets, unset.UnsetType):
+            self.subnets = subnets
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "networks",
+            "subnets",
+        ]
+    
+    @builtins.property
+    def networks(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("networks", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @networks.setter
+    def networks(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("networks",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def subnets(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("subnets", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @subnets.setter
+    def subnets(self, value: "abc.Iterable[builtins.str]") -> None:
+        return super()._set_field("subnets",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "networks":"networks",
+        "subnets":"subnets",
     }
     
 # file: nebius/vpc/v1/allocation.proto
 class Allocation(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.Allocation
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Allocation",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -396,7 +462,7 @@ class Allocation(pb_classes.Message):
 class AllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_ip_spec__(pb_classes.OneOf):
@@ -486,7 +552,7 @@ class AllocationSpec(pb_classes.Message):
 class IPv4PrivateAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.IPv4PrivateAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PrivateAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_pool__(pb_classes.OneOf):
@@ -588,7 +654,7 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
 class IPv4PublicAllocationSpec(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.IPv4PublicAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PublicAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_pool__(pb_classes.OneOf):
@@ -690,7 +756,7 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
 class AllocationStatus(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationStatus",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class State(pb_enum.Enum):
@@ -779,7 +845,7 @@ class AllocationStatus(pb_classes.Message):
 class AllocationDetails(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.AllocationDetails
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationDetails",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -842,7 +908,7 @@ class AllocationDetails(pb_classes.Message):
 class Assignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.Assignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Assignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class __OneOfClass_type__(pb_classes.OneOf):
@@ -932,7 +998,7 @@ class Assignment(pb_classes.Message):
 class NetworkInterfaceAssignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.NetworkInterfaceAssignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NetworkInterfaceAssignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -980,7 +1046,7 @@ class NetworkInterfaceAssignment(pb_classes.Message):
 class LoadBalancerAssignment(pb_classes.Message):
     __PB2_CLASS__ = allocation_pb2.LoadBalancerAssignment
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.LoadBalancerAssignment",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1015,7 +1081,7 @@ class LoadBalancerAssignment(pb_classes.Message):
 class GetAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.GetAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1049,7 +1115,7 @@ class GetAllocationRequest(pb_classes.Message):
 class GetAllocationByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.GetAllocationByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetAllocationByNameRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1097,7 +1163,7 @@ class GetAllocationByNameRequest(pb_classes.Message):
 class ListAllocationsRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1159,7 +1225,7 @@ class ListAllocationsRequest(pb_classes.Message):
 class ListAllocationsByPoolRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsByPoolRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsByPoolRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1221,7 +1287,7 @@ class ListAllocationsByPoolRequest(pb_classes.Message):
 class ListAllocationsResponse(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsResponse",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1270,7 +1336,7 @@ class ListAllocationsResponse(pb_classes.Message):
 class CreateAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.CreateAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.CreateAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1320,7 +1386,7 @@ class CreateAllocationRequest(pb_classes.Message):
 class UpdateAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.UpdateAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdateAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1370,7 +1436,7 @@ class UpdateAllocationRequest(pb_classes.Message):
 class DeleteAllocationRequest(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.DeleteAllocationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.DeleteAllocationRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1515,6 +1581,7 @@ class AllocationServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateAllocationRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -1552,7 +1619,7 @@ class AllocationServiceClient(client.Client):
 class Network(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.Network
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Network",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1617,7 +1684,7 @@ class Network(pb_classes.Message):
 class NetworkSpec(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NetworkSpec",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1667,7 +1734,7 @@ class NetworkSpec(pb_classes.Message):
 class IPv4PrivateNetworkPools(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.IPv4PrivateNetworkPools
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PrivateNetworkPools",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1702,7 +1769,7 @@ class IPv4PrivateNetworkPools(pb_classes.Message):
 class IPv4PublicNetworkPools(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.IPv4PublicNetworkPools
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PublicNetworkPools",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1737,7 +1804,7 @@ class IPv4PublicNetworkPools(pb_classes.Message):
 class NetworkPool(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkPool
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NetworkPool",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1771,7 +1838,7 @@ class NetworkPool(pb_classes.Message):
 class NetworkStatus(pb_classes.Message):
     __PB2_CLASS__ = network_pb2.NetworkStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NetworkStatus",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class State(pb_enum.Enum):
@@ -1816,7 +1883,7 @@ class NetworkStatus(pb_classes.Message):
 class GetNetworkRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.GetNetworkRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetNetworkRequest",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1850,7 +1917,7 @@ class GetNetworkRequest(pb_classes.Message):
 class GetNetworkByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.GetNetworkByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetNetworkByNameRequest",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1898,7 +1965,7 @@ class GetNetworkByNameRequest(pb_classes.Message):
 class ListNetworksRequest(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.ListNetworksRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListNetworksRequest",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1960,7 +2027,7 @@ class ListNetworksRequest(pb_classes.Message):
 class ListNetworksResponse(pb_classes.Message):
     __PB2_CLASS__ = network_service_pb2.ListNetworksResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListNetworksResponse",network_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2076,7 +2143,7 @@ class NetworkServiceClient(client.Client):
 class GetPoolRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.GetPoolRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetPoolRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2110,7 +2177,7 @@ class GetPoolRequest(pb_classes.Message):
 class GetPoolByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.GetPoolByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetPoolByNameRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2158,7 +2225,7 @@ class GetPoolByNameRequest(pb_classes.Message):
 class ListPoolsRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.ListPoolsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListPoolsRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2220,7 +2287,7 @@ class ListPoolsRequest(pb_classes.Message):
 class ListPoolsBySourcePoolRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.ListPoolsBySourcePoolRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListPoolsBySourcePoolRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2282,7 +2349,7 @@ class ListPoolsBySourcePoolRequest(pb_classes.Message):
 class ListPoolsResponse(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.ListPoolsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListPoolsResponse",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2331,7 +2398,7 @@ class ListPoolsResponse(pb_classes.Message):
 class UpdatePoolRequest(pb_classes.Message):
     __PB2_CLASS__ = pool_service_pb2.UpdatePoolRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdatePoolRequest",pool_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2472,6 +2539,7 @@ class PoolServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdatePoolRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,
@@ -2489,7 +2557,7 @@ class PoolServiceClient(client.Client):
 class Subnet(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.Subnet
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Subnet",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2554,7 +2622,7 @@ class Subnet(pb_classes.Message):
 class SubnetSpec(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetSpec",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2618,7 +2686,7 @@ class SubnetSpec(pb_classes.Message):
 class IPv4PrivateSubnetPools(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.IPv4PrivateSubnetPools
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PrivateSubnetPools",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2667,7 +2735,7 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
 class IPv4PublicSubnetPools(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.IPv4PublicSubnetPools
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PublicSubnetPools",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2716,7 +2784,7 @@ class IPv4PublicSubnetPools(pb_classes.Message):
 class SubnetPool(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetPool
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetPool",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2751,7 +2819,7 @@ class SubnetPool(pb_classes.Message):
 class SubnetCidr(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetCidr
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetCidr",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2814,7 +2882,7 @@ class SubnetCidr(pb_classes.Message):
 class SubnetStatus(pb_classes.Message):
     __PB2_CLASS__ = subnet_pb2.SubnetStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetStatus",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class State(pb_enum.Enum):
@@ -2889,7 +2957,7 @@ class SubnetStatus(pb_classes.Message):
 class GetSubnetRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.GetSubnetRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetSubnetRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2923,7 +2991,7 @@ class GetSubnetRequest(pb_classes.Message):
 class GetSubnetByNameRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.GetSubnetByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetSubnetByNameRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -2971,7 +3039,7 @@ class GetSubnetByNameRequest(pb_classes.Message):
 class ListSubnetsRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSubnetsRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -3033,7 +3101,7 @@ class ListSubnetsRequest(pb_classes.Message):
 class ListSubnetsByNetworkRequest(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsByNetworkRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSubnetsByNetworkRequest",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -3095,7 +3163,7 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
 class ListSubnetsResponse(pb_classes.Message):
     __PB2_CLASS__ = subnet_service_pb2.ListSubnetsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSubnetsResponse",subnet_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -3236,6 +3304,7 @@ __all__ = [
     "PoolSpec",
     "PoolCidr",
     "PoolStatus",
+    "PoolAssignment",
     "Allocation",
     "AllocationSpec",
     "IPv4PrivateAllocationSpec",

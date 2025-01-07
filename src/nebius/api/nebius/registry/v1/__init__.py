@@ -24,13 +24,14 @@ import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.registry.v1.registry_pb2 as registry_pb2
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.registry.v1.registry_service_pb2 as registry_service_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
 # file: nebius/registry/v1/artifact.proto
 class Artifact(pb_classes.Message):
     __PB2_CLASS__ = artifact_pb2.Artifact
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.Artifact",artifact_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
         "created_at": well_known_1.ts_mask,
         "updated_at": well_known_1.ts_mask,
     }
@@ -205,7 +206,7 @@ class Artifact(pb_classes.Message):
 class GetArtifactRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.GetArtifactRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.GetArtifactRequest",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -239,7 +240,7 @@ class GetArtifactRequest(pb_classes.Message):
 class ListArtifactsRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.ListArtifactsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListArtifactsRequest",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -315,7 +316,7 @@ class ListArtifactsRequest(pb_classes.Message):
 class ListArtifactsResponse(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.ListArtifactsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListArtifactsResponse",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -364,7 +365,7 @@ class ListArtifactsResponse(pb_classes.Message):
 class DeleteArtifactRequest(pb_classes.Message):
     __PB2_CLASS__ = artifact_service_pb2.DeleteArtifactRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.DeleteArtifactRequest",artifact_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -466,7 +467,7 @@ class ArtifactServiceClient(client.Client):
 class Registry(pb_classes.Message):
     __PB2_CLASS__ = registry_pb2.Registry
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.Registry",registry_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -531,7 +532,7 @@ class Registry(pb_classes.Message):
 class RegistrySpec(pb_classes.Message):
     __PB2_CLASS__ = registry_pb2.RegistrySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.RegistrySpec",registry_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -579,7 +580,7 @@ class RegistrySpec(pb_classes.Message):
 class RegistryStatus(pb_classes.Message):
     __PB2_CLASS__ = registry_pb2.RegistryStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.RegistryStatus",registry_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     class State(pb_enum.Enum):
@@ -638,7 +639,7 @@ class RegistryStatus(pb_classes.Message):
 class GetRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.GetRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.GetRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -672,7 +673,7 @@ class GetRegistryRequest(pb_classes.Message):
 class ListRegistriesRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.ListRegistriesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListRegistriesRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -748,7 +749,7 @@ class ListRegistriesRequest(pb_classes.Message):
 class ListRegistriesResponse(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.ListRegistriesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.ListRegistriesResponse",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -797,7 +798,7 @@ class ListRegistriesResponse(pb_classes.Message):
 class CreateRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.CreateRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.CreateRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -847,7 +848,7 @@ class CreateRegistryRequest(pb_classes.Message):
 class UpdateRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.UpdateRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.UpdateRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -897,7 +898,7 @@ class UpdateRegistryRequest(pb_classes.Message):
 class DeleteRegistryRequest(pb_classes.Message):
     __PB2_CLASS__ = registry_service_pb2.DeleteRegistryRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.registry.v1.DeleteRegistryRequest",registry_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -1002,6 +1003,7 @@ class RegistryServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateRegistryRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
             request=request,

@@ -22,7 +22,7 @@ import nebius.api.nebius.msp.v1alpha1.resource.template_service_pb2 as template_
 class Template(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.Template
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.Template",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -72,7 +72,7 @@ class Template(pb_classes.Message):
 class TemplateStatus(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.TemplateStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.TemplateStatus",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -107,7 +107,7 @@ class TemplateStatus(pb_classes.Message):
 class TemplateSpec(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.TemplateSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.TemplateSpec",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -186,7 +186,7 @@ class TemplateSpec(pb_classes.Message):
 class ResourcesSpec(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.ResourcesSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ResourcesSpec",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -234,7 +234,7 @@ class ResourcesSpec(pb_classes.Message):
 class PresetDetails(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.PresetDetails
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.PresetDetails",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -282,7 +282,7 @@ class PresetDetails(pb_classes.Message):
 class Range(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.Range
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.Range",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -358,7 +358,7 @@ class Range(pb_classes.Message):
 class Disk(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.Disk
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.Disk",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -407,7 +407,7 @@ class Disk(pb_classes.Message):
 class DiskSpec(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.DiskSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.DiskSpec",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -455,7 +455,7 @@ class DiskSpec(pb_classes.Message):
 class Host(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.Host
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.Host",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -490,7 +490,7 @@ class Host(pb_classes.Message):
 class HostSpec(pb_classes.Message):
     __PB2_CLASS__ = template_pb2.HostSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.HostSpec",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -525,7 +525,7 @@ class HostSpec(pb_classes.Message):
 class Preset(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.Preset
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.Preset",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -560,7 +560,7 @@ class Preset(pb_classes.Message):
 class PresetSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.PresetSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.PresetSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -639,7 +639,7 @@ class PresetSpec(pb_classes.Message):
 class FlavorSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.FlavorSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.FlavorSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -689,7 +689,7 @@ class FlavorSpec(pb_classes.Message):
 class CpuSpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.CpuSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.CpuSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -737,7 +737,7 @@ class CpuSpec(pb_classes.Message):
 class MemorySpec(pb_classes.Message):
     __PB2_CLASS__ = preset_pb2.MemorySpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.MemorySpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -772,7 +772,7 @@ class MemorySpec(pb_classes.Message):
 class ListPresetsRequest(pb_classes.Message):
     __PB2_CLASS__ = preset_service_pb2.ListPresetsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ListPresetsRequest",preset_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -820,7 +820,7 @@ class ListPresetsRequest(pb_classes.Message):
 class ListPresetsResponse(pb_classes.Message):
     __PB2_CLASS__ = preset_service_pb2.ListPresetsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ListPresetsResponse",preset_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -896,7 +896,7 @@ class PresetServiceClient(client.Client):
 class ListTemplatesRequest(pb_classes.Message):
     __PB2_CLASS__ = template_service_pb2.ListTemplatesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ListTemplatesRequest",template_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
@@ -944,7 +944,7 @@ class ListTemplatesRequest(pb_classes.Message):
 class ListTemplatesResponse(pb_classes.Message):
     __PB2_CLASS__ = template_service_pb2.ListTemplatesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.resource.ListTemplatesResponse",template_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions = {
+    __mask_functions__ = {
     }
     
     def __init__(
