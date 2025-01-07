@@ -20,10 +20,6 @@ Try it out as follows:
 NEBIUS_IAM_TOKEN=$(nebius iam get-access-token) python -m ./path/to/your/pysdk/src/examples/basic.py your-project-id
 ```
 
-### TODOs
-
- * Fieldmasks not implemented (Update requests have to be manually filled)
-
 ### How-to
 
 #### Initialize
@@ -238,22 +234,69 @@ Do not forget to save request ID and trace ID from the output, in case you will 
 
 ### Call `Update` methods
 
-`Update` methods require `ResetMask` masks to be passed alongside the request, if you want to set some fields to default. Currently, there's no python library to support Nebius `ResetMask`, so you have to create the masks yourself.
+`Update` method requires either to pass a manually constructed `x-resetmask` or to send a fully set new specification. Here are both examples:
+
+#### Using full state modifications
 
 ```python
 from nebius.api.nebius.storage.v1 import UpdateBucketRequest
 
+bucket = await service.get(req)
+bucket.spec.max_size_bytes *= 2  # Example of the change
 operation = await service.update(
-    UpdateBucketRequest(), # if we send it without metadata, it won't update anything
-    metadata=[
-        ("x-reset-mask","spec.max_size_bytes")  # we reset max_size_bytes to 0 — unlimited
-        ("x-reset-mask","spec.versioning_policy")  # you can add multiple masks, they will be combined
-    ]
+    UpdateBucketRequest(
+        metadata=bucket.metadata,
+        spec=bucket.spec,
+    ),
 )
 ```
-You can use `nebius.base.metadata.Metadata` container to work with metadata, it gives some helper functions and conveniences, as well as automatically converts all the headers from http-like to grpc-compliant lowercase.
 
-**Note**: Our internal field masks have more granularity than google ones, so they are incompatible.
+This will double the bucket volume limit, respecting the resource version.
+
+If during your modification (between `get` and `update`) there was another concurrent one, the request will fail. You may ommit resource version check by resetting `resource_version` to **0**:
+
+```python
+from nebius.api.nebius.storage.v1 import UpdateBucketRequest
+
+bucket = await service.get(req)
+bucket.spec.max_size_bytes *= 2  # Example of the change
+bucket.metadata.resource_version = 0  # This will skip version check and fully overwrite the resource
+operation = await service.update(
+    UpdateBucketRequest(
+        metadata=bucket.metadata,
+        spec=bucket.spec,
+    ),
+)
+```
+
+This will fully replace the bucket specification to the sent one, overwriting any changes that could have been made by any concurrent updates.
+
+
+#### Using manually set `X-ResetMask`
+
+You may want to send partial updates without requesting full specification beforehand, this process will require manual setting of the `X-ResetMask` in the metadata. Any unset or default fields without one will not be overwritten.
+
+```python
+from nebius.api.nebius.storage.v1 import UpdateBucketRequest
+from nebius.api.nebius.common.v1 import ResourceMetadata
+from nebius.base.metadata import Metadata
+
+md = Metadata()
+md["X-ResetMask"] = "spec.max_size_bytes"
+operation = await service.update(
+    UpdateBucketRequest(
+        metadata=ResourceMetadata(
+            id="some-bucket-id",  # Required to identify the resource
+        )
+    ),
+    metadata=md,
+)
+```
+This example will only reset `max_size_bytes` in the bucket, clearing the limit, but won't unset anything else.
+
+**Note**: Our internal field masks have more granularity than google ones, so they are incompatible. You can read more on the masks in the Nebius API documentation.
+
+**Note**: Please read the API documentation before modifying lists and maps with manual masks.
 
 ### Contributing
 
