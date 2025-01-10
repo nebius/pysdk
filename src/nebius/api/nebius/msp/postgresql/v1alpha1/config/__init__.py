@@ -417,6 +417,10 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def autovacuum_work_mem(self) -> "builtins.int|None":
+        """
+         in kilobytes.
+        """
+        
         return super()._get_field("autovacuum_work_mem", explicit_presence=True,
         )
     @autovacuum_work_mem.setter
@@ -426,6 +430,10 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def statement_timeout(self) -> "builtins.int|None":
+        """
+         in milliseconds.
+        """
+        
         return super()._get_field("statement_timeout", explicit_presence=True,
         )
     @statement_timeout.setter
@@ -435,6 +443,10 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def idle_in_transaction_session_timeout(self) -> "builtins.int|None":
+        """
+         in milliseconds.
+        """
+        
         return super()._get_field("idle_in_transaction_session_timeout", explicit_presence=True,
         )
     @idle_in_transaction_session_timeout.setter
@@ -444,6 +456,10 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def autovacuum_vacuum_cost_delay(self) -> "builtins.int|None":
+        """
+         in milliseconds.
+        """
+        
         return super()._get_field("autovacuum_vacuum_cost_delay", explicit_presence=True,
         )
     @autovacuum_vacuum_cost_delay.setter
@@ -462,6 +478,10 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def autovacuum_naptime(self) -> "builtins.int|None":
+        """
+         in seconds.
+        """
+        
         return super()._get_field("autovacuum_naptime", explicit_presence=True,
         )
     @autovacuum_naptime.setter
@@ -516,6 +536,10 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def shared_buffers(self) -> "builtins.int|None":
+        """
+         in kilobytes.
+        """
+        
         return super()._get_field("shared_buffers", explicit_presence=True,
         )
     @shared_buffers.setter

@@ -820,6 +820,10 @@ class ListAccessKeysRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Represents the container ID.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -829,6 +833,11 @@ class ListAccessKeysRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -838,6 +847,10 @@ class ListAccessKeysRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -847,6 +860,10 @@ class ListAccessKeysRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -897,6 +914,10 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
     
     @builtins.property
     def account(self) -> "Account":
+        """
+         Represents the parent account ID.
+        """
+        
         return super()._get_field("account", explicit_presence=False,
         wrap=Account,
         )
@@ -907,6 +928,11 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -916,6 +942,10 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -925,6 +955,10 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -1155,6 +1189,10 @@ class ListAccessKeysResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[AccessKey]":
+        """
+         List of access keys returned in the response. The field should be named as `items` for consistency.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AccessKey,None,None),
         )
@@ -1165,6 +1203,10 @@ class ListAccessKeysResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -1767,6 +1809,10 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Represents the container ID.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -1776,6 +1822,11 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -1785,6 +1836,10 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -1794,6 +1849,10 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -1844,6 +1903,10 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
     
     @builtins.property
     def account(self) -> "Account":
+        """
+         Represents the parent account ID.
+        """
+        
         return super()._get_field("account", explicit_presence=False,
         wrap=Account,
         )
@@ -1854,6 +1917,11 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -1863,6 +1931,10 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -1872,6 +1944,10 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -2065,6 +2141,10 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[AuthPublicKey]":
+        """
+         List of auth public keys returned in the response. The field should be named as `items` for consistency.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AuthPublicKey,None,None),
         )
@@ -2075,6 +2155,10 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -2268,6 +2352,10 @@ class State(pb_enum.Enum):
     PURGING = 7
     PURGED = 8
     CREATING = 1001
+    """
+     DRAFT = 1000;
+    """
+    
 
 # file: nebius/iam/v1/suspension_state.proto
 class SuspensionState(pb_enum.Enum):
@@ -2973,6 +3061,10 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
     
     @builtins.property
     def federation_id(self) -> "builtins.str":
+        """
+         Represents the parent federation ID. Corresponds to the parent_id value.
+        """
+        
         return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
@@ -2982,6 +3074,11 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -2991,6 +3088,10 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -3115,6 +3216,10 @@ class ListFederationCertificateResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[FederationCertificate]":
+        """
+         List of public keys returned in the response. The field should be named as `items` for consistency.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(FederationCertificate,None,None),
         )
@@ -3125,6 +3230,10 @@ class ListFederationCertificateResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -3374,6 +3483,10 @@ class ListFederationsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -3958,6 +4071,10 @@ class ServiceAccountStatus(pb_classes.Message):
     }
     
 class ServiceAccountAttributes(pb_classes.Message):
+    """
+     see also nebius/iam/v1/tenant_user_account.proto/UserAttributes
+    """
+    
     __PB2_CLASS__ = service_account_pb2.ServiceAccountAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ServiceAccountAttributes",service_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -4161,6 +4278,10 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
     
     @builtins.property
     def error(self) -> "Error|None":
+        """
+         in a case of issues of getting attributes from pds service, we can still return some data from cpl
+        """
+        
         return super()._get_field("error", explicit_presence=True,
         wrap=Error,
         )
@@ -4753,6 +4874,13 @@ class TenantUserAccountSpec(pb_classes.Message):
     }
     
     class VisibleAttributes(pb_classes.Message):
+        """
+         when a global user account is projected to a specific tenant
+         they can give consent for that tenant's owner to view specific personal data
+         by listing explicitly visible PDS attributes
+         complete list of PDS attributes is described in ../../pds/inner/v1alpha1/iam_identifier.proto
+        """
+        
         __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.TenantUserAccountSpec.VisibleAttributes",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
         __mask_functions__ = {
@@ -4868,6 +4996,11 @@ class TenantUserAccountStatus(pb_classes.Message):
     
     @builtins.property
     def invitation_id(self) -> "builtins.str":
+        """
+         if a tenant user account is created during invitation it gets a reference to the invitation resource
+         once invitation is accepted it looses this reference (and internally gets a reference to their global federated user account)
+        """
+        
         return super()._get_field("invitation_id", explicit_presence=False,
         )
     @invitation_id.setter
@@ -4877,6 +5010,10 @@ class TenantUserAccountStatus(pb_classes.Message):
     
     @builtins.property
     def federation_id(self) -> "builtins.str":
+        """
+         currently can only accept the values: custom, unknown, google, github.
+        """
+        
         return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
@@ -4948,6 +5085,10 @@ class GroupMembership(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "GroupMembershipStatus":
+        """
+         Dummy field for compliance with terraform resource generator.
+        """
+        
         return super()._get_field("status", explicit_presence=False,
         wrap=GroupMembershipStatus,
         )
@@ -4997,6 +5138,10 @@ class GroupMembershipSpec(pb_classes.Message):
     
     @builtins.property
     def member_id(self) -> "builtins.str":
+        """
+         Member of the group. Can be tenant user account id or service account id.
+        """
+        
         return super()._get_field("member_id", explicit_presence=False,
         )
     @member_id.setter
@@ -5028,6 +5173,10 @@ class GroupMembershipStatus(pb_classes.Message):
     }
     
 class GroupMembershipWithAttributes(pb_classes.Message):
+    """
+     see also nebius/iam/v1/tenant_user_account.proto/TenantUserAccountWithAttributes
+    """
+    
     __PB2_CLASS__ = group_membership_pb2.GroupMembershipWithAttributes
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMembershipWithAttributes",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -5122,6 +5271,11 @@ class GroupMembershipWithAttributes(pb_classes.Message):
     
     @builtins.property
     def user_attributes(self) -> "UserAttributes|None":
+        """
+         filled with known data for members corresponding to tenant user accounts and provisional tenant user accounts (invitees)
+         left unset for service accounts
+        """
+        
         return super()._get_field("user_attributes", explicit_presence=True,
         wrap=UserAttributes,
         )
@@ -5132,6 +5286,11 @@ class GroupMembershipWithAttributes(pb_classes.Message):
     
     @builtins.property
     def service_account_attributes(self) -> "ServiceAccountAttributes|None":
+        """
+         filled with known data for members corresponding to service accounts
+         left unset for any kind of tenant user accounts
+        """
+        
         return super()._get_field("service_account_attributes", explicit_presence=True,
         wrap=ServiceAccountAttributes,
         )
@@ -5142,6 +5301,10 @@ class GroupMembershipWithAttributes(pb_classes.Message):
     
     @builtins.property
     def error(self) -> "Error|None":
+        """
+         in a case of issues of getting attributes from pds service, we can still return some data from cpl
+        """
+        
         return super()._get_field("error", explicit_presence=True,
         wrap=Error,
         )
@@ -5363,6 +5526,10 @@ class ListGroupMembershipsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -5459,6 +5626,10 @@ class ListMemberOfRequest(pb_classes.Message):
     
     @builtins.property
     def subject_id(self) -> "builtins.str":
+        """
+         Requested subject id. Can be tenant user account id or service account id.
+        """
+        
         return super()._get_field("subject_id", explicit_presence=False,
         )
     @subject_id.setter
@@ -5468,6 +5639,10 @@ class ListMemberOfRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -5528,6 +5703,10 @@ class ListGroupMembershipsResponse(pb_classes.Message):
     
     @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembership]":
+        """
+         Members of the group. Can be tenant user account ids or service account ids.
+        """
+        
         return super()._get_field("memberships", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(GroupMembership,None,None),
         )
@@ -5577,6 +5756,13 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
     
     @builtins.property
     def memberships(self) -> "abc.MutableSequence[GroupMembershipWithAttributes]":
+        """
+         Members of the group with their attributes if supported by member type.
+         Can be tenant user accounts (regular or provisional/invited) or service accounts.
+         Regular tenant user accounts may have a full set of attributes, provisional may have contacts only,
+         service accounts
+        """
+        
         return super()._get_field("memberships", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(GroupMembershipWithAttributes,None,None),
         )
@@ -5626,6 +5812,10 @@ class ListMemberOfResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Group]":
+        """
+         Groups that requested entity is a member of
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Group,None,None),
         )
@@ -5950,6 +6140,10 @@ class ListGroupsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -6100,6 +6294,10 @@ class GroupServiceClient(client.Client):
 
 # file: nebius/iam/v1/token_service.proto
 class ExchangeTokenRequest(pb_classes.Message):
+    """
+     https://www.rfc-editor.org/rfc/rfc8693.html
+    """
+    
     __PB2_CLASS__ = token_service_pb2.ExchangeTokenRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ExchangeTokenRequest",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -6154,6 +6352,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def grant_type(self) -> "builtins.str":
+        """
+         required - urn:ietf:params:oauth:grant-type:token-exchange
+        """
+        
         return super()._get_field("grant_type", explicit_presence=False,
         )
     @grant_type.setter
@@ -6163,6 +6365,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def requested_token_type(self) -> "builtins.str":
+        """
+         optional type of requested token, default is urn:ietf:params:oauth:token-type:access_token
+        """
+        
         return super()._get_field("requested_token_type", explicit_presence=False,
         )
     @requested_token_type.setter
@@ -6172,6 +6378,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def subject_token(self) -> "builtins.str":
+        """
+         required - could be self signed JWT token
+        """
+        
         return super()._get_field("subject_token", explicit_presence=False,
         )
     @subject_token.setter
@@ -6181,6 +6391,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def subject_token_type(self) -> "builtins.str":
+        """
+         required, in case of jwt - urn:ietf:params:oauth:token-type:jwt
+        """
+        
         return super()._get_field("subject_token_type", explicit_presence=False,
         )
     @subject_token_type.setter
@@ -6190,6 +6404,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def scopes(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         optional (scopes of the token)
+        """
+        
         return super()._get_field("scopes", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -6200,6 +6418,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def audience(self) -> "builtins.str":
+        """
+         optional, name of the oauth client id on which this token will be used
+        """
+        
         return super()._get_field("audience", explicit_presence=False,
         )
     @audience.setter
@@ -6209,6 +6431,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def actor_token(self) -> "builtins.str":
+        """
+         optional, subject token for impersonation/delegation (who want to impersonate/delegate) in subject_token.
+        """
+        
         return super()._get_field("actor_token", explicit_presence=False,
         )
     @actor_token.setter
@@ -6218,6 +6444,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def actor_token_type(self) -> "builtins.str":
+        """
+         optional, token type for the impersonation/delegation (who want to impersonate/delegate). Usually it's urn:ietf:params:oauth:token-type:access_token
+        """
+        
         return super()._get_field("actor_token_type", explicit_presence=False,
         )
     @actor_token_type.setter
@@ -6227,6 +6457,10 @@ class ExchangeTokenRequest(pb_classes.Message):
     
     @builtins.property
     def resource(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         optional, list of resources approved to use by token, if applicable
+        """
+        
         return super()._get_field("resource", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -6286,6 +6520,10 @@ class CreateTokenResponse(pb_classes.Message):
     
     @builtins.property
     def access_token(self) -> "builtins.str":
+        """
+         required
+        """
+        
         return super()._get_field("access_token", explicit_presence=False,
         )
     @access_token.setter
@@ -6295,6 +6533,10 @@ class CreateTokenResponse(pb_classes.Message):
     
     @builtins.property
     def issued_token_type(self) -> "builtins.str":
+        """
+         required
+        """
+        
         return super()._get_field("issued_token_type", explicit_presence=False,
         )
     @issued_token_type.setter
@@ -6304,6 +6546,10 @@ class CreateTokenResponse(pb_classes.Message):
     
     @builtins.property
     def token_type(self) -> "builtins.str":
+        """
+         required - Bearer
+        """
+        
         return super()._get_field("token_type", explicit_presence=False,
         )
     @token_type.setter
@@ -6519,10 +6765,30 @@ class InvitationStatus(pb_classes.Message):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.InvitationStatus.State",invitation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         CREATING = 4
+        """
+         contacts data is not stored in pds yet. probably will GC it later
+        """
+        
         CREATED = 5
+        """
+         notification is not sent yet
+        """
+        
         PENDING = 1
+        """
+         notification is sent, we are waiting for the user to approve the notification
+        """
+        
         EXPIRED = 2
+        """
+         notification is expired, accept is no longer possible
+        """
+        
         ACCEPTED = 3
+        """
+         notification is accepted
+        """
+        
     
     def __init__(
         self,
@@ -6637,6 +6903,10 @@ class CreateInvitationRequest(pb_classes.Message):
     
     @builtins.property
     def no_send(self) -> "builtins.bool":
+        """
+         if set, no sending is attempted (it's supposed that later a Resend method is called)
+        """
+        
         return super()._get_field("no_send", explicit_presence=False,
         )
     @no_send.setter
@@ -7648,6 +7918,10 @@ class ListProjectsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Represents the container ID.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -7657,6 +7931,11 @@ class ListProjectsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -7666,6 +7945,10 @@ class ListProjectsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -7675,6 +7958,10 @@ class ListProjectsRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -7727,6 +8014,10 @@ class ListProjectsResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -8001,6 +8292,10 @@ class ListServiceAccountRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Represents the container ID.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -8010,6 +8305,11 @@ class ListServiceAccountRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -8019,6 +8319,10 @@ class ListServiceAccountRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -8028,6 +8332,10 @@ class ListServiceAccountRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -8154,6 +8462,10 @@ class ListServiceAccountResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[ServiceAccount]":
+        """
+         List of service accounts returned in the response. The field should be named as `items` for consistency.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(ServiceAccount,None,None),
         )
@@ -8164,6 +8476,10 @@ class ListServiceAccountResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -8386,6 +8702,10 @@ class RevokeSessionRequest(pb_classes.Message):
     
     @builtins.property
     def service_account_id(self) -> "builtins.str|None":
+        """
+         revoke all for specific service account - to revoke logout from all sessions for user
+        """
+        
         return super()._get_field("service_account_id", explicit_presence=True,
         )
     @service_account_id.setter
@@ -8395,6 +8715,10 @@ class RevokeSessionRequest(pb_classes.Message):
     
     @builtins.property
     def all_my_active(self) -> "builtins.bool|None":
+        """
+         revoke all active session of current user
+        """
+        
         return super()._get_field("all_my_active", explicit_presence=True,
         )
     @all_my_active.setter
@@ -8404,6 +8728,10 @@ class RevokeSessionRequest(pb_classes.Message):
     
     @builtins.property
     def tenant_user_account_id(self) -> "builtins.str|None":
+        """
+         revoke all for specific tenant user - to revoke logout from all sessions for user
+        """
+        
         return super()._get_field("tenant_user_account_id", explicit_presence=True,
         )
     @tenant_user_account_id.setter
@@ -8557,6 +8885,11 @@ class ListTenantsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -8566,6 +8899,10 @@ class ListTenantsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -8575,6 +8912,10 @@ class ListTenantsRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -8626,6 +8967,10 @@ class ListTenantsResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -8708,6 +9053,10 @@ class GetTenantUserAccountRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         tenant user account id like 'tenantuseraccount-{region}someuniquesuffix'
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -8782,6 +9131,10 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Represents the tenant ID like 'tenant-someuniqueprefix'
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -8791,6 +9144,11 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -8800,6 +9158,10 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -8851,6 +9213,10 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccount]":
+        """
+         List of service accounts returned in the response. The field should be named as `items` for consistency.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(TenantUserAccount,None,None),
         )
@@ -8861,6 +9227,10 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -9052,6 +9422,10 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         tenant user account id like 'tenantuseraccount-{region}someuniquesuffix'
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -9126,6 +9500,10 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Represents the tenant ID like 'tenant-{region}someuniquesuffix'
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -9135,6 +9513,11 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int|None":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
         return super()._get_field("page_size", explicit_presence=True,
         )
     @page_size.setter
@@ -9144,6 +9527,10 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -9195,6 +9582,10 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[TenantUserAccountWithAttributes]":
+        """
+         List of user accounts returned in the response. The field should be named as `items` for consistency.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(TenantUserAccountWithAttributes,None,None),
         )
@@ -9205,6 +9596,10 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter

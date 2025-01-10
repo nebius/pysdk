@@ -68,6 +68,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def phase(self) -> "ClusterStatus.Phase":
+        """
+         Current phase of the cluster.
+        """
+        
         return super()._get_field("phase", explicit_presence=False,
         wrap=ClusterStatus.Phase,
         )
@@ -78,6 +82,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "ClusterStatus.State":
+        """
+         State reflects substatus of the phase to define whether it's healthy or not.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=ClusterStatus.State,
         )

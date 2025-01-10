@@ -100,6 +100,10 @@ class Cluster(pb_classes.Message):
     }
     
 class ClusterSpec(pb_classes.Message):
+    """
+     Cluster specification
+    """
+    
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -166,6 +170,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def description(self) -> "builtins.str|None":
+        """
+         Description of the cluster.
+        """
+        
         return super()._get_field("description", explicit_presence=True,
         )
     @description.setter
@@ -175,6 +183,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def limits(self) -> "Limits":
+        """
+         Limits for the cluster
+        """
+        
         return super()._get_field("limits", explicit_presence=False,
         wrap=Limits,
         )
@@ -185,6 +197,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def authorization(self) -> "Password":
+        """
+         Password for Spark History server and Sessions.
+        """
+        
         return super()._get_field("authorization", explicit_presence=False,
         wrap=Password,
         )
@@ -195,6 +211,11 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def service_account_id(self) -> "builtins.str":
+        """
+         ID of the user service account for accessing
+         S3 buckets in the user project
+        """
+        
         return super()._get_field("service_account_id", explicit_presence=False,
         )
     @service_account_id.setter
@@ -279,6 +300,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
+        """
+         Current phase (or stage) of the cluster.
+        """
+        
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
@@ -289,6 +314,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
+        """
+         State reflects substatus of the stage to define whether it's healthy or not.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
@@ -299,6 +328,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def history_server_endpoint(self) -> "builtins.str|None":
+        """
+         History Server WebUI endpoint
+        """
+        
         return super()._get_field("history_server_endpoint", explicit_presence=True,
         )
     @history_server_endpoint.setter
@@ -419,6 +452,10 @@ class GetClusterRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the cluster to retrieve.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -457,6 +494,10 @@ class GetClusterByNameRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Parent ID of the cluster to retrieve.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -466,6 +507,10 @@ class GetClusterByNameRequest(pb_classes.Message):
     
     @builtins.property
     def name(self) -> "builtins.str":
+        """
+         Name of the cluster to retrieve.
+        """
+        
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
@@ -509,6 +554,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Identifier of IAM container to list clusters from.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -518,6 +567,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response. Default value is 100.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -527,6 +580,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -595,6 +652,10 @@ class ListClustersResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
+        """
+         List of clusters.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Cluster,None,None),
         )
@@ -605,6 +666,10 @@ class ListClustersResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str|None":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=True,
         )
     @next_page_token.setter
@@ -645,6 +710,10 @@ class CreateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the new cluster. Must include parent_id in which we create the cluster.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -655,6 +724,10 @@ class CreateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "ClusterSpec":
+        """
+         Specification for the new cluster.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
         )
@@ -695,6 +768,10 @@ class UpdateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the cluster. Must include id of the cluster we are going to update.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -705,6 +782,10 @@ class UpdateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "ClusterSpec":
+        """
+         Updated specification for the cluster.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
         )
@@ -741,6 +822,10 @@ class DeleteClusterRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the cluster to delete.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -766,6 +851,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
+        """
+         Returns the specified cluster.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -786,6 +875,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetClusterByNameRequest","Cluster"]:
+        """
+         Returns the specified cluster by name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -806,6 +899,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
+        """
+         Retrieves a list of clusters.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -826,6 +923,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Creates a cluster.
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -846,6 +947,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Updates a cluster.
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -867,6 +972,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Delete a cluster.
+        """
+        
         return super().request(
             method="Delete",
             request=request,
@@ -908,6 +1017,10 @@ class PythonConfig(pb_classes.Message):
     
     @builtins.property
     def requirements(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         Python requirements
+        """
+        
         return super()._get_field("requirements", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -918,6 +1031,10 @@ class PythonConfig(pb_classes.Message):
     
     @builtins.property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         S3 URIs of files to be placed in PYTHONPATH of driver and executors for python applications (.py, .zip, .egg)
+        """
+        
         return super()._get_field("file_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -954,6 +1071,10 @@ class JavaConfig(pb_classes.Message):
     
     @builtins.property
     def entrypoint_class(self) -> "builtins.str":
+        """
+         Entrypoint class for Java application
+        """
+        
         return super()._get_field("entrypoint_class", explicit_presence=False,
         )
     @entrypoint_class.setter
@@ -1257,6 +1378,10 @@ class Job(pb_classes.Message):
     }
     
 class JobSpec(pb_classes.Message):
+    """
+     Spark Job specification
+    """
+    
     __PB2_CLASS__ = job_pb2.JobSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.JobSpec",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -1338,6 +1463,10 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def runtime_config(self) -> __OneOfClass_runtime_config_python__|__OneOfClass_runtime_config_java__|None:
+        """
+         Runtime-specific job config
+        """
+        
         field_name: str|None = super().which_field_in_oneof("runtime_config")
         match field_name:
             case "python":
@@ -1440,6 +1569,10 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def description(self) -> "builtins.str|None":
+        """
+         Description of the job.
+        """
+        
         return super()._get_field("description", explicit_presence=True,
         )
     @description.setter
@@ -1449,6 +1582,11 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def application_file_uri(self) -> "builtins.str":
+        """
+         S3 URI of main application file
+         Example: s3a://mybucket/myapp.py
+        """
+        
         return super()._get_field("application_file_uri", explicit_presence=False,
         )
     @application_file_uri.setter
@@ -1487,6 +1625,10 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def application_args(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         Application args
+        """
+        
         return super()._get_field("application_args", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -1497,6 +1639,10 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         S3 URIs of files to be placed in executor working directory
+        """
+        
         return super()._get_field("file_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -1507,6 +1653,10 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def jar_uris(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         S3 URIs of Jars to be placed in classpaths of driver and executors for java applications
+        """
+        
         return super()._get_field("jar_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -1517,6 +1667,10 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def packages(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         List of maven coordinates of jars to include on the driver and executor classpaths
+        """
+        
         return super()._get_field("packages", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -1527,6 +1681,10 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def spark_conf(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        """
+         Map of spark configuration parameters
+        """
+        
         return super()._get_field("spark_conf", explicit_presence=False,
         wrap=pb_classes.Map,
         )
@@ -1596,6 +1754,10 @@ class JobResultDetails(pb_classes.Message):
     
     @builtins.property
     def code(self) -> "JobResultCode":
+        """
+         Result code
+        """
+        
         return super()._get_field("code", explicit_presence=False,
         wrap=JobResultCode,
         )
@@ -1679,6 +1841,10 @@ class JobStatus(pb_classes.Message):
     
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
+        """
+         Current phase (or stage) of the cluster.
+        """
+        
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
@@ -1689,6 +1855,10 @@ class JobStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
+        """
+         State reflects substatus of the stage to define whether it's healthy or not.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
@@ -1699,6 +1869,10 @@ class JobStatus(pb_classes.Message):
     
     @builtins.property
     def driver_endpoint(self) -> "builtins.str|None":
+        """
+         Job Driver Web UI endpoint
+        """
+        
         return super()._get_field("driver_endpoint", explicit_presence=True,
         )
     @driver_endpoint.setter
@@ -1708,6 +1882,10 @@ class JobStatus(pb_classes.Message):
     
     @builtins.property
     def driver_preset_details(self) -> "resource_1.PresetDetails":
+        """
+         Job driver resource preset details
+        """
+        
         return super()._get_field("driver_preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
         )
@@ -1718,6 +1896,10 @@ class JobStatus(pb_classes.Message):
     
     @builtins.property
     def executor_preset_details(self) -> "resource_1.PresetDetails":
+        """
+         Job executor resource preset details
+        """
+        
         return super()._get_field("executor_preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
         )
@@ -1728,6 +1910,10 @@ class JobStatus(pb_classes.Message):
     
     @builtins.property
     def result_details(self) -> "JobResultDetails":
+        """
+         Job execution result details
+        """
+        
         return super()._get_field("result_details", explicit_presence=False,
         wrap=JobResultDetails,
         )
@@ -1770,6 +1956,10 @@ class GetJobRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the job to retrieve.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -1812,6 +2002,10 @@ class ListJobsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Identifier of IAM container to list jobs from.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -1821,6 +2015,10 @@ class ListJobsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response. Default value is 100.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -1830,6 +2028,10 @@ class ListJobsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -1898,6 +2100,10 @@ class ListJobsResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Job]":
+        """
+         List of jobs.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Job,None,None),
         )
@@ -1908,6 +2114,10 @@ class ListJobsResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str|None":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=True,
         )
     @next_page_token.setter
@@ -1948,6 +2158,10 @@ class CreateJobRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the new job. Must include parent_id - ID of the cluster to create job in.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -1958,6 +2172,10 @@ class CreateJobRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "JobSpec":
+        """
+         Specification for the new job.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=JobSpec,
         )
@@ -1994,6 +2212,10 @@ class CancelJobRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the job to cancel.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -2019,6 +2241,10 @@ class JobServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetJobRequest","Job"]:
+        """
+         Returns the specified job.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -2039,6 +2265,10 @@ class JobServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["ListJobsRequest","ListJobsResponse"]:
+        """
+         Retrieves a list of jobs.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -2059,6 +2289,10 @@ class JobServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["CreateJobRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Creates a job.
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -2079,6 +2313,10 @@ class JobServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["CancelJobRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Cancel the job.
+        """
+        
         return super().request(
             method="Cancel",
             request=request,
@@ -2159,6 +2397,10 @@ class Session(pb_classes.Message):
     }
     
 class SessionSpec(pb_classes.Message):
+    """
+     Spark Session specification
+    """
+    
     __PB2_CLASS__ = session_pb2.SessionSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.spark.v1alpha1.SessionSpec",session_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -2291,6 +2533,10 @@ class SessionSpec(pb_classes.Message):
     
     @builtins.property
     def description(self) -> "builtins.str|None":
+        """
+         Description of the session.
+        """
+        
         return super()._get_field("description", explicit_presence=True,
         )
     @description.setter
@@ -2329,6 +2575,10 @@ class SessionSpec(pb_classes.Message):
     
     @builtins.property
     def file_uris(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         S3 URIs of files to be placed in executor working directory
+        """
+        
         return super()._get_field("file_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -2339,6 +2589,10 @@ class SessionSpec(pb_classes.Message):
     
     @builtins.property
     def jar_uris(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         S3 URIs of Jars to be placed in classpaths of driver and executors for java applications
+        """
+        
         return super()._get_field("jar_uris", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -2349,6 +2603,10 @@ class SessionSpec(pb_classes.Message):
     
     @builtins.property
     def packages(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         List of maven coordinates of jars to include on the driver and executor classpaths
+        """
+        
         return super()._get_field("packages", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -2359,6 +2617,10 @@ class SessionSpec(pb_classes.Message):
     
     @builtins.property
     def spark_conf(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        """
+         Map of spark configuration parameters
+        """
+        
         return super()._get_field("spark_conf", explicit_presence=False,
         wrap=pb_classes.Map,
         )
@@ -2369,6 +2631,10 @@ class SessionSpec(pb_classes.Message):
     
     @builtins.property
     def python(self) -> "PythonConfig":
+        """
+         Python runtime-specific session config
+        """
+        
         return super()._get_field("python", explicit_presence=False,
         wrap=PythonConfig,
         )
@@ -2458,6 +2724,10 @@ class SessionStatus(pb_classes.Message):
     
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
+        """
+         Current phase (or stage) of the cluster.
+        """
+        
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
@@ -2468,6 +2738,10 @@ class SessionStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
+        """
+         State reflects substatus of the stage to define whether it's healthy or not.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
@@ -2478,6 +2752,10 @@ class SessionStatus(pb_classes.Message):
     
     @builtins.property
     def spark_connect_endpoint(self) -> "builtins.str|None":
+        """
+         Spark Connect endpoint
+        """
+        
         return super()._get_field("spark_connect_endpoint", explicit_presence=True,
         )
     @spark_connect_endpoint.setter
@@ -2487,6 +2765,10 @@ class SessionStatus(pb_classes.Message):
     
     @builtins.property
     def driver_preset_details(self) -> "resource_1.PresetDetails":
+        """
+         Session driver resource preset details
+        """
+        
         return super()._get_field("driver_preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
         )
@@ -2497,6 +2779,10 @@ class SessionStatus(pb_classes.Message):
     
     @builtins.property
     def executor_preset_details(self) -> "resource_1.PresetDetails":
+        """
+         Session executor resource preset details
+        """
+        
         return super()._get_field("executor_preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
         )
@@ -2538,6 +2824,10 @@ class GetSessionRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the session to retrieve.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -2576,6 +2866,10 @@ class GetSessionByNameRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Parent ID of the session to retrieve.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -2585,6 +2879,10 @@ class GetSessionByNameRequest(pb_classes.Message):
     
     @builtins.property
     def name(self) -> "builtins.str":
+        """
+         Name of the session to retrieve.
+        """
+        
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
@@ -2628,6 +2926,10 @@ class ListSessionsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Identifier of IAM container to list sessions from.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -2637,6 +2939,10 @@ class ListSessionsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response. Default value is 100.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -2646,6 +2952,10 @@ class ListSessionsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -2714,6 +3024,10 @@ class ListSessionsResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Session]":
+        """
+         List of sessions.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Session,None,None),
         )
@@ -2724,6 +3038,10 @@ class ListSessionsResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str|None":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=True,
         )
     @next_page_token.setter
@@ -2764,6 +3082,10 @@ class CreateSessionRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the new session. Must include parent_id - ID of the cluster to create session in.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -2774,6 +3096,10 @@ class CreateSessionRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "SessionSpec":
+        """
+         Specification for the new session.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=SessionSpec,
         )
@@ -2810,6 +3136,10 @@ class DeleteSessionRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the session to delete.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -2835,6 +3165,10 @@ class SessionServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetSessionRequest","Session"]:
+        """
+         Returns the specified session.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -2855,6 +3189,10 @@ class SessionServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetSessionByNameRequest","Session"]:
+        """
+         Returns the specified session by name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -2875,6 +3213,10 @@ class SessionServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["ListSessionsRequest","ListSessionsResponse"]:
+        """
+         Retrieves a list of sessions.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -2895,6 +3237,10 @@ class SessionServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["CreateSessionRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Creates a session.
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -2915,6 +3261,10 @@ class SessionServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["DeleteSessionRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Deletes a session.
+        """
+        
         return super().request(
             method="Delete",
             request=request,

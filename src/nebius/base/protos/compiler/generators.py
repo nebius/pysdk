@@ -3,7 +3,7 @@ from logging import getLogger
 from nebius.api.nebius import FieldBehavior
 
 from .annotations import field_behavior
-from .descriptors import Enum, Field, File, Message, Method, OneOf, Service
+from .descriptors import Enum, Field, File, Message, Method, OneOf, Service, SourceInfo
 from .pygen import ImportedSymbol, PyGenFile
 from .recursion_detector import is_recursive
 from .well_known import converter_dict
@@ -35,6 +35,34 @@ def mask_getter(field: Field) -> ImportedSymbol | str:
     if field.is_message() and field.message.full_type_name in converter_dict:
         return converter_dict[field.message.full_type_name].mask_func
     return "None"
+
+
+def escape_triple_quoted_string(s: str) -> str:
+    """
+    Converts a string into a properly escaped triple-quoted string.
+    """
+    return s.replace("\\", "\\\\").replace('"""', '\\"""')
+
+
+def print_triple_quoted_string(s: str, g: PyGenFile) -> None:
+    s_escaped = escape_triple_quoted_string(s)
+    for line in (f'"""{s_escaped}"""').splitlines():
+        g.p(line)
+
+
+def generate_docstring(info: SourceInfo, g: PyGenFile) -> None:
+    comment = "\n\n".join(
+        filter(
+            lambda x: x != "",
+            [
+                info.leading_comments,
+                info.trailing_comments,
+            ],
+        )
+    )
+    if comment != "":
+        print_triple_quoted_string("\n" + comment, g)
+        g.p()
 
 
 def getter_type(
@@ -148,6 +176,7 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
     getter_type(field, g)
     g.p('":', noindent=True)
     with g:
+        generate_docstring(field.source_info, g)
         g.p(
             "return super()._get_field(",
             '"',
@@ -272,6 +301,7 @@ def generate_enum(enum: Enum, g: PyGenFile) -> None:
         "):",
     )
     with g:
+        generate_docstring(enum.source_info, g)
         g.p(
             "__PB2_DESCRIPTOR__ = ",
             ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
@@ -287,6 +317,7 @@ def generate_enum(enum: Enum, g: PyGenFile) -> None:
         )
         for val in enum.values:
             g.p(val.name, " = ", val.number)
+            generate_docstring(val.source_info, g)
 
 
 def generate_oneof(oneof: OneOf, g: PyGenFile) -> None:
@@ -371,6 +402,7 @@ def generate_oneof(oneof: OneOf, g: PyGenFile) -> None:
         )
     g.p("None:", noindent=True)
     with g:
+        generate_docstring(oneof.source_info, g)
         field_name = g.suggest_name("field_name", [self_name])
         g.p(field_name, ': str|None = super().which_field_in_oneof("', oneof.name, '")')
         g.p("match ", field_name, ":")
@@ -415,6 +447,7 @@ def generate_message(message: Message, g: PyGenFile) -> None:
     initial_message_name = g.suggest_name("initial_message")
     self_name = g.suggest_name("self")
     with g:
+        generate_docstring(message.source_info, g)
         g.p("__PB2_CLASS__ = ", message.pb2)
         g.p(
             "__PB2_DESCRIPTOR__ = ",
@@ -537,6 +570,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
         "):",
     )
     with g:
+        generate_docstring(srv.source_info, g)
         g.p(
             "__PB2_DESCRIPTOR__ = ",
             ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
@@ -608,6 +642,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                 g.p(method.output.export_path, noindent=True, add_eol=False)
             g.p('"]:', noindent=True)
             with g:
+                generate_docstring(method.source_info, g)
                 if method.name == "Update" and is_operation_output(method):
                     g.p(
                         "metadata = ",

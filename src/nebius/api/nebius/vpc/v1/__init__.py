@@ -33,20 +33,56 @@ import nebius.api.nebius.vpc.v1.subnet_service_pb2 as subnet_service_pb2
 class AddressBlockState(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.AddressBlockState",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     STATE_UNSPECIFIED = 0
+    """
+     Default, unspecified state.
+    """
+    
     AVAILABLE = 1
+    """
+     Allocation from range is available.
+    """
+    
     DISABLED = 2
+    """
+     New allocation would not be created.
+    """
+    
 
 class IpVersion(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.IpVersion",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     IP_VERSION_UNSPECIFIED = 0
+    """
+     Default, unspecified IP version.
+    """
+    
     IPV4 = 1
+    """
+     IPv4 address.
+    """
+    
     IPV6 = 2
+    """
+     IPv6 address.
+    """
+    
 
 class IpVisibility(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.IpVisibility",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     IP_VISIBILITY_UNSPECIFIED = 0
+    """
+     Default, unspecified IP visibility.
+    """
+    
     PRIVATE = 1
+    """
+     Private address.
+    """
+    
     PUBLIC = 2
+    """
+     Public address.
+    """
+    
 
 class Pool(pb_classes.Message):
     __PB2_CLASS__ = pool_pb2.Pool
@@ -79,6 +115,11 @@ class Pool(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the Pool.
+         `metadata.parent_id` represents the Project.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -89,6 +130,10 @@ class Pool(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "PoolSpec":
+        """
+         Specification of the Pool.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=PoolSpec,
         )
@@ -99,6 +144,10 @@ class Pool(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "PoolStatus":
+        """
+         Status information for the Pool.
+        """
+        
         return super()._get_field("status", explicit_presence=False,
         wrap=PoolStatus,
         )
@@ -148,6 +197,11 @@ class PoolSpec(pb_classes.Message):
     
     @builtins.property
     def source_pool_id(self) -> "builtins.str":
+        """
+         ID of source pool. Current pool will be created with the same scope.
+         Pool is a root-pool if this field is empty
+        """
+        
         return super()._get_field("source_pool_id", explicit_presence=False,
         )
     @source_pool_id.setter
@@ -157,6 +211,10 @@ class PoolSpec(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "IpVersion":
+        """
+         IP version for the Pool.
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         wrap=IpVersion,
         )
@@ -177,6 +235,10 @@ class PoolSpec(pb_classes.Message):
     
     @builtins.property
     def cidrs(self) -> "abc.MutableSequence[PoolCidr]":
+        """
+         CIDR blocks.
+        """
+        
         return super()._get_field("cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(PoolCidr,None,None),
         )
@@ -223,6 +285,12 @@ class PoolCidr(pb_classes.Message):
     
     @builtins.property
     def cidr(self) -> "builtins.str":
+        """
+         CIDR block.
+         May be a prefix length (such as /24) for non-top-level pools
+         or a CIDR-formatted string (such as 10.1.2.0/24).
+        """
+        
         return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
@@ -232,6 +300,11 @@ class PoolCidr(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "AddressBlockState":
+        """
+         State of the Cidr.
+         Default state is AVAILABLE
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=AddressBlockState,
         )
@@ -242,6 +315,11 @@ class PoolCidr(pb_classes.Message):
     
     @builtins.property
     def max_mask_length(self) -> "builtins.int":
+        """
+         Maximum mask length for allocation from this cidr including creation of sub-pools
+         Default max_mask_length is 32 for IPv4 and 128 for IPv6
+        """
+        
         return super()._get_field("max_mask_length", explicit_presence=False,
         )
     @max_mask_length.setter
@@ -262,11 +340,31 @@ class PoolStatus(pb_classes.Message):
     }
     
     class State(pb_enum.Enum):
+        """
+         Possible states of the Pool.
+        """
+        
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.PoolStatus.State",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
+        """
+         Default, unspecified state.
+        """
+        
         CREATING = 1
+        """
+         Pool is being created.
+        """
+        
         READY = 2
+        """
+         Pool is ready for use.
+        """
+        
         DELETING = 3
+        """
+         Pool is being deleted.
+        """
+        
     
     def __init__(
         self,
@@ -298,6 +396,10 @@ class PoolStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "PoolStatus.State":
+        """
+         Current state of the Pool.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=PoolStatus.State,
         )
@@ -308,6 +410,10 @@ class PoolStatus(pb_classes.Message):
     
     @builtins.property
     def cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         CIDR blocks.
+        """
+        
         return super()._get_field("cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -318,6 +424,10 @@ class PoolStatus(pb_classes.Message):
     
     @builtins.property
     def scope_id(self) -> "builtins.str":
+        """
+         Scope is the unique identifier for single pool tree.
+        """
+        
         return super()._get_field("scope_id", explicit_presence=False,
         )
     @scope_id.setter
@@ -327,6 +437,10 @@ class PoolStatus(pb_classes.Message):
     
     @builtins.property
     def assignment(self) -> "PoolAssignment":
+        """
+         Assignment details for this Pool
+        """
+        
         return super()._get_field("assignment", explicit_presence=False,
         wrap=PoolAssignment,
         )
@@ -370,6 +484,10 @@ class PoolAssignment(pb_classes.Message):
     
     @builtins.property
     def networks(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         IDs of Networks to which the Pool is assigned.
+        """
+        
         return super()._get_field("networks", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -380,6 +498,10 @@ class PoolAssignment(pb_classes.Message):
     
     @builtins.property
     def subnets(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         IDs of Subnets to which the Pool is assigned.
+        """
+        
         return super()._get_field("subnets", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -425,6 +547,11 @@ class Allocation(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata for the Allocation.
+         `metadata.parent_id` represents IAM Container.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -435,6 +562,10 @@ class Allocation(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "AllocationSpec":
+        """
+         Specifications for the allocation, detailing its name and IP configuration.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=AllocationSpec,
         )
@@ -445,6 +576,10 @@ class Allocation(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "AllocationStatus":
+        """
+         Contains the current status of the allocation, indicating its state and any additional details.
+        """
+        
         return super()._get_field("status", explicit_presence=False,
         wrap=AllocationStatus,
         )
@@ -492,6 +627,10 @@ class AllocationSpec(pb_classes.Message):
     
     @builtins.property
     def ip_spec(self) -> __OneOfClass_ip_spec_ipv4_private__|__OneOfClass_ip_spec_ipv4_public__|None:
+        """
+         Holds the IP specifications for the allocation, including the type of IP (IPv4 or IPv6) and its corresponding configuration.
+        """
+        
         field_name: str|None = super().which_field_in_oneof("ip_spec")
         match field_name:
             case "ipv4_private":
@@ -619,6 +758,13 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     
     @builtins.property
     def cidr(self) -> "builtins.str":
+        """
+         CIDR block for IPv4 Allocation.
+         May be a single IP address (such as 10.2.3.4),
+         a prefix length (such as /24) or a CIDR-formatted string (such as 10.1.2.0/24).
+         Random address (/32) from pool would be allocated if field is omitted.
+        """
+        
         return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
@@ -628,6 +774,11 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     
     @builtins.property
     def subnet_id(self) -> "builtins.str|None":
+        """
+         Subnet ID.
+         Required same subnet to use allocation in subnet-resources (e.g. Network Interface)
+        """
+        
         return super()._get_field("subnet_id", explicit_presence=True,
         )
     @subnet_id.setter
@@ -637,6 +788,10 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     
     @builtins.property
     def pool_id(self) -> "builtins.str|None":
+        """
+         Pool for the IPv4 private allocation.
+        """
+        
         return super()._get_field("pool_id", explicit_presence=True,
         )
     @pool_id.setter
@@ -721,6 +876,13 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
     
     @builtins.property
     def cidr(self) -> "builtins.str":
+        """
+         CIDR block for IPv4 Allocation.
+         May be a single IP address (such as 10.2.3.4),
+         a prefix length (such as /32) or a CIDR-formatted string (such as 10.1.2.0/32).
+         Random address (/32) from pool would be allocated if field is omitted.
+        """
+        
         return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
@@ -730,6 +892,11 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
     
     @builtins.property
     def subnet_id(self) -> "builtins.str|None":
+        """
+         Subnet ID.
+         Required same subnet to use allocation in subnet-resources (e.g. Network Interface)
+        """
+        
         return super()._get_field("subnet_id", explicit_presence=True,
         )
     @subnet_id.setter
@@ -739,6 +906,10 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
     
     @builtins.property
     def pool_id(self) -> "builtins.str|None":
+        """
+         Pool for the IPv4 public allocation.
+        """
+        
         return super()._get_field("pool_id", explicit_presence=True,
         )
     @pool_id.setter
@@ -760,12 +931,36 @@ class AllocationStatus(pb_classes.Message):
     }
     
     class State(pb_enum.Enum):
+        """
+         Enumeration of possible states of the Allocation.
+        """
+        
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.AllocationStatus.State",allocation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
+        """
+         Default state, unspecified.
+        """
+        
         CREATING = 1
+        """
+         Allocation is being created.
+        """
+        
         ALLOCATED = 2
+        """
+         Allocation is ready for use.
+        """
+        
         ASSIGNED = 3
+        """
+         Allocation is used.
+        """
+        
         DELETING = 4
+        """
+         Allocation is being deleted.
+        """
+        
     
     def __init__(
         self,
@@ -797,6 +992,10 @@ class AllocationStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "AllocationStatus.State":
+        """
+         This field represents the current state of the allocation.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=AllocationStatus.State,
         )
@@ -807,6 +1006,11 @@ class AllocationStatus(pb_classes.Message):
     
     @builtins.property
     def details(self) -> "AllocationDetails":
+        """
+         Detailed information about the allocation status,
+         including the allocated CIDR, pool ID and IP version.
+        """
+        
         return super()._get_field("details", explicit_presence=False,
         wrap=AllocationDetails,
         )
@@ -817,6 +1021,11 @@ class AllocationStatus(pb_classes.Message):
     
     @builtins.property
     def assignment(self) -> "Assignment":
+        """
+         Information about the assignment associated with the allocation,
+         such as network interface or load balancer assignment.
+        """
+        
         return super()._get_field("assignment", explicit_presence=False,
         wrap=Assignment,
         )
@@ -827,6 +1036,10 @@ class AllocationStatus(pb_classes.Message):
     
     @builtins.property
     def static(self) -> "builtins.bool":
+        """
+         If false - Lifecycle of allocation depends on resource that using it.
+        """
+        
         return super()._get_field("static", explicit_presence=False,
         )
     @static.setter
@@ -938,6 +1151,11 @@ class Assignment(pb_classes.Message):
     
     @builtins.property
     def type(self) -> __OneOfClass_type_network_interface__|__OneOfClass_type_load_balancer__|None:
+        """
+         This field specifies the type of assignment associated with the allocation,
+         which could be a network interface or load balancer assignment.
+        """
+        
         field_name: str|None = super().which_field_in_oneof("type")
         match field_name:
             case "network_interface":
@@ -1022,6 +1240,10 @@ class NetworkInterfaceAssignment(pb_classes.Message):
     
     @builtins.property
     def instance_id(self) -> "builtins.str":
+        """
+         ID of the Compute instance network interface belongs to.
+        """
+        
         return super()._get_field("instance_id", explicit_presence=False,
         )
     @instance_id.setter
@@ -1031,6 +1253,10 @@ class NetworkInterfaceAssignment(pb_classes.Message):
     
     @builtins.property
     def name(self) -> "builtins.str":
+        """
+         Network interface name
+        """
+        
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
@@ -1066,6 +1292,10 @@ class LoadBalancerAssignment(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the Load Balancer.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -1617,6 +1847,12 @@ class AllocationServiceClient(client.Client):
 
 # file: nebius/vpc/v1/network.proto
 class Network(pb_classes.Message):
+    """
+     Defines a Network, which serves as a virtual representation of a traditional LAN
+     within a cloud environment.
+     Networks facilitate communication between subnets.
+    """
+    
     __PB2_CLASS__ = network_pb2.Network
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Network",network_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -1647,6 +1883,11 @@ class Network(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata for the network resource.
+         `metadata.parent_id` represents IAM container
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -1657,6 +1898,10 @@ class Network(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "NetworkSpec":
+        """
+         Specification of the network.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=NetworkSpec,
         )
@@ -1667,6 +1912,10 @@ class Network(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "NetworkStatus":
+        """
+         Status of the network.
+        """
+        
         return super()._get_field("status", explicit_presence=False,
         wrap=NetworkStatus,
         )
@@ -1708,6 +1957,11 @@ class NetworkSpec(pb_classes.Message):
     
     @builtins.property
     def ipv4_private_pools(self) -> "IPv4PrivateNetworkPools":
+        """
+         Pools for private ipv4 addresses.
+         Default private pools will be created if not specified.
+        """
+        
         return super()._get_field("ipv4_private_pools", explicit_presence=False,
         wrap=IPv4PrivateNetworkPools,
         )
@@ -1718,6 +1972,11 @@ class NetworkSpec(pb_classes.Message):
     
     @builtins.property
     def ipv4_public_pools(self) -> "IPv4PublicNetworkPools":
+        """
+         Pools for public ipv4 addresses.
+         Default public pool will be used if not specified.
+        """
+        
         return super()._get_field("ipv4_public_pools", explicit_presence=False,
         wrap=IPv4PublicNetworkPools,
         )
@@ -1842,11 +2101,31 @@ class NetworkStatus(pb_classes.Message):
     }
     
     class State(pb_enum.Enum):
+        """
+         Enumeration of possible states of the network.
+        """
+        
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.NetworkStatus.State",network_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
+        """
+         Default state, unspecified.
+        """
+        
         CREATING = 1
+        """
+         Network is being created.
+        """
+        
         READY = 2
+        """
+         Network is ready for use.
+        """
+        
         DELETING = 3
+        """
+         Network is being deleted.
+        """
+        
     
     def __init__(
         self,
@@ -1866,6 +2145,10 @@ class NetworkStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "NetworkStatus.State":
+        """
+         Current state of the network.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=NetworkStatus.State,
         )
@@ -2555,6 +2838,11 @@ class PoolServiceClient(client.Client):
 
 # file: nebius/vpc/v1/subnet.proto
 class Subnet(pb_classes.Message):
+    """
+     Defines a Subnet, a segment of a network used for more granular control and management.
+     Subnet uses pools to organize address space.
+    """
+    
     __PB2_CLASS__ = subnet_pb2.Subnet
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Subnet",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -2585,6 +2873,11 @@ class Subnet(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata for the subnet resource.
+         `metadata.parent_id` represents IAM container
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -2595,6 +2888,10 @@ class Subnet(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "SubnetSpec":
+        """
+         Specification of the subnet.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=SubnetSpec,
         )
@@ -2605,6 +2902,10 @@ class Subnet(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "SubnetStatus":
+        """
+         Status of the subnet.
+        """
+        
         return super()._get_field("status", explicit_presence=False,
         wrap=SubnetStatus,
         )
@@ -2650,6 +2951,10 @@ class SubnetSpec(pb_classes.Message):
     
     @builtins.property
     def network_id(self) -> "builtins.str":
+        """
+         Network ID.
+        """
+        
         return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
@@ -2659,6 +2964,11 @@ class SubnetSpec(pb_classes.Message):
     
     @builtins.property
     def ipv4_private_pools(self) -> "IPv4PrivateSubnetPools|None":
+        """
+         Pools for private ipv4 addresses.
+         Default is 'use_network_pools = true'
+        """
+        
         return super()._get_field("ipv4_private_pools", explicit_presence=True,
         wrap=IPv4PrivateSubnetPools,
         )
@@ -2669,6 +2979,11 @@ class SubnetSpec(pb_classes.Message):
     
     @builtins.property
     def ipv4_public_pools(self) -> "IPv4PublicSubnetPools|None":
+        """
+         Pools for public ipv4 addresses.
+         Default is 'use_network_pools = true'
+        """
+        
         return super()._get_field("ipv4_public_pools", explicit_presence=True,
         wrap=IPv4PublicSubnetPools,
         )
@@ -2710,6 +3025,11 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
     
     @builtins.property
     def pools(self) -> "abc.MutableSequence[SubnetPool]":
+        """
+         Pools for private ipv4 allocations in subnet
+         Must be empty if 'use_network_pools = true'
+        """
+        
         return super()._get_field("pools", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(SubnetPool,None,None),
         )
@@ -2720,6 +3040,11 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
     
     @builtins.property
     def use_network_pools(self) -> "builtins.bool":
+        """
+         Allow using of private ipv4 pools which are specified in network
+         Must be false if 'pools' is not empty
+        """
+        
         return super()._get_field("use_network_pools", explicit_presence=False,
         )
     @use_network_pools.setter
@@ -2759,6 +3084,11 @@ class IPv4PublicSubnetPools(pb_classes.Message):
     
     @builtins.property
     def pools(self) -> "abc.MutableSequence[SubnetPool]":
+        """
+         Pools for public ipv4 allocations in subnet
+         Must be empty if 'use_network_pools = true'
+        """
+        
         return super()._get_field("pools", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(SubnetPool,None,None),
         )
@@ -2769,6 +3099,11 @@ class IPv4PublicSubnetPools(pb_classes.Message):
     
     @builtins.property
     def use_network_pools(self) -> "builtins.bool":
+        """
+         Allow using of public ipv4 pools which are specified in network
+         Must be false if 'pools' is not empty
+        """
+        
         return super()._get_field("use_network_pools", explicit_presence=False,
         )
     @use_network_pools.setter
@@ -2847,6 +3182,11 @@ class SubnetCidr(pb_classes.Message):
     
     @builtins.property
     def cidr(self) -> "builtins.str":
+        """
+         CIDR block.
+         May be a prefix length (such as /24) or a CIDR-formatted string (such as 10.1.2.0/24).
+        """
+        
         return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
@@ -2856,6 +3196,11 @@ class SubnetCidr(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "AddressBlockState":
+        """
+         State of the Cidr.
+         Default state is AVAILABLE
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=AddressBlockState,
         )
@@ -2866,6 +3211,11 @@ class SubnetCidr(pb_classes.Message):
     
     @builtins.property
     def max_mask_length(self) -> "builtins.int":
+        """
+         Maximum mask length for allocation from this cidr
+         Default max_mask_length is 32 for IPv4 and 128 for IPv6
+        """
+        
         return super()._get_field("max_mask_length", explicit_presence=False,
         )
     @max_mask_length.setter
@@ -2886,11 +3236,31 @@ class SubnetStatus(pb_classes.Message):
     }
     
     class State(pb_enum.Enum):
+        """
+         Enumeration of possible states of the subnet.
+        """
+        
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.SubnetStatus.State",subnet_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
+        """
+         Default state, unspecified.
+        """
+        
         CREATING = 1
+        """
+         Subnet is being created.
+        """
+        
         READY = 2
+        """
+         Subnet is ready for use.
+        """
+        
         DELETING = 3
+        """
+         Subnet is being deleted.
+        """
+        
     
     def __init__(
         self,
@@ -2918,6 +3288,10 @@ class SubnetStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "SubnetStatus.State":
+        """
+         Current state of the subnet.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=SubnetStatus.State,
         )
@@ -2928,6 +3302,10 @@ class SubnetStatus(pb_classes.Message):
     
     @builtins.property
     def ipv4_private_cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         CIDR blocks.
+        """
+        
         return super()._get_field("ipv4_private_cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -2938,6 +3316,10 @@ class SubnetStatus(pb_classes.Message):
     
     @builtins.property
     def ipv4_public_cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         CIDR blocks.
+        """
+        
         return super()._get_field("ipv4_public_cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )

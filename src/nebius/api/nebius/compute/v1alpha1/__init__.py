@@ -110,6 +110,10 @@ class DiskSpec(pb_classes.Message):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.DiskSpec.DiskType",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         NETWORK_SSD = 1
+        """
+         the list of available types will be clarified later, it is not final version
+        """
+        
         NETWORK_HDD = 2
         NETWORK_SSD_NON_REPLICATED = 3
         NETWORK_SSD_IO_M3 = 4
@@ -521,6 +525,10 @@ class DiskStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -1057,6 +1065,10 @@ class FilesystemSpec(pb_classes.Message):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1alpha1.FilesystemSpec.FilesystemType",filesystem_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         NETWORK_SSD = 1
+        """
+         the list of available types will be clarified later, it is not final version
+        """
+        
         NETWORK_HDD = 2
     
     class __OneOfClass_size__(pb_classes.OneOf):
@@ -1323,6 +1335,10 @@ class FilesystemStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -1919,6 +1935,10 @@ class GpuClusterStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -2616,6 +2636,10 @@ class ImageStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -2703,6 +2727,10 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         default 'project-{region}public-images'
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -3381,6 +3409,10 @@ class AttachedDiskSpec(pb_classes.Message):
     
     @builtins.property
     def device_name(self) -> "builtins.str":
+        """
+         Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_name}' as a device path in mount command.
+        """
+        
         return super()._get_field("device_name", explicit_presence=False,
         )
     @device_name.setter
@@ -3540,6 +3572,10 @@ class AttachedFilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def device_name(self) -> "builtins.str":
+        """
+         Specifies the user-defined identifier, allowing to use it as a device in mount command.
+        """
+        
         return super()._get_field("device_name", explicit_presence=False,
         )
     @device_name.setter
@@ -3629,6 +3665,10 @@ class InstanceStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter

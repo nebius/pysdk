@@ -17,6 +17,10 @@ import typing as typing
 
 # file: nebius/common/error/v1alpha1/common_errors.proto
 class BadRequest(pb_classes.Message):
+    """
+     The request is invalid.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.BadRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.BadRequest",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -49,6 +53,10 @@ class BadRequest(pb_classes.Message):
         
         @builtins.property
         def field(self) -> "builtins.str":
+            """
+             What field value is invalid.
+            """
+            
             return super()._get_field("field", explicit_presence=False,
             )
         @field.setter
@@ -58,6 +66,10 @@ class BadRequest(pb_classes.Message):
         
         @builtins.property
         def message(self) -> "builtins.str":
+            """
+             Description why the value is invalid, in English.
+            """
+            
             return super()._get_field("message", explicit_presence=False,
             )
         @message.setter
@@ -89,6 +101,10 @@ class BadRequest(pb_classes.Message):
     
     @builtins.property
     def violations(self) -> "abc.MutableSequence[BadRequest.Violation]":
+        """
+         Describes all violations.
+        """
+        
         return super()._get_field("violations", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(BadRequest.Violation,None,None),
         )
@@ -103,6 +119,10 @@ class BadRequest(pb_classes.Message):
     }
     
 class BadResourceState(pb_classes.Message):
+    """
+     The resource we are trying to use, create, change or delete is in a bad state and cannot be used.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.BadResourceState
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.BadResourceState",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -129,6 +149,10 @@ class BadResourceState(pb_classes.Message):
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
+        """
+         ID of the resource which is bad.
+        """
+        
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
@@ -138,6 +162,10 @@ class BadResourceState(pb_classes.Message):
     
     @builtins.property
     def message(self) -> "builtins.str":
+        """
+         The reason why this state is bad and cannot be used.
+        """
+        
         return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
@@ -151,6 +179,10 @@ class BadResourceState(pb_classes.Message):
     }
     
 class ResourceNotFound(pb_classes.Message):
+    """
+     Resource we are trying to interact with does not exist.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.ResourceNotFound
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.ResourceNotFound",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -173,6 +205,10 @@ class ResourceNotFound(pb_classes.Message):
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
+        """
+         ID of the requested resource.
+        """
+        
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
@@ -185,6 +221,10 @@ class ResourceNotFound(pb_classes.Message):
     }
     
 class ResourceAlreadyExists(pb_classes.Message):
+    """
+     Resource we are trying to create already exists.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.ResourceAlreadyExists
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.ResourceAlreadyExists",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -207,6 +247,10 @@ class ResourceAlreadyExists(pb_classes.Message):
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
+        """
+         ID of the existing resource.
+        """
+        
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
@@ -219,6 +263,10 @@ class ResourceAlreadyExists(pb_classes.Message):
     }
     
 class ResourceConflict(pb_classes.Message):
+    """
+     There is a difference between the actual resource state and the expected one.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.ResourceConflict
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.ResourceConflict",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -245,6 +293,10 @@ class ResourceConflict(pb_classes.Message):
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
+        """
+         ID of conflicting resource.
+        """
+        
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
@@ -254,6 +306,10 @@ class ResourceConflict(pb_classes.Message):
     
     @builtins.property
     def message(self) -> "builtins.str":
+        """
+         Detailed info about conflict.
+        """
+        
         return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
@@ -267,6 +323,10 @@ class ResourceConflict(pb_classes.Message):
     }
     
 class OperationAborted(pb_classes.Message):
+    """
+     Operation on the resource has been aborted by a subsequent operation.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.OperationAborted
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.OperationAborted",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -297,6 +357,10 @@ class OperationAborted(pb_classes.Message):
     
     @builtins.property
     def operation_id(self) -> "builtins.str":
+        """
+         ID of the aborted operation
+        """
+        
         return super()._get_field("operation_id", explicit_presence=False,
         )
     @operation_id.setter
@@ -306,6 +370,10 @@ class OperationAborted(pb_classes.Message):
     
     @builtins.property
     def aborted_by_operation_id(self) -> "builtins.str":
+        """
+         ID of the subsequent operation
+        """
+        
         return super()._get_field("aborted_by_operation_id", explicit_presence=False,
         )
     @aborted_by_operation_id.setter
@@ -315,6 +383,10 @@ class OperationAborted(pb_classes.Message):
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
+        """
+         Resource ID corresponding to both of the operations
+        """
+        
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
@@ -329,6 +401,10 @@ class OperationAborted(pb_classes.Message):
     }
     
 class OutOfRange(pb_classes.Message):
+    """
+     Indicates that element with requested parameters is exceeding the particular range.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.OutOfRange
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.OutOfRange",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -355,6 +431,10 @@ class OutOfRange(pb_classes.Message):
     
     @builtins.property
     def requested(self) -> "builtins.str":
+        """
+         Requested value.
+        """
+        
         return super()._get_field("requested", explicit_presence=False,
         )
     @requested.setter
@@ -364,6 +444,10 @@ class OutOfRange(pb_classes.Message):
     
     @builtins.property
     def limit(self) -> "builtins.str":
+        """
+         Available limit.
+        """
+        
         return super()._get_field("limit", explicit_presence=False,
         )
     @limit.setter
@@ -377,6 +461,10 @@ class OutOfRange(pb_classes.Message):
     }
     
 class PermissionDenied(pb_classes.Message):
+    """
+     Indicates that the action cannot be performed because there are insufficient access rights to a resource.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.PermissionDenied
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.PermissionDenied",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -399,6 +487,10 @@ class PermissionDenied(pb_classes.Message):
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
+        """
+         ID of the resource that cannot be accessed.
+        """
+        
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
@@ -411,6 +503,10 @@ class PermissionDenied(pb_classes.Message):
     }
     
 class InternalError(pb_classes.Message):
+    """
+     Generic internal error.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.InternalError
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.InternalError",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -437,6 +533,10 @@ class InternalError(pb_classes.Message):
     
     @builtins.property
     def request_id(self) -> "builtins.str":
+        """
+         Error request ID.
+        """
+        
         return super()._get_field("request_id", explicit_presence=False,
         )
     @request_id.setter
@@ -446,6 +546,10 @@ class InternalError(pb_classes.Message):
     
     @builtins.property
     def trace_id(self) -> "builtins.str":
+        """
+         Trace ID for the failing request.
+        """
+        
         return super()._get_field("trace_id", explicit_presence=False,
         )
     @trace_id.setter
@@ -459,6 +563,10 @@ class InternalError(pb_classes.Message):
     }
     
 class TooManyRequests(pb_classes.Message):
+    """
+     You initiated too many requests to the service at once. Enhance your calm.
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.TooManyRequests
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.TooManyRequests",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -481,6 +589,10 @@ class TooManyRequests(pb_classes.Message):
     
     @builtins.property
     def violation(self) -> "builtins.str":
+        """
+         What request limit is exceeded (service-dependent).
+        """
+        
         return super()._get_field("violation", explicit_presence=False,
         )
     @violation.setter
@@ -493,6 +605,10 @@ class TooManyRequests(pb_classes.Message):
     }
     
 class QuotaFailure(pb_classes.Message):
+    """
+     Indicates a failure due to exceeding specified limits or allocations in a system or service
+    """
+    
     __PB2_CLASS__ = common_errors_pb2.QuotaFailure
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.error.v1alpha1.QuotaFailure",common_errors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -533,6 +649,10 @@ class QuotaFailure(pb_classes.Message):
         
         @builtins.property
         def quota(self) -> "builtins.str":
+            """
+             Which quota check failed.
+            """
+            
             return super()._get_field("quota", explicit_presence=False,
             )
         @quota.setter
@@ -542,6 +662,10 @@ class QuotaFailure(pb_classes.Message):
         
         @builtins.property
         def message(self) -> "builtins.str":
+            """
+             A description of how the quota check failed.
+            """
+            
             return super()._get_field("message", explicit_presence=False,
             )
         @message.setter
@@ -551,6 +675,10 @@ class QuotaFailure(pb_classes.Message):
         
         @builtins.property
         def limit(self) -> "builtins.str":
+            """
+             Maximum permissible value.
+            """
+            
             return super()._get_field("limit", explicit_presence=False,
             )
         @limit.setter
@@ -560,6 +688,10 @@ class QuotaFailure(pb_classes.Message):
         
         @builtins.property
         def requested(self) -> "builtins.str":
+            """
+             Requested value.
+            """
+            
             return super()._get_field("requested", explicit_presence=False,
             )
         @requested.setter
@@ -593,6 +725,10 @@ class QuotaFailure(pb_classes.Message):
     
     @builtins.property
     def violations(self) -> "abc.MutableSequence[QuotaFailure.Violation]":
+        """
+         Describes all quota violations
+        """
+        
         return super()._get_field("violations", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(QuotaFailure.Violation,None,None),
         )
@@ -617,8 +753,20 @@ class ServiceError(pb_classes.Message):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.common.error.v1alpha1.ServiceError.RetryType",error_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         CALL = 1
+        """
+         Just retry the failed call.
+        """
+        
         UNIT_OF_WORK = 2
+        """
+         Retry whole logic before call and make a new one.
+        """
+        
         NOTHING = 3
+        """
+         Do not retry, this is a fatal error.
+        """
+        
     
     class __OneOfClass_details__(pb_classes.OneOf):
         name: builtins.str= "details"
@@ -728,6 +876,10 @@ class ServiceError(pb_classes.Message):
     
     @builtins.property
     def details(self) -> __OneOfClass_details_bad_request__|__OneOfClass_details_bad_resource_state__|__OneOfClass_details_resource_not_found__|__OneOfClass_details_resource_already_exists__|__OneOfClass_details_out_of_range__|__OneOfClass_details_permission_denied__|__OneOfClass_details_resource_conflict__|__OneOfClass_details_operation_aborted__|__OneOfClass_details_too_many_requests__|__OneOfClass_details_quota_failure__|__OneOfClass_details_internal_error__|None:
+        """
+         Additional message describing the error, if any.
+        """
+        
         field_name: str|None = super().which_field_in_oneof("details")
         match field_name:
             case "bad_request":
@@ -828,6 +980,10 @@ class ServiceError(pb_classes.Message):
     
     @builtins.property
     def service(self) -> "builtins.str":
+        """
+         ID of Service which the error originated in. E.g. "dns".
+        """
+        
         return super()._get_field("service", explicit_presence=False,
         )
     @service.setter
@@ -837,6 +993,12 @@ class ServiceError(pb_classes.Message):
     
     @builtins.property
     def code(self) -> "builtins.str":
+        """
+         Detailed error code, service-specific. E.g. "DnsZoneNotEmpty".
+         Name of the exception, without Exception suffix if not set
+         Example: for PermissionDeniedException -> code == PermissionDenied
+        """
+        
         return super()._get_field("code", explicit_presence=False,
         )
     @code.setter
@@ -956,6 +1118,10 @@ class ServiceError(pb_classes.Message):
     
     @builtins.property
     def retry_type(self) -> "ServiceError.RetryType":
+        """
+         Retry type tells how to provide retry, e.g.: just a single call or the whole logic before it.
+        """
+        
         return super()._get_field("retry_type", explicit_presence=False,
         wrap=ServiceError.RetryType,
         )
