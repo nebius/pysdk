@@ -283,7 +283,7 @@ class Message:
         el_pb2 = self.__class__.__PY_TO_PB2__[name]
         self.__pb2_message__.ClearField(el_pb2)  # type: ignore[unused-ignore]
         fk = FieldKey(el_pb2)
-        if explicit_presence and value is None:
+        if value is None:
             if fk not in self.__recorded_reset_mask.field_parts:
                 self.__recorded_reset_mask.field_parts[fk] = Mask()
             return

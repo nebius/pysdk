@@ -32,9 +32,9 @@ class K8sRelease(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|unset.UnsetType" = unset.Unset,
-        status: "K8sReleaseStatus|k8s_release_pb2.K8sReleaseStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None|unset.UnsetType" = unset.Unset,
+        status: "K8sReleaseStatus|k8s_release_pb2.K8sReleaseStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -57,7 +57,7 @@ class K8sRelease(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -67,7 +67,7 @@ class K8sRelease(pb_classes.Message):
         wrap=K8sReleaseSpec,
         )
     @spec.setter
-    def spec(self, value: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec") -> None:
+    def spec(self, value: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -77,7 +77,7 @@ class K8sRelease(pb_classes.Message):
         wrap=K8sReleaseStatus,
         )
     @status.setter
-    def status(self, value: "K8sReleaseStatus|k8s_release_pb2.K8sReleaseStatus") -> None:
+    def status(self, value: "K8sReleaseStatus|k8s_release_pb2.K8sReleaseStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -103,8 +103,8 @@ class K8sReleaseSpec(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|unset.UnsetType" = unset.Unset,
-            value: "builtins.str|unset.UnsetType" = unset.Unset,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(key, unset.UnsetType):
@@ -123,7 +123,7 @@ class K8sReleaseSpec(pb_classes.Message):
             return super()._get_field("key", explicit_presence=False,
             )
         @key.setter
-        def key(self, value: "builtins.str") -> None:
+        def key(self, value: "builtins.str|None") -> None:
             return super()._set_field("key",value,explicit_presence=False,
             )
         
@@ -132,7 +132,7 @@ class K8sReleaseSpec(pb_classes.Message):
             return super()._get_field("value", explicit_presence=False,
             )
         @value.setter
-        def value(self, value: "builtins.str") -> None:
+        def value(self, value: "builtins.str|None") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
         
@@ -146,12 +146,12 @@ class K8sReleaseSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cluster_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        product_slug: "builtins.str|unset.UnsetType" = unset.Unset,
-        namespace: "builtins.str|unset.UnsetType" = unset.Unset,
-        application_name: "builtins.str|unset.UnsetType" = unset.Unset,
-        values: "builtins.str|unset.UnsetType" = unset.Unset,
-        set: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
+        cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        product_slug: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        namespace: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        application_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        values: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        set: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(cluster_id, unset.UnsetType):
@@ -183,7 +183,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._get_field("cluster_id", explicit_presence=False,
         )
     @cluster_id.setter
-    def cluster_id(self, value: "builtins.str") -> None:
+    def cluster_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("cluster_id",value,explicit_presence=False,
         )
     
@@ -192,7 +192,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._get_field("product_slug", explicit_presence=False,
         )
     @product_slug.setter
-    def product_slug(self, value: "builtins.str") -> None:
+    def product_slug(self, value: "builtins.str|None") -> None:
         return super()._set_field("product_slug",value,explicit_presence=False,
         )
     
@@ -201,7 +201,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._get_field("namespace", explicit_presence=False,
         )
     @namespace.setter
-    def namespace(self, value: "builtins.str") -> None:
+    def namespace(self, value: "builtins.str|None") -> None:
         return super()._set_field("namespace",value,explicit_presence=False,
         )
     
@@ -210,7 +210,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._get_field("application_name", explicit_presence=False,
         )
     @application_name.setter
-    def application_name(self, value: "builtins.str") -> None:
+    def application_name(self, value: "builtins.str|None") -> None:
         return super()._set_field("application_name",value,explicit_presence=False,
         )
     
@@ -219,7 +219,7 @@ class K8sReleaseSpec(pb_classes.Message):
         return super()._get_field("values", explicit_presence=False,
         )
     @values.setter
-    def values(self, value: "builtins.str") -> None:
+    def values(self, value: "builtins.str|None") -> None:
         return super()._set_field("values",value,explicit_presence=False,
         )
     
@@ -229,7 +229,7 @@ class K8sReleaseSpec(pb_classes.Message):
         wrap=pb_classes.Map,
         )
     @set.setter
-    def set(self, value: "abc.Mapping[builtins.str,builtins.str]") -> None:
+    def set(self, value: "abc.Mapping[builtins.str,builtins.str]|None") -> None:
         return super()._set_field("set",value,explicit_presence=False,
         )
     
@@ -262,8 +262,8 @@ class K8sReleaseStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State|unset.UnsetType" = unset.Unset,
-        error_message: "builtins.str|unset.UnsetType" = unset.Unset,
+        state: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State|None|unset.UnsetType" = unset.Unset,
+        error_message: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -284,7 +284,7 @@ class K8sReleaseStatus(pb_classes.Message):
         wrap=K8sReleaseStatus.State,
         )
     @state.setter
-    def state(self, value: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State") -> None:
+    def state(self, value: "K8sReleaseStatus.State|k8s_release_pb2.K8sReleaseStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -293,7 +293,7 @@ class K8sReleaseStatus(pb_classes.Message):
         return super()._get_field("error_message", explicit_presence=False,
         )
     @error_message.setter
-    def error_message(self, value: "builtins.str") -> None:
+    def error_message(self, value: "builtins.str|None") -> None:
         return super()._set_field("error_message",value,explicit_presence=False,
         )
     
@@ -314,7 +314,7 @@ class GetK8sReleaseRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -330,7 +330,7 @@ class GetK8sReleaseRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -348,11 +348,11 @@ class ListK8sReleasesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
-        cluster_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -380,7 +380,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -389,7 +389,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -398,7 +398,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -407,7 +407,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -416,7 +416,7 @@ class ListK8sReleasesRequest(pb_classes.Message):
         return super()._get_field("cluster_id", explicit_presence=False,
         )
     @cluster_id.setter
-    def cluster_id(self, value: "builtins.str") -> None:
+    def cluster_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("cluster_id",value,explicit_presence=False,
         )
     
@@ -438,8 +438,8 @@ class CreateK8sReleaseRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -459,7 +459,7 @@ class CreateK8sReleaseRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -469,7 +469,7 @@ class CreateK8sReleaseRequest(pb_classes.Message):
         wrap=K8sReleaseSpec,
         )
     @spec.setter
-    def spec(self, value: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec") -> None:
+    def spec(self, value: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -488,7 +488,7 @@ class DeleteK8sReleaseRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -504,7 +504,7 @@ class DeleteK8sReleaseRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -522,8 +522,8 @@ class ListK8sReleasesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[K8sRelease]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[K8sRelease]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -543,7 +543,7 @@ class ListK8sReleasesResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(K8sRelease,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[K8sRelease]") -> None:
+    def items(self, value: "abc.Iterable[K8sRelease]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -552,7 +552,7 @@ class ListK8sReleasesResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     

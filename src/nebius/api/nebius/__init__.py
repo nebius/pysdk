@@ -41,9 +41,9 @@ class RegionRouting(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        nid: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        disabled: "builtins.bool|unset.UnsetType" = unset.Unset,
-        strict: "builtins.bool|unset.UnsetType" = unset.Unset,
+        nid: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        disabled: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        strict: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(nid, unset.UnsetType):
@@ -66,7 +66,7 @@ class RegionRouting(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @nid.setter
-    def nid(self, value: "abc.Iterable[builtins.str]") -> None:
+    def nid(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("nid",value,explicit_presence=False,
         )
     
@@ -75,7 +75,7 @@ class RegionRouting(pb_classes.Message):
         return super()._get_field("disabled", explicit_presence=False,
         )
     @disabled.setter
-    def disabled(self, value: "builtins.bool") -> None:
+    def disabled(self, value: "builtins.bool|None") -> None:
         return super()._set_field("disabled",value,explicit_presence=False,
         )
     
@@ -84,7 +84,7 @@ class RegionRouting(pb_classes.Message):
         return super()._get_field("strict", explicit_presence=False,
         )
     @strict.setter
-    def strict(self, value: "builtins.bool") -> None:
+    def strict(self, value: "builtins.bool|None") -> None:
         return super()._set_field("strict",value,explicit_presence=False,
         )
     

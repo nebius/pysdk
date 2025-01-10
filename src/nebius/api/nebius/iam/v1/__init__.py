@@ -72,7 +72,7 @@ class Account(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            id: "builtins.str|unset.UnsetType" = unset.Unset,
+            id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(id, unset.UnsetType):
@@ -88,7 +88,7 @@ class Account(pb_classes.Message):
             return super()._get_field("id", explicit_presence=False,
             )
         @id.setter
-        def id(self, value: "builtins.str") -> None:
+        def id(self, value: "builtins.str|None") -> None:
             return super()._set_field("id",value,explicit_presence=False,
             )
         
@@ -107,7 +107,7 @@ class Account(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            id: "builtins.str|unset.UnsetType" = unset.Unset,
+            id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(id, unset.UnsetType):
@@ -123,7 +123,7 @@ class Account(pb_classes.Message):
             return super()._get_field("id", explicit_presence=False,
             )
         @id.setter
-        def id(self, value: "builtins.str") -> None:
+        def id(self, value: "builtins.str|None") -> None:
             return super()._set_field("id",value,explicit_presence=False,
             )
         
@@ -279,9 +279,9 @@ class AccessKey(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
-        status: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None|unset.UnsetType" = unset.Unset,
+        status: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -304,7 +304,7 @@ class AccessKey(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -314,7 +314,7 @@ class AccessKey(pb_classes.Message):
         wrap=AccessKeySpec,
         )
     @spec.setter
-    def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec") -> None:
+    def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -324,7 +324,7 @@ class AccessKey(pb_classes.Message):
         wrap=AccessKeyStatus,
         )
     @status.setter
-    def status(self, value: "AccessKeyStatus|access_key_pb2.AccessKeyStatus") -> None:
+    def status(self, value: "AccessKeyStatus|access_key_pb2.AccessKeyStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -345,9 +345,9 @@ class AccessKeySpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        account: "Account|access_pb2.Account|None|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(account, unset.UnsetType):
@@ -370,7 +370,7 @@ class AccessKeySpec(pb_classes.Message):
         wrap=Account,
         )
     @account.setter
-    def account(self, value: "Account|access_pb2.Account") -> None:
+    def account(self, value: "Account|access_pb2.Account|None") -> None:
         return super()._set_field("account",value,explicit_presence=False,
         )
     
@@ -380,7 +380,7 @@ class AccessKeySpec(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("expires_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -390,7 +390,7 @@ class AccessKeySpec(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -419,12 +419,12 @@ class AccessKeyStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State|unset.UnsetType" = unset.Unset,
-        fingerprint: "builtins.str|unset.UnsetType" = unset.Unset,
-        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
-        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        aws_access_key_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        secret: "builtins.str|unset.UnsetType" = unset.Unset,
+        state: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State|None|unset.UnsetType" = unset.Unset,
+        fingerprint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        aws_access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        secret: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -457,7 +457,7 @@ class AccessKeyStatus(pb_classes.Message):
         wrap=AccessKeyStatus.State,
         )
     @state.setter
-    def state(self, value: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State") -> None:
+    def state(self, value: "AccessKeyStatus.State|access_key_pb2.AccessKeyStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -466,7 +466,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._get_field("fingerprint", explicit_presence=False,
         )
     @fingerprint.setter
-    def fingerprint(self, value: "builtins.str") -> None:
+    def fingerprint(self, value: "builtins.str|None") -> None:
         return super()._set_field("fingerprint",value,explicit_presence=False,
         )
     
@@ -475,7 +475,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._get_field("algorithm", explicit_presence=False,
         )
     @algorithm.setter
-    def algorithm(self, value: "builtins.str") -> None:
+    def algorithm(self, value: "builtins.str|None") -> None:
         return super()._set_field("algorithm",value,explicit_presence=False,
         )
     
@@ -484,7 +484,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._get_field("key_size", explicit_presence=False,
         )
     @key_size.setter
-    def key_size(self, value: "builtins.int") -> None:
+    def key_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("key_size",value,explicit_presence=False,
         )
     
@@ -493,7 +493,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._get_field("aws_access_key_id", explicit_presence=False,
         )
     @aws_access_key_id.setter
-    def aws_access_key_id(self, value: "builtins.str") -> None:
+    def aws_access_key_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("aws_access_key_id",value,explicit_presence=False,
         )
     
@@ -502,7 +502,7 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._get_field("secret", explicit_presence=False,
         )
     @secret.setter
-    def secret(self, value: "builtins.str") -> None:
+    def secret(self, value: "builtins.str|None") -> None:
         return super()._set_field("secret",value,explicit_presence=False,
         )
     
@@ -527,8 +527,8 @@ class CreateAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -548,7 +548,7 @@ class CreateAccessKeyRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -558,7 +558,7 @@ class CreateAccessKeyRequest(pb_classes.Message):
         wrap=AccessKeySpec,
         )
     @spec.setter
-    def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec") -> None:
+    def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -665,7 +665,7 @@ class GetAccessKeySecretOnceRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -681,7 +681,7 @@ class GetAccessKeySecretOnceRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -699,7 +699,7 @@ class GetAccessKeyByIdRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -715,7 +715,7 @@ class GetAccessKeyByIdRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -733,7 +733,7 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        aws_access_key_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        aws_access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(aws_access_key_id, unset.UnsetType):
@@ -749,7 +749,7 @@ class GetAccessKeyByAwsIdRequest(pb_classes.Message):
         return super()._get_field("aws_access_key_id", explicit_presence=False,
         )
     @aws_access_key_id.setter
-    def aws_access_key_id(self, value: "builtins.str") -> None:
+    def aws_access_key_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("aws_access_key_id",value,explicit_presence=False,
         )
     
@@ -794,10 +794,10 @@ class ListAccessKeysRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -823,7 +823,7 @@ class ListAccessKeysRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -841,7 +841,7 @@ class ListAccessKeysRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -850,7 +850,7 @@ class ListAccessKeysRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -872,10 +872,10 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        account: "Account|access_pb2.Account|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(account, unset.UnsetType):
@@ -901,7 +901,7 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         wrap=Account,
         )
     @account.setter
-    def account(self, value: "Account|access_pb2.Account") -> None:
+    def account(self, value: "Account|access_pb2.Account|None") -> None:
         return super()._set_field("account",value,explicit_presence=False,
         )
     
@@ -910,7 +910,7 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -919,7 +919,7 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -928,7 +928,7 @@ class ListAccessKeysByAccountRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -949,8 +949,8 @@ class UpdateAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AccessKeySpec|access_key_pb2.AccessKeySpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -970,7 +970,7 @@ class UpdateAccessKeyRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -980,7 +980,7 @@ class UpdateAccessKeyRequest(pb_classes.Message):
         wrap=AccessKeySpec,
         )
     @spec.setter
-    def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec") -> None:
+    def spec(self, value: "AccessKeySpec|access_key_pb2.AccessKeySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -999,7 +999,7 @@ class ActivateAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1016,7 +1016,7 @@ class ActivateAccessKeyRequest(pb_classes.Message):
         wrap=KeyIdentity,
         )
     @id.setter
-    def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity") -> None:
+    def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1034,7 +1034,7 @@ class DeactivateAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1051,7 +1051,7 @@ class DeactivateAccessKeyRequest(pb_classes.Message):
         wrap=KeyIdentity,
         )
     @id.setter
-    def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity") -> None:
+    def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1069,7 +1069,7 @@ class DeleteAccessKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|unset.UnsetType" = unset.Unset,
+        id: "KeyIdentity|access_key_service_pb2.KeyIdentity|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1086,7 +1086,7 @@ class DeleteAccessKeyRequest(pb_classes.Message):
         wrap=KeyIdentity,
         )
     @id.setter
-    def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity") -> None:
+    def id(self, value: "KeyIdentity|access_key_service_pb2.KeyIdentity|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1104,7 +1104,7 @@ class GetAccessKeySecretOnceResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        secret: "builtins.str|unset.UnsetType" = unset.Unset,
+        secret: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(secret, unset.UnsetType):
@@ -1120,7 +1120,7 @@ class GetAccessKeySecretOnceResponse(pb_classes.Message):
         return super()._get_field("secret", explicit_presence=False,
         )
     @secret.setter
-    def secret(self, value: "builtins.str") -> None:
+    def secret(self, value: "builtins.str|None") -> None:
         return super()._set_field("secret",value,explicit_presence=False,
         )
     
@@ -1138,8 +1138,8 @@ class ListAccessKeysResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[AccessKey]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[AccessKey]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -1159,7 +1159,7 @@ class ListAccessKeysResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(AccessKey,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[AccessKey]") -> None:
+    def items(self, value: "abc.Iterable[AccessKey]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -1168,7 +1168,7 @@ class ListAccessKeysResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -1396,9 +1396,9 @@ class AuthPublicKey(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
-        status: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None|unset.UnsetType" = unset.Unset,
+        status: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1421,7 +1421,7 @@ class AuthPublicKey(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1431,7 +1431,7 @@ class AuthPublicKey(pb_classes.Message):
         wrap=AuthPublicKeySpec,
         )
     @spec.setter
-    def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec") -> None:
+    def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1441,7 +1441,7 @@ class AuthPublicKey(pb_classes.Message):
         wrap=AuthPublicKeyStatus,
         )
     @status.setter
-    def status(self, value: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus") -> None:
+    def status(self, value: "AuthPublicKeyStatus|auth_public_key_pb2.AuthPublicKeyStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -1462,10 +1462,10 @@ class AuthPublicKeySpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
-        data: "builtins.str|unset.UnsetType" = unset.Unset,
+        account: "Account|access_pb2.Account|None|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        data: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(account, unset.UnsetType):
@@ -1491,7 +1491,7 @@ class AuthPublicKeySpec(pb_classes.Message):
         wrap=Account,
         )
     @account.setter
-    def account(self, value: "Account|access_pb2.Account") -> None:
+    def account(self, value: "Account|access_pb2.Account|None") -> None:
         return super()._set_field("account",value,explicit_presence=False,
         )
     
@@ -1501,7 +1501,7 @@ class AuthPublicKeySpec(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("expires_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -1511,7 +1511,7 @@ class AuthPublicKeySpec(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -1520,7 +1520,7 @@ class AuthPublicKeySpec(pb_classes.Message):
         return super()._get_field("data", explicit_presence=False,
         )
     @data.setter
-    def data(self, value: "builtins.str") -> None:
+    def data(self, value: "builtins.str|None") -> None:
         return super()._set_field("data",value,explicit_presence=False,
         )
     
@@ -1550,10 +1550,10 @@ class AuthPublicKeyStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State|unset.UnsetType" = unset.Unset,
-        fingerprint: "builtins.str|unset.UnsetType" = unset.Unset,
-        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
-        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        state: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State|None|unset.UnsetType" = unset.Unset,
+        fingerprint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -1580,7 +1580,7 @@ class AuthPublicKeyStatus(pb_classes.Message):
         wrap=AuthPublicKeyStatus.State,
         )
     @state.setter
-    def state(self, value: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State") -> None:
+    def state(self, value: "AuthPublicKeyStatus.State|auth_public_key_pb2.AuthPublicKeyStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -1589,7 +1589,7 @@ class AuthPublicKeyStatus(pb_classes.Message):
         return super()._get_field("fingerprint", explicit_presence=False,
         )
     @fingerprint.setter
-    def fingerprint(self, value: "builtins.str") -> None:
+    def fingerprint(self, value: "builtins.str|None") -> None:
         return super()._set_field("fingerprint",value,explicit_presence=False,
         )
     
@@ -1598,7 +1598,7 @@ class AuthPublicKeyStatus(pb_classes.Message):
         return super()._get_field("algorithm", explicit_presence=False,
         )
     @algorithm.setter
-    def algorithm(self, value: "builtins.str") -> None:
+    def algorithm(self, value: "builtins.str|None") -> None:
         return super()._set_field("algorithm",value,explicit_presence=False,
         )
     
@@ -1607,7 +1607,7 @@ class AuthPublicKeyStatus(pb_classes.Message):
         return super()._get_field("key_size", explicit_presence=False,
         )
     @key_size.setter
-    def key_size(self, value: "builtins.int") -> None:
+    def key_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("key_size",value,explicit_presence=False,
         )
     
@@ -1630,8 +1630,8 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1651,7 +1651,7 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1661,7 +1661,7 @@ class CreateAuthPublicKeyRequest(pb_classes.Message):
         wrap=AuthPublicKeySpec,
         )
     @spec.setter
-    def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec") -> None:
+    def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1680,7 +1680,7 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1696,7 +1696,7 @@ class GetAuthPublicKeyRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1741,10 +1741,10 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1770,7 +1770,7 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1788,7 +1788,7 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -1797,7 +1797,7 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -1819,10 +1819,10 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        account: "Account|access_pb2.Account|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        account: "Account|access_pb2.Account|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(account, unset.UnsetType):
@@ -1848,7 +1848,7 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         wrap=Account,
         )
     @account.setter
-    def account(self, value: "Account|access_pb2.Account") -> None:
+    def account(self, value: "Account|access_pb2.Account|None") -> None:
         return super()._set_field("account",value,explicit_presence=False,
         )
     
@@ -1857,7 +1857,7 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -1866,7 +1866,7 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -1875,7 +1875,7 @@ class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -1896,8 +1896,8 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1917,7 +1917,7 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1927,7 +1927,7 @@ class UpdateAuthPublicKeyRequest(pb_classes.Message):
         wrap=AuthPublicKeySpec,
         )
     @spec.setter
-    def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec") -> None:
+    def spec(self, value: "AuthPublicKeySpec|auth_public_key_pb2.AuthPublicKeySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1946,7 +1946,7 @@ class ActivateAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1962,7 +1962,7 @@ class ActivateAuthPublicKeyRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1980,7 +1980,7 @@ class DeactivateAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1996,7 +1996,7 @@ class DeactivateAuthPublicKeyRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2014,7 +2014,7 @@ class DeleteAuthPublicKeyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -2030,7 +2030,7 @@ class DeleteAuthPublicKeyRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2048,8 +2048,8 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[AuthPublicKey]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[AuthPublicKey]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -2069,7 +2069,7 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(AuthPublicKey,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[AuthPublicKey]") -> None:
+    def items(self, value: "abc.Iterable[AuthPublicKey]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -2078,7 +2078,7 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -2289,9 +2289,9 @@ class Container(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ContainerSpec|container_pb2.ContainerSpec|unset.UnsetType" = unset.Unset,
-        status: "ContainerStatus|container_pb2.ContainerStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ContainerSpec|container_pb2.ContainerSpec|None|unset.UnsetType" = unset.Unset,
+        status: "ContainerStatus|container_pb2.ContainerStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2314,7 +2314,7 @@ class Container(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2324,7 +2324,7 @@ class Container(pb_classes.Message):
         wrap=ContainerSpec,
         )
     @spec.setter
-    def spec(self, value: "ContainerSpec|container_pb2.ContainerSpec") -> None:
+    def spec(self, value: "ContainerSpec|container_pb2.ContainerSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2334,7 +2334,7 @@ class Container(pb_classes.Message):
         wrap=ContainerStatus,
         )
     @status.setter
-    def status(self, value: "ContainerStatus|container_pb2.ContainerStatus") -> None:
+    def status(self, value: "ContainerStatus|container_pb2.ContainerStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -2373,8 +2373,8 @@ class ContainerStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|unset.UnsetType" = unset.Unset,
-        container_state: "State|state_pb2.State|unset.UnsetType" = unset.Unset,
+        suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|None|unset.UnsetType" = unset.Unset,
+        container_state: "State|state_pb2.State|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(suspension_state, unset.UnsetType):
@@ -2394,7 +2394,7 @@ class ContainerStatus(pb_classes.Message):
         wrap=SuspensionState,
         )
     @suspension_state.setter
-    def suspension_state(self, value: "SuspensionState|suspension_state_pb2.SuspensionState") -> None:
+    def suspension_state(self, value: "SuspensionState|suspension_state_pb2.SuspensionState|None") -> None:
         return super()._set_field("suspension_state",value,explicit_presence=False,
         )
     
@@ -2404,7 +2404,7 @@ class ContainerStatus(pb_classes.Message):
         wrap=State,
         )
     @container_state.setter
-    def container_state(self, value: "State|state_pb2.State") -> None:
+    def container_state(self, value: "State|state_pb2.State|None") -> None:
         return super()._set_field("container_state",value,explicit_presence=False,
         )
     
@@ -2424,9 +2424,9 @@ class Federation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
-        status: "FederationStatus|federation_pb2.FederationStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|None|unset.UnsetType" = unset.Unset,
+        status: "FederationStatus|federation_pb2.FederationStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2449,7 +2449,7 @@ class Federation(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2459,7 +2459,7 @@ class Federation(pb_classes.Message):
         wrap=FederationSpec,
         )
     @spec.setter
-    def spec(self, value: "FederationSpec|federation_pb2.FederationSpec") -> None:
+    def spec(self, value: "FederationSpec|federation_pb2.FederationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2469,7 +2469,7 @@ class Federation(pb_classes.Message):
         wrap=FederationStatus,
         )
     @status.setter
-    def status(self, value: "FederationStatus|federation_pb2.FederationStatus") -> None:
+    def status(self, value: "FederationStatus|federation_pb2.FederationStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -2516,8 +2516,8 @@ class FederationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_account_auto_creation: "builtins.bool|unset.UnsetType" = unset.Unset,
-        active: "builtins.bool|unset.UnsetType" = unset.Unset,
+        user_account_auto_creation: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        active: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         saml_settings: "SamlSettings|federation_pb2.SamlSettings|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -2541,7 +2541,7 @@ class FederationSpec(pb_classes.Message):
         return super()._get_field("user_account_auto_creation", explicit_presence=False,
         )
     @user_account_auto_creation.setter
-    def user_account_auto_creation(self, value: "builtins.bool") -> None:
+    def user_account_auto_creation(self, value: "builtins.bool|None") -> None:
         return super()._set_field("user_account_auto_creation",value,explicit_presence=False,
         )
     
@@ -2550,7 +2550,7 @@ class FederationSpec(pb_classes.Message):
         return super()._get_field("active", explicit_presence=False,
         )
     @active.setter
-    def active(self, value: "builtins.bool") -> None:
+    def active(self, value: "builtins.bool|None") -> None:
         return super()._set_field("active",value,explicit_presence=False,
         )
     
@@ -2581,8 +2581,8 @@ class SamlSettings(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        idp_issuer: "builtins.str|unset.UnsetType" = unset.Unset,
-        sso_url: "builtins.str|unset.UnsetType" = unset.Unset,
+        idp_issuer: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        sso_url: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(idp_issuer, unset.UnsetType):
@@ -2601,7 +2601,7 @@ class SamlSettings(pb_classes.Message):
         return super()._get_field("idp_issuer", explicit_presence=False,
         )
     @idp_issuer.setter
-    def idp_issuer(self, value: "builtins.str") -> None:
+    def idp_issuer(self, value: "builtins.str|None") -> None:
         return super()._set_field("idp_issuer",value,explicit_presence=False,
         )
     
@@ -2610,7 +2610,7 @@ class SamlSettings(pb_classes.Message):
         return super()._get_field("sso_url", explicit_presence=False,
         )
     @sso_url.setter
-    def sso_url(self, value: "builtins.str") -> None:
+    def sso_url(self, value: "builtins.str|None") -> None:
         return super()._set_field("sso_url",value,explicit_presence=False,
         )
     
@@ -2649,9 +2649,9 @@ class FederationCertificate(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
-        status: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None|unset.UnsetType" = unset.Unset,
+        status: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2674,7 +2674,7 @@ class FederationCertificate(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2684,7 +2684,7 @@ class FederationCertificate(pb_classes.Message):
         wrap=FederationCertificateSpec,
         )
     @spec.setter
-    def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec") -> None:
+    def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2694,7 +2694,7 @@ class FederationCertificate(pb_classes.Message):
         wrap=FederationCertificateStatus,
         )
     @status.setter
-    def status(self, value: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus") -> None:
+    def status(self, value: "FederationCertificateStatus|federation_certificate_pb2.FederationCertificateStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -2714,8 +2714,8 @@ class FederationCertificateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
-        data: "builtins.str|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        data: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -2734,7 +2734,7 @@ class FederationCertificateSpec(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -2743,7 +2743,7 @@ class FederationCertificateSpec(pb_classes.Message):
         return super()._get_field("data", explicit_presence=False,
         )
     @data.setter
-    def data(self, value: "builtins.str") -> None:
+    def data(self, value: "builtins.str|None") -> None:
         return super()._set_field("data",value,explicit_presence=False,
         )
     
@@ -2770,11 +2770,11 @@ class FederationCertificateStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|unset.UnsetType" = unset.Unset,
-        algorithm: "builtins.str|unset.UnsetType" = unset.Unset,
-        key_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        not_before: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        not_after: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        state: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|None|unset.UnsetType" = unset.Unset,
+        algorithm: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        key_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        not_before: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        not_after: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -2804,7 +2804,7 @@ class FederationCertificateStatus(pb_classes.Message):
         wrap=FederationCertificateStatus.State,
         )
     @state.setter
-    def state(self, value: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State") -> None:
+    def state(self, value: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -2813,7 +2813,7 @@ class FederationCertificateStatus(pb_classes.Message):
         return super()._get_field("algorithm", explicit_presence=False,
         )
     @algorithm.setter
-    def algorithm(self, value: "builtins.str") -> None:
+    def algorithm(self, value: "builtins.str|None") -> None:
         return super()._set_field("algorithm",value,explicit_presence=False,
         )
     
@@ -2822,7 +2822,7 @@ class FederationCertificateStatus(pb_classes.Message):
         return super()._get_field("key_size", explicit_presence=False,
         )
     @key_size.setter
-    def key_size(self, value: "builtins.int") -> None:
+    def key_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("key_size",value,explicit_presence=False,
         )
     
@@ -2832,7 +2832,7 @@ class FederationCertificateStatus(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @not_before.setter
-    def not_before(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def not_before(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("not_before",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -2843,7 +2843,7 @@ class FederationCertificateStatus(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @not_after.setter
-    def not_after(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def not_after(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("not_after",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -2868,8 +2868,8 @@ class CreateFederationCertificateRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2889,7 +2889,7 @@ class CreateFederationCertificateRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2899,7 +2899,7 @@ class CreateFederationCertificateRequest(pb_classes.Message):
         wrap=FederationCertificateSpec,
         )
     @spec.setter
-    def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec") -> None:
+    def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2918,7 +2918,7 @@ class GetFederationCertificateRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -2934,7 +2934,7 @@ class GetFederationCertificateRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2952,9 +2952,9 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(federation_id, unset.UnsetType):
@@ -2976,7 +2976,7 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
-    def federation_id(self, value: "builtins.str") -> None:
+    def federation_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("federation_id",value,explicit_presence=False,
         )
     
@@ -2985,7 +2985,7 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -2994,7 +2994,7 @@ class ListFederationCertificateByFederationRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -3014,8 +3014,8 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -3035,7 +3035,7 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -3045,7 +3045,7 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
         wrap=FederationCertificateSpec,
         )
     @spec.setter
-    def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec") -> None:
+    def spec(self, value: "FederationCertificateSpec|federation_certificate_pb2.FederationCertificateSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -3064,7 +3064,7 @@ class DeleteFederationCertificateRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3080,7 +3080,7 @@ class DeleteFederationCertificateRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3098,8 +3098,8 @@ class ListFederationCertificateResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[FederationCertificate]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[FederationCertificate]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -3119,7 +3119,7 @@ class ListFederationCertificateResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(FederationCertificate,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[FederationCertificate]") -> None:
+    def items(self, value: "abc.Iterable[FederationCertificate]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -3128,7 +3128,7 @@ class ListFederationCertificateResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -3256,8 +3256,8 @@ class CreateFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -3277,7 +3277,7 @@ class CreateFederationRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -3287,7 +3287,7 @@ class CreateFederationRequest(pb_classes.Message):
         wrap=FederationSpec,
         )
     @spec.setter
-    def spec(self, value: "FederationSpec|federation_pb2.FederationSpec") -> None:
+    def spec(self, value: "FederationSpec|federation_pb2.FederationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -3306,7 +3306,7 @@ class GetFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3322,7 +3322,7 @@ class GetFederationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3340,10 +3340,10 @@ class ListFederationsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -3368,7 +3368,7 @@ class ListFederationsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -3377,7 +3377,7 @@ class ListFederationsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -3386,7 +3386,7 @@ class ListFederationsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -3395,7 +3395,7 @@ class ListFederationsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -3416,8 +3416,8 @@ class ListFederationsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Federation]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Federation]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -3437,7 +3437,7 @@ class ListFederationsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Federation,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Federation]") -> None:
+    def items(self, value: "abc.Iterable[Federation]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -3446,7 +3446,7 @@ class ListFederationsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -3465,9 +3465,9 @@ class UpdateFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FederationSpec|federation_pb2.FederationSpec|unset.UnsetType" = unset.Unset,
-        status: "FederationStatus|federation_pb2.FederationStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederationSpec|federation_pb2.FederationSpec|None|unset.UnsetType" = unset.Unset,
+        status: "FederationStatus|federation_pb2.FederationStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -3490,7 +3490,7 @@ class UpdateFederationRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -3500,7 +3500,7 @@ class UpdateFederationRequest(pb_classes.Message):
         wrap=FederationSpec,
         )
     @spec.setter
-    def spec(self, value: "FederationSpec|federation_pb2.FederationSpec") -> None:
+    def spec(self, value: "FederationSpec|federation_pb2.FederationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -3510,7 +3510,7 @@ class UpdateFederationRequest(pb_classes.Message):
         wrap=FederationStatus,
         )
     @status.setter
-    def status(self, value: "FederationStatus|federation_pb2.FederationStatus") -> None:
+    def status(self, value: "FederationStatus|federation_pb2.FederationStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -3530,7 +3530,7 @@ class DeleteFederationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3546,7 +3546,7 @@ class DeleteFederationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3693,9 +3693,9 @@ class Group(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "GroupSpec|group_pb2.GroupSpec|unset.UnsetType" = unset.Unset,
-        status: "GroupStatus|group_pb2.GroupStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "GroupSpec|group_pb2.GroupSpec|None|unset.UnsetType" = unset.Unset,
+        status: "GroupStatus|group_pb2.GroupStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -3718,7 +3718,7 @@ class Group(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -3728,7 +3728,7 @@ class Group(pb_classes.Message):
         wrap=GroupSpec,
         )
     @spec.setter
-    def spec(self, value: "GroupSpec|group_pb2.GroupSpec") -> None:
+    def spec(self, value: "GroupSpec|group_pb2.GroupSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -3738,7 +3738,7 @@ class Group(pb_classes.Message):
         wrap=GroupStatus,
         )
     @status.setter
-    def status(self, value: "GroupStatus|group_pb2.GroupStatus") -> None:
+    def status(self, value: "GroupStatus|group_pb2.GroupStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -3782,8 +3782,8 @@ class GroupStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "GroupStatus.State|group_pb2.GroupStatus.State|unset.UnsetType" = unset.Unset,
-        members_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        state: "GroupStatus.State|group_pb2.GroupStatus.State|None|unset.UnsetType" = unset.Unset,
+        members_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -3804,7 +3804,7 @@ class GroupStatus(pb_classes.Message):
         wrap=GroupStatus.State,
         )
     @state.setter
-    def state(self, value: "GroupStatus.State|group_pb2.GroupStatus.State") -> None:
+    def state(self, value: "GroupStatus.State|group_pb2.GroupStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -3813,7 +3813,7 @@ class GroupStatus(pb_classes.Message):
         return super()._get_field("members_count", explicit_presence=False,
         )
     @members_count.setter
-    def members_count(self, value: "builtins.int") -> None:
+    def members_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("members_count",value,explicit_presence=False,
         )
     
@@ -3834,9 +3834,9 @@ class ServiceAccount(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
-        status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None|unset.UnsetType" = unset.Unset,
+        status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -3859,7 +3859,7 @@ class ServiceAccount(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -3869,7 +3869,7 @@ class ServiceAccount(pb_classes.Message):
         wrap=ServiceAccountSpec,
         )
     @spec.setter
-    def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec") -> None:
+    def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -3879,7 +3879,7 @@ class ServiceAccount(pb_classes.Message):
         wrap=ServiceAccountStatus,
         )
     @status.setter
-    def status(self, value: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus") -> None:
+    def status(self, value: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -3899,7 +3899,7 @@ class ServiceAccountSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -3915,7 +3915,7 @@ class ServiceAccountSpec(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -3933,7 +3933,7 @@ class ServiceAccountStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        active: "builtins.bool|unset.UnsetType" = unset.Unset,
+        active: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(active, unset.UnsetType):
@@ -3949,7 +3949,7 @@ class ServiceAccountStatus(pb_classes.Message):
         return super()._get_field("active", explicit_presence=False,
         )
     @active.setter
-    def active(self, value: "builtins.bool") -> None:
+    def active(self, value: "builtins.bool|None") -> None:
         return super()._set_field("active",value,explicit_presence=False,
         )
     
@@ -3967,8 +3967,8 @@ class ServiceAccountAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(name, unset.UnsetType):
@@ -3987,7 +3987,7 @@ class ServiceAccountAttributes(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -3996,7 +3996,7 @@ class ServiceAccountAttributes(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -4016,9 +4016,9 @@ class TenantUserAccount(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|unset.UnsetType" = unset.Unset,
-        status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|None|unset.UnsetType" = unset.Unset,
+        status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -4041,7 +4041,7 @@ class TenantUserAccount(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -4051,7 +4051,7 @@ class TenantUserAccount(pb_classes.Message):
         wrap=TenantUserAccountSpec,
         )
     @spec.setter
-    def spec(self, value: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec") -> None:
+    def spec(self, value: "TenantUserAccountSpec|tenant_user_account_pb2.TenantUserAccountSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -4061,7 +4061,7 @@ class TenantUserAccount(pb_classes.Message):
         wrap=TenantUserAccountStatus,
         )
     @status.setter
-    def status(self, value: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus") -> None:
+    def status(self, value: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -4119,7 +4119,7 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|unset.UnsetType" = unset.Unset,
+        tenant_user_account: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|None|unset.UnsetType" = unset.Unset,
         attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
         error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -4145,7 +4145,7 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
         wrap=TenantUserAccount,
         )
     @tenant_user_account.setter
-    def tenant_user_account(self, value: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount") -> None:
+    def tenant_user_account(self, value: "TenantUserAccount|tenant_user_account_pb2.TenantUserAccount|None") -> None:
         return super()._set_field("tenant_user_account",value,explicit_presence=False,
         )
     
@@ -4722,7 +4722,7 @@ class Error(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        message: "builtins.str|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(message, unset.UnsetType):
@@ -4738,7 +4738,7 @@ class Error(pb_classes.Message):
         return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
-    def message(self, value: "builtins.str") -> None:
+    def message(self, value: "builtins.str|None") -> None:
         return super()._set_field("message",value,explicit_presence=False,
         )
     
@@ -4762,7 +4762,7 @@ class TenantUserAccountSpec(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            attribute: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+            attribute: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(attribute, unset.UnsetType):
@@ -4779,7 +4779,7 @@ class TenantUserAccountSpec(pb_classes.Message):
             wrap=pb_classes.Repeated,
             )
         @attribute.setter
-        def attribute(self, value: "abc.Iterable[builtins.str]") -> None:
+        def attribute(self, value: "abc.Iterable[builtins.str]|None") -> None:
             return super()._set_field("attribute",value,explicit_presence=False,
             )
         
@@ -4792,7 +4792,7 @@ class TenantUserAccountSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|unset.UnsetType" = unset.Unset,
+        visible_attributes: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(visible_attributes, unset.UnsetType):
@@ -4810,7 +4810,7 @@ class TenantUserAccountSpec(pb_classes.Message):
         wrap=TenantUserAccountSpec.VisibleAttributes,
         )
     @visible_attributes.setter
-    def visible_attributes(self, value: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes") -> None:
+    def visible_attributes(self, value: "TenantUserAccountSpec.VisibleAttributes|tenant_user_account_pb2.TenantUserAccountSpec.VisibleAttributes|None") -> None:
         return super()._set_field("visible_attributes",value,explicit_presence=False,
         )
     
@@ -4836,9 +4836,9 @@ class TenantUserAccountStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|unset.UnsetType" = unset.Unset,
-        invitation_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None|unset.UnsetType" = unset.Unset,
+        invitation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -4862,7 +4862,7 @@ class TenantUserAccountStatus(pb_classes.Message):
         wrap=TenantUserAccountStatus.State,
         )
     @state.setter
-    def state(self, value: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State") -> None:
+    def state(self, value: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -4871,7 +4871,7 @@ class TenantUserAccountStatus(pb_classes.Message):
         return super()._get_field("invitation_id", explicit_presence=False,
         )
     @invitation_id.setter
-    def invitation_id(self, value: "builtins.str") -> None:
+    def invitation_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("invitation_id",value,explicit_presence=False,
         )
     
@@ -4880,7 +4880,7 @@ class TenantUserAccountStatus(pb_classes.Message):
         return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
-    def federation_id(self, value: "builtins.str") -> None:
+    def federation_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("federation_id",value,explicit_presence=False,
         )
     
@@ -4903,10 +4903,10 @@ class GroupMembership(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|unset.UnsetType" = unset.Unset,
-        status: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|unset.UnsetType" = unset.Unset,
-        revoke_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None|unset.UnsetType" = unset.Unset,
+        status: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|None|unset.UnsetType" = unset.Unset,
+        revoke_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -4932,7 +4932,7 @@ class GroupMembership(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -4942,7 +4942,7 @@ class GroupMembership(pb_classes.Message):
         wrap=GroupMembershipSpec,
         )
     @spec.setter
-    def spec(self, value: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec") -> None:
+    def spec(self, value: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -4952,7 +4952,7 @@ class GroupMembership(pb_classes.Message):
         wrap=GroupMembershipStatus,
         )
     @status.setter
-    def status(self, value: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus") -> None:
+    def status(self, value: "GroupMembershipStatus|group_membership_pb2.GroupMembershipStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -4962,7 +4962,7 @@ class GroupMembership(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @revoke_at.setter
-    def revoke_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def revoke_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("revoke_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -4984,7 +4984,7 @@ class GroupMembershipSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        member_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        member_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(member_id, unset.UnsetType):
@@ -5000,7 +5000,7 @@ class GroupMembershipSpec(pb_classes.Message):
         return super()._get_field("member_id", explicit_presence=False,
         )
     @member_id.setter
-    def member_id(self, value: "builtins.str") -> None:
+    def member_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("member_id",value,explicit_presence=False,
         )
     
@@ -5086,7 +5086,7 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        group_membership: "GroupMembership|group_membership_pb2.GroupMembership|unset.UnsetType" = unset.Unset,
+        group_membership: "GroupMembership|group_membership_pb2.GroupMembership|None|unset.UnsetType" = unset.Unset,
         user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
         service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None|unset.UnsetType" = unset.Unset,
         error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
@@ -5116,7 +5116,7 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         wrap=GroupMembership,
         )
     @group_membership.setter
-    def group_membership(self, value: "GroupMembership|group_membership_pb2.GroupMembership") -> None:
+    def group_membership(self, value: "GroupMembership|group_membership_pb2.GroupMembership|None") -> None:
         return super()._set_field("group_membership",value,explicit_presence=False,
         )
     
@@ -5169,9 +5169,9 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|unset.UnsetType" = unset.Unset,
-        revoke_after_hours: "builtins.int|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None|unset.UnsetType" = unset.Unset,
+        revoke_after_hours: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -5194,7 +5194,7 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -5204,7 +5204,7 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         wrap=GroupMembershipSpec,
         )
     @spec.setter
-    def spec(self, value: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec") -> None:
+    def spec(self, value: "GroupMembershipSpec|group_membership_pb2.GroupMembershipSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -5213,7 +5213,7 @@ class CreateGroupMembershipRequest(pb_classes.Message):
         return super()._get_field("revoke_after_hours", explicit_presence=False,
         )
     @revoke_after_hours.setter
-    def revoke_after_hours(self, value: "builtins.int") -> None:
+    def revoke_after_hours(self, value: "builtins.int|None") -> None:
         return super()._set_field("revoke_after_hours",value,explicit_presence=False,
         )
     
@@ -5233,7 +5233,7 @@ class DeleteGroupMembershipRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -5249,7 +5249,7 @@ class DeleteGroupMembershipRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -5267,7 +5267,7 @@ class GetGroupMembershipRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -5283,7 +5283,7 @@ class GetGroupMembershipRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -5328,10 +5328,10 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -5357,7 +5357,7 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -5375,7 +5375,7 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -5384,7 +5384,7 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -5433,10 +5433,10 @@ class ListMemberOfRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        subject_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        subject_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(subject_id, unset.UnsetType):
@@ -5462,7 +5462,7 @@ class ListMemberOfRequest(pb_classes.Message):
         return super()._get_field("subject_id", explicit_presence=False,
         )
     @subject_id.setter
-    def subject_id(self, value: "builtins.str") -> None:
+    def subject_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("subject_id",value,explicit_presence=False,
         )
     
@@ -5480,7 +5480,7 @@ class ListMemberOfRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -5489,7 +5489,7 @@ class ListMemberOfRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -5511,8 +5511,8 @@ class ListGroupMembershipsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        memberships: "abc.Iterable[GroupMembership]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        memberships: "abc.Iterable[GroupMembership]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(memberships, unset.UnsetType):
@@ -5532,7 +5532,7 @@ class ListGroupMembershipsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(GroupMembership,None,None),
         )
     @memberships.setter
-    def memberships(self, value: "abc.Iterable[GroupMembership]") -> None:
+    def memberships(self, value: "abc.Iterable[GroupMembership]|None") -> None:
         return super()._set_field("memberships",value,explicit_presence=False,
         )
     
@@ -5541,7 +5541,7 @@ class ListGroupMembershipsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -5560,8 +5560,8 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        memberships: "abc.Iterable[GroupMembershipWithAttributes]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        memberships: "abc.Iterable[GroupMembershipWithAttributes]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(memberships, unset.UnsetType):
@@ -5581,7 +5581,7 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(GroupMembershipWithAttributes,None,None),
         )
     @memberships.setter
-    def memberships(self, value: "abc.Iterable[GroupMembershipWithAttributes]") -> None:
+    def memberships(self, value: "abc.Iterable[GroupMembershipWithAttributes]|None") -> None:
         return super()._set_field("memberships",value,explicit_presence=False,
         )
     
@@ -5590,7 +5590,7 @@ class ListGroupMembershipsWithAttributesResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -5609,8 +5609,8 @@ class ListMemberOfResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Group]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Group]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -5630,7 +5630,7 @@ class ListMemberOfResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Group,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Group]") -> None:
+    def items(self, value: "abc.Iterable[Group]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -5639,7 +5639,7 @@ class ListMemberOfResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -5806,7 +5806,7 @@ class GetGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -5822,7 +5822,7 @@ class GetGroupRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -5840,8 +5840,8 @@ class GetGroupByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -5860,7 +5860,7 @@ class GetGroupByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -5869,7 +5869,7 @@ class GetGroupByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -5915,10 +5915,10 @@ class ListGroupsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -5944,7 +5944,7 @@ class ListGroupsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -5962,7 +5962,7 @@ class ListGroupsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -5971,7 +5971,7 @@ class ListGroupsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -5993,8 +5993,8 @@ class ListGroupsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Group]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Group]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -6014,7 +6014,7 @@ class ListGroupsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Group,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Group]") -> None:
+    def items(self, value: "abc.Iterable[Group]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -6023,7 +6023,7 @@ class ListGroupsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -6109,15 +6109,15 @@ class ExchangeTokenRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        grant_type: "builtins.str|unset.UnsetType" = unset.Unset,
-        requested_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
-        subject_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        subject_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
-        scopes: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        audience: "builtins.str|unset.UnsetType" = unset.Unset,
-        actor_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        actor_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
-        resource: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        grant_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        requested_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        subject_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        subject_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        scopes: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        audience: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        actor_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        actor_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(grant_type, unset.UnsetType):
@@ -6157,7 +6157,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._get_field("grant_type", explicit_presence=False,
         )
     @grant_type.setter
-    def grant_type(self, value: "builtins.str") -> None:
+    def grant_type(self, value: "builtins.str|None") -> None:
         return super()._set_field("grant_type",value,explicit_presence=False,
         )
     
@@ -6166,7 +6166,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._get_field("requested_token_type", explicit_presence=False,
         )
     @requested_token_type.setter
-    def requested_token_type(self, value: "builtins.str") -> None:
+    def requested_token_type(self, value: "builtins.str|None") -> None:
         return super()._set_field("requested_token_type",value,explicit_presence=False,
         )
     
@@ -6175,7 +6175,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._get_field("subject_token", explicit_presence=False,
         )
     @subject_token.setter
-    def subject_token(self, value: "builtins.str") -> None:
+    def subject_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("subject_token",value,explicit_presence=False,
         )
     
@@ -6184,7 +6184,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._get_field("subject_token_type", explicit_presence=False,
         )
     @subject_token_type.setter
-    def subject_token_type(self, value: "builtins.str") -> None:
+    def subject_token_type(self, value: "builtins.str|None") -> None:
         return super()._set_field("subject_token_type",value,explicit_presence=False,
         )
     
@@ -6194,7 +6194,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @scopes.setter
-    def scopes(self, value: "abc.Iterable[builtins.str]") -> None:
+    def scopes(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("scopes",value,explicit_presence=False,
         )
     
@@ -6203,7 +6203,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._get_field("audience", explicit_presence=False,
         )
     @audience.setter
-    def audience(self, value: "builtins.str") -> None:
+    def audience(self, value: "builtins.str|None") -> None:
         return super()._set_field("audience",value,explicit_presence=False,
         )
     
@@ -6212,7 +6212,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._get_field("actor_token", explicit_presence=False,
         )
     @actor_token.setter
-    def actor_token(self, value: "builtins.str") -> None:
+    def actor_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("actor_token",value,explicit_presence=False,
         )
     
@@ -6221,7 +6221,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         return super()._get_field("actor_token_type", explicit_presence=False,
         )
     @actor_token_type.setter
-    def actor_token_type(self, value: "builtins.str") -> None:
+    def actor_token_type(self, value: "builtins.str|None") -> None:
         return super()._set_field("actor_token_type",value,explicit_presence=False,
         )
     
@@ -6231,7 +6231,7 @@ class ExchangeTokenRequest(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @resource.setter
-    def resource(self, value: "abc.Iterable[builtins.str]") -> None:
+    def resource(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("resource",value,explicit_presence=False,
         )
     
@@ -6257,11 +6257,11 @@ class CreateTokenResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        access_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        issued_token_type: "builtins.str|unset.UnsetType" = unset.Unset,
-        token_type: "builtins.str|unset.UnsetType" = unset.Unset,
-        expires_in: "builtins.int|unset.UnsetType" = unset.Unset,
-        scopes: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        access_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        issued_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        expires_in: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        scopes: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(access_token, unset.UnsetType):
@@ -6289,7 +6289,7 @@ class CreateTokenResponse(pb_classes.Message):
         return super()._get_field("access_token", explicit_presence=False,
         )
     @access_token.setter
-    def access_token(self, value: "builtins.str") -> None:
+    def access_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("access_token",value,explicit_presence=False,
         )
     
@@ -6298,7 +6298,7 @@ class CreateTokenResponse(pb_classes.Message):
         return super()._get_field("issued_token_type", explicit_presence=False,
         )
     @issued_token_type.setter
-    def issued_token_type(self, value: "builtins.str") -> None:
+    def issued_token_type(self, value: "builtins.str|None") -> None:
         return super()._set_field("issued_token_type",value,explicit_presence=False,
         )
     
@@ -6307,7 +6307,7 @@ class CreateTokenResponse(pb_classes.Message):
         return super()._get_field("token_type", explicit_presence=False,
         )
     @token_type.setter
-    def token_type(self, value: "builtins.str") -> None:
+    def token_type(self, value: "builtins.str|None") -> None:
         return super()._set_field("token_type",value,explicit_presence=False,
         )
     
@@ -6316,7 +6316,7 @@ class CreateTokenResponse(pb_classes.Message):
         return super()._get_field("expires_in", explicit_presence=False,
         )
     @expires_in.setter
-    def expires_in(self, value: "builtins.int") -> None:
+    def expires_in(self, value: "builtins.int|None") -> None:
         return super()._set_field("expires_in",value,explicit_presence=False,
         )
     
@@ -6326,7 +6326,7 @@ class CreateTokenResponse(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @scopes.setter
-    def scopes(self, value: "abc.Iterable[builtins.str]") -> None:
+    def scopes(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("scopes",value,explicit_presence=False,
         )
     
@@ -6376,9 +6376,9 @@ class Invitation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
-        status: "InvitationStatus|invitation_pb2.InvitationStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None|unset.UnsetType" = unset.Unset,
+        status: "InvitationStatus|invitation_pb2.InvitationStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -6401,7 +6401,7 @@ class Invitation(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -6411,7 +6411,7 @@ class Invitation(pb_classes.Message):
         wrap=InvitationSpec,
         )
     @spec.setter
-    def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec") -> None:
+    def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -6421,7 +6421,7 @@ class Invitation(pb_classes.Message):
         wrap=InvitationStatus,
         )
     @status.setter
-    def status(self, value: "InvitationStatus|invitation_pb2.InvitationStatus") -> None:
+    def status(self, value: "InvitationStatus|invitation_pb2.InvitationStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -6468,7 +6468,7 @@ class InvitationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
         email: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -6489,7 +6489,7 @@ class InvitationSpec(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -6528,9 +6528,9 @@ class InvitationStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        state: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|unset.UnsetType" = unset.Unset,
+        tenant_user_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        state: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(tenant_user_account_id, unset.UnsetType):
@@ -6553,7 +6553,7 @@ class InvitationStatus(pb_classes.Message):
         return super()._get_field("tenant_user_account_id", explicit_presence=False,
         )
     @tenant_user_account_id.setter
-    def tenant_user_account_id(self, value: "builtins.str") -> None:
+    def tenant_user_account_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("tenant_user_account_id",value,explicit_presence=False,
         )
     
@@ -6563,7 +6563,7 @@ class InvitationStatus(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @expires_at.setter
-    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("expires_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -6574,7 +6574,7 @@ class InvitationStatus(pb_classes.Message):
         wrap=InvitationStatus.State,
         )
     @state.setter
-    def state(self, value: "InvitationStatus.State|invitation_pb2.InvitationStatus.State") -> None:
+    def state(self, value: "InvitationStatus.State|invitation_pb2.InvitationStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -6596,9 +6596,9 @@ class CreateInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
-        no_send: "builtins.bool|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None|unset.UnsetType" = unset.Unset,
+        no_send: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -6621,7 +6621,7 @@ class CreateInvitationRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -6631,7 +6631,7 @@ class CreateInvitationRequest(pb_classes.Message):
         wrap=InvitationSpec,
         )
     @spec.setter
-    def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec") -> None:
+    def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -6640,7 +6640,7 @@ class CreateInvitationRequest(pb_classes.Message):
         return super()._get_field("no_send", explicit_presence=False,
         )
     @no_send.setter
-    def no_send(self, value: "builtins.bool") -> None:
+    def no_send(self, value: "builtins.bool|None") -> None:
         return super()._set_field("no_send",value,explicit_presence=False,
         )
     
@@ -6660,7 +6660,7 @@ class GetInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -6676,7 +6676,7 @@ class GetInvitationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -6694,10 +6694,10 @@ class ListInvitationsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -6722,7 +6722,7 @@ class ListInvitationsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -6731,7 +6731,7 @@ class ListInvitationsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -6740,7 +6740,7 @@ class ListInvitationsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -6749,7 +6749,7 @@ class ListInvitationsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -6770,8 +6770,8 @@ class ListInvitationsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Invitation]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Invitation]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -6791,7 +6791,7 @@ class ListInvitationsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Invitation,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Invitation]") -> None:
+    def items(self, value: "abc.Iterable[Invitation]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -6800,7 +6800,7 @@ class ListInvitationsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -6819,7 +6819,7 @@ class DeleteInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -6835,7 +6835,7 @@ class DeleteInvitationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -6853,8 +6853,8 @@ class UpdateInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "InvitationSpec|invitation_pb2.InvitationSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "InvitationSpec|invitation_pb2.InvitationSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -6874,7 +6874,7 @@ class UpdateInvitationRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -6884,7 +6884,7 @@ class UpdateInvitationRequest(pb_classes.Message):
         wrap=InvitationSpec,
         )
     @spec.setter
-    def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec") -> None:
+    def spec(self, value: "InvitationSpec|invitation_pb2.InvitationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -6903,7 +6903,7 @@ class ResendInvitationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -6919,7 +6919,7 @@ class ResendInvitationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -7066,8 +7066,8 @@ class UserAccountExternalId(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        federation_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        federation_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        federation_user_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(federation_user_account_id, unset.UnsetType):
@@ -7086,7 +7086,7 @@ class UserAccountExternalId(pb_classes.Message):
         return super()._get_field("federation_user_account_id", explicit_presence=False,
         )
     @federation_user_account_id.setter
-    def federation_user_account_id(self, value: "builtins.str") -> None:
+    def federation_user_account_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("federation_user_account_id",value,explicit_presence=False,
         )
     
@@ -7095,7 +7095,7 @@ class UserAccountExternalId(pb_classes.Message):
         return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
-    def federation_id(self, value: "builtins.str") -> None:
+    def federation_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("federation_id",value,explicit_presence=False,
         )
     
@@ -7288,11 +7288,11 @@ class UserProfile(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        federation_info: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        federation_info: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|None|unset.UnsetType" = unset.Unset,
         attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
         retrieving_error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
-        tenants: "abc.Iterable[UserTenantInfo]|unset.UnsetType" = unset.Unset,
+        tenants: "abc.Iterable[UserTenantInfo]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -7321,7 +7321,7 @@ class UserProfile(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -7331,7 +7331,7 @@ class UserProfile(pb_classes.Message):
         wrap=UserAccountExternalId,
         )
     @federation_info.setter
-    def federation_info(self, value: "UserAccountExternalId|user_account_pb2.UserAccountExternalId") -> None:
+    def federation_info(self, value: "UserAccountExternalId|user_account_pb2.UserAccountExternalId|None") -> None:
         return super()._set_field("federation_info",value,explicit_presence=False,
         )
     
@@ -7361,7 +7361,7 @@ class UserProfile(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(UserTenantInfo,None,None),
         )
     @tenants.setter
-    def tenants(self, value: "abc.Iterable[UserTenantInfo]") -> None:
+    def tenants(self, value: "abc.Iterable[UserTenantInfo]|None") -> None:
         return super()._set_field("tenants",value,explicit_presence=False,
         )
     
@@ -7384,8 +7384,8 @@ class UserTenantInfo(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        tenant_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        tenant_user_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        tenant_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        tenant_user_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(tenant_id, unset.UnsetType):
@@ -7404,7 +7404,7 @@ class UserTenantInfo(pb_classes.Message):
         return super()._get_field("tenant_id", explicit_presence=False,
         )
     @tenant_id.setter
-    def tenant_id(self, value: "builtins.str") -> None:
+    def tenant_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("tenant_id",value,explicit_presence=False,
         )
     
@@ -7413,7 +7413,7 @@ class UserTenantInfo(pb_classes.Message):
         return super()._get_field("tenant_user_account_id", explicit_presence=False,
         )
     @tenant_user_account_id.setter
-    def tenant_user_account_id(self, value: "builtins.str") -> None:
+    def tenant_user_account_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("tenant_user_account_id",value,explicit_presence=False,
         )
     
@@ -7432,7 +7432,7 @@ class ServiceAccountProfile(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        info: "ServiceAccount|service_account_pb2.ServiceAccount|unset.UnsetType" = unset.Unset,
+        info: "ServiceAccount|service_account_pb2.ServiceAccount|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(info, unset.UnsetType):
@@ -7449,7 +7449,7 @@ class ServiceAccountProfile(pb_classes.Message):
         wrap=ServiceAccount,
         )
     @info.setter
-    def info(self, value: "ServiceAccount|service_account_pb2.ServiceAccount") -> None:
+    def info(self, value: "ServiceAccount|service_account_pb2.ServiceAccount|None") -> None:
         return super()._set_field("info",value,explicit_presence=False,
         )
     
@@ -7513,7 +7513,7 @@ class GetProjectRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -7529,7 +7529,7 @@ class GetProjectRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -7547,8 +7547,8 @@ class GetProjectByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -7567,7 +7567,7 @@ class GetProjectByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -7576,7 +7576,7 @@ class GetProjectByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -7622,10 +7622,10 @@ class ListProjectsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -7651,7 +7651,7 @@ class ListProjectsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -7669,7 +7669,7 @@ class ListProjectsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -7678,7 +7678,7 @@ class ListProjectsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -7700,8 +7700,8 @@ class ListProjectsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Container]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Container]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -7721,7 +7721,7 @@ class ListProjectsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Container,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Container]") -> None:
+    def items(self, value: "abc.Iterable[Container]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -7730,7 +7730,7 @@ class ListProjectsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -7816,8 +7816,8 @@ class CreateServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -7837,7 +7837,7 @@ class CreateServiceAccountRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -7847,7 +7847,7 @@ class CreateServiceAccountRequest(pb_classes.Message):
         wrap=ServiceAccountSpec,
         )
     @spec.setter
-    def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec") -> None:
+    def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -7866,7 +7866,7 @@ class GetServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -7882,7 +7882,7 @@ class GetServiceAccountRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -7900,8 +7900,8 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -7920,7 +7920,7 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -7929,7 +7929,7 @@ class GetServiceAccountByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -7975,10 +7975,10 @@ class ListServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -8004,7 +8004,7 @@ class ListServiceAccountRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -8022,7 +8022,7 @@ class ListServiceAccountRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -8031,7 +8031,7 @@ class ListServiceAccountRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -8053,8 +8053,8 @@ class UpdateServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -8074,7 +8074,7 @@ class UpdateServiceAccountRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -8084,7 +8084,7 @@ class UpdateServiceAccountRequest(pb_classes.Message):
         wrap=ServiceAccountSpec,
         )
     @spec.setter
-    def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec") -> None:
+    def spec(self, value: "ServiceAccountSpec|service_account_pb2.ServiceAccountSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -8103,7 +8103,7 @@ class DeleteServiceAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -8119,7 +8119,7 @@ class DeleteServiceAccountRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -8137,8 +8137,8 @@ class ListServiceAccountResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[ServiceAccount]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[ServiceAccount]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -8158,7 +8158,7 @@ class ListServiceAccountResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(ServiceAccount,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[ServiceAccount]") -> None:
+    def items(self, value: "abc.Iterable[ServiceAccount]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -8167,7 +8167,7 @@ class ListServiceAccountResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -8474,7 +8474,7 @@ class GetTenantRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -8490,7 +8490,7 @@ class GetTenantRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -8536,8 +8536,8 @@ class ListTenantsRequest(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(page_size, unset.UnsetType):
@@ -8569,7 +8569,7 @@ class ListTenantsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -8578,7 +8578,7 @@ class ListTenantsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -8599,8 +8599,8 @@ class ListTenantsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Container]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Container]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -8620,7 +8620,7 @@ class ListTenantsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Container,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Container]") -> None:
+    def items(self, value: "abc.Iterable[Container]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -8629,7 +8629,7 @@ class ListTenantsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -8695,7 +8695,7 @@ class GetTenantUserAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -8711,7 +8711,7 @@ class GetTenantUserAccountRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -8756,10 +8756,10 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -8785,7 +8785,7 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -8803,7 +8803,7 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -8812,7 +8812,7 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -8834,8 +8834,8 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[TenantUserAccount]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[TenantUserAccount]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -8855,7 +8855,7 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(TenantUserAccount,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[TenantUserAccount]") -> None:
+    def items(self, value: "abc.Iterable[TenantUserAccount]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -8864,7 +8864,7 @@ class ListTenantUserAccountsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -8883,7 +8883,7 @@ class BlockTenantUserAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -8899,7 +8899,7 @@ class BlockTenantUserAccountRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -8917,7 +8917,7 @@ class UnblockTenantUserAccountRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -8933,7 +8933,7 @@ class UnblockTenantUserAccountRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -9039,7 +9039,7 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -9055,7 +9055,7 @@ class GetTenantUserAccountWithAttributesRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -9100,10 +9100,10 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -9129,7 +9129,7 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -9147,7 +9147,7 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -9156,7 +9156,7 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -9178,8 +9178,8 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[TenantUserAccountWithAttributes]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[TenantUserAccountWithAttributes]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -9199,7 +9199,7 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(TenantUserAccountWithAttributes,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[TenantUserAccountWithAttributes]") -> None:
+    def items(self, value: "abc.Iterable[TenantUserAccountWithAttributes]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -9208,7 +9208,7 @@ class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     

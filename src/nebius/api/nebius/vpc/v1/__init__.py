@@ -58,9 +58,9 @@ class Pool(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "PoolSpec|pool_pb2.PoolSpec|unset.UnsetType" = unset.Unset,
-        status: "PoolStatus|pool_pb2.PoolStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "PoolSpec|pool_pb2.PoolSpec|None|unset.UnsetType" = unset.Unset,
+        status: "PoolStatus|pool_pb2.PoolStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -83,7 +83,7 @@ class Pool(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -93,7 +93,7 @@ class Pool(pb_classes.Message):
         wrap=PoolSpec,
         )
     @spec.setter
-    def spec(self, value: "PoolSpec|pool_pb2.PoolSpec") -> None:
+    def spec(self, value: "PoolSpec|pool_pb2.PoolSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -103,7 +103,7 @@ class Pool(pb_classes.Message):
         wrap=PoolStatus,
         )
     @status.setter
-    def status(self, value: "PoolStatus|pool_pb2.PoolStatus") -> None:
+    def status(self, value: "PoolStatus|pool_pb2.PoolStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -123,10 +123,10 @@ class PoolSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        source_pool_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        version: "IpVersion|pool_pb2.IpVersion|unset.UnsetType" = unset.Unset,
-        visibility: "IpVisibility|pool_pb2.IpVisibility|unset.UnsetType" = unset.Unset,
-        cidrs: "abc.Iterable[PoolCidr]|unset.UnsetType" = unset.Unset,
+        source_pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        version: "IpVersion|pool_pb2.IpVersion|None|unset.UnsetType" = unset.Unset,
+        visibility: "IpVisibility|pool_pb2.IpVisibility|None|unset.UnsetType" = unset.Unset,
+        cidrs: "abc.Iterable[PoolCidr]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(source_pool_id, unset.UnsetType):
@@ -151,7 +151,7 @@ class PoolSpec(pb_classes.Message):
         return super()._get_field("source_pool_id", explicit_presence=False,
         )
     @source_pool_id.setter
-    def source_pool_id(self, value: "builtins.str") -> None:
+    def source_pool_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("source_pool_id",value,explicit_presence=False,
         )
     
@@ -161,7 +161,7 @@ class PoolSpec(pb_classes.Message):
         wrap=IpVersion,
         )
     @version.setter
-    def version(self, value: "IpVersion|pool_pb2.IpVersion") -> None:
+    def version(self, value: "IpVersion|pool_pb2.IpVersion|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -171,7 +171,7 @@ class PoolSpec(pb_classes.Message):
         wrap=IpVisibility,
         )
     @visibility.setter
-    def visibility(self, value: "IpVisibility|pool_pb2.IpVisibility") -> None:
+    def visibility(self, value: "IpVisibility|pool_pb2.IpVisibility|None") -> None:
         return super()._set_field("visibility",value,explicit_presence=False,
         )
     
@@ -181,7 +181,7 @@ class PoolSpec(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(PoolCidr,None,None),
         )
     @cidrs.setter
-    def cidrs(self, value: "abc.Iterable[PoolCidr]") -> None:
+    def cidrs(self, value: "abc.Iterable[PoolCidr]|None") -> None:
         return super()._set_field("cidrs",value,explicit_presence=False,
         )
     
@@ -202,9 +202,9 @@ class PoolCidr(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidr: "builtins.str|unset.UnsetType" = unset.Unset,
-        state: "AddressBlockState|pool_pb2.AddressBlockState|unset.UnsetType" = unset.Unset,
-        max_mask_length: "builtins.int|unset.UnsetType" = unset.Unset,
+        cidr: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        state: "AddressBlockState|pool_pb2.AddressBlockState|None|unset.UnsetType" = unset.Unset,
+        max_mask_length: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(cidr, unset.UnsetType):
@@ -226,7 +226,7 @@ class PoolCidr(pb_classes.Message):
         return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
-    def cidr(self, value: "builtins.str") -> None:
+    def cidr(self, value: "builtins.str|None") -> None:
         return super()._set_field("cidr",value,explicit_presence=False,
         )
     
@@ -236,7 +236,7 @@ class PoolCidr(pb_classes.Message):
         wrap=AddressBlockState,
         )
     @state.setter
-    def state(self, value: "AddressBlockState|pool_pb2.AddressBlockState") -> None:
+    def state(self, value: "AddressBlockState|pool_pb2.AddressBlockState|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -245,7 +245,7 @@ class PoolCidr(pb_classes.Message):
         return super()._get_field("max_mask_length", explicit_presence=False,
         )
     @max_mask_length.setter
-    def max_mask_length(self, value: "builtins.int") -> None:
+    def max_mask_length(self, value: "builtins.int|None") -> None:
         return super()._set_field("max_mask_length",value,explicit_presence=False,
         )
     
@@ -272,10 +272,10 @@ class PoolStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "PoolStatus.State|pool_pb2.PoolStatus.State|unset.UnsetType" = unset.Unset,
-        cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        scope_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        assignment: "PoolAssignment|pool_pb2.PoolAssignment|unset.UnsetType" = unset.Unset,
+        state: "PoolStatus.State|pool_pb2.PoolStatus.State|None|unset.UnsetType" = unset.Unset,
+        cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        scope_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        assignment: "PoolAssignment|pool_pb2.PoolAssignment|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -302,7 +302,7 @@ class PoolStatus(pb_classes.Message):
         wrap=PoolStatus.State,
         )
     @state.setter
-    def state(self, value: "PoolStatus.State|pool_pb2.PoolStatus.State") -> None:
+    def state(self, value: "PoolStatus.State|pool_pb2.PoolStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -312,7 +312,7 @@ class PoolStatus(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @cidrs.setter
-    def cidrs(self, value: "abc.Iterable[builtins.str]") -> None:
+    def cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("cidrs",value,explicit_presence=False,
         )
     
@@ -321,7 +321,7 @@ class PoolStatus(pb_classes.Message):
         return super()._get_field("scope_id", explicit_presence=False,
         )
     @scope_id.setter
-    def scope_id(self, value: "builtins.str") -> None:
+    def scope_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("scope_id",value,explicit_presence=False,
         )
     
@@ -331,7 +331,7 @@ class PoolStatus(pb_classes.Message):
         wrap=PoolAssignment,
         )
     @assignment.setter
-    def assignment(self, value: "PoolAssignment|pool_pb2.PoolAssignment") -> None:
+    def assignment(self, value: "PoolAssignment|pool_pb2.PoolAssignment|None") -> None:
         return super()._set_field("assignment",value,explicit_presence=False,
         )
     
@@ -353,8 +353,8 @@ class PoolAssignment(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        networks: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        subnets: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        networks: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        subnets: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(networks, unset.UnsetType):
@@ -374,7 +374,7 @@ class PoolAssignment(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @networks.setter
-    def networks(self, value: "abc.Iterable[builtins.str]") -> None:
+    def networks(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("networks",value,explicit_presence=False,
         )
     
@@ -384,7 +384,7 @@ class PoolAssignment(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @subnets.setter
-    def subnets(self, value: "abc.Iterable[builtins.str]") -> None:
+    def subnets(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("subnets",value,explicit_presence=False,
         )
     
@@ -404,9 +404,9 @@ class Allocation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AllocationSpec|allocation_pb2.AllocationSpec|unset.UnsetType" = unset.Unset,
-        status: "AllocationStatus|allocation_pb2.AllocationStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AllocationSpec|allocation_pb2.AllocationSpec|None|unset.UnsetType" = unset.Unset,
+        status: "AllocationStatus|allocation_pb2.AllocationStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -429,7 +429,7 @@ class Allocation(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -439,7 +439,7 @@ class Allocation(pb_classes.Message):
         wrap=AllocationSpec,
         )
     @spec.setter
-    def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec") -> None:
+    def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -449,7 +449,7 @@ class Allocation(pb_classes.Message):
         wrap=AllocationStatus,
         )
     @status.setter
-    def status(self, value: "AllocationStatus|allocation_pb2.AllocationStatus") -> None:
+    def status(self, value: "AllocationStatus|allocation_pb2.AllocationStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -597,7 +597,7 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidr: "builtins.str|unset.UnsetType" = unset.Unset,
+        cidr: "builtins.str|None|unset.UnsetType" = unset.Unset,
         subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -622,7 +622,7 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
         return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
-    def cidr(self, value: "builtins.str") -> None:
+    def cidr(self, value: "builtins.str|None") -> None:
         return super()._set_field("cidr",value,explicit_presence=False,
         )
     
@@ -699,7 +699,7 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidr: "builtins.str|unset.UnsetType" = unset.Unset,
+        cidr: "builtins.str|None|unset.UnsetType" = unset.Unset,
         subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -724,7 +724,7 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
         return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
-    def cidr(self, value: "builtins.str") -> None:
+    def cidr(self, value: "builtins.str|None") -> None:
         return super()._set_field("cidr",value,explicit_presence=False,
         )
     
@@ -771,10 +771,10 @@ class AllocationStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "AllocationStatus.State|allocation_pb2.AllocationStatus.State|unset.UnsetType" = unset.Unset,
-        details: "AllocationDetails|allocation_pb2.AllocationDetails|unset.UnsetType" = unset.Unset,
-        assignment: "Assignment|allocation_pb2.Assignment|unset.UnsetType" = unset.Unset,
-        static: "builtins.bool|unset.UnsetType" = unset.Unset,
+        state: "AllocationStatus.State|allocation_pb2.AllocationStatus.State|None|unset.UnsetType" = unset.Unset,
+        details: "AllocationDetails|allocation_pb2.AllocationDetails|None|unset.UnsetType" = unset.Unset,
+        assignment: "Assignment|allocation_pb2.Assignment|None|unset.UnsetType" = unset.Unset,
+        static: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -801,7 +801,7 @@ class AllocationStatus(pb_classes.Message):
         wrap=AllocationStatus.State,
         )
     @state.setter
-    def state(self, value: "AllocationStatus.State|allocation_pb2.AllocationStatus.State") -> None:
+    def state(self, value: "AllocationStatus.State|allocation_pb2.AllocationStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -811,7 +811,7 @@ class AllocationStatus(pb_classes.Message):
         wrap=AllocationDetails,
         )
     @details.setter
-    def details(self, value: "AllocationDetails|allocation_pb2.AllocationDetails") -> None:
+    def details(self, value: "AllocationDetails|allocation_pb2.AllocationDetails|None") -> None:
         return super()._set_field("details",value,explicit_presence=False,
         )
     
@@ -821,7 +821,7 @@ class AllocationStatus(pb_classes.Message):
         wrap=Assignment,
         )
     @assignment.setter
-    def assignment(self, value: "Assignment|allocation_pb2.Assignment") -> None:
+    def assignment(self, value: "Assignment|allocation_pb2.Assignment|None") -> None:
         return super()._set_field("assignment",value,explicit_presence=False,
         )
     
@@ -830,7 +830,7 @@ class AllocationStatus(pb_classes.Message):
         return super()._get_field("static", explicit_presence=False,
         )
     @static.setter
-    def static(self, value: "builtins.bool") -> None:
+    def static(self, value: "builtins.bool|None") -> None:
         return super()._set_field("static",value,explicit_presence=False,
         )
     
@@ -852,9 +852,9 @@ class AllocationDetails(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        allocated_cidr: "builtins.str|unset.UnsetType" = unset.Unset,
-        pool_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        version: "IpVersion|pool_pb2.IpVersion|unset.UnsetType" = unset.Unset,
+        allocated_cidr: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        version: "IpVersion|pool_pb2.IpVersion|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(allocated_cidr, unset.UnsetType):
@@ -876,7 +876,7 @@ class AllocationDetails(pb_classes.Message):
         return super()._get_field("allocated_cidr", explicit_presence=False,
         )
     @allocated_cidr.setter
-    def allocated_cidr(self, value: "builtins.str") -> None:
+    def allocated_cidr(self, value: "builtins.str|None") -> None:
         return super()._set_field("allocated_cidr",value,explicit_presence=False,
         )
     
@@ -885,7 +885,7 @@ class AllocationDetails(pb_classes.Message):
         return super()._get_field("pool_id", explicit_presence=False,
         )
     @pool_id.setter
-    def pool_id(self, value: "builtins.str") -> None:
+    def pool_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("pool_id",value,explicit_presence=False,
         )
     
@@ -895,7 +895,7 @@ class AllocationDetails(pb_classes.Message):
         wrap=IpVersion,
         )
     @version.setter
-    def version(self, value: "IpVersion|pool_pb2.IpVersion") -> None:
+    def version(self, value: "IpVersion|pool_pb2.IpVersion|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -1005,8 +1005,8 @@ class NetworkInterfaceAssignment(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        instance_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        instance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(instance_id, unset.UnsetType):
@@ -1025,7 +1025,7 @@ class NetworkInterfaceAssignment(pb_classes.Message):
         return super()._get_field("instance_id", explicit_presence=False,
         )
     @instance_id.setter
-    def instance_id(self, value: "builtins.str") -> None:
+    def instance_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("instance_id",value,explicit_presence=False,
         )
     
@@ -1034,7 +1034,7 @@ class NetworkInterfaceAssignment(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -1053,7 +1053,7 @@ class LoadBalancerAssignment(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1069,7 +1069,7 @@ class LoadBalancerAssignment(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1088,7 +1088,7 @@ class GetAllocationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1104,7 +1104,7 @@ class GetAllocationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1122,8 +1122,8 @@ class GetAllocationByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1142,7 +1142,7 @@ class GetAllocationByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1151,7 +1151,7 @@ class GetAllocationByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -1170,9 +1170,9 @@ class ListAllocationsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1194,7 +1194,7 @@ class ListAllocationsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1203,7 +1203,7 @@ class ListAllocationsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -1212,7 +1212,7 @@ class ListAllocationsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -1232,9 +1232,9 @@ class ListAllocationsByPoolRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pool_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(pool_id, unset.UnsetType):
@@ -1256,7 +1256,7 @@ class ListAllocationsByPoolRequest(pb_classes.Message):
         return super()._get_field("pool_id", explicit_presence=False,
         )
     @pool_id.setter
-    def pool_id(self, value: "builtins.str") -> None:
+    def pool_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("pool_id",value,explicit_presence=False,
         )
     
@@ -1265,7 +1265,7 @@ class ListAllocationsByPoolRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -1274,7 +1274,7 @@ class ListAllocationsByPoolRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -1294,8 +1294,8 @@ class ListAllocationsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Allocation]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Allocation]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -1315,7 +1315,7 @@ class ListAllocationsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Allocation,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Allocation]") -> None:
+    def items(self, value: "abc.Iterable[Allocation]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -1324,7 +1324,7 @@ class ListAllocationsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -1343,8 +1343,8 @@ class CreateAllocationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AllocationSpec|allocation_pb2.AllocationSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AllocationSpec|allocation_pb2.AllocationSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1364,7 +1364,7 @@ class CreateAllocationRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1374,7 +1374,7 @@ class CreateAllocationRequest(pb_classes.Message):
         wrap=AllocationSpec,
         )
     @spec.setter
-    def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec") -> None:
+    def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1393,8 +1393,8 @@ class UpdateAllocationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "AllocationSpec|allocation_pb2.AllocationSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AllocationSpec|allocation_pb2.AllocationSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1414,7 +1414,7 @@ class UpdateAllocationRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1424,7 +1424,7 @@ class UpdateAllocationRequest(pb_classes.Message):
         wrap=AllocationSpec,
         )
     @spec.setter
-    def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec") -> None:
+    def spec(self, value: "AllocationSpec|allocation_pb2.AllocationSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1443,7 +1443,7 @@ class DeleteAllocationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1459,7 +1459,7 @@ class DeleteAllocationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1626,9 +1626,9 @@ class Network(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "NetworkSpec|network_pb2.NetworkSpec|unset.UnsetType" = unset.Unset,
-        status: "NetworkStatus|network_pb2.NetworkStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "NetworkSpec|network_pb2.NetworkSpec|None|unset.UnsetType" = unset.Unset,
+        status: "NetworkStatus|network_pb2.NetworkStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1651,7 +1651,7 @@ class Network(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1661,7 +1661,7 @@ class Network(pb_classes.Message):
         wrap=NetworkSpec,
         )
     @spec.setter
-    def spec(self, value: "NetworkSpec|network_pb2.NetworkSpec") -> None:
+    def spec(self, value: "NetworkSpec|network_pb2.NetworkSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1671,7 +1671,7 @@ class Network(pb_classes.Message):
         wrap=NetworkStatus,
         )
     @status.setter
-    def status(self, value: "NetworkStatus|network_pb2.NetworkStatus") -> None:
+    def status(self, value: "NetworkStatus|network_pb2.NetworkStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -1691,8 +1691,8 @@ class NetworkSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        ipv4_private_pools: "IPv4PrivateNetworkPools|network_pb2.IPv4PrivateNetworkPools|unset.UnsetType" = unset.Unset,
-        ipv4_public_pools: "IPv4PublicNetworkPools|network_pb2.IPv4PublicNetworkPools|unset.UnsetType" = unset.Unset,
+        ipv4_private_pools: "IPv4PrivateNetworkPools|network_pb2.IPv4PrivateNetworkPools|None|unset.UnsetType" = unset.Unset,
+        ipv4_public_pools: "IPv4PublicNetworkPools|network_pb2.IPv4PublicNetworkPools|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(ipv4_private_pools, unset.UnsetType):
@@ -1712,7 +1712,7 @@ class NetworkSpec(pb_classes.Message):
         wrap=IPv4PrivateNetworkPools,
         )
     @ipv4_private_pools.setter
-    def ipv4_private_pools(self, value: "IPv4PrivateNetworkPools|network_pb2.IPv4PrivateNetworkPools") -> None:
+    def ipv4_private_pools(self, value: "IPv4PrivateNetworkPools|network_pb2.IPv4PrivateNetworkPools|None") -> None:
         return super()._set_field("ipv4_private_pools",value,explicit_presence=False,
         )
     
@@ -1722,7 +1722,7 @@ class NetworkSpec(pb_classes.Message):
         wrap=IPv4PublicNetworkPools,
         )
     @ipv4_public_pools.setter
-    def ipv4_public_pools(self, value: "IPv4PublicNetworkPools|network_pb2.IPv4PublicNetworkPools") -> None:
+    def ipv4_public_pools(self, value: "IPv4PublicNetworkPools|network_pb2.IPv4PublicNetworkPools|None") -> None:
         return super()._set_field("ipv4_public_pools",value,explicit_presence=False,
         )
     
@@ -1741,7 +1741,7 @@ class IPv4PrivateNetworkPools(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pools: "abc.Iterable[NetworkPool]|unset.UnsetType" = unset.Unset,
+        pools: "abc.Iterable[NetworkPool]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(pools, unset.UnsetType):
@@ -1758,7 +1758,7 @@ class IPv4PrivateNetworkPools(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(NetworkPool,None,None),
         )
     @pools.setter
-    def pools(self, value: "abc.Iterable[NetworkPool]") -> None:
+    def pools(self, value: "abc.Iterable[NetworkPool]|None") -> None:
         return super()._set_field("pools",value,explicit_presence=False,
         )
     
@@ -1776,7 +1776,7 @@ class IPv4PublicNetworkPools(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pools: "abc.Iterable[NetworkPool]|unset.UnsetType" = unset.Unset,
+        pools: "abc.Iterable[NetworkPool]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(pools, unset.UnsetType):
@@ -1793,7 +1793,7 @@ class IPv4PublicNetworkPools(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(NetworkPool,None,None),
         )
     @pools.setter
-    def pools(self, value: "abc.Iterable[NetworkPool]") -> None:
+    def pools(self, value: "abc.Iterable[NetworkPool]|None") -> None:
         return super()._set_field("pools",value,explicit_presence=False,
         )
     
@@ -1811,7 +1811,7 @@ class NetworkPool(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1827,7 +1827,7 @@ class NetworkPool(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1852,7 +1852,7 @@ class NetworkStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "NetworkStatus.State|network_pb2.NetworkStatus.State|unset.UnsetType" = unset.Unset,
+        state: "NetworkStatus.State|network_pb2.NetworkStatus.State|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -1870,7 +1870,7 @@ class NetworkStatus(pb_classes.Message):
         wrap=NetworkStatus.State,
         )
     @state.setter
-    def state(self, value: "NetworkStatus.State|network_pb2.NetworkStatus.State") -> None:
+    def state(self, value: "NetworkStatus.State|network_pb2.NetworkStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -1890,7 +1890,7 @@ class GetNetworkRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1906,7 +1906,7 @@ class GetNetworkRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1924,8 +1924,8 @@ class GetNetworkByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1944,7 +1944,7 @@ class GetNetworkByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1953,7 +1953,7 @@ class GetNetworkByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -1972,9 +1972,9 @@ class ListNetworksRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1996,7 +1996,7 @@ class ListNetworksRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -2005,7 +2005,7 @@ class ListNetworksRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -2014,7 +2014,7 @@ class ListNetworksRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -2034,8 +2034,8 @@ class ListNetworksResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Network]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Network]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -2055,7 +2055,7 @@ class ListNetworksResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Network,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Network]") -> None:
+    def items(self, value: "abc.Iterable[Network]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -2064,7 +2064,7 @@ class ListNetworksResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -2150,7 +2150,7 @@ class GetPoolRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -2166,7 +2166,7 @@ class GetPoolRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2184,8 +2184,8 @@ class GetPoolByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -2204,7 +2204,7 @@ class GetPoolByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -2213,7 +2213,7 @@ class GetPoolByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -2232,9 +2232,9 @@ class ListPoolsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -2256,7 +2256,7 @@ class ListPoolsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -2265,7 +2265,7 @@ class ListPoolsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -2274,7 +2274,7 @@ class ListPoolsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -2294,9 +2294,9 @@ class ListPoolsBySourcePoolRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pool_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(pool_id, unset.UnsetType):
@@ -2318,7 +2318,7 @@ class ListPoolsBySourcePoolRequest(pb_classes.Message):
         return super()._get_field("pool_id", explicit_presence=False,
         )
     @pool_id.setter
-    def pool_id(self, value: "builtins.str") -> None:
+    def pool_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("pool_id",value,explicit_presence=False,
         )
     
@@ -2327,7 +2327,7 @@ class ListPoolsBySourcePoolRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -2336,7 +2336,7 @@ class ListPoolsBySourcePoolRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -2356,8 +2356,8 @@ class ListPoolsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Pool]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Pool]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -2377,7 +2377,7 @@ class ListPoolsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Pool,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Pool]") -> None:
+    def items(self, value: "abc.Iterable[Pool]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -2386,7 +2386,7 @@ class ListPoolsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -2405,8 +2405,8 @@ class UpdatePoolRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "PoolSpec|pool_pb2.PoolSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "PoolSpec|pool_pb2.PoolSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2426,7 +2426,7 @@ class UpdatePoolRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2436,7 +2436,7 @@ class UpdatePoolRequest(pb_classes.Message):
         wrap=PoolSpec,
         )
     @spec.setter
-    def spec(self, value: "PoolSpec|pool_pb2.PoolSpec") -> None:
+    def spec(self, value: "PoolSpec|pool_pb2.PoolSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2564,9 +2564,9 @@ class Subnet(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "SubnetSpec|subnet_pb2.SubnetSpec|unset.UnsetType" = unset.Unset,
-        status: "SubnetStatus|subnet_pb2.SubnetStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "SubnetSpec|subnet_pb2.SubnetSpec|None|unset.UnsetType" = unset.Unset,
+        status: "SubnetStatus|subnet_pb2.SubnetStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2589,7 +2589,7 @@ class Subnet(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2599,7 +2599,7 @@ class Subnet(pb_classes.Message):
         wrap=SubnetSpec,
         )
     @spec.setter
-    def spec(self, value: "SubnetSpec|subnet_pb2.SubnetSpec") -> None:
+    def spec(self, value: "SubnetSpec|subnet_pb2.SubnetSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2609,7 +2609,7 @@ class Subnet(pb_classes.Message):
         wrap=SubnetStatus,
         )
     @status.setter
-    def status(self, value: "SubnetStatus|subnet_pb2.SubnetStatus") -> None:
+    def status(self, value: "SubnetStatus|subnet_pb2.SubnetStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -2629,7 +2629,7 @@ class SubnetSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        network_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ipv4_private_pools: "IPv4PrivateSubnetPools|subnet_pb2.IPv4PrivateSubnetPools|None|unset.UnsetType" = unset.Unset,
         ipv4_public_pools: "IPv4PublicSubnetPools|subnet_pb2.IPv4PublicSubnetPools|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -2653,7 +2653,7 @@ class SubnetSpec(pb_classes.Message):
         return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
-    def network_id(self, value: "builtins.str") -> None:
+    def network_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("network_id",value,explicit_presence=False,
         )
     
@@ -2693,8 +2693,8 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pools: "abc.Iterable[SubnetPool]|unset.UnsetType" = unset.Unset,
-        use_network_pools: "builtins.bool|unset.UnsetType" = unset.Unset,
+        pools: "abc.Iterable[SubnetPool]|None|unset.UnsetType" = unset.Unset,
+        use_network_pools: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(pools, unset.UnsetType):
@@ -2714,7 +2714,7 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(SubnetPool,None,None),
         )
     @pools.setter
-    def pools(self, value: "abc.Iterable[SubnetPool]") -> None:
+    def pools(self, value: "abc.Iterable[SubnetPool]|None") -> None:
         return super()._set_field("pools",value,explicit_presence=False,
         )
     
@@ -2723,7 +2723,7 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
         return super()._get_field("use_network_pools", explicit_presence=False,
         )
     @use_network_pools.setter
-    def use_network_pools(self, value: "builtins.bool") -> None:
+    def use_network_pools(self, value: "builtins.bool|None") -> None:
         return super()._set_field("use_network_pools",value,explicit_presence=False,
         )
     
@@ -2742,8 +2742,8 @@ class IPv4PublicSubnetPools(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pools: "abc.Iterable[SubnetPool]|unset.UnsetType" = unset.Unset,
-        use_network_pools: "builtins.bool|unset.UnsetType" = unset.Unset,
+        pools: "abc.Iterable[SubnetPool]|None|unset.UnsetType" = unset.Unset,
+        use_network_pools: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(pools, unset.UnsetType):
@@ -2763,7 +2763,7 @@ class IPv4PublicSubnetPools(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(SubnetPool,None,None),
         )
     @pools.setter
-    def pools(self, value: "abc.Iterable[SubnetPool]") -> None:
+    def pools(self, value: "abc.Iterable[SubnetPool]|None") -> None:
         return super()._set_field("pools",value,explicit_presence=False,
         )
     
@@ -2772,7 +2772,7 @@ class IPv4PublicSubnetPools(pb_classes.Message):
         return super()._get_field("use_network_pools", explicit_presence=False,
         )
     @use_network_pools.setter
-    def use_network_pools(self, value: "builtins.bool") -> None:
+    def use_network_pools(self, value: "builtins.bool|None") -> None:
         return super()._set_field("use_network_pools",value,explicit_presence=False,
         )
     
@@ -2791,7 +2791,7 @@ class SubnetPool(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidrs: "abc.Iterable[SubnetCidr]|unset.UnsetType" = unset.Unset,
+        cidrs: "abc.Iterable[SubnetCidr]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(cidrs, unset.UnsetType):
@@ -2808,7 +2808,7 @@ class SubnetPool(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(SubnetCidr,None,None),
         )
     @cidrs.setter
-    def cidrs(self, value: "abc.Iterable[SubnetCidr]") -> None:
+    def cidrs(self, value: "abc.Iterable[SubnetCidr]|None") -> None:
         return super()._set_field("cidrs",value,explicit_presence=False,
         )
     
@@ -2826,9 +2826,9 @@ class SubnetCidr(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cidr: "builtins.str|unset.UnsetType" = unset.Unset,
-        state: "AddressBlockState|pool_pb2.AddressBlockState|unset.UnsetType" = unset.Unset,
-        max_mask_length: "builtins.int|unset.UnsetType" = unset.Unset,
+        cidr: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        state: "AddressBlockState|pool_pb2.AddressBlockState|None|unset.UnsetType" = unset.Unset,
+        max_mask_length: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(cidr, unset.UnsetType):
@@ -2850,7 +2850,7 @@ class SubnetCidr(pb_classes.Message):
         return super()._get_field("cidr", explicit_presence=False,
         )
     @cidr.setter
-    def cidr(self, value: "builtins.str") -> None:
+    def cidr(self, value: "builtins.str|None") -> None:
         return super()._set_field("cidr",value,explicit_presence=False,
         )
     
@@ -2860,7 +2860,7 @@ class SubnetCidr(pb_classes.Message):
         wrap=AddressBlockState,
         )
     @state.setter
-    def state(self, value: "AddressBlockState|pool_pb2.AddressBlockState") -> None:
+    def state(self, value: "AddressBlockState|pool_pb2.AddressBlockState|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -2869,7 +2869,7 @@ class SubnetCidr(pb_classes.Message):
         return super()._get_field("max_mask_length", explicit_presence=False,
         )
     @max_mask_length.setter
-    def max_mask_length(self, value: "builtins.int") -> None:
+    def max_mask_length(self, value: "builtins.int|None") -> None:
         return super()._set_field("max_mask_length",value,explicit_presence=False,
         )
     
@@ -2896,9 +2896,9 @@ class SubnetStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "SubnetStatus.State|subnet_pb2.SubnetStatus.State|unset.UnsetType" = unset.Unset,
-        ipv4_private_cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        ipv4_public_cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        state: "SubnetStatus.State|subnet_pb2.SubnetStatus.State|None|unset.UnsetType" = unset.Unset,
+        ipv4_private_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        ipv4_public_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -2922,7 +2922,7 @@ class SubnetStatus(pb_classes.Message):
         wrap=SubnetStatus.State,
         )
     @state.setter
-    def state(self, value: "SubnetStatus.State|subnet_pb2.SubnetStatus.State") -> None:
+    def state(self, value: "SubnetStatus.State|subnet_pb2.SubnetStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -2932,7 +2932,7 @@ class SubnetStatus(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @ipv4_private_cidrs.setter
-    def ipv4_private_cidrs(self, value: "abc.Iterable[builtins.str]") -> None:
+    def ipv4_private_cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("ipv4_private_cidrs",value,explicit_presence=False,
         )
     
@@ -2942,7 +2942,7 @@ class SubnetStatus(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @ipv4_public_cidrs.setter
-    def ipv4_public_cidrs(self, value: "abc.Iterable[builtins.str]") -> None:
+    def ipv4_public_cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("ipv4_public_cidrs",value,explicit_presence=False,
         )
     
@@ -2964,7 +2964,7 @@ class GetSubnetRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -2980,7 +2980,7 @@ class GetSubnetRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2998,8 +2998,8 @@ class GetSubnetByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -3018,7 +3018,7 @@ class GetSubnetByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -3027,7 +3027,7 @@ class GetSubnetByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -3046,9 +3046,9 @@ class ListSubnetsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -3070,7 +3070,7 @@ class ListSubnetsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -3079,7 +3079,7 @@ class ListSubnetsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -3088,7 +3088,7 @@ class ListSubnetsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -3108,9 +3108,9 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        network_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(network_id, unset.UnsetType):
@@ -3132,7 +3132,7 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
         return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
-    def network_id(self, value: "builtins.str") -> None:
+    def network_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("network_id",value,explicit_presence=False,
         )
     
@@ -3141,7 +3141,7 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -3150,7 +3150,7 @@ class ListSubnetsByNetworkRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -3170,8 +3170,8 @@ class ListSubnetsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Subnet]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Subnet]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -3191,7 +3191,7 @@ class ListSubnetsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Subnet,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Subnet]") -> None:
+    def items(self, value: "abc.Iterable[Subnet]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -3200,7 +3200,7 @@ class ListSubnetsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     

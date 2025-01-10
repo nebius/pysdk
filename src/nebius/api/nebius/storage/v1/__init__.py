@@ -54,13 +54,13 @@ class CurrentBucketCounters(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        simple_objects_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
-        simple_objects_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        multipart_objects_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
-        multipart_objects_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        multipart_uploads_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
-        inflight_parts_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
-        inflight_parts_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        simple_objects_quantity: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        simple_objects_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        multipart_objects_quantity: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        multipart_objects_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        multipart_uploads_quantity: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        inflight_parts_quantity: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        inflight_parts_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(simple_objects_quantity, unset.UnsetType):
@@ -94,7 +94,7 @@ class CurrentBucketCounters(pb_classes.Message):
         return super()._get_field("simple_objects_quantity", explicit_presence=False,
         )
     @simple_objects_quantity.setter
-    def simple_objects_quantity(self, value: "builtins.int") -> None:
+    def simple_objects_quantity(self, value: "builtins.int|None") -> None:
         return super()._set_field("simple_objects_quantity",value,explicit_presence=False,
         )
     
@@ -103,7 +103,7 @@ class CurrentBucketCounters(pb_classes.Message):
         return super()._get_field("simple_objects_size", explicit_presence=False,
         )
     @simple_objects_size.setter
-    def simple_objects_size(self, value: "builtins.int") -> None:
+    def simple_objects_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("simple_objects_size",value,explicit_presence=False,
         )
     
@@ -112,7 +112,7 @@ class CurrentBucketCounters(pb_classes.Message):
         return super()._get_field("multipart_objects_quantity", explicit_presence=False,
         )
     @multipart_objects_quantity.setter
-    def multipart_objects_quantity(self, value: "builtins.int") -> None:
+    def multipart_objects_quantity(self, value: "builtins.int|None") -> None:
         return super()._set_field("multipart_objects_quantity",value,explicit_presence=False,
         )
     
@@ -121,7 +121,7 @@ class CurrentBucketCounters(pb_classes.Message):
         return super()._get_field("multipart_objects_size", explicit_presence=False,
         )
     @multipart_objects_size.setter
-    def multipart_objects_size(self, value: "builtins.int") -> None:
+    def multipart_objects_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("multipart_objects_size",value,explicit_presence=False,
         )
     
@@ -130,7 +130,7 @@ class CurrentBucketCounters(pb_classes.Message):
         return super()._get_field("multipart_uploads_quantity", explicit_presence=False,
         )
     @multipart_uploads_quantity.setter
-    def multipart_uploads_quantity(self, value: "builtins.int") -> None:
+    def multipart_uploads_quantity(self, value: "builtins.int|None") -> None:
         return super()._set_field("multipart_uploads_quantity",value,explicit_presence=False,
         )
     
@@ -139,7 +139,7 @@ class CurrentBucketCounters(pb_classes.Message):
         return super()._get_field("inflight_parts_quantity", explicit_presence=False,
         )
     @inflight_parts_quantity.setter
-    def inflight_parts_quantity(self, value: "builtins.int") -> None:
+    def inflight_parts_quantity(self, value: "builtins.int|None") -> None:
         return super()._set_field("inflight_parts_quantity",value,explicit_presence=False,
         )
     
@@ -148,7 +148,7 @@ class CurrentBucketCounters(pb_classes.Message):
         return super()._get_field("inflight_parts_size", explicit_presence=False,
         )
     @inflight_parts_size.setter
-    def inflight_parts_size(self, value: "builtins.int") -> None:
+    def inflight_parts_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("inflight_parts_size",value,explicit_presence=False,
         )
     
@@ -172,10 +172,10 @@ class NonCurrentBucketCounters(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        simple_objects_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
-        simple_objects_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        multipart_objects_quantity: "builtins.int|unset.UnsetType" = unset.Unset,
-        multipart_objects_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        simple_objects_quantity: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        simple_objects_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        multipart_objects_quantity: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        multipart_objects_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(simple_objects_quantity, unset.UnsetType):
@@ -200,7 +200,7 @@ class NonCurrentBucketCounters(pb_classes.Message):
         return super()._get_field("simple_objects_quantity", explicit_presence=False,
         )
     @simple_objects_quantity.setter
-    def simple_objects_quantity(self, value: "builtins.int") -> None:
+    def simple_objects_quantity(self, value: "builtins.int|None") -> None:
         return super()._set_field("simple_objects_quantity",value,explicit_presence=False,
         )
     
@@ -209,7 +209,7 @@ class NonCurrentBucketCounters(pb_classes.Message):
         return super()._get_field("simple_objects_size", explicit_presence=False,
         )
     @simple_objects_size.setter
-    def simple_objects_size(self, value: "builtins.int") -> None:
+    def simple_objects_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("simple_objects_size",value,explicit_presence=False,
         )
     
@@ -218,7 +218,7 @@ class NonCurrentBucketCounters(pb_classes.Message):
         return super()._get_field("multipart_objects_quantity", explicit_presence=False,
         )
     @multipart_objects_quantity.setter
-    def multipart_objects_quantity(self, value: "builtins.int") -> None:
+    def multipart_objects_quantity(self, value: "builtins.int|None") -> None:
         return super()._set_field("multipart_objects_quantity",value,explicit_presence=False,
         )
     
@@ -227,7 +227,7 @@ class NonCurrentBucketCounters(pb_classes.Message):
         return super()._get_field("multipart_objects_size", explicit_presence=False,
         )
     @multipart_objects_size.setter
-    def multipart_objects_size(self, value: "builtins.int") -> None:
+    def multipart_objects_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("multipart_objects_size",value,explicit_presence=False,
         )
     
@@ -248,9 +248,9 @@ class BucketCounters(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        storage_class: "StorageClass|base_pb2.StorageClass|unset.UnsetType" = unset.Unset,
-        counters: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters|unset.UnsetType" = unset.Unset,
-        non_current_counters: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters|unset.UnsetType" = unset.Unset,
+        storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
+        counters: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters|None|unset.UnsetType" = unset.Unset,
+        non_current_counters: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(storage_class, unset.UnsetType):
@@ -273,7 +273,7 @@ class BucketCounters(pb_classes.Message):
         wrap=StorageClass,
         )
     @storage_class.setter
-    def storage_class(self, value: "StorageClass|base_pb2.StorageClass") -> None:
+    def storage_class(self, value: "StorageClass|base_pb2.StorageClass|None") -> None:
         return super()._set_field("storage_class",value,explicit_presence=False,
         )
     
@@ -283,7 +283,7 @@ class BucketCounters(pb_classes.Message):
         wrap=CurrentBucketCounters,
         )
     @counters.setter
-    def counters(self, value: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters") -> None:
+    def counters(self, value: "CurrentBucketCounters|bucket_counters_pb2.CurrentBucketCounters|None") -> None:
         return super()._set_field("counters",value,explicit_presence=False,
         )
     
@@ -293,7 +293,7 @@ class BucketCounters(pb_classes.Message):
         wrap=NonCurrentBucketCounters,
         )
     @non_current_counters.setter
-    def non_current_counters(self, value: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters") -> None:
+    def non_current_counters(self, value: "NonCurrentBucketCounters|bucket_counters_pb2.NonCurrentBucketCounters|None") -> None:
         return super()._set_field("non_current_counters",value,explicit_presence=False,
         )
     
@@ -314,7 +314,7 @@ class LifecycleConfiguration(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        rules: "abc.Iterable[LifecycleRule]|unset.UnsetType" = unset.Unset,
+        rules: "abc.Iterable[LifecycleRule]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(rules, unset.UnsetType):
@@ -331,7 +331,7 @@ class LifecycleConfiguration(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(LifecycleRule,None,None),
         )
     @rules.setter
-    def rules(self, value: "abc.Iterable[LifecycleRule]") -> None:
+    def rules(self, value: "abc.Iterable[LifecycleRule]|None") -> None:
         return super()._set_field("rules",value,explicit_presence=False,
         )
     
@@ -355,12 +355,12 @@ class LifecycleRule(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        status: "LifecycleRule.Status|lifecycle_pb2.LifecycleRule.Status|unset.UnsetType" = unset.Unset,
-        filter: "LifecycleFilter|lifecycle_pb2.LifecycleFilter|unset.UnsetType" = unset.Unset,
-        expiration: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration|unset.UnsetType" = unset.Unset,
-        noncurrent_version_expiration: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration|unset.UnsetType" = unset.Unset,
-        abort_incomplete_multipart_upload: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        status: "LifecycleRule.Status|lifecycle_pb2.LifecycleRule.Status|None|unset.UnsetType" = unset.Unset,
+        filter: "LifecycleFilter|lifecycle_pb2.LifecycleFilter|None|unset.UnsetType" = unset.Unset,
+        expiration: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration|None|unset.UnsetType" = unset.Unset,
+        noncurrent_version_expiration: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration|None|unset.UnsetType" = unset.Unset,
+        abort_incomplete_multipart_upload: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -392,7 +392,7 @@ class LifecycleRule(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -402,7 +402,7 @@ class LifecycleRule(pb_classes.Message):
         wrap=LifecycleRule.Status,
         )
     @status.setter
-    def status(self, value: "LifecycleRule.Status|lifecycle_pb2.LifecycleRule.Status") -> None:
+    def status(self, value: "LifecycleRule.Status|lifecycle_pb2.LifecycleRule.Status|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -412,7 +412,7 @@ class LifecycleRule(pb_classes.Message):
         wrap=LifecycleFilter,
         )
     @filter.setter
-    def filter(self, value: "LifecycleFilter|lifecycle_pb2.LifecycleFilter") -> None:
+    def filter(self, value: "LifecycleFilter|lifecycle_pb2.LifecycleFilter|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -422,7 +422,7 @@ class LifecycleRule(pb_classes.Message):
         wrap=LifecycleExpiration,
         )
     @expiration.setter
-    def expiration(self, value: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration") -> None:
+    def expiration(self, value: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration|None") -> None:
         return super()._set_field("expiration",value,explicit_presence=False,
         )
     
@@ -432,7 +432,7 @@ class LifecycleRule(pb_classes.Message):
         wrap=LifecycleNoncurrentVersionExpiration,
         )
     @noncurrent_version_expiration.setter
-    def noncurrent_version_expiration(self, value: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration") -> None:
+    def noncurrent_version_expiration(self, value: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration|None") -> None:
         return super()._set_field("noncurrent_version_expiration",value,explicit_presence=False,
         )
     
@@ -442,7 +442,7 @@ class LifecycleRule(pb_classes.Message):
         wrap=LifecycleAbortIncompleteMultipartUpload,
         )
     @abort_incomplete_multipart_upload.setter
-    def abort_incomplete_multipart_upload(self, value: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload") -> None:
+    def abort_incomplete_multipart_upload(self, value: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload|None") -> None:
         return super()._set_field("abort_incomplete_multipart_upload",value,explicit_presence=False,
         )
     
@@ -466,9 +466,9 @@ class LifecycleFilter(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        prefix: "builtins.str|unset.UnsetType" = unset.Unset,
-        object_size_greater_than_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        object_size_less_than_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        object_size_greater_than_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        object_size_less_than_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(prefix, unset.UnsetType):
@@ -490,7 +490,7 @@ class LifecycleFilter(pb_classes.Message):
         return super()._get_field("prefix", explicit_presence=False,
         )
     @prefix.setter
-    def prefix(self, value: "builtins.str") -> None:
+    def prefix(self, value: "builtins.str|None") -> None:
         return super()._set_field("prefix",value,explicit_presence=False,
         )
     
@@ -499,7 +499,7 @@ class LifecycleFilter(pb_classes.Message):
         return super()._get_field("object_size_greater_than_bytes", explicit_presence=False,
         )
     @object_size_greater_than_bytes.setter
-    def object_size_greater_than_bytes(self, value: "builtins.int") -> None:
+    def object_size_greater_than_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("object_size_greater_than_bytes",value,explicit_presence=False,
         )
     
@@ -508,7 +508,7 @@ class LifecycleFilter(pb_classes.Message):
         return super()._get_field("object_size_less_than_bytes", explicit_presence=False,
         )
     @object_size_less_than_bytes.setter
-    def object_size_less_than_bytes(self, value: "builtins.int") -> None:
+    def object_size_less_than_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("object_size_less_than_bytes",value,explicit_presence=False,
         )
     
@@ -569,7 +569,7 @@ class LifecycleExpiration(pb_classes.Message):
         *,
         date: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         days: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        expired_object_delete_marker: "builtins.bool|unset.UnsetType" = unset.Unset,
+        expired_object_delete_marker: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(date, unset.UnsetType):
@@ -612,7 +612,7 @@ class LifecycleExpiration(pb_classes.Message):
         return super()._get_field("expired_object_delete_marker", explicit_presence=False,
         )
     @expired_object_delete_marker.setter
-    def expired_object_delete_marker(self, value: "builtins.bool") -> None:
+    def expired_object_delete_marker(self, value: "builtins.bool|None") -> None:
         return super()._set_field("expired_object_delete_marker",value,explicit_presence=False,
         )
     
@@ -661,7 +661,7 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         newer_noncurrent_versions: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        noncurrent_days: "builtins.int|unset.UnsetType" = unset.Unset,
+        noncurrent_days: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(newer_noncurrent_versions, unset.UnsetType):
@@ -690,7 +690,7 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
         return super()._get_field("noncurrent_days", explicit_presence=False,
         )
     @noncurrent_days.setter
-    def noncurrent_days(self, value: "builtins.int") -> None:
+    def noncurrent_days(self, value: "builtins.int|None") -> None:
         return super()._set_field("noncurrent_days",value,explicit_presence=False,
         )
     
@@ -710,7 +710,7 @@ class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        days_after_initiation: "builtins.int|unset.UnsetType" = unset.Unset,
+        days_after_initiation: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(days_after_initiation, unset.UnsetType):
@@ -726,7 +726,7 @@ class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
         return super()._get_field("days_after_initiation", explicit_presence=False,
         )
     @days_after_initiation.setter
-    def days_after_initiation(self, value: "builtins.int") -> None:
+    def days_after_initiation(self, value: "builtins.int|None") -> None:
         return super()._set_field("days_after_initiation",value,explicit_presence=False,
         )
     
@@ -745,9 +745,9 @@ class Bucket(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "BucketSpec|bucket_pb2.BucketSpec|unset.UnsetType" = unset.Unset,
-        status: "BucketStatus|bucket_pb2.BucketStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "BucketSpec|bucket_pb2.BucketSpec|None|unset.UnsetType" = unset.Unset,
+        status: "BucketStatus|bucket_pb2.BucketStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -770,7 +770,7 @@ class Bucket(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -780,7 +780,7 @@ class Bucket(pb_classes.Message):
         wrap=BucketSpec,
         )
     @spec.setter
-    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec") -> None:
+    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -790,7 +790,7 @@ class Bucket(pb_classes.Message):
         wrap=BucketStatus,
         )
     @status.setter
-    def status(self, value: "BucketStatus|bucket_pb2.BucketStatus") -> None:
+    def status(self, value: "BucketStatus|bucket_pb2.BucketStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -810,9 +810,9 @@ class BucketSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        versioning_policy: "VersioningPolicy|base_pb2.VersioningPolicy|unset.UnsetType" = unset.Unset,
-        max_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        lifecycle_configuration: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|unset.UnsetType" = unset.Unset,
+        versioning_policy: "VersioningPolicy|base_pb2.VersioningPolicy|None|unset.UnsetType" = unset.Unset,
+        max_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        lifecycle_configuration: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(versioning_policy, unset.UnsetType):
@@ -835,7 +835,7 @@ class BucketSpec(pb_classes.Message):
         wrap=VersioningPolicy,
         )
     @versioning_policy.setter
-    def versioning_policy(self, value: "VersioningPolicy|base_pb2.VersioningPolicy") -> None:
+    def versioning_policy(self, value: "VersioningPolicy|base_pb2.VersioningPolicy|None") -> None:
         return super()._set_field("versioning_policy",value,explicit_presence=False,
         )
     
@@ -844,7 +844,7 @@ class BucketSpec(pb_classes.Message):
         return super()._get_field("max_size_bytes", explicit_presence=False,
         )
     @max_size_bytes.setter
-    def max_size_bytes(self, value: "builtins.int") -> None:
+    def max_size_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("max_size_bytes",value,explicit_presence=False,
         )
     
@@ -854,7 +854,7 @@ class BucketSpec(pb_classes.Message):
         wrap=LifecycleConfiguration,
         )
     @lifecycle_configuration.setter
-    def lifecycle_configuration(self, value: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration") -> None:
+    def lifecycle_configuration(self, value: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|None") -> None:
         return super()._set_field("lifecycle_configuration",value,explicit_presence=False,
         )
     
@@ -890,12 +890,12 @@ class BucketStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        counters: "abc.Iterable[BucketCounters]|unset.UnsetType" = unset.Unset,
-        state: "BucketStatus.State|bucket_pb2.BucketStatus.State|unset.UnsetType" = unset.Unset,
-        suspension_state: "BucketStatus.SuspensionState|bucket_pb2.BucketStatus.SuspensionState|unset.UnsetType" = unset.Unset,
-        deleted_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        domain_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        counters: "abc.Iterable[BucketCounters]|None|unset.UnsetType" = unset.Unset,
+        state: "BucketStatus.State|bucket_pb2.BucketStatus.State|None|unset.UnsetType" = unset.Unset,
+        suspension_state: "BucketStatus.SuspensionState|bucket_pb2.BucketStatus.SuspensionState|None|unset.UnsetType" = unset.Unset,
+        deleted_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        domain_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(counters, unset.UnsetType):
@@ -929,7 +929,7 @@ class BucketStatus(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(BucketCounters,None,None),
         )
     @counters.setter
-    def counters(self, value: "abc.Iterable[BucketCounters]") -> None:
+    def counters(self, value: "abc.Iterable[BucketCounters]|None") -> None:
         return super()._set_field("counters",value,explicit_presence=False,
         )
     
@@ -939,7 +939,7 @@ class BucketStatus(pb_classes.Message):
         wrap=BucketStatus.State,
         )
     @state.setter
-    def state(self, value: "BucketStatus.State|bucket_pb2.BucketStatus.State") -> None:
+    def state(self, value: "BucketStatus.State|bucket_pb2.BucketStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -949,7 +949,7 @@ class BucketStatus(pb_classes.Message):
         wrap=BucketStatus.SuspensionState,
         )
     @suspension_state.setter
-    def suspension_state(self, value: "BucketStatus.SuspensionState|bucket_pb2.BucketStatus.SuspensionState") -> None:
+    def suspension_state(self, value: "BucketStatus.SuspensionState|bucket_pb2.BucketStatus.SuspensionState|None") -> None:
         return super()._set_field("suspension_state",value,explicit_presence=False,
         )
     
@@ -959,7 +959,7 @@ class BucketStatus(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @deleted_at.setter
-    def deleted_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def deleted_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("deleted_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -970,7 +970,7 @@ class BucketStatus(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @purge_at.setter
-    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def purge_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("purge_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -980,7 +980,7 @@ class BucketStatus(pb_classes.Message):
         return super()._get_field("domain_name", explicit_presence=False,
         )
     @domain_name.setter
-    def domain_name(self, value: "builtins.str") -> None:
+    def domain_name(self, value: "builtins.str|None") -> None:
         return super()._set_field("domain_name",value,explicit_presence=False,
         )
     
@@ -1006,8 +1006,8 @@ class GetBucketRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        with_deleted: "builtins.bool|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        with_deleted: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1026,7 +1026,7 @@ class GetBucketRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1035,7 +1035,7 @@ class GetBucketRequest(pb_classes.Message):
         return super()._get_field("with_deleted", explicit_presence=False,
         )
     @with_deleted.setter
-    def with_deleted(self, value: "builtins.bool") -> None:
+    def with_deleted(self, value: "builtins.bool|None") -> None:
         return super()._set_field("with_deleted",value,explicit_presence=False,
         )
     
@@ -1054,9 +1054,9 @@ class GetBucketByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
-        with_deleted: "builtins.bool|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        with_deleted: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1078,7 +1078,7 @@ class GetBucketByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1087,7 +1087,7 @@ class GetBucketByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -1096,7 +1096,7 @@ class GetBucketByNameRequest(pb_classes.Message):
         return super()._get_field("with_deleted", explicit_presence=False,
         )
     @with_deleted.setter
-    def with_deleted(self, value: "builtins.bool") -> None:
+    def with_deleted(self, value: "builtins.bool|None") -> None:
         return super()._set_field("with_deleted",value,explicit_presence=False,
         )
     
@@ -1116,8 +1116,8 @@ class CreateBucketRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "BucketSpec|bucket_pb2.BucketSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "BucketSpec|bucket_pb2.BucketSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1137,7 +1137,7 @@ class CreateBucketRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1147,7 +1147,7 @@ class CreateBucketRequest(pb_classes.Message):
         wrap=BucketSpec,
         )
     @spec.setter
-    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec") -> None:
+    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1166,8 +1166,8 @@ class UpdateBucketRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "BucketSpec|bucket_pb2.BucketSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "BucketSpec|bucket_pb2.BucketSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1187,7 +1187,7 @@ class UpdateBucketRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1197,7 +1197,7 @@ class UpdateBucketRequest(pb_classes.Message):
         wrap=BucketSpec,
         )
     @spec.setter
-    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec") -> None:
+    def spec(self, value: "BucketSpec|bucket_pb2.BucketSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1256,7 +1256,7 @@ class DeleteBucketRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         ttl: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -1281,7 +1281,7 @@ class DeleteBucketRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1324,7 +1324,7 @@ class PurgeBucketRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1340,7 +1340,7 @@ class PurgeBucketRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1358,7 +1358,7 @@ class UndeleteBucketRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1374,7 +1374,7 @@ class UndeleteBucketRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1392,11 +1392,11 @@ class ListBucketsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
-        with_deleted: "builtins.bool|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        with_deleted: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1424,7 +1424,7 @@ class ListBucketsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1433,7 +1433,7 @@ class ListBucketsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -1442,7 +1442,7 @@ class ListBucketsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -1451,7 +1451,7 @@ class ListBucketsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -1460,7 +1460,7 @@ class ListBucketsRequest(pb_classes.Message):
         return super()._get_field("with_deleted", explicit_presence=False,
         )
     @with_deleted.setter
-    def with_deleted(self, value: "builtins.bool") -> None:
+    def with_deleted(self, value: "builtins.bool|None") -> None:
         return super()._set_field("with_deleted",value,explicit_presence=False,
         )
     
@@ -1482,8 +1482,8 @@ class ListBucketsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Bucket]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Bucket]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -1503,7 +1503,7 @@ class ListBucketsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Bucket,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Bucket]") -> None:
+    def items(self, value: "abc.Iterable[Bucket]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -1512,7 +1512,7 @@ class ListBucketsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     

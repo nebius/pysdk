@@ -43,7 +43,7 @@ class Operation(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            values: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+            values: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(values, unset.UnsetType):
@@ -60,7 +60,7 @@ class Operation(pb_classes.Message):
             wrap=pb_classes.Repeated,
             )
         @values.setter
-        def values(self, value: "abc.Iterable[builtins.str]") -> None:
+        def values(self, value: "abc.Iterable[builtins.str]|None") -> None:
             return super()._set_field("values",value,explicit_presence=False,
             )
         
@@ -79,8 +79,8 @@ class Operation(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|unset.UnsetType" = unset.Unset,
-            value: "Operation.request_header|operation_pb2.Operation.request_header|unset.UnsetType" = unset.Unset,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "Operation.request_header|operation_pb2.Operation.request_header|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(key, unset.UnsetType):
@@ -99,7 +99,7 @@ class Operation(pb_classes.Message):
             return super()._get_field("key", explicit_presence=False,
             )
         @key.setter
-        def key(self, value: "builtins.str") -> None:
+        def key(self, value: "builtins.str|None") -> None:
             return super()._set_field("key",value,explicit_presence=False,
             )
         
@@ -109,7 +109,7 @@ class Operation(pb_classes.Message):
             wrap=Operation.request_header,
             )
         @value.setter
-        def value(self, value: "Operation.request_header|operation_pb2.Operation.request_header") -> None:
+        def value(self, value: "Operation.request_header|operation_pb2.Operation.request_header|None") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
         
@@ -123,16 +123,16 @@ class Operation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        created_by: "builtins.str|unset.UnsetType" = unset.Unset,
-        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        request: "any_pb2.Any|unset.UnsetType" = unset.Unset,
-        request_headers: "abc.Mapping[builtins.str,Operation.request_header]|unset.UnsetType" = unset.Unset,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        resource: "any_pb2.Any|unset.UnsetType" = unset.Unset,
-        progress_data: "any_pb2.Any|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        created_by: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        request: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
+        request_headers: "abc.Mapping[builtins.str,Operation.request_header]|None|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
+        progress_data: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
         status: "status_pb2.Status|request_status.RequestStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -181,7 +181,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -190,7 +190,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -200,7 +200,7 @@ class Operation(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("created_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -210,7 +210,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("created_by", explicit_presence=False,
         )
     @created_by.setter
-    def created_by(self, value: "builtins.str") -> None:
+    def created_by(self, value: "builtins.str|None") -> None:
         return super()._set_field("created_by",value,explicit_presence=False,
         )
     
@@ -220,7 +220,7 @@ class Operation(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @finished_at.setter
-    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("finished_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -230,7 +230,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("request", explicit_presence=False,
         )
     @request.setter
-    def request(self, value: "any_pb2.Any") -> None:
+    def request(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("request",value,explicit_presence=False,
         )
     
@@ -240,7 +240,7 @@ class Operation(pb_classes.Message):
         wrap=pb_classes.Map.with_wrap(Operation.request_header,None,None),
         )
     @request_headers.setter
-    def request_headers(self, value: "abc.Mapping[builtins.str,Operation.request_header]") -> None:
+    def request_headers(self, value: "abc.Mapping[builtins.str,Operation.request_header]|None") -> None:
         return super()._set_field("request_headers",value,explicit_presence=False,
         )
     
@@ -249,7 +249,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -258,7 +258,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("resource", explicit_presence=False,
         )
     @resource.setter
-    def resource(self, value: "any_pb2.Any") -> None:
+    def resource(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("resource",value,explicit_presence=False,
         )
     
@@ -267,7 +267,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("progress_data", explicit_presence=False,
         )
     @progress_data.setter
-    def progress_data(self, value: "any_pb2.Any") -> None:
+    def progress_data(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("progress_data",value,explicit_presence=False,
         )
     
@@ -309,7 +309,7 @@ class GetOperationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -325,7 +325,7 @@ class GetOperationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -343,10 +343,10 @@ class ListOperationsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_id, unset.UnsetType):
@@ -371,7 +371,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -380,7 +380,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -389,7 +389,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -398,7 +398,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -419,8 +419,8 @@ class ListOperationsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        operations: "abc.Iterable[Operation]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        operations: "abc.Iterable[Operation]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(operations, unset.UnsetType):
@@ -440,7 +440,7 @@ class ListOperationsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Operation,None,None),
         )
     @operations.setter
-    def operations(self, value: "abc.Iterable[Operation]") -> None:
+    def operations(self, value: "abc.Iterable[Operation]|None") -> None:
         return super()._set_field("operations",value,explicit_presence=False,
         )
     
@@ -449,7 +449,7 @@ class ListOperationsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -468,10 +468,10 @@ class ListOperationsByParentRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -496,7 +496,7 @@ class ListOperationsByParentRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -505,7 +505,7 @@ class ListOperationsByParentRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -514,7 +514,7 @@ class ListOperationsByParentRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -523,7 +523,7 @@ class ListOperationsByParentRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     

@@ -45,9 +45,9 @@ class Disk(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "DiskSpec|disk_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
-        status: "DiskStatus|disk_pb2.DiskStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "DiskSpec|disk_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
+        status: "DiskStatus|disk_pb2.DiskStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -70,7 +70,7 @@ class Disk(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -80,7 +80,7 @@ class Disk(pb_classes.Message):
         wrap=DiskSpec,
         )
     @spec.setter
-    def spec(self, value: "DiskSpec|disk_pb2.DiskSpec") -> None:
+    def spec(self, value: "DiskSpec|disk_pb2.DiskSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -90,7 +90,7 @@ class Disk(pb_classes.Message):
         wrap=DiskStatus,
         )
     @status.setter
-    def status(self, value: "DiskStatus|disk_pb2.DiskStatus") -> None:
+    def status(self, value: "DiskStatus|disk_pb2.DiskStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -220,9 +220,9 @@ class DiskSpec(pb_classes.Message):
         size_kibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         size_mebibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        block_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|unset.UnsetType" = unset.Unset,
-        placement_policy: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|unset.UnsetType" = unset.Unset,
+        block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None|unset.UnsetType" = unset.Unset,
+        placement_policy: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|None|unset.UnsetType" = unset.Unset,
         source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_image_family: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -303,7 +303,7 @@ class DiskSpec(pb_classes.Message):
         return super()._get_field("block_size_bytes", explicit_presence=False,
         )
     @block_size_bytes.setter
-    def block_size_bytes(self, value: "builtins.int") -> None:
+    def block_size_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("block_size_bytes",value,explicit_presence=False,
         )
     
@@ -313,7 +313,7 @@ class DiskSpec(pb_classes.Message):
         wrap=DiskSpec.DiskType,
         )
     @type.setter
-    def type(self, value: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType") -> None:
+    def type(self, value: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None") -> None:
         return super()._set_field("type",value,explicit_presence=False,
         )
     
@@ -323,7 +323,7 @@ class DiskSpec(pb_classes.Message):
         wrap=DiskPlacementPolicy,
         )
     @placement_policy.setter
-    def placement_policy(self, value: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy") -> None:
+    def placement_policy(self, value: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|None") -> None:
         return super()._set_field("placement_policy",value,explicit_presence=False,
         )
     
@@ -370,8 +370,8 @@ class DiskPlacementPolicy(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        placement_group_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        placement_group_partition: "builtins.int|unset.UnsetType" = unset.Unset,
+        placement_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        placement_group_partition: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(placement_group_id, unset.UnsetType):
@@ -390,7 +390,7 @@ class DiskPlacementPolicy(pb_classes.Message):
         return super()._get_field("placement_group_id", explicit_presence=False,
         )
     @placement_group_id.setter
-    def placement_group_id(self, value: "builtins.str") -> None:
+    def placement_group_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("placement_group_id",value,explicit_presence=False,
         )
     
@@ -399,7 +399,7 @@ class DiskPlacementPolicy(pb_classes.Message):
         return super()._get_field("placement_group_partition", explicit_presence=False,
         )
     @placement_group_partition.setter
-    def placement_group_partition(self, value: "builtins.int") -> None:
+    def placement_group_partition(self, value: "builtins.int|None") -> None:
         return super()._set_field("placement_group_partition",value,explicit_presence=False,
         )
     
@@ -427,13 +427,13 @@ class DiskStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "DiskStatus.State|disk_pb2.DiskStatus.State|unset.UnsetType" = unset.Unset,
-        state_description: "builtins.str|unset.UnsetType" = unset.Unset,
-        read_write_attachment: "builtins.str|unset.UnsetType" = unset.Unset,
-        read_only_attachments: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        source_image_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        state: "DiskStatus.State|disk_pb2.DiskStatus.State|None|unset.UnsetType" = unset.Unset,
+        state_description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        read_write_attachment: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        read_only_attachments: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -469,7 +469,7 @@ class DiskStatus(pb_classes.Message):
         wrap=DiskStatus.State,
         )
     @state.setter
-    def state(self, value: "DiskStatus.State|disk_pb2.DiskStatus.State") -> None:
+    def state(self, value: "DiskStatus.State|disk_pb2.DiskStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -478,7 +478,7 @@ class DiskStatus(pb_classes.Message):
         return super()._get_field("state_description", explicit_presence=False,
         )
     @state_description.setter
-    def state_description(self, value: "builtins.str") -> None:
+    def state_description(self, value: "builtins.str|None") -> None:
         return super()._set_field("state_description",value,explicit_presence=False,
         )
     
@@ -487,7 +487,7 @@ class DiskStatus(pb_classes.Message):
         return super()._get_field("read_write_attachment", explicit_presence=False,
         )
     @read_write_attachment.setter
-    def read_write_attachment(self, value: "builtins.str") -> None:
+    def read_write_attachment(self, value: "builtins.str|None") -> None:
         return super()._set_field("read_write_attachment",value,explicit_presence=False,
         )
     
@@ -497,7 +497,7 @@ class DiskStatus(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @read_only_attachments.setter
-    def read_only_attachments(self, value: "abc.Iterable[builtins.str]") -> None:
+    def read_only_attachments(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("read_only_attachments",value,explicit_presence=False,
         )
     
@@ -506,7 +506,7 @@ class DiskStatus(pb_classes.Message):
         return super()._get_field("source_image_id", explicit_presence=False,
         )
     @source_image_id.setter
-    def source_image_id(self, value: "builtins.str") -> None:
+    def source_image_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("source_image_id",value,explicit_presence=False,
         )
     
@@ -515,7 +515,7 @@ class DiskStatus(pb_classes.Message):
         return super()._get_field("size_bytes", explicit_presence=False,
         )
     @size_bytes.setter
-    def size_bytes(self, value: "builtins.int") -> None:
+    def size_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("size_bytes",value,explicit_presence=False,
         )
     
@@ -524,7 +524,7 @@ class DiskStatus(pb_classes.Message):
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
-    def reconciling(self, value: "builtins.bool") -> None:
+    def reconciling(self, value: "builtins.bool|None") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
@@ -550,7 +550,7 @@ class GetDiskRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -566,7 +566,7 @@ class GetDiskRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -584,10 +584,10 @@ class ListDisksRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -612,7 +612,7 @@ class ListDisksRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -621,7 +621,7 @@ class ListDisksRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -630,7 +630,7 @@ class ListDisksRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -639,7 +639,7 @@ class ListDisksRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -660,8 +660,8 @@ class CreateDiskRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "DiskSpec|disk_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "DiskSpec|disk_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -681,7 +681,7 @@ class CreateDiskRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -691,7 +691,7 @@ class CreateDiskRequest(pb_classes.Message):
         wrap=DiskSpec,
         )
     @spec.setter
-    def spec(self, value: "DiskSpec|disk_pb2.DiskSpec") -> None:
+    def spec(self, value: "DiskSpec|disk_pb2.DiskSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -710,8 +710,8 @@ class UpdateDiskRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "DiskSpec|disk_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "DiskSpec|disk_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -731,7 +731,7 @@ class UpdateDiskRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -741,7 +741,7 @@ class UpdateDiskRequest(pb_classes.Message):
         wrap=DiskSpec,
         )
     @spec.setter
-    def spec(self, value: "DiskSpec|disk_pb2.DiskSpec") -> None:
+    def spec(self, value: "DiskSpec|disk_pb2.DiskSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -760,7 +760,7 @@ class DeleteDiskRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -776,7 +776,7 @@ class DeleteDiskRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -794,8 +794,8 @@ class ListDisksResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Disk]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Disk]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -815,7 +815,7 @@ class ListDisksResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Disk,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Disk]") -> None:
+    def items(self, value: "abc.Iterable[Disk]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -824,7 +824,7 @@ class ListDisksResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -992,9 +992,9 @@ class Filesystem(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|unset.UnsetType" = unset.Unset,
-        status: "FilesystemStatus|filesystem_pb2.FilesystemStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None|unset.UnsetType" = unset.Unset,
+        status: "FilesystemStatus|filesystem_pb2.FilesystemStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1017,7 +1017,7 @@ class Filesystem(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1027,7 +1027,7 @@ class Filesystem(pb_classes.Message):
         wrap=FilesystemSpec,
         )
     @spec.setter
-    def spec(self, value: "FilesystemSpec|filesystem_pb2.FilesystemSpec") -> None:
+    def spec(self, value: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1037,7 +1037,7 @@ class Filesystem(pb_classes.Message):
         wrap=FilesystemStatus,
         )
     @status.setter
-    def status(self, value: "FilesystemStatus|filesystem_pb2.FilesystemStatus") -> None:
+    def status(self, value: "FilesystemStatus|filesystem_pb2.FilesystemStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -1127,8 +1127,8 @@ class FilesystemSpec(pb_classes.Message):
         size_kibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         size_mebibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        block_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        type: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType|unset.UnsetType" = unset.Unset,
+        block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        type: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(size_bytes, unset.UnsetType):
@@ -1197,7 +1197,7 @@ class FilesystemSpec(pb_classes.Message):
         return super()._get_field("block_size_bytes", explicit_presence=False,
         )
     @block_size_bytes.setter
-    def block_size_bytes(self, value: "builtins.int") -> None:
+    def block_size_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("block_size_bytes",value,explicit_presence=False,
         )
     
@@ -1207,7 +1207,7 @@ class FilesystemSpec(pb_classes.Message):
         wrap=FilesystemSpec.FilesystemType,
         )
     @type.setter
-    def type(self, value: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType") -> None:
+    def type(self, value: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType|None") -> None:
         return super()._set_field("type",value,explicit_presence=False,
         )
     
@@ -1241,12 +1241,12 @@ class FilesystemStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "FilesystemStatus.State|filesystem_pb2.FilesystemStatus.State|unset.UnsetType" = unset.Unset,
-        state_description: "builtins.str|unset.UnsetType" = unset.Unset,
-        read_write_attachments: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        read_only_attachments: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        state: "FilesystemStatus.State|filesystem_pb2.FilesystemStatus.State|None|unset.UnsetType" = unset.Unset,
+        state_description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        read_write_attachments: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        read_only_attachments: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -1279,7 +1279,7 @@ class FilesystemStatus(pb_classes.Message):
         wrap=FilesystemStatus.State,
         )
     @state.setter
-    def state(self, value: "FilesystemStatus.State|filesystem_pb2.FilesystemStatus.State") -> None:
+    def state(self, value: "FilesystemStatus.State|filesystem_pb2.FilesystemStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -1288,7 +1288,7 @@ class FilesystemStatus(pb_classes.Message):
         return super()._get_field("state_description", explicit_presence=False,
         )
     @state_description.setter
-    def state_description(self, value: "builtins.str") -> None:
+    def state_description(self, value: "builtins.str|None") -> None:
         return super()._set_field("state_description",value,explicit_presence=False,
         )
     
@@ -1298,7 +1298,7 @@ class FilesystemStatus(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @read_write_attachments.setter
-    def read_write_attachments(self, value: "abc.Iterable[builtins.str]") -> None:
+    def read_write_attachments(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("read_write_attachments",value,explicit_presence=False,
         )
     
@@ -1308,7 +1308,7 @@ class FilesystemStatus(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @read_only_attachments.setter
-    def read_only_attachments(self, value: "abc.Iterable[builtins.str]") -> None:
+    def read_only_attachments(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("read_only_attachments",value,explicit_presence=False,
         )
     
@@ -1317,7 +1317,7 @@ class FilesystemStatus(pb_classes.Message):
         return super()._get_field("size_bytes", explicit_presence=False,
         )
     @size_bytes.setter
-    def size_bytes(self, value: "builtins.int") -> None:
+    def size_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("size_bytes",value,explicit_presence=False,
         )
     
@@ -1326,7 +1326,7 @@ class FilesystemStatus(pb_classes.Message):
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
-    def reconciling(self, value: "builtins.bool") -> None:
+    def reconciling(self, value: "builtins.bool|None") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
@@ -1351,7 +1351,7 @@ class GetFilesystemRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1367,7 +1367,7 @@ class GetFilesystemRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1385,10 +1385,10 @@ class ListFilesystemsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1413,7 +1413,7 @@ class ListFilesystemsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1422,7 +1422,7 @@ class ListFilesystemsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -1431,7 +1431,7 @@ class ListFilesystemsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -1440,7 +1440,7 @@ class ListFilesystemsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -1461,8 +1461,8 @@ class CreateFilesystemRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1482,7 +1482,7 @@ class CreateFilesystemRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1492,7 +1492,7 @@ class CreateFilesystemRequest(pb_classes.Message):
         wrap=FilesystemSpec,
         )
     @spec.setter
-    def spec(self, value: "FilesystemSpec|filesystem_pb2.FilesystemSpec") -> None:
+    def spec(self, value: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1511,8 +1511,8 @@ class UpdateFilesystemRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1532,7 +1532,7 @@ class UpdateFilesystemRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1542,7 +1542,7 @@ class UpdateFilesystemRequest(pb_classes.Message):
         wrap=FilesystemSpec,
         )
     @spec.setter
-    def spec(self, value: "FilesystemSpec|filesystem_pb2.FilesystemSpec") -> None:
+    def spec(self, value: "FilesystemSpec|filesystem_pb2.FilesystemSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1561,7 +1561,7 @@ class DeleteFilesystemRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1577,7 +1577,7 @@ class DeleteFilesystemRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1595,8 +1595,8 @@ class ListFilesystemsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Filesystem]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Filesystem]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -1616,7 +1616,7 @@ class ListFilesystemsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Filesystem,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Filesystem]") -> None:
+    def items(self, value: "abc.Iterable[Filesystem]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -1625,7 +1625,7 @@ class ListFilesystemsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -1793,9 +1793,9 @@ class GpuCluster(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|unset.UnsetType" = unset.Unset,
-        status: "GpuClusterStatus|gpu_cluster_pb2.GpuClusterStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None|unset.UnsetType" = unset.Unset,
+        status: "GpuClusterStatus|gpu_cluster_pb2.GpuClusterStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1818,7 +1818,7 @@ class GpuCluster(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1828,7 +1828,7 @@ class GpuCluster(pb_classes.Message):
         wrap=GpuClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec") -> None:
+    def spec(self, value: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1838,7 +1838,7 @@ class GpuCluster(pb_classes.Message):
         wrap=GpuClusterStatus,
         )
     @status.setter
-    def status(self, value: "GpuClusterStatus|gpu_cluster_pb2.GpuClusterStatus") -> None:
+    def status(self, value: "GpuClusterStatus|gpu_cluster_pb2.GpuClusterStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -1858,7 +1858,7 @@ class GpuClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        infiniband_fabric: "builtins.str|unset.UnsetType" = unset.Unset,
+        infiniband_fabric: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(infiniband_fabric, unset.UnsetType):
@@ -1874,7 +1874,7 @@ class GpuClusterSpec(pb_classes.Message):
         return super()._get_field("infiniband_fabric", explicit_presence=False,
         )
     @infiniband_fabric.setter
-    def infiniband_fabric(self, value: "builtins.str") -> None:
+    def infiniband_fabric(self, value: "builtins.str|None") -> None:
         return super()._set_field("infiniband_fabric",value,explicit_presence=False,
         )
     
@@ -1892,8 +1892,8 @@ class GpuClusterStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        instances: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        instances: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(instances, unset.UnsetType):
@@ -1913,7 +1913,7 @@ class GpuClusterStatus(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @instances.setter
-    def instances(self, value: "abc.Iterable[builtins.str]") -> None:
+    def instances(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("instances",value,explicit_presence=False,
         )
     
@@ -1922,7 +1922,7 @@ class GpuClusterStatus(pb_classes.Message):
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
-    def reconciling(self, value: "builtins.bool") -> None:
+    def reconciling(self, value: "builtins.bool|None") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
@@ -1942,7 +1942,7 @@ class GetGpuClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1958,7 +1958,7 @@ class GetGpuClusterRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1976,10 +1976,10 @@ class ListGpuClustersRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -2004,7 +2004,7 @@ class ListGpuClustersRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -2013,7 +2013,7 @@ class ListGpuClustersRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -2022,7 +2022,7 @@ class ListGpuClustersRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -2031,7 +2031,7 @@ class ListGpuClustersRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -2052,8 +2052,8 @@ class CreateGpuClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2073,7 +2073,7 @@ class CreateGpuClusterRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2083,7 +2083,7 @@ class CreateGpuClusterRequest(pb_classes.Message):
         wrap=GpuClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec") -> None:
+    def spec(self, value: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2102,8 +2102,8 @@ class UpdateGpuClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2123,7 +2123,7 @@ class UpdateGpuClusterRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2133,7 +2133,7 @@ class UpdateGpuClusterRequest(pb_classes.Message):
         wrap=GpuClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec") -> None:
+    def spec(self, value: "GpuClusterSpec|gpu_cluster_pb2.GpuClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2152,7 +2152,7 @@ class DeleteGpuClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -2168,7 +2168,7 @@ class DeleteGpuClusterRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2186,8 +2186,8 @@ class ListGpuClustersResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[GpuCluster]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[GpuCluster]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -2207,7 +2207,7 @@ class ListGpuClustersResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(GpuCluster,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[GpuCluster]") -> None:
+    def items(self, value: "abc.Iterable[GpuCluster]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -2216,7 +2216,7 @@ class ListGpuClustersResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -2384,9 +2384,9 @@ class Image(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ImageSpec|image_pb2.ImageSpec|unset.UnsetType" = unset.Unset,
-        status: "ImageStatus|image_pb2.ImageStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ImageSpec|image_pb2.ImageSpec|None|unset.UnsetType" = unset.Unset,
+        status: "ImageStatus|image_pb2.ImageStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2409,7 +2409,7 @@ class Image(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2419,7 +2419,7 @@ class Image(pb_classes.Message):
         wrap=ImageSpec,
         )
     @spec.setter
-    def spec(self, value: "ImageSpec|image_pb2.ImageSpec") -> None:
+    def spec(self, value: "ImageSpec|image_pb2.ImageSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2429,7 +2429,7 @@ class Image(pb_classes.Message):
         wrap=ImageStatus,
         )
     @status.setter
-    def status(self, value: "ImageStatus|image_pb2.ImageStatus") -> None:
+    def status(self, value: "ImageStatus|image_pb2.ImageStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -2477,8 +2477,8 @@ class ImageSpec(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         description: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        image_family: "builtins.str|unset.UnsetType" = unset.Unset,
-        version: "builtins.str|unset.UnsetType" = unset.Unset,
+        image_family: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -2510,7 +2510,7 @@ class ImageSpec(pb_classes.Message):
         return super()._get_field("image_family", explicit_presence=False,
         )
     @image_family.setter
-    def image_family(self, value: "builtins.str") -> None:
+    def image_family(self, value: "builtins.str|None") -> None:
         return super()._set_field("image_family",value,explicit_presence=False,
         )
     
@@ -2519,7 +2519,7 @@ class ImageSpec(pb_classes.Message):
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
-    def version(self, value: "builtins.str") -> None:
+    def version(self, value: "builtins.str|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -2549,11 +2549,11 @@ class ImageStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "ImageStatus.State|image_pb2.ImageStatus.State|unset.UnsetType" = unset.Unset,
-        state_description: "builtins.str|unset.UnsetType" = unset.Unset,
-        storage_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        min_disk_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        state: "ImageStatus.State|image_pb2.ImageStatus.State|None|unset.UnsetType" = unset.Unset,
+        state_description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        storage_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        min_disk_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -2583,7 +2583,7 @@ class ImageStatus(pb_classes.Message):
         wrap=ImageStatus.State,
         )
     @state.setter
-    def state(self, value: "ImageStatus.State|image_pb2.ImageStatus.State") -> None:
+    def state(self, value: "ImageStatus.State|image_pb2.ImageStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -2592,7 +2592,7 @@ class ImageStatus(pb_classes.Message):
         return super()._get_field("state_description", explicit_presence=False,
         )
     @state_description.setter
-    def state_description(self, value: "builtins.str") -> None:
+    def state_description(self, value: "builtins.str|None") -> None:
         return super()._set_field("state_description",value,explicit_presence=False,
         )
     
@@ -2601,7 +2601,7 @@ class ImageStatus(pb_classes.Message):
         return super()._get_field("storage_size_bytes", explicit_presence=False,
         )
     @storage_size_bytes.setter
-    def storage_size_bytes(self, value: "builtins.int") -> None:
+    def storage_size_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("storage_size_bytes",value,explicit_presence=False,
         )
     
@@ -2610,7 +2610,7 @@ class ImageStatus(pb_classes.Message):
         return super()._get_field("min_disk_size_bytes", explicit_presence=False,
         )
     @min_disk_size_bytes.setter
-    def min_disk_size_bytes(self, value: "builtins.int") -> None:
+    def min_disk_size_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("min_disk_size_bytes",value,explicit_presence=False,
         )
     
@@ -2619,7 +2619,7 @@ class ImageStatus(pb_classes.Message):
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
-    def reconciling(self, value: "builtins.bool") -> None:
+    def reconciling(self, value: "builtins.bool|None") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
@@ -2643,7 +2643,7 @@ class GetImageRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -2659,7 +2659,7 @@ class GetImageRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2677,8 +2677,8 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        image_family: "builtins.str|unset.UnsetType" = unset.Unset,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        image_family: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(image_family, unset.UnsetType):
@@ -2697,7 +2697,7 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
         return super()._get_field("image_family", explicit_presence=False,
         )
     @image_family.setter
-    def image_family(self, value: "builtins.str") -> None:
+    def image_family(self, value: "builtins.str|None") -> None:
         return super()._set_field("image_family",value,explicit_presence=False,
         )
     
@@ -2706,7 +2706,7 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -2725,10 +2725,10 @@ class ListImagesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -2753,7 +2753,7 @@ class ListImagesRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -2762,7 +2762,7 @@ class ListImagesRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -2771,7 +2771,7 @@ class ListImagesRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -2780,7 +2780,7 @@ class ListImagesRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -2801,8 +2801,8 @@ class ListImagesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Image]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Image]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -2822,7 +2822,7 @@ class ListImagesResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Image,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Image]") -> None:
+    def items(self, value: "abc.Iterable[Image]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -2831,7 +2831,7 @@ class ListImagesResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -2962,9 +2962,9 @@ class Instance(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "InstanceSpec|instance_pb2.InstanceSpec|unset.UnsetType" = unset.Unset,
-        status: "InstanceStatus|instance_pb2.InstanceStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "InstanceSpec|instance_pb2.InstanceSpec|None|unset.UnsetType" = unset.Unset,
+        status: "InstanceStatus|instance_pb2.InstanceStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2987,7 +2987,7 @@ class Instance(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2997,7 +2997,7 @@ class Instance(pb_classes.Message):
         wrap=InstanceSpec,
         )
     @spec.setter
-    def spec(self, value: "InstanceSpec|instance_pb2.InstanceSpec") -> None:
+    def spec(self, value: "InstanceSpec|instance_pb2.InstanceSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -3007,7 +3007,7 @@ class Instance(pb_classes.Message):
         wrap=InstanceStatus,
         )
     @status.setter
-    def status(self, value: "InstanceStatus|instance_pb2.InstanceStatus") -> None:
+    def status(self, value: "InstanceStatus|instance_pb2.InstanceStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -3027,16 +3027,16 @@ class InstanceSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        service_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        resources: "ResourcesSpec|instance_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
-        gpu_cluster: "InstanceGpuClusterSpec|instance_pb2.InstanceGpuClusterSpec|unset.UnsetType" = unset.Unset,
-        network_interfaces: "abc.Iterable[v1alpha1_2.NetworkInterfaceSpec]|unset.UnsetType" = unset.Unset,
-        boot_disk: "AttachedDiskSpec|instance_pb2.AttachedDiskSpec|unset.UnsetType" = unset.Unset,
-        secondary_disks: "abc.Iterable[AttachedDiskSpec]|unset.UnsetType" = unset.Unset,
-        filesystems: "abc.Iterable[AttachedFilesystemSpec]|unset.UnsetType" = unset.Unset,
-        cloud_init_user_data: "builtins.str|unset.UnsetType" = unset.Unset,
-        stopped: "builtins.bool|unset.UnsetType" = unset.Unset,
-        recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|unset.UnsetType" = unset.Unset,
+        service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resources: "ResourcesSpec|instance_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
+        gpu_cluster: "InstanceGpuClusterSpec|instance_pb2.InstanceGpuClusterSpec|None|unset.UnsetType" = unset.Unset,
+        network_interfaces: "abc.Iterable[v1alpha1_2.NetworkInterfaceSpec]|None|unset.UnsetType" = unset.Unset,
+        boot_disk: "AttachedDiskSpec|instance_pb2.AttachedDiskSpec|None|unset.UnsetType" = unset.Unset,
+        secondary_disks: "abc.Iterable[AttachedDiskSpec]|None|unset.UnsetType" = unset.Unset,
+        filesystems: "abc.Iterable[AttachedFilesystemSpec]|None|unset.UnsetType" = unset.Unset,
+        cloud_init_user_data: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        stopped: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service_account_id, unset.UnsetType):
@@ -3079,7 +3079,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._get_field("service_account_id", explicit_presence=False,
         )
     @service_account_id.setter
-    def service_account_id(self, value: "builtins.str") -> None:
+    def service_account_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("service_account_id",value,explicit_presence=False,
         )
     
@@ -3089,7 +3089,7 @@ class InstanceSpec(pb_classes.Message):
         wrap=ResourcesSpec,
         )
     @resources.setter
-    def resources(self, value: "ResourcesSpec|instance_pb2.ResourcesSpec") -> None:
+    def resources(self, value: "ResourcesSpec|instance_pb2.ResourcesSpec|None") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
@@ -3099,7 +3099,7 @@ class InstanceSpec(pb_classes.Message):
         wrap=InstanceGpuClusterSpec,
         )
     @gpu_cluster.setter
-    def gpu_cluster(self, value: "InstanceGpuClusterSpec|instance_pb2.InstanceGpuClusterSpec") -> None:
+    def gpu_cluster(self, value: "InstanceGpuClusterSpec|instance_pb2.InstanceGpuClusterSpec|None") -> None:
         return super()._set_field("gpu_cluster",value,explicit_presence=False,
         )
     
@@ -3109,7 +3109,7 @@ class InstanceSpec(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(v1alpha1_2.NetworkInterfaceSpec,None,None),
         )
     @network_interfaces.setter
-    def network_interfaces(self, value: "abc.Iterable[v1alpha1_2.NetworkInterfaceSpec]") -> None:
+    def network_interfaces(self, value: "abc.Iterable[v1alpha1_2.NetworkInterfaceSpec]|None") -> None:
         return super()._set_field("network_interfaces",value,explicit_presence=False,
         )
     
@@ -3119,7 +3119,7 @@ class InstanceSpec(pb_classes.Message):
         wrap=AttachedDiskSpec,
         )
     @boot_disk.setter
-    def boot_disk(self, value: "AttachedDiskSpec|instance_pb2.AttachedDiskSpec") -> None:
+    def boot_disk(self, value: "AttachedDiskSpec|instance_pb2.AttachedDiskSpec|None") -> None:
         return super()._set_field("boot_disk",value,explicit_presence=False,
         )
     
@@ -3129,7 +3129,7 @@ class InstanceSpec(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(AttachedDiskSpec,None,None),
         )
     @secondary_disks.setter
-    def secondary_disks(self, value: "abc.Iterable[AttachedDiskSpec]") -> None:
+    def secondary_disks(self, value: "abc.Iterable[AttachedDiskSpec]|None") -> None:
         return super()._set_field("secondary_disks",value,explicit_presence=False,
         )
     
@@ -3139,7 +3139,7 @@ class InstanceSpec(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None,None),
         )
     @filesystems.setter
-    def filesystems(self, value: "abc.Iterable[AttachedFilesystemSpec]") -> None:
+    def filesystems(self, value: "abc.Iterable[AttachedFilesystemSpec]|None") -> None:
         return super()._set_field("filesystems",value,explicit_presence=False,
         )
     
@@ -3148,7 +3148,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._get_field("cloud_init_user_data", explicit_presence=False,
         )
     @cloud_init_user_data.setter
-    def cloud_init_user_data(self, value: "builtins.str") -> None:
+    def cloud_init_user_data(self, value: "builtins.str|None") -> None:
         return super()._set_field("cloud_init_user_data",value,explicit_presence=False,
         )
     
@@ -3157,7 +3157,7 @@ class InstanceSpec(pb_classes.Message):
         return super()._get_field("stopped", explicit_presence=False,
         )
     @stopped.setter
-    def stopped(self, value: "builtins.bool") -> None:
+    def stopped(self, value: "builtins.bool|None") -> None:
         return super()._set_field("stopped",value,explicit_presence=False,
         )
     
@@ -3167,7 +3167,7 @@ class InstanceSpec(pb_classes.Message):
         wrap=InstanceRecoveryPolicy,
         )
     @recovery_policy.setter
-    def recovery_policy(self, value: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy") -> None:
+    def recovery_policy(self, value: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None") -> None:
         return super()._set_field("recovery_policy",value,explicit_presence=False,
         )
     
@@ -3221,7 +3221,7 @@ class ResourcesSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        platform: "builtins.str|unset.UnsetType" = unset.Unset,
+        platform: "builtins.str|None|unset.UnsetType" = unset.Unset,
         preset: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -3242,7 +3242,7 @@ class ResourcesSpec(pb_classes.Message):
         return super()._get_field("platform", explicit_presence=False,
         )
     @platform.setter
-    def platform(self, value: "builtins.str") -> None:
+    def platform(self, value: "builtins.str|None") -> None:
         return super()._set_field("platform",value,explicit_presence=False,
         )
     
@@ -3271,7 +3271,7 @@ class InstanceGpuClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3287,7 +3287,7 @@ class InstanceGpuClusterSpec(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3338,9 +3338,9 @@ class AttachedDiskSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        attach_mode: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode|unset.UnsetType" = unset.Unset,
+        attach_mode: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode|None|unset.UnsetType" = unset.Unset,
         existing_disk: "ExistingDisk|instance_pb2.ExistingDisk|None|unset.UnsetType" = unset.Unset,
-        device_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        device_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(attach_mode, unset.UnsetType):
@@ -3365,7 +3365,7 @@ class AttachedDiskSpec(pb_classes.Message):
         wrap=AttachedDiskSpec.AttachMode,
         )
     @attach_mode.setter
-    def attach_mode(self, value: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode") -> None:
+    def attach_mode(self, value: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode|None") -> None:
         return super()._set_field("attach_mode",value,explicit_presence=False,
         )
     
@@ -3384,7 +3384,7 @@ class AttachedDiskSpec(pb_classes.Message):
         return super()._get_field("device_name", explicit_presence=False,
         )
     @device_name.setter
-    def device_name(self, value: "builtins.str") -> None:
+    def device_name(self, value: "builtins.str|None") -> None:
         return super()._set_field("device_name",value,explicit_presence=False,
         )
     
@@ -3406,7 +3406,7 @@ class ExistingDisk(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3422,7 +3422,7 @@ class ExistingDisk(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3440,7 +3440,7 @@ class ExistingFilesystem(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3456,7 +3456,7 @@ class ExistingFilesystem(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3507,8 +3507,8 @@ class AttachedFilesystemSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        attach_mode: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode|unset.UnsetType" = unset.Unset,
-        device_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        attach_mode: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode|None|unset.UnsetType" = unset.Unset,
+        device_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         existing_filesystem: "ExistingFilesystem|instance_pb2.ExistingFilesystem|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -3534,7 +3534,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         wrap=AttachedFilesystemSpec.AttachMode,
         )
     @attach_mode.setter
-    def attach_mode(self, value: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode") -> None:
+    def attach_mode(self, value: "AttachedFilesystemSpec.AttachMode|instance_pb2.AttachedFilesystemSpec.AttachMode|None") -> None:
         return super()._set_field("attach_mode",value,explicit_presence=False,
         )
     
@@ -3543,7 +3543,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         return super()._get_field("device_name", explicit_presence=False,
         )
     @device_name.setter
-    def device_name(self, value: "builtins.str") -> None:
+    def device_name(self, value: "builtins.str|None") -> None:
         return super()._set_field("device_name",value,explicit_presence=False,
         )
     
@@ -3587,9 +3587,9 @@ class InstanceStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|unset.UnsetType" = unset.Unset,
-        network_interfaces: "abc.Iterable[v1alpha1_2.NetworkInterfaceStatus]|unset.UnsetType" = unset.Unset,
-        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        state: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|None|unset.UnsetType" = unset.Unset,
+        network_interfaces: "abc.Iterable[v1alpha1_2.NetworkInterfaceStatus]|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -3613,7 +3613,7 @@ class InstanceStatus(pb_classes.Message):
         wrap=InstanceStatus.InstanceState,
         )
     @state.setter
-    def state(self, value: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState") -> None:
+    def state(self, value: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -3623,7 +3623,7 @@ class InstanceStatus(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(v1alpha1_2.NetworkInterfaceStatus,None,None),
         )
     @network_interfaces.setter
-    def network_interfaces(self, value: "abc.Iterable[v1alpha1_2.NetworkInterfaceStatus]") -> None:
+    def network_interfaces(self, value: "abc.Iterable[v1alpha1_2.NetworkInterfaceStatus]|None") -> None:
         return super()._set_field("network_interfaces",value,explicit_presence=False,
         )
     
@@ -3632,7 +3632,7 @@ class InstanceStatus(pb_classes.Message):
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
-    def reconciling(self, value: "builtins.bool") -> None:
+    def reconciling(self, value: "builtins.bool|None") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
@@ -3654,7 +3654,7 @@ class GetInstanceRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3670,7 +3670,7 @@ class GetInstanceRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3688,9 +3688,9 @@ class ListInstancesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -3712,7 +3712,7 @@ class ListInstancesRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -3721,7 +3721,7 @@ class ListInstancesRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -3730,7 +3730,7 @@ class ListInstancesRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -3750,8 +3750,8 @@ class CreateInstanceRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "InstanceSpec|instance_pb2.InstanceSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "InstanceSpec|instance_pb2.InstanceSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -3771,7 +3771,7 @@ class CreateInstanceRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -3781,7 +3781,7 @@ class CreateInstanceRequest(pb_classes.Message):
         wrap=InstanceSpec,
         )
     @spec.setter
-    def spec(self, value: "InstanceSpec|instance_pb2.InstanceSpec") -> None:
+    def spec(self, value: "InstanceSpec|instance_pb2.InstanceSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -3800,8 +3800,8 @@ class UpdateInstanceRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "InstanceSpec|instance_pb2.InstanceSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "InstanceSpec|instance_pb2.InstanceSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -3821,7 +3821,7 @@ class UpdateInstanceRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -3831,7 +3831,7 @@ class UpdateInstanceRequest(pb_classes.Message):
         wrap=InstanceSpec,
         )
     @spec.setter
-    def spec(self, value: "InstanceSpec|instance_pb2.InstanceSpec") -> None:
+    def spec(self, value: "InstanceSpec|instance_pb2.InstanceSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -3850,7 +3850,7 @@ class DeleteInstanceRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3866,7 +3866,7 @@ class DeleteInstanceRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3884,8 +3884,8 @@ class ListInstancesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Instance]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Instance]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -3905,7 +3905,7 @@ class ListInstancesResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Instance,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Instance]") -> None:
+    def items(self, value: "abc.Iterable[Instance]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -3914,7 +3914,7 @@ class ListInstancesResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -3933,7 +3933,7 @@ class StartInstanceRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3949,7 +3949,7 @@ class StartInstanceRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -3967,7 +3967,7 @@ class StopInstanceRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -3983,7 +3983,7 @@ class StopInstanceRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     

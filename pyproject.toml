@@ -18,7 +18,7 @@ dependencies = [
     "grpcio>=1.68.1",
     "PyJWT>=2.9.0",
     "certifi>=2024.8.30",
-    "protobuf>=5.29.2",
+    "protobuf>=5.29.3",
     "grpcio-status>=1.68.1",
 ]
 readme = "README.md"
@@ -160,7 +160,7 @@ deps = [
     "grpcio>=1.68.1",
     "PyJWT>=2.9.0",
     "certifi>=2024.8.30",
-    "protobuf>=5.29.2",
+    "protobuf>=5.29.3",
     "grpcio-status>=1.68.1",
     "grpc-stubs>=1.53",  # For mypy
     "types-protobuf>=5.29.1", # for mypy

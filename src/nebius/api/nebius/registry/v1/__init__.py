@@ -56,15 +56,15 @@ class Artifact(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
-        media_type: "builtins.str|unset.UnsetType" = unset.Unset,
-        digest: "builtins.str|unset.UnsetType" = unset.Unset,
-        size: "builtins.int|unset.UnsetType" = unset.Unset,
-        status: "Artifact.Status|artifact_pb2.Artifact.Status|unset.UnsetType" = unset.Unset,
-        type: "Artifact.Type|artifact_pb2.Artifact.Type|unset.UnsetType" = unset.Unset,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        updated_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        media_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        digest: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        status: "Artifact.Status|artifact_pb2.Artifact.Status|None|unset.UnsetType" = unset.Unset,
+        type: "Artifact.Type|artifact_pb2.Artifact.Type|None|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        updated_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -106,7 +106,7 @@ class Artifact(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -115,7 +115,7 @@ class Artifact(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -124,7 +124,7 @@ class Artifact(pb_classes.Message):
         return super()._get_field("media_type", explicit_presence=False,
         )
     @media_type.setter
-    def media_type(self, value: "builtins.str") -> None:
+    def media_type(self, value: "builtins.str|None") -> None:
         return super()._set_field("media_type",value,explicit_presence=False,
         )
     
@@ -133,7 +133,7 @@ class Artifact(pb_classes.Message):
         return super()._get_field("digest", explicit_presence=False,
         )
     @digest.setter
-    def digest(self, value: "builtins.str") -> None:
+    def digest(self, value: "builtins.str|None") -> None:
         return super()._set_field("digest",value,explicit_presence=False,
         )
     
@@ -142,7 +142,7 @@ class Artifact(pb_classes.Message):
         return super()._get_field("size", explicit_presence=False,
         )
     @size.setter
-    def size(self, value: "builtins.int") -> None:
+    def size(self, value: "builtins.int|None") -> None:
         return super()._set_field("size",value,explicit_presence=False,
         )
     
@@ -152,7 +152,7 @@ class Artifact(pb_classes.Message):
         wrap=Artifact.Status,
         )
     @status.setter
-    def status(self, value: "Artifact.Status|artifact_pb2.Artifact.Status") -> None:
+    def status(self, value: "Artifact.Status|artifact_pb2.Artifact.Status|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -162,7 +162,7 @@ class Artifact(pb_classes.Message):
         wrap=Artifact.Type,
         )
     @type.setter
-    def type(self, value: "Artifact.Type|artifact_pb2.Artifact.Type") -> None:
+    def type(self, value: "Artifact.Type|artifact_pb2.Artifact.Type|None") -> None:
         return super()._set_field("type",value,explicit_presence=False,
         )
     
@@ -172,7 +172,7 @@ class Artifact(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("created_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -183,7 +183,7 @@ class Artifact(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @updated_at.setter
-    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("updated_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -213,7 +213,7 @@ class GetArtifactRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -229,7 +229,7 @@ class GetArtifactRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -247,10 +247,10 @@ class ListArtifactsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -275,7 +275,7 @@ class ListArtifactsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -284,7 +284,7 @@ class ListArtifactsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -293,7 +293,7 @@ class ListArtifactsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -302,7 +302,7 @@ class ListArtifactsRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -323,8 +323,8 @@ class ListArtifactsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Artifact]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Artifact]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -344,7 +344,7 @@ class ListArtifactsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Artifact,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Artifact]") -> None:
+    def items(self, value: "abc.Iterable[Artifact]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -353,7 +353,7 @@ class ListArtifactsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -372,7 +372,7 @@ class DeleteArtifactRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -388,7 +388,7 @@ class DeleteArtifactRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -474,9 +474,9 @@ class Registry(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "RegistrySpec|registry_pb2.RegistrySpec|unset.UnsetType" = unset.Unset,
-        status: "RegistryStatus|registry_pb2.RegistryStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RegistrySpec|registry_pb2.RegistrySpec|None|unset.UnsetType" = unset.Unset,
+        status: "RegistryStatus|registry_pb2.RegistryStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -499,7 +499,7 @@ class Registry(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -509,7 +509,7 @@ class Registry(pb_classes.Message):
         wrap=RegistrySpec,
         )
     @spec.setter
-    def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec") -> None:
+    def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -519,7 +519,7 @@ class Registry(pb_classes.Message):
         wrap=RegistryStatus,
         )
     @status.setter
-    def status(self, value: "RegistryStatus|registry_pb2.RegistryStatus") -> None:
+    def status(self, value: "RegistryStatus|registry_pb2.RegistryStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -539,8 +539,8 @@ class RegistrySpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
-        images_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        images_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -559,7 +559,7 @@ class RegistrySpec(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -568,7 +568,7 @@ class RegistrySpec(pb_classes.Message):
         return super()._get_field("images_count", explicit_presence=False,
         )
     @images_count.setter
-    def images_count(self, value: "builtins.int") -> None:
+    def images_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("images_count",value,explicit_presence=False,
         )
     
@@ -594,8 +594,8 @@ class RegistryStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "RegistryStatus.State|registry_pb2.RegistryStatus.State|unset.UnsetType" = unset.Unset,
-        images_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        state: "RegistryStatus.State|registry_pb2.RegistryStatus.State|None|unset.UnsetType" = unset.Unset,
+        images_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -616,7 +616,7 @@ class RegistryStatus(pb_classes.Message):
         wrap=RegistryStatus.State,
         )
     @state.setter
-    def state(self, value: "RegistryStatus.State|registry_pb2.RegistryStatus.State") -> None:
+    def state(self, value: "RegistryStatus.State|registry_pb2.RegistryStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -625,7 +625,7 @@ class RegistryStatus(pb_classes.Message):
         return super()._get_field("images_count", explicit_presence=False,
         )
     @images_count.setter
-    def images_count(self, value: "builtins.int") -> None:
+    def images_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("images_count",value,explicit_presence=False,
         )
     
@@ -646,7 +646,7 @@ class GetRegistryRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -662,7 +662,7 @@ class GetRegistryRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -680,10 +680,10 @@ class ListRegistriesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
-        filter: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -708,7 +708,7 @@ class ListRegistriesRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -717,7 +717,7 @@ class ListRegistriesRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -726,7 +726,7 @@ class ListRegistriesRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -735,7 +735,7 @@ class ListRegistriesRequest(pb_classes.Message):
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
-    def filter(self, value: "builtins.str") -> None:
+    def filter(self, value: "builtins.str|None") -> None:
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
@@ -756,8 +756,8 @@ class ListRegistriesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Registry]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Registry]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -777,7 +777,7 @@ class ListRegistriesResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Registry,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Registry]") -> None:
+    def items(self, value: "abc.Iterable[Registry]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -786,7 +786,7 @@ class ListRegistriesResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -805,8 +805,8 @@ class CreateRegistryRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "RegistrySpec|registry_pb2.RegistrySpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RegistrySpec|registry_pb2.RegistrySpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -826,7 +826,7 @@ class CreateRegistryRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -836,7 +836,7 @@ class CreateRegistryRequest(pb_classes.Message):
         wrap=RegistrySpec,
         )
     @spec.setter
-    def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec") -> None:
+    def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -855,8 +855,8 @@ class UpdateRegistryRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "RegistrySpec|registry_pb2.RegistrySpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RegistrySpec|registry_pb2.RegistrySpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -876,7 +876,7 @@ class UpdateRegistryRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -886,7 +886,7 @@ class UpdateRegistryRequest(pb_classes.Message):
         wrap=RegistrySpec,
         )
     @spec.setter
-    def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec") -> None:
+    def spec(self, value: "RegistrySpec|registry_pb2.RegistrySpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -905,7 +905,7 @@ class DeleteRegistryRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -921,7 +921,7 @@ class DeleteRegistryRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     

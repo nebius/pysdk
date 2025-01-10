@@ -43,9 +43,9 @@ class Cluster(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
-        status: "ClusterStatus|cluster_pb2.ClusterStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
+        status: "ClusterStatus|cluster_pb2.ClusterStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -68,7 +68,7 @@ class Cluster(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -78,7 +78,7 @@ class Cluster(pb_classes.Message):
         wrap=ClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec") -> None:
+    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -88,7 +88,7 @@ class Cluster(pb_classes.Message):
         wrap=ClusterStatus,
         )
     @status.setter
-    def status(self, value: "ClusterStatus|cluster_pb2.ClusterStatus") -> None:
+    def status(self, value: "ClusterStatus|cluster_pb2.ClusterStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -108,8 +108,8 @@ class ClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        control_plane: "ControlPlaneSpec|cluster_pb2.ControlPlaneSpec|unset.UnsetType" = unset.Unset,
-        kube_network: "KubeNetworkSpec|cluster_pb2.KubeNetworkSpec|unset.UnsetType" = unset.Unset,
+        control_plane: "ControlPlaneSpec|cluster_pb2.ControlPlaneSpec|None|unset.UnsetType" = unset.Unset,
+        kube_network: "KubeNetworkSpec|cluster_pb2.KubeNetworkSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(control_plane, unset.UnsetType):
@@ -129,7 +129,7 @@ class ClusterSpec(pb_classes.Message):
         wrap=ControlPlaneSpec,
         )
     @control_plane.setter
-    def control_plane(self, value: "ControlPlaneSpec|cluster_pb2.ControlPlaneSpec") -> None:
+    def control_plane(self, value: "ControlPlaneSpec|cluster_pb2.ControlPlaneSpec|None") -> None:
         return super()._set_field("control_plane",value,explicit_presence=False,
         )
     
@@ -139,7 +139,7 @@ class ClusterSpec(pb_classes.Message):
         wrap=KubeNetworkSpec,
         )
     @kube_network.setter
-    def kube_network(self, value: "KubeNetworkSpec|cluster_pb2.KubeNetworkSpec") -> None:
+    def kube_network(self, value: "KubeNetworkSpec|cluster_pb2.KubeNetworkSpec|None") -> None:
         return super()._set_field("kube_network",value,explicit_presence=False,
         )
     
@@ -158,10 +158,10 @@ class ControlPlaneSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        version: "builtins.str|unset.UnsetType" = unset.Unset,
-        subnet_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        endpoints: "ControlPlaneEndpointsSpec|cluster_pb2.ControlPlaneEndpointsSpec|unset.UnsetType" = unset.Unset,
-        etcd_cluster_size: "builtins.int|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        endpoints: "ControlPlaneEndpointsSpec|cluster_pb2.ControlPlaneEndpointsSpec|None|unset.UnsetType" = unset.Unset,
+        etcd_cluster_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -186,7 +186,7 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
-    def version(self, value: "builtins.str") -> None:
+    def version(self, value: "builtins.str|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -195,7 +195,7 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._get_field("subnet_id", explicit_presence=False,
         )
     @subnet_id.setter
-    def subnet_id(self, value: "builtins.str") -> None:
+    def subnet_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("subnet_id",value,explicit_presence=False,
         )
     
@@ -205,7 +205,7 @@ class ControlPlaneSpec(pb_classes.Message):
         wrap=ControlPlaneEndpointsSpec,
         )
     @endpoints.setter
-    def endpoints(self, value: "ControlPlaneEndpointsSpec|cluster_pb2.ControlPlaneEndpointsSpec") -> None:
+    def endpoints(self, value: "ControlPlaneEndpointsSpec|cluster_pb2.ControlPlaneEndpointsSpec|None") -> None:
         return super()._set_field("endpoints",value,explicit_presence=False,
         )
     
@@ -214,7 +214,7 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._get_field("etcd_cluster_size", explicit_presence=False,
         )
     @etcd_cluster_size.setter
-    def etcd_cluster_size(self, value: "builtins.int") -> None:
+    def etcd_cluster_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("etcd_cluster_size",value,explicit_presence=False,
         )
     
@@ -289,7 +289,7 @@ class KubeNetworkSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        service_cidrs: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+        service_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service_cidrs, unset.UnsetType):
@@ -306,7 +306,7 @@ class KubeNetworkSpec(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @service_cidrs.setter
-    def service_cidrs(self, value: "abc.Iterable[builtins.str]") -> None:
+    def service_cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("service_cidrs",value,explicit_presence=False,
         )
     
@@ -331,9 +331,9 @@ class ClusterStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|unset.UnsetType" = unset.Unset,
-        control_plane: "ControlPlaneStatus|cluster_pb2.ControlPlaneStatus|unset.UnsetType" = unset.Unset,
-        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None|unset.UnsetType" = unset.Unset,
+        control_plane: "ControlPlaneStatus|cluster_pb2.ControlPlaneStatus|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -357,7 +357,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "ClusterStatus.State|cluster_pb2.ClusterStatus.State") -> None:
+    def state(self, value: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -367,7 +367,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=ControlPlaneStatus,
         )
     @control_plane.setter
-    def control_plane(self, value: "ControlPlaneStatus|cluster_pb2.ControlPlaneStatus") -> None:
+    def control_plane(self, value: "ControlPlaneStatus|cluster_pb2.ControlPlaneStatus|None") -> None:
         return super()._set_field("control_plane",value,explicit_presence=False,
         )
     
@@ -376,7 +376,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
-    def reconciling(self, value: "builtins.bool") -> None:
+    def reconciling(self, value: "builtins.bool|None") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
@@ -397,10 +397,10 @@ class ControlPlaneStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        version: "builtins.str|unset.UnsetType" = unset.Unset,
-        endpoints: "ControlPlaneStatusEndpoints|cluster_pb2.ControlPlaneStatusEndpoints|unset.UnsetType" = unset.Unset,
-        etcd_cluster_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        auth: "ControlPlaneStatusAuth|cluster_pb2.ControlPlaneStatusAuth|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        endpoints: "ControlPlaneStatusEndpoints|cluster_pb2.ControlPlaneStatusEndpoints|None|unset.UnsetType" = unset.Unset,
+        etcd_cluster_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        auth: "ControlPlaneStatusAuth|cluster_pb2.ControlPlaneStatusAuth|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -425,7 +425,7 @@ class ControlPlaneStatus(pb_classes.Message):
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
-    def version(self, value: "builtins.str") -> None:
+    def version(self, value: "builtins.str|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -435,7 +435,7 @@ class ControlPlaneStatus(pb_classes.Message):
         wrap=ControlPlaneStatusEndpoints,
         )
     @endpoints.setter
-    def endpoints(self, value: "ControlPlaneStatusEndpoints|cluster_pb2.ControlPlaneStatusEndpoints") -> None:
+    def endpoints(self, value: "ControlPlaneStatusEndpoints|cluster_pb2.ControlPlaneStatusEndpoints|None") -> None:
         return super()._set_field("endpoints",value,explicit_presence=False,
         )
     
@@ -444,7 +444,7 @@ class ControlPlaneStatus(pb_classes.Message):
         return super()._get_field("etcd_cluster_size", explicit_presence=False,
         )
     @etcd_cluster_size.setter
-    def etcd_cluster_size(self, value: "builtins.int") -> None:
+    def etcd_cluster_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("etcd_cluster_size",value,explicit_presence=False,
         )
     
@@ -454,7 +454,7 @@ class ControlPlaneStatus(pb_classes.Message):
         wrap=ControlPlaneStatusAuth,
         )
     @auth.setter
-    def auth(self, value: "ControlPlaneStatusAuth|cluster_pb2.ControlPlaneStatusAuth") -> None:
+    def auth(self, value: "ControlPlaneStatusAuth|cluster_pb2.ControlPlaneStatusAuth|None") -> None:
         return super()._set_field("auth",value,explicit_presence=False,
         )
     
@@ -475,8 +475,8 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        public_endpoint: "builtins.str|unset.UnsetType" = unset.Unset,
-        private_endpoint: "builtins.str|unset.UnsetType" = unset.Unset,
+        public_endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        private_endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(public_endpoint, unset.UnsetType):
@@ -495,7 +495,7 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
         return super()._get_field("public_endpoint", explicit_presence=False,
         )
     @public_endpoint.setter
-    def public_endpoint(self, value: "builtins.str") -> None:
+    def public_endpoint(self, value: "builtins.str|None") -> None:
         return super()._set_field("public_endpoint",value,explicit_presence=False,
         )
     
@@ -504,7 +504,7 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
         return super()._get_field("private_endpoint", explicit_presence=False,
         )
     @private_endpoint.setter
-    def private_endpoint(self, value: "builtins.str") -> None:
+    def private_endpoint(self, value: "builtins.str|None") -> None:
         return super()._set_field("private_endpoint",value,explicit_presence=False,
         )
     
@@ -523,7 +523,7 @@ class ControlPlaneStatusAuth(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cluster_ca_certificate: "builtins.str|unset.UnsetType" = unset.Unset,
+        cluster_ca_certificate: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(cluster_ca_certificate, unset.UnsetType):
@@ -539,7 +539,7 @@ class ControlPlaneStatusAuth(pb_classes.Message):
         return super()._get_field("cluster_ca_certificate", explicit_presence=False,
         )
     @cluster_ca_certificate.setter
-    def cluster_ca_certificate(self, value: "builtins.str") -> None:
+    def cluster_ca_certificate(self, value: "builtins.str|None") -> None:
         return super()._set_field("cluster_ca_certificate",value,explicit_presence=False,
         )
     
@@ -558,8 +558,8 @@ class CreateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -579,7 +579,7 @@ class CreateClusterRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -589,7 +589,7 @@ class CreateClusterRequest(pb_classes.Message):
         wrap=ClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec") -> None:
+    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -608,8 +608,8 @@ class GetClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        resource_version: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -628,7 +628,7 @@ class GetClusterRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -637,7 +637,7 @@ class GetClusterRequest(pb_classes.Message):
         return super()._get_field("resource_version", explicit_presence=False,
         )
     @resource_version.setter
-    def resource_version(self, value: "builtins.str") -> None:
+    def resource_version(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_version",value,explicit_presence=False,
         )
     
@@ -656,8 +656,8 @@ class GetClusterByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -676,7 +676,7 @@ class GetClusterByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -685,7 +685,7 @@ class GetClusterByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -704,9 +704,9 @@ class ListClustersRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -728,7 +728,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -737,7 +737,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -746,7 +746,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -766,8 +766,8 @@ class ListClustersResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Cluster]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Cluster]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -787,7 +787,7 @@ class ListClustersResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Cluster,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Cluster]") -> None:
+    def items(self, value: "abc.Iterable[Cluster]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -796,7 +796,7 @@ class ListClustersResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -815,8 +815,8 @@ class UpdateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -836,7 +836,7 @@ class UpdateClusterRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -846,7 +846,7 @@ class UpdateClusterRequest(pb_classes.Message):
         wrap=ClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec") -> None:
+    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -865,7 +865,7 @@ class DeleteClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -881,7 +881,7 @@ class DeleteClusterRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1100,8 +1100,8 @@ class DiskSpec(pb_classes.Message):
         size_kibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         size_mebibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        block_size_bytes: "builtins.int|unset.UnsetType" = unset.Unset,
-        type: "DiskSpec.DiskType|instance_template_pb2.DiskSpec.DiskType|unset.UnsetType" = unset.Unset,
+        block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        type: "DiskSpec.DiskType|instance_template_pb2.DiskSpec.DiskType|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(size_bytes, unset.UnsetType):
@@ -1170,7 +1170,7 @@ class DiskSpec(pb_classes.Message):
         return super()._get_field("block_size_bytes", explicit_presence=False,
         )
     @block_size_bytes.setter
-    def block_size_bytes(self, value: "builtins.int") -> None:
+    def block_size_bytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("block_size_bytes",value,explicit_presence=False,
         )
     
@@ -1180,7 +1180,7 @@ class DiskSpec(pb_classes.Message):
         wrap=DiskSpec.DiskType,
         )
     @type.setter
-    def type(self, value: "DiskSpec.DiskType|instance_template_pb2.DiskSpec.DiskType") -> None:
+    def type(self, value: "DiskSpec.DiskType|instance_template_pb2.DiskSpec.DiskType|None") -> None:
         return super()._set_field("type",value,explicit_presence=False,
         )
     
@@ -1232,7 +1232,7 @@ class ResourcesSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        platform: "builtins.str|unset.UnsetType" = unset.Unset,
+        platform: "builtins.str|None|unset.UnsetType" = unset.Unset,
         preset: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -1253,7 +1253,7 @@ class ResourcesSpec(pb_classes.Message):
         return super()._get_field("platform", explicit_presence=False,
         )
     @platform.setter
-    def platform(self, value: "builtins.str") -> None:
+    def platform(self, value: "builtins.str|None") -> None:
         return super()._set_field("platform",value,explicit_presence=False,
         )
     
@@ -1283,9 +1283,9 @@ class NodeGroup(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|unset.UnsetType" = unset.Unset,
-        status: "NodeGroupStatus|node_group_pb2.NodeGroupStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None|unset.UnsetType" = unset.Unset,
+        status: "NodeGroupStatus|node_group_pb2.NodeGroupStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1308,7 +1308,7 @@ class NodeGroup(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1318,7 +1318,7 @@ class NodeGroup(pb_classes.Message):
         wrap=NodeGroupSpec,
         )
     @spec.setter
-    def spec(self, value: "NodeGroupSpec|node_group_pb2.NodeGroupSpec") -> None:
+    def spec(self, value: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1328,7 +1328,7 @@ class NodeGroup(pb_classes.Message):
         wrap=NodeGroupStatus,
         )
     @status.setter
-    def status(self, value: "NodeGroupStatus|node_group_pb2.NodeGroupStatus") -> None:
+    def status(self, value: "NodeGroupStatus|node_group_pb2.NodeGroupStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -1386,11 +1386,11 @@ class NodeGroupSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        version: "builtins.str|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
         fixed_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         autoscaling: "NodeGroupAutoscalingSpec|node_group_pb2.NodeGroupAutoscalingSpec|None|unset.UnsetType" = unset.Unset,
-        template: "NodeTemplate|node_group_pb2.NodeTemplate|unset.UnsetType" = unset.Unset,
-        strategy: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy|unset.UnsetType" = unset.Unset,
+        template: "NodeTemplate|node_group_pb2.NodeTemplate|None|unset.UnsetType" = unset.Unset,
+        strategy: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -1419,7 +1419,7 @@ class NodeGroupSpec(pb_classes.Message):
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
-    def version(self, value: "builtins.str") -> None:
+    def version(self, value: "builtins.str|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -1448,7 +1448,7 @@ class NodeGroupSpec(pb_classes.Message):
         wrap=NodeTemplate,
         )
     @template.setter
-    def template(self, value: "NodeTemplate|node_group_pb2.NodeTemplate") -> None:
+    def template(self, value: "NodeTemplate|node_group_pb2.NodeTemplate|None") -> None:
         return super()._set_field("template",value,explicit_presence=False,
         )
     
@@ -1458,7 +1458,7 @@ class NodeGroupSpec(pb_classes.Message):
         wrap=NodeGroupDeploymentStrategy,
         )
     @strategy.setter
-    def strategy(self, value: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy") -> None:
+    def strategy(self, value: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy|None") -> None:
         return super()._set_field("strategy",value,explicit_presence=False,
         )
     
@@ -1481,15 +1481,15 @@ class NodeTemplate(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "NodeMetadataTemplate|node_group_pb2.NodeMetadataTemplate|unset.UnsetType" = unset.Unset,
-        taints: "abc.Iterable[NodeTaint]|unset.UnsetType" = unset.Unset,
-        resources: "ResourcesSpec|instance_template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
-        boot_disk: "DiskSpec|instance_template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
-        gpu_cluster: "GpuClusterSpec|node_group_pb2.GpuClusterSpec|unset.UnsetType" = unset.Unset,
-        network_interfaces: "abc.Iterable[NetworkInterfaceTemplate]|unset.UnsetType" = unset.Unset,
-        filesystems: "abc.Iterable[AttachedFilesystemSpec]|unset.UnsetType" = unset.Unset,
-        cloud_init_user_data: "builtins.str|unset.UnsetType" = unset.Unset,
-        service_account_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        metadata: "NodeMetadataTemplate|node_group_pb2.NodeMetadataTemplate|None|unset.UnsetType" = unset.Unset,
+        taints: "abc.Iterable[NodeTaint]|None|unset.UnsetType" = unset.Unset,
+        resources: "ResourcesSpec|instance_template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
+        boot_disk: "DiskSpec|instance_template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
+        gpu_cluster: "GpuClusterSpec|node_group_pb2.GpuClusterSpec|None|unset.UnsetType" = unset.Unset,
+        network_interfaces: "abc.Iterable[NetworkInterfaceTemplate]|None|unset.UnsetType" = unset.Unset,
+        filesystems: "abc.Iterable[AttachedFilesystemSpec]|None|unset.UnsetType" = unset.Unset,
+        cloud_init_user_data: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1530,7 +1530,7 @@ class NodeTemplate(pb_classes.Message):
         wrap=NodeMetadataTemplate,
         )
     @metadata.setter
-    def metadata(self, value: "NodeMetadataTemplate|node_group_pb2.NodeMetadataTemplate") -> None:
+    def metadata(self, value: "NodeMetadataTemplate|node_group_pb2.NodeMetadataTemplate|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1540,7 +1540,7 @@ class NodeTemplate(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(NodeTaint,None,None),
         )
     @taints.setter
-    def taints(self, value: "abc.Iterable[NodeTaint]") -> None:
+    def taints(self, value: "abc.Iterable[NodeTaint]|None") -> None:
         return super()._set_field("taints",value,explicit_presence=False,
         )
     
@@ -1550,7 +1550,7 @@ class NodeTemplate(pb_classes.Message):
         wrap=ResourcesSpec,
         )
     @resources.setter
-    def resources(self, value: "ResourcesSpec|instance_template_pb2.ResourcesSpec") -> None:
+    def resources(self, value: "ResourcesSpec|instance_template_pb2.ResourcesSpec|None") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
@@ -1560,7 +1560,7 @@ class NodeTemplate(pb_classes.Message):
         wrap=DiskSpec,
         )
     @boot_disk.setter
-    def boot_disk(self, value: "DiskSpec|instance_template_pb2.DiskSpec") -> None:
+    def boot_disk(self, value: "DiskSpec|instance_template_pb2.DiskSpec|None") -> None:
         return super()._set_field("boot_disk",value,explicit_presence=False,
         )
     
@@ -1570,7 +1570,7 @@ class NodeTemplate(pb_classes.Message):
         wrap=GpuClusterSpec,
         )
     @gpu_cluster.setter
-    def gpu_cluster(self, value: "GpuClusterSpec|node_group_pb2.GpuClusterSpec") -> None:
+    def gpu_cluster(self, value: "GpuClusterSpec|node_group_pb2.GpuClusterSpec|None") -> None:
         return super()._set_field("gpu_cluster",value,explicit_presence=False,
         )
     
@@ -1580,7 +1580,7 @@ class NodeTemplate(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(NetworkInterfaceTemplate,None,None),
         )
     @network_interfaces.setter
-    def network_interfaces(self, value: "abc.Iterable[NetworkInterfaceTemplate]") -> None:
+    def network_interfaces(self, value: "abc.Iterable[NetworkInterfaceTemplate]|None") -> None:
         return super()._set_field("network_interfaces",value,explicit_presence=False,
         )
     
@@ -1590,7 +1590,7 @@ class NodeTemplate(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None,None),
         )
     @filesystems.setter
-    def filesystems(self, value: "abc.Iterable[AttachedFilesystemSpec]") -> None:
+    def filesystems(self, value: "abc.Iterable[AttachedFilesystemSpec]|None") -> None:
         return super()._set_field("filesystems",value,explicit_presence=False,
         )
     
@@ -1599,7 +1599,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._get_field("cloud_init_user_data", explicit_presence=False,
         )
     @cloud_init_user_data.setter
-    def cloud_init_user_data(self, value: "builtins.str") -> None:
+    def cloud_init_user_data(self, value: "builtins.str|None") -> None:
         return super()._set_field("cloud_init_user_data",value,explicit_presence=False,
         )
     
@@ -1608,7 +1608,7 @@ class NodeTemplate(pb_classes.Message):
         return super()._get_field("service_account_id", explicit_presence=False,
         )
     @service_account_id.setter
-    def service_account_id(self, value: "builtins.str") -> None:
+    def service_account_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("service_account_id",value,explicit_presence=False,
         )
     
@@ -1640,8 +1640,8 @@ class NodeMetadataTemplate(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|unset.UnsetType" = unset.Unset,
-            value: "builtins.str|unset.UnsetType" = unset.Unset,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(key, unset.UnsetType):
@@ -1660,7 +1660,7 @@ class NodeMetadataTemplate(pb_classes.Message):
             return super()._get_field("key", explicit_presence=False,
             )
         @key.setter
-        def key(self, value: "builtins.str") -> None:
+        def key(self, value: "builtins.str|None") -> None:
             return super()._set_field("key",value,explicit_presence=False,
             )
         
@@ -1669,7 +1669,7 @@ class NodeMetadataTemplate(pb_classes.Message):
             return super()._get_field("value", explicit_presence=False,
             )
         @value.setter
-        def value(self, value: "builtins.str") -> None:
+        def value(self, value: "builtins.str|None") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
         
@@ -1683,7 +1683,7 @@ class NodeMetadataTemplate(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        labels: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
+        labels: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(labels, unset.UnsetType):
@@ -1701,7 +1701,7 @@ class NodeMetadataTemplate(pb_classes.Message):
         wrap=pb_classes.Map,
         )
     @labels.setter
-    def labels(self, value: "abc.Mapping[builtins.str,builtins.str]") -> None:
+    def labels(self, value: "abc.Mapping[builtins.str,builtins.str]|None") -> None:
         return super()._set_field("labels",value,explicit_presence=False,
         )
     
@@ -1720,7 +1720,7 @@ class GpuClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1736,7 +1736,7 @@ class GpuClusterSpec(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1755,7 +1755,7 @@ class NetworkInterfaceTemplate(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         public_ip_address: "PublicIPAddress|node_group_pb2.PublicIPAddress|None|unset.UnsetType" = unset.Unset,
-        subnet_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(public_ip_address, unset.UnsetType):
@@ -1784,7 +1784,7 @@ class NetworkInterfaceTemplate(pb_classes.Message):
         return super()._get_field("subnet_id", explicit_presence=False,
         )
     @subnet_id.setter
-    def subnet_id(self, value: "builtins.str") -> None:
+    def subnet_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("subnet_id",value,explicit_presence=False,
         )
     
@@ -1855,8 +1855,8 @@ class AttachedFilesystemSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        attach_mode: "AttachedFilesystemSpec.AttachMode|node_group_pb2.AttachedFilesystemSpec.AttachMode|unset.UnsetType" = unset.Unset,
-        device_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        attach_mode: "AttachedFilesystemSpec.AttachMode|node_group_pb2.AttachedFilesystemSpec.AttachMode|None|unset.UnsetType" = unset.Unset,
+        device_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         existing_filesystem: "ExistingFilesystem|node_group_pb2.ExistingFilesystem|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -1882,7 +1882,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         wrap=AttachedFilesystemSpec.AttachMode,
         )
     @attach_mode.setter
-    def attach_mode(self, value: "AttachedFilesystemSpec.AttachMode|node_group_pb2.AttachedFilesystemSpec.AttachMode") -> None:
+    def attach_mode(self, value: "AttachedFilesystemSpec.AttachMode|node_group_pb2.AttachedFilesystemSpec.AttachMode|None") -> None:
         return super()._set_field("attach_mode",value,explicit_presence=False,
         )
     
@@ -1891,7 +1891,7 @@ class AttachedFilesystemSpec(pb_classes.Message):
         return super()._get_field("device_name", explicit_presence=False,
         )
     @device_name.setter
-    def device_name(self, value: "builtins.str") -> None:
+    def device_name(self, value: "builtins.str|None") -> None:
         return super()._set_field("device_name",value,explicit_presence=False,
         )
     
@@ -1923,7 +1923,7 @@ class ExistingFilesystem(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1939,7 +1939,7 @@ class ExistingFilesystem(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1957,8 +1957,8 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        min_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
-        max_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
+        min_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        max_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(min_node_count, unset.UnsetType):
@@ -1977,7 +1977,7 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
         return super()._get_field("min_node_count", explicit_presence=False,
         )
     @min_node_count.setter
-    def min_node_count(self, value: "builtins.int") -> None:
+    def min_node_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("min_node_count",value,explicit_presence=False,
         )
     
@@ -1986,7 +1986,7 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
         return super()._get_field("max_node_count", explicit_presence=False,
         )
     @max_node_count.setter
-    def max_node_count(self, value: "builtins.int") -> None:
+    def max_node_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("max_node_count",value,explicit_presence=False,
         )
     
@@ -2012,9 +2012,9 @@ class NodeTaint(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        key: "builtins.str|unset.UnsetType" = unset.Unset,
-        value: "builtins.str|unset.UnsetType" = unset.Unset,
-        effect: "NodeTaint.Effect|node_group_pb2.NodeTaint.Effect|unset.UnsetType" = unset.Unset,
+        key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        effect: "NodeTaint.Effect|node_group_pb2.NodeTaint.Effect|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(key, unset.UnsetType):
@@ -2037,7 +2037,7 @@ class NodeTaint(pb_classes.Message):
         return super()._get_field("key", explicit_presence=False,
         )
     @key.setter
-    def key(self, value: "builtins.str") -> None:
+    def key(self, value: "builtins.str|None") -> None:
         return super()._set_field("key",value,explicit_presence=False,
         )
     
@@ -2046,7 +2046,7 @@ class NodeTaint(pb_classes.Message):
         return super()._get_field("value", explicit_presence=False,
         )
     @value.setter
-    def value(self, value: "builtins.str") -> None:
+    def value(self, value: "builtins.str|None") -> None:
         return super()._set_field("value",value,explicit_presence=False,
         )
     
@@ -2056,7 +2056,7 @@ class NodeTaint(pb_classes.Message):
         wrap=NodeTaint.Effect,
         )
     @effect.setter
-    def effect(self, value: "NodeTaint.Effect|node_group_pb2.NodeTaint.Effect") -> None:
+    def effect(self, value: "NodeTaint.Effect|node_group_pb2.NodeTaint.Effect|None") -> None:
         return super()._set_field("effect",value,explicit_presence=False,
         )
     
@@ -2078,9 +2078,9 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        max_unavailable: "PercentOrCount|node_group_pb2.PercentOrCount|unset.UnsetType" = unset.Unset,
-        max_surge: "PercentOrCount|node_group_pb2.PercentOrCount|unset.UnsetType" = unset.Unset,
-        drain_timeout: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
+        max_unavailable: "PercentOrCount|node_group_pb2.PercentOrCount|None|unset.UnsetType" = unset.Unset,
+        max_surge: "PercentOrCount|node_group_pb2.PercentOrCount|None|unset.UnsetType" = unset.Unset,
+        drain_timeout: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(max_unavailable, unset.UnsetType):
@@ -2103,7 +2103,7 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         wrap=PercentOrCount,
         )
     @max_unavailable.setter
-    def max_unavailable(self, value: "PercentOrCount|node_group_pb2.PercentOrCount") -> None:
+    def max_unavailable(self, value: "PercentOrCount|node_group_pb2.PercentOrCount|None") -> None:
         return super()._set_field("max_unavailable",value,explicit_presence=False,
         )
     
@@ -2113,7 +2113,7 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         wrap=PercentOrCount,
         )
     @max_surge.setter
-    def max_surge(self, value: "PercentOrCount|node_group_pb2.PercentOrCount") -> None:
+    def max_surge(self, value: "PercentOrCount|node_group_pb2.PercentOrCount|None") -> None:
         return super()._set_field("max_surge",value,explicit_presence=False,
         )
     
@@ -2123,7 +2123,7 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         wrap=well_known_1.from_duration
         )
     @drain_timeout.setter
-    def drain_timeout(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+    def drain_timeout(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
         return super()._set_field("drain_timeout",value,explicit_presence=False,
         unwrap=well_known_1.to_duration
         )
@@ -2239,13 +2239,13 @@ class NodeGroupStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        state: "NodeGroupStatus.State|node_group_pb2.NodeGroupStatus.State|unset.UnsetType" = unset.Unset,
-        version: "builtins.str|unset.UnsetType" = unset.Unset,
-        target_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
-        node_count: "builtins.int|unset.UnsetType" = unset.Unset,
-        outdated_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
-        ready_node_count: "builtins.int|unset.UnsetType" = unset.Unset,
-        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        state: "NodeGroupStatus.State|node_group_pb2.NodeGroupStatus.State|None|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        target_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        outdated_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        ready_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -2281,7 +2281,7 @@ class NodeGroupStatus(pb_classes.Message):
         wrap=NodeGroupStatus.State,
         )
     @state.setter
-    def state(self, value: "NodeGroupStatus.State|node_group_pb2.NodeGroupStatus.State") -> None:
+    def state(self, value: "NodeGroupStatus.State|node_group_pb2.NodeGroupStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -2290,7 +2290,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
-    def version(self, value: "builtins.str") -> None:
+    def version(self, value: "builtins.str|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -2299,7 +2299,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._get_field("target_node_count", explicit_presence=False,
         )
     @target_node_count.setter
-    def target_node_count(self, value: "builtins.int") -> None:
+    def target_node_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("target_node_count",value,explicit_presence=False,
         )
     
@@ -2308,7 +2308,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._get_field("node_count", explicit_presence=False,
         )
     @node_count.setter
-    def node_count(self, value: "builtins.int") -> None:
+    def node_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("node_count",value,explicit_presence=False,
         )
     
@@ -2317,7 +2317,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._get_field("outdated_node_count", explicit_presence=False,
         )
     @outdated_node_count.setter
-    def outdated_node_count(self, value: "builtins.int") -> None:
+    def outdated_node_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("outdated_node_count",value,explicit_presence=False,
         )
     
@@ -2326,7 +2326,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._get_field("ready_node_count", explicit_presence=False,
         )
     @ready_node_count.setter
-    def ready_node_count(self, value: "builtins.int") -> None:
+    def ready_node_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("ready_node_count",value,explicit_presence=False,
         )
     
@@ -2335,7 +2335,7 @@ class NodeGroupStatus(pb_classes.Message):
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
-    def reconciling(self, value: "builtins.bool") -> None:
+    def reconciling(self, value: "builtins.bool|None") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
@@ -2361,8 +2361,8 @@ class CreateNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2382,7 +2382,7 @@ class CreateNodeGroupRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2392,7 +2392,7 @@ class CreateNodeGroupRequest(pb_classes.Message):
         wrap=NodeGroupSpec,
         )
     @spec.setter
-    def spec(self, value: "NodeGroupSpec|node_group_pb2.NodeGroupSpec") -> None:
+    def spec(self, value: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2411,8 +2411,8 @@ class GetNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        resource_version: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -2431,7 +2431,7 @@ class GetNodeGroupRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2440,7 +2440,7 @@ class GetNodeGroupRequest(pb_classes.Message):
         return super()._get_field("resource_version", explicit_presence=False,
         )
     @resource_version.setter
-    def resource_version(self, value: "builtins.str") -> None:
+    def resource_version(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_version",value,explicit_presence=False,
         )
     
@@ -2459,8 +2459,8 @@ class GetNodeGroupByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -2479,7 +2479,7 @@ class GetNodeGroupByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -2488,7 +2488,7 @@ class GetNodeGroupByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -2507,9 +2507,9 @@ class ListNodeGroupsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -2531,7 +2531,7 @@ class ListNodeGroupsRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -2540,7 +2540,7 @@ class ListNodeGroupsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -2549,7 +2549,7 @@ class ListNodeGroupsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -2569,8 +2569,8 @@ class ListNodeGroupsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[NodeGroup]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[NodeGroup]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -2590,7 +2590,7 @@ class ListNodeGroupsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(NodeGroup,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[NodeGroup]") -> None:
+    def items(self, value: "abc.Iterable[NodeGroup]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -2599,7 +2599,7 @@ class ListNodeGroupsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -2618,8 +2618,8 @@ class UpdateNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -2639,7 +2639,7 @@ class UpdateNodeGroupRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -2649,7 +2649,7 @@ class UpdateNodeGroupRequest(pb_classes.Message):
         wrap=NodeGroupSpec,
         )
     @spec.setter
-    def spec(self, value: "NodeGroupSpec|node_group_pb2.NodeGroupSpec") -> None:
+    def spec(self, value: "NodeGroupSpec|node_group_pb2.NodeGroupSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -2668,7 +2668,7 @@ class DeleteNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -2684,7 +2684,7 @@ class DeleteNodeGroupRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2729,7 +2729,7 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         latest_infra_version: "empty_pb2.Empty|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -2750,7 +2750,7 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -2928,7 +2928,7 @@ class ProgressData(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        problems: "abc.Iterable[Problem]|unset.UnsetType" = unset.Unset,
+        problems: "abc.Iterable[Problem]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(problems, unset.UnsetType):
@@ -2945,7 +2945,7 @@ class ProgressData(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Problem,None,None),
         )
     @problems.setter
-    def problems(self, value: "abc.Iterable[Problem]") -> None:
+    def problems(self, value: "abc.Iterable[Problem]|None") -> None:
         return super()._set_field("problems",value,explicit_presence=False,
         )
     
@@ -2963,8 +2963,8 @@ class Problem(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        stage: "builtins.str|unset.UnsetType" = unset.Unset,
-        message: "builtins.str|unset.UnsetType" = unset.Unset,
+        stage: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(stage, unset.UnsetType):
@@ -2983,7 +2983,7 @@ class Problem(pb_classes.Message):
         return super()._get_field("stage", explicit_presence=False,
         )
     @stage.setter
-    def stage(self, value: "builtins.str") -> None:
+    def stage(self, value: "builtins.str|None") -> None:
         return super()._set_field("stage",value,explicit_presence=False,
         )
     
@@ -2992,7 +2992,7 @@ class Problem(pb_classes.Message):
         return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
-    def message(self, value: "builtins.str") -> None:
+    def message(self, value: "builtins.str|None") -> None:
         return super()._set_field("message",value,explicit_presence=False,
         )
     
