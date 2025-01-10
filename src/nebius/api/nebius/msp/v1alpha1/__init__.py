@@ -45,9 +45,9 @@ class ClusterStatus(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        phase: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase|unset.UnsetType" = unset.Unset,
-        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|unset.UnsetType" = unset.Unset,
-        reconciling: "builtins.bool|unset.UnsetType" = unset.Unset,
+        phase: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase|None|unset.UnsetType" = unset.Unset,
+        state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(phase, unset.UnsetType):
@@ -72,7 +72,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase") -> None:
+    def phase(self, value: "ClusterStatus.Phase|cluster_pb2.ClusterStatus.Phase|None") -> None:
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
@@ -82,7 +82,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "ClusterStatus.State|cluster_pb2.ClusterStatus.State") -> None:
+    def state(self, value: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -91,7 +91,7 @@ class ClusterStatus(pb_classes.Message):
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
-    def reconciling(self, value: "builtins.bool") -> None:
+    def reconciling(self, value: "builtins.bool|None") -> None:
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     

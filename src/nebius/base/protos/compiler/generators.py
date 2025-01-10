@@ -216,7 +216,7 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
         g.p(")")
     g.p("@", field.pythonic_name, ".setter")
     g.p("def ", field.pythonic_name, '(self, value: "', add_eol=False)
-    setter_type(field, g)
+    setter_type(field, g, always_none=True)
     g.p('") -> None:', noindent=True)
     with g:
         g.p(
@@ -240,7 +240,7 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
 
 def generate_field_init_arg(field: Field, g: PyGenFile) -> None:
     g.p(field.pythonic_name, ': "', add_eol=False)
-    setter_type(field, g)
+    setter_type(field, g, always_none=True)
     g.p(
         "|",
         ImportedSymbol("UnsetType", "nebius.base.protos.unset"),

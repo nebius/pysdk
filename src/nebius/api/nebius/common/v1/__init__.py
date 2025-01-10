@@ -193,8 +193,8 @@ class ServiceError(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        service: "builtins.str|unset.UnsetType" = unset.Unset,
-        code: "builtins.str|unset.UnsetType" = unset.Unset,
+        service: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        code: "builtins.str|None|unset.UnsetType" = unset.Unset,
         bad_request: "BadRequest|error_pb2.BadRequest|None|unset.UnsetType" = unset.Unset,
         bad_resource_state: "BadResourceState|error_pb2.BadResourceState|None|unset.UnsetType" = unset.Unset,
         resource_not_found: "ResourceNotFound|error_pb2.ResourceNotFound|None|unset.UnsetType" = unset.Unset,
@@ -207,7 +207,7 @@ class ServiceError(pb_classes.Message):
         quota_failure: "QuotaFailure|error_pb2.QuotaFailure|None|unset.UnsetType" = unset.Unset,
         not_enough_resources: "NotEnoughResources|error_pb2.NotEnoughResources|None|unset.UnsetType" = unset.Unset,
         internal_error: "InternalError|error_pb2.InternalError|None|unset.UnsetType" = unset.Unset,
-        retry_type: "ServiceError.RetryType|error_pb2.ServiceError.RetryType|unset.UnsetType" = unset.Unset,
+        retry_type: "ServiceError.RetryType|error_pb2.ServiceError.RetryType|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service, unset.UnsetType):
@@ -267,7 +267,7 @@ class ServiceError(pb_classes.Message):
         return super()._get_field("service", explicit_presence=False,
         )
     @service.setter
-    def service(self, value: "builtins.str") -> None:
+    def service(self, value: "builtins.str|None") -> None:
         return super()._set_field("service",value,explicit_presence=False,
         )
     
@@ -276,7 +276,7 @@ class ServiceError(pb_classes.Message):
         return super()._get_field("code", explicit_presence=False,
         )
     @code.setter
-    def code(self, value: "builtins.str") -> None:
+    def code(self, value: "builtins.str|None") -> None:
         return super()._set_field("code",value,explicit_presence=False,
         )
     
@@ -406,7 +406,7 @@ class ServiceError(pb_classes.Message):
         wrap=ServiceError.RetryType,
         )
     @retry_type.setter
-    def retry_type(self, value: "ServiceError.RetryType|error_pb2.ServiceError.RetryType") -> None:
+    def retry_type(self, value: "ServiceError.RetryType|error_pb2.ServiceError.RetryType|None") -> None:
         return super()._set_field("retry_type",value,explicit_presence=False,
         )
     
@@ -446,8 +446,8 @@ class BadRequest(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            field: "builtins.str|unset.UnsetType" = unset.Unset,
-            message: "builtins.str|unset.UnsetType" = unset.Unset,
+            field: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            message: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(field, unset.UnsetType):
@@ -466,7 +466,7 @@ class BadRequest(pb_classes.Message):
             return super()._get_field("field", explicit_presence=False,
             )
         @field.setter
-        def field(self, value: "builtins.str") -> None:
+        def field(self, value: "builtins.str|None") -> None:
             return super()._set_field("field",value,explicit_presence=False,
             )
         
@@ -475,7 +475,7 @@ class BadRequest(pb_classes.Message):
             return super()._get_field("message", explicit_presence=False,
             )
         @message.setter
-        def message(self, value: "builtins.str") -> None:
+        def message(self, value: "builtins.str|None") -> None:
             return super()._set_field("message",value,explicit_presence=False,
             )
         
@@ -489,7 +489,7 @@ class BadRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        violations: "abc.Iterable[BadRequest.Violation]|unset.UnsetType" = unset.Unset,
+        violations: "abc.Iterable[BadRequest.Violation]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(violations, unset.UnsetType):
@@ -507,7 +507,7 @@ class BadRequest(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(BadRequest.Violation,None,None),
         )
     @violations.setter
-    def violations(self, value: "abc.Iterable[BadRequest.Violation]") -> None:
+    def violations(self, value: "abc.Iterable[BadRequest.Violation]|None") -> None:
         return super()._set_field("violations",value,explicit_presence=False,
         )
     
@@ -526,8 +526,8 @@ class BadResourceState(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        message: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_id, unset.UnsetType):
@@ -546,7 +546,7 @@ class BadResourceState(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -555,7 +555,7 @@ class BadResourceState(pb_classes.Message):
         return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
-    def message(self, value: "builtins.str") -> None:
+    def message(self, value: "builtins.str|None") -> None:
         return super()._set_field("message",value,explicit_presence=False,
         )
     
@@ -574,7 +574,7 @@ class ResourceNotFound(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_id, unset.UnsetType):
@@ -590,7 +590,7 @@ class ResourceNotFound(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -608,7 +608,7 @@ class ResourceAlreadyExists(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_id, unset.UnsetType):
@@ -624,7 +624,7 @@ class ResourceAlreadyExists(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -642,8 +642,8 @@ class ResourceConflict(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        message: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_id, unset.UnsetType):
@@ -662,7 +662,7 @@ class ResourceConflict(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -671,7 +671,7 @@ class ResourceConflict(pb_classes.Message):
         return super()._get_field("message", explicit_presence=False,
         )
     @message.setter
-    def message(self, value: "builtins.str") -> None:
+    def message(self, value: "builtins.str|None") -> None:
         return super()._set_field("message",value,explicit_presence=False,
         )
     
@@ -690,9 +690,9 @@ class OperationAborted(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        operation_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        aborted_by_operation_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        operation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        aborted_by_operation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(operation_id, unset.UnsetType):
@@ -714,7 +714,7 @@ class OperationAborted(pb_classes.Message):
         return super()._get_field("operation_id", explicit_presence=False,
         )
     @operation_id.setter
-    def operation_id(self, value: "builtins.str") -> None:
+    def operation_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("operation_id",value,explicit_presence=False,
         )
     
@@ -723,7 +723,7 @@ class OperationAborted(pb_classes.Message):
         return super()._get_field("aborted_by_operation_id", explicit_presence=False,
         )
     @aborted_by_operation_id.setter
-    def aborted_by_operation_id(self, value: "builtins.str") -> None:
+    def aborted_by_operation_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("aborted_by_operation_id",value,explicit_presence=False,
         )
     
@@ -732,7 +732,7 @@ class OperationAborted(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -752,8 +752,8 @@ class OutOfRange(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        requested: "builtins.str|unset.UnsetType" = unset.Unset,
-        limit: "builtins.str|unset.UnsetType" = unset.Unset,
+        requested: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        limit: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(requested, unset.UnsetType):
@@ -772,7 +772,7 @@ class OutOfRange(pb_classes.Message):
         return super()._get_field("requested", explicit_presence=False,
         )
     @requested.setter
-    def requested(self, value: "builtins.str") -> None:
+    def requested(self, value: "builtins.str|None") -> None:
         return super()._set_field("requested",value,explicit_presence=False,
         )
     
@@ -781,7 +781,7 @@ class OutOfRange(pb_classes.Message):
         return super()._get_field("limit", explicit_presence=False,
         )
     @limit.setter
-    def limit(self, value: "builtins.str") -> None:
+    def limit(self, value: "builtins.str|None") -> None:
         return super()._set_field("limit",value,explicit_presence=False,
         )
     
@@ -800,7 +800,7 @@ class PermissionDenied(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_id, unset.UnsetType):
@@ -816,7 +816,7 @@ class PermissionDenied(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -834,8 +834,8 @@ class InternalError(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        request_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        trace_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        request_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        trace_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(request_id, unset.UnsetType):
@@ -854,7 +854,7 @@ class InternalError(pb_classes.Message):
         return super()._get_field("request_id", explicit_presence=False,
         )
     @request_id.setter
-    def request_id(self, value: "builtins.str") -> None:
+    def request_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("request_id",value,explicit_presence=False,
         )
     
@@ -863,7 +863,7 @@ class InternalError(pb_classes.Message):
         return super()._get_field("trace_id", explicit_presence=False,
         )
     @trace_id.setter
-    def trace_id(self, value: "builtins.str") -> None:
+    def trace_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("trace_id",value,explicit_presence=False,
         )
     
@@ -882,7 +882,7 @@ class TooManyRequests(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        violation: "builtins.str|unset.UnsetType" = unset.Unset,
+        violation: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(violation, unset.UnsetType):
@@ -898,7 +898,7 @@ class TooManyRequests(pb_classes.Message):
         return super()._get_field("violation", explicit_presence=False,
         )
     @violation.setter
-    def violation(self, value: "builtins.str") -> None:
+    def violation(self, value: "builtins.str|None") -> None:
         return super()._set_field("violation",value,explicit_presence=False,
         )
     
@@ -922,10 +922,10 @@ class QuotaFailure(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            quota: "builtins.str|unset.UnsetType" = unset.Unset,
-            message: "builtins.str|unset.UnsetType" = unset.Unset,
-            limit: "builtins.str|unset.UnsetType" = unset.Unset,
-            requested: "builtins.str|unset.UnsetType" = unset.Unset,
+            quota: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            message: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            limit: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            requested: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(quota, unset.UnsetType):
@@ -950,7 +950,7 @@ class QuotaFailure(pb_classes.Message):
             return super()._get_field("quota", explicit_presence=False,
             )
         @quota.setter
-        def quota(self, value: "builtins.str") -> None:
+        def quota(self, value: "builtins.str|None") -> None:
             return super()._set_field("quota",value,explicit_presence=False,
             )
         
@@ -959,7 +959,7 @@ class QuotaFailure(pb_classes.Message):
             return super()._get_field("message", explicit_presence=False,
             )
         @message.setter
-        def message(self, value: "builtins.str") -> None:
+        def message(self, value: "builtins.str|None") -> None:
             return super()._set_field("message",value,explicit_presence=False,
             )
         
@@ -968,7 +968,7 @@ class QuotaFailure(pb_classes.Message):
             return super()._get_field("limit", explicit_presence=False,
             )
         @limit.setter
-        def limit(self, value: "builtins.str") -> None:
+        def limit(self, value: "builtins.str|None") -> None:
             return super()._set_field("limit",value,explicit_presence=False,
             )
         
@@ -977,7 +977,7 @@ class QuotaFailure(pb_classes.Message):
             return super()._get_field("requested", explicit_presence=False,
             )
         @requested.setter
-        def requested(self, value: "builtins.str") -> None:
+        def requested(self, value: "builtins.str|None") -> None:
             return super()._set_field("requested",value,explicit_presence=False,
             )
         
@@ -993,7 +993,7 @@ class QuotaFailure(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        violations: "abc.Iterable[QuotaFailure.Violation]|unset.UnsetType" = unset.Unset,
+        violations: "abc.Iterable[QuotaFailure.Violation]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(violations, unset.UnsetType):
@@ -1011,7 +1011,7 @@ class QuotaFailure(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(QuotaFailure.Violation,None,None),
         )
     @violations.setter
-    def violations(self, value: "abc.Iterable[QuotaFailure.Violation]") -> None:
+    def violations(self, value: "abc.Iterable[QuotaFailure.Violation]|None") -> None:
         return super()._set_field("violations",value,explicit_presence=False,
         )
     
@@ -1036,9 +1036,9 @@ class NotEnoughResources(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            resource_type: "builtins.str|unset.UnsetType" = unset.Unset,
-            message: "builtins.str|unset.UnsetType" = unset.Unset,
-            requested: "builtins.str|unset.UnsetType" = unset.Unset,
+            resource_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            message: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            requested: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(resource_type, unset.UnsetType):
@@ -1060,7 +1060,7 @@ class NotEnoughResources(pb_classes.Message):
             return super()._get_field("resource_type", explicit_presence=False,
             )
         @resource_type.setter
-        def resource_type(self, value: "builtins.str") -> None:
+        def resource_type(self, value: "builtins.str|None") -> None:
             return super()._set_field("resource_type",value,explicit_presence=False,
             )
         
@@ -1069,7 +1069,7 @@ class NotEnoughResources(pb_classes.Message):
             return super()._get_field("message", explicit_presence=False,
             )
         @message.setter
-        def message(self, value: "builtins.str") -> None:
+        def message(self, value: "builtins.str|None") -> None:
             return super()._set_field("message",value,explicit_presence=False,
             )
         
@@ -1078,7 +1078,7 @@ class NotEnoughResources(pb_classes.Message):
             return super()._get_field("requested", explicit_presence=False,
             )
         @requested.setter
-        def requested(self, value: "builtins.str") -> None:
+        def requested(self, value: "builtins.str|None") -> None:
             return super()._set_field("requested",value,explicit_presence=False,
             )
         
@@ -1093,7 +1093,7 @@ class NotEnoughResources(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        violations: "abc.Iterable[NotEnoughResources.Violation]|unset.UnsetType" = unset.Unset,
+        violations: "abc.Iterable[NotEnoughResources.Violation]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(violations, unset.UnsetType):
@@ -1111,7 +1111,7 @@ class NotEnoughResources(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(NotEnoughResources.Violation,None,None),
         )
     @violations.setter
-    def violations(self, value: "abc.Iterable[NotEnoughResources.Violation]") -> None:
+    def violations(self, value: "abc.Iterable[NotEnoughResources.Violation]|None") -> None:
         return super()._set_field("violations",value,explicit_presence=False,
         )
     
@@ -1139,8 +1139,8 @@ class ResourceMetadata(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|unset.UnsetType" = unset.Unset,
-            value: "builtins.str|unset.UnsetType" = unset.Unset,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(key, unset.UnsetType):
@@ -1159,7 +1159,7 @@ class ResourceMetadata(pb_classes.Message):
             return super()._get_field("key", explicit_presence=False,
             )
         @key.setter
-        def key(self, value: "builtins.str") -> None:
+        def key(self, value: "builtins.str|None") -> None:
             return super()._set_field("key",value,explicit_presence=False,
             )
         
@@ -1168,7 +1168,7 @@ class ResourceMetadata(pb_classes.Message):
             return super()._get_field("value", explicit_presence=False,
             )
         @value.setter
-        def value(self, value: "builtins.str") -> None:
+        def value(self, value: "builtins.str|None") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
         
@@ -1182,13 +1182,13 @@ class ResourceMetadata(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
-        resource_version: "builtins.int|unset.UnsetType" = unset.Unset,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        updated_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        labels: "abc.Mapping[builtins.str,builtins.str]|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        updated_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        labels: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1223,7 +1223,7 @@ class ResourceMetadata(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1232,7 +1232,7 @@ class ResourceMetadata(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1241,7 +1241,7 @@ class ResourceMetadata(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -1250,7 +1250,7 @@ class ResourceMetadata(pb_classes.Message):
         return super()._get_field("resource_version", explicit_presence=False,
         )
     @resource_version.setter
-    def resource_version(self, value: "builtins.int") -> None:
+    def resource_version(self, value: "builtins.int|None") -> None:
         return super()._set_field("resource_version",value,explicit_presence=False,
         )
     
@@ -1260,7 +1260,7 @@ class ResourceMetadata(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("created_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -1271,7 +1271,7 @@ class ResourceMetadata(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @updated_at.setter
-    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def updated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("updated_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -1282,7 +1282,7 @@ class ResourceMetadata(pb_classes.Message):
         wrap=pb_classes.Map,
         )
     @labels.setter
-    def labels(self, value: "abc.Mapping[builtins.str,builtins.str]") -> None:
+    def labels(self, value: "abc.Mapping[builtins.str,builtins.str]|None") -> None:
         return super()._set_field("labels",value,explicit_presence=False,
         )
     
@@ -1307,8 +1307,8 @@ class GetByNameRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1327,7 +1327,7 @@ class GetByNameRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -1336,7 +1336,7 @@ class GetByNameRequest(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -1365,7 +1365,7 @@ class Operation(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            values: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
+            values: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(values, unset.UnsetType):
@@ -1382,7 +1382,7 @@ class Operation(pb_classes.Message):
             wrap=pb_classes.Repeated,
             )
         @values.setter
-        def values(self, value: "abc.Iterable[builtins.str]") -> None:
+        def values(self, value: "abc.Iterable[builtins.str]|None") -> None:
             return super()._set_field("values",value,explicit_presence=False,
             )
         
@@ -1401,8 +1401,8 @@ class Operation(pb_classes.Message):
             self,
             initial_message: message_1.Message|None = None,
             *,
-            key: "builtins.str|unset.UnsetType" = unset.Unset,
-            value: "Operation.RequestHeader|operation_pb2.Operation.RequestHeader|unset.UnsetType" = unset.Unset,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "Operation.RequestHeader|operation_pb2.Operation.RequestHeader|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(key, unset.UnsetType):
@@ -1421,7 +1421,7 @@ class Operation(pb_classes.Message):
             return super()._get_field("key", explicit_presence=False,
             )
         @key.setter
-        def key(self, value: "builtins.str") -> None:
+        def key(self, value: "builtins.str|None") -> None:
             return super()._set_field("key",value,explicit_presence=False,
             )
         
@@ -1431,7 +1431,7 @@ class Operation(pb_classes.Message):
             wrap=Operation.RequestHeader,
             )
         @value.setter
-        def value(self, value: "Operation.RequestHeader|operation_pb2.Operation.RequestHeader") -> None:
+        def value(self, value: "Operation.RequestHeader|operation_pb2.Operation.RequestHeader|None") -> None:
             return super()._set_field("value",value,explicit_presence=False,
             )
         
@@ -1445,15 +1445,15 @@ class Operation(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        created_by: "builtins.str|unset.UnsetType" = unset.Unset,
-        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|unset.UnsetType" = unset.Unset,
-        request: "any_pb2.Any|unset.UnsetType" = unset.Unset,
-        request_headers: "abc.Mapping[builtins.str,Operation.RequestHeader]|unset.UnsetType" = unset.Unset,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        progress_data: "any_pb2.Any|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        created_by: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        request: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
+        request_headers: "abc.Mapping[builtins.str,Operation.RequestHeader]|None|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        progress_data: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
         status: "status_pb2.Status|request_status.RequestStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -1499,7 +1499,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1508,7 +1508,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -1518,7 +1518,7 @@ class Operation(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("created_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -1528,7 +1528,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("created_by", explicit_presence=False,
         )
     @created_by.setter
-    def created_by(self, value: "builtins.str") -> None:
+    def created_by(self, value: "builtins.str|None") -> None:
         return super()._set_field("created_by",value,explicit_presence=False,
         )
     
@@ -1538,7 +1538,7 @@ class Operation(pb_classes.Message):
         wrap=well_known_1.from_timestamp
         )
     @finished_at.setter
-    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime") -> None:
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
         return super()._set_field("finished_at",value,explicit_presence=False,
         unwrap=well_known_1.to_timestamp
         )
@@ -1548,7 +1548,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("request", explicit_presence=False,
         )
     @request.setter
-    def request(self, value: "any_pb2.Any") -> None:
+    def request(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("request",value,explicit_presence=False,
         )
     
@@ -1558,7 +1558,7 @@ class Operation(pb_classes.Message):
         wrap=pb_classes.Map.with_wrap(Operation.RequestHeader,None,None),
         )
     @request_headers.setter
-    def request_headers(self, value: "abc.Mapping[builtins.str,Operation.RequestHeader]") -> None:
+    def request_headers(self, value: "abc.Mapping[builtins.str,Operation.RequestHeader]|None") -> None:
         return super()._set_field("request_headers",value,explicit_presence=False,
         )
     
@@ -1567,7 +1567,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -1576,7 +1576,7 @@ class Operation(pb_classes.Message):
         return super()._get_field("progress_data", explicit_presence=False,
         )
     @progress_data.setter
-    def progress_data(self, value: "any_pb2.Any") -> None:
+    def progress_data(self, value: "any_pb2.Any|None") -> None:
         return super()._set_field("progress_data",value,explicit_presence=False,
         )
     
@@ -1617,7 +1617,7 @@ class GetOperationRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1633,7 +1633,7 @@ class GetOperationRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1651,9 +1651,9 @@ class ListOperationsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resource_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_id, unset.UnsetType):
@@ -1675,7 +1675,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
-    def resource_id(self, value: "builtins.str") -> None:
+    def resource_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("resource_id",value,explicit_presence=False,
         )
     
@@ -1684,7 +1684,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -1693,7 +1693,7 @@ class ListOperationsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -1713,8 +1713,8 @@ class ListOperationsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        operations: "abc.Iterable[Operation]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        operations: "abc.Iterable[Operation]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(operations, unset.UnsetType):
@@ -1734,7 +1734,7 @@ class ListOperationsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Operation,None,None),
         )
     @operations.setter
-    def operations(self, value: "abc.Iterable[Operation]") -> None:
+    def operations(self, value: "abc.Iterable[Operation]|None") -> None:
         return super()._set_field("operations",value,explicit_presence=False,
         )
     
@@ -1743,7 +1743,7 @@ class ListOperationsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     

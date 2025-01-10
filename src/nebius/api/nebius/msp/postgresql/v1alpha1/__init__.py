@@ -43,9 +43,9 @@ class PresetSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|unset.UnsetType" = unset.Unset,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
+        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None|unset.UnsetType" = unset.Unset,
+        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
+        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(hosts, unset.UnsetType):
@@ -68,7 +68,7 @@ class PresetSpec(pb_classes.Message):
         wrap=resource_1.HostSpec,
         )
     @hosts.setter
-    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec") -> None:
+    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec|None") -> None:
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
@@ -78,7 +78,7 @@ class PresetSpec(pb_classes.Message):
         wrap=resource_1.DiskSpec,
         )
     @disk.setter
-    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec") -> None:
+    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec|None") -> None:
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
@@ -88,7 +88,7 @@ class PresetSpec(pb_classes.Message):
         wrap=resource_1.ResourcesSpec,
         )
     @resources.setter
-    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec") -> None:
+    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
@@ -109,9 +109,9 @@ class TemplateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|unset.UnsetType" = unset.Unset,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|unset.UnsetType" = unset.Unset,
+        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
+        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None|unset.UnsetType" = unset.Unset,
+        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resources, unset.UnsetType):
@@ -134,7 +134,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.ResourcesSpec,
         )
     @resources.setter
-    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec") -> None:
+    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
@@ -144,7 +144,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.HostSpec,
         )
     @hosts.setter
-    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec") -> None:
+    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec|None") -> None:
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
@@ -154,7 +154,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.DiskSpec,
         )
     @disk.setter
-    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec") -> None:
+    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec|None") -> None:
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
@@ -175,9 +175,9 @@ class Cluster(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
-        status: "ClusterStatus|cluster_pb2.ClusterStatus|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
+        status: "ClusterStatus|cluster_pb2.ClusterStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -200,7 +200,7 @@ class Cluster(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -210,7 +210,7 @@ class Cluster(pb_classes.Message):
         wrap=ClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec") -> None:
+    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -220,7 +220,7 @@ class Cluster(pb_classes.Message):
         wrap=ClusterStatus,
         )
     @status.setter
-    def status(self, value: "ClusterStatus|cluster_pb2.ClusterStatus") -> None:
+    def status(self, value: "ClusterStatus|cluster_pb2.ClusterStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -273,7 +273,7 @@ class ConnectionPoolerConfig(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        pooling_mode: "ConnectionPoolerConfig.PoolingMode|cluster_pb2.ConnectionPoolerConfig.PoolingMode|unset.UnsetType" = unset.Unset,
+        pooling_mode: "ConnectionPoolerConfig.PoolingMode|cluster_pb2.ConnectionPoolerConfig.PoolingMode|None|unset.UnsetType" = unset.Unset,
         max_pool_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -296,7 +296,7 @@ class ConnectionPoolerConfig(pb_classes.Message):
         wrap=ConnectionPoolerConfig.PoolingMode,
         )
     @pooling_mode.setter
-    def pooling_mode(self, value: "ConnectionPoolerConfig.PoolingMode|cluster_pb2.ConnectionPoolerConfig.PoolingMode") -> None:
+    def pooling_mode(self, value: "ConnectionPoolerConfig.PoolingMode|cluster_pb2.ConnectionPoolerConfig.PoolingMode|None") -> None:
         return super()._set_field("pooling_mode",value,explicit_presence=False,
         )
     
@@ -326,11 +326,11 @@ class ClusterSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        description: "builtins.str|unset.UnsetType" = unset.Unset,
-        network_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        config: "ConfigSpec|cluster_pb2.ConfigSpec|unset.UnsetType" = unset.Unset,
-        bootstrap: "BootstrapSpec|cluster_pb2.BootstrapSpec|unset.UnsetType" = unset.Unset,
-        backup: "BackupSpec|cluster_pb2.BackupSpec|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        config: "ConfigSpec|cluster_pb2.ConfigSpec|None|unset.UnsetType" = unset.Unset,
+        bootstrap: "BootstrapSpec|cluster_pb2.BootstrapSpec|None|unset.UnsetType" = unset.Unset,
+        backup: "BackupSpec|cluster_pb2.BackupSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -358,7 +358,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
-    def description(self, value: "builtins.str") -> None:
+    def description(self, value: "builtins.str|None") -> None:
         return super()._set_field("description",value,explicit_presence=False,
         )
     
@@ -367,7 +367,7 @@ class ClusterSpec(pb_classes.Message):
         return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
-    def network_id(self, value: "builtins.str") -> None:
+    def network_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("network_id",value,explicit_presence=False,
         )
     
@@ -377,7 +377,7 @@ class ClusterSpec(pb_classes.Message):
         wrap=ConfigSpec,
         )
     @config.setter
-    def config(self, value: "ConfigSpec|cluster_pb2.ConfigSpec") -> None:
+    def config(self, value: "ConfigSpec|cluster_pb2.ConfigSpec|None") -> None:
         return super()._set_field("config",value,explicit_presence=False,
         )
     
@@ -387,7 +387,7 @@ class ClusterSpec(pb_classes.Message):
         wrap=BootstrapSpec,
         )
     @bootstrap.setter
-    def bootstrap(self, value: "BootstrapSpec|cluster_pb2.BootstrapSpec") -> None:
+    def bootstrap(self, value: "BootstrapSpec|cluster_pb2.BootstrapSpec|None") -> None:
         return super()._set_field("bootstrap",value,explicit_presence=False,
         )
     
@@ -397,7 +397,7 @@ class ClusterSpec(pb_classes.Message):
         wrap=BackupSpec,
         )
     @backup.setter
-    def backup(self, value: "BackupSpec|cluster_pb2.BackupSpec") -> None:
+    def backup(self, value: "BackupSpec|cluster_pb2.BackupSpec|None") -> None:
         return super()._set_field("backup",value,explicit_presence=False,
         )
     
@@ -419,10 +419,10 @@ class ClusterStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|unset.UnsetType" = unset.Unset,
-        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|unset.UnsetType" = unset.Unset,
-        preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|unset.UnsetType" = unset.Unset,
-        connection_endpoints: "Endpoints|cluster_pb2.Endpoints|unset.UnsetType" = unset.Unset,
+        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None|unset.UnsetType" = unset.Unset,
+        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None|unset.UnsetType" = unset.Unset,
+        preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None|unset.UnsetType" = unset.Unset,
+        connection_endpoints: "Endpoints|cluster_pb2.Endpoints|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(phase, unset.UnsetType):
@@ -448,7 +448,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase") -> None:
+    def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None") -> None:
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
@@ -458,7 +458,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=v1alpha1_1.ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State") -> None:
+    def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -468,7 +468,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=resource_1.PresetDetails,
         )
     @preset_details.setter
-    def preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails") -> None:
+    def preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails|None") -> None:
         return super()._set_field("preset_details",value,explicit_presence=False,
         )
     
@@ -478,7 +478,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=Endpoints,
         )
     @connection_endpoints.setter
-    def connection_endpoints(self, value: "Endpoints|cluster_pb2.Endpoints") -> None:
+    def connection_endpoints(self, value: "Endpoints|cluster_pb2.Endpoints|None") -> None:
         return super()._set_field("connection_endpoints",value,explicit_presence=False,
         )
     
@@ -499,10 +499,10 @@ class Endpoints(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        private_read_write: "builtins.str|unset.UnsetType" = unset.Unset,
-        private_read_only: "builtins.str|unset.UnsetType" = unset.Unset,
-        public_read_write: "builtins.str|unset.UnsetType" = unset.Unset,
-        public_read_only: "builtins.str|unset.UnsetType" = unset.Unset,
+        private_read_write: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        private_read_only: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        public_read_write: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        public_read_only: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(private_read_write, unset.UnsetType):
@@ -527,7 +527,7 @@ class Endpoints(pb_classes.Message):
         return super()._get_field("private_read_write", explicit_presence=False,
         )
     @private_read_write.setter
-    def private_read_write(self, value: "builtins.str") -> None:
+    def private_read_write(self, value: "builtins.str|None") -> None:
         return super()._set_field("private_read_write",value,explicit_presence=False,
         )
     
@@ -536,7 +536,7 @@ class Endpoints(pb_classes.Message):
         return super()._get_field("private_read_only", explicit_presence=False,
         )
     @private_read_only.setter
-    def private_read_only(self, value: "builtins.str") -> None:
+    def private_read_only(self, value: "builtins.str|None") -> None:
         return super()._set_field("private_read_only",value,explicit_presence=False,
         )
     
@@ -545,7 +545,7 @@ class Endpoints(pb_classes.Message):
         return super()._get_field("public_read_write", explicit_presence=False,
         )
     @public_read_write.setter
-    def public_read_write(self, value: "builtins.str") -> None:
+    def public_read_write(self, value: "builtins.str|None") -> None:
         return super()._set_field("public_read_write",value,explicit_presence=False,
         )
     
@@ -554,7 +554,7 @@ class Endpoints(pb_classes.Message):
         return super()._get_field("public_read_only", explicit_presence=False,
         )
     @public_read_only.setter
-    def public_read_only(self, value: "builtins.str") -> None:
+    def public_read_only(self, value: "builtins.str|None") -> None:
         return super()._set_field("public_read_only",value,explicit_presence=False,
         )
     
@@ -602,12 +602,12 @@ class ConfigSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        version: "builtins.str|unset.UnsetType" = unset.Unset,
-        pooler_config: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|unset.UnsetType" = unset.Unset,
-        resources: "PresetSpec|preset_pb2.PresetSpec|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        pooler_config: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|None|unset.UnsetType" = unset.Unset,
+        resources: "PresetSpec|preset_pb2.PresetSpec|None|unset.UnsetType" = unset.Unset,
         postgresql_config_16: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None|unset.UnsetType" = unset.Unset,
-        public_access: "builtins.bool|unset.UnsetType" = unset.Unset,
-        template: "TemplateSpec|template_pb2_1.TemplateSpec|unset.UnsetType" = unset.Unset,
+        public_access: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        template: "TemplateSpec|template_pb2_1.TemplateSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -639,7 +639,7 @@ class ConfigSpec(pb_classes.Message):
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
-    def version(self, value: "builtins.str") -> None:
+    def version(self, value: "builtins.str|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -649,7 +649,7 @@ class ConfigSpec(pb_classes.Message):
         wrap=ConnectionPoolerConfig,
         )
     @pooler_config.setter
-    def pooler_config(self, value: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig") -> None:
+    def pooler_config(self, value: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|None") -> None:
         return super()._set_field("pooler_config",value,explicit_presence=False,
         )
     
@@ -659,7 +659,7 @@ class ConfigSpec(pb_classes.Message):
         wrap=PresetSpec,
         )
     @resources.setter
-    def resources(self, value: "PresetSpec|preset_pb2.PresetSpec") -> None:
+    def resources(self, value: "PresetSpec|preset_pb2.PresetSpec|None") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
@@ -678,7 +678,7 @@ class ConfigSpec(pb_classes.Message):
         return super()._get_field("public_access", explicit_presence=False,
         )
     @public_access.setter
-    def public_access(self, value: "builtins.bool") -> None:
+    def public_access(self, value: "builtins.bool|None") -> None:
         return super()._set_field("public_access",value,explicit_presence=False,
         )
     
@@ -688,7 +688,7 @@ class ConfigSpec(pb_classes.Message):
         wrap=TemplateSpec,
         )
     @template.setter
-    def template(self, value: "TemplateSpec|template_pb2_1.TemplateSpec") -> None:
+    def template(self, value: "TemplateSpec|template_pb2_1.TemplateSpec|None") -> None:
         return super()._set_field("template",value,explicit_presence=False,
         )
     
@@ -712,9 +712,9 @@ class BootstrapSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        user_name: "builtins.str|unset.UnsetType" = unset.Unset,
-        user_password: "builtins.str|unset.UnsetType" = unset.Unset,
-        db_name: "builtins.str|unset.UnsetType" = unset.Unset,
+        user_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        user_password: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        db_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(user_name, unset.UnsetType):
@@ -736,7 +736,7 @@ class BootstrapSpec(pb_classes.Message):
         return super()._get_field("user_name", explicit_presence=False,
         )
     @user_name.setter
-    def user_name(self, value: "builtins.str") -> None:
+    def user_name(self, value: "builtins.str|None") -> None:
         return super()._set_field("user_name",value,explicit_presence=False,
         )
     
@@ -745,7 +745,7 @@ class BootstrapSpec(pb_classes.Message):
         return super()._get_field("user_password", explicit_presence=False,
         )
     @user_password.setter
-    def user_password(self, value: "builtins.str") -> None:
+    def user_password(self, value: "builtins.str|None") -> None:
         return super()._set_field("user_password",value,explicit_presence=False,
         )
     
@@ -754,7 +754,7 @@ class BootstrapSpec(pb_classes.Message):
         return super()._get_field("db_name", explicit_presence=False,
         )
     @db_name.setter
-    def db_name(self, value: "builtins.str") -> None:
+    def db_name(self, value: "builtins.str|None") -> None:
         return super()._set_field("db_name",value,explicit_presence=False,
         )
     
@@ -774,8 +774,8 @@ class BackupSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        backup_window_start: "builtins.str|unset.UnsetType" = unset.Unset,
-        retention_policy: "builtins.str|unset.UnsetType" = unset.Unset,
+        backup_window_start: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        retention_policy: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(backup_window_start, unset.UnsetType):
@@ -794,7 +794,7 @@ class BackupSpec(pb_classes.Message):
         return super()._get_field("backup_window_start", explicit_presence=False,
         )
     @backup_window_start.setter
-    def backup_window_start(self, value: "builtins.str") -> None:
+    def backup_window_start(self, value: "builtins.str|None") -> None:
         return super()._set_field("backup_window_start",value,explicit_presence=False,
         )
     
@@ -803,7 +803,7 @@ class BackupSpec(pb_classes.Message):
         return super()._get_field("retention_policy", explicit_presence=False,
         )
     @retention_policy.setter
-    def retention_policy(self, value: "builtins.str") -> None:
+    def retention_policy(self, value: "builtins.str|None") -> None:
         return super()._set_field("retention_policy",value,explicit_presence=False,
         )
     
@@ -823,7 +823,7 @@ class GetClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -839,7 +839,7 @@ class GetClusterRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -857,9 +857,9 @@ class ListClustersRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -881,7 +881,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -890,7 +890,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -899,7 +899,7 @@ class ListClustersRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -919,8 +919,8 @@ class ListClustersResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        clusters: "abc.Iterable[Cluster]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        clusters: "abc.Iterable[Cluster]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(clusters, unset.UnsetType):
@@ -940,7 +940,7 @@ class ListClustersResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Cluster,None,None),
         )
     @clusters.setter
-    def clusters(self, value: "abc.Iterable[Cluster]") -> None:
+    def clusters(self, value: "abc.Iterable[Cluster]|None") -> None:
         return super()._set_field("clusters",value,explicit_presence=False,
         )
     
@@ -949,7 +949,7 @@ class ListClustersResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -968,8 +968,8 @@ class CreateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -989,7 +989,7 @@ class CreateClusterRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -999,7 +999,7 @@ class CreateClusterRequest(pb_classes.Message):
         wrap=ClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec") -> None:
+    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -1018,7 +1018,7 @@ class DeleteClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        id: "builtins.str|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1034,7 +1034,7 @@ class DeleteClusterRequest(pb_classes.Message):
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
-    def id(self, value: "builtins.str") -> None:
+    def id(self, value: "builtins.str|None") -> None:
         return super()._set_field("id",value,explicit_presence=False,
         )
     
@@ -1052,8 +1052,8 @@ class UpdateClusterRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|unset.UnsetType" = unset.Unset,
-        spec: "ClusterSpec|cluster_pb2.ClusterSpec|unset.UnsetType" = unset.Unset,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1073,7 +1073,7 @@ class UpdateClusterRequest(pb_classes.Message):
         wrap=v1_1.ResourceMetadata,
         )
     @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata") -> None:
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
         return super()._set_field("metadata",value,explicit_presence=False,
         )
     
@@ -1083,7 +1083,7 @@ class UpdateClusterRequest(pb_classes.Message):
         wrap=ClusterSpec,
         )
     @spec.setter
-    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec") -> None:
+    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     

@@ -52,19 +52,19 @@ class GetVersionRequest(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        type: "AgentType|version_service_pb2.AgentType|unset.UnsetType" = unset.Unset,
-        agent_version: "builtins.str|unset.UnsetType" = unset.Unset,
-        updater_version: "builtins.str|unset.UnsetType" = unset.Unset,
-        parent_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        instance_id: "builtins.str|unset.UnsetType" = unset.Unset,
-        os_info: "OSInfo|version_service_pb2.OSInfo|unset.UnsetType" = unset.Unset,
-        agent_state: "AgentState|version_service_pb2.AgentState|unset.UnsetType" = unset.Unset,
-        agent_uptime: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
-        system_uptime: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
-        updater_uptime: "duration_pb2.Duration|datetime.timedelta|unset.UnsetType" = unset.Unset,
-        agent_state_messages: "abc.Iterable[builtins.str]|unset.UnsetType" = unset.Unset,
-        last_update_error: "builtins.str|unset.UnsetType" = unset.Unset,
-        mk8s_cluster_id: "builtins.str|unset.UnsetType" = unset.Unset,
+        type: "AgentType|version_service_pb2.AgentType|None|unset.UnsetType" = unset.Unset,
+        agent_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        updater_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        instance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        os_info: "OSInfo|version_service_pb2.OSInfo|None|unset.UnsetType" = unset.Unset,
+        agent_state: "AgentState|version_service_pb2.AgentState|None|unset.UnsetType" = unset.Unset,
+        agent_uptime: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
+        system_uptime: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
+        updater_uptime: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
+        agent_state_messages: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        last_update_error: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        mk8s_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -117,7 +117,7 @@ class GetVersionRequest(pb_classes.Message):
         wrap=AgentType,
         )
     @type.setter
-    def type(self, value: "AgentType|version_service_pb2.AgentType") -> None:
+    def type(self, value: "AgentType|version_service_pb2.AgentType|None") -> None:
         return super()._set_field("type",value,explicit_presence=False,
         )
     
@@ -126,7 +126,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._get_field("agent_version", explicit_presence=False,
         )
     @agent_version.setter
-    def agent_version(self, value: "builtins.str") -> None:
+    def agent_version(self, value: "builtins.str|None") -> None:
         return super()._set_field("agent_version",value,explicit_presence=False,
         )
     
@@ -135,7 +135,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._get_field("updater_version", explicit_presence=False,
         )
     @updater_version.setter
-    def updater_version(self, value: "builtins.str") -> None:
+    def updater_version(self, value: "builtins.str|None") -> None:
         return super()._set_field("updater_version",value,explicit_presence=False,
         )
     
@@ -144,7 +144,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
-    def parent_id(self, value: "builtins.str") -> None:
+    def parent_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("parent_id",value,explicit_presence=False,
         )
     
@@ -153,7 +153,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._get_field("instance_id", explicit_presence=False,
         )
     @instance_id.setter
-    def instance_id(self, value: "builtins.str") -> None:
+    def instance_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("instance_id",value,explicit_presence=False,
         )
     
@@ -163,7 +163,7 @@ class GetVersionRequest(pb_classes.Message):
         wrap=OSInfo,
         )
     @os_info.setter
-    def os_info(self, value: "OSInfo|version_service_pb2.OSInfo") -> None:
+    def os_info(self, value: "OSInfo|version_service_pb2.OSInfo|None") -> None:
         return super()._set_field("os_info",value,explicit_presence=False,
         )
     
@@ -173,7 +173,7 @@ class GetVersionRequest(pb_classes.Message):
         wrap=AgentState,
         )
     @agent_state.setter
-    def agent_state(self, value: "AgentState|version_service_pb2.AgentState") -> None:
+    def agent_state(self, value: "AgentState|version_service_pb2.AgentState|None") -> None:
         return super()._set_field("agent_state",value,explicit_presence=False,
         )
     
@@ -183,7 +183,7 @@ class GetVersionRequest(pb_classes.Message):
         wrap=well_known.from_duration
         )
     @agent_uptime.setter
-    def agent_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+    def agent_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
         return super()._set_field("agent_uptime",value,explicit_presence=False,
         unwrap=well_known.to_duration
         )
@@ -194,7 +194,7 @@ class GetVersionRequest(pb_classes.Message):
         wrap=well_known.from_duration
         )
     @system_uptime.setter
-    def system_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+    def system_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
         return super()._set_field("system_uptime",value,explicit_presence=False,
         unwrap=well_known.to_duration
         )
@@ -205,7 +205,7 @@ class GetVersionRequest(pb_classes.Message):
         wrap=well_known.from_duration
         )
     @updater_uptime.setter
-    def updater_uptime(self, value: "duration_pb2.Duration|datetime.timedelta") -> None:
+    def updater_uptime(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
         return super()._set_field("updater_uptime",value,explicit_presence=False,
         unwrap=well_known.to_duration
         )
@@ -216,7 +216,7 @@ class GetVersionRequest(pb_classes.Message):
         wrap=pb_classes.Repeated,
         )
     @agent_state_messages.setter
-    def agent_state_messages(self, value: "abc.Iterable[builtins.str]") -> None:
+    def agent_state_messages(self, value: "abc.Iterable[builtins.str]|None") -> None:
         return super()._set_field("agent_state_messages",value,explicit_presence=False,
         )
     
@@ -225,7 +225,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._get_field("last_update_error", explicit_presence=False,
         )
     @last_update_error.setter
-    def last_update_error(self, value: "builtins.str") -> None:
+    def last_update_error(self, value: "builtins.str|None") -> None:
         return super()._set_field("last_update_error",value,explicit_presence=False,
         )
     
@@ -234,7 +234,7 @@ class GetVersionRequest(pb_classes.Message):
         return super()._get_field("mk8s_cluster_id", explicit_presence=False,
         )
     @mk8s_cluster_id.setter
-    def mk8s_cluster_id(self, value: "builtins.str") -> None:
+    def mk8s_cluster_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("mk8s_cluster_id",value,explicit_presence=False,
         )
     
@@ -264,9 +264,9 @@ class OSInfo(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        name: "builtins.str|unset.UnsetType" = unset.Unset,
-        uname: "builtins.str|unset.UnsetType" = unset.Unset,
-        architecture: "builtins.str|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        uname: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        architecture: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(name, unset.UnsetType):
@@ -288,7 +288,7 @@ class OSInfo(pb_classes.Message):
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
-    def name(self, value: "builtins.str") -> None:
+    def name(self, value: "builtins.str|None") -> None:
         return super()._set_field("name",value,explicit_presence=False,
         )
     
@@ -297,7 +297,7 @@ class OSInfo(pb_classes.Message):
         return super()._get_field("uname", explicit_presence=False,
         )
     @uname.setter
-    def uname(self, value: "builtins.str") -> None:
+    def uname(self, value: "builtins.str|None") -> None:
         return super()._set_field("uname",value,explicit_presence=False,
         )
     
@@ -306,7 +306,7 @@ class OSInfo(pb_classes.Message):
         return super()._get_field("architecture", explicit_presence=False,
         )
     @architecture.setter
-    def architecture(self, value: "builtins.str") -> None:
+    def architecture(self, value: "builtins.str|None") -> None:
         return super()._set_field("architecture",value,explicit_presence=False,
         )
     
@@ -375,7 +375,7 @@ class GetVersionResponse(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        action: "Action|version_service_pb2.Action|unset.UnsetType" = unset.Unset,
+        action: "Action|version_service_pb2.Action|None|unset.UnsetType" = unset.Unset,
         nop: "NopActionParams|version_service_pb2.NopActionParams|None|unset.UnsetType" = unset.Unset,
         update: "UpdateActionParams|version_service_pb2.UpdateActionParams|None|unset.UnsetType" = unset.Unset,
         restart: "RestartActionParams|version_service_pb2.RestartActionParams|None|unset.UnsetType" = unset.Unset,
@@ -405,7 +405,7 @@ class GetVersionResponse(pb_classes.Message):
         wrap=Action,
         )
     @action.setter
-    def action(self, value: "Action|version_service_pb2.Action") -> None:
+    def action(self, value: "Action|version_service_pb2.Action|None") -> None:
         return super()._set_field("action",value,explicit_presence=False,
         )
     
@@ -476,8 +476,8 @@ class UpdateActionParams(pb_classes.Message):
         self,
         initial_message: message.Message|None = None,
         *,
-        version: "builtins.str|unset.UnsetType" = unset.Unset,
-        repo_url: "builtins.str|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        repo_url: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -496,7 +496,7 @@ class UpdateActionParams(pb_classes.Message):
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
-    def version(self, value: "builtins.str") -> None:
+    def version(self, value: "builtins.str|None") -> None:
         return super()._set_field("version",value,explicit_presence=False,
         )
     
@@ -505,7 +505,7 @@ class UpdateActionParams(pb_classes.Message):
         return super()._get_field("repo_url", explicit_presence=False,
         )
     @repo_url.setter
-    def repo_url(self, value: "builtins.str") -> None:
+    def repo_url(self, value: "builtins.str|None") -> None:
         return super()._set_field("repo_url",value,explicit_presence=False,
         )
     

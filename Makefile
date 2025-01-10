@@ -16,7 +16,7 @@ update-submodule:
 compile-proto:
 	rm -rf $(OUT_NEW_DIR)
 	mkdir $(OUT_NEW_DIR)
-	buf generate nebius-api --include-imports --timeout 0
+	buf generate $(PROTO_DIR) --include-imports --timeout 0
 	rm -rf $(OUT_NEW_DIR)/google
 	find $(OUT_NEW_DIR) -type d -exec touch {}/__init__.py \;
 	rm -rf $(OUT_DIR)

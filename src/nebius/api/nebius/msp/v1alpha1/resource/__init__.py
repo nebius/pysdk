@@ -29,8 +29,8 @@ class Template(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        status: "TemplateStatus|template_pb2.TemplateStatus|unset.UnsetType" = unset.Unset,
-        spec: "TemplateSpec|template_pb2.TemplateSpec|unset.UnsetType" = unset.Unset,
+        status: "TemplateStatus|template_pb2.TemplateStatus|None|unset.UnsetType" = unset.Unset,
+        spec: "TemplateSpec|template_pb2.TemplateSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(status, unset.UnsetType):
@@ -50,7 +50,7 @@ class Template(pb_classes.Message):
         wrap=TemplateStatus,
         )
     @status.setter
-    def status(self, value: "TemplateStatus|template_pb2.TemplateStatus") -> None:
+    def status(self, value: "TemplateStatus|template_pb2.TemplateStatus|None") -> None:
         return super()._set_field("status",value,explicit_presence=False,
         )
     
@@ -60,7 +60,7 @@ class Template(pb_classes.Message):
         wrap=TemplateSpec,
         )
     @spec.setter
-    def spec(self, value: "TemplateSpec|template_pb2.TemplateSpec") -> None:
+    def spec(self, value: "TemplateSpec|template_pb2.TemplateSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -79,7 +79,7 @@ class TemplateStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        preset_details: "PresetDetails|template_pb2.PresetDetails|unset.UnsetType" = unset.Unset,
+        preset_details: "PresetDetails|template_pb2.PresetDetails|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(preset_details, unset.UnsetType):
@@ -96,7 +96,7 @@ class TemplateStatus(pb_classes.Message):
         wrap=PresetDetails,
         )
     @preset_details.setter
-    def preset_details(self, value: "PresetDetails|template_pb2.PresetDetails") -> None:
+    def preset_details(self, value: "PresetDetails|template_pb2.PresetDetails|None") -> None:
         return super()._set_field("preset_details",value,explicit_presence=False,
         )
     
@@ -114,10 +114,10 @@ class TemplateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resources: "ResourcesSpec|template_pb2.ResourcesSpec|unset.UnsetType" = unset.Unset,
-        hosts: "Host|template_pb2.Host|unset.UnsetType" = unset.Unset,
-        disk: "Disk|template_pb2.Disk|unset.UnsetType" = unset.Unset,
-        role: "builtins.str|unset.UnsetType" = unset.Unset,
+        resources: "ResourcesSpec|template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
+        hosts: "Host|template_pb2.Host|None|unset.UnsetType" = unset.Unset,
+        disk: "Disk|template_pb2.Disk|None|unset.UnsetType" = unset.Unset,
+        role: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resources, unset.UnsetType):
@@ -143,7 +143,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=ResourcesSpec,
         )
     @resources.setter
-    def resources(self, value: "ResourcesSpec|template_pb2.ResourcesSpec") -> None:
+    def resources(self, value: "ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
@@ -153,7 +153,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=Host,
         )
     @hosts.setter
-    def hosts(self, value: "Host|template_pb2.Host") -> None:
+    def hosts(self, value: "Host|template_pb2.Host|None") -> None:
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
@@ -163,7 +163,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=Disk,
         )
     @disk.setter
-    def disk(self, value: "Disk|template_pb2.Disk") -> None:
+    def disk(self, value: "Disk|template_pb2.Disk|None") -> None:
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
@@ -172,7 +172,7 @@ class TemplateSpec(pb_classes.Message):
         return super()._get_field("role", explicit_presence=False,
         )
     @role.setter
-    def role(self, value: "builtins.str") -> None:
+    def role(self, value: "builtins.str|None") -> None:
         return super()._set_field("role",value,explicit_presence=False,
         )
     
@@ -193,8 +193,8 @@ class ResourcesSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        platform: "builtins.str|unset.UnsetType" = unset.Unset,
-        preset: "builtins.str|unset.UnsetType" = unset.Unset,
+        platform: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        preset: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(platform, unset.UnsetType):
@@ -213,7 +213,7 @@ class ResourcesSpec(pb_classes.Message):
         return super()._get_field("platform", explicit_presence=False,
         )
     @platform.setter
-    def platform(self, value: "builtins.str") -> None:
+    def platform(self, value: "builtins.str|None") -> None:
         return super()._set_field("platform",value,explicit_presence=False,
         )
     
@@ -222,7 +222,7 @@ class ResourcesSpec(pb_classes.Message):
         return super()._get_field("preset", explicit_presence=False,
         )
     @preset.setter
-    def preset(self, value: "builtins.str") -> None:
+    def preset(self, value: "builtins.str|None") -> None:
         return super()._set_field("preset",value,explicit_presence=False,
         )
     
@@ -241,8 +241,8 @@ class PresetDetails(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cpu_count: "builtins.int|unset.UnsetType" = unset.Unset,
-        memory_gibibytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        cpu_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        memory_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(cpu_count, unset.UnsetType):
@@ -261,7 +261,7 @@ class PresetDetails(pb_classes.Message):
         return super()._get_field("cpu_count", explicit_presence=False,
         )
     @cpu_count.setter
-    def cpu_count(self, value: "builtins.int") -> None:
+    def cpu_count(self, value: "builtins.int|None") -> None:
         return super()._set_field("cpu_count",value,explicit_presence=False,
         )
     
@@ -270,7 +270,7 @@ class PresetDetails(pb_classes.Message):
         return super()._get_field("memory_gibibytes", explicit_presence=False,
         )
     @memory_gibibytes.setter
-    def memory_gibibytes(self, value: "builtins.int") -> None:
+    def memory_gibibytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("memory_gibibytes",value,explicit_presence=False,
         )
     
@@ -289,10 +289,10 @@ class Range(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        min: "builtins.int|unset.UnsetType" = unset.Unset,
-        max: "builtins.int|unset.UnsetType" = unset.Unset,
-        step: "builtins.int|unset.UnsetType" = unset.Unset,
-        value: "builtins.int|unset.UnsetType" = unset.Unset,
+        min: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        max: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        step: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        value: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(min, unset.UnsetType):
@@ -317,7 +317,7 @@ class Range(pb_classes.Message):
         return super()._get_field("min", explicit_presence=False,
         )
     @min.setter
-    def min(self, value: "builtins.int") -> None:
+    def min(self, value: "builtins.int|None") -> None:
         return super()._set_field("min",value,explicit_presence=False,
         )
     
@@ -326,7 +326,7 @@ class Range(pb_classes.Message):
         return super()._get_field("max", explicit_presence=False,
         )
     @max.setter
-    def max(self, value: "builtins.int") -> None:
+    def max(self, value: "builtins.int|None") -> None:
         return super()._set_field("max",value,explicit_presence=False,
         )
     
@@ -335,7 +335,7 @@ class Range(pb_classes.Message):
         return super()._get_field("step", explicit_presence=False,
         )
     @step.setter
-    def step(self, value: "builtins.int") -> None:
+    def step(self, value: "builtins.int|None") -> None:
         return super()._set_field("step",value,explicit_presence=False,
         )
     
@@ -344,7 +344,7 @@ class Range(pb_classes.Message):
         return super()._get_field("value", explicit_presence=False,
         )
     @value.setter
-    def value(self, value: "builtins.int") -> None:
+    def value(self, value: "builtins.int|None") -> None:
         return super()._set_field("value",value,explicit_presence=False,
         )
     
@@ -365,8 +365,8 @@ class Disk(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        type: "builtins.str|unset.UnsetType" = unset.Unset,
-        size_gibibytes: "Range|template_pb2.Range|unset.UnsetType" = unset.Unset,
+        type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        size_gibibytes: "Range|template_pb2.Range|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -385,7 +385,7 @@ class Disk(pb_classes.Message):
         return super()._get_field("type", explicit_presence=False,
         )
     @type.setter
-    def type(self, value: "builtins.str") -> None:
+    def type(self, value: "builtins.str|None") -> None:
         return super()._set_field("type",value,explicit_presence=False,
         )
     
@@ -395,7 +395,7 @@ class Disk(pb_classes.Message):
         wrap=Range,
         )
     @size_gibibytes.setter
-    def size_gibibytes(self, value: "Range|template_pb2.Range") -> None:
+    def size_gibibytes(self, value: "Range|template_pb2.Range|None") -> None:
         return super()._set_field("size_gibibytes",value,explicit_presence=False,
         )
     
@@ -414,8 +414,8 @@ class DiskSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        type: "builtins.str|unset.UnsetType" = unset.Unset,
-        size_gibibytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -434,7 +434,7 @@ class DiskSpec(pb_classes.Message):
         return super()._get_field("type", explicit_presence=False,
         )
     @type.setter
-    def type(self, value: "builtins.str") -> None:
+    def type(self, value: "builtins.str|None") -> None:
         return super()._set_field("type",value,explicit_presence=False,
         )
     
@@ -443,7 +443,7 @@ class DiskSpec(pb_classes.Message):
         return super()._get_field("size_gibibytes", explicit_presence=False,
         )
     @size_gibibytes.setter
-    def size_gibibytes(self, value: "builtins.int") -> None:
+    def size_gibibytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("size_gibibytes",value,explicit_presence=False,
         )
     
@@ -462,7 +462,7 @@ class Host(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        count: "Range|template_pb2.Range|unset.UnsetType" = unset.Unset,
+        count: "Range|template_pb2.Range|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(count, unset.UnsetType):
@@ -479,7 +479,7 @@ class Host(pb_classes.Message):
         wrap=Range,
         )
     @count.setter
-    def count(self, value: "Range|template_pb2.Range") -> None:
+    def count(self, value: "Range|template_pb2.Range|None") -> None:
         return super()._set_field("count",value,explicit_presence=False,
         )
     
@@ -497,7 +497,7 @@ class HostSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        count: "builtins.int|unset.UnsetType" = unset.Unset,
+        count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(count, unset.UnsetType):
@@ -513,7 +513,7 @@ class HostSpec(pb_classes.Message):
         return super()._get_field("count", explicit_presence=False,
         )
     @count.setter
-    def count(self, value: "builtins.int") -> None:
+    def count(self, value: "builtins.int|None") -> None:
         return super()._set_field("count",value,explicit_presence=False,
         )
     
@@ -532,7 +532,7 @@ class Preset(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        spec: "PresetSpec|preset_pb2.PresetSpec|unset.UnsetType" = unset.Unset,
+        spec: "PresetSpec|preset_pb2.PresetSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(spec, unset.UnsetType):
@@ -549,7 +549,7 @@ class Preset(pb_classes.Message):
         wrap=PresetSpec,
         )
     @spec.setter
-    def spec(self, value: "PresetSpec|preset_pb2.PresetSpec") -> None:
+    def spec(self, value: "PresetSpec|preset_pb2.PresetSpec|None") -> None:
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
@@ -567,10 +567,10 @@ class PresetSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        flavor: "FlavorSpec|preset_pb2.FlavorSpec|unset.UnsetType" = unset.Unset,
-        hosts: "Host|template_pb2.Host|unset.UnsetType" = unset.Unset,
-        disk: "Disk|template_pb2.Disk|unset.UnsetType" = unset.Unset,
-        role: "builtins.str|unset.UnsetType" = unset.Unset,
+        flavor: "FlavorSpec|preset_pb2.FlavorSpec|None|unset.UnsetType" = unset.Unset,
+        hosts: "Host|template_pb2.Host|None|unset.UnsetType" = unset.Unset,
+        disk: "Disk|template_pb2.Disk|None|unset.UnsetType" = unset.Unset,
+        role: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(flavor, unset.UnsetType):
@@ -596,7 +596,7 @@ class PresetSpec(pb_classes.Message):
         wrap=FlavorSpec,
         )
     @flavor.setter
-    def flavor(self, value: "FlavorSpec|preset_pb2.FlavorSpec") -> None:
+    def flavor(self, value: "FlavorSpec|preset_pb2.FlavorSpec|None") -> None:
         return super()._set_field("flavor",value,explicit_presence=False,
         )
     
@@ -606,7 +606,7 @@ class PresetSpec(pb_classes.Message):
         wrap=Host,
         )
     @hosts.setter
-    def hosts(self, value: "Host|template_pb2.Host") -> None:
+    def hosts(self, value: "Host|template_pb2.Host|None") -> None:
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
@@ -616,7 +616,7 @@ class PresetSpec(pb_classes.Message):
         wrap=Disk,
         )
     @disk.setter
-    def disk(self, value: "Disk|template_pb2.Disk") -> None:
+    def disk(self, value: "Disk|template_pb2.Disk|None") -> None:
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
@@ -625,7 +625,7 @@ class PresetSpec(pb_classes.Message):
         return super()._get_field("role", explicit_presence=False,
         )
     @role.setter
-    def role(self, value: "builtins.str") -> None:
+    def role(self, value: "builtins.str|None") -> None:
         return super()._set_field("role",value,explicit_presence=False,
         )
     
@@ -646,8 +646,8 @@ class FlavorSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        cpu: "CpuSpec|preset_pb2.CpuSpec|unset.UnsetType" = unset.Unset,
-        memory: "MemorySpec|preset_pb2.MemorySpec|unset.UnsetType" = unset.Unset,
+        cpu: "CpuSpec|preset_pb2.CpuSpec|None|unset.UnsetType" = unset.Unset,
+        memory: "MemorySpec|preset_pb2.MemorySpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(cpu, unset.UnsetType):
@@ -667,7 +667,7 @@ class FlavorSpec(pb_classes.Message):
         wrap=CpuSpec,
         )
     @cpu.setter
-    def cpu(self, value: "CpuSpec|preset_pb2.CpuSpec") -> None:
+    def cpu(self, value: "CpuSpec|preset_pb2.CpuSpec|None") -> None:
         return super()._set_field("cpu",value,explicit_presence=False,
         )
     
@@ -677,7 +677,7 @@ class FlavorSpec(pb_classes.Message):
         wrap=MemorySpec,
         )
     @memory.setter
-    def memory(self, value: "MemorySpec|preset_pb2.MemorySpec") -> None:
+    def memory(self, value: "MemorySpec|preset_pb2.MemorySpec|None") -> None:
         return super()._set_field("memory",value,explicit_presence=False,
         )
     
@@ -696,8 +696,8 @@ class CpuSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        count: "builtins.int|unset.UnsetType" = unset.Unset,
-        generation: "builtins.int|unset.UnsetType" = unset.Unset,
+        count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        generation: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(count, unset.UnsetType):
@@ -716,7 +716,7 @@ class CpuSpec(pb_classes.Message):
         return super()._get_field("count", explicit_presence=False,
         )
     @count.setter
-    def count(self, value: "builtins.int") -> None:
+    def count(self, value: "builtins.int|None") -> None:
         return super()._set_field("count",value,explicit_presence=False,
         )
     
@@ -725,7 +725,7 @@ class CpuSpec(pb_classes.Message):
         return super()._get_field("generation", explicit_presence=False,
         )
     @generation.setter
-    def generation(self, value: "builtins.int") -> None:
+    def generation(self, value: "builtins.int|None") -> None:
         return super()._set_field("generation",value,explicit_presence=False,
         )
     
@@ -744,7 +744,7 @@ class MemorySpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        limit_gibibytes: "builtins.int|unset.UnsetType" = unset.Unset,
+        limit_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(limit_gibibytes, unset.UnsetType):
@@ -760,7 +760,7 @@ class MemorySpec(pb_classes.Message):
         return super()._get_field("limit_gibibytes", explicit_presence=False,
         )
     @limit_gibibytes.setter
-    def limit_gibibytes(self, value: "builtins.int") -> None:
+    def limit_gibibytes(self, value: "builtins.int|None") -> None:
         return super()._set_field("limit_gibibytes",value,explicit_presence=False,
         )
     
@@ -779,8 +779,8 @@ class ListPresetsRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(page_size, unset.UnsetType):
@@ -799,7 +799,7 @@ class ListPresetsRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -808,7 +808,7 @@ class ListPresetsRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -827,8 +827,8 @@ class ListPresetsResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Preset]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Preset]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -848,7 +848,7 @@ class ListPresetsResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Preset,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Preset]") -> None:
+    def items(self, value: "abc.Iterable[Preset]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -857,7 +857,7 @@ class ListPresetsResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
@@ -903,8 +903,8 @@ class ListTemplatesRequest(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        page_size: "builtins.int|unset.UnsetType" = unset.Unset,
-        page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(page_size, unset.UnsetType):
@@ -923,7 +923,7 @@ class ListTemplatesRequest(pb_classes.Message):
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
-    def page_size(self, value: "builtins.int") -> None:
+    def page_size(self, value: "builtins.int|None") -> None:
         return super()._set_field("page_size",value,explicit_presence=False,
         )
     
@@ -932,7 +932,7 @@ class ListTemplatesRequest(pb_classes.Message):
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
-    def page_token(self, value: "builtins.str") -> None:
+    def page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
@@ -951,8 +951,8 @@ class ListTemplatesResponse(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        items: "abc.Iterable[Template]|unset.UnsetType" = unset.Unset,
-        next_page_token: "builtins.str|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[Template]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(items, unset.UnsetType):
@@ -972,7 +972,7 @@ class ListTemplatesResponse(pb_classes.Message):
         wrap=pb_classes.Repeated.with_wrap(Template,None,None),
         )
     @items.setter
-    def items(self, value: "abc.Iterable[Template]") -> None:
+    def items(self, value: "abc.Iterable[Template]|None") -> None:
         return super()._set_field("items",value,explicit_presence=False,
         )
     
@@ -981,7 +981,7 @@ class ListTemplatesResponse(pb_classes.Message):
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
-    def next_page_token(self, value: "builtins.str") -> None:
+    def next_page_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("next_page_token",value,explicit_presence=False,
         )
     
