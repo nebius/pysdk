@@ -1,10 +1,10 @@
 version: v2
 plugins:
-  - remote: buf.build/protocolbuffers/python
+  - remote: buf.build/protocolbuffers/python:v29.1
     out: src/nebius/api-new
-  - remote: buf.build/grpc/python
+  - remote: buf.build/grpc/python:v1.68.1
     out: src/nebius/api-new
-  - remote: buf.build/protocolbuffers/pyi
+  - remote: buf.build/protocolbuffers/pyi:v29.1
     out: src/nebius/api-new
   - local: ["python", "-m", "nebius.base.protos.compiler.main"]
     opt:
