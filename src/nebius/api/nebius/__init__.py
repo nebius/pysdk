@@ -17,19 +17,84 @@ import nebius.base.protos.unset as unset
 class ResourceBehavior(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.ResourceBehavior",annotations_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     RESOURCE_BEHAVIOR_UNSPECIFIED = 0
+    """
+     The behavior of the resource is unspecified.
+     Avoid using this default value.
+    """
+    
     MOVABLE = 1
+    """
+     Indicates that the resource can be moved to another parent, typically an
+     IAM container, though not necessarily limited to this.
+     This behavior suggests that the `metadata.parent_id` attribute could be modified.
+    """
+    
     UNNAMED = 2
+    """
+     Indicates that the resource name can be unspecified or does not follow
+     uniqueness requirement within parent_id and resource type.
+    """
+    
     IMMUTABLE_NAME = 3
+    """
+     Indicates that the resource is named, and the name cannot be changed after
+     it is created. It is strongly recommended to do srvices with renaming
+     capability, as the guidelines suggest.
+    """
+    
 
 class FieldBehavior(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.FieldBehavior",annotations_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     FIELD_BEHAVIOR_UNSPECIFIED = 0
     IMMUTABLE = 2
+    """
+     This indicates that the field can't be changed during a resource update.
+     Changing the field value will cause an `INVALID_ARGUMENT` error.
+     Resource recreate requires a change of the field value.
+    """
+    
     IDENTIFIER = 3
+    """
+     Indicates field is a resource ID, so it MUST be present on a resource
+     update, but MUST NOT be set on create.
+     Otherwise, RPC will fail with the `INVALID_ARGUMENT` error
+    """
+    
     INPUT_ONLY = 4
+    """
+     Indicates field is not present in output.
+    """
+    
     OUTPUT_ONLY = 5
+    """
+     Indicates field can't be set on create or changed on update.
+     Otherwise, RPC will fail with the `INVALID_ARGUMENT` error
+    """
+    
     MEANINGFUL_EMPTY_VALUE = 6
+    """
+     Indicates that an empty message and a null have different semantics.
+     Usually, that field is a feature spec message: its empty message enables
+     that feature, and null disables it. Such a message is different from `bool`
+     because it already has some feature parameters, or they can be added later
+     in a backward-compatible way.
+     IMPORTANT: if the message itself is recursive, this behavior is forced.
+    """
+    
     NON_EMPTY_DEFAULT = 7
+    """
+     Indicates that an empty (default) value will be filled by the server.
+     Usually, that field is a feature spec value, which by default is computed.
+     Values marked with this annotation won't raise error if they are not set
+     and the returned value is not equal to protobuf default.
+    
+     IMPORTANT:
+     Updating this value from explicit to default may not lead to Update call in
+     some tools (eg Terraform).
+     Compound values (messages, lists and maps) may result in unpredictable
+     updates (see examples in guidelines).
+    """
+    
 
 class RegionRouting(pb_classes.Message):
     __PB2_CLASS__ = annotations_pb2.RegionRouting
@@ -62,6 +127,13 @@ class RegionRouting(pb_classes.Message):
     
     @builtins.property
     def nid(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         A list of fields to extract the NID from, in order of priority.
+         The API Gateway will check each field in sequence and use the first valid NID it finds.
+         This overrides the default NID lookup order: `id`, `parent_id`, `metadata.id`, `metadata.parent_id`.
+         If the field contains a non-empty list of strings, all NIDs in the array must be valid and have the same routing code.
+        """
+        
         return super()._get_field("nid", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -72,6 +144,11 @@ class RegionRouting(pb_classes.Message):
     
     @builtins.property
     def disabled(self) -> "builtins.bool":
+        """
+         If true, region routing is disabled for the method.
+         When this is set, requests will not be forwarded to a different region, even if an NID is present.
+        """
+        
         return super()._get_field("disabled", explicit_presence=False,
         )
     @disabled.setter
@@ -81,6 +158,11 @@ class RegionRouting(pb_classes.Message):
     
     @builtins.property
     def strict(self) -> "builtins.bool":
+        """
+         In strict mode, the API Gateway returns an INVALID_ARGUMENT error to the user when a routing error occurs,
+         rather than forwarding the request to the local region.
+        """
+        
         return super()._get_field("strict", explicit_presence=False,
         )
     @strict.setter

@@ -90,6 +90,10 @@ class Cluster(pb_classes.Message):
     }
     
 class ClusterSpec(pb_classes.Message):
+    """
+     Cluster specification
+    """
+    
     __PB2_CLASS__ = cluster_pb2.ClusterSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.mlflow.v1alpha1.ClusterSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -136,6 +140,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def description(self) -> "builtins.str":
+        """
+         Description of the cluster.
+        """
+        
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
@@ -145,6 +153,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def public_access(self) -> "builtins.bool":
+        """
+         Either make cluster public accessible or accessible only via private VPC.
+        """
+        
         return super()._get_field("public_access", explicit_presence=False,
         )
     @public_access.setter
@@ -154,6 +166,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def admin_username(self) -> "builtins.str":
+        """
+         MLflow admin username.
+        """
+        
         return super()._get_field("admin_username", explicit_presence=False,
         )
     @admin_username.setter
@@ -163,6 +179,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def admin_password(self) -> "builtins.str":
+        """
+         MLflow admin password.
+        """
+        
         return super()._get_field("admin_password", explicit_presence=False,
         )
     @admin_password.setter
@@ -172,6 +192,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def service_account_id(self) -> "builtins.str":
+        """
+         Id of the service account that will be used to access S3 bucket (and create one if not provided).
+        """
+        
         return super()._get_field("service_account_id", explicit_presence=False,
         )
     @service_account_id.setter
@@ -181,6 +205,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def storage_bucket_name(self) -> "builtins.str":
+        """
+         Name of the Nebius S3 bucket for MLflow artifacts. If not provided, will be created under the same parent.
+        """
+        
         return super()._get_field("storage_bucket_name", explicit_presence=False,
         )
     @storage_bucket_name.setter
@@ -190,6 +218,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def network_id(self) -> "builtins.str":
+        """
+         ID of the vpc network.
+        """
+        
         return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
@@ -254,6 +286,10 @@ class MlflowClusterStatus(pb_classes.Message):
     
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
+        """
+         Current phase of the cluster.
+        """
+        
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
@@ -264,6 +300,10 @@ class MlflowClusterStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
+        """
+         State reflects substatus of the phase to define whether it's healthy or not.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
@@ -274,6 +314,11 @@ class MlflowClusterStatus(pb_classes.Message):
     
     @builtins.property
     def tracking_endpoint(self) -> "builtins.str":
+        """
+         Tracking endpoint url.
+         Will be removed soon in favor of private_tracking_endpoint and public_tracking_endpoint.
+        """
+        
         return super()._get_field("tracking_endpoint", explicit_presence=False,
         )
     @tracking_endpoint.setter
@@ -283,6 +328,10 @@ class MlflowClusterStatus(pb_classes.Message):
     
     @builtins.property
     def effective_storage_bucket_name(self) -> "builtins.str":
+        """
+         Name of the Nebius S3 bucket for MLflow artifacts.
+        """
+        
         return super()._get_field("effective_storage_bucket_name", explicit_presence=False,
         )
     @effective_storage_bucket_name.setter
@@ -292,6 +341,10 @@ class MlflowClusterStatus(pb_classes.Message):
     
     @builtins.property
     def experiments_count(self) -> "builtins.int":
+        """
+         Count of experiments in the MLflow cluster
+        """
+        
         return super()._get_field("experiments_count", explicit_presence=False,
         )
     @experiments_count.setter
@@ -301,6 +354,10 @@ class MlflowClusterStatus(pb_classes.Message):
     
     @builtins.property
     def mlflow_version(self) -> "builtins.str":
+        """
+         MLflow version
+        """
+        
         return super()._get_field("mlflow_version", explicit_presence=False,
         )
     @mlflow_version.setter
@@ -310,6 +367,10 @@ class MlflowClusterStatus(pb_classes.Message):
     
     @builtins.property
     def tracking_endpoints(self) -> "Endpoints":
+        """
+         Public and private tracking endpoints
+        """
+        
         return super()._get_field("tracking_endpoints", explicit_presence=False,
         wrap=Endpoints,
         )
@@ -355,6 +416,10 @@ class Endpoints(pb_classes.Message):
     
     @builtins.property
     def private(self) -> "builtins.str":
+        """
+         Private endpoint
+        """
+        
         return super()._get_field("private", explicit_presence=False,
         )
     @private.setter
@@ -364,6 +429,10 @@ class Endpoints(pb_classes.Message):
     
     @builtins.property
     def public(self) -> "builtins.str":
+        """
+         Public endpoint
+        """
+        
         return super()._get_field("public", explicit_presence=False,
         )
     @public.setter
@@ -400,6 +469,10 @@ class GetClusterRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the cluster to retrieve.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -438,6 +511,10 @@ class GetClusterByNameRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Identifier of IAM container to get cluster from.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -447,6 +524,10 @@ class GetClusterByNameRequest(pb_classes.Message):
     
     @builtins.property
     def name(self) -> "builtins.str":
+        """
+         Name of the cluster.
+        """
+        
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
@@ -490,6 +571,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Identifier of IAM container to list clusters from.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -499,6 +584,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response. Default value is 100.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -508,6 +597,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -548,6 +641,10 @@ class ListClustersResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Cluster]":
+        """
+         List of clusters.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Cluster,None,None),
         )
@@ -558,6 +655,10 @@ class ListClustersResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -597,6 +698,10 @@ class CreateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the new cluster. Must include parent_id in which we create the cluster.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -607,6 +712,10 @@ class CreateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "ClusterSpec":
+        """
+         Specification for the new cluster.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
         )
@@ -643,6 +752,10 @@ class DeleteClusterRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the cluster to delete.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -668,6 +781,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
+        """
+         Returns the specified cluster.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -688,6 +805,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetClusterByNameRequest","Cluster"]:
+        """
+         Returns the specified cluster.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -708,6 +829,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
+        """
+         Retrieves a list of clusters.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -728,6 +853,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Creates a cluster.
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -748,6 +877,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Delete a cluster.
+        """
+        
         return super().request(
             method="Delete",
             request=request,

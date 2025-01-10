@@ -285,6 +285,10 @@ class OSInfo(pb_classes.Message):
     
     @builtins.property
     def name(self) -> "builtins.str":
+        """
+         Example: "Ubuntu 22.04.4 LTS"
+        """
+        
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
@@ -294,6 +298,10 @@ class OSInfo(pb_classes.Message):
     
     @builtins.property
     def uname(self) -> "builtins.str":
+        """
+         Example: "Linux computeimage-abcdef 6.5.0-44-generic #44~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jun 18 14:36:16 UTC 2 x86_64 x86_64 x86_64 GNU/Linux"
+        """
+        
         return super()._get_field("uname", explicit_presence=False,
         )
     @uname.setter

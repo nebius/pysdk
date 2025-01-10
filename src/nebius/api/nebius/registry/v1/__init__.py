@@ -495,6 +495,11 @@ class Registry(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         This is metadata about the resource, such as its id, name, labels, etc.
+         This contains fields that may be updated both by the end user and the system.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -505,6 +510,11 @@ class Registry(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "RegistrySpec":
+        """
+         This is defined by the user and describes the desired state of system.
+         Fill this in when creating or updating an object.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=RegistrySpec,
         )
@@ -515,6 +525,10 @@ class Registry(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "RegistryStatus":
+        """
+         This is filled in by the server and reports the current state of the system.
+        """
+        
         return super()._get_field("status", explicit_presence=False,
         wrap=RegistryStatus,
         )
@@ -565,6 +579,10 @@ class RegistrySpec(pb_classes.Message):
     
     @builtins.property
     def images_count(self) -> "builtins.int":
+        """
+          Registry.Type type = 2;
+        """
+        
         return super()._get_field("images_count", explicit_presence=False,
         )
     @images_count.setter

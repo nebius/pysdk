@@ -113,6 +113,10 @@ class DiskSpec(pb_classes.Message):
     }
     
     class DiskType(pb_enum.Enum):
+        """
+         the list of available types will be clarified later, it is not final version
+        """
+        
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskSpec.DiskType",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         NETWORK_SSD = 1
@@ -576,6 +580,10 @@ class DiskStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -626,6 +634,10 @@ class ListOperationsByParentRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         ID of the parent to list operations for resource type at.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -635,6 +647,10 @@ class ListOperationsByParentRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Page size. [1...1000]. Optional, if not specified, a reasonable default will be chosen by the service.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -644,6 +660,10 @@ class ListOperationsByParentRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Listing continuation token. Empty to start listing from the first page.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -1175,6 +1195,10 @@ class FilesystemSpec(pb_classes.Message):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.FilesystemSpec.FilesystemType",filesystem_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
         NETWORK_SSD = 1
+        """
+         the list of available types will be clarified later, it is not final version
+        """
+        
         NETWORK_HDD = 2
     
     class __OneOfClass_size__(pb_classes.OneOf):
@@ -1441,6 +1465,10 @@ class FilesystemStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -2037,6 +2065,10 @@ class GpuClusterStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -2734,6 +2766,10 @@ class ImageStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -2821,6 +2857,10 @@ class GetImageLatestByFamilyRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         default 'project-{region}public-images'
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -3066,6 +3106,10 @@ class ImageServiceClient(client.Client):
 
 # file: nebius/compute/v1/network_interface.proto
 class NetworkInterfaceSpec(pb_classes.Message):
+    """
+     Describes the specification of a network interface.
+    """
+    
     __PB2_CLASS__ = network_interface_pb2.NetworkInterfaceSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NetworkInterfaceSpec",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -3100,6 +3144,10 @@ class NetworkInterfaceSpec(pb_classes.Message):
     
     @builtins.property
     def subnet_id(self) -> "builtins.str":
+        """
+         Subnet ID
+        """
+        
         return super()._get_field("subnet_id", explicit_presence=False,
         )
     @subnet_id.setter
@@ -3109,6 +3157,11 @@ class NetworkInterfaceSpec(pb_classes.Message):
     
     @builtins.property
     def name(self) -> "builtins.str":
+        """
+         Name for interface.
+         Must be unique within instance's network interfaces
+        """
+        
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
@@ -3118,6 +3171,10 @@ class NetworkInterfaceSpec(pb_classes.Message):
     
     @builtins.property
     def ip_address(self) -> "IPAddress|None":
+        """
+         Private IPv4 address associated with the interface.
+        """
+        
         return super()._get_field("ip_address", explicit_presence=True,
         wrap=IPAddress,
         )
@@ -3128,6 +3185,10 @@ class NetworkInterfaceSpec(pb_classes.Message):
     
     @builtins.property
     def public_ip_address(self) -> "PublicIPAddress|None":
+        """
+         Public IPv4 address associated with the interface.
+        """
+        
         return super()._get_field("public_ip_address", explicit_presence=True,
         wrap=PublicIPAddress,
         )
@@ -3144,6 +3205,10 @@ class NetworkInterfaceSpec(pb_classes.Message):
     }
     
 class IPAddress(pb_classes.Message):
+    """
+     Describes an IPv4 address.
+    """
+    
     __PB2_CLASS__ = network_interface_pb2.IPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.IPAddress",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -3166,6 +3231,10 @@ class IPAddress(pb_classes.Message):
     
     @builtins.property
     def allocation_id(self) -> "builtins.str":
+        """
+         Allocation identifier if it was created before.
+        """
+        
         return super()._get_field("allocation_id", explicit_presence=False,
         )
     @allocation_id.setter
@@ -3178,6 +3247,10 @@ class IPAddress(pb_classes.Message):
     }
     
 class PublicIPAddress(pb_classes.Message):
+    """
+     Describes a public IP address.
+    """
+    
     __PB2_CLASS__ = network_interface_pb2.PublicIPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PublicIPAddress",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -3201,6 +3274,10 @@ class PublicIPAddress(pb_classes.Message):
     
     @builtins.property
     def allocation(self) -> __OneOfClass_allocation_allocation_id__|None:
+        """
+         Describes different methods of public IP address allocation.
+        """
+        
         field_name: str|None = super().which_field_in_oneof("allocation")
         match field_name:
             case "allocation_id":
@@ -3232,6 +3309,10 @@ class PublicIPAddress(pb_classes.Message):
     
     @builtins.property
     def allocation_id(self) -> "builtins.str|None":
+        """
+         Allocation identifier if it was created before.
+        """
+        
         return super()._get_field("allocation_id", explicit_presence=True,
         )
     @allocation_id.setter
@@ -3241,6 +3322,12 @@ class PublicIPAddress(pb_classes.Message):
     
     @builtins.property
     def static(self) -> "builtins.bool":
+        """
+         If false - Allocation will be created/deleted during NetworkInterface.Allocate/NetworkInterface.Deallocate
+         If true  - Allocation will be created/deleted during NetworkInterface.Create/NetworkInterface.Delete
+         False by default
+        """
+        
         return super()._get_field("static", explicit_presence=False,
         )
     @static.setter
@@ -3255,6 +3342,10 @@ class PublicIPAddress(pb_classes.Message):
     }
     
 class NetworkInterfaceStatus(pb_classes.Message):
+    """
+     Describes the status of a network interface.
+    """
+    
     __PB2_CLASS__ = network_interface_pb2.NetworkInterfaceStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NetworkInterfaceStatus",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -3293,6 +3384,10 @@ class NetworkInterfaceStatus(pb_classes.Message):
     
     @builtins.property
     def index(self) -> "builtins.int":
+        """
+         The index of the network interface
+        """
+        
         return super()._get_field("index", explicit_presence=False,
         )
     @index.setter
@@ -3302,6 +3397,11 @@ class NetworkInterfaceStatus(pb_classes.Message):
     
     @builtins.property
     def name(self) -> "builtins.str":
+        """
+         Name for interface.
+         Unique within instance's network interfaces
+        """
+        
         return super()._get_field("name", explicit_presence=False,
         )
     @name.setter
@@ -3311,6 +3411,10 @@ class NetworkInterfaceStatus(pb_classes.Message):
     
     @builtins.property
     def ip_address(self) -> "IPAddressStatus":
+        """
+         Effective Private IPv4 address
+        """
+        
         return super()._get_field("ip_address", explicit_presence=False,
         wrap=IPAddressStatus,
         )
@@ -3321,6 +3425,10 @@ class NetworkInterfaceStatus(pb_classes.Message):
     
     @builtins.property
     def public_ip_address(self) -> "PublicIPAddressStatus":
+        """
+         Effective Public IPv4 address
+        """
+        
         return super()._get_field("public_ip_address", explicit_presence=False,
         wrap=PublicIPAddressStatus,
         )
@@ -3331,6 +3439,10 @@ class NetworkInterfaceStatus(pb_classes.Message):
     
     @builtins.property
     def mac_address(self) -> "builtins.str":
+        """
+         MAC address
+        """
+        
         return super()._get_field("mac_address", explicit_presence=False,
         )
     @mac_address.setter
@@ -3373,6 +3485,10 @@ class IPAddressStatus(pb_classes.Message):
     
     @builtins.property
     def address(self) -> "builtins.str":
+        """
+         Effective private IPv4 address assigned to the interface.
+        """
+        
         return super()._get_field("address", explicit_presence=False,
         )
     @address.setter
@@ -3382,6 +3498,10 @@ class IPAddressStatus(pb_classes.Message):
     
     @builtins.property
     def allocation_id(self) -> "builtins.str":
+        """
+         Allocation identifier.
+        """
+        
         return super()._get_field("allocation_id", explicit_presence=False,
         )
     @allocation_id.setter
@@ -3421,6 +3541,10 @@ class PublicIPAddressStatus(pb_classes.Message):
     
     @builtins.property
     def address(self) -> "builtins.str":
+        """
+         Effective public IPv4 address assigned to the interface.
+        """
+        
         return super()._get_field("address", explicit_presence=False,
         )
     @address.setter
@@ -3430,6 +3554,10 @@ class PublicIPAddressStatus(pb_classes.Message):
     
     @builtins.property
     def allocation_id(self) -> "builtins.str":
+        """
+         Allocation identifier.
+        """
+        
         return super()._get_field("allocation_id", explicit_presence=False,
         )
     @allocation_id.setter
@@ -3521,6 +3649,10 @@ class MaintenanceEventStatus(pb_classes.Message):
     
     @builtins.property
     def operation_id(self) -> "builtins.str":
+        """
+         Operation ID of stopping or recovering operation
+        """
+        
         return super()._get_field("operation_id", explicit_presence=False,
         )
     @operation_id.setter
@@ -3530,6 +3662,10 @@ class MaintenanceEventStatus(pb_classes.Message):
     
     @builtins.property
     def created_at(self) -> "datetime.datetime":
+        """
+         Time when the maintenance event is created
+        """
+        
         return super()._get_field("created_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
@@ -3541,6 +3677,10 @@ class MaintenanceEventStatus(pb_classes.Message):
     
     @builtins.property
     def finished_at(self) -> "datetime.datetime":
+        """
+         Time when the maintenance event is finished
+        """
+        
         return super()._get_field("finished_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
@@ -3552,6 +3692,10 @@ class MaintenanceEventStatus(pb_classes.Message):
     
     @builtins.property
     def sla_deadline_ts(self) -> "datetime.datetime":
+        """
+         Time when the instance will be force stopped
+        """
+        
         return super()._get_field("sla_deadline_ts", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
@@ -3563,6 +3707,10 @@ class MaintenanceEventStatus(pb_classes.Message):
     
     @builtins.property
     def support_center_ticket_id(self) -> "builtins.str":
+        """
+         Ticket key, can be transformed into url where support is talking with the client
+        """
+        
         return super()._get_field("support_center_ticket_id", explicit_presence=False,
         )
     @support_center_ticket_id.setter
@@ -4016,6 +4164,10 @@ class AttachedDiskSpec(pb_classes.Message):
     
     @builtins.property
     def device_id(self) -> "builtins.str":
+        """
+         Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
+        """
+        
         return super()._get_field("device_id", explicit_presence=False,
         )
     @device_id.setter
@@ -4175,6 +4327,10 @@ class AttachedFilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def mount_tag(self) -> "builtins.str":
+        """
+         Specifies the user-defined identifier, allowing to use it as a device in mount command.
+        """
+        
         return super()._get_field("mount_tag", explicit_presence=False,
         )
     @mount_tag.setter
@@ -4268,6 +4424,10 @@ class InstanceStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Indicates whether there is an ongoing operation
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter

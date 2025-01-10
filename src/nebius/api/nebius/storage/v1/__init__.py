@@ -163,6 +163,10 @@ class CurrentBucketCounters(pb_classes.Message):
     }
     
 class NonCurrentBucketCounters(pb_classes.Message):
+    """
+     Counters for non-current object versions (for versioning buckets).
+    """
+    
     __PB2_CLASS__ = bucket_counters_pb2.NonCurrentBucketCounters
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.NonCurrentBucketCounters",bucket_counters_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -305,6 +309,20 @@ class BucketCounters(pb_classes.Message):
     
 # file: nebius/storage/v1/lifecycle.proto
 class LifecycleConfiguration(pb_classes.Message):
+    """
+     The lifecycle configuration consists of one or more rules.
+     An Lifecycle configuration can have up to 1,000 rules.
+     Each rule consists of the following:
+     - A filter identifying a subset of objects to which the rule applies.
+       The filter can be based on a key name prefix, object size, or any combination of these.
+     - A status indicating whether the rule is currently active.
+     - One or more lifecycle expiration actions that you want to be performed on the objects
+       identified by the filter. If the state of your bucket is versioning-enabled or versioning-suspended
+       (bucket.spec.versioning_policy equals to ENABLED or SUSPENDED) you can have many versions of the same
+       object (one current version and zero or more noncurrent versions). The system provides predefined actions
+       that you can specify for current and noncurrent object versions.
+    """
+    
     __PB2_CLASS__ = lifecycle_pb2.LifecycleConfiguration
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleConfiguration",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -389,6 +407,11 @@ class LifecycleRule(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         Unique identifier for the rule per configuration.
+         The value cannot be longer than 255 characters.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -408,6 +431,12 @@ class LifecycleRule(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "LifecycleFilter":
+        """
+         The Filter is used to identify objects that a Lifecycle Rule applies to.
+         The Lifecycle Rule will apply to any object matching all of the predicates
+         configured inside (using logical AND).
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         wrap=LifecycleFilter,
         )
@@ -418,6 +447,11 @@ class LifecycleRule(pb_classes.Message):
     
     @builtins.property
     def expiration(self) -> "LifecycleExpiration":
+        """
+         Specifies the expiration for the lifecycle of the object in the form of date, days and,
+         whether the object has a delete marker.
+        """
+        
         return super()._get_field("expiration", explicit_presence=False,
         wrap=LifecycleExpiration,
         )
@@ -428,6 +462,11 @@ class LifecycleRule(pb_classes.Message):
     
     @builtins.property
     def noncurrent_version_expiration(self) -> "LifecycleNoncurrentVersionExpiration":
+        """
+         Specifies when noncurrent object versions expire.
+         It works only on a bucket that has versioning enabled (or suspended).
+        """
+        
         return super()._get_field("noncurrent_version_expiration", explicit_presence=False,
         wrap=LifecycleNoncurrentVersionExpiration,
         )
@@ -438,6 +477,11 @@ class LifecycleRule(pb_classes.Message):
     
     @builtins.property
     def abort_incomplete_multipart_upload(self) -> "LifecycleAbortIncompleteMultipartUpload":
+        """
+         Specifies the days since the initiation of an incomplete multipart upload that
+         the system will wait before permanently removing all parts of the upload.
+        """
+        
         return super()._get_field("abort_incomplete_multipart_upload", explicit_presence=False,
         wrap=LifecycleAbortIncompleteMultipartUpload,
         )
@@ -487,6 +531,11 @@ class LifecycleFilter(pb_classes.Message):
     
     @builtins.property
     def prefix(self) -> "builtins.str":
+        """
+         Prefix identifying one or more objects to which the rule applies.
+         If prefix is empty, the rule applies to all objects in the bucket.
+        """
+        
         return super()._get_field("prefix", explicit_presence=False,
         )
     @prefix.setter
@@ -496,6 +545,10 @@ class LifecycleFilter(pb_classes.Message):
     
     @builtins.property
     def object_size_greater_than_bytes(self) -> "builtins.int":
+        """
+         Minimum object size to which the rule applies.
+        """
+        
         return super()._get_field("object_size_greater_than_bytes", explicit_presence=False,
         )
     @object_size_greater_than_bytes.setter
@@ -505,6 +558,10 @@ class LifecycleFilter(pb_classes.Message):
     
     @builtins.property
     def object_size_less_than_bytes(self) -> "builtins.int":
+        """
+         Maximum object size to which the rule applies.
+        """
+        
         return super()._get_field("object_size_less_than_bytes", explicit_presence=False,
         )
     @object_size_less_than_bytes.setter
@@ -589,6 +646,10 @@ class LifecycleExpiration(pb_classes.Message):
     
     @builtins.property
     def date(self) -> "datetime.datetime|None":
+        """
+         Indicates at what date the object will be deleted. The time is always midnight UTC.
+        """
+        
         return super()._get_field("date", explicit_presence=True,
         wrap=well_known_1.from_timestamp
         )
@@ -600,6 +661,11 @@ class LifecycleExpiration(pb_classes.Message):
     
     @builtins.property
     def days(self) -> "builtins.int|None":
+        """
+         Indicates the lifetime, in days, of the objects that are subject to the rule.
+         The value must be a non-zero positive integer.
+        """
+        
         return super()._get_field("days", explicit_presence=True,
         )
     @days.setter
@@ -609,6 +675,13 @@ class LifecycleExpiration(pb_classes.Message):
     
     @builtins.property
     def expired_object_delete_marker(self) -> "builtins.bool":
+        """
+         Indicates whether the system will remove a "delete marker" with no noncurrent versions.
+         If set to true, the "delete marker" will be permanently removed.
+         If set to false the policy takes no action.
+         This cannot be specified with Days or Date in a LifecycleExpiration Policy.
+        """
+        
         return super()._get_field("expired_object_delete_marker", explicit_presence=False,
         )
     @expired_object_delete_marker.setter
@@ -678,6 +751,10 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
     
     @builtins.property
     def newer_noncurrent_versions(self) -> "builtins.int|None":
+        """
+         Specifies how many noncurrent versions the system will retain.
+        """
+        
         return super()._get_field("newer_noncurrent_versions", explicit_presence=True,
         )
     @newer_noncurrent_versions.setter
@@ -687,6 +764,10 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
     
     @builtins.property
     def noncurrent_days(self) -> "builtins.int":
+        """
+         Specifies the number of days an object is noncurrent before the system will expire it.
+        """
+        
         return super()._get_field("noncurrent_days", explicit_presence=False,
         )
     @noncurrent_days.setter
@@ -723,6 +804,11 @@ class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
     
     @builtins.property
     def days_after_initiation(self) -> "builtins.int":
+        """
+         Specifies the days since the initiation of an incomplete multipart upload that
+         the system will wait before permanently removing all parts of the upload.
+        """
+        
         return super()._get_field("days_after_initiation", explicit_presence=False,
         )
     @days_after_initiation.setter
@@ -831,6 +917,13 @@ class BucketSpec(pb_classes.Message):
     
     @builtins.property
     def versioning_policy(self) -> "VersioningPolicy":
+        """
+         Supports transitions:
+          * disabled -> enabled
+          * disabled -> suspended
+          * enabled <-> suspended
+        """
+        
         return super()._get_field("versioning_policy", explicit_presence=False,
         wrap=VersioningPolicy,
         )
@@ -841,6 +934,13 @@ class BucketSpec(pb_classes.Message):
     
     @builtins.property
     def max_size_bytes(self) -> "builtins.int":
+        """
+         Maximum bucket size.
+         Zero means unlimited.
+         Actual limit can be lower if customer doesn't have enough quota.
+         Real bucket size can go a little higher if customer writes too fast.
+        """
+        
         return super()._get_field("max_size_bytes", explicit_presence=False,
         )
     @max_size_bytes.setter
@@ -876,9 +976,27 @@ class BucketStatus(pb_classes.Message):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.BucketStatus.State",bucket_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         CREATING = 1
+        """
+         Bucket is under creation and cannot be used yet.
+        """
+        
         ACTIVE = 2
+        """
+         Bucket is active and ready for usage.
+        """
+        
         UPDATING = 3
+        """
+         Bucket is being updated.
+         It can be used, but some settings are being modified and you can observe their inconsistency.
+        """
+        
         SCHEDULED_FOR_DELETION = 4
+        """
+         Bucket is scheduled for deletion.
+         It cannot be used in s3 api anymore.
+        """
+        
     
     class SuspensionState(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.BucketStatus.SuspensionState",bucket_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -955,6 +1073,11 @@ class BucketStatus(pb_classes.Message):
     
     @builtins.property
     def deleted_at(self) -> "datetime.datetime":
+        """
+         The time when the bucket was deleted (or scheduled for deletion).
+         It resets to null if the bucket is undeleted.
+        """
+        
         return super()._get_field("deleted_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
@@ -966,6 +1089,10 @@ class BucketStatus(pb_classes.Message):
     
     @builtins.property
     def purge_at(self) -> "datetime.datetime":
+        """
+         The time when the bucket will be automatically purged in case it was soft-deleted.
+        """
+        
         return super()._get_field("purge_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
@@ -977,6 +1104,11 @@ class BucketStatus(pb_classes.Message):
     
     @builtins.property
     def domain_name(self) -> "builtins.str":
+        """
+         The domain of the endpoint where the bucket can be accessed. It omits the scheme (HTTPS) and the port (443)
+         and contains only the FQDN address.
+        """
+        
         return super()._get_field("domain_name", explicit_presence=False,
         )
     @domain_name.setter
@@ -1032,6 +1164,11 @@ class GetBucketRequest(pb_classes.Message):
     
     @builtins.property
     def with_deleted(self) -> "builtins.bool":
+        """
+         By default, only CREATING and ACTIVE buckets are visible.
+         DEPRECATED: soft-deleted buckets are shown by default.
+        """
+        
         return super()._get_field("with_deleted", explicit_presence=False,
         )
     @with_deleted.setter
@@ -1093,6 +1230,11 @@ class GetBucketByNameRequest(pb_classes.Message):
     
     @builtins.property
     def with_deleted(self) -> "builtins.bool":
+        """
+         By default, only CREATING and ACTIVE buckets are visible.
+         DEPRECATED: soft-deleted buckets are shown by default.
+        """
+        
         return super()._get_field("with_deleted", explicit_presence=False,
         )
     @with_deleted.setter
@@ -1241,6 +1383,11 @@ class DeleteBucketRequest(pb_classes.Message):
     
     @builtins.property
     def purge(self) -> __OneOfClass_purge_purge_at__|__OneOfClass_purge_ttl__|None:
+        """
+         You can provide purge_at or ttl after which the bucket will be purged automatically.
+         Otherwise, default ttl of 7 days will be applied.
+        """
+        
         field_name: str|None = super().which_field_in_oneof("purge")
         match field_name:
             case "purge_at":
@@ -1287,6 +1434,10 @@ class DeleteBucketRequest(pb_classes.Message):
     
     @builtins.property
     def purge_at(self) -> "datetime.datetime|None":
+        """
+         Absolute purging time: status.purge_at will be set to this value.
+        """
+        
         return super()._get_field("purge_at", explicit_presence=True,
         wrap=well_known_1.from_timestamp
         )
@@ -1298,6 +1449,10 @@ class DeleteBucketRequest(pb_classes.Message):
     
     @builtins.property
     def ttl(self) -> "datetime.timedelta|None":
+        """
+         Relative purging time: status.purge_at will be set to (current timestamp + ttl).
+        """
+        
         return super()._get_field("ttl", explicit_presence=True,
         wrap=well_known_1.from_duration
         )
@@ -1421,6 +1576,10 @@ class ListBucketsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Represents the container ID.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -1430,6 +1589,10 @@ class ListBucketsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -1439,6 +1602,10 @@ class ListBucketsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -1448,6 +1615,10 @@ class ListBucketsRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -1457,6 +1628,11 @@ class ListBucketsRequest(pb_classes.Message):
     
     @builtins.property
     def with_deleted(self) -> "builtins.bool":
+        """
+         By default, only CREATING and ACTIVE buckets are shown.
+         DEPRECATED: soft-deleted buckets are shown by default.
+        """
+        
         return super()._get_field("with_deleted", explicit_presence=False,
         )
     @with_deleted.setter
@@ -1499,6 +1675,10 @@ class ListBucketsResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Bucket]":
+        """
+         List of buckets returned in the response. The field should be named as `items` for consistency.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Bucket,None,None),
         )
@@ -1509,6 +1689,10 @@ class ListBucketsResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -1656,6 +1840,12 @@ class BucketServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["PurgeBucketRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Purge instantly deletes the bucket in ScheduledForDeletion state.
+         It can be used only for buckets in ScheduledForDeletion state.
+         If you want to delete Active bucket instantly, use Delete with zero ttl.
+        """
+        
         return super().request(
             method="Purge",
             request=request,
@@ -1676,6 +1866,10 @@ class BucketServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UndeleteBucketRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Undelete recovers the bucket from ScheduledForDeletion state to Active.
+        """
+        
         return super().request(
             method="Undelete",
             request=request,

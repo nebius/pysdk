@@ -34,6 +34,11 @@ class Operation(pb_classes.Message):
     }
     
     class request_header(pb_classes.Message):
+        """
+         Request header is a container for all the values of a particular header of a request
+         as there is no such thing as map<string, repeated string>
+        """
+        
         __PB2_CLASS__ = operation_pb2.Operation.request_header
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1alpha1.Operation.request_header",operation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
         __mask_functions__ = {
@@ -56,6 +61,10 @@ class Operation(pb_classes.Message):
         
         @builtins.property
         def values(self) -> "abc.MutableSequence[builtins.str]":
+            """
+             The values of a particular header from a request
+            """
+            
             return super()._get_field("values", explicit_presence=False,
             wrap=pb_classes.Repeated,
             )
@@ -178,6 +187,10 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the operation.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -187,6 +200,10 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def description(self) -> "builtins.str":
+        """
+         Human readable description of the operation. 0-256 characters long.
+        """
+        
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
@@ -196,6 +213,10 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def created_at(self) -> "datetime.datetime":
+        """
+         Creation timestamp.
+        """
+        
         return super()._get_field("created_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
@@ -207,6 +228,10 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def created_by(self) -> "builtins.str":
+        """
+         ID of the user or service account who initiated the operation.
+        """
+        
         return super()._get_field("created_by", explicit_presence=False,
         )
     @created_by.setter
@@ -216,6 +241,10 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def finished_at(self) -> "datetime.datetime":
+        """
+         The time when the operation finished.
+        """
+        
         return super()._get_field("finished_at", explicit_presence=False,
         wrap=well_known_1.from_timestamp
         )
@@ -227,6 +256,10 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def request(self) -> "any_pb2.Any":
+        """
+         The request that generated this operation.
+        """
+        
         return super()._get_field("request", explicit_presence=False,
         )
     @request.setter
@@ -236,6 +269,15 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def request_headers(self) -> "abc.MutableMapping[builtins.str,Operation.request_header]":
+        """
+         The request headers that are essential for the request that generated the operation.
+         For instance, `x-resetmask`. Without these headers the request might have been processed
+         differently if repeated.
+         All the header names *must* be converted to lower case.
+         Validator is based on:
+         https://httpwg.org/specs/rfc9110.html#considerations.for.new.field.names
+        """
+        
         return super()._get_field("request_headers", explicit_presence=False,
         wrap=pb_classes.Map.with_wrap(Operation.request_header,None,None),
         )
@@ -246,6 +288,13 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
+        """
+         ID of the resource that this operation creates, updates, deletes or otherwise changes.
+        
+         If the operation affects multiple resources or does not affect any API resources at all
+         (e.g. a routine maintenance operation visible to the user), the [resource_id] must be empty.
+        """
+        
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
@@ -255,6 +304,23 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def resource(self) -> "any_pb2.Any":
+        """
+         Snapshot of the resource at the moment this operation started.
+         - [resource.spec] and [resource.metadata] reflect the desired resource state at the moment
+           this operation started.
+           E.g., in an Update operation it will be the *updated* resource spec and metadata,
+           in a Create operation it will be the spec and metadata *of the resource being created*,
+           and so on.
+         - [resource.status] reflects the status of the resource at the moment this operation started.
+           This is a snapshot, call the <Resource>Service/Get to get current status of the resource.
+        
+         The [resource] field MUST never be updated *after* this operation has started.
+        
+         In a Delete operation, an operation affecting multiple resources or an operation that doesn't
+         affect any API resources at all (e.g. a routine maintenance operation visible to the user),
+         the [resource] inside MUST be a [google.protobuf.Empty].
+        """
+        
         return super()._get_field("resource", explicit_presence=False,
         )
     @resource.setter
@@ -264,6 +330,14 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def progress_data(self) -> "any_pb2.Any":
+        """
+         Additional information about the progress of an operation, e.g., a progress percentage.
+         MAY be absent while the operation is running, MUST be absent after the operation has completed.
+        
+         Format of message inside [progress_data] is service-dependent and MUST be documented by the
+         service, IF it is used.
+        """
+        
         return super()._get_field("progress_data", explicit_presence=False,
         )
     @progress_data.setter
@@ -273,6 +347,20 @@ class Operation(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "request_status.RequestStatus|None":
+        """
+         The status of this operation. Set when this operation is completed.
+         See https://github.com/grpc/grpc/blob/master/src/proto/grpc/status/status.proto.
+        
+         [status.code] is https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto:
+         - If [status.code] == OK, the operation has completed successfully.
+         - If [status.code] != OK, the operation has failed or has been cancelled.
+           - [status.message] will contain a user-readable and actionable error message.
+           - [status.details] will contain additional diagnostic information in the form of
+             [ServiceError] from ../error/v1alpha1/error.proto
+         - [status.code] must belong to an Operation-compatible subset of GRPC codes:
+           OK, CANCELLED, PERMISSION_DENIED, RESOURCE_EXHAUSTED, FAILED_PRECONDITION, ABORTED, INTERNAL
+        """
+        
         return super()._get_field("status", explicit_presence=True,
         wrap=request_status.request_status_from_rpc_status
         )
@@ -322,6 +410,10 @@ class GetOperationRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         Operation ID.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -368,6 +460,10 @@ class ListOperationsRequest(pb_classes.Message):
     
     @builtins.property
     def resource_id(self) -> "builtins.str":
+        """
+         ID of the Resource to list operations for.
+        """
+        
         return super()._get_field("resource_id", explicit_presence=False,
         )
     @resource_id.setter
@@ -377,6 +473,10 @@ class ListOperationsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Page size. [1...1000]. Optional, if not specified, a reasonable default will be chosen by the service.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -386,6 +486,10 @@ class ListOperationsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Listing continuation token. Empty to start listing from the first page.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -395,6 +499,11 @@ class ListOperationsRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         Filter expression for the listing results. Optional.
+         Filter expression format: TBD.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -436,6 +545,10 @@ class ListOperationsResponse(pb_classes.Message):
     
     @builtins.property
     def operations(self) -> "abc.MutableSequence[Operation]":
+        """
+         List of operations on this result page.
+        """
+        
         return super()._get_field("operations", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Operation,None,None),
         )
@@ -446,6 +559,10 @@ class ListOperationsResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         Listing continuation token for the next page of results.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -493,6 +610,10 @@ class ListOperationsByParentRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         ID of the parent to list operations for resource type at.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -502,6 +623,10 @@ class ListOperationsByParentRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Page size. [1...1000]. Optional, if not specified, a reasonable default will be chosen by the service.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -511,6 +636,10 @@ class ListOperationsByParentRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Listing continuation token. Empty to start listing from the first page.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -520,6 +649,11 @@ class ListOperationsByParentRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+         Filter expression for the listing results. Optional.
+         Filter expression format: TBD.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -548,6 +682,10 @@ class OperationServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetOperationRequest","operation.Operation[Operation]"]:
+        """
+         Returns the latest state of the specified operation.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -568,6 +706,10 @@ class OperationServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["ListOperationsRequest","ListOperationsResponse"]:
+        """
+         Lists operations for the specified resource.
+        """
+        
         return super().request(
             method="List",
             request=request,

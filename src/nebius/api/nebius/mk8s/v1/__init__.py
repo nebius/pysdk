@@ -134,6 +134,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def kube_network(self) -> "KubeNetworkSpec":
+        """
+         Defines kubernetes network configuration, like IP allocation.
+        """
+        
         return super()._get_field("kube_network", explicit_presence=False,
         wrap=KubeNetworkSpec,
         )
@@ -182,6 +186,11 @@ class ControlPlaneSpec(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "builtins.str":
+        """
+         Desired Kubernetes version of the cluster. For now only acceptable format is
+         `<major>.<minor>` like "1.30". Option for patch version update will be added later.
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
@@ -191,6 +200,11 @@ class ControlPlaneSpec(pb_classes.Message):
     
     @builtins.property
     def subnet_id(self) -> "builtins.str":
+        """
+         Nebius VPC Subnet ID where control plane instances will be located.
+         Also will be default NodeGroup subnet.
+        """
+        
         return super()._get_field("subnet_id", explicit_presence=False,
         )
     @subnet_id.setter
@@ -210,6 +224,13 @@ class ControlPlaneSpec(pb_classes.Message):
     
     @builtins.property
     def etcd_cluster_size(self) -> "builtins.int":
+        """
+         Number of instances in etcd cluster.
+         3 by default.
+         Control plane with `etcd_cluster_size: 3` called "Highly Available" ("HA"), because it's Kubernetes API
+         will be available despite a failure of one control plane instance.
+        """
+        
         return super()._get_field("etcd_cluster_size", explicit_presence=False,
         )
     @etcd_cluster_size.setter
@@ -247,6 +268,11 @@ class ControlPlaneEndpointsSpec(pb_classes.Message):
     
     @builtins.property
     def public_endpoint(self) -> "PublicEndpointSpec|None":
+        """
+         Specification of public endpoint for control plane.
+         Set value to empty, to enable it.
+        """
+        
         return super()._get_field("public_endpoint", explicit_presence=True,
         wrap=PublicEndpointSpec,
         )
@@ -301,6 +327,16 @@ class KubeNetworkSpec(pb_classes.Message):
     
     @builtins.property
     def service_cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         CIDR blocks for Service ClusterIP allocation. For now, only one value is supported.
+         For now, value should be in prefix length form (such as "/16").
+         Later a CIDR-formatted string (such as "10.1.2.0/16") will be supported.
+         In case of prefix length, certain CIDR is auto allocated.
+         Specified CIDR blocks will be reserved in Cluster.spec.control_plane.subnet_id to prevent address duplication.
+         Allowed prefix length is from "/12" to "/28".
+         Empty value treated as ["/16"].
+        """
+        
         return super()._get_field("service_cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -372,6 +408,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Show that changes are in flight
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -421,6 +461,13 @@ class ControlPlaneStatus(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "builtins.str":
+        """
+         Actual Kubernetes and configuration version.
+         Version have format `<major>.<minor>.<patch>-nebius-cp.<infra_version>` like "1.30.0-nebius-cp.3".
+         Where <major>.<minor>.<patch> is Kubernetes version and <infra_version> is version of control plane infrastructure and configuration,
+         which update may include bug fixes, security updates and new features of components running on control plane, like CCM or Cluster Autoscaler.
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
@@ -440,6 +487,10 @@ class ControlPlaneStatus(pb_classes.Message):
     
     @builtins.property
     def etcd_cluster_size(self) -> "builtins.int":
+        """
+         Number of instances in etcd cluster.
+        """
+        
         return super()._get_field("etcd_cluster_size", explicit_presence=False,
         )
     @etcd_cluster_size.setter
@@ -465,6 +516,10 @@ class ControlPlaneStatus(pb_classes.Message):
     }
     
 class ControlPlaneStatusEndpoints(pb_classes.Message):
+    """
+     Endpoints of Kubernetes control plane. Kubernetes API can be accessed at `https://endpoint/`.
+    """
+    
     __PB2_CLASS__ = cluster_pb2.ControlPlaneStatusEndpoints
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ControlPlaneStatusEndpoints",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -491,6 +546,10 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
     
     @builtins.property
     def public_endpoint(self) -> "builtins.str":
+        """
+         DNS name or IP address accessible from the Internet.
+        """
+        
         return super()._get_field("public_endpoint", explicit_presence=False,
         )
     @public_endpoint.setter
@@ -500,6 +559,10 @@ class ControlPlaneStatusEndpoints(pb_classes.Message):
     
     @builtins.property
     def private_endpoint(self) -> "builtins.str":
+        """
+         DNS name or IP address accessible from the user VPC.
+        """
+        
         return super()._get_field("private_endpoint", explicit_presence=False,
         )
     @private_endpoint.setter
@@ -535,6 +598,10 @@ class ControlPlaneStatusAuth(pb_classes.Message):
     
     @builtins.property
     def cluster_ca_certificate(self) -> "builtins.str":
+        """
+         PEM with the Cluster Certificate Authority, that must be used for TLS connection to Kubernetes API.
+        """
+        
         return super()._get_field("cluster_ca_certificate", explicit_presence=False,
         )
     @cluster_ca_certificate.setter
@@ -676,6 +743,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         ID of the IAM container we are listing the resources in.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -685,6 +756,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -694,6 +769,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -783,6 +862,11 @@ class UpdateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the instance.
+         Includes ID of the instance to update.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -793,6 +877,10 @@ class UpdateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "ClusterSpec":
+        """
+         Updated specifications for the instance.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
         )
@@ -1225,6 +1313,12 @@ class ResourcesSpec(pb_classes.Message):
     
 # file: nebius/mk8s/v1/node_group.proto
 class NodeGroup(pb_classes.Message):
+    """
+     NodeGroup represents Kubernetes node pool - set of worker machines having the same configuration.
+     A Node is a Nebius Compute Instance created in Cluster.metadata.parent_id container, running kubelet
+     that registers in Kubernetes API and a Node object created.
+    """
+    
     __PB2_CLASS__ = node_group_pb2.NodeGroup
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeGroup",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -1255,6 +1349,10 @@ class NodeGroup(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         The parent_id is an ID of Cluster
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -1367,6 +1465,12 @@ class NodeGroupSpec(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "builtins.str":
+        """
+         Version is desired Kubernetes version of the cluster. For now only acceptable format is
+         `<major>.<minor>` like "1.30". Option for patch version update will be added later.
+         By default the cluster control plane <major>.<minor> version will be used.
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
@@ -1376,6 +1480,10 @@ class NodeGroupSpec(pb_classes.Message):
     
     @builtins.property
     def fixed_node_count(self) -> "builtins.int|None":
+        """
+         Number of nodes in the group. Can be changed manually at any time.
+        """
+        
         return super()._get_field("fixed_node_count", explicit_presence=True,
         )
     @fixed_node_count.setter
@@ -1385,6 +1493,11 @@ class NodeGroupSpec(pb_classes.Message):
     
     @builtins.property
     def autoscaling(self) -> "NodeGroupAutoscalingSpec|None":
+        """
+         Enables [Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler)
+         for that NodeGroup, and defines autoscaling parameters.
+        """
+        
         return super()._get_field("autoscaling", explicit_presence=True,
         wrap=NodeGroupAutoscalingSpec,
         )
@@ -1395,6 +1508,11 @@ class NodeGroupSpec(pb_classes.Message):
     
     @builtins.property
     def template(self) -> "NodeTemplate":
+        """
+         Parameters for Kubernetes Node object and Nebius Compute Instance
+         If not written opposite a NodeTemplate field update will cause NodeGroup roll-out according NodeGroupDeploymentStrategy.
+        """
+        
         return super()._get_field("template", explicit_presence=False,
         wrap=NodeTemplate,
         )
@@ -1405,6 +1523,11 @@ class NodeGroupSpec(pb_classes.Message):
     
     @builtins.property
     def strategy(self) -> "NodeGroupDeploymentStrategy":
+        """
+         Defines deployment - roll-out, or nodes re-creation during configuration change.
+         Allows to setup compromise in roll-out speed, extra resources consumption and workloads disruption.
+        """
+        
         return super()._get_field("strategy", explicit_presence=False,
         wrap=NodeGroupDeploymentStrategy,
         )
@@ -1487,6 +1610,14 @@ class NodeTemplate(pb_classes.Message):
     
     @builtins.property
     def taints(self) -> "abc.MutableSequence[NodeTaint]":
+        """
+         Kubernetes Node taints.
+         For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
+         That behaviour may change later.
+         So, for now you will need to manually set them to existing nodes, if that is needed.
+         Field change will NOT trigger NodeGroup roll out.
+        """
+        
         return super()._get_field("taints", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(NodeTaint,None,None),
         )
@@ -1497,6 +1628,10 @@ class NodeTemplate(pb_classes.Message):
     
     @builtins.property
     def resources(self) -> "ResourcesSpec":
+        """
+         Resources that will have Nebius Compute Instance where Node kubelet will run.
+        """
+        
         return super()._get_field("resources", explicit_presence=False,
         wrap=ResourcesSpec,
         )
@@ -1507,6 +1642,10 @@ class NodeTemplate(pb_classes.Message):
     
     @builtins.property
     def boot_disk(self) -> "DiskSpec":
+        """
+         Parameters of a Node Nebius Compute Instance boot disk.
+        """
+        
         return super()._get_field("boot_disk", explicit_presence=False,
         wrap=DiskSpec,
         )
@@ -1517,6 +1656,10 @@ class NodeTemplate(pb_classes.Message):
     
     @builtins.property
     def gpu_cluster(self) -> "GpuClusterSpec":
+        """
+         Nebius Compute GPUCluster ID that will be attached to node.
+        """
+        
         return super()._get_field("gpu_cluster", explicit_presence=False,
         wrap=GpuClusterSpec,
         )
@@ -1537,6 +1680,11 @@ class NodeTemplate(pb_classes.Message):
     
     @builtins.property
     def filesystems(self) -> "abc.MutableSequence[AttachedFilesystemSpec]":
+        """
+         Static attachments of Compute Filesystem.
+         Can be used as a workaround, until CSI for Compute Disk and Filesystem will be available.
+        """
+        
         return super()._get_field("filesystems", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None,None),
         )
@@ -1547,6 +1695,11 @@ class NodeTemplate(pb_classes.Message):
     
     @builtins.property
     def cloud_init_user_data(self) -> "builtins.str":
+        """
+         cloud-init user-data
+         Should contain at least one SSH key.
+        """
+        
         return super()._get_field("cloud_init_user_data", explicit_presence=False,
         )
     @cloud_init_user_data.setter
@@ -1556,6 +1709,14 @@ class NodeTemplate(pb_classes.Message):
     
     @builtins.property
     def service_account_id(self) -> "builtins.str":
+        """
+         the Nebius service account whose credentials will be available on the nodes of the group.
+         With these credentials, it is possible to make `npc` or public API requests from the nodes without the need for extra authentication.
+         This service account is also used to make requests to container registry.
+        
+         `resource.serviceaccount.issueAccessToken` permission is required to use this field.
+        """
+        
         return super()._get_field("service_account_id", explicit_presence=False,
         )
     @service_account_id.setter
@@ -1648,6 +1809,16 @@ class NodeMetadataTemplate(pb_classes.Message):
     
     @builtins.property
     def labels(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        """
+         Kubernetes Node labels.
+         For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
+         That behaviour may change later.
+         So, for now you will need to manually set them to existing nodes, if that is needed.
+        
+         System labels containing "kubernetes.io" and "k8s.io" will be ignored.
+         Field change will NOT trigger NodeGroup roll out.
+        """
+        
         return super()._get_field("labels", explicit_presence=False,
         wrap=pb_classes.Map,
         )
@@ -1722,6 +1893,11 @@ class NetworkInterfaceTemplate(pb_classes.Message):
     
     @builtins.property
     def public_ip_address(self) -> "PublicIPAddress|None":
+        """
+         Parameters for Public IPv4 address associated with the interface.
+         Set to empty value, to enable it.
+        """
+        
         return super()._get_field("public_ip_address", explicit_presence=True,
         wrap=PublicIPAddress,
         )
@@ -1732,6 +1908,12 @@ class NetworkInterfaceTemplate(pb_classes.Message):
     
     @builtins.property
     def subnet_id(self) -> "builtins.str":
+        """
+         Nebius VPC Subnet ID that will be attached to a node cloud instance network interface.
+         By default Cluster control plane subnet_id used.
+         Subnet should be located in the same network with control plane.
+        """
+        
         return super()._get_field("subnet_id", explicit_presence=False,
         )
     @subnet_id.setter
@@ -1745,6 +1927,10 @@ class NetworkInterfaceTemplate(pb_classes.Message):
     }
     
 class PublicIPAddress(pb_classes.Message):
+    """
+     Describes a public IP address.
+    """
+    
     __PB2_CLASS__ = node_group_pb2.PublicIPAddress
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.PublicIPAddress",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -1839,6 +2025,10 @@ class AttachedFilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def mount_tag(self) -> "builtins.str":
+        """
+         Specifies the user-defined identifier, allowing to use it as a device in mount command.
+        """
+        
         return super()._get_field("mount_tag", explicit_presence=False,
         )
     @mount_tag.setter
@@ -1947,6 +2137,10 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
     }
     
 class NodeTaint(pb_classes.Message):
+    """
+     See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+    """
+    
     __PB2_CLASS__ = node_group_pb2.NodeTaint
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeTaint",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -2050,6 +2244,16 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
     
     @builtins.property
     def max_unavailable(self) -> "PercentOrCount":
+        """
+         The maximum number of nodes that can be simultaneously unavailable during the update process.
+         This value can be specified either as an absolute number (for example 3) or as a percentage of the desired number of nodes (for example 5%).
+         When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
+         This value cannot be 0 if `max_surge` is also set to 0.
+         Defaults to 0.
+         Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
+         ensuring that at least 80% of the desired nodes remain operational.
+        """
+        
         return super()._get_field("max_unavailable", explicit_presence=False,
         wrap=PercentOrCount,
         )
@@ -2060,6 +2264,20 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
     
     @builtins.property
     def max_surge(self) -> "PercentOrCount":
+        """
+         The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
+         This value can be specified either as an absolute number (for example 3) or as a percentage of the desired number of nodes (for example 5%).
+         When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
+         This value cannot be 0 if `max_unavailable` is also set to 0.
+         Defaults to 1.
+         Example: If set to 25%, the node group can scale up by an additional 25% during the update,
+         allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
+         NOTE: it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
+           Available quota effectively limits `max_surge`.
+           In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
+           Such error will be visible in Operation.progress_data.
+        """
+        
         return super()._get_field("max_surge", explicit_presence=False,
         wrap=PercentOrCount,
         )
@@ -2070,6 +2288,15 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
     
     @builtins.property
     def drain_timeout(self) -> "datetime.timedelta":
+        """
+         Maximum amount of time that the service will spend on attempting gracefully draining a node (evicting it's pods), before
+         falling back to pod deletion.
+         By default, node can be drained unlimited time.
+         Important consequence of that is if PodDisruptionBudget doesn't allow to evict a pod,
+         then NodeGroup update with node re-creation will hung on that pod eviction.
+         Note, that it is different from `kubectl drain --timeout`
+        """
+        
         return super()._get_field("drain_timeout", explicit_presence=False,
         wrap=well_known_1.from_duration
         )
@@ -2238,6 +2465,12 @@ class NodeGroupStatus(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "builtins.str":
+        """
+         Actual version of NodeGroup. Have format `<major>.<minor>.<patch>-nebius-node.<infra_version>` like "1.30.0-nebius-node.10".
+         Where <major>.<minor>.<patch> is Kubernetes version and <infra_version> is version of Node infrastructure and configuration,
+         which update may include bug fixes, security updates and new features depending on worker node configuration.
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
@@ -2247,6 +2480,12 @@ class NodeGroupStatus(pb_classes.Message):
     
     @builtins.property
     def target_node_count(self) -> "builtins.int":
+        """
+         Desired total number of nodes that should be in the node group.
+         It is either `NodeGroupSpec.fixed_node_count` or arbitrary number between
+         `NodeGroupAutoscalingSpec.min_node_count` and `NodeGroupAutoscalingSpec.max_node_count` decided by autoscaler.
+        """
+        
         return super()._get_field("target_node_count", explicit_presence=False,
         )
     @target_node_count.setter
@@ -2256,6 +2495,11 @@ class NodeGroupStatus(pb_classes.Message):
     
     @builtins.property
     def node_count(self) -> "builtins.int":
+        """
+         Total number of nodes that are currently in the node group.
+         Both ready and not ready nodes are counted.
+        """
+        
         return super()._get_field("node_count", explicit_presence=False,
         )
     @node_count.setter
@@ -2265,6 +2509,11 @@ class NodeGroupStatus(pb_classes.Message):
     
     @builtins.property
     def outdated_node_count(self) -> "builtins.int":
+        """
+         Total number of nodes that has outdated node configuration.
+         These nodes will be replaced by new nodes with up-to-date configuration.
+        """
+        
         return super()._get_field("outdated_node_count", explicit_presence=False,
         )
     @outdated_node_count.setter
@@ -2274,6 +2523,11 @@ class NodeGroupStatus(pb_classes.Message):
     
     @builtins.property
     def ready_node_count(self) -> "builtins.int":
+        """
+         Total number of nodes that successfully joined the cluster and are ready to serve workloads.
+         Both outdated and up-to-date nodes are counted.
+        """
+        
         return super()._get_field("ready_node_count", explicit_presence=False,
         )
     @ready_node_count.setter
@@ -2283,6 +2537,10 @@ class NodeGroupStatus(pb_classes.Message):
     
     @builtins.property
     def reconciling(self) -> "builtins.bool":
+        """
+         Show that there are changes are in flight.
+        """
+        
         return super()._get_field("reconciling", explicit_presence=False,
         )
     @reconciling.setter
@@ -2431,6 +2689,10 @@ class ListNodeGroupsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         ID of the parent Cluster.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -2440,6 +2702,10 @@ class ListNodeGroupsRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -2449,6 +2715,10 @@ class ListNodeGroupsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -2659,6 +2929,10 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
     
     @builtins.property
     def latest_infra_version(self) -> "empty_pb2.Empty|None":
+        """
+         Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the same.
+        """
+        
         return super()._get_field("latest_infra_version", explicit_presence=True,
         )
     @latest_infra_version.setter
@@ -2844,6 +3118,10 @@ class ProgressData(pb_classes.Message):
     
     @builtins.property
     def problems(self) -> "abc.MutableSequence[Problem]":
+        """
+         Problems encountered during the operation execution.
+        """
+        
         return super()._get_field("problems", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Problem,None,None),
         )
@@ -2883,6 +3161,10 @@ class Problem(pb_classes.Message):
     
     @builtins.property
     def stage(self) -> "builtins.str":
+        """
+         Stage on which the problem occurred.
+        """
+        
         return super()._get_field("stage", explicit_presence=False,
         )
     @stage.setter
@@ -2892,6 +3174,10 @@ class Problem(pb_classes.Message):
     
     @builtins.property
     def message(self) -> "builtins.str":
+        """
+         Message describing the problem.
+        """
+        
         return super()._get_field("message", explicit_presence=False,
         )
     @message.setter

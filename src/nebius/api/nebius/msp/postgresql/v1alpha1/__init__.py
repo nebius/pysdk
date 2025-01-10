@@ -130,6 +130,10 @@ class TemplateSpec(pb_classes.Message):
     
     @builtins.property
     def resources(self) -> "resource_1.ResourcesSpec":
+        """
+         reduced msp.v1alpha1.resource.TemplateSpec
+        """
+        
         return super()._get_field("resources", explicit_presence=False,
         wrap=resource_1.ResourcesSpec,
         )
@@ -240,7 +244,15 @@ class ConnectionPoolerConfig(pb_classes.Message):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.msp.postgresql.v1alpha1.ConnectionPoolerConfig.PoolingMode",cluster_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         POOLING_MODE_UNSPECIFIED = 0
         SESSION = 1
+        """
+         Session pooling mode.
+        """
+        
         TRANSACTION = 2
+        """
+         Transaction pooling mode.
+        """
+        
     
     class __OneOfClass__max_pool_size__(pb_classes.OneOf):
         name: builtins.str= "_max_pool_size"
@@ -292,6 +304,10 @@ class ConnectionPoolerConfig(pb_classes.Message):
     
     @builtins.property
     def pooling_mode(self) -> "ConnectionPoolerConfig.PoolingMode":
+        """
+         Mode that the connection pooler is working in.
+        """
+        
         return super()._get_field("pooling_mode", explicit_presence=False,
         wrap=ConnectionPoolerConfig.PoolingMode,
         )
@@ -302,6 +318,10 @@ class ConnectionPoolerConfig(pb_classes.Message):
     
     @builtins.property
     def max_pool_size(self) -> "builtins.int|None":
+        """
+         Maximum number of connections in the pool for a single database.
+        """
+        
         return super()._get_field("max_pool_size", explicit_presence=True,
         )
     @max_pool_size.setter
@@ -355,6 +375,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def description(self) -> "builtins.str":
+        """
+         Description of the PostgreSQL cluster.
+        """
+        
         return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
@@ -364,6 +388,10 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def network_id(self) -> "builtins.str":
+        """
+         Network ID in which the cluster is created.
+        """
+        
         return super()._get_field("network_id", explicit_presence=False,
         )
     @network_id.setter
@@ -444,6 +472,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
+        """
+         Current phase of the cluster.
+        """
+        
         return super()._get_field("phase", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.Phase,
         )
@@ -454,6 +486,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "v1alpha1_1.ClusterStatus.State":
+        """
+         State reflects substatus of the phase to define whether it's healthy or not.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=v1alpha1_1.ClusterStatus.State,
         )
@@ -464,6 +500,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def preset_details(self) -> "resource_1.PresetDetails":
+        """
+         Cluster resource preset details
+        """
+        
         return super()._get_field("preset_details", explicit_presence=False,
         wrap=resource_1.PresetDetails,
         )
@@ -474,6 +514,10 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def connection_endpoints(self) -> "Endpoints":
+        """
+         Connection endpoints of the PostgreSQL cluster.
+        """
+        
         return super()._get_field("connection_endpoints", explicit_presence=False,
         wrap=Endpoints,
         )
@@ -524,6 +568,10 @@ class Endpoints(pb_classes.Message):
     
     @builtins.property
     def private_read_write(self) -> "builtins.str":
+        """
+         Read write endpoint of the PostgreSQL cluster accessible from the private VPC.
+        """
+        
         return super()._get_field("private_read_write", explicit_presence=False,
         )
     @private_read_write.setter
@@ -533,6 +581,10 @@ class Endpoints(pb_classes.Message):
     
     @builtins.property
     def private_read_only(self) -> "builtins.str":
+        """
+         Read only endpoint of the PostgreSQL cluster accessible from the private VPC.
+        """
+        
         return super()._get_field("private_read_only", explicit_presence=False,
         )
     @private_read_only.setter
@@ -542,6 +594,10 @@ class Endpoints(pb_classes.Message):
     
     @builtins.property
     def public_read_write(self) -> "builtins.str":
+        """
+         Read write endpoint of the PostgreSQL cluster accessible from the internet.
+        """
+        
         return super()._get_field("public_read_write", explicit_presence=False,
         )
     @public_read_write.setter
@@ -551,6 +607,10 @@ class Endpoints(pb_classes.Message):
     
     @builtins.property
     def public_read_only(self) -> "builtins.str":
+        """
+         Read only endpoint of the PostgreSQL cluster accessible from the internet.
+        """
+        
         return super()._get_field("public_read_only", explicit_presence=False,
         )
     @public_read_only.setter
@@ -589,6 +649,10 @@ class ConfigSpec(pb_classes.Message):
     
     @builtins.property
     def config(self) -> __OneOfClass_config_postgresql_config_16__|None:
+        """
+         Config of the PostgreSQL cluster.
+        """
+        
         field_name: str|None = super().which_field_in_oneof("config")
         match field_name:
             case "postgresql_config_16":
@@ -636,6 +700,11 @@ class ConfigSpec(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "builtins.str":
+        """
+         Version of PostgreSQL used in the cluster.
+         Possible values: `16`
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
@@ -645,6 +714,10 @@ class ConfigSpec(pb_classes.Message):
     
     @builtins.property
     def pooler_config(self) -> "ConnectionPoolerConfig":
+        """
+         Configuration of the connection pooler.
+        """
+        
         return super()._get_field("pooler_config", explicit_presence=False,
         wrap=ConnectionPoolerConfig,
         )
@@ -655,6 +728,13 @@ class ConfigSpec(pb_classes.Message):
     
     @builtins.property
     def resources(self) -> "PresetSpec":
+        """
+         Resources allocated to PostgreSQL hosts.
+        
+        
+         use template instead
+        """
+        
         return super()._get_field("resources", explicit_presence=False,
         wrap=PresetSpec,
         )
@@ -665,6 +745,10 @@ class ConfigSpec(pb_classes.Message):
     
     @builtins.property
     def postgresql_config_16(self) -> "config_1.PostgresqlConfig16|None":
+        """
+         Configuration parameters for postgres
+        """
+        
         return super()._get_field("postgresql_config_16", explicit_presence=True,
         wrap=config_1.PostgresqlConfig16,
         )
@@ -675,6 +759,10 @@ class ConfigSpec(pb_classes.Message):
     
     @builtins.property
     def public_access(self) -> "builtins.bool":
+        """
+         Either make cluster public accessible or accessible only via private VPC.
+        """
+        
         return super()._get_field("public_access", explicit_presence=False,
         )
     @public_access.setter
@@ -684,6 +772,10 @@ class ConfigSpec(pb_classes.Message):
     
     @builtins.property
     def template(self) -> "TemplateSpec":
+        """
+         Resources allocated to PostgreSQL hosts.
+        """
+        
         return super()._get_field("template", explicit_presence=False,
         wrap=TemplateSpec,
         )
@@ -733,6 +825,10 @@ class BootstrapSpec(pb_classes.Message):
     
     @builtins.property
     def user_name(self) -> "builtins.str":
+        """
+         Name of the bootstrap PostgreSQL user.
+        """
+        
         return super()._get_field("user_name", explicit_presence=False,
         )
     @user_name.setter
@@ -742,6 +838,10 @@ class BootstrapSpec(pb_classes.Message):
     
     @builtins.property
     def user_password(self) -> "builtins.str":
+        """
+         Password of the bootstrap PostgreSQL user.
+        """
+        
         return super()._get_field("user_password", explicit_presence=False,
         )
     @user_password.setter
@@ -751,6 +851,10 @@ class BootstrapSpec(pb_classes.Message):
     
     @builtins.property
     def db_name(self) -> "builtins.str":
+        """
+         Name of the PostgreSQL database. 1-63 characters long.
+        """
+        
         return super()._get_field("db_name", explicit_presence=False,
         )
     @db_name.setter
@@ -791,6 +895,10 @@ class BackupSpec(pb_classes.Message):
     
     @builtins.property
     def backup_window_start(self) -> "builtins.str":
+        """
+         Backup window start in "HH:MM:SS" format (UTC Time)
+        """
+        
         return super()._get_field("backup_window_start", explicit_presence=False,
         )
     @backup_window_start.setter
@@ -800,6 +908,10 @@ class BackupSpec(pb_classes.Message):
     
     @builtins.property
     def retention_policy(self) -> "builtins.str":
+        """
+         Retention policy to be used for backups and WALs (i.e. '7d')
+        """
+        
         return super()._get_field("retention_policy", explicit_presence=False,
         )
     @retention_policy.setter
@@ -836,6 +948,11 @@ class GetClusterRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL Cluster resource to return.
+         To get the cluster ID use a [ClusterService.List] request.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -878,6 +995,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Identifier of IAM container to list clusters from.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -887,6 +1008,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+        """
+        
         return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
@@ -896,6 +1021,10 @@ class ListClustersRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -936,6 +1065,10 @@ class ListClustersResponse(pb_classes.Message):
     
     @builtins.property
     def clusters(self) -> "abc.MutableSequence[Cluster]":
+        """
+         List of PostgreSQL Cluster resources.
+        """
+        
         return super()._get_field("clusters", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Cluster,None,None),
         )
@@ -946,6 +1079,13 @@ class ListClustersResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+         This token allows you to get the next page of results for list requests. If the number of results
+         is larger than [ListClustersRequest.page_size], use the [next_page_token] as the value
+         for the [ListClustersRequest.page_token] parameter in the next list request. Each subsequent
+         list request will have its own [next_page_token] to continue paging through the results.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -985,6 +1125,10 @@ class CreateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the new cluster.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -995,6 +1139,10 @@ class CreateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "ClusterSpec":
+        """
+         Specification for the new cluster.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
         )
@@ -1031,6 +1179,11 @@ class DeleteClusterRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster to delete.
+         To get the PostgreSQL cluster ID, use a [ClusterService.List] request.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -1069,6 +1222,10 @@ class UpdateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the cluster. Must include id of the cluster we are going to update.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -1079,6 +1236,10 @@ class UpdateClusterRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "ClusterSpec":
+        """
+         Updated specification for the cluster.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=ClusterSpec,
         )
@@ -1094,6 +1255,10 @@ class UpdateClusterRequest(pb_classes.Message):
     
 
 class ClusterServiceClient(client.Client):
+    """
+     A set of methods for managing PostgreSQL Cluster resources.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.postgresql.v1alpha1.ClusterService"
     __operation_type__ = v1alpha1_2.Operation
@@ -1106,6 +1271,11 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
+        """
+         Returns the specified PostgreSQL Cluster resource.
+         To get the list of available PostgreSQL Cluster resources, make a [List] request.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -1126,6 +1296,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Cluster"]:
+        """
+         Returns the specified PostgreSQL Cluster resource by name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -1146,6 +1320,11 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
+        """
+         Retrieves the list of PostgreSQL Cluster resources that belong
+         to the specified folder.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -1166,6 +1345,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Creates a PostgreSQL cluster in the specified folder.
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -1186,6 +1369,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Deletes the specified PostgreSQL cluster.
+        """
+        
         return super().request(
             method="Delete",
             request=request,
@@ -1206,6 +1393,10 @@ class ClusterServiceClient(client.Client):
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Updates the PostgreSQL cluster.
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",

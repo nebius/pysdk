@@ -29,6 +29,49 @@ class FieldNotEnumError(DescriptorError):
         )
 
 
+class SourceInfo:
+    def __init__(self, info: pb.SourceCodeInfo.Location | None = None) -> None:
+        if info is not None:
+            self._info = info
+        else:
+            self._info = pb.SourceCodeInfo.Location(
+                leading_comments="",
+                trailing_comments="",
+                leading_detached_comments=[],
+                span=[-1, -1, -1],
+            )
+
+    @property
+    def leading_detached_comments(self) -> Sequence[str]:
+        return self._info.leading_detached_comments
+
+    @property
+    def leading_comments(self) -> str:
+        return self._info.leading_comments
+
+    @property
+    def trailing_comments(self) -> str:
+        return self._info.trailing_comments
+
+    @property
+    def start_line(self) -> int:
+        return self._info.span[0]
+
+    @property
+    def start_column(self) -> int:
+        return self._info.span[1]
+
+    @property
+    def end_line(self) -> int:
+        if len(self._info.span) > 3:
+            return self._info.span[2]
+        return self._info.span[0]
+
+    @property
+    def end_column(self) -> int:
+        return self._info.span[-1]
+
+
 class Descriptor:
     @property
     def name(self) -> str:
@@ -40,10 +83,35 @@ class EnumValue(Descriptor):
         self,
         descriptor: pb.EnumValueDescriptorProto,
         containing_enum: "Enum",
+        index: int = -1,
     ) -> None:
         self.descriptor = descriptor
         self.containing_enum = containing_enum
         self._pythonic_name = ""
+        self._index = index
+        self._path_in_file: Sequence[int] | None = None
+
+    @property
+    def source_info(self) -> SourceInfo:
+        if self.path_in_file in self.containing_enum.containing_file.source_code_info:
+            return SourceInfo(
+                self.containing_enum.containing_file.source_code_info[self.path_in_file]
+            )
+        return SourceInfo()
+
+    @property
+    def path_in_file(self) -> Sequence[int]:
+        if self._path_in_file is None:
+            self._path_in_file = tuple(
+                tuple(self.containing_enum.path_in_file)
+                + tuple(
+                    [
+                        pb.EnumDescriptorProto.VALUE_FIELD_NUMBER,
+                        self._index,
+                    ]
+                )
+            )
+        return self._path_in_file
 
     @property
     def pythonic_name(self) -> str:
@@ -70,6 +138,7 @@ class Enum(Descriptor):
         descriptor: pb.EnumDescriptorProto,
         containing_file: "File",
         containing_message: "Message|None" = None,
+        index: int = -1,
     ) -> None:
         self.descriptor = descriptor
         self.containing_message = containing_message
@@ -77,6 +146,36 @@ class Enum(Descriptor):
         self._values: list[EnumValue] | None = None
         self._values_dict: dict[str, EnumValue] | None = None
         self._pythonic_name = ""
+        self._index = index
+        self._path_in_file: Sequence[int] | None = None
+
+    @property
+    def source_info(self) -> SourceInfo:
+        if self.path_in_file in self.containing_file.source_code_info:
+            return SourceInfo(self.containing_file.source_code_info[self.path_in_file])
+        return SourceInfo()
+
+    @property
+    def path_in_file(self) -> Sequence[int]:
+        if self._path_in_file is None:
+            if self.containing_message is not None:
+                self._path_in_file = tuple(
+                    tuple(self.containing_message.path_in_file)
+                    + tuple(
+                        [
+                            pb.DescriptorProto.ENUM_TYPE_FIELD_NUMBER,
+                            self._index,
+                        ]
+                    )
+                )
+            else:
+                self._path_in_file = tuple(
+                    [
+                        pb.FileDescriptorProto.ENUM_TYPE_FIELD_NUMBER,
+                        self._index,
+                    ]
+                )
+        return self._path_in_file
 
     def __repr__(self) -> str:
         return f"Enum({self.full_type_name})"
@@ -90,7 +189,10 @@ class Enum(Descriptor):
     @property
     def values(self) -> list[EnumValue]:
         if self._values is None:
-            self._values = [EnumValue(val, self) for val in self.descriptor.value]
+            self._values = [
+                EnumValue(val, self, index=i)
+                for i, val in enumerate(self.descriptor.value)
+            ]
         return self._values
 
     @property
@@ -134,12 +236,35 @@ class Field(Descriptor):
         descriptor: pb.FieldDescriptorProto,
         containing_message: "Message",
         containing_file: "File",
+        index: int = -1,
     ) -> None:
         self.descriptor = descriptor
         self.containing_message = containing_message
         self._pythonic_name = ""
         self._containing_file = containing_file
         self._oneof: "OneOf|None|bool" = None
+        self._index = index
+        self._path_in_file: Sequence[int] | None = None
+
+    @property
+    def source_info(self) -> SourceInfo:
+        if self.path_in_file in self._containing_file.source_code_info:
+            return SourceInfo(self._containing_file.source_code_info[self.path_in_file])
+        return SourceInfo()
+
+    @property
+    def path_in_file(self) -> Sequence[int]:
+        if self._path_in_file is None:
+            self._path_in_file = tuple(
+                tuple(self.containing_message.path_in_file)
+                + tuple(
+                    [
+                        pb.DescriptorProto.FIELD_FIELD_NUMBER,
+                        self._index,
+                    ]
+                )
+            )
+        return self._path_in_file
 
     def is_in_oneof(self) -> bool:
         return self.descriptor.HasField("oneof_index")
@@ -305,6 +430,27 @@ class OneOf(Descriptor):
         self._pythonic_name = ""
         self._containing_file = containing_file
         self._fields: "list[Field]|None" = None
+        self._path_in_file: Sequence[int] | None = None
+
+    @property
+    def source_info(self) -> SourceInfo:
+        if self.path_in_file in self._containing_file.source_code_info:
+            return SourceInfo(self._containing_file.source_code_info[self.path_in_file])
+        return SourceInfo()
+
+    @property
+    def path_in_file(self) -> Sequence[int]:
+        if self._path_in_file is None:
+            self._path_in_file = tuple(
+                tuple(self.containing_message.path_in_file)
+                + tuple(
+                    [
+                        pb.DescriptorProto.ONEOF_DECL_FIELD_NUMBER,
+                        self._index,
+                    ]
+                )
+            )
+        return self._path_in_file
 
     @property
     def fields(self) -> list[Field]:
@@ -344,6 +490,7 @@ class Message(Descriptor):
         descriptor: pb.DescriptorProto,
         containing_file: "File",
         containing_message: "Message|None" = None,
+        index: int = -1,
     ) -> None:
         self.descriptor = descriptor
         self.containing_file = containing_file
@@ -357,6 +504,36 @@ class Message(Descriptor):
         self._oneofs_dict: dict[str, OneOf] | None = None
         self.attached_names = dict[str, str]()
         self._pythonic_name = ""
+        self._index = index
+        self._path_in_file: Sequence[int] | None = None
+
+    @property
+    def source_info(self) -> SourceInfo:
+        if self.path_in_file in self.containing_file.source_code_info:
+            return SourceInfo(self.containing_file.source_code_info[self.path_in_file])
+        return SourceInfo()
+
+    @property
+    def path_in_file(self) -> Sequence[int]:
+        if self._path_in_file is None:
+            if self.containing_message is not None:
+                self._path_in_file = tuple(
+                    tuple(self.containing_message.path_in_file)
+                    + tuple(
+                        [
+                            pb.DescriptorProto.NESTED_TYPE_FIELD_NUMBER,
+                            self._index,
+                        ]
+                    )
+                )
+            else:
+                self._path_in_file = tuple(
+                    [
+                        pb.FileDescriptorProto.MESSAGE_TYPE_FIELD_NUMBER,
+                        self._index,
+                    ]
+                )
+        return self._path_in_file
 
     def __repr__(self) -> str:
         return f"Message({self.full_type_name})"
@@ -371,8 +548,8 @@ class Message(Descriptor):
     def enums_dict(self) -> dict[str, Enum]:
         if self._enums_dict is None:
             self._enums_dict = {
-                e.name: Enum(e, self.containing_file, self)
-                for e in self.descriptor.enum_type
+                e.name: Enum(e, self.containing_file, self, index=i)
+                for i, e in enumerate(self.descriptor.enum_type)
             }
         return self._enums_dict
 
@@ -422,7 +599,8 @@ class Message(Descriptor):
     def fields(self) -> list[Field]:
         if self._fields is None:
             self._fields = [
-                Field(f, self, self.containing_file) for f in self.descriptor.field
+                Field(f, self, self.containing_file, index=i)
+                for i, f in enumerate(self.descriptor.field)
             ]
         return self._fields
 
@@ -478,8 +656,8 @@ class Message(Descriptor):
     def messages(self) -> Sequence["Message"]:
         if self._messages is None:
             self._messages = [
-                Message(msg, self.containing_file, self)
-                for msg in self.descriptor.nested_type
+                Message(msg, self.containing_file, self, index=i)
+                for i, msg in enumerate(self.descriptor.nested_type)
             ]
         return self._messages
 
@@ -513,12 +691,42 @@ class Method(Descriptor):
         self,
         descriptor: pb.MethodDescriptorProto,
         containing_service: "Service",
+        index: int = -1,
     ) -> None:
         self.descriptor = descriptor
         self.containing_service = containing_service
         self._pythonic_name = ""
         self._input: Message | None = None
         self._output: Message | None = None
+        self._index = index
+        self._path_in_file: Sequence[int] | None = None
+
+    @property
+    def source_info(self) -> SourceInfo:
+        if (
+            self.path_in_file
+            in self.containing_service.containing_file.source_code_info
+        ):
+            return SourceInfo(
+                self.containing_service.containing_file.source_code_info[
+                    self.path_in_file
+                ]
+            )
+        return SourceInfo()
+
+    @property
+    def path_in_file(self) -> Sequence[int]:
+        if self._path_in_file is None:
+            self._path_in_file = tuple(
+                tuple(self.containing_service.path_in_file)
+                + tuple(
+                    [
+                        pb.ServiceDescriptorProto.METHOD_FIELD_NUMBER,
+                        self._index,
+                    ]
+                )
+            )
+        return self._path_in_file
 
     def __repr__(self) -> str:
         return f"Method({self.full_type_name})"
@@ -562,11 +770,31 @@ class Service(Descriptor):
         self,
         descriptor: pb.ServiceDescriptorProto,
         containing_file: "File",
+        index: int = -1,
     ) -> None:
         self.descriptor = descriptor
         self.containing_file = containing_file
         self._pythonic_name = ""
         self._methods: dict[str, Method] | None = None
+        self._index = index
+        self._path_in_file: Sequence[int] | None = None
+
+    @property
+    def source_info(self) -> SourceInfo:
+        if self.path_in_file in self.containing_file.source_code_info:
+            return SourceInfo(self.containing_file.source_code_info[self.path_in_file])
+        return SourceInfo()
+
+    @property
+    def path_in_file(self) -> Sequence[int]:
+        if self._path_in_file is None:
+            self._path_in_file = tuple(
+                [
+                    pb.FileDescriptorProto.SERVICE_FIELD_NUMBER,
+                    self._index,
+                ]
+            )
+        return self._path_in_file
 
     def __repr__(self) -> str:
         return f"Service({self.full_type_name})"
@@ -574,7 +802,10 @@ class Service(Descriptor):
     @property
     def methods(self) -> dict[str, Method]:
         if self._methods is None:
-            self._methods = {m.name: Method(m, self) for m in self.descriptor.method}
+            self._methods = {
+                m.name: Method(m, self, index=i)
+                for i, m in enumerate(self.descriptor.method)
+            }
         return self._methods
 
     @property
@@ -637,6 +868,18 @@ class File(Descriptor):
         self._enums_dict: dict[str, Enum] | None = None
         self._services_dict: dict[str, Service] | None = None
         self._extensions: dict[str, Field] | None = None
+        self._source_code_info: (
+            dict[Sequence[int], pb.SourceCodeInfo.Location] | None
+        ) = None
+
+    @property
+    def source_code_info(self) -> dict[Sequence[int], pb.SourceCodeInfo.Location]:
+        if self._source_code_info is None:
+            self._source_code_info = {
+                tuple(loc.path): loc
+                for loc in self.descriptor.source_code_info.location
+            }
+        return self._source_code_info
 
     def __repr__(self) -> str:
         return f"File({self.name})"
@@ -773,7 +1016,8 @@ class File(Descriptor):
     def messages(self) -> Sequence[Message]:
         if self._messages is None:
             self._messages = [
-                Message(msg, self) for msg in self.descriptor.message_type
+                Message(msg, self, index=i)
+                for i, msg in enumerate(self.descriptor.message_type)
             ]
         return self._messages
 
@@ -781,7 +1025,8 @@ class File(Descriptor):
     def services_dict(self) -> dict[str, Service]:
         if self._services_dict is None:
             self._services_dict = {
-                s.name: Service(s, self) for s in self.descriptor.service
+                s.name: Service(s, self, index=i)
+                for i, s in enumerate(self.descriptor.service)
             }
         return self._services_dict
 
@@ -789,7 +1034,8 @@ class File(Descriptor):
     def enums_dict(self) -> dict[str, Enum]:
         if self._enums_dict is None:
             self._enums_dict = {
-                e.name: Enum(e, self) for e in self.descriptor.enum_type
+                e.name: Enum(e, self, index=i)
+                for i, e in enumerate(self.descriptor.enum_type)
             }
         return self._enums_dict
 

@@ -332,6 +332,10 @@ class Range(pb_classes.Message):
     
     @builtins.property
     def step(self) -> "builtins.int":
+        """
+         step 0 is no step validation
+        """
+        
         return super()._get_field("step", explicit_presence=False,
         )
     @step.setter
