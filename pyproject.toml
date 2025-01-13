@@ -41,6 +41,9 @@ genproto = [
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
 ]
+gendoc = [
+    "portray>=1.8.0"
+]
 
 [tool.setuptools]
 package-dir = { "" = "src" }
@@ -166,3 +169,6 @@ deps = [
     "types-protobuf>=5.29.1", # for mypy
 ]
 commands = [["mypy","src/"]]
+
+[tool.portray]
+modules = ["nebius"]
