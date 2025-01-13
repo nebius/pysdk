@@ -298,6 +298,20 @@ This example will only reset `max_size_bytes` in the bucket, clearing the limit,
 
 **Note**: Please read the API documentation before modifying lists and maps with manual masks.
 
+### Full documentation and reference
+
+Currently, the full documentation is not referenced anywhere, but can be viewed from sources.
+
+To see all the documentation and reference, you can use `portray`. Install the documentation generator dependencies adding `[gendoc]` tag to module installation, and then run it:
+
+```bash
+cd ./path/to/your/pysdk
+pip install .[gendoc]
+portray in_browser
+```
+
+In the future, all the documentation will be available on github pages or elsewhere.
+
 ### Contributing
 
 Contributions are welcome! Please refer to the [contributing guidelines](CONTRIBUTING.md) for more information.
