@@ -42,7 +42,7 @@ genproto = [
     "protovalidate>=0.5",
 ]
 gendoc = [
-    "portray>=1.8.0"
+    "portray>=1.8.0",
 ]
 
 [tool.setuptools]

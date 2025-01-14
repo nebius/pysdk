@@ -310,7 +310,7 @@ pip install .[gendoc]
 portray in_browser
 ```
 
-In the future, all the documentation will be available on github pages or elsewhere.
+In the future, all the documentation will be available on github pages.
 
 ### Contributing
 
