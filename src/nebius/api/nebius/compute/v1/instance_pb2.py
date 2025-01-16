@@ -26,10 +26,9 @@ from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validat
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.compute.v1 import network_interface_pb2 as nebius_dot_compute_dot_v1_dot_network__interface__pb2
-from nebius.api.nebius.compute.v1 import maintenance_event_pb2 as nebius_dot_compute_dot_v1_dot_maintenance__event__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/compute/v1/instance.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/annotations.proto\x1a)nebius/compute/v1/network_interface.proto\x1a)nebius/compute/v1/maintenance_event.proto\"\xba\x01\n\x08Instance\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.InstanceSpecR\x04spec\x12\x39\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.compute.v1.InstanceStatusR\x06status\"\xef\x05\n\x0cInstanceSpec\x12\x32\n\x12service_account_id\x18\x01 \x01(\tB\x04\xbaJ\x01\x02R\x10serviceAccountId\x12\x46\n\tresources\x18\x02 \x01(\x0b\x32 .nebius.compute.v1.ResourcesSpecB\x06\xbaH\x03\xc8\x01\x01R\tresources\x12P\n\x0bgpu_cluster\x18\x03 \x01(\x0b\x32).nebius.compute.v1.InstanceGpuClusterSpecB\x04\xbaJ\x01\x02R\ngpuCluster\x12\x63\n\x12network_interfaces\x18\x04 \x03(\x0b\x32\'.nebius.compute.v1.NetworkInterfaceSpecB\x0b\xbaH\x08\x92\x01\x02\x10\x08\xc8\x01\x01R\x11networkInterfaces\x12\x46\n\tboot_disk\x18\x05 \x01(\x0b\x32#.nebius.compute.v1.AttachedDiskSpecB\x04\xbaJ\x01\x02R\x08\x62ootDisk\x12V\n\x0fsecondary_disks\x18\x06 \x03(\x0b\x32#.nebius.compute.v1.AttachedDiskSpecB\x08\xbaH\x05\x92\x01\x02\x10\x08R\x0esecondaryDisks\x12Y\n\x0b\x66ilesystems\x18\x07 \x03(\x0b\x32).nebius.compute.v1.AttachedFilesystemSpecB\x0c\xbaH\x05\x92\x01\x02\x10\x08\xbaJ\x01\x02R\x0b\x66ilesystems\x12=\n\x14\x63loud_init_user_data\x18\x08 \x01(\tB\x0c\xbaH\x06r\x04\x18\x80\x80\x02\xc0J\x01R\x11\x63loudInitUserData\x12\x18\n\x07stopped\x18\r \x01(\x08R\x07stopped\x12X\n\x0frecovery_policy\x18\x0f \x01(\x0e\x32).nebius.compute.v1.InstanceRecoveryPolicyB\x04\xbaJ\x01\x02R\x0erecoveryPolicy\"`\n\rResourcesSpec\x12&\n\x08platform\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x08platform\x12\x18\n\x06preset\x18\x02 \x01(\tH\x00R\x06presetB\r\n\x04size\x12\x05\xbaH\x02\x08\x01\"(\n\x16InstanceGpuClusterSpec\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\xa6\x02\n\x10\x41ttachedDiskSpec\x12W\n\x0b\x61ttach_mode\x18\x01 \x01(\x0e\x32..nebius.compute.v1.AttachedDiskSpec.AttachModeB\x06\xbaH\x03\xc8\x01\x01R\nattachMode\x12\x46\n\rexisting_disk\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.ExistingDiskH\x00R\x0c\x65xistingDisk\x12$\n\tdevice_id\x18\x03 \x01(\tB\x07\xbaH\x04r\x02\x18\x14R\x08\x64\x65viceId\"<\n\nAttachMode\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02\x42\r\n\x04type\x12\x05\xbaH\x02\x08\x01\"&\n\x0c\x45xistingDisk\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\",\n\x12\x45xistingFilesystem\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\xc3\x02\n\x16\x41ttachedFilesystemSpec\x12]\n\x0b\x61ttach_mode\x18\x01 \x01(\x0e\x32\x34.nebius.compute.v1.AttachedFilesystemSpec.AttachModeB\x06\xbaH\x03\xc8\x01\x01R\nattachMode\x12#\n\tmount_tag\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08mountTag\x12X\n\x13\x65xisting_filesystem\x18\x03 \x01(\x0b\x32%.nebius.compute.v1.ExistingFilesystemH\x00R\x12\x65xistingFilesystem\"<\n\nAttachMode\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02\x42\r\n\x04type\x12\x05\xbaH\x02\x08\x01\"\xb9\x03\n\x0eInstanceStatus\x12\x45\n\x05state\x18\x01 \x01(\x0e\x32/.nebius.compute.v1.InstanceStatus.InstanceStateR\x05state\x12X\n\x12network_interfaces\x18\x02 \x03(\x0b\x32).nebius.compute.v1.NetworkInterfaceStatusR\x11networkInterfaces\x12 \n\x0breconciling\x18\x05 \x01(\x08R\x0breconciling\x12V\n\x11maintenance_event\x18\x06 \x01(\x0b\x32).nebius.compute.v1.MaintenanceEventStatusR\x10maintenanceEvent\"\x8b\x01\n\rInstanceState\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\x0c\n\x08UPDATING\x10\x02\x12\x0c\n\x08STARTING\x10\x03\x12\x0b\n\x07RUNNING\x10\x04\x12\x0c\n\x08STOPPING\x10\x05\x12\x0b\n\x07STOPPED\x10\x06\x12\x0c\n\x08\x44\x45LETING\x10\x07\x12\t\n\x05\x45RROR\x10\x08*/\n\x16InstanceRecoveryPolicy\x12\x0b\n\x07RECOVER\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\x42\\\n\x18\x61i.nebius.pub.compute.v1B\rInstanceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/compute/v1/instance.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/annotations.proto\x1a)nebius/compute/v1/network_interface.proto\"\xba\x01\n\x08Instance\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.InstanceSpecR\x04spec\x12\x39\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.compute.v1.InstanceStatusR\x06status\"\xef\x05\n\x0cInstanceSpec\x12\x32\n\x12service_account_id\x18\x01 \x01(\tB\x04\xbaJ\x01\x02R\x10serviceAccountId\x12\x46\n\tresources\x18\x02 \x01(\x0b\x32 .nebius.compute.v1.ResourcesSpecB\x06\xbaH\x03\xc8\x01\x01R\tresources\x12P\n\x0bgpu_cluster\x18\x03 \x01(\x0b\x32).nebius.compute.v1.InstanceGpuClusterSpecB\x04\xbaJ\x01\x02R\ngpuCluster\x12\x63\n\x12network_interfaces\x18\x04 \x03(\x0b\x32\'.nebius.compute.v1.NetworkInterfaceSpecB\x0b\xbaH\x08\x92\x01\x02\x10\x08\xc8\x01\x01R\x11networkInterfaces\x12\x46\n\tboot_disk\x18\x05 \x01(\x0b\x32#.nebius.compute.v1.AttachedDiskSpecB\x04\xbaJ\x01\x02R\x08\x62ootDisk\x12V\n\x0fsecondary_disks\x18\x06 \x03(\x0b\x32#.nebius.compute.v1.AttachedDiskSpecB\x08\xbaH\x05\x92\x01\x02\x10\x08R\x0esecondaryDisks\x12Y\n\x0b\x66ilesystems\x18\x07 \x03(\x0b\x32).nebius.compute.v1.AttachedFilesystemSpecB\x0c\xbaH\x05\x92\x01\x02\x10\x08\xbaJ\x01\x02R\x0b\x66ilesystems\x12=\n\x14\x63loud_init_user_data\x18\x08 \x01(\tB\x0c\xbaH\x06r\x04\x18\x80\x80\x02\xc0J\x01R\x11\x63loudInitUserData\x12\x18\n\x07stopped\x18\r \x01(\x08R\x07stopped\x12X\n\x0frecovery_policy\x18\x0f \x01(\x0e\x32).nebius.compute.v1.InstanceRecoveryPolicyB\x04\xbaJ\x01\x02R\x0erecoveryPolicy\"`\n\rResourcesSpec\x12&\n\x08platform\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x08platform\x12\x18\n\x06preset\x18\x02 \x01(\tH\x00R\x06presetB\r\n\x04size\x12\x05\xbaH\x02\x08\x01\"(\n\x16InstanceGpuClusterSpec\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\xa6\x02\n\x10\x41ttachedDiskSpec\x12W\n\x0b\x61ttach_mode\x18\x01 \x01(\x0e\x32..nebius.compute.v1.AttachedDiskSpec.AttachModeB\x06\xbaH\x03\xc8\x01\x01R\nattachMode\x12\x46\n\rexisting_disk\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.ExistingDiskH\x00R\x0c\x65xistingDisk\x12$\n\tdevice_id\x18\x03 \x01(\tB\x07\xbaH\x04r\x02\x18\x14R\x08\x64\x65viceId\"<\n\nAttachMode\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02\x42\r\n\x04type\x12\x05\xbaH\x02\x08\x01\"&\n\x0c\x45xistingDisk\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\",\n\x12\x45xistingFilesystem\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\xc3\x02\n\x16\x41ttachedFilesystemSpec\x12]\n\x0b\x61ttach_mode\x18\x01 \x01(\x0e\x32\x34.nebius.compute.v1.AttachedFilesystemSpec.AttachModeB\x06\xbaH\x03\xc8\x01\x01R\nattachMode\x12#\n\tmount_tag\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08mountTag\x12X\n\x13\x65xisting_filesystem\x18\x03 \x01(\x0b\x32%.nebius.compute.v1.ExistingFilesystemH\x00R\x12\x65xistingFilesystem\"<\n\nAttachMode\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02\x42\r\n\x04type\x12\x05\xbaH\x02\x08\x01\"\x99\x03\n\x0eInstanceStatus\x12\x45\n\x05state\x18\x01 \x01(\x0e\x32/.nebius.compute.v1.InstanceStatus.InstanceStateR\x05state\x12X\n\x12network_interfaces\x18\x02 \x03(\x0b\x32).nebius.compute.v1.NetworkInterfaceStatusR\x11networkInterfaces\x12 \n\x0breconciling\x18\x05 \x01(\x08R\x0breconciling\x12\x30\n\x14maintenance_event_id\x18\x07 \x01(\tR\x12maintenanceEventId\"\x8b\x01\n\rInstanceState\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\x0c\n\x08UPDATING\x10\x02\x12\x0c\n\x08STARTING\x10\x03\x12\x0b\n\x07RUNNING\x10\x04\x12\x0c\n\x08STOPPING\x10\x05\x12\x0b\n\x07STOPPED\x10\x06\x12\x0c\n\x08\x44\x45LETING\x10\x07\x12\t\n\x05\x45RROR\x10\x08J\x04\x08\x06\x10\x07*/\n\x16InstanceRecoveryPolicy\x12\x0b\n\x07RECOVER\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\x42\\\n\x18\x61i.nebius.pub.compute.v1B\rInstanceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -75,30 +74,30 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_ATTACHEDFILESYSTEMSPEC'].fields_by_name['attach_mode']._serialized_options = b'\272H\003\310\001\001'
   _globals['_ATTACHEDFILESYSTEMSPEC'].fields_by_name['mount_tag']._loaded_options = None
   _globals['_ATTACHEDFILESYSTEMSPEC'].fields_by_name['mount_tag']._serialized_options = b'\272H\003\310\001\001'
-  _globals['_INSTANCERECOVERYPOLICY']._serialized_start=2465
-  _globals['_INSTANCERECOVERYPOLICY']._serialized_end=2512
-  _globals['_INSTANCE']._serialized_start=230
-  _globals['_INSTANCE']._serialized_end=416
-  _globals['_INSTANCESPEC']._serialized_start=419
-  _globals['_INSTANCESPEC']._serialized_end=1170
-  _globals['_RESOURCESSPEC']._serialized_start=1172
-  _globals['_RESOURCESSPEC']._serialized_end=1268
-  _globals['_INSTANCEGPUCLUSTERSPEC']._serialized_start=1270
-  _globals['_INSTANCEGPUCLUSTERSPEC']._serialized_end=1310
-  _globals['_ATTACHEDDISKSPEC']._serialized_start=1313
-  _globals['_ATTACHEDDISKSPEC']._serialized_end=1607
-  _globals['_ATTACHEDDISKSPEC_ATTACHMODE']._serialized_start=1532
-  _globals['_ATTACHEDDISKSPEC_ATTACHMODE']._serialized_end=1592
-  _globals['_EXISTINGDISK']._serialized_start=1609
-  _globals['_EXISTINGDISK']._serialized_end=1647
-  _globals['_EXISTINGFILESYSTEM']._serialized_start=1649
-  _globals['_EXISTINGFILESYSTEM']._serialized_end=1693
-  _globals['_ATTACHEDFILESYSTEMSPEC']._serialized_start=1696
-  _globals['_ATTACHEDFILESYSTEMSPEC']._serialized_end=2019
-  _globals['_ATTACHEDFILESYSTEMSPEC_ATTACHMODE']._serialized_start=1532
-  _globals['_ATTACHEDFILESYSTEMSPEC_ATTACHMODE']._serialized_end=1592
-  _globals['_INSTANCESTATUS']._serialized_start=2022
-  _globals['_INSTANCESTATUS']._serialized_end=2463
-  _globals['_INSTANCESTATUS_INSTANCESTATE']._serialized_start=2324
-  _globals['_INSTANCESTATUS_INSTANCESTATE']._serialized_end=2463
+  _globals['_INSTANCERECOVERYPOLICY']._serialized_start=2390
+  _globals['_INSTANCERECOVERYPOLICY']._serialized_end=2437
+  _globals['_INSTANCE']._serialized_start=187
+  _globals['_INSTANCE']._serialized_end=373
+  _globals['_INSTANCESPEC']._serialized_start=376
+  _globals['_INSTANCESPEC']._serialized_end=1127
+  _globals['_RESOURCESSPEC']._serialized_start=1129
+  _globals['_RESOURCESSPEC']._serialized_end=1225
+  _globals['_INSTANCEGPUCLUSTERSPEC']._serialized_start=1227
+  _globals['_INSTANCEGPUCLUSTERSPEC']._serialized_end=1267
+  _globals['_ATTACHEDDISKSPEC']._serialized_start=1270
+  _globals['_ATTACHEDDISKSPEC']._serialized_end=1564
+  _globals['_ATTACHEDDISKSPEC_ATTACHMODE']._serialized_start=1489
+  _globals['_ATTACHEDDISKSPEC_ATTACHMODE']._serialized_end=1549
+  _globals['_EXISTINGDISK']._serialized_start=1566
+  _globals['_EXISTINGDISK']._serialized_end=1604
+  _globals['_EXISTINGFILESYSTEM']._serialized_start=1606
+  _globals['_EXISTINGFILESYSTEM']._serialized_end=1650
+  _globals['_ATTACHEDFILESYSTEMSPEC']._serialized_start=1653
+  _globals['_ATTACHEDFILESYSTEMSPEC']._serialized_end=1976
+  _globals['_ATTACHEDFILESYSTEMSPEC_ATTACHMODE']._serialized_start=1489
+  _globals['_ATTACHEDFILESYSTEMSPEC_ATTACHMODE']._serialized_end=1549
+  _globals['_INSTANCESTATUS']._serialized_start=1979
+  _globals['_INSTANCESTATUS']._serialized_end=2388
+  _globals['_INSTANCESTATUS_INSTANCESTATE']._serialized_start=2243
+  _globals['_INSTANCESTATUS_INSTANCESTATE']._serialized_end=2382
 # @@protoc_insertion_point(module_scope)
