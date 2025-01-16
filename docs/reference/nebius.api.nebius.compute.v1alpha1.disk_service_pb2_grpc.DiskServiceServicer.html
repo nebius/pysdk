@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer</title>
+    <meta name="generator" content="pydoctor 24.11.2">
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+
+      <div class="navlinks">
+        <span class="navbar-brand">
+          nebius <a href="index.html">Reference</a>
+        </span>
+
+        <a href="apiReference.html">
+          API
+        </a>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+
+        </div>
+
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.html" class="internal-link" title="This class"><wbr></wbr>Disk<wbr></wbr>Service<wbr></wbr>Servicer</a></code>
+      </div>
+
+      <div>
+        
+
+        
+        
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#Create" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Create"><wbr></wbr>Create</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#Delete" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Delete"><wbr></wbr>Delete</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#Get" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Get"><wbr></wbr>Get</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#GetByName" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.GetByName"><wbr></wbr>Get<wbr></wbr>By<wbr></wbr>Name</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#List" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.List"><wbr></wbr>List</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#ListOperationsByParent" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.ListOperationsByParent"><wbr></wbr>List<wbr></wbr>Operations<wbr></wbr>By<wbr></wbr>Parent</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#Update" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Update"><wbr></wbr>Update</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+        
+        
+
+        
+        
+
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.html" class="internal-link" title="The parent of this class">disk<wbr></wbr>_service<wbr></wbr>_pb2<wbr></wbr>_grpc</a></code>
+      </div>
+
+      <div>
+        
+
+        
+        
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskService.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskService"><wbr></wbr>Disk<wbr></wbr>Service</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer"><wbr></wbr>Disk<wbr></wbr>Service<wbr></wbr>Servicer</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceStub.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceStub"><wbr></wbr>Disk<wbr></wbr>Service<wbr></wbr>Stub</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.html#add_DiskServiceServicer_to_server" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.add_DiskServiceServicer_to_server">add_<wbr></wbr>Disk<wbr></wbr>Service<wbr></wbr>Servicer_to_server</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+        
+        
+
+        
+        
+
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div>
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+
+      </div>
+
+      <div id="main" class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">nebius</a></code><wbr></wbr>.<code><a href="nebius.api.html" class="internal-link" title="nebius.api">api</a></code><wbr></wbr>.<code><a href="nebius.api.nebius.html" class="internal-link" title="nebius.api.nebius">nebius</a></code><wbr></wbr>.<code><a href="nebius.api.nebius.compute.html" class="internal-link" title="nebius.api.nebius.compute">compute</a></code><wbr></wbr>.<code><a href="nebius.api.nebius.compute.v1alpha1.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1">v1alpha1</a></code><wbr></wbr>.<code><a href="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc">disk_service_pb2_grpc</a></code><wbr></wbr>.<code><a href="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer">DiskServiceServicer</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle system units</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">DiskServiceServicer</span>(object):</code></p>
+          <p><a href="classIndex.html#nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>Missing associated documentation comment in .proto file.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id534">
+  
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#Create" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Create"><wbr></wbr>Create</a></code></td>
+    <td>Missing associated documentation comment in .proto file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#Delete" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Delete"><wbr></wbr>Delete</a></code></td>
+    <td>Missing associated documentation comment in .proto file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#Get" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Get"><wbr></wbr>Get</a></code></td>
+    <td>Missing associated documentation comment in .proto file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#GetByName" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.GetByName"><wbr></wbr>Get<wbr></wbr>By<wbr></wbr>Name</a></code></td>
+    <td>Missing associated documentation comment in .proto file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#List" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.List"><wbr></wbr>List</a></code></td>
+    <td>Missing associated documentation comment in .proto file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#ListOperationsByParent" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.ListOperationsByParent"><wbr></wbr>List<wbr></wbr>Operations<wbr></wbr>By<wbr></wbr>Parent</a></code></td>
+    <td>Missing associated documentation comment in .proto file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#Update" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Update"><wbr></wbr>Update</a></code></td>
+    <td>Missing associated documentation comment in .proto file.</td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basemethod">
+  
+  
+  <a name="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Create">
+    
+  </a>
+  <a name="Create">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">Create</span><span class="function-signature">(self, request, context)</span>:
+    
+    <a class="headerLink" href="#Create" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Create">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Missing associated documentation comment in .proto file.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Delete">
+    
+  </a>
+  <a name="Delete">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">Delete</span><span class="function-signature">(self, request, context)</span>:
+    
+    <a class="headerLink" href="#Delete" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Delete">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Missing associated documentation comment in .proto file.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Get">
+    
+  </a>
+  <a name="Get">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">Get</span><span class="function-signature">(self, request, context)</span>:
+    
+    <a class="headerLink" href="#Get" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Get">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Missing associated documentation comment in .proto file.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.GetByName">
+    
+  </a>
+  <a name="GetByName">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">GetByName</span><span class="function-signature">(self, request, context)</span>:
+    
+    <a class="headerLink" href="#GetByName" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.GetByName">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Missing associated documentation comment in .proto file.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.List">
+    
+  </a>
+  <a name="List">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">List</span><span class="function-signature">(self, request, context)</span>:
+    
+    <a class="headerLink" href="#List" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.List">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Missing associated documentation comment in .proto file.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.ListOperationsByParent">
+    
+  </a>
+  <a name="ListOperationsByParent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">ListOperationsByParent</span><span class="function-signature">(self, request, context)</span>:
+    
+    <a class="headerLink" href="#ListOperationsByParent" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.ListOperationsByParent">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Missing associated documentation comment in .proto file.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Update">
+    
+  </a>
+  <a name="Update">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">Update</span><span class="function-signature">(self, request, context)</span>:
+    
+    <a class="headerLink" href="#Update" title="nebius.api.nebius.compute.v1alpha1.disk_service_pb2_grpc.DiskServiceServicer.Update">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Missing associated documentation comment in .proto file.</p></div>
+  </div>
+</div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container-fluid">
+    <a href="index.html">Reference Documentation</a> for nebius,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    24.11.2.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

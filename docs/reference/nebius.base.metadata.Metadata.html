@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>nebius.base.metadata.Metadata</title>
+    <meta name="generator" content="pydoctor 24.11.2">
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+
+      <div class="navlinks">
+        <span class="navbar-brand">
+          nebius <a href="index.html">Reference</a>
+        </span>
+
+        <a href="apiReference.html">
+          API
+        </a>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+
+        </div>
+
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="This class"><wbr></wbr>Metadata</a></code>
+      </div>
+
+      <div>
+        
+
+        
+        
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__delitem__" class="internal-link" title="nebius.base.metadata.Metadata.__delitem__">__delitem__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__getitem__" class="internal-link" title="nebius.base.metadata.Metadata.__getitem__">__getitem__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__has__" class="internal-link" title="nebius.base.metadata.Metadata.__has__">__has__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="nebius.base.metadata.Metadata.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__len__" class="internal-link" title="nebius.base.metadata.Metadata.__len__">__len__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__repr__" class="internal-link" title="nebius.base.metadata.Metadata.__repr__">__repr__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__setitem__" class="internal-link" title="nebius.base.metadata.Metadata.__setitem__">__setitem__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#clean" class="internal-link" title="nebius.base.metadata.Metadata.clean">clean</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#get_one" class="internal-link" title="nebius.base.metadata.Metadata.get_one">get<wbr></wbr>_one</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#insert" class="internal-link" title="nebius.base.metadata.Metadata.insert">insert</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_contents" class="internal-link" title="nebius.base.metadata.Metadata._contents">_contents</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="nebius.base.metadata.html" class="internal-link" title="The parent of this class">metadata</a></code>
+      </div>
+
+      <div>
+        
+
+        
+        
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.base.metadata.Authorization.html" class="internal-link" title="nebius.base.metadata.Authorization"><wbr></wbr>Authorization</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.base.metadata.Internal.html" class="internal-link" title="nebius.base.metadata.Internal"><wbr></wbr>Internal</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata"><wbr></wbr>Metadata</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+        
+        
+
+        
+        
+
+        
+        
+
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div>
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+
+      </div>
+
+      <div id="main" class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">nebius</a></code><wbr></wbr>.<code><a href="nebius.base.html" class="internal-link" title="nebius.base">base</a></code><wbr></wbr>.<code><a href="nebius.base.metadata.html" class="internal-link" title="nebius.base.metadata">metadata</a></code><wbr></wbr>.<code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle system units</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Metadata</span>(MutableSequence[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str]]):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.base.metadata.Metadata.__init__">Metadata(initial)</a></code></p>
+          <p><a href="classIndex.html#nebius.base.metadata.Metadata">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="undocumented">Undocumented</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id2508">
+  
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__delitem__" class="internal-link" title="nebius.base.metadata.Metadata.__delitem__">__delitem__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__getitem__" class="internal-link" title="nebius.base.metadata.Metadata.__getitem__">__getitem__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__has__" class="internal-link" title="nebius.base.metadata.Metadata.__has__">__has__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__" class="internal-link" title="nebius.base.metadata.Metadata.__init__">__init__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__len__" class="internal-link" title="nebius.base.metadata.Metadata.__len__">__len__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__repr__" class="internal-link" title="nebius.base.metadata.Metadata.__repr__">__repr__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__setitem__" class="internal-link" title="nebius.base.metadata.Metadata.__setitem__">__setitem__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#clean" class="internal-link" title="nebius.base.metadata.Metadata.clean">clean</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_one" class="internal-link" title="nebius.base.metadata.Metadata.get_one">get<wbr></wbr>_one</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#insert" class="internal-link" title="nebius.base.metadata.Metadata.insert">insert</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_contents" class="internal-link" title="nebius.base.metadata.Metadata._contents">_contents</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.__delitem__">
+    
+  </a>
+  <a name="__delitem__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__delitem__</span><span class="function-signature">(self, index: <code>int | slice | str</code>)</span>:
+    
+    <a class="headerLink" href="#__delitem__" title="nebius.base.metadata.Metadata.__delitem__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.__getitem__">
+    
+  </a>
+  <a name="__getitem__">
+    
+  </a>
+  <div class="functionHeader">
+    @overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__getitem__</span><span class="function-signature">(self, index: <code>int</code>) -&gt; <code>tuple[<wbr></wbr>str, <wbr></wbr>str]</code></span>:</div>@overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__getitem__</span><span class="function-signature">(self, index: <code>slice</code>) -&gt; <code>MutableSequence[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str]]</code></span>:</div>@overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__getitem__</span><span class="function-signature">(self, index: <code>str</code>) -&gt; <code>Sequence[<wbr></wbr>str]</code></span>:</div>
+    
+    
+    
+    <a class="headerLink" href="#__getitem__" title="nebius.base.metadata.Metadata.__getitem__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.__has__">
+    
+  </a>
+  <a name="__has__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__has__</span><span class="function-signature">(self, key: <code>str</code>) -&gt; <code>bool</code></span>:
+    
+    <a class="headerLink" href="#__has__" title="nebius.base.metadata.Metadata.__has__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, initial: <code>Iterable[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str]] | None</code> = None)</span>:
+    
+    <a class="headerLink" href="#__init__" title="nebius.base.metadata.Metadata.__init__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.__len__">
+    
+  </a>
+  <a name="__len__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__len__</span><span class="function-signature">(self) -&gt; <code>int</code></span>:
+    
+    <a class="headerLink" href="#__len__" title="nebius.base.metadata.Metadata.__len__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.__repr__">
+    
+  </a>
+  <a name="__repr__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+    
+    <a class="headerLink" href="#__repr__" title="nebius.base.metadata.Metadata.__repr__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.__setitem__">
+    
+  </a>
+  <a name="__setitem__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__setitem__</span><span class="function-signature">(self, index: <code>int | slice | str</code>, value: <code>tuple[<wbr></wbr>str, <wbr></wbr>str] | Iterable[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str]] | Iterable[<wbr></wbr>str] | str</code>)</span>:
+    
+    <a class="headerLink" href="#__setitem__" title="nebius.base.metadata.Metadata.__setitem__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.clean">
+    
+  </a>
+  <a name="clean">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">clean</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
+    
+    <a class="headerLink" href="#clean" title="nebius.base.metadata.Metadata.clean">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.get_one">
+    
+  </a>
+  <a name="get_one">
+    
+  </a>
+  <div class="functionHeader">
+    @overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">get_one</span><span class="function-signature">(self, index: <code>str</code>, default: <code>str</code>, first: <code>bool</code> = False) -&gt; <code>str</code></span>:</div>@overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">get_one</span><span class="function-signature">(self, index: <code>str</code>, default: <code>None</code> = None, first: <code>bool</code> = False) -&gt; <code>str | None</code></span>:</div>
+    
+    
+    
+    <a class="headerLink" href="#get_one" title="nebius.base.metadata.Metadata.get_one">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.base.metadata.Metadata.insert">
+    
+  </a>
+  <a name="insert">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">insert</span><span class="function-signature">(self, index: <code>int</code>, value: <code>tuple[<wbr></wbr>str, <wbr></wbr>str]</code>)</span>:
+    
+    <a class="headerLink" href="#insert" title="nebius.base.metadata.Metadata.insert">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.base.metadata.Metadata._contents">
+    
+  </a>
+  <a name="_contents">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_contents</span> =
+    
+    <a class="headerLink" href="#_contents" title="nebius.base.metadata.Metadata._contents">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container-fluid">
+    <a href="index.html">Reference Documentation</a> for nebius,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    24.11.2.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

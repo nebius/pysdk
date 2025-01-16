@@ -7,7 +7,7 @@ from grpc import CallCredentials, Compression
 from grpc.aio import AioRpcError
 from grpc.aio import Channel as GRPCChannel
 from grpc.aio import Metadata as GrpcMetadata
-from grpc.aio._call import UnaryUnaryCall
+from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
 from grpc_status import rpc_status
 
 from nebius.aio.abc import ClientChannelInterface as Channel

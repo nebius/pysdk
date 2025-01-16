@@ -302,13 +302,7 @@ This example will only reset `max_size_bytes` in the bucket, clearing the limit,
 
 Currently, the full documentation is not referenced anywhere, but can be viewed from sources.
 
-To see all the documentation and reference, you can use `portray`. Install the documentation generator dependencies adding `[gendoc]` tag to module installation, and then run it:
-
-```bash
-cd ./path/to/your/pysdk
-pip install .[gendoc]
-portray in_browser
-```
+To see the reference, open [docs/reference/apiReference.html] in your browser.
 
 In the future, all the documentation will be available on github pages.
 

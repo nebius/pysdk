@@ -43,12 +43,12 @@ def _modify_name(
     # Check magic conflict pattern
     # As in previous check, we have to check for both the original and the potentially
     # modified names, because we don't want conflicts
-    conflict_with_magic_methods = rf"^_({first_container_letter}*)_(.*)$"
+    conflict_with_magic_methods = rf"^_({first_container_letter}*)_(.*)__$"
     match2 = re.match(conflict_with_magic_methods, suggested_name)
     if match2:
         prefix, something = match2.groups()
         # Add another letter to the sequence
-        return f"_{prefix + first_container_letter}_{something}"
+        return f"_{prefix + first_container_letter}_{something}__"
 
     # If no pattern matches, return the original string
     return suggested_name

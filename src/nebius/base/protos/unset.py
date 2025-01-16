@@ -12,7 +12,8 @@ class Singleton(type):
 
 @final
 class UnsetType(metaclass=Singleton):
-    pass
+    def __repr__(self) -> str:
+        return __name__ + ".Unset"
 
 
 Unset = UnsetType()

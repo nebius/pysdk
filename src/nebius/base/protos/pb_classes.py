@@ -398,8 +398,10 @@ class Repeated(MutableSequence[CollectibleOuter]):
 
     @overload
     def __getitem__(self, index: int) -> CollectibleOuter: ...
+
     @overload
     def __getitem__(self, index: slice) -> MutableSequence[CollectibleOuter]: ...
+
     def __getitem__(
         self, index: int | slice
     ) -> CollectibleOuter | MutableSequence[CollectibleOuter]:

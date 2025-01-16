@@ -124,7 +124,7 @@ def main() -> None:
         # Create a lock object
         lock = FileLock(lock_file)
 
-        import debugpy  # type: ignore[unused-ignore,import-not-found]
+        import debugpy  # type: ignore[unused-ignore,import-not-found,import-untyped]
 
         parsed_url = urlparse(f"//{options.debugger_connect}", scheme="tcp")
         lock.acquire()

@@ -1,0 +1,2376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>nebius.aio.request.Request</title>
+    <meta name="generator" content="pydoctor 24.11.2">
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+
+      <div class="navlinks">
+        <span class="navbar-brand">
+          nebius <a href="index.html">Reference</a>
+        </span>
+
+        <a href="apiReference.html">
+          API
+        </a>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+
+        </div>
+
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="nebius.aio.request.Request.html" class="internal-link" title="This class"><wbr></wbr>Request</a></code>
+      </div>
+
+      <div>
+        
+
+        
+        
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__await__" class="internal-link" title="nebius.aio.request.Request.__await__">__await__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="nebius.aio.request.Request.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#__repr__" class="internal-link" title="nebius.aio.request.Request.__repr__">__repr__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#cancel" class="internal-link" title="nebius.aio.request.Request.cancel">cancel</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#cancelled" class="internal-link" title="nebius.aio.request.Request.cancelled">cancelled</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#compression.setter" class="internal-link" title="nebius.aio.request.Request.compression.setter">compression<wbr></wbr>.setter</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#credentials.setter" class="internal-link" title="nebius.aio.request.Request.credentials.setter">credentials<wbr></wbr>.setter</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#current_status" class="internal-link" title="nebius.aio.request.Request.current_status">current<wbr></wbr>_status</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#done" class="internal-link" title="nebius.aio.request.Request.done">done</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#initial_metadata" class="internal-link" title="nebius.aio.request.Request.initial_metadata">initial<wbr></wbr>_metadata</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#initial_metadata_sync" class="internal-link" title="nebius.aio.request.Request.initial_metadata_sync">initial<wbr></wbr>_metadata<wbr></wbr>_sync</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#input_metadata" class="internal-link" title="nebius.aio.request.Request.input_metadata">input<wbr></wbr>_metadata</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#request_id" class="internal-link" title="nebius.aio.request.Request.request_id">request<wbr></wbr>_id</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#request_id_sync" class="internal-link" title="nebius.aio.request.Request.request_id_sync">request<wbr></wbr>_id<wbr></wbr>_sync</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#send" class="internal-link" title="nebius.aio.request.Request.send">send</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#status" class="internal-link" title="nebius.aio.request.Request.status">status</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#timeout.setter" class="internal-link" title="nebius.aio.request.Request.timeout.setter">timeout<wbr></wbr>.setter</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#trace_id" class="internal-link" title="nebius.aio.request.Request.trace_id">trace<wbr></wbr>_id</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#trace_id_sync" class="internal-link" title="nebius.aio.request.Request.trace_id_sync">trace<wbr></wbr>_id<wbr></wbr>_sync</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#trailing_metadata" class="internal-link" title="nebius.aio.request.Request.trailing_metadata">trailing<wbr></wbr>_metadata</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#trailing_metadata_sync" class="internal-link" title="nebius.aio.request.Request.trailing_metadata_sync">trailing<wbr></wbr>_metadata<wbr></wbr>_sync</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#wait" class="internal-link" title="nebius.aio.request.Request.wait">wait</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#wait_for_ready.setter" class="internal-link" title="nebius.aio.request.Request.wait_for_ready.setter">wait<wbr></wbr>_for<wbr></wbr>_ready<wbr></wbr>.setter</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_get_request_id" class="internal-link" title="nebius.aio.request.Request._get_request_id">_get<wbr></wbr>_request<wbr></wbr>_id</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_parse_request_id" class="internal-link" title="nebius.aio.request.Request._parse_request_id">_parse<wbr></wbr>_request<wbr></wbr>_id</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_raise_request_error" class="internal-link" title="nebius.aio.request.Request._raise_request_error">_raise<wbr></wbr>_request<wbr></wbr>_error</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#compression" class="internal-link" title="nebius.aio.request.Request.compression">compression</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#credentials" class="internal-link" title="nebius.aio.request.Request.credentials">credentials</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#is_sent" class="internal-link" title="nebius.aio.request.Request.is_sent">is<wbr></wbr>_sent</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#timeout" class="internal-link" title="nebius.aio.request.Request.timeout">timeout</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#wait_for_ready" class="internal-link" title="nebius.aio.request.Request.wait_for_ready">wait<wbr></wbr>_for<wbr></wbr>_ready</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_call" class="internal-link" title="nebius.aio.request.Request._call">_call</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_cancelled" class="internal-link" title="nebius.aio.request.Request._cancelled">_cancelled</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_channel" class="internal-link" title="nebius.aio.request.Request._channel">_channel</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_compression" class="internal-link" title="nebius.aio.request.Request._compression">_compression</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_credentials" class="internal-link" title="nebius.aio.request.Request._credentials">_credentials</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_error_wrapper" class="internal-link" title="nebius.aio.request.Request._error_wrapper">_error<wbr></wbr>_wrapper</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_grpc_channel" class="internal-link" title="nebius.aio.request.Request._grpc_channel">_grpc<wbr></wbr>_channel</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_initial_metadata" class="internal-link" title="nebius.aio.request.Request._initial_metadata">_initial<wbr></wbr>_metadata</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_input" class="internal-link" title="nebius.aio.request.Request._input">_input</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_input_metadata" class="internal-link" title="nebius.aio.request.Request._input_metadata">_input<wbr></wbr>_metadata</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_method" class="internal-link" title="nebius.aio.request.Request._method">_method</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_request_id" class="internal-link" title="nebius.aio.request.Request._request_id">_request<wbr></wbr>_id</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_result_pb2_class" class="internal-link" title="nebius.aio.request.Request._result_pb2_class">_result<wbr></wbr>_pb2<wbr></wbr>_class</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_result_wrapper" class="internal-link" title="nebius.aio.request.Request._result_wrapper">_result<wbr></wbr>_wrapper</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_sent" class="internal-link" title="nebius.aio.request.Request._sent">_sent</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_service" class="internal-link" title="nebius.aio.request.Request._service">_service</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_status" class="internal-link" title="nebius.aio.request.Request._status">_status</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_timeout" class="internal-link" title="nebius.aio.request.Request._timeout">_timeout</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_trace_id" class="internal-link" title="nebius.aio.request.Request._trace_id">_trace<wbr></wbr>_id</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_trailing_metadata" class="internal-link" title="nebius.aio.request.Request._trailing_metadata">_trailing<wbr></wbr>_metadata</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="#_wait_for_ready" class="internal-link" title="nebius.aio.request.Request._wait_for_ready">_wait<wbr></wbr>_for<wbr></wbr>_ready</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="nebius.aio.request.html" class="internal-link" title="The parent of this class">request</a></code>
+      </div>
+
+      <div>
+        
+
+        
+        
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request"><wbr></wbr>Request</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.RequestError.html" class="internal-link" title="nebius.aio.request.RequestError"><wbr></wbr>Request<wbr></wbr>Error</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.RequestIsCancelledError.html" class="internal-link" title="nebius.aio.request.RequestIsCancelledError"><wbr></wbr>Request<wbr></wbr>Is<wbr></wbr>Cancelled<wbr></wbr>Error</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.RequestIsSentError.html" class="internal-link" title="nebius.aio.request.RequestIsSentError"><wbr></wbr>Request<wbr></wbr>Is<wbr></wbr>Sent<wbr></wbr>Error</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.RequestSentNoCallError.html" class="internal-link" title="nebius.aio.request.RequestSentNoCallError"><wbr></wbr>Request<wbr></wbr>Sent<wbr></wbr>No<wbr></wbr>Call<wbr></wbr>Error</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+        
+        
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+    
+    <li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.html#Err" class="internal-link" title="nebius.aio.request.Err"><wbr></wbr>Err</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.html#Req" class="internal-link" title="nebius.aio.request.Req"><wbr></wbr>Req</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res"><wbr></wbr>Res</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+
+        
+
+        
+            <div class="itemName"><code><a href="nebius.aio.request.html#log" class="internal-link" title="nebius.aio.request.log">log</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        
+        
+
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div>
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+
+      </div>
+
+      <div id="main" class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">nebius</a></code><wbr></wbr>.<code><a href="nebius.aio.html" class="internal-link" title="nebius.aio">aio</a></code><wbr></wbr>.<code><a href="nebius.aio.request.html" class="internal-link" title="nebius.aio.request">request</a></code><wbr></wbr>.<code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">Request</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle system units</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Request</span>(Generic[<wbr></wbr><a href="nebius.aio.request.html#Req" class="internal-link" title="nebius.aio.request.Req">Req</a>, <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>]):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.aio.request.Request.__init__">Request(channel, service, method, request, ...)</a></code></p>
+          <p><a href="classIndex.html#nebius.aio.request.Request">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="undocumented">Undocumented</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id32">
+  
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__await__" class="internal-link" title="nebius.aio.request.Request.__await__">__await__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__" class="internal-link" title="nebius.aio.request.Request.__init__">__init__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__repr__" class="internal-link" title="nebius.aio.request.Request.__repr__">__repr__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#cancel" class="internal-link" title="nebius.aio.request.Request.cancel">cancel</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#cancelled" class="internal-link" title="nebius.aio.request.Request.cancelled">cancelled</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#compression.setter" class="internal-link" title="nebius.aio.request.Request.compression.setter">compression<wbr></wbr>.setter</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#credentials.setter" class="internal-link" title="nebius.aio.request.Request.credentials.setter">credentials<wbr></wbr>.setter</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#current_status" class="internal-link" title="nebius.aio.request.Request.current_status">current<wbr></wbr>_status</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#done" class="internal-link" title="nebius.aio.request.Request.done">done</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Async Method</td>
+    <td><code><a href="#initial_metadata" class="internal-link" title="nebius.aio.request.Request.initial_metadata">initial<wbr></wbr>_metadata</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#initial_metadata_sync" class="internal-link" title="nebius.aio.request.Request.initial_metadata_sync">initial<wbr></wbr>_metadata<wbr></wbr>_sync</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#input_metadata" class="internal-link" title="nebius.aio.request.Request.input_metadata">input<wbr></wbr>_metadata</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Async Method</td>
+    <td><code><a href="#request_id" class="internal-link" title="nebius.aio.request.Request.request_id">request<wbr></wbr>_id</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#request_id_sync" class="internal-link" title="nebius.aio.request.Request.request_id_sync">request<wbr></wbr>_id<wbr></wbr>_sync</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#send" class="internal-link" title="nebius.aio.request.Request.send">send</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Async Method</td>
+    <td><code><a href="#status" class="internal-link" title="nebius.aio.request.Request.status">status</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#timeout.setter" class="internal-link" title="nebius.aio.request.Request.timeout.setter">timeout<wbr></wbr>.setter</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Async Method</td>
+    <td><code><a href="#trace_id" class="internal-link" title="nebius.aio.request.Request.trace_id">trace<wbr></wbr>_id</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#trace_id_sync" class="internal-link" title="nebius.aio.request.Request.trace_id_sync">trace<wbr></wbr>_id<wbr></wbr>_sync</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Async Method</td>
+    <td><code><a href="#trailing_metadata" class="internal-link" title="nebius.aio.request.Request.trailing_metadata">trailing<wbr></wbr>_metadata</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#trailing_metadata_sync" class="internal-link" title="nebius.aio.request.Request.trailing_metadata_sync">trailing<wbr></wbr>_metadata<wbr></wbr>_sync</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#wait" class="internal-link" title="nebius.aio.request.Request.wait">wait</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#wait_for_ready.setter" class="internal-link" title="nebius.aio.request.Request.wait_for_ready.setter">wait<wbr></wbr>_for<wbr></wbr>_ready<wbr></wbr>.setter</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#compression" class="internal-link" title="nebius.aio.request.Request.compression">compression</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#credentials" class="internal-link" title="nebius.aio.request.Request.credentials">credentials</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#is_sent" class="internal-link" title="nebius.aio.request.Request.is_sent">is<wbr></wbr>_sent</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#timeout" class="internal-link" title="nebius.aio.request.Request.timeout">timeout</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#wait_for_ready" class="internal-link" title="nebius.aio.request.Request.wait_for_ready">wait<wbr></wbr>_for<wbr></wbr>_ready</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method private">
+    
+    <td>Async Method</td>
+    <td><code><a href="#_get_request_id" class="internal-link" title="nebius.aio.request.Request._get_request_id">_get<wbr></wbr>_request<wbr></wbr>_id</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method private">
+    
+    <td>Method</td>
+    <td><code><a href="#_parse_request_id" class="internal-link" title="nebius.aio.request.Request._parse_request_id">_parse<wbr></wbr>_request<wbr></wbr>_id</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method private">
+    
+    <td>Method</td>
+    <td><code><a href="#_raise_request_error" class="internal-link" title="nebius.aio.request.Request._raise_request_error">_raise<wbr></wbr>_request<wbr></wbr>_error</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_call" class="internal-link" title="nebius.aio.request.Request._call">_call</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_cancelled" class="internal-link" title="nebius.aio.request.Request._cancelled">_cancelled</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_channel" class="internal-link" title="nebius.aio.request.Request._channel">_channel</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_compression" class="internal-link" title="nebius.aio.request.Request._compression">_compression</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_credentials" class="internal-link" title="nebius.aio.request.Request._credentials">_credentials</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_error_wrapper" class="internal-link" title="nebius.aio.request.Request._error_wrapper">_error<wbr></wbr>_wrapper</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_grpc_channel" class="internal-link" title="nebius.aio.request.Request._grpc_channel">_grpc<wbr></wbr>_channel</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_initial_metadata" class="internal-link" title="nebius.aio.request.Request._initial_metadata">_initial<wbr></wbr>_metadata</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_input" class="internal-link" title="nebius.aio.request.Request._input">_input</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_input_metadata" class="internal-link" title="nebius.aio.request.Request._input_metadata">_input<wbr></wbr>_metadata</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_method" class="internal-link" title="nebius.aio.request.Request._method">_method</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_request_id" class="internal-link" title="nebius.aio.request.Request._request_id">_request<wbr></wbr>_id</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_result_pb2_class" class="internal-link" title="nebius.aio.request.Request._result_pb2_class">_result<wbr></wbr>_pb2<wbr></wbr>_class</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_result_wrapper" class="internal-link" title="nebius.aio.request.Request._result_wrapper">_result<wbr></wbr>_wrapper</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_sent" class="internal-link" title="nebius.aio.request.Request._sent">_sent</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_service" class="internal-link" title="nebius.aio.request.Request._service">_service</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_status" class="internal-link" title="nebius.aio.request.Request._status">_status</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_timeout" class="internal-link" title="nebius.aio.request.Request._timeout">_timeout</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_trace_id" class="internal-link" title="nebius.aio.request.Request._trace_id">_trace<wbr></wbr>_id</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_trailing_metadata" class="internal-link" title="nebius.aio.request.Request._trailing_metadata">_trailing<wbr></wbr>_metadata</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#_wait_for_ready" class="internal-link" title="nebius.aio.request.Request._wait_for_ready">_wait<wbr></wbr>_for<wbr></wbr>_ready</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.__await__">
+    
+  </a>
+  <a name="__await__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__await__</span><span class="function-signature">(self) -&gt; <code>Generator[<wbr></wbr>Any, <wbr></wbr>None, <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>]</code></span>:
+    
+    <a class="headerLink" href="#__await__" title="nebius.aio.request.Request.__await__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, channel: <code><a href="nebius.aio.abc.ClientChannelInterface.html" class="internal-link" title="nebius.aio.abc.ClientChannelInterface">Channel</a></code>, service: <code>str</code>, method: <code>str</code>, request: <code><a href="nebius.aio.request.html#Req" class="internal-link" title="nebius.aio.request.Req">Req</a></code>, result_pb2_class: <code>type[<wbr></wbr>PMessage]</code>, metadata: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | Iterable[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str]] | None</code> = None, timeout: <code>float | None</code> = None, credentials: <code>CallCredentials | None</code> = None, wait_for_ready: <code>bool | None</code> = None, compression: <code>Compression | None</code> = None, result_wrapper: <code>Callable[<wbr></wbr>[<wbr></wbr>GRPCChannel, <wbr></wbr><a href="nebius.aio.abc.SyncronizerInterface.html" class="internal-link" title="nebius.aio.abc.SyncronizerInterface">SyncronizerInterface</a>, <wbr></wbr>Any], <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>] | None</code> = None, grpc_channel_override: <code>GRPCChannel | None</code> = None, error_wrapper: <code>Callable[<wbr></wbr>[<wbr></wbr><a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a>], <wbr></wbr><a href="nebius.aio.request.RequestError.html" class="internal-link" title="nebius.aio.request.RequestError">RequestError</a>] | None</code> = None)</span>:
+    
+    <a class="headerLink" href="#__init__" title="nebius.aio.request.Request.__init__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.__repr__">
+    
+  </a>
+  <a name="__repr__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+    
+    <a class="headerLink" href="#__repr__" title="nebius.aio.request.Request.__repr__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.cancel">
+    
+  </a>
+  <a name="cancel">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">cancel</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
+    
+    <a class="headerLink" href="#cancel" title="nebius.aio.request.Request.cancel">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.cancelled">
+    
+  </a>
+  <a name="cancelled">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">cancelled</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
+    
+    <a class="headerLink" href="#cancelled" title="nebius.aio.request.Request.cancelled">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.compression.setter">
+    
+  </a>
+  <a name="compression.setter">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @<a href="#compression.setter" class="internal-link" title="nebius.aio.request.Request.compression.setter">compression.setter</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">compression</span><span class="function-signature">(self, compression: <code>Compression | None</code>)</span>:
+    
+    <a class="headerLink" href="#compression.setter" title="nebius.aio.request.Request.compression.setter">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.credentials.setter">
+    
+  </a>
+  <a name="credentials.setter">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @<a href="#credentials.setter" class="internal-link" title="nebius.aio.request.Request.credentials.setter">credentials.setter</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">credentials</span><span class="function-signature">(self, credentials: <code>CallCredentials | None</code>)</span>:
+    
+    <a class="headerLink" href="#credentials.setter" title="nebius.aio.request.Request.credentials.setter">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.current_status">
+    
+  </a>
+  <a name="current_status">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">current_status</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a> | <a href="nebius.aio.request_status.UnfinishedRequestStatus.html" class="internal-link" title="nebius.aio.request_status.UnfinishedRequestStatus">UnfinishedRequestStatus</a></code></span>:
+    
+    <a class="headerLink" href="#current_status" title="nebius.aio.request.Request.current_status">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.done">
+    
+  </a>
+  <a name="done">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">done</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
+    
+    <a class="headerLink" href="#done" title="nebius.aio.request.Request.done">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.initial_metadata">
+    
+  </a>
+  <a name="initial_metadata">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">async def</span> <span class="py-defname">initial_metadata</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
+    
+    <a class="headerLink" href="#initial_metadata" title="nebius.aio.request.Request.initial_metadata">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.initial_metadata_sync">
+    
+  </a>
+  <a name="initial_metadata_sync">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">initial_metadata_sync</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
+    
+    <a class="headerLink" href="#initial_metadata_sync" title="nebius.aio.request.Request.initial_metadata_sync">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.input_metadata">
+    
+  </a>
+  <a name="input_metadata">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">input_metadata</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
+    
+    <a class="headerLink" href="#input_metadata" title="nebius.aio.request.Request.input_metadata">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.request_id">
+    
+  </a>
+  <a name="request_id">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">async def</span> <span class="py-defname">request_id</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+    
+    <a class="headerLink" href="#request_id" title="nebius.aio.request.Request.request_id">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.request_id_sync">
+    
+  </a>
+  <a name="request_id_sync">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">request_id_sync</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+    
+    <a class="headerLink" href="#request_id_sync" title="nebius.aio.request.Request.request_id_sync">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.send">
+    
+  </a>
+  <a name="send">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">send</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#send" title="nebius.aio.request.Request.send">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.status">
+    
+  </a>
+  <a name="status">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">async def</span> <span class="py-defname">status</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a></code></span>:
+    
+    <a class="headerLink" href="#status" title="nebius.aio.request.Request.status">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.timeout.setter">
+    
+  </a>
+  <a name="timeout.setter">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @<a href="#timeout.setter" class="internal-link" title="nebius.aio.request.Request.timeout.setter">timeout.setter</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">timeout</span><span class="function-signature">(self, timeout: <code>float | None</code>)</span>:
+    
+    <a class="headerLink" href="#timeout.setter" title="nebius.aio.request.Request.timeout.setter">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.trace_id">
+    
+  </a>
+  <a name="trace_id">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">async def</span> <span class="py-defname">trace_id</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+    
+    <a class="headerLink" href="#trace_id" title="nebius.aio.request.Request.trace_id">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.trace_id_sync">
+    
+  </a>
+  <a name="trace_id_sync">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">trace_id_sync</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+    
+    <a class="headerLink" href="#trace_id_sync" title="nebius.aio.request.Request.trace_id_sync">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.trailing_metadata">
+    
+  </a>
+  <a name="trailing_metadata">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">async def</span> <span class="py-defname">trailing_metadata</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
+    
+    <a class="headerLink" href="#trailing_metadata" title="nebius.aio.request.Request.trailing_metadata">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.trailing_metadata_sync">
+    
+  </a>
+  <a name="trailing_metadata_sync">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">trailing_metadata_sync</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
+    
+    <a class="headerLink" href="#trailing_metadata_sync" title="nebius.aio.request.Request.trailing_metadata_sync">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.wait">
+    
+  </a>
+  <a name="wait">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">wait</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a></code></span>:
+    
+    <a class="headerLink" href="#wait" title="nebius.aio.request.Request.wait">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="nebius.aio.request.Request.wait_for_ready.setter">
+    
+  </a>
+  <a name="wait_for_ready.setter">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @<a href="#wait_for_ready.setter" class="internal-link" title="nebius.aio.request.Request.wait_for_ready.setter">wait_for_ready.setter</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">wait_for_ready</span><span class="function-signature">(self, wait_for_ready: <code>bool | None</code>)</span>:
+    
+    <a class="headerLink" href="#wait_for_ready.setter" title="nebius.aio.request.Request.wait_for_ready.setter">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="nebius.aio.request.Request.compression">
+    
+  </a>
+  <a name="compression">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">compression</span>: <code>Compression | None</code> =
+    
+    <a class="headerLink" href="#compression" title="nebius.aio.request.Request.compression">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="nebius.aio.request.Request.credentials">
+    
+  </a>
+  <a name="credentials">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">credentials</span>: <code>CallCredentials | None</code> =
+    
+    <a class="headerLink" href="#credentials" title="nebius.aio.request.Request.credentials">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="nebius.aio.request.Request.is_sent">
+    
+  </a>
+  <a name="is_sent">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">is_sent</span>: <code>bool</code> =
+    
+    <a class="headerLink" href="#is_sent" title="nebius.aio.request.Request.is_sent">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="nebius.aio.request.Request.timeout">
+    
+  </a>
+  <a name="timeout">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">timeout</span>: <code>float | None</code> =
+    
+    <a class="headerLink" href="#timeout" title="nebius.aio.request.Request.timeout">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="nebius.aio.request.Request.wait_for_ready">
+    
+  </a>
+  <a name="wait_for_ready">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">wait_for_ready</span>: <code>bool | None</code> =
+    
+    <a class="headerLink" href="#wait_for_ready" title="nebius.aio.request.Request.wait_for_ready">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="nebius.aio.request.Request._get_request_id">
+    
+  </a>
+  <a name="_get_request_id">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">async def</span> <span class="py-defname">_get_request_id</span><span class="function-signature">(self) -&gt; <code>tuple[<wbr></wbr>str, <wbr></wbr>str]</code></span>:
+    
+    <a class="headerLink" href="#_get_request_id" title="nebius.aio.request.Request._get_request_id">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="nebius.aio.request.Request._parse_request_id">
+    
+  </a>
+  <a name="_parse_request_id">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">_parse_request_id</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#_parse_request_id" title="nebius.aio.request.Request._parse_request_id">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod private">
+  
+  
+  <a name="nebius.aio.request.Request._raise_request_error">
+    
+  </a>
+  <a name="_raise_request_error">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">_raise_request_error</span><span class="function-signature">(self, err: <code>AioRpcError</code>)</span>:
+    
+    <a class="headerLink" href="#_raise_request_error" title="nebius.aio.request.Request._raise_request_error">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._call">
+    
+  </a>
+  <a name="_call">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_call</span>: <code>UnaryUnaryCall | None</code> =
+    
+    <a class="headerLink" href="#_call" title="nebius.aio.request.Request._call">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._cancelled">
+    
+  </a>
+  <a name="_cancelled">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_cancelled</span>: <code>bool</code> =
+    
+    <a class="headerLink" href="#_cancelled" title="nebius.aio.request.Request._cancelled">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._channel">
+    
+  </a>
+  <a name="_channel">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_channel</span> =
+    
+    <a class="headerLink" href="#_channel" title="nebius.aio.request.Request._channel">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._compression">
+    
+  </a>
+  <a name="_compression">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_compression</span> =
+    
+    <a class="headerLink" href="#_compression" title="nebius.aio.request.Request._compression">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._credentials">
+    
+  </a>
+  <a name="_credentials">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_credentials</span> =
+    
+    <a class="headerLink" href="#_credentials" title="nebius.aio.request.Request._credentials">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._error_wrapper">
+    
+  </a>
+  <a name="_error_wrapper">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_error_wrapper</span> =
+    
+    <a class="headerLink" href="#_error_wrapper" title="nebius.aio.request.Request._error_wrapper">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._grpc_channel">
+    
+  </a>
+  <a name="_grpc_channel">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_grpc_channel</span> =
+    
+    <a class="headerLink" href="#_grpc_channel" title="nebius.aio.request.Request._grpc_channel">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._initial_metadata">
+    
+  </a>
+  <a name="_initial_metadata">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_initial_metadata</span>: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | None</code> =
+    
+    <a class="headerLink" href="#_initial_metadata" title="nebius.aio.request.Request._initial_metadata">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._input">
+    
+  </a>
+  <a name="_input">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_input</span> =
+    
+    <a class="headerLink" href="#_input" title="nebius.aio.request.Request._input">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._input_metadata">
+    
+  </a>
+  <a name="_input_metadata">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_input_metadata</span> =
+    
+    <a class="headerLink" href="#_input_metadata" title="nebius.aio.request.Request._input_metadata">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._method">
+    
+  </a>
+  <a name="_method">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_method</span> =
+    
+    <a class="headerLink" href="#_method" title="nebius.aio.request.Request._method">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._request_id">
+    
+  </a>
+  <a name="_request_id">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_request_id</span>: <code>str | None</code> =
+    
+    <a class="headerLink" href="#_request_id" title="nebius.aio.request.Request._request_id">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._result_pb2_class">
+    
+  </a>
+  <a name="_result_pb2_class">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_result_pb2_class</span> =
+    
+    <a class="headerLink" href="#_result_pb2_class" title="nebius.aio.request.Request._result_pb2_class">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._result_wrapper">
+    
+  </a>
+  <a name="_result_wrapper">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_result_wrapper</span> =
+    
+    <a class="headerLink" href="#_result_wrapper" title="nebius.aio.request.Request._result_wrapper">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._sent">
+    
+  </a>
+  <a name="_sent">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_sent</span>: <code>bool</code> =
+    
+    <a class="headerLink" href="#_sent" title="nebius.aio.request.Request._sent">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._service">
+    
+  </a>
+  <a name="_service">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_service</span> =
+    
+    <a class="headerLink" href="#_service" title="nebius.aio.request.Request._service">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._status">
+    
+  </a>
+  <a name="_status">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_status</span>: <code>RequestStatusExtended | None</code> =
+    
+    <a class="headerLink" href="#_status" title="nebius.aio.request.Request._status">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._timeout">
+    
+  </a>
+  <a name="_timeout">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_timeout</span> =
+    
+    <a class="headerLink" href="#_timeout" title="nebius.aio.request.Request._timeout">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._trace_id">
+    
+  </a>
+  <a name="_trace_id">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_trace_id</span>: <code>str | None</code> =
+    
+    <a class="headerLink" href="#_trace_id" title="nebius.aio.request.Request._trace_id">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._trailing_metadata">
+    
+  </a>
+  <a name="_trailing_metadata">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_trailing_metadata</span>: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | None</code> =
+    
+    <a class="headerLink" href="#_trailing_metadata" title="nebius.aio.request.Request._trailing_metadata">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable private">
+  
+  
+  <a name="nebius.aio.request.Request._wait_for_ready">
+    
+  </a>
+  <a name="_wait_for_ready">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_wait_for_ready</span> =
+    
+    <a class="headerLink" href="#_wait_for_ready" title="nebius.aio.request.Request._wait_for_ready">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container-fluid">
+    <a href="index.html">Reference Documentation</a> for nebius,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    24.11.2.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>
