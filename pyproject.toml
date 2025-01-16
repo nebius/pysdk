@@ -90,6 +90,7 @@ exclude = [
     "__pypackages__",
     "_build",
     "buck-out",
+    "docs/reference",
     "build",
     "dist",
     "node_modules",
