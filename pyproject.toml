@@ -55,7 +55,7 @@ where = ["src"]
 [tool.black]
 line-length = 88
 target-version = ["py310"]
-exclude = "(src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
+exclude = "(docs|src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
 
 [tool.mypy]
 strict = true
@@ -90,7 +90,7 @@ exclude = [
     "__pypackages__",
     "_build",
     "buck-out",
-    "docs/reference",
+    "docs",
     "build",
     "dist",
     "node_modules",
@@ -179,8 +179,8 @@ commands = [["mypy","src/"]]
 [tool.pydoctor]
 add-package = ["src/nebius"]
 project-name="nebius"
-html-output="docs/reference"
-template-dir="docs/templates"
+html-output="docs"
+template-dir="templates"
 html-writer="nebius.base.gendoc.writer.TemplateWriter"
 privacy = [
     "PRIVATE:nebius.api.nebius.common.*.OperationServiceClient",
