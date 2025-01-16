@@ -52,7 +52,7 @@ def test_get_instance_sync() -> None:
             ret.metadata.name = "MockDisk"
             return ret
 
-    def server_thread(port_future: Future[int], stop_event: Event):
+    def server_thread(port_future: Future[int], stop_event: Event) -> None:
         # Create a new event loop for the thread
         loop = new_event_loop()
         set_event_loop(loop)
