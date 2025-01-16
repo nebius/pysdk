@@ -185,6 +185,8 @@ html-writer="nebius.base.gendoc.writer.TemplateWriter"
 privacy = [
     "PRIVATE:nebius.api.nebius.common.*.OperationServiceClient",
     "PRIVATE:nebius.api.buf",
+    "HIDDEN:nebius.api.nebius.example.**",
+    "HIDDEN:nebius.api.nebius.example",
     "PRIVATE:nebius.base.gendoc",
     "PRIVATE:nebius.api.**_pb2",
     "PRIVATE:nebius.api.**_pb2_grpc",

@@ -30,10 +30,6 @@ import nebius.api.nebius.compute.v1.gpu_cluster_service_pb2 as gpu_cluster_servi
 import nebius.api.nebius.compute.v1.image_pb2 as image_pb2
 import nebius.api.nebius.compute.v1.image_service_pb2 as image_service_pb2
 import nebius.api.nebius.compute.v1.network_interface_pb2 as network_interface_pb2
-import nebius.api.nebius.compute.v1.maintenance_event_pb2 as maintenance_event_pb2
-import nebius.base.protos.well_known as well_known_1
-import google.protobuf.timestamp_pb2 as timestamp_pb2
-import datetime as datetime
 import nebius.api.nebius.compute.v1.instance_pb2 as instance_pb2
 import nebius.api.nebius.compute.v1.instance_service_pb2 as instance_service_pb2
 import nebius.api.nebius.compute.v1.platform_pb2 as platform_pb2
@@ -3570,165 +3566,6 @@ class PublicIPAddressStatus(pb_classes.Message):
         "allocation_id":"allocation_id",
     }
     
-# file: nebius/compute/v1/maintenance_event.proto
-class MaintenanceEventStatus(pb_classes.Message):
-    __PB2_CLASS__ = maintenance_event_pb2.MaintenanceEventStatus
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.MaintenanceEventStatus",maintenance_event_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-        "created_at": well_known_1.ts_mask,
-        "finished_at": well_known_1.ts_mask,
-        "sla_deadline_ts": well_known_1.ts_mask,
-    }
-    
-    class State(pb_enum.Enum):
-        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.MaintenanceEventStatus.State",maintenance_event_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
-        STATE_UNSPECIFIED = 0
-        STATE_PENDING = 1
-        STATE_IN_PROGRESS = 2
-        STATE_COMPLETED = 3
-        STATE_CANCELLED = 4
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        maintenance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        state: "MaintenanceEventStatus.State|maintenance_event_pb2.MaintenanceEventStatus.State|None|unset.UnsetType" = unset.Unset,
-        operation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
-        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
-        sla_deadline_ts: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
-        support_center_ticket_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(maintenance_id, unset.UnsetType):
-            self.maintenance_id = maintenance_id
-        if not isinstance(state, unset.UnsetType):
-            self.state = state
-        if not isinstance(operation_id, unset.UnsetType):
-            self.operation_id = operation_id
-        if not isinstance(created_at, unset.UnsetType):
-            self.created_at = created_at
-        if not isinstance(finished_at, unset.UnsetType):
-            self.finished_at = finished_at
-        if not isinstance(sla_deadline_ts, unset.UnsetType):
-            self.sla_deadline_ts = sla_deadline_ts
-        if not isinstance(support_center_ticket_id, unset.UnsetType):
-            self.support_center_ticket_id = support_center_ticket_id
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "maintenance_id",
-            "state",
-            "operation_id",
-            "created_at",
-            "finished_at",
-            "sla_deadline_ts",
-            "support_center_ticket_id",
-            "State",
-        ]
-    
-    @builtins.property
-    def maintenance_id(self) -> "builtins.str":
-        return super()._get_field("maintenance_id", explicit_presence=False,
-        )
-    @maintenance_id.setter
-    def maintenance_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("maintenance_id",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def state(self) -> "MaintenanceEventStatus.State":
-        return super()._get_field("state", explicit_presence=False,
-        wrap=MaintenanceEventStatus.State,
-        )
-    @state.setter
-    def state(self, value: "MaintenanceEventStatus.State|maintenance_event_pb2.MaintenanceEventStatus.State|None") -> None:
-        return super()._set_field("state",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def operation_id(self) -> "builtins.str":
-        """
-         Operation ID of stopping or recovering operation
-        """
-        
-        return super()._get_field("operation_id", explicit_presence=False,
-        )
-    @operation_id.setter
-    def operation_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("operation_id",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def created_at(self) -> "datetime.datetime":
-        """
-         Time when the maintenance event is created
-        """
-        
-        return super()._get_field("created_at", explicit_presence=False,
-        wrap=well_known_1.from_timestamp
-        )
-    @created_at.setter
-    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("created_at",value,explicit_presence=False,
-        unwrap=well_known_1.to_timestamp
-        )
-    
-    @builtins.property
-    def finished_at(self) -> "datetime.datetime":
-        """
-         Time when the maintenance event is finished
-        """
-        
-        return super()._get_field("finished_at", explicit_presence=False,
-        wrap=well_known_1.from_timestamp
-        )
-    @finished_at.setter
-    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("finished_at",value,explicit_presence=False,
-        unwrap=well_known_1.to_timestamp
-        )
-    
-    @builtins.property
-    def sla_deadline_ts(self) -> "datetime.datetime":
-        """
-         Time when the instance will be force stopped
-        """
-        
-        return super()._get_field("sla_deadline_ts", explicit_presence=False,
-        wrap=well_known_1.from_timestamp
-        )
-    @sla_deadline_ts.setter
-    def sla_deadline_ts(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("sla_deadline_ts",value,explicit_presence=False,
-        unwrap=well_known_1.to_timestamp
-        )
-    
-    @builtins.property
-    def support_center_ticket_id(self) -> "builtins.str":
-        """
-         Ticket key, can be transformed into url where support is talking with the client
-        """
-        
-        return super()._get_field("support_center_ticket_id", explicit_presence=False,
-        )
-    @support_center_ticket_id.setter
-    def support_center_ticket_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("support_center_ticket_id",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "maintenance_id":"maintenance_id",
-        "state":"state",
-        "operation_id":"operation_id",
-        "created_at":"created_at",
-        "finished_at":"finished_at",
-        "sla_deadline_ts":"sla_deadline_ts",
-        "support_center_ticket_id":"support_center_ticket_id",
-        "State":"State",
-    }
-    
 # file: nebius/compute/v1/instance.proto
 class InstanceRecoveryPolicy(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.InstanceRecoveryPolicy",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -4381,7 +4218,7 @@ class InstanceStatus(pb_classes.Message):
         state: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|None|unset.UnsetType" = unset.Unset,
         network_interfaces: "abc.Iterable[NetworkInterfaceStatus]|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
-        maintenance_event: "MaintenanceEventStatus|maintenance_event_pb2.MaintenanceEventStatus|None|unset.UnsetType" = unset.Unset,
+        maintenance_event_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -4390,15 +4227,15 @@ class InstanceStatus(pb_classes.Message):
             self.network_interfaces = network_interfaces
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
-        if not isinstance(maintenance_event, unset.UnsetType):
-            self.maintenance_event = maintenance_event
+        if not isinstance(maintenance_event_id, unset.UnsetType):
+            self.maintenance_event_id = maintenance_event_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "network_interfaces",
             "reconciling",
-            "maintenance_event",
+            "maintenance_event_id",
             "InstanceState",
         ]
     
@@ -4436,20 +4273,19 @@ class InstanceStatus(pb_classes.Message):
         )
     
     @builtins.property
-    def maintenance_event(self) -> "MaintenanceEventStatus":
-        return super()._get_field("maintenance_event", explicit_presence=False,
-        wrap=MaintenanceEventStatus,
+    def maintenance_event_id(self) -> "builtins.str":
+        return super()._get_field("maintenance_event_id", explicit_presence=False,
         )
-    @maintenance_event.setter
-    def maintenance_event(self, value: "MaintenanceEventStatus|maintenance_event_pb2.MaintenanceEventStatus|None") -> None:
-        return super()._set_field("maintenance_event",value,explicit_presence=False,
+    @maintenance_event_id.setter
+    def maintenance_event_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("maintenance_event_id",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "network_interfaces":"network_interfaces",
         "reconciling":"reconciling",
-        "maintenance_event":"maintenance_event",
+        "maintenance_event_id":"maintenance_event_id",
         "InstanceState":"InstanceState",
     }
     
@@ -5483,7 +5319,6 @@ __all__ = [
     "NetworkInterfaceStatus",
     "IPAddressStatus",
     "PublicIPAddressStatus",
-    "MaintenanceEventStatus",
     "InstanceRecoveryPolicy",
     "Instance",
     "InstanceSpec",
