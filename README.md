@@ -302,7 +302,7 @@ This example will only reset `max_size_bytes` in the bucket, clearing the limit,
 
 Currently, the full documentation is not referenced anywhere, but can be viewed from sources.
 
-To see the reference, open [docs/reference/apiReference.html](docs/reference/apiReference.html]) in your browser.
+To see the reference, open [docs/reference/apiReference.html](docs/reference/apiReference.html) in your browser.
 
 In the future, all the documentation will be available on github pages.
 
