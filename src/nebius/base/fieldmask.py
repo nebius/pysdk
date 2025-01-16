@@ -33,8 +33,10 @@ class FieldKey(str):
 class FieldPath(list[FieldKey]):
     @overload
     def __init__(self) -> None: ...
+
     @overload
     def __init__(self, base: Iterable[FieldKey | str]) -> None: ...
+
     def __init__(self, base: Iterable[FieldKey | str] | None) -> None:  # type: ignore
         super().__init__()
         if base is not None:

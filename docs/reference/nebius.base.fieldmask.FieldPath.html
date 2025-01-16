@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+
+
+  <head>
+
+    <title>nebius.base.fieldmask.FieldPath</title>
+    <meta name="generator" content="pydoctor 24.11.2">
+
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+
+</head>
+
+  <body>
+
+
+
+    <nav class="navbar navbar-default mainnavbar">
+
+
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+
+      <div class="navlinks">
+        <span class="navbar-brand">
+          nebius <a href="index.html">Reference</a>
+        </span>
+
+        <a href="apiReference.html">
+          API
+        </a>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+
+        </div>
+
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+
+        <div class="sidebar"><nav class="sidebar">
+
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="This class"><wbr></wbr>Field<wbr></wbr>Path</a></code>
+      </div>
+
+      <div>
+
+
+
+
+
+
+
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+
+    <li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#unmarshal" class="internal-link" title="nebius.base.fieldmask.FieldPath.unmarshal">unmarshal</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#__add__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__add__">__add__</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#__eq__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__eq__">__eq__</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#__iadd__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__iadd__">__iadd__</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__init__">__init__</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#__repr__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__repr__">__repr__</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#copy" class="internal-link" title="nebius.base.fieldmask.FieldPath.copy">copy</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#is_prefix_of" class="internal-link" title="nebius.base.fieldmask.FieldPath.is_prefix_of">is<wbr></wbr>_prefix<wbr></wbr>_of</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#marshal" class="internal-link" title="nebius.base.fieldmask.FieldPath.marshal">marshal</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#matches_reset_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath.matches_reset_mask">matches<wbr></wbr>_reset<wbr></wbr>_mask</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#matches_reset_mask_final" class="internal-link" title="nebius.base.fieldmask.FieldPath.matches_reset_mask_final">matches<wbr></wbr>_reset<wbr></wbr>_mask<wbr></wbr>_final</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#matches_select_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath.matches_select_mask">matches<wbr></wbr>_select<wbr></wbr>_mask</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#matches_select_mask_inner" class="internal-link" title="nebius.base.fieldmask.FieldPath.matches_select_mask_inner">matches<wbr></wbr>_select<wbr></wbr>_mask<wbr></wbr>_inner</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#parent" class="internal-link" title="nebius.base.fieldmask.FieldPath.parent">parent</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#to_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath.to_mask">to<wbr></wbr>_mask</a></code>
+            </div>
+
+
+    </li><li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="#_matches_reset_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath._matches_reset_mask">_matches<wbr></wbr>_reset<wbr></wbr>_mask</a></code>
+            </div>
+
+
+    </li><li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="#_matches_select_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath._matches_select_mask">_matches<wbr></wbr>_select<wbr></wbr>_mask</a></code>
+            </div>
+
+
+    </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="nebius.base.fieldmask.html" class="internal-link" title="The parent of this class">fieldmask</a></code>
+      </div>
+
+      <div>
+
+
+
+
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+
+    <li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey"><wbr></wbr>Field<wbr></wbr>Key</a></code>
+            </div>
+
+
+    </li><li class=" thisobject">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath"><wbr></wbr>Field<wbr></wbr>Path</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask"><wbr></wbr>Mask</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.base.fieldmask.Error.html" class="internal-link" title="nebius.base.fieldmask.Error"><wbr></wbr>Error</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.base.fieldmask.MarshalError.html" class="internal-link" title="nebius.base.fieldmask.MarshalError"><wbr></wbr>Marshal<wbr></wbr>Error</a></code>
+            </div>
+
+
+    </li>
+</ul>
+
+
+
+
+
+
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+
+    <li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.base.fieldmask.html#_simple_string_pattern" class="internal-link" title="nebius.base.fieldmask._simple_string_pattern">_simple<wbr></wbr>_string<wbr></wbr>_pattern</a></code>
+            </div>
+
+
+    </li>
+</ul>
+
+
+
+
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div>
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+
+      </div>
+
+      <div id="main" class="">
+
+
+
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">nebius</a></code><wbr></wbr>.<code><a href="nebius.base.html" class="internal-link" title="nebius.base">base</a></code><wbr></wbr>.<code><a href="nebius.base.fieldmask.html" class="internal-link" title="nebius.base.fieldmask">fieldmask</a></code><wbr></wbr>.<code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle system units</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">FieldPath</span>(list[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__init__">FieldPath(base)</a></code></p>
+          <p><a href="classIndex.html#nebius.base.fieldmask.FieldPath">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="undocumented">Undocumented</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id2491">
+
+
+  <tr class="classmethod">
+
+    <td>Class Method</td>
+    <td><code><a href="#unmarshal" class="internal-link" title="nebius.base.fieldmask.FieldPath.unmarshal">unmarshal</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#__add__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__add__">__add__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#__eq__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__eq__">__eq__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#__iadd__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__iadd__">__iadd__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#__init__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__init__">__init__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#__repr__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__repr__">__repr__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#copy" class="internal-link" title="nebius.base.fieldmask.FieldPath.copy">copy</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#is_prefix_of" class="internal-link" title="nebius.base.fieldmask.FieldPath.is_prefix_of">is<wbr></wbr>_prefix<wbr></wbr>_of</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#marshal" class="internal-link" title="nebius.base.fieldmask.FieldPath.marshal">marshal</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#matches_reset_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath.matches_reset_mask">matches<wbr></wbr>_reset<wbr></wbr>_mask</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#matches_reset_mask_final" class="internal-link" title="nebius.base.fieldmask.FieldPath.matches_reset_mask_final">matches<wbr></wbr>_reset<wbr></wbr>_mask<wbr></wbr>_final</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#matches_select_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath.matches_select_mask">matches<wbr></wbr>_select<wbr></wbr>_mask</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#matches_select_mask_inner" class="internal-link" title="nebius.base.fieldmask.FieldPath.matches_select_mask_inner">matches<wbr></wbr>_select<wbr></wbr>_mask<wbr></wbr>_inner</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#parent" class="internal-link" title="nebius.base.fieldmask.FieldPath.parent">parent</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#to_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath.to_mask">to<wbr></wbr>_mask</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="staticmethod private">
+
+    <td>Static Method</td>
+    <td><code><a href="#_matches_reset_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath._matches_reset_mask">_matches<wbr></wbr>_reset<wbr></wbr>_mask</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="staticmethod private">
+
+    <td>Static Method</td>
+    <td><code><a href="#_matches_select_mask" class="internal-link" title="nebius.base.fieldmask.FieldPath._matches_select_mask">_matches<wbr></wbr>_select<wbr></wbr>_mask</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+
+
+
+        </div>
+
+        <div id="childList">
+          <div class="baseclassmethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.unmarshal">
+
+  </a>
+  <a name="unmarshal">
+
+  </a>
+  <div class="functionHeader">
+
+    @classmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">unmarshal</span><span class="function-signature">(cls, s: <code>str</code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | None</code></span>:
+
+    <a class="headerLink" href="#unmarshal" title="nebius.base.fieldmask.FieldPath.unmarshal">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.__add__">
+
+  </a>
+  <a name="__add__">
+
+  </a>
+  <div class="functionHeader">
+    @overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__add__</span><span class="function-signature">(self, value: <code>Iterable[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | str]</code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></span>:</div>@overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__add__</span><span class="function-signature">(self, value: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a></code>) -&gt; <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a></code></span>:</div>
+
+
+
+    <a class="headerLink" href="#__add__" title="nebius.base.fieldmask.FieldPath.__add__">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.__eq__">
+
+  </a>
+  <a name="__eq__">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">__eq__</span><span class="function-signature">(self, value: <code>object</code>) -&gt; <code>bool</code></span>:
+
+    <a class="headerLink" href="#__eq__" title="nebius.base.fieldmask.FieldPath.__eq__">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.__iadd__">
+
+  </a>
+  <a name="__iadd__">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">__iadd__</span><span class="function-signature">(self, value: <code>Iterable[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | str]</code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></span>:
+
+    <a class="headerLink" href="#__iadd__" title="nebius.base.fieldmask.FieldPath.__iadd__">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.__init__">
+
+  </a>
+  <a name="__init__">
+
+  </a>
+  <div class="functionHeader">
+    @overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self)</span>:</div>@overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, base: <code>Iterable[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | str]</code>)</span>:</div>
+
+
+
+    <a class="headerLink" href="#__init__" title="nebius.base.fieldmask.FieldPath.__init__">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.__repr__">
+
+  </a>
+  <a name="__repr__">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+
+    <a class="headerLink" href="#__repr__" title="nebius.base.fieldmask.FieldPath.__repr__">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.copy">
+
+  </a>
+  <a name="copy">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">copy</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></span>:
+
+    <a class="headerLink" href="#copy" title="nebius.base.fieldmask.FieldPath.copy">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.is_prefix_of">
+
+  </a>
+  <a name="is_prefix_of">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">is_prefix_of</span><span class="function-signature">(self, value: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code>) -&gt; <code>bool</code></span>:
+
+    <a class="headerLink" href="#is_prefix_of" title="nebius.base.fieldmask.FieldPath.is_prefix_of">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.marshal">
+
+  </a>
+  <a name="marshal">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">marshal</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+
+    <a class="headerLink" href="#marshal" title="nebius.base.fieldmask.FieldPath.marshal">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.matches_reset_mask">
+
+  </a>
+  <a name="matches_reset_mask">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">matches_reset_mask</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>bool</code></span>:
+
+    <a class="headerLink" href="#matches_reset_mask" title="nebius.base.fieldmask.FieldPath.matches_reset_mask">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.matches_reset_mask_final">
+
+  </a>
+  <a name="matches_reset_mask_final">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">matches_reset_mask_final</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>bool</code></span>:
+
+    <a class="headerLink" href="#matches_reset_mask_final" title="nebius.base.fieldmask.FieldPath.matches_reset_mask_final">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.matches_select_mask">
+
+  </a>
+  <a name="matches_select_mask">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">matches_select_mask</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>bool</code></span>:
+
+    <a class="headerLink" href="#matches_select_mask" title="nebius.base.fieldmask.FieldPath.matches_select_mask">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.matches_select_mask_inner">
+
+  </a>
+  <a name="matches_select_mask_inner">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">matches_select_mask_inner</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>tuple[<wbr></wbr>bool, <wbr></wbr>bool]</code></span>:
+
+    <a class="headerLink" href="#matches_select_mask_inner" title="nebius.base.fieldmask.FieldPath.matches_select_mask_inner">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.parent">
+
+  </a>
+  <a name="parent">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">parent</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | None</code></span>:
+
+    <a class="headerLink" href="#parent" title="nebius.base.fieldmask.FieldPath.parent">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.base.fieldmask.FieldPath.to_mask">
+
+  </a>
+  <a name="to_mask">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">to_mask</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a></code></span>:
+
+    <a class="headerLink" href="#to_mask" title="nebius.base.fieldmask.FieldPath.to_mask">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basestaticmethod private">
+
+
+  <a name="nebius.base.fieldmask.FieldPath._matches_reset_mask">
+
+  </a>
+  <a name="_matches_reset_mask">
+
+  </a>
+  <div class="functionHeader">
+
+    @staticmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">_matches_reset_mask</span><span class="function-signature">(fp: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | list[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]</code>, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>tuple[<wbr></wbr>bool, <wbr></wbr>bool]</code></span>:
+
+    <a class="headerLink" href="#_matches_reset_mask" title="nebius.base.fieldmask.FieldPath._matches_reset_mask">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basestaticmethod private">
+
+
+  <a name="nebius.base.fieldmask.FieldPath._matches_select_mask">
+
+  </a>
+  <a name="_matches_select_mask">
+
+  </a>
+  <div class="functionHeader">
+
+    @staticmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">_matches_select_mask</span><span class="function-signature">(fp: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | list[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]</code>, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>tuple[<wbr></wbr>bool, <wbr></wbr>bool]</code></span>:
+
+    <a class="headerLink" href="#_matches_select_mask" title="nebius.base.fieldmask.FieldPath._matches_select_mask">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+
+  <div class="container-fluid">
+    <a href="index.html">Reference Documentation</a> for nebius,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    24.11.2 at 2025-01-16 13:31:01.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

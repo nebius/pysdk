@@ -39,13 +39,13 @@ To set up your development environment, ensure you have the following tools inst
 Then, install the module for edit with the required dependencies:
 
 ```bash
-pip install -e .[dev,genproto]
+pip install -e .[dev,genproto,gendoc]
 ```
 
 On Windows, you will have to add another dependency:
 
 ```bash
-pip install -e .[dev,genproto,windows]
+pip install -e .[dev,genproto,windows,gendoc]
 ```
 
 ## 🧪 Testing

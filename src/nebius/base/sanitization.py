@@ -14,10 +14,10 @@ def ellipsis_in_middle(secret: str) -> str:
     ```
 
     Args:
-        secret (str): to redact
+     - secret (str): to redact
 
     Returns:
-        str: redacted secret
+     - str: redacted secret
     """
     if len(secret) <= 2:
         return secret

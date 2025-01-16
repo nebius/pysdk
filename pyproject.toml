@@ -42,7 +42,8 @@ genproto = [
     "protovalidate>=0.5",
 ]
 gendoc = [
-    "portray>=1.8.0",
+    "pydoctor>=24.11.2",
+    "beautifulsoup4>=4.12.3",
 ]
 
 [tool.setuptools]
@@ -165,10 +166,25 @@ deps = [
     "certifi>=2024.8.30",
     "protobuf>=5.29.1",
     "grpcio-status>=1.68.1",
-    "grpc-stubs>=1.53",  # For mypy
-    "types-protobuf>=5.29.1", # for mypy
+    "pydoctor>=24.11.2",
+    "beautifulsoup4>=4.12.3",
+    # For mypy
+    "grpc-stubs>=1.53",
+    "types-protobuf>=5.29.1",
+    "types-beautifulsoup4>=4.12.0",
 ]
 commands = [["mypy","src/"]]
 
-[tool.portray]
-modules = ["nebius"]
+[tool.pydoctor]
+add-package = ["src/nebius"]
+project-name="nebius"
+html-output="docs/reference"
+template-dir="docs/templates"
+html-writer="nebius.base.gendoc.writer.TemplateWriter"
+privacy = [
+    "PRIVATE:nebius.api.nebius.common.*.OperationServiceClient",
+    "PRIVATE:nebius.api.buf",
+    "PRIVATE:nebius.base.gendoc",
+    "PRIVATE:nebius.api.**_pb2",
+    "PRIVATE:nebius.api.**_pb2_grpc",
+]

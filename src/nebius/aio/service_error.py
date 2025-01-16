@@ -118,6 +118,12 @@ def int_to_status_code(i: int | StatusCode) -> StatusCode:
     return StatusCode.UNKNOWN
 
 
+DefaultRetriableCodes = [
+    StatusCode.RESOURCE_EXHAUSTED,
+    StatusCode.UNAVAILABLE,
+]
+
+
 @dataclass
 class RequestStatusExtended(RequestStatus):
     code: StatusCode
@@ -177,3 +183,51 @@ class RequestStatusExtended(RequestStatus):
             request_id=request_id,
             trace_id=trace_id,
         )
+
+    def is_retriable(self) -> bool:
+        # Check service errors
+        for service_error in self.service_errors:
+            if hasattr(service_error, "retry_type"):
+                retry_type = service_error.retry_type
+                if retry_type == ServiceError.RetryType.CALL:
+                    return True
+                if retry_type in [
+                    ServiceError.RetryType.NOTHING,
+                    ServiceError.RetryType.UNIT_OF_WORK,
+                ]:
+                    return False
+
+        # Check gRPC error codes
+        if self.code in DefaultRetriableCodes:
+            return True
+
+        return False
+
+
+def is_retriable_error(err: Exception) -> bool:
+    if isinstance(err, RequestStatusExtended):
+        return err.is_retriable()
+
+    # Network and transport error handling
+    if is_network_error(err) or is_transport_error(err) or is_dns_error(err):
+        return True
+
+    return False
+
+
+def is_network_error(err: Exception) -> bool:
+    if isinstance(err, OSError) and "timed out" in str(err):
+        return True
+    return False
+
+
+def is_transport_error(err: Exception) -> bool:
+    if isinstance(err, OSError) and (
+        "connection refused" in str(err) or "connection reset" in str(err)
+    ):
+        return True
+    return False
+
+
+def is_dns_error(err: Exception) -> bool:
+    return "name resolution" in str(err)

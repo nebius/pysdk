@@ -1,0 +1,1156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+
+
+  <head>
+
+    <title>nebius.aio.operation.Operation</title>
+    <meta name="generator" content="pydoctor 24.11.2">
+
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+
+</head>
+
+  <body>
+
+
+
+    <nav class="navbar navbar-default mainnavbar">
+
+
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+
+      <div class="navlinks">
+        <span class="navbar-brand">
+          nebius <a href="index.html">Reference</a>
+        </span>
+
+        <a href="apiReference.html">
+          API
+        </a>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+
+        </div>
+
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+
+        <div class="sidebar"><nav class="sidebar">
+
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="nebius.aio.operation.Operation.html" class="internal-link" title="This class"><wbr></wbr>Operation</a></code>
+      </div>
+
+      <div>
+
+
+
+
+
+
+
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+
+    <li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="nebius.aio.operation.Operation.__init__">__init__</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#__repr__" class="internal-link" title="nebius.aio.operation.Operation.__repr__">__repr__</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#done" class="internal-link" title="nebius.aio.operation.Operation.done">done</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#raw" class="internal-link" title="nebius.aio.operation.Operation.raw">raw</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#status" class="internal-link" title="nebius.aio.operation.Operation.status">status</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#successful" class="internal-link" title="nebius.aio.operation.Operation.successful">successful</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#sync_update" class="internal-link" title="nebius.aio.operation.Operation.sync_update">sync<wbr></wbr>_update</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#sync_wait" class="internal-link" title="nebius.aio.operation.Operation.sync_wait">sync<wbr></wbr>_wait</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#update" class="internal-link" title="nebius.aio.operation.Operation.update">update</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#wait" class="internal-link" title="nebius.aio.operation.Operation.wait">wait</a></code>
+            </div>
+
+
+    </li><li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="#_set_new_operation" class="internal-link" title="nebius.aio.operation.Operation._set_new_operation">_set<wbr></wbr>_new<wbr></wbr>_operation</a></code>
+            </div>
+
+
+    </li>
+</ul>
+
+
+
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+
+    <li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#created_at" class="internal-link" title="nebius.aio.operation.Operation.created_at">created<wbr></wbr>_at</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#created_by" class="internal-link" title="nebius.aio.operation.Operation.created_by">created<wbr></wbr>_by</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#description" class="internal-link" title="nebius.aio.operation.Operation.description">description</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#finished_at" class="internal-link" title="nebius.aio.operation.Operation.finished_at">finished<wbr></wbr>_at</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#id" class="internal-link" title="nebius.aio.operation.Operation.id">id</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="#resource_id" class="internal-link" title="nebius.aio.operation.Operation.resource_id">resource<wbr></wbr>_id</a></code>
+            </div>
+
+
+    </li><li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="#_channel" class="internal-link" title="nebius.aio.operation.Operation._channel">_channel</a></code>
+            </div>
+
+
+    </li><li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="#_get_request_obj" class="internal-link" title="nebius.aio.operation.Operation._get_request_obj">_get<wbr></wbr>_request<wbr></wbr>_obj</a></code>
+            </div>
+
+
+    </li><li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="#_operation" class="internal-link" title="nebius.aio.operation.Operation._operation">_operation</a></code>
+            </div>
+
+
+    </li><li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="#_service" class="internal-link" title="nebius.aio.operation.Operation._service">_service</a></code>
+            </div>
+
+
+    </li><li class="private">
+
+
+
+
+
+            <div class="itemName"><code><a href="#_syncronizer" class="internal-link" title="nebius.aio.operation.Operation._syncronizer">_syncronizer</a></code>
+            </div>
+
+
+    </li>
+</ul>
+
+
+
+
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="nebius.aio.operation.html" class="internal-link" title="The parent of this class">operation</a></code>
+      </div>
+
+      <div>
+
+
+
+
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+
+    <li class=" thisobject">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation"><wbr></wbr>Operation</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.aio.operation.Static.html" class="internal-link" title="nebius.aio.operation.Static"><wbr></wbr>Static</a></code>
+            </div>
+
+
+    </li>
+</ul>
+
+
+
+
+
+
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+
+    <li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.aio.operation.html#OperationPb" class="internal-link" title="nebius.aio.operation.OperationPb"><wbr></wbr>Operation<wbr></wbr>Pb</a></code>
+            </div>
+
+
+    </li><li class="">
+
+
+
+
+
+            <div class="itemName"><code><a href="nebius.aio.operation.html#T" class="internal-link" title="nebius.aio.operation.T">T</a></code>
+            </div>
+
+
+    </li>
+</ul>
+
+
+
+
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div>
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+
+      </div>
+
+      <div id="main" class="">
+
+
+
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">nebius</a></code><wbr></wbr>.<code><a href="nebius.aio.html" class="internal-link" title="nebius.aio">aio</a></code><wbr></wbr>.<code><a href="nebius.aio.operation.html" class="internal-link" title="nebius.aio.operation">operation</a></code><wbr></wbr>.<code><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation">Operation</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle system units</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Operation</span>(Generic[<wbr></wbr><a href="nebius.aio.operation.html#OperationPb" class="internal-link" title="nebius.aio.operation.OperationPb">OperationPb</a>]):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.aio.operation.Operation.__init__">Operation(channel, syncronizer, operation)</a></code></p>
+          <p><a href="classIndex.html#nebius.aio.operation.Operation">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="undocumented">Undocumented</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id27">
+
+
+  <tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#__init__" class="internal-link" title="nebius.aio.operation.Operation.__init__">__init__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#__repr__" class="internal-link" title="nebius.aio.operation.Operation.__repr__">__repr__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#done" class="internal-link" title="nebius.aio.operation.Operation.done">done</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#raw" class="internal-link" title="nebius.aio.operation.Operation.raw">raw</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#status" class="internal-link" title="nebius.aio.operation.Operation.status">status</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#successful" class="internal-link" title="nebius.aio.operation.Operation.successful">successful</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#sync_update" class="internal-link" title="nebius.aio.operation.Operation.sync_update">sync<wbr></wbr>_update</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Method</td>
+    <td><code><a href="#sync_wait" class="internal-link" title="nebius.aio.operation.Operation.sync_wait">sync<wbr></wbr>_wait</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Async Method</td>
+    <td><code><a href="#update" class="internal-link" title="nebius.aio.operation.Operation.update">update</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+
+    <td>Async Method</td>
+    <td><code><a href="#wait" class="internal-link" title="nebius.aio.operation.Operation.wait">wait</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+
+    <td>Property</td>
+    <td><code><a href="#created_at" class="internal-link" title="nebius.aio.operation.Operation.created_at">created<wbr></wbr>_at</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+
+    <td>Property</td>
+    <td><code><a href="#created_by" class="internal-link" title="nebius.aio.operation.Operation.created_by">created<wbr></wbr>_by</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+
+    <td>Property</td>
+    <td><code><a href="#description" class="internal-link" title="nebius.aio.operation.Operation.description">description</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+
+    <td>Property</td>
+    <td><code><a href="#finished_at" class="internal-link" title="nebius.aio.operation.Operation.finished_at">finished<wbr></wbr>_at</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+
+    <td>Property</td>
+    <td><code><a href="#id" class="internal-link" title="nebius.aio.operation.Operation.id">id</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="property">
+
+    <td>Property</td>
+    <td><code><a href="#resource_id" class="internal-link" title="nebius.aio.operation.Operation.resource_id">resource<wbr></wbr>_id</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method private">
+
+    <td>Method</td>
+    <td><code><a href="#_set_new_operation" class="internal-link" title="nebius.aio.operation.Operation._set_new_operation">_set<wbr></wbr>_new<wbr></wbr>_operation</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+
+    <td>Instance Variable</td>
+    <td><code><a href="#_channel" class="internal-link" title="nebius.aio.operation.Operation._channel">_channel</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+
+    <td>Instance Variable</td>
+    <td><code><a href="#_get_request_obj" class="internal-link" title="nebius.aio.operation.Operation._get_request_obj">_get<wbr></wbr>_request<wbr></wbr>_obj</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+
+    <td>Instance Variable</td>
+    <td><code><a href="#_operation" class="internal-link" title="nebius.aio.operation.Operation._operation">_operation</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+
+    <td>Instance Variable</td>
+    <td><code><a href="#_service" class="internal-link" title="nebius.aio.operation.Operation._service">_service</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable private">
+
+    <td>Instance Variable</td>
+    <td><code><a href="#_syncronizer" class="internal-link" title="nebius.aio.operation.Operation._syncronizer">_syncronizer</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+
+
+
+        </div>
+
+        <div id="childList">
+          <div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.__init__">
+
+  </a>
+  <a name="__init__">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, channel: <code>GRPCChannel</code>, syncronizer: <code><a href="nebius.aio.abc.SyncronizerInterface.html" class="internal-link" title="nebius.aio.abc.SyncronizerInterface">SyncronizerInterface</a></code>, operation: <code><a href="nebius.aio.operation.html#OperationPb" class="internal-link" title="nebius.aio.operation.OperationPb">OperationPb</a></code>)</span>:
+
+    <a class="headerLink" href="#__init__" title="nebius.aio.operation.Operation.__init__">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.__repr__">
+
+  </a>
+  <a name="__repr__">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
+
+    <a class="headerLink" href="#__repr__" title="nebius.aio.operation.Operation.__repr__">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.done">
+
+  </a>
+  <a name="done">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">done</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
+
+    <a class="headerLink" href="#done" title="nebius.aio.operation.Operation.done">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.raw">
+
+  </a>
+  <a name="raw">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">raw</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.operation.html#OperationPb" class="internal-link" title="nebius.aio.operation.OperationPb">OperationPb</a></code></span>:
+
+    <a class="headerLink" href="#raw" title="nebius.aio.operation.Operation.raw">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.status">
+
+  </a>
+  <a name="status">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">status</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a> | None</code></span>:
+
+    <a class="headerLink" href="#status" title="nebius.aio.operation.Operation.status">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.successful">
+
+  </a>
+  <a name="successful">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">successful</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
+
+    <a class="headerLink" href="#successful" title="nebius.aio.operation.Operation.successful">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.sync_update">
+
+  </a>
+  <a name="sync_update">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">sync_update</span><span class="function-signature">(self, timeout: <code>float | None</code> = None)</span>:
+
+    <a class="headerLink" href="#sync_update" title="nebius.aio.operation.Operation.sync_update">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.sync_wait">
+
+  </a>
+  <a name="sync_wait">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">sync_wait</span><span class="function-signature">(self, timeout: <code>float | None</code> = None)</span>:
+
+    <a class="headerLink" href="#sync_wait" title="nebius.aio.operation.Operation.sync_wait">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.update">
+
+  </a>
+  <a name="update">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">async def</span> <span class="py-defname">update</span><span class="function-signature">(self, metadata: <code>Iterable[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str]] | None</code> = None, timeout: <code>float | None</code> = None, credentials: <code>CallCredentials | None</code> = None, wait_for_ready: <code>bool | None</code> = None, compression: <code>Compression | None</code> = None)</span>:
+
+    <a class="headerLink" href="#update" title="nebius.aio.operation.Operation.update">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+
+
+  <a name="nebius.aio.operation.Operation.wait">
+
+  </a>
+  <a name="wait">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">async def</span> <span class="py-defname">wait</span><span class="function-signature">(self, interval: <code>float | timedelta</code> = 1, metadata: <code>Iterable[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str]] | None</code> = None, timeout: <code>float | None</code> = None, credentials: <code>CallCredentials | None</code> = None, wait_for_ready: <code>bool | None</code> = None, compression: <code>Compression | None</code> = None)</span>:
+
+    <a class="headerLink" href="#wait" title="nebius.aio.operation.Operation.wait">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="baseproperty">
+
+
+  <a name="nebius.aio.operation.Operation.created_at">
+
+  </a>
+  <a name="created_at">
+
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">created_at</span>: <code>datetime</code> =
+
+    <a class="headerLink" href="#created_at" title="nebius.aio.operation.Operation.created_at">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseproperty">
+
+
+  <a name="nebius.aio.operation.Operation.created_by">
+
+  </a>
+  <a name="created_by">
+
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">created_by</span>: <code>str</code> =
+
+    <a class="headerLink" href="#created_by" title="nebius.aio.operation.Operation.created_by">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseproperty">
+
+
+  <a name="nebius.aio.operation.Operation.description">
+
+  </a>
+  <a name="description">
+
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">description</span>: <code>str</code> =
+
+    <a class="headerLink" href="#description" title="nebius.aio.operation.Operation.description">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseproperty">
+
+
+  <a name="nebius.aio.operation.Operation.finished_at">
+
+  </a>
+  <a name="finished_at">
+
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">finished_at</span>: <code>datetime | None</code> =
+
+    <a class="headerLink" href="#finished_at" title="nebius.aio.operation.Operation.finished_at">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseproperty">
+
+
+  <a name="nebius.aio.operation.Operation.id">
+
+  </a>
+  <a name="id">
+
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">id</span>: <code>str</code> =
+
+    <a class="headerLink" href="#id" title="nebius.aio.operation.Operation.id">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseproperty">
+
+
+  <a name="nebius.aio.operation.Operation.resource_id">
+
+  </a>
+  <a name="resource_id">
+
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">resource_id</span>: <code>str</code> =
+
+    <a class="headerLink" href="#resource_id" title="nebius.aio.operation.Operation.resource_id">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="basemethod private">
+
+
+  <a name="nebius.aio.operation.Operation._set_new_operation">
+
+  </a>
+  <a name="_set_new_operation">
+
+  </a>
+  <div class="functionHeader">
+
+
+    <span class="py-keyword">def</span> <span class="py-defname">_set_new_operation</span><span class="function-signature">(self, operation: <code><a href="nebius.aio.operation.html#OperationPb" class="internal-link" title="nebius.aio.operation.OperationPb">OperationPb</a></code>)</span>:
+
+    <a class="headerLink" href="#_set_new_operation" title="nebius.aio.operation.Operation._set_new_operation">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="baseinstancevariable private">
+
+
+  <a name="nebius.aio.operation.Operation._channel">
+
+  </a>
+  <a name="_channel">
+
+  </a>
+  <div class="functionHeader">
+
+    <span class="py-defname">_channel</span> =
+
+    <a class="headerLink" href="#_channel" title="nebius.aio.operation.Operation._channel">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseinstancevariable private">
+
+
+  <a name="nebius.aio.operation.Operation._get_request_obj">
+
+  </a>
+  <a name="_get_request_obj">
+
+  </a>
+  <div class="functionHeader">
+
+    <span class="py-defname">_get_request_obj</span>: <code>type[<wbr></wbr>GetOperationRequest | OldGet]</code> =
+
+    <a class="headerLink" href="#_get_request_obj" title="nebius.aio.operation.Operation._get_request_obj">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseinstancevariable private">
+
+
+  <a name="nebius.aio.operation.Operation._operation">
+
+  </a>
+  <a name="_operation">
+
+  </a>
+  <div class="functionHeader">
+
+    <span class="py-defname">_operation</span>: <code><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation">Operation</a> | Old</code> =
+
+    <a class="headerLink" href="#_operation" title="nebius.aio.operation.Operation._operation">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseinstancevariable private">
+
+
+  <a name="nebius.aio.operation.Operation._service">
+
+  </a>
+  <a name="_service">
+
+  </a>
+  <div class="functionHeader">
+
+    <span class="py-defname">_service</span>: <code>OperationServiceClient | OldClient</code> =
+
+    <a class="headerLink" href="#_service" title="nebius.aio.operation.Operation._service">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div><div class="baseinstancevariable private">
+
+
+  <a name="nebius.aio.operation.Operation._syncronizer">
+
+  </a>
+  <a name="_syncronizer">
+
+  </a>
+  <div class="functionHeader">
+
+    <span class="py-defname">_syncronizer</span> =
+
+    <a class="headerLink" href="#_syncronizer" title="nebius.aio.operation.Operation._syncronizer">
+
+
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+
+    <div><p class="undocumented">Undocumented</p></div>
+
+  </div>
+</div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+
+  <div class="container-fluid">
+    <a href="index.html">Reference Documentation</a> for nebius,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    24.11.2 at 2025-01-16 13:31:01.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>
