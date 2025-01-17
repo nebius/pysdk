@@ -108,7 +108,7 @@ sdk = SDK(
 
 #### Test the SDK
 
-To test the SDK, you have a convenient method [`SDK.whoami`¹](https://nebius.github.io/pysdk/nebius.sdk.SDK.html#whoami), that will return basic info about the profile, you've authenticated with.
+To test the SDK, you have a convenient method [`SDK.whoami`](https://nebius.github.io/pysdk/nebius.sdk.SDK.html#whoami), that will return basic info about the profile, you've authenticated with.
 
 SDK is created around asyncio, so the best is to call it from async context:
 
@@ -167,7 +167,7 @@ result = service.get(GetBucketRequest(
 
 ##### Poll operations
 
-Some methods return [`nebius.aio.Operation`¹](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html), which needs to be finished, for instance `Create` request from the `BucketService`. Operations can be waited till completion.
+Some methods return [`nebius.aio.Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html), which needs to be finished, for instance `Create` request from the `BucketService`. Operations can be waited till completion.
 
 Assuming, we are already in async context:
 
@@ -223,9 +223,9 @@ log.info(f"Server answered: {response}; Request ID: {request_id} and Trace ID: {
 
 ##### Parse errors
 
-Sometimes things go wrong. There are many exceptions a request can raise, but some of them are created on a server. These exceptions will derive from [`nebius.aio.service_error.RequestError`¹](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestError.html). This error will contain request status and additional information from the server, if there was any.
+Sometimes things go wrong. There are many exceptions a request can raise, but some of them are created on a server. These exceptions will derive from [`nebius.aio.service_error.RequestError`](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestError.html). This error will contain request status and additional information from the server, if there was any.
 
-You can just print the RequestError to see all the info in readable format, or you can parse [`nebius.aio.service_error.RequestStatusExtended`¹](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestStatusExtended.html) located in `caught_error.status`, which will contain all the information in structured form.
+You can just print the RequestError to see all the info in readable format, or you can parse [`nebius.aio.service_error.RequestStatusExtended`](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestStatusExtended.html) located in `caught_error.status`, which will contain all the information in structured form.
 
 ```python
 from nebius.aio.service_error import RequestError
@@ -241,7 +241,7 @@ Do not forget to save request ID and trace ID from the output, in case you will 
 
 ### Call `Update` methods
 
-Any `Update` method requires either to pass a manually constructed [`x-resetmask`¹](https://nebius.github.io/pysdk/nebius.base.fieldmask.Mask.html) or to send a fully set new specification. Here are both examples:
+Any `Update` method requires either to pass a manually constructed [`x-resetmask`](https://nebius.github.io/pysdk/nebius.base.fieldmask.Mask.html) or to send a fully set new specification. Here are both examples:
 
 #### Using full state modifications
 
