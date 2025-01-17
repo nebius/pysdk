@@ -14,6 +14,7 @@ authors = [
 ]
 license = { text = "MIT" }
 dependencies = [
+    # added a dep, add the notice!
     "cryptography>=43.0.3",
     "grpcio>=1.68.1",
     "PyJWT>=2.9.0",
@@ -26,7 +27,9 @@ requires-python = ">=3.10"
 
 [project.optional-dependencies]
 windows = ["certifi-win32"]  # to use windows certificates
-dev = [ # don't forget to mirror some of these to tox.ini
+dev = [
+    # added a dep, add the notice!
+    # don't forget to mirror some of these to tox config in this file
     "pytest>=8.0",  # For running tests
     "pytest-asyncio>=0.24.0",  # For running async tests
     "tox>=4.0",     # For testing automation
@@ -37,11 +40,13 @@ dev = [ # don't forget to mirror some of these to tox.ini
     "types-protobuf>=5.29.1", # for mypy
 ]
 genproto = [
+    # added a dep, add the notice!
     "grpcio-tools>=1.68.1",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
 ]
 gendoc = [
+    # added a dep, add the notice!
     "pydoctor>=24.11.2",
     "beautifulsoup4>=4.12.3",
 ]
