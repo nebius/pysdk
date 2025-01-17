@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
-    
+    <link rel="canonical" href="https://nebius.github.io/pysdk/nebius.base.protos.descriptor.DescriptorWrap.html" />
 </head>
 
   <body>
@@ -32,24 +32,15 @@
 
       <div class="navlinks">
         <span class="navbar-brand">
-          nebius <a href="index.html">Reference</a>
+          <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>
         </span>
 
-        <a href="apiReference.html">
-          API
-        </a>
-
-        <a href="moduleIndex.html">
-          Modules
-        </a>
-
-        <a href="classIndex.html">
-          Classes
-        </a>
-
-        <a href="nameIndex.html">
-          Names
-        </a>
+        <a href="https://github.com/nebius/pysdk/tree/main/README.md">Readme</a>
+        <a href="index.html">Code reference</a>
+        <a href="apiReference.html">API</a>
+        <a href="moduleIndex.html">Modules</a>
+        <a href="classIndex.html">Classes</a>
+        <a href="nameIndex.html">Names</a>
 
         <div id="search-box-container">
           <div class="input-group">
@@ -299,7 +290,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">DescriptorWrap</span>(ABC, Generic[<wbr></wbr><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a>]):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.base.protos.descriptor.DescriptorWrap.__init__">DescriptorWrap(name, file_descriptor, expected_type)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">DescriptorWrap</span>(<a href="https://docs.python.org/3/library/abc.html#abc.ABC" class="intersphinx-link">ABC</a>, <a href="https://docs.python.org/3/library/typing.html#typing.Generic" class="intersphinx-link">Generic</a>[<wbr></wbr><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a>]): <a href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/protos/descriptor.py#L12" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.base.protos.descriptor.DescriptorWrap.__init__">DescriptorWrap(name, file_descriptor, expected_type)</a></code></p>
           <p><a href="classIndex.html#nebius.base.protos.descriptor.DescriptorWrap">View In Hierarchy</a></p>
         </div>
 
@@ -367,7 +358,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">__call__</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/protos/descriptor.py#L26">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__call__" title="nebius.base.protos.descriptor.DescriptorWrap.__call__">
       
       
@@ -390,8 +384,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, name: <code>str</code>, file_descriptor: <code>pb.FileDescriptor</code>, expected_type: <code>type[<wbr></wbr><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a>]</code>)</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, name: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, file_descriptor: <code>pb.FileDescriptor</code>, expected_type: <code><a href="https://docs.python.org/3/library/functions.html#type" class="intersphinx-link">type</a>[<wbr></wbr><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a>]</code>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/protos/descriptor.py#L13">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__init__" title="nebius.base.protos.descriptor.DescriptorWrap.__init__">
       
       
@@ -414,8 +411,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">_find_descriptor</span><span class="function-signature">(self, container: <code>pb.FileDescriptor | pb.Descriptor</code>, name: <code>str</code>) -&gt; <code>pb.Descriptor | pb.EnumDescriptor | pb.OneofDescriptor | pb.ServiceDescriptor | None</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">_find_descriptor</span><span class="function-signature">(self, container: <code>pb.FileDescriptor | pb.Descriptor</code>, name: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code>pb.Descriptor | pb.EnumDescriptor | pb.OneofDescriptor | pb.ServiceDescriptor | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/protos/descriptor.py#L42">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_find_descriptor" title="nebius.base.protos.descriptor.DescriptorWrap._find_descriptor">
       
       
@@ -437,8 +437,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_descriptor</span>: <code><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a> | None</code> =
-    
+    <span class="py-defname">_descriptor</span>: <code><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/protos/descriptor.py#L24">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_descriptor" title="nebius.base.protos.descriptor.DescriptorWrap._descriptor">
       
       
@@ -461,8 +464,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_expected_type</span>: <code>type[<wbr></wbr><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a>]</code> =
-    
+    <span class="py-defname">_expected_type</span>: <code><a href="https://docs.python.org/3/library/functions.html#type" class="intersphinx-link">type</a>[<wbr></wbr><a href="nebius.base.protos.descriptor.html#T" class="internal-link" title="nebius.base.protos.descriptor.T">T</a>]</code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/protos/descriptor.py#L23">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_expected_type" title="nebius.base.protos.descriptor.DescriptorWrap._expected_type">
       
       
@@ -486,7 +492,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_file_descriptor</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/protos/descriptor.py#L22">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_file_descriptor" title="nebius.base.protos.descriptor.DescriptorWrap._file_descriptor">
       
       
@@ -510,7 +519,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_name</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/protos/descriptor.py#L21">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_name" title="nebius.base.protos.descriptor.DescriptorWrap._name">
       
       
@@ -532,7 +544,7 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">Reference Documentation</a> for nebius,
+    <a href="index.html">Reference Documentation</a> for <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
     24.11.2.
   </div>

@@ -181,7 +181,11 @@ add-package = ["src/nebius"]
 project-name="nebius"
 html-output="docs"
 template-dir="templates"
+project-url="https://github.com/nebius/pysdk"
+html-base-url="https://nebius.github.io/pysdk"
 html-writer="nebius.base.gendoc.writer.TemplateWriter"
+html-viewsource-base="https://github.com/nebius/pysdk/tree/main"
+intersphinx = ["https://docs.python.org/3/objects.inv"]
 privacy = [
     "PRIVATE:nebius.api.nebius.common.*.OperationServiceClient",
     "PRIVATE:nebius.api.buf",

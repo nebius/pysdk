@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
-    
+    <link rel="canonical" href="https://nebius.github.io/pysdk/nebius.aio.channel.Channel.html" />
 </head>
 
   <body>
@@ -32,24 +32,15 @@
 
       <div class="navlinks">
         <span class="navbar-brand">
-          nebius <a href="index.html">Reference</a>
+          <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>
         </span>
 
-        <a href="apiReference.html">
-          API
-        </a>
-
-        <a href="moduleIndex.html">
-          Modules
-        </a>
-
-        <a href="classIndex.html">
-          Classes
-        </a>
-
-        <a href="nameIndex.html">
-          Names
-        </a>
+        <a href="https://github.com/nebius/pysdk/tree/main/README.md">Readme</a>
+        <a href="index.html">Code reference</a>
+        <a href="apiReference.html">API</a>
+        <a href="moduleIndex.html">Modules</a>
+        <a href="classIndex.html">Classes</a>
+        <a href="nameIndex.html">Names</a>
 
         <div id="search-box-container">
           <div class="input-group">
@@ -642,7 +633,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Channel</span>(<a href="nebius.aio.base.ChannelBase.html" class="internal-link" title="nebius.aio.base.ChannelBase">ChannelBase</a>):</code></p><p>Known subclasses: <code><a href="nebius.sdk.SDK.html" class="internal-link">nebius.sdk.SDK</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.aio.channel.Channel.__init__">Channel(resolver, substitutions, domain, options, ...)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Channel</span>(<a href="nebius.aio.base.ChannelBase.html" class="internal-link" title="nebius.aio.base.ChannelBase">ChannelBase</a>): <a href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L158" class="sourceLink">(source)</a></code></p><p>Known subclasses: <code><a href="nebius.sdk.SDK.html" class="internal-link">nebius.sdk.SDK</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.aio.channel.Channel.__init__">Channel(resolver, substitutions, domain, options, ...)</a></code></p>
           <p><a href="classIndex.html#nebius.aio.channel.Channel">View In Hierarchy</a></p>
         </div>
 
@@ -840,7 +831,10 @@
     
     
     <span class="py-keyword">async def</span> <span class="py-defname">__aenter__</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.channel.Channel.html" class="internal-link" title="nebius.aio.channel.Channel">Channel</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L379">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__aenter__" title="nebius.aio.channel.Channel.__aenter__">
       
       
@@ -863,8 +857,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">async def</span> <span class="py-defname">__aexit__</span><span class="function-signature">(self, exc_type: <code>Any</code>, exc_val: <code>Any</code>, exc_tb: <code>Any</code>)</span>:
-    
+    <span class="py-keyword">async def</span> <span class="py-defname">__aexit__</span><span class="function-signature">(self, exc_type: <code><a href="https://docs.python.org/3/library/typing.html#typing.Any" class="intersphinx-link">Any</a></code>, exc_val: <code><a href="https://docs.python.org/3/library/typing.html#typing.Any" class="intersphinx-link">Any</a></code>, exc_tb: <code><a href="https://docs.python.org/3/library/typing.html#typing.Any" class="intersphinx-link">Any</a></code>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L382">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__aexit__" title="nebius.aio.channel.Channel.__aexit__">
       
       
@@ -887,8 +884,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, *, resolver: <code><a href="nebius.base.resolver.Resolver.html" class="internal-link" title="nebius.base.resolver.Resolver">Resolver</a> | None</code> = None, substitutions: <code>dict[<wbr></wbr>str, <wbr></wbr>str] | None</code> = None, domain: <code>str</code> = <a href="nebius.base.constants.html#DOMAIN" class="internal-link" title="nebius.base.constants.DOMAIN">DOMAIN</a>, options: <code>ChannelArgumentType | None</code> = None, interceptors: <code>Sequence[<wbr></wbr>ClientInterceptor] | None</code> = None, address_options: <code>dict[<wbr></wbr>str, <wbr></wbr>ChannelArgumentType] | None</code> = None, address_interceptors: <code>dict[<wbr></wbr>str, <wbr></wbr>Sequence[<wbr></wbr>ClientInterceptor]] | None</code> = None, credentials: <code><a href="nebius.aio.channel.html#Credentials" class="internal-link" title="nebius.aio.channel.Credentials">Credentials</a></code> = None, service_account_id: <code>str | None</code> = None, service_account_public_key_id: <code>str | None</code> = None, service_account_private_key_file_name: <code>str | None</code> = None, credentials_file_name: <code>str | None</code> = None, tls_credentials: <code>ChannelCredentials | None</code> = None, event_loop: <code>AbstractEventLoop | None</code> = None)</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, *, resolver: <code><a href="nebius.base.resolver.Resolver.html" class="internal-link" title="nebius.base.resolver.Resolver">Resolver</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, substitutions: <code><a href="https://docs.python.org/3/library/stdtypes.html#dict" class="intersphinx-link">dict</a>[<wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>, <wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, domain: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code> = <a href="nebius.base.constants.html#DOMAIN" class="internal-link" title="nebius.base.constants.DOMAIN">DOMAIN</a>, options: <code>ChannelArgumentType | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, interceptors: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" class="intersphinx-link">Sequence</a>[<wbr></wbr>ClientInterceptor] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, address_options: <code><a href="https://docs.python.org/3/library/stdtypes.html#dict" class="intersphinx-link">dict</a>[<wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>, <wbr></wbr>ChannelArgumentType] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, address_interceptors: <code><a href="https://docs.python.org/3/library/stdtypes.html#dict" class="intersphinx-link">dict</a>[<wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>, <wbr></wbr><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" class="intersphinx-link">Sequence</a>[<wbr></wbr>ClientInterceptor]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code><a href="nebius.aio.channel.html#Credentials" class="internal-link" title="nebius.aio.channel.Credentials">Credentials</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, service_account_id: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, service_account_public_key_id: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, service_account_private_key_file_name: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials_file_name: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, tls_credentials: <code>ChannelCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, event_loop: <code><a href="https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.AbstractEventLoop" class="intersphinx-link">AbstractEventLoop</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L159">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__init__" title="nebius.aio.channel.Channel.__init__">
       
       
@@ -912,7 +912,10 @@
     
     
     <span class="py-keyword">async def</span> <span class="py-defname">channel_ready</span><span class="function-signature">(self)</span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L394">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#channel_ready" title="nebius.aio.channel.Channel.channel_ready">
       
       
@@ -935,8 +938,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">async def</span> <span class="py-defname">close</span><span class="function-signature">(self, grace: <code>float | None</code> = None)</span>:
-    
+    <span class="py-keyword">async def</span> <span class="py-defname">close</span><span class="function-signature">(self, grace: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L289">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#close" title="nebius.aio.channel.Channel.close">
       
       
@@ -959,8 +965,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">create_address_channel</span><span class="function-signature">(self, addr: <code>str</code>) -&gt; <code>GRPCChannel</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">create_address_channel</span><span class="function-signature">(self, addr: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code>GRPCChannel</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L348">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#create_address_channel" title="nebius.aio.channel.Channel.create_address_channel">
       
       
@@ -983,8 +992,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_addr_by_method</span><span class="function-signature">(self, method_name: <code>str</code>) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_addr_by_method</span><span class="function-signature">(self, method_name: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L320">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_addr_by_method" title="nebius.aio.channel.Channel.get_addr_by_method">
       
       
@@ -1007,8 +1019,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_addr_from_service_name</span><span class="function-signature">(self, service_name: <code>str</code>) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_addr_from_service_name</span><span class="function-signature">(self, service_name: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L315">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_addr_from_service_name" title="nebius.aio.channel.Channel.get_addr_from_service_name">
       
       
@@ -1031,8 +1046,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_addr_from_stub</span><span class="function-signature">(self, service_stub_class: <code>type[<wbr></wbr><a href="nebius.aio.service_descriptor.ServiceStub.html" class="internal-link" title="nebius.aio.service_descriptor.ServiceStub">ServiceStub</a>]</code>) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_addr_from_stub</span><span class="function-signature">(self, service_stub_class: <code><a href="https://docs.python.org/3/library/functions.html#type" class="intersphinx-link">type</a>[<wbr></wbr><a href="nebius.aio.service_descriptor.ServiceStub.html" class="internal-link" title="nebius.aio.service_descriptor.ServiceStub">ServiceStub</a>]</code>) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L311">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_addr_from_stub" title="nebius.aio.channel.Channel.get_addr_from_stub">
       
       
@@ -1055,8 +1073,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_address_interceptors</span><span class="function-signature">(self, addr: <code>str</code>) -&gt; <code>Sequence[<wbr></wbr>ClientInterceptor]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_address_interceptors</span><span class="function-signature">(self, addr: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" class="intersphinx-link">Sequence</a>[<wbr></wbr>ClientInterceptor]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L341">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_address_interceptors" title="nebius.aio.channel.Channel.get_address_interceptors">
       
       
@@ -1079,8 +1100,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_address_options</span><span class="function-signature">(self, addr: <code>str</code>) -&gt; <code>ChannelArgumentType</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_address_options</span><span class="function-signature">(self, addr: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code>ChannelArgumentType</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L335">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_address_options" title="nebius.aio.channel.Channel.get_address_options">
       
       
@@ -1103,8 +1127,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_channel_by_addr</span><span class="function-signature">(self, addr: <code>str</code>) -&gt; <code>GRPCChannel</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_channel_by_addr</span><span class="function-signature">(self, addr: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code>GRPCChannel</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L326">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_channel_by_addr" title="nebius.aio.channel.Channel.get_channel_by_addr">
       
       
@@ -1127,8 +1154,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_channel_by_method</span><span class="function-signature">(self, method_name: <code>str</code>) -&gt; <code>GRPCChannel</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_channel_by_method</span><span class="function-signature">(self, method_name: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code>GRPCChannel</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L331">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_channel_by_method" title="nebius.aio.channel.Channel.get_channel_by_method">
       
       
@@ -1151,8 +1181,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_corresponding_operation_service</span><span class="function-signature">(self, service_stub_class: <code>type[<wbr></wbr><a href="nebius.aio.service_descriptor.ServiceStub.html" class="internal-link" title="nebius.aio.service_descriptor.ServiceStub">ServiceStub</a>]</code>) -&gt; <code><a href="nebius.api.nebius.common.v1.operation_service_pb2_grpc.OperationServiceStub.html" class="internal-link" title="nebius.api.nebius.common.v1.operation_service_pb2_grpc.OperationServiceStub">OperationServiceStub</a></code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_corresponding_operation_service</span><span class="function-signature">(self, service_stub_class: <code><a href="https://docs.python.org/3/library/functions.html#type" class="intersphinx-link">type</a>[<wbr></wbr><a href="nebius.aio.service_descriptor.ServiceStub.html" class="internal-link" title="nebius.aio.service_descriptor.ServiceStub">ServiceStub</a>]</code>) -&gt; <code><a href="nebius.api.nebius.common.v1.operation_service_pb2_grpc.OperationServiceStub.html" class="internal-link" title="nebius.api.nebius.common.v1.operation_service_pb2_grpc.OperationServiceStub">OperationServiceStub</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L295">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_corresponding_operation_service" title="nebius.aio.channel.Channel.get_corresponding_operation_service">
       
       
@@ -1175,8 +1208,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_corresponding_operation_service_alpha</span><span class="function-signature">(self, service_stub_class: <code>type[<wbr></wbr><a href="nebius.aio.service_descriptor.ServiceStub.html" class="internal-link" title="nebius.aio.service_descriptor.ServiceStub">ServiceStub</a>]</code>) -&gt; <code><a href="nebius.api.nebius.common.v1alpha1.operation_service_pb2_grpc.OperationServiceStub.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.operation_service_pb2_grpc.OperationServiceStub">OperationServiceStubDeprecated</a></code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_corresponding_operation_service_alpha</span><span class="function-signature">(self, service_stub_class: <code><a href="https://docs.python.org/3/library/functions.html#type" class="intersphinx-link">type</a>[<wbr></wbr><a href="nebius.aio.service_descriptor.ServiceStub.html" class="internal-link" title="nebius.aio.service_descriptor.ServiceStub">ServiceStub</a>]</code>) -&gt; <code><a href="nebius.api.nebius.common.v1alpha1.operation_service_pb2_grpc.OperationServiceStub.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.operation_service_pb2_grpc.OperationServiceStub">OperationServiceStubDeprecated</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L303">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_corresponding_operation_service_alpha" title="nebius.aio.channel.Channel.get_corresponding_operation_service_alpha">
       
       
@@ -1199,8 +1235,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_state</span><span class="function-signature">(self, try_to_connect: <code>bool</code> = False) -&gt; <code>ChannelConnectivity</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_state</span><span class="function-signature">(self, try_to_connect: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code> = <a href="https://docs.python.org/3/library/constants.html#False" class="intersphinx-link">False</a>) -&gt; <code>ChannelConnectivity</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L385">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_state" title="nebius.aio.channel.Channel.get_state">
       
       
@@ -1223,8 +1262,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">run_sync</span><span class="function-signature">(self, awaitable: <code>Awaitable[<wbr></wbr><a href="nebius.aio.channel.html#T" class="internal-link" title="nebius.aio.channel.T">T</a>]</code>, timeout: <code>float | None</code> = None) -&gt; <code><a href="nebius.aio.channel.html#T" class="internal-link" title="nebius.aio.channel.T">T</a></code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">run_sync</span><span class="function-signature">(self, awaitable: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Awaitable" class="intersphinx-link">Awaitable</a>[<wbr></wbr><a href="nebius.aio.channel.html#T" class="internal-link" title="nebius.aio.channel.T">T</a>]</code>, timeout: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.channel.html#T" class="internal-link" title="nebius.aio.channel.T">T</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L254">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#run_sync" title="nebius.aio.channel.Channel.run_sync">
       
       
@@ -1247,8 +1289,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">stream_stream</span><span class="function-signature">(self, method: <code>str</code>, request_serializer: <code>SerializingFunction | None</code> = None, response_deserializer: <code>DeserializingFunction | None</code> = None, _registered_method: <code>bool | None</code> = None) -&gt; <code>StreamStreamMultiCallable</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">stream_stream</span><span class="function-signature">(self, method: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, request_serializer: <code>SerializingFunction | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, response_deserializer: <code>DeserializingFunction | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, _registered_method: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code>StreamStreamMultiCallable</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L415">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#stream_stream" title="nebius.aio.channel.Channel.stream_stream">
       
       
@@ -1271,8 +1316,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">stream_unary</span><span class="function-signature">(self, method: <code>str</code>, request_serializer: <code>SerializingFunction | None</code> = None, response_deserializer: <code>DeserializingFunction | None</code> = None, _registered_method: <code>bool | None</code> = None) -&gt; <code>StreamUnaryMultiCallable</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">stream_unary</span><span class="function-signature">(self, method: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, request_serializer: <code>SerializingFunction | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, response_deserializer: <code>DeserializingFunction | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, _registered_method: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code>StreamUnaryMultiCallable</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L406">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#stream_unary" title="nebius.aio.channel.Channel.stream_unary">
       
       
@@ -1295,8 +1343,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">sync_close</span><span class="function-signature">(self, timeout: <code>float | None</code> = None)</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">sync_close</span><span class="function-signature">(self, timeout: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L286">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#sync_close" title="nebius.aio.channel.Channel.sync_close">
       
       
@@ -1319,8 +1370,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">unary_stream</span><span class="function-signature">(self, method: <code>str</code>, request_serializer: <code>SerializingFunction | None</code> = None, response_deserializer: <code>DeserializingFunction | None</code> = None, _registered_method: <code>bool | None</code> = None) -&gt; <code>UnaryStreamMultiCallable[<wbr></wbr><a href="nebius.aio.channel.html#Req" class="internal-link" title="nebius.aio.channel.Req">Req</a>, <wbr></wbr><a href="nebius.aio.channel.html#Res" class="internal-link" title="nebius.aio.channel.Res">Res</a>]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">unary_stream</span><span class="function-signature">(self, method: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, request_serializer: <code>SerializingFunction | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, response_deserializer: <code>DeserializingFunction | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, _registered_method: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code>UnaryStreamMultiCallable[<wbr></wbr><a href="nebius.aio.channel.html#Req" class="internal-link" title="nebius.aio.channel.Req">Req</a>, <wbr></wbr><a href="nebius.aio.channel.html#Res" class="internal-link" title="nebius.aio.channel.Res">Res</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L397">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#unary_stream" title="nebius.aio.channel.Channel.unary_stream">
       
       
@@ -1343,8 +1397,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">unary_unary</span><span class="function-signature">(self, method_name: <code>str</code>, request_serializer: <code>SerializingFunction | None</code> = None, response_deserializer: <code>DeserializingFunction | None</code> = None, _registered_method: <code>bool | None</code> = False) -&gt; <code>UnaryUnaryMultiCallable[<wbr></wbr><a href="nebius.aio.channel.html#Req" class="internal-link" title="nebius.aio.channel.Req">Req</a>, <wbr></wbr><a href="nebius.aio.channel.html#Res" class="internal-link" title="nebius.aio.channel.Res">Res</a>]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">unary_unary</span><span class="function-signature">(self, method_name: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, request_serializer: <code>SerializingFunction | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, response_deserializer: <code>DeserializingFunction | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, _registered_method: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#False" class="intersphinx-link">False</a>) -&gt; <code>UnaryUnaryMultiCallable[<wbr></wbr><a href="nebius.aio.channel.html#Req" class="internal-link" title="nebius.aio.channel.Req">Req</a>, <wbr></wbr><a href="nebius.aio.channel.html#Res" class="internal-link" title="nebius.aio.channel.Res">Res</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L364">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#unary_unary" title="nebius.aio.channel.Channel.unary_unary">
       
       
@@ -1368,7 +1425,10 @@
     
     
     <span class="py-keyword">async def</span> <span class="py-defname">wait_for_state_change</span><span class="function-signature">(self, last_observed_state: <code>ChannelConnectivity</code>)</span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L388">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#wait_for_state_change" title="nebius.aio.channel.Channel.wait_for_state_change">
       
       
@@ -1391,7 +1451,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_address_interceptors</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L214">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_address_interceptors" title="nebius.aio.channel.Channel._address_interceptors">
       
       
@@ -1415,7 +1478,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_address_options</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L213">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_address_options" title="nebius.aio.channel.Channel._address_options">
       
       
@@ -1439,7 +1505,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_channels</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L196">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_channels" title="nebius.aio.channel.Channel._channels">
       
       
@@ -1463,7 +1532,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_event_loop</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L250">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_event_loop" title="nebius.aio.channel.Channel._event_loop">
       
       
@@ -1486,8 +1558,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_global_interceptors</span>: <code>list[<wbr></wbr>ClientInterceptor]</code> =
-    
+    <span class="py-defname">_global_interceptors</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr>ClientInterceptor]</code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L204">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_global_interceptors" title="nebius.aio.channel.Channel._global_interceptors">
       
       
@@ -1510,8 +1585,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_global_interceptors_inner</span>: <code>list[<wbr></wbr>ClientInterceptor]</code> =
-    
+    <span class="py-defname">_global_interceptors_inner</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr>ClientInterceptor]</code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L216">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_global_interceptors_inner" title="nebius.aio.channel.Channel._global_interceptors_inner">
       
       
@@ -1535,7 +1613,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_global_options</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L203">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_global_options" title="nebius.aio.channel.Channel._global_options">
       
       
@@ -1559,7 +1640,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_methods</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L197">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_methods" title="nebius.aio.channel.Channel._methods">
       
       
@@ -1583,7 +1667,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_resolver</span>: <code><a href="nebius.base.resolver.Resolver.html" class="internal-link" title="nebius.base.resolver.Resolver">Resolver</a></code> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L185">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_resolver" title="nebius.aio.channel.Channel._resolver">
       
       
@@ -1607,7 +1694,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_tls_credentials</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/channel.py#L194">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_tls_credentials" title="nebius.aio.channel.Channel._tls_credentials">
       
       
@@ -1629,7 +1719,7 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">Reference Documentation</a> for nebius,
+    <a href="index.html">Reference Documentation</a> for <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
     24.11.2.
   </div>

@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
-    
+    <link rel="canonical" href="https://nebius.github.io/pysdk/nebius.aio.token.renewable.Bearer.html" />
 </head>
 
   <body>
@@ -32,24 +32,15 @@
 
       <div class="navlinks">
         <span class="navbar-brand">
-          nebius <a href="index.html">Reference</a>
+          <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>
         </span>
 
-        <a href="apiReference.html">
-          API
-        </a>
-
-        <a href="moduleIndex.html">
-          Modules
-        </a>
-
-        <a href="classIndex.html">
-          Classes
-        </a>
-
-        <a href="nameIndex.html">
-          Names
-        </a>
+        <a href="https://github.com/nebius/pysdk/tree/main/README.md">Readme</a>
+        <a href="index.html">Code reference</a>
+        <a href="apiReference.html">API</a>
+        <a href="moduleIndex.html">Modules</a>
+        <a href="classIndex.html">Classes</a>
+        <a href="nameIndex.html">Names</a>
 
         <div id="search-box-container">
           <div class="input-group">
@@ -459,7 +450,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Bearer</span>(<a href="nebius.aio.token.token.Bearer.html" class="internal-link" title="nebius.aio.token.token.Bearer">ParentBearer</a>):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.aio.token.renewable.Bearer.__init__">Bearer(source, max_retries, lifetime_safe_fraction, initial_retry_timeout, ...)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Bearer</span>(<a href="nebius.aio.token.token.Bearer.html" class="internal-link" title="nebius.aio.token.token.Bearer">ParentBearer</a>): <a href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L52" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.aio.token.renewable.Bearer.__init__">Bearer(source, max_retries, lifetime_safe_fraction, initial_retry_timeout, ...)</a></code></p>
           <p><a href="classIndex.html#nebius.aio.token.renewable.Bearer">View In Hierarchy</a></p>
         </div>
 
@@ -591,8 +582,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, source: <code><a href="nebius.aio.token.token.Bearer.html" class="internal-link" title="nebius.aio.token.token.Bearer">ParentBearer</a></code>, max_retries: <code>int</code> = 2, lifetime_safe_fraction: <code>float</code> = 0.9, initial_retry_timeout: <code>timedelta</code> = timedelta(<wbr></wbr>seconds=1), max_retry_timeout: <code>timedelta</code> = timedelta(<wbr></wbr>minutes=1), retry_timeout_exponent: <code>float</code> = 1.5, refresh_request_timeout: <code>timedelta</code> = timedelta(<wbr></wbr>seconds=5))</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, source: <code><a href="nebius.aio.token.token.Bearer.html" class="internal-link" title="nebius.aio.token.token.Bearer">ParentBearer</a></code>, max_retries: <code><a href="https://docs.python.org/3/library/functions.html#int" class="intersphinx-link">int</a></code> = 2, lifetime_safe_fraction: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a></code> = 0.9, initial_retry_timeout: <code><a href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" class="intersphinx-link">timedelta</a></code> = <a href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" class="intersphinx-link">timedelta</a>(<wbr></wbr>seconds=1), max_retry_timeout: <code><a href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" class="intersphinx-link">timedelta</a></code> = <a href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" class="intersphinx-link">timedelta</a>(<wbr></wbr>minutes=1), retry_timeout_exponent: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a></code> = 1.5, refresh_request_timeout: <code><a href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" class="intersphinx-link">timedelta</a></code> = <a href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" class="intersphinx-link">timedelta</a>(<wbr></wbr>seconds=5))</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L53">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__init__" title="nebius.aio.token.renewable.Bearer.__init__">
       
       
@@ -615,8 +609,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">async def</span> <span class="py-defname">fetch</span><span class="function-signature">(self, timeout: <code>float | None</code> = None) -&gt; <code><a href="nebius.aio.token.token.Token.html" class="internal-link" title="nebius.aio.token.token.Token">Token</a></code></span>:
-    
+    <span class="py-keyword">async def</span> <span class="py-defname">fetch</span><span class="function-signature">(self, timeout: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.token.token.Token.html" class="internal-link" title="nebius.aio.token.token.Token">Token</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L82">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#fetch" title="nebius.aio.token.renewable.Bearer.fetch">
       
       
@@ -639,8 +636,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">is_renewal_required</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">is_renewal_required</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L146">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#is_renewal_required" title="nebius.aio.token.renewable.Bearer.is_renewal_required">
       
       
@@ -664,7 +664,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">receiver</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.token.renewable.Receiver.html" class="internal-link" title="nebius.aio.token.renewable.Receiver">Receiver</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L161">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#receiver" title="nebius.aio.token.renewable.Bearer.receiver">
       
       
@@ -688,7 +691,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">request_renewal</span><span class="function-signature">(self)</span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L149">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#request_renewal" title="nebius.aio.token.renewable.Bearer.request_renewal">
       
       
@@ -712,7 +718,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">stop</span><span class="function-signature">(self)</span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L155">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#stop" title="nebius.aio.token.renewable.Bearer.stop">
       
       
@@ -736,7 +745,10 @@
     
     
     <span class="py-keyword">async def</span> <span class="py-defname">_run</span><span class="function-signature">(self)</span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L96">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_run" title="nebius.aio.token.renewable.Bearer._run">
       
       
@@ -758,8 +770,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_cache</span>: <code><a href="nebius.aio.token.token.Token.html" class="internal-link" title="nebius.aio.token.token.Token">Token</a> | None</code> =
-    
+    <span class="py-defname">_cache</span>: <code><a href="nebius.aio.token.token.Token.html" class="internal-link" title="nebius.aio.token.token.Token">Token</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L65">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_cache" title="nebius.aio.token.renewable.Bearer._cache">
       
       
@@ -783,7 +798,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_initial_retry_timeout</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L77">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_initial_retry_timeout" title="nebius.aio.token.renewable.Bearer._initial_retry_timeout">
       
       
@@ -807,7 +825,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_is_fresh</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L67">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_is_fresh" title="nebius.aio.token.renewable.Bearer._is_fresh">
       
       
@@ -831,7 +852,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_is_stopped</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L68">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_is_stopped" title="nebius.aio.token.renewable.Bearer._is_stopped">
       
       
@@ -855,7 +879,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_lifetime_safe_fraction</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L76">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_lifetime_safe_fraction" title="nebius.aio.token.renewable.Bearer._lifetime_safe_fraction">
       
       
@@ -879,7 +906,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_max_retries</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L75">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_max_retries" title="nebius.aio.token.renewable.Bearer._max_retries">
       
       
@@ -903,7 +933,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_max_retry_timeout</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L78">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_max_retry_timeout" title="nebius.aio.token.renewable.Bearer._max_retry_timeout">
       
       
@@ -927,7 +960,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_refresh_request_timeout</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L80">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_refresh_request_timeout" title="nebius.aio.token.renewable.Bearer._refresh_request_timeout">
       
       
@@ -950,8 +986,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_refresh_task</span>: <code>Task[<wbr></wbr>Any] | None</code> =
-    
+    <span class="py-defname">_refresh_task</span>: <code><a href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task" class="intersphinx-link">Task</a>[<wbr></wbr><a href="https://docs.python.org/3/library/typing.html#typing.Any" class="intersphinx-link">Any</a>] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L71">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_refresh_task" title="nebius.aio.token.renewable.Bearer._refresh_task">
       
       
@@ -975,7 +1014,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_renew_requested</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L69">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_renew_requested" title="nebius.aio.token.renewable.Bearer._renew_requested">
       
       
@@ -998,8 +1040,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_renewal_attempt</span>: <code>int</code> =
-    
+    <span class="py-defname">_renewal_attempt</span>: <code><a href="https://docs.python.org/3/library/functions.html#int" class="intersphinx-link">int</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L73">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_renewal_attempt" title="nebius.aio.token.renewable.Bearer._renewal_attempt">
       
       
@@ -1023,7 +1068,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_retry_timeout_exponent</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L79">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_retry_timeout_exponent" title="nebius.aio.token.renewable.Bearer._retry_timeout_exponent">
       
       
@@ -1047,7 +1095,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_source</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/token/renewable.py#L64">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_source" title="nebius.aio.token.renewable.Bearer._source">
       
       
@@ -1069,7 +1120,7 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">Reference Documentation</a> for nebius,
+    <a href="index.html">Reference Documentation</a> for <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
     24.11.2.
   </div>

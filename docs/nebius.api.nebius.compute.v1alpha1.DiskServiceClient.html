@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
-    
+    <link rel="canonical" href="https://nebius.github.io/pysdk/nebius.api.nebius.compute.v1alpha1.DiskServiceClient.html" />
 </head>
 
   <body>
@@ -32,24 +32,15 @@
 
       <div class="navlinks">
         <span class="navbar-brand">
-          nebius <a href="index.html">Reference</a>
+          <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>
         </span>
 
-        <a href="apiReference.html">
-          API
-        </a>
-
-        <a href="moduleIndex.html">
-          Modules
-        </a>
-
-        <a href="classIndex.html">
-          Classes
-        </a>
-
-        <a href="nameIndex.html">
-          Names
-        </a>
+        <a href="https://github.com/nebius/pysdk/tree/main/README.md">Readme</a>
+        <a href="index.html">Code reference</a>
+        <a href="apiReference.html">API</a>
+        <a href="moduleIndex.html">Modules</a>
+        <a href="classIndex.html">Classes</a>
+        <a href="nameIndex.html">Names</a>
 
         <div id="search-box-container">
           <div class="input-group">
@@ -1115,7 +1106,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">DiskServiceClient</span>(<a href="nebius.aio.client.Client.html" class="internal-link" title="nebius.aio.client.Client">client.Client</a>):</code></p><p>Constructor: <code><a href="nebius.aio.client.Client.html#__init__" class="internal-link" title="nebius.aio.client.Client.__init__">DiskServiceClient(channel)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">DiskServiceClient</span>(<a href="nebius.aio.client.Client.html" class="internal-link" title="nebius.aio.client.Client">client.Client</a>): <a href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L845" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="nebius.aio.client.Client.html#__init__" class="internal-link" title="nebius.aio.client.Client.__init__">DiskServiceClient(channel)</a></code></p>
           <p><a href="classIndex.html#nebius.api.nebius.compute.v1alpha1.DiskServiceClient">View In Hierarchy</a></p>
         </div>
 
@@ -1216,8 +1207,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">create</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.CreateDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.CreateDiskRequest">CreateDiskRequest</a></code>, metadata: <code>abc.Iterable[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | None</code> = None, timeout: <code>builtins.float | None</code> = None, credentials: <code>grpc.CallCredentials | None</code> = None, wait_for_ready: <code>builtins.bool | None</code> = None, compression: <code>grpc.Compression | None</code> = None) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.CreateDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.CreateDiskRequest">CreateDiskRequest</a>, <wbr></wbr><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation">operation.Operation</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.Operation.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.Operation">v1alpha1_1.Operation</a>]]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">create</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.CreateDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.CreateDiskRequest">CreateDiskRequest</a></code>, metadata: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">abc.Iterable</a>[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, timeout: <code>builtins.float | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code>grpc.CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, wait_for_ready: <code>builtins.bool | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, compression: <code>grpc.Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.CreateDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.CreateDiskRequest">CreateDiskRequest</a>, <wbr></wbr><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation">operation.Operation</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.Operation.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.Operation">v1alpha1_1.Operation</a>]]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L910">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#create" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.create">
       
       
@@ -1240,8 +1234,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">delete</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.DeleteDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.DeleteDiskRequest">DeleteDiskRequest</a></code>, metadata: <code>abc.Iterable[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | None</code> = None, timeout: <code>builtins.float | None</code> = None, credentials: <code>grpc.CallCredentials | None</code> = None, wait_for_ready: <code>builtins.bool | None</code> = None, compression: <code>grpc.Compression | None</code> = None) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.DeleteDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.DeleteDiskRequest">DeleteDiskRequest</a>, <wbr></wbr><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation">operation.Operation</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.Operation.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.Operation">v1alpha1_1.Operation</a>]]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">delete</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.DeleteDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.DeleteDiskRequest">DeleteDiskRequest</a></code>, metadata: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">abc.Iterable</a>[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, timeout: <code>builtins.float | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code>grpc.CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, wait_for_ready: <code>builtins.bool | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, compression: <code>grpc.Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.DeleteDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.DeleteDiskRequest">DeleteDiskRequest</a>, <wbr></wbr><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation">operation.Operation</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.Operation.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.Operation">v1alpha1_1.Operation</a>]]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L951">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#delete" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.delete">
       
       
@@ -1264,8 +1261,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.GetDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.GetDiskRequest">GetDiskRequest</a></code>, metadata: <code>abc.Iterable[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | None</code> = None, timeout: <code>builtins.float | None</code> = None, credentials: <code>grpc.CallCredentials | None</code> = None, wait_for_ready: <code>builtins.bool | None</code> = None, compression: <code>grpc.Compression | None</code> = None) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.GetDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.GetDiskRequest">GetDiskRequest</a>, <wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.Disk.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.Disk">Disk</a>]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.GetDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.GetDiskRequest">GetDiskRequest</a></code>, metadata: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">abc.Iterable</a>[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, timeout: <code>builtins.float | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code>grpc.CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, wait_for_ready: <code>builtins.bool | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, compression: <code>grpc.Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.GetDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.GetDiskRequest">GetDiskRequest</a>, <wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.Disk.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.Disk">Disk</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L850">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.get">
       
       
@@ -1288,8 +1288,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_by_name</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.common.v1.GetByNameRequest.html" class="internal-link" title="nebius.api.nebius.common.v1.GetByNameRequest">v1_1.GetByNameRequest</a></code>, metadata: <code>abc.Iterable[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | None</code> = None, timeout: <code>builtins.float | None</code> = None, credentials: <code>grpc.CallCredentials | None</code> = None, wait_for_ready: <code>builtins.bool | None</code> = None, compression: <code>grpc.Compression | None</code> = None) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1.GetByNameRequest.html" class="internal-link" title="nebius.api.nebius.common.v1.GetByNameRequest">v1_1.GetByNameRequest</a>, <wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.Disk.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.Disk">Disk</a>]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">get_by_name</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.common.v1.GetByNameRequest.html" class="internal-link" title="nebius.api.nebius.common.v1.GetByNameRequest">v1_1.GetByNameRequest</a></code>, metadata: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">abc.Iterable</a>[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, timeout: <code>builtins.float | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code>grpc.CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, wait_for_ready: <code>builtins.bool | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, compression: <code>grpc.Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1.GetByNameRequest.html" class="internal-link" title="nebius.api.nebius.common.v1.GetByNameRequest">v1_1.GetByNameRequest</a>, <wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.Disk.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.Disk">Disk</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L870">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#get_by_name" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.get_by_name">
       
       
@@ -1312,8 +1315,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">list</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.ListDisksRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.ListDisksRequest">ListDisksRequest</a></code>, metadata: <code>abc.Iterable[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | None</code> = None, timeout: <code>builtins.float | None</code> = None, credentials: <code>grpc.CallCredentials | None</code> = None, wait_for_ready: <code>builtins.bool | None</code> = None, compression: <code>grpc.Compression | None</code> = None) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.ListDisksRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.ListDisksRequest">ListDisksRequest</a>, <wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.ListDisksResponse.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.ListDisksResponse">ListDisksResponse</a>]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">list</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.ListDisksRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.ListDisksRequest">ListDisksRequest</a></code>, metadata: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">abc.Iterable</a>[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, timeout: <code>builtins.float | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code>grpc.CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, wait_for_ready: <code>builtins.bool | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, compression: <code>grpc.Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.ListDisksRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.ListDisksRequest">ListDisksRequest</a>, <wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.ListDisksResponse.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.ListDisksResponse">ListDisksResponse</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L890">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#list" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.list">
       
       
@@ -1336,8 +1342,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">list_operations_by_parent</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.common.v1alpha1.ListOperationsByParentRequest.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.ListOperationsByParentRequest">v1alpha1_1.ListOperationsByParentRequest</a></code>, metadata: <code>abc.Iterable[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | None</code> = None, timeout: <code>builtins.float | None</code> = None, credentials: <code>grpc.CallCredentials | None</code> = None, wait_for_ready: <code>builtins.bool | None</code> = None, compression: <code>grpc.Compression | None</code> = None) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.ListOperationsByParentRequest.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.ListOperationsByParentRequest">v1alpha1_1.ListOperationsByParentRequest</a>, <wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.ListOperationsResponse.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.ListOperationsResponse">v1alpha1_1.ListOperationsResponse</a>]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">list_operations_by_parent</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.common.v1alpha1.ListOperationsByParentRequest.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.ListOperationsByParentRequest">v1alpha1_1.ListOperationsByParentRequest</a></code>, metadata: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">abc.Iterable</a>[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, timeout: <code>builtins.float | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code>grpc.CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, wait_for_ready: <code>builtins.bool | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, compression: <code>grpc.Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.ListOperationsByParentRequest.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.ListOperationsByParentRequest">v1alpha1_1.ListOperationsByParentRequest</a>, <wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.ListOperationsResponse.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.ListOperationsResponse">v1alpha1_1.ListOperationsResponse</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L971">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#list_operations_by_parent" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.list_operations_by_parent">
       
       
@@ -1360,8 +1369,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">update</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.UpdateDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.UpdateDiskRequest">UpdateDiskRequest</a></code>, metadata: <code>abc.Iterable[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | None</code> = None, timeout: <code>builtins.float | None</code> = None, credentials: <code>grpc.CallCredentials | None</code> = None, wait_for_ready: <code>builtins.bool | None</code> = None, compression: <code>grpc.Compression | None</code> = None) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.UpdateDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.UpdateDiskRequest">UpdateDiskRequest</a>, <wbr></wbr><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation">operation.Operation</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.Operation.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.Operation">v1alpha1_1.Operation</a>]]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">update</span><span class="function-signature">(self, request: <code><a href="nebius.api.nebius.compute.v1alpha1.UpdateDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.UpdateDiskRequest">UpdateDiskRequest</a></code>, metadata: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">abc.Iterable</a>[<wbr></wbr>builtins.tuple[<wbr></wbr>builtins.str, <wbr></wbr>builtins.str]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, timeout: <code>builtins.float | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code>grpc.CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, wait_for_ready: <code>builtins.bool | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, compression: <code>grpc.Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>) -&gt; <code><a href="nebius.aio.request.Request.html" class="internal-link" title="nebius.aio.request.Request">request_1.Request</a>[<wbr></wbr><a href="nebius.api.nebius.compute.v1alpha1.UpdateDiskRequest.html" class="internal-link" title="nebius.api.nebius.compute.v1alpha1.UpdateDiskRequest">UpdateDiskRequest</a>, <wbr></wbr><a href="nebius.aio.operation.Operation.html" class="internal-link" title="nebius.aio.operation.Operation">operation.Operation</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1alpha1.Operation.html" class="internal-link" title="nebius.api.nebius.common.v1alpha1.Operation">v1alpha1_1.Operation</a>]]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L930">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#update" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.update">
       
       
@@ -1384,7 +1396,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">__PB2_DESCRIPTOR__</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L846">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__PB2_DESCRIPTOR__" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.__PB2_DESCRIPTOR__">
       
       
@@ -1412,8 +1427,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">__service_name__</span>: <code>str</code> =
-    
+    <span class="py-defname">__service_name__</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/api/nebius/compute/v1alpha1/__init__.py#L847">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__service_name__" title="nebius.api.nebius.compute.v1alpha1.DiskServiceClient.__service_name__">
       
       
@@ -1435,7 +1453,7 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">Reference Documentation</a> for nebius,
+    <a href="index.html">Reference Documentation</a> for <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
     24.11.2.
   </div>
