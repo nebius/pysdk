@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
-    
+    <link rel="canonical" href="https://nebius.github.io/pysdk/nebius.base.fieldmask.FieldPath.html" />
 </head>
 
   <body>
@@ -32,24 +32,15 @@
 
       <div class="navlinks">
         <span class="navbar-brand">
-          nebius <a href="index.html">Reference</a>
+          <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>
         </span>
 
-        <a href="apiReference.html">
-          API
-        </a>
-
-        <a href="moduleIndex.html">
-          Modules
-        </a>
-
-        <a href="classIndex.html">
-          Classes
-        </a>
-
-        <a href="nameIndex.html">
-          Names
-        </a>
+        <a href="https://github.com/nebius/pysdk/tree/main/README.md">Readme</a>
+        <a href="index.html">Code reference</a>
+        <a href="apiReference.html">API</a>
+        <a href="moduleIndex.html">Modules</a>
+        <a href="classIndex.html">Classes</a>
+        <a href="nameIndex.html">Names</a>
 
         <div id="search-box-container">
           <div class="input-group">
@@ -436,7 +427,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">FieldPath</span>(list[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__init__">FieldPath(base)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">FieldPath</span>(<a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]): <a href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L33" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.base.fieldmask.FieldPath.__init__">FieldPath(base)</a></code></p>
           <p><a href="classIndex.html#nebius.base.fieldmask.FieldPath">View In Hierarchy</a></p>
         </div>
 
@@ -552,9 +543,12 @@
   </a>
   <div class="functionHeader">
     
-    @classmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">unmarshal</span><span class="function-signature">(cls, s: <code>str</code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | None</code></span>:
-    
+    @<a href="https://docs.python.org/3/library/functions.html#classmethod" class="intersphinx-link">classmethod</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">unmarshal</span><span class="function-signature">(cls, s: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L139">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#unmarshal" title="nebius.base.fieldmask.FieldPath.unmarshal">
       
       
@@ -575,10 +569,13 @@
     
   </a>
   <div class="functionHeader">
-    @overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__add__</span><span class="function-signature">(self, value: <code>Iterable[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | str]</code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></span>:</div>@overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__add__</span><span class="function-signature">(self, value: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a></code>) -&gt; <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a></code></span>:</div>
+    @<a href="https://docs.python.org/3/library/typing.html#typing.overload" class="intersphinx-link">overload</a><br /><div><span class="py-keyword">def</span> <span class="py-defname">__add__</span><span class="function-signature">(self, value: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">Iterable</a>[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | <a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>]</code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></span>:</div>@<a href="https://docs.python.org/3/library/typing.html#typing.overload" class="intersphinx-link">overload</a><br /><div><span class="py-keyword">def</span> <span class="py-defname">__add__</span><span class="function-signature">(self, value: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a></code>) -&gt; <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a></code></span>:</div>
     
     
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L154">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__add__" title="nebius.base.fieldmask.FieldPath.__add__">
       
       
@@ -601,8 +598,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__eq__</span><span class="function-signature">(self, value: <code>object</code>) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__eq__</span><span class="function-signature">(self, value: <code><a href="https://docs.python.org/3/library/functions.html#object" class="intersphinx-link">object</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L175">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__eq__" title="nebius.base.fieldmask.FieldPath.__eq__">
       
       
@@ -625,8 +625,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__iadd__</span><span class="function-signature">(self, value: <code>Iterable[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | str]</code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__iadd__</span><span class="function-signature">(self, value: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">Iterable</a>[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | <a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>]</code>) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L143">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__iadd__" title="nebius.base.fieldmask.FieldPath.__iadd__">
       
       
@@ -647,10 +650,13 @@
     
   </a>
   <div class="functionHeader">
-    @overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self)</span>:</div>@overload<br /><div><span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, base: <code>Iterable[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | str]</code>)</span>:</div>
+    @<a href="https://docs.python.org/3/library/typing.html#typing.overload" class="intersphinx-link">overload</a><br /><div><span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self)</span>:</div>@<a href="https://docs.python.org/3/library/typing.html#typing.overload" class="intersphinx-link">overload</a><br /><div><span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, base: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">Iterable</a>[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a> | <a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>]</code>)</span>:</div>
     
     
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L34">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__init__" title="nebius.base.fieldmask.FieldPath.__init__">
       
       
@@ -673,8 +679,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L133">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__repr__" title="nebius.base.fieldmask.FieldPath.__repr__">
       
       
@@ -698,7 +707,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">copy</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L59">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#copy" title="nebius.base.fieldmask.FieldPath.copy">
       
       
@@ -721,8 +733,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">is_prefix_of</span><span class="function-signature">(self, value: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code>) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">is_prefix_of</span><span class="function-signature">(self, value: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L180">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#is_prefix_of" title="nebius.base.fieldmask.FieldPath.is_prefix_of">
       
       
@@ -745,8 +760,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">marshal</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">marshal</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L130">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#marshal" title="nebius.base.fieldmask.FieldPath.marshal">
       
       
@@ -769,8 +787,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">matches_reset_mask</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">matches_reset_mask</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L115">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#matches_reset_mask" title="nebius.base.fieldmask.FieldPath.matches_reset_mask">
       
       
@@ -793,8 +814,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">matches_reset_mask_final</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">matches_reset_mask_final</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L119">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#matches_reset_mask_final" title="nebius.base.fieldmask.FieldPath.matches_reset_mask_final">
       
       
@@ -817,8 +841,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">matches_select_mask</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">matches_select_mask</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L123">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#matches_select_mask" title="nebius.base.fieldmask.FieldPath.matches_select_mask">
       
       
@@ -841,8 +868,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">matches_select_mask_inner</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>tuple[<wbr></wbr>bool, <wbr></wbr>bool]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">matches_select_mask_inner</span><span class="function-signature">(self, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#tuple" class="intersphinx-link">tuple</a>[<wbr></wbr><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a>, <wbr></wbr><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L127">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#matches_select_mask_inner" title="nebius.base.fieldmask.FieldPath.matches_select_mask_inner">
       
       
@@ -865,8 +895,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">parent</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | None</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">parent</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L54">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#parent" title="nebius.base.fieldmask.FieldPath.parent">
       
       
@@ -890,7 +923,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">to_mask</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L62">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#to_mask" title="nebius.base.fieldmask.FieldPath.to_mask">
       
       
@@ -912,9 +948,12 @@
   </a>
   <div class="functionHeader">
     
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">_matches_reset_mask</span><span class="function-signature">(fp: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | list[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]</code>, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>tuple[<wbr></wbr>bool, <wbr></wbr>bool]</code></span>:
-    
+    @<a href="https://docs.python.org/3/library/functions.html#staticmethod" class="intersphinx-link">staticmethod</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">_matches_reset_mask</span><span class="function-signature">(fp: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | <a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]</code>, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#tuple" class="intersphinx-link">tuple</a>[<wbr></wbr><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a>, <wbr></wbr><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L71">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_matches_reset_mask" title="nebius.base.fieldmask.FieldPath._matches_reset_mask">
       
       
@@ -936,9 +975,12 @@
   </a>
   <div class="functionHeader">
     
-    @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">_matches_select_mask</span><span class="function-signature">(fp: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | list[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]</code>, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | None</code>) -&gt; <code>tuple[<wbr></wbr>bool, <wbr></wbr>bool]</code></span>:
-    
+    @<a href="https://docs.python.org/3/library/functions.html#staticmethod" class="intersphinx-link">staticmethod</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">_matches_select_mask</span><span class="function-signature">(fp: <code><a href="nebius.base.fieldmask.FieldPath.html" class="internal-link" title="nebius.base.fieldmask.FieldPath">FieldPath</a> | <a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr><a href="nebius.base.fieldmask.FieldKey.html" class="internal-link" title="nebius.base.fieldmask.FieldKey">FieldKey</a>]</code>, mask: <code><a href="nebius.base.fieldmask.Mask.html" class="internal-link" title="nebius.base.fieldmask.Mask">Mask</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#tuple" class="intersphinx-link">tuple</a>[<wbr></wbr><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a>, <wbr></wbr><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/fieldmask.py#L93">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_matches_select_mask" title="nebius.base.fieldmask.FieldPath._matches_select_mask">
       
       
@@ -959,7 +1001,7 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">Reference Documentation</a> for nebius,
+    <a href="index.html">Reference Documentation</a> for <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
     24.11.2.
   </div>

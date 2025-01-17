@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
-    
+    <link rel="canonical" href="https://nebius.github.io/pysdk/nebius.base._service_error.html" />
 </head>
 
   <body>
@@ -32,24 +32,15 @@
 
       <div class="navlinks">
         <span class="navbar-brand">
-          nebius <a href="index.html">Reference</a>
+          <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>
         </span>
 
-        <a href="apiReference.html">
-          API
-        </a>
-
-        <a href="moduleIndex.html">
-          Modules
-        </a>
-
-        <a href="classIndex.html">
-          Classes
-        </a>
-
-        <a href="nameIndex.html">
-          Names
-        </a>
+        <a href="https://github.com/nebius/pysdk/tree/main/README.md">Readme</a>
+        <a href="index.html">Code reference</a>
+        <a href="apiReference.html">API</a>
+        <a href="moduleIndex.html">Modules</a>
+        <a href="classIndex.html">Classes</a>
+        <a href="nameIndex.html">Names</a>
 
         <div id="search-box-container">
           <div class="input-group">
@@ -436,7 +427,7 @@
         </div>
 
         <div class="extrasDocstring">
-          
+          <a href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/_service_error.py" class="sourceLink">(source)</a>
           <p></p>
         </div>
 
@@ -503,8 +494,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">grpc_status_of_errors</span><span class="function-signature">(code: <code>int</code>, message: <code>str</code>, errors: <code>ServiceErrorPb | Iterable[<wbr></wbr>ServiceErrorPb]</code>) -&gt; <code>Status</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">grpc_status_of_errors</span><span class="function-signature">(code: <code><a href="https://docs.python.org/3/library/functions.html#int" class="intersphinx-link">int</a></code>, message: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, errors: <code>ServiceErrorPb | <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">Iterable</a>[<wbr></wbr>ServiceErrorPb]</code>) -&gt; <code>Status</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/_service_error.py#L63">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#grpc_status_of_errors" title="nebius.base._service_error.grpc_status_of_errors">
       
       
@@ -527,8 +521,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">pb2_from_error</span><span class="function-signature">(err: <code>RpcError</code>) -&gt; <code>list[<wbr></wbr>ServiceErrorPb]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">pb2_from_error</span><span class="function-signature">(err: <code>RpcError</code>) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr>ServiceErrorPb]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/_service_error.py#L30">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#pb2_from_error" title="nebius.base._service_error.pb2_from_error">
       
       
@@ -551,8 +548,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">pb2_from_status</span><span class="function-signature">(status: <code>StatusPb</code>, remove_from_details: <code>bool</code> = False) -&gt; <code>list[<wbr></wbr>ServiceErrorPb]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">pb2_from_status</span><span class="function-signature">(status: <code>StatusPb</code>, remove_from_details: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code> = <a href="https://docs.python.org/3/library/constants.html#False" class="intersphinx-link">False</a>) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr>ServiceErrorPb]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/_service_error.py#L11">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#pb2_from_status" title="nebius.base._service_error.pb2_from_status">
       
       
@@ -575,8 +575,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">pbrpc_status_of_errors</span><span class="function-signature">(code: <code>int</code>, message: <code>str</code>, errors: <code>ServiceErrorPb | Iterable[<wbr></wbr>ServiceErrorPb]</code>) -&gt; <code>StatusPb</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">pbrpc_status_of_errors</span><span class="function-signature">(code: <code><a href="https://docs.python.org/3/library/functions.html#int" class="intersphinx-link">int</a></code>, message: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, errors: <code>ServiceErrorPb | <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">Iterable</a>[<wbr></wbr>ServiceErrorPb]</code>) -&gt; <code>StatusPb</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/_service_error.py#L43">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#pbrpc_status_of_errors" title="nebius.base._service_error.pbrpc_status_of_errors">
       
       
@@ -600,7 +603,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">to_anypb</span><span class="function-signature">(err: <code>ServiceErrorPb</code>) -&gt; <code>AnyPb</code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/_service_error.py#L37">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#to_anypb" title="nebius.base._service_error.to_anypb">
       
       
@@ -623,8 +629,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">trailing_metadata_of_errors</span><span class="function-signature">(errors: <code>ServiceErrorPb | Iterable[<wbr></wbr>ServiceErrorPb]</code>, status_code: <code>int</code> = 1, status_message: <code>str</code> = <span class="rst-variable-quote">'</span><span class="rst-variable-string"></span><span class="rst-variable-quote">'</span>) -&gt; <code><a href="#Metadata" class="internal-link" title="nebius.base._service_error.Metadata">Metadata</a></code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">trailing_metadata_of_errors</span><span class="function-signature">(errors: <code>ServiceErrorPb | <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">Iterable</a>[<wbr></wbr>ServiceErrorPb]</code>, status_code: <code><a href="https://docs.python.org/3/library/functions.html#int" class="intersphinx-link">int</a></code> = 1, status_message: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code> = <span class="rst-variable-quote">'</span><span class="rst-variable-string"></span><span class="rst-variable-quote">'</span>) -&gt; <code><a href="#Metadata" class="internal-link" title="nebius.base._service_error.Metadata">Metadata</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/_service_error.py#L77">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#trailing_metadata_of_errors" title="nebius.base._service_error.trailing_metadata_of_errors">
       
       
@@ -647,7 +656,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">Metadata</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/base/_service_error.py#L71">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#Metadata" title="nebius.base._service_error.Metadata">
       
       
@@ -657,7 +669,7 @@
   <div class="functionBody">
     
     <div><p class="undocumented">Undocumented</p></div>
-    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>tuple[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str | bytes], <wbr></wbr><span class="rst-variable-ellipsis">...</span>]</code></pre></td></tr></table>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code><a href="https://docs.python.org/3/library/stdtypes.html#tuple" class="intersphinx-link">tuple</a>[<wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#tuple" class="intersphinx-link">tuple</a>[<wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>, <wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/stdtypes.html#bytes" class="intersphinx-link">bytes</a>], <wbr></wbr><span class="rst-variable-ellipsis">...</span>]</code></pre></td></tr></table>
   </div>
 </div>
         </div>
@@ -669,7 +681,7 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">Reference Documentation</a> for nebius,
+    <a href="index.html">Reference Documentation</a> for <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
     24.11.2.
   </div>

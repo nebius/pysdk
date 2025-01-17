@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
-    
+    <link rel="canonical" href="https://nebius.github.io/pysdk/nebius.aio.request.Request.html" />
 </head>
 
   <body>
@@ -32,24 +32,15 @@
 
       <div class="navlinks">
         <span class="navbar-brand">
-          nebius <a href="index.html">Reference</a>
+          <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>
         </span>
 
-        <a href="apiReference.html">
-          API
-        </a>
-
-        <a href="moduleIndex.html">
-          Modules
-        </a>
-
-        <a href="classIndex.html">
-          Classes
-        </a>
-
-        <a href="nameIndex.html">
-          Names
-        </a>
+        <a href="https://github.com/nebius/pysdk/tree/main/README.md">Readme</a>
+        <a href="index.html">Code reference</a>
+        <a href="apiReference.html">API</a>
+        <a href="moduleIndex.html">Modules</a>
+        <a href="classIndex.html">Classes</a>
+        <a href="nameIndex.html">Names</a>
 
         <div id="search-box-container">
           <div class="input-group">
@@ -819,7 +810,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Request</span>(Generic[<wbr></wbr><a href="nebius.aio.request.html#Req" class="internal-link" title="nebius.aio.request.Req">Req</a>, <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>]):</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.aio.request.Request.__init__">Request(channel, service, method, request, ...)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Request</span>(<a href="https://docs.python.org/3/library/typing.html#typing.Generic" class="intersphinx-link">Generic</a>[<wbr></wbr><a href="nebius.aio.request.html#Req" class="internal-link" title="nebius.aio.request.Req">Req</a>, <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>]): <a href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L46" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="nebius.aio.request.Request.__init__">Request(channel, service, method, request, ...)</a></code></p>
           <p><a href="classIndex.html#nebius.aio.request.Request">View In Hierarchy</a></p>
         </div>
 
@@ -1111,8 +1102,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__await__</span><span class="function-signature">(self) -&gt; <code>Generator[<wbr></wbr>Any, <wbr></wbr>None, <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>]</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__await__</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Generator" class="intersphinx-link">Generator</a>[<wbr></wbr><a href="https://docs.python.org/3/library/typing.html#typing.Any" class="intersphinx-link">Any</a>, <wbr></wbr><a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L343">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__await__" title="nebius.aio.request.Request.__await__">
       
       
@@ -1135,8 +1129,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, channel: <code><a href="nebius.aio.abc.ClientChannelInterface.html" class="internal-link" title="nebius.aio.abc.ClientChannelInterface">Channel</a></code>, service: <code>str</code>, method: <code>str</code>, request: <code><a href="nebius.aio.request.html#Req" class="internal-link" title="nebius.aio.request.Req">Req</a></code>, result_pb2_class: <code>type[<wbr></wbr>PMessage]</code>, metadata: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | Iterable[<wbr></wbr>tuple[<wbr></wbr>str, <wbr></wbr>str]] | None</code> = None, timeout: <code>float | None</code> = None, credentials: <code>CallCredentials | None</code> = None, wait_for_ready: <code>bool | None</code> = None, compression: <code>Compression | None</code> = None, result_wrapper: <code>Callable[<wbr></wbr>[<wbr></wbr>GRPCChannel, <wbr></wbr><a href="nebius.aio.abc.SyncronizerInterface.html" class="internal-link" title="nebius.aio.abc.SyncronizerInterface">SyncronizerInterface</a>, <wbr></wbr>Any], <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>] | None</code> = None, grpc_channel_override: <code>GRPCChannel | None</code> = None, error_wrapper: <code>Callable[<wbr></wbr>[<wbr></wbr><a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a>], <wbr></wbr><a href="nebius.aio.request.RequestError.html" class="internal-link" title="nebius.aio.request.RequestError">RequestError</a>] | None</code> = None)</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, channel: <code><a href="nebius.aio.abc.ClientChannelInterface.html" class="internal-link" title="nebius.aio.abc.ClientChannelInterface">Channel</a></code>, service: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, method: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, request: <code><a href="nebius.aio.request.html#Req" class="internal-link" title="nebius.aio.request.Req">Req</a></code>, result_pb2_class: <code><a href="https://docs.python.org/3/library/functions.html#type" class="intersphinx-link">type</a>[<wbr></wbr>PMessage]</code>, metadata: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" class="intersphinx-link">Iterable</a>[<wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#tuple" class="intersphinx-link">tuple</a>[<wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>, <wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>]] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, timeout: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, credentials: <code>CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, wait_for_ready: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, compression: <code>Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, result_wrapper: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" class="intersphinx-link">Callable</a>[<wbr></wbr>[<wbr></wbr>GRPCChannel, <wbr></wbr><a href="nebius.aio.abc.SyncronizerInterface.html" class="internal-link" title="nebius.aio.abc.SyncronizerInterface">SyncronizerInterface</a>, <wbr></wbr><a href="https://docs.python.org/3/library/typing.html#typing.Any" class="intersphinx-link">Any</a>], <wbr></wbr><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a>] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, grpc_channel_override: <code>GRPCChannel | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, error_wrapper: <code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" class="intersphinx-link">Callable</a>[<wbr></wbr>[<wbr></wbr><a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a>], <wbr></wbr><a href="nebius.aio.request.RequestError.html" class="internal-link" title="nebius.aio.request.RequestError">RequestError</a>] | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L47">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__init__" title="nebius.aio.request.Request.__init__">
       
       
@@ -1159,8 +1156,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L89">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__repr__" title="nebius.aio.request.Request.__repr__">
       
       
@@ -1183,8 +1183,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">cancel</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">cancel</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L105">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#cancel" title="nebius.aio.request.Request.cancel">
       
       
@@ -1207,8 +1210,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">cancelled</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">cancelled</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L100">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#cancelled" title="nebius.aio.request.Request.cancelled">
       
       
@@ -1231,8 +1237,11 @@
   <div class="functionHeader">
     
     @<a href="#compression.setter" class="internal-link" title="nebius.aio.request.Request.compression.setter">compression.setter</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">compression</span><span class="function-signature">(self, compression: <code>Compression | None</code>)</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">compression</span><span class="function-signature">(self, compression: <code>Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L149">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#compression.setter" title="nebius.aio.request.Request.compression.setter">
       
       
@@ -1255,8 +1264,11 @@
   <div class="functionHeader">
     
     @<a href="#credentials.setter" class="internal-link" title="nebius.aio.request.Request.credentials.setter">credentials.setter</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">credentials</span><span class="function-signature">(self, credentials: <code>CallCredentials | None</code>)</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">credentials</span><span class="function-signature">(self, credentials: <code>CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L129">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#credentials.setter" title="nebius.aio.request.Request.credentials.setter">
       
       
@@ -1280,7 +1292,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">current_status</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a> | <a href="nebius.aio.request_status.UnfinishedRequestStatus.html" class="internal-link" title="nebius.aio.request_status.UnfinishedRequestStatus">UnfinishedRequestStatus</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L207">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#current_status" title="nebius.aio.request.Request.current_status">
       
       
@@ -1303,8 +1318,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">done</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">done</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L95">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#done" title="nebius.aio.request.Request.done">
       
       
@@ -1328,7 +1346,10 @@
     
     
     <span class="py-keyword">async def</span> <span class="py-defname">initial_metadata</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L238">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#initial_metadata" title="nebius.aio.request.Request.initial_metadata">
       
       
@@ -1352,7 +1373,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">initial_metadata_sync</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L197">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#initial_metadata_sync" title="nebius.aio.request.Request.initial_metadata_sync">
       
       
@@ -1376,7 +1400,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">input_metadata</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L112">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#input_metadata" title="nebius.aio.request.Request.input_metadata">
       
       
@@ -1399,8 +1426,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">async def</span> <span class="py-defname">request_id</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">async def</span> <span class="py-defname">request_id</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L220">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#request_id" title="nebius.aio.request.Request.request_id">
       
       
@@ -1423,8 +1453,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">request_id_sync</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">request_id_sync</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L228">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#request_id_sync" title="nebius.aio.request.Request.request_id_sync">
       
       
@@ -1448,7 +1481,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">send</span><span class="function-signature">(self)</span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L159">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#send" title="nebius.aio.request.Request.send">
       
       
@@ -1472,7 +1508,10 @@
     
     
     <span class="py-keyword">async def</span> <span class="py-defname">status</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L279">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#status" title="nebius.aio.request.Request.status">
       
       
@@ -1495,8 +1534,11 @@
   <div class="functionHeader">
     
     @<a href="#timeout.setter" class="internal-link" title="nebius.aio.request.Request.timeout.setter">timeout.setter</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">timeout</span><span class="function-signature">(self, timeout: <code>float | None</code>)</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">timeout</span><span class="function-signature">(self, timeout: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L119">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#timeout.setter" title="nebius.aio.request.Request.timeout.setter">
       
       
@@ -1519,8 +1561,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">async def</span> <span class="py-defname">trace_id</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">async def</span> <span class="py-defname">trace_id</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L224">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#trace_id" title="nebius.aio.request.Request.trace_id">
       
       
@@ -1543,8 +1588,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">trace_id_sync</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">trace_id_sync</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L233">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#trace_id_sync" title="nebius.aio.request.Request.trace_id_sync">
       
       
@@ -1568,7 +1616,10 @@
     
     
     <span class="py-keyword">async def</span> <span class="py-defname">trailing_metadata</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L256">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#trailing_metadata" title="nebius.aio.request.Request.trailing_metadata">
       
       
@@ -1592,7 +1643,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">trailing_metadata_sync</span><span class="function-signature">(self) -&gt; <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L202">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#trailing_metadata_sync" title="nebius.aio.request.Request.trailing_metadata_sync">
       
       
@@ -1616,7 +1670,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">wait</span><span class="function-signature">(self) -&gt; <code><a href="nebius.aio.request.html#Res" class="internal-link" title="nebius.aio.request.Res">Res</a></code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L194">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#wait" title="nebius.aio.request.Request.wait">
       
       
@@ -1639,8 +1696,11 @@
   <div class="functionHeader">
     
     @<a href="#wait_for_ready.setter" class="internal-link" title="nebius.aio.request.Request.wait_for_ready.setter">wait_for_ready.setter</a><br />
-    <span class="py-keyword">def</span> <span class="py-defname">wait_for_ready</span><span class="function-signature">(self, wait_for_ready: <code>bool | None</code>)</span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">wait_for_ready</span><span class="function-signature">(self, wait_for_ready: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code>)</span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L139">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#wait_for_ready.setter" title="nebius.aio.request.Request.wait_for_ready.setter">
       
       
@@ -1661,9 +1721,12 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">compression</span>: <code>Compression | None</code> =
-    
+    @<a href="https://docs.python.org/3/library/functions.html#property" class="intersphinx-link">property</a><br />
+    <span class="py-defname">compression</span>: <code>Compression | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L145">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#compression" title="nebius.aio.request.Request.compression">
       
       
@@ -1685,9 +1748,12 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">credentials</span>: <code>CallCredentials | None</code> =
-    
+    @<a href="https://docs.python.org/3/library/functions.html#property" class="intersphinx-link">property</a><br />
+    <span class="py-defname">credentials</span>: <code>CallCredentials | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L125">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#credentials" title="nebius.aio.request.Request.credentials">
       
       
@@ -1709,9 +1775,12 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">is_sent</span>: <code>bool</code> =
-    
+    @<a href="https://docs.python.org/3/library/functions.html#property" class="intersphinx-link">property</a><br />
+    <span class="py-defname">is_sent</span>: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L155">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#is_sent" title="nebius.aio.request.Request.is_sent">
       
       
@@ -1733,9 +1802,12 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">timeout</span>: <code>float | None</code> =
-    
+    @<a href="https://docs.python.org/3/library/functions.html#property" class="intersphinx-link">property</a><br />
+    <span class="py-defname">timeout</span>: <code><a href="https://docs.python.org/3/library/functions.html#float" class="intersphinx-link">float</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L115">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#timeout" title="nebius.aio.request.Request.timeout">
       
       
@@ -1757,9 +1829,12 @@
     
   </a>
   <div class="functionHeader">
-    @property<br />
-    <span class="py-defname">wait_for_ready</span>: <code>bool | None</code> =
-    
+    @<a href="https://docs.python.org/3/library/functions.html#property" class="intersphinx-link">property</a><br />
+    <span class="py-defname">wait_for_ready</span>: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L135">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#wait_for_ready" title="nebius.aio.request.Request.wait_for_ready">
       
       
@@ -1783,8 +1858,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">async def</span> <span class="py-defname">_get_request_id</span><span class="function-signature">(self) -&gt; <code>tuple[<wbr></wbr>str, <wbr></wbr>str]</code></span>:
-    
+    <span class="py-keyword">async def</span> <span class="py-defname">_get_request_id</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#tuple" class="intersphinx-link">tuple</a>[<wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>, <wbr></wbr><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L214">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_get_request_id" title="nebius.aio.request.Request._get_request_id">
       
       
@@ -1808,7 +1886,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">_parse_request_id</span><span class="function-signature">(self)</span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L273">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_parse_request_id" title="nebius.aio.request.Request._parse_request_id">
       
       
@@ -1832,7 +1913,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">_raise_request_error</span><span class="function-signature">(self, err: <code>AioRpcError</code>)</span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L318">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_raise_request_error" title="nebius.aio.request.Request._raise_request_error">
       
       
@@ -1854,8 +1938,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_call</span>: <code>UnaryUnaryCall | None</code> =
-    
+    <span class="py-defname">_call</span>: <code>UnaryUnaryCall | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L77">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_call" title="nebius.aio.request.Request._call">
       
       
@@ -1878,8 +1965,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_cancelled</span>: <code>bool</code> =
-    
+    <span class="py-defname">_cancelled</span>: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L78">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_cancelled" title="nebius.aio.request.Request._cancelled">
       
       
@@ -1903,7 +1993,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_channel</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L65">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_channel" title="nebius.aio.request.Request._channel">
       
       
@@ -1927,7 +2020,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_compression</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L76">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_compression" title="nebius.aio.request.Request._compression">
       
       
@@ -1951,7 +2047,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_credentials</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L74">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_credentials" title="nebius.aio.request.Request._credentials">
       
       
@@ -1975,7 +2074,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_error_wrapper</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L82">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_error_wrapper" title="nebius.aio.request.Request._error_wrapper">
       
       
@@ -1999,7 +2101,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_grpc_channel</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L72">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_grpc_channel" title="nebius.aio.request.Request._grpc_channel">
       
       
@@ -2022,8 +2127,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_initial_metadata</span>: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | None</code> =
-    
+    <span class="py-defname">_initial_metadata</span>: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L84">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_initial_metadata" title="nebius.aio.request.Request._initial_metadata">
       
       
@@ -2047,7 +2155,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_input</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L66">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_input" title="nebius.aio.request.Request._input">
       
       
@@ -2071,7 +2182,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_input_metadata</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L70">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_input_metadata" title="nebius.aio.request.Request._input_metadata">
       
       
@@ -2095,7 +2209,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_method</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L68">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_method" title="nebius.aio.request.Request._method">
       
       
@@ -2118,8 +2235,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_request_id</span>: <code>str | None</code> =
-    
+    <span class="py-defname">_request_id</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L87">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_request_id" title="nebius.aio.request.Request._request_id">
       
       
@@ -2143,7 +2263,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_result_pb2_class</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L69">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_result_pb2_class" title="nebius.aio.request.Request._result_pb2_class">
       
       
@@ -2167,7 +2290,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_result_wrapper</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L71">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_result_wrapper" title="nebius.aio.request.Request._result_wrapper">
       
       
@@ -2190,8 +2316,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_sent</span>: <code>bool</code> =
-    
+    <span class="py-defname">_sent</span>: <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L173">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_sent" title="nebius.aio.request.Request._sent">
       
       
@@ -2215,7 +2344,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_service</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L67">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_service" title="nebius.aio.request.Request._service">
       
       
@@ -2238,8 +2370,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_status</span>: <code>RequestStatusExtended | None</code> =
-    
+    <span class="py-defname">_status</span>: <code>RequestStatusExtended | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L83">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_status" title="nebius.aio.request.Request._status">
       
       
@@ -2263,7 +2398,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_timeout</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L73">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_timeout" title="nebius.aio.request.Request._timeout">
       
       
@@ -2286,8 +2424,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_trace_id</span>: <code>str | None</code> =
-    
+    <span class="py-defname">_trace_id</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L86">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_trace_id" title="nebius.aio.request.Request._trace_id">
       
       
@@ -2310,8 +2451,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">_trailing_metadata</span>: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | None</code> =
-    
+    <span class="py-defname">_trailing_metadata</span>: <code><a href="nebius.base.metadata.Metadata.html" class="internal-link" title="nebius.base.metadata.Metadata">Metadata</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L85">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_trailing_metadata" title="nebius.aio.request.Request._trailing_metadata">
       
       
@@ -2335,7 +2479,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">_wait_for_ready</span> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/request.py#L75">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#_wait_for_ready" title="nebius.aio.request.Request._wait_for_ready">
       
       
@@ -2357,7 +2504,7 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">Reference Documentation</a> for nebius,
+    <a href="index.html">Reference Documentation</a> for <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
     24.11.2.
   </div>

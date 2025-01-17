@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="apidocs.css" />
     <link rel="stylesheet" type="text/css" href="extra.css" />
-    
+    <link rel="canonical" href="https://nebius.github.io/pysdk/nebius.aio.service_error.RequestStatusExtended.html" />
 </head>
 
   <body>
@@ -32,24 +32,15 @@
 
       <div class="navlinks">
         <span class="navbar-brand">
-          nebius <a href="index.html">Reference</a>
+          <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>
         </span>
 
-        <a href="apiReference.html">
-          API
-        </a>
-
-        <a href="moduleIndex.html">
-          Modules
-        </a>
-
-        <a href="classIndex.html">
-          Classes
-        </a>
-
-        <a href="nameIndex.html">
-          Names
-        </a>
+        <a href="https://github.com/nebius/pysdk/tree/main/README.md">Readme</a>
+        <a href="index.html">Code reference</a>
+        <a href="apiReference.html">API</a>
+        <a href="moduleIndex.html">Modules</a>
+        <a href="classIndex.html">Classes</a>
+        <a href="nameIndex.html">Names</a>
 
         <div id="search-box-container">
           <div class="input-group">
@@ -422,7 +413,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">RequestStatusExtended</span>(<a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a>):</code></p><p>Constructor: <code><a href="#from_rpc_status" class="internal-link" title="nebius.aio.service_error.RequestStatusExtended.from_rpc_status">RequestStatusExtended.from_rpc_status(status, request_id, trace_id)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">RequestStatusExtended</span>(<a href="nebius.aio.request_status.RequestStatus.html" class="internal-link" title="nebius.aio.request_status.RequestStatus">RequestStatus</a>): <a href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L127" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#from_rpc_status" class="internal-link" title="nebius.aio.service_error.RequestStatusExtended.from_rpc_status">RequestStatusExtended.from_rpc_status(status, request_id, trace_id)</a></code></p>
           <p><a href="classIndex.html#nebius.aio.service_error.RequestStatusExtended">View In Hierarchy</a></p>
         </div>
 
@@ -503,9 +494,12 @@
   </a>
   <div class="functionHeader">
     
-    @classmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">from_rpc_status</span><span class="function-signature">(cls, status: <code>StatusPb</code>, request_id: <code>str</code>, trace_id: <code>str</code>) -&gt; <code><a href="nebius.aio.service_error.RequestStatusExtended.html" class="internal-link" title="nebius.aio.service_error.RequestStatusExtended">RequestStatusExtended</a></code></span>:
-    
+    @<a href="https://docs.python.org/3/library/functions.html#classmethod" class="intersphinx-link">classmethod</a><br />
+    <span class="py-keyword">def</span> <span class="py-defname">from_rpc_status</span><span class="function-signature">(cls, status: <code>StatusPb</code>, request_id: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, trace_id: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>) -&gt; <code><a href="nebius.aio.service_error.RequestStatusExtended.html" class="internal-link" title="nebius.aio.service_error.RequestStatusExtended">RequestStatusExtended</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L170">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#from_rpc_status" title="nebius.aio.service_error.RequestStatusExtended.from_rpc_status">
       
       
@@ -528,8 +522,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">__str__</span><span class="function-signature">(self) -&gt; <code>str</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">__str__</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L136">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#__str__" title="nebius.aio.service_error.RequestStatusExtended.__str__">
       
       
@@ -552,8 +549,11 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">is_retriable</span><span class="function-signature">(self) -&gt; <code>bool</code></span>:
-    
+    <span class="py-keyword">def</span> <span class="py-defname">is_retriable</span><span class="function-signature">(self) -&gt; <code><a href="https://docs.python.org/3/library/functions.html#bool" class="intersphinx-link">bool</a></code></span>:
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L187">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#is_retriable" title="nebius.aio.service_error.RequestStatusExtended.is_retriable">
       
       
@@ -577,7 +577,10 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">to_rpc_status</span><span class="function-signature">(self) -&gt; <code>StatusPb</code></span>:
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L162">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#to_rpc_status" title="nebius.aio.service_error.RequestStatusExtended.to_rpc_status">
       
       
@@ -600,7 +603,10 @@
   <div class="functionHeader">
     
     <span class="py-defname">code</span>: <code>StatusCode</code> =
-    
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L129">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#code" title="nebius.aio.service_error.RequestStatusExtended.code">
       
       
@@ -623,8 +629,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">details</span>: <code>list[<wbr></wbr>AnyPb]</code> =
-    
+    <span class="py-defname">details</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr>AnyPb]</code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L131">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#details" title="nebius.aio.service_error.RequestStatusExtended.details">
       
       
@@ -647,8 +656,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">message</span>: <code>str | None</code> =
-    
+    <span class="py-defname">message</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L130">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#message" title="nebius.aio.service_error.RequestStatusExtended.message">
       
       
@@ -671,8 +683,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">request_id</span>: <code>str</code> =
-    
+    <span class="py-defname">request_id</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L133">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#request_id" title="nebius.aio.service_error.RequestStatusExtended.request_id">
       
       
@@ -695,8 +710,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">service_errors</span>: <code>list[<wbr></wbr><a href="nebius.api.nebius.common.v1.ServiceError.html" class="internal-link" title="nebius.api.nebius.common.v1.ServiceError">ServiceError</a>]</code> =
-    
+    <span class="py-defname">service_errors</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#list" class="intersphinx-link">list</a>[<wbr></wbr><a href="nebius.api.nebius.common.v1.ServiceError.html" class="internal-link" title="nebius.api.nebius.common.v1.ServiceError">ServiceError</a>]</code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L132">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#service_errors" title="nebius.aio.service_error.RequestStatusExtended.service_errors">
       
       
@@ -719,8 +737,11 @@
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">trace_id</span>: <code>str</code> =
-    
+    <span class="py-defname">trace_id</span>: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code> =
+    <a class="sourceLink" href="https://github.com/nebius/pysdk/tree/main/src/nebius/aio/service_error.py#L134">
+      
+      (source)
+    </a>
     <a class="headerLink" href="#trace_id" title="nebius.aio.service_error.RequestStatusExtended.trace_id">
       
       
@@ -742,7 +763,7 @@
 
   
   <div class="container-fluid">
-    <a href="index.html">Reference Documentation</a> for nebius,
+    <a href="index.html">Reference Documentation</a> for <a href="https://github.com/nebius/pysdk" class="projecthome">nebius</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
     24.11.2.
   </div>
