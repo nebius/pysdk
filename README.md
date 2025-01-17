@@ -4,6 +4,10 @@ The Nebius Python SDK is a comprehensive client library for interacting with [ne
 Built on gRPC, it supports all APIs defined in the [Nebius API repository](https://github.com/nebius/api).
 This SDK simplifies resource management, authentication, and communication with Nebius services, making it a valuable tool for developers.
 
+### Full documentation and reference
+
+To see all the services and their methods, look into the [API reference](https://nebius.github.io/pysdk/apiReference.html).
+
 ### Installation
 
 If you've received this module in a zip archive or checked out from git, install it as follows:
@@ -30,7 +34,7 @@ from nebius.sdk import SDK
 sdk = SDK()
 ```
 
-This will initialize the SDK with IAM token from `NEBIUS_IAM_TOKEN` env var.
+This will initialize the [SDK](https://nebius.github.io/pysdk/nebius.sdk.SDK.html) with IAM token from `NEBIUS_IAM_TOKEN` env var.
 If you want to use different ways of authorization, see next.
 
 See the following how-to's on how to provide your crerentials.
@@ -42,8 +46,8 @@ You can also initialize the same token these ways:
 ```python
 import os
 from nebius.sdk import SDK
-from nebius.aio.token.static import Bearer, EnvBearer
-from nebius.aio.token.token import Token
+from nebius.aio.token.static import Bearer, EnvBearer  # [1]
+from nebius.aio.token.token import Token  # [2]
 
 sdk = SDK(credentials=os.environ.get("NEBIUS_IAM_TOKEN", ""))
 #or
@@ -53,6 +57,7 @@ sdk = SDK(credentials=EnvBearer("NEBIUS_IAM_TOKEN"))
 #or
 sdk = SDK(credentials=Bearer(Token(os.environ.get("NEBIUS_IAM_TOKEN", ""))))
 ```
+[[1](https://nebius.github.io/pysdk/nebius.aio.token.static.html), [2](https://nebius.github.io/pysdk/nebius.aio.token.token.html)]
 
 Now, your application will get token from the local Env variable, as in the example above.
 
@@ -63,7 +68,7 @@ You need to have `private_key.pem` file on your machine.
 
 ```python
 from nebius.sdk import SDK
-from nebius.base.service_account.pk_file import Reader as PKReader
+from nebius.base.service_account.pk_file import Reader as PKReader  # [1]
 
 sdk = SDK(
     credentials=PKReader(
@@ -79,6 +84,7 @@ sdk = SDK(
     service_account_id="your-service-account-id",
 )
 ```
+[[1](https://nebius.github.io/pysdk/nebius.base.service_account.pk_file.Reader.html)]
 
 ##### Initialize with credentials
 
@@ -86,7 +92,7 @@ Assuming you have a joint credentials file with private key and all the IDs incl
 
 ```python
 from nebius.sdk import SDK
-from nebius.base.service_account.credentials_file import Reader as CredentialsReader
+from nebius.base.service_account.credentials_file import Reader as CredentialsReader  # [1]
 
 sdk = SDK(
     credentials=CredentialsReader(
@@ -98,10 +104,11 @@ sdk = SDK(
     credentials_file_name="location/of/your/credentials.json",
 )
 ```
+[[1](https://nebius.github.io/pysdk/nebius.base.service_account.credentials_file.Reader.html)]
 
 #### Test the SDK
 
-To test the SDK, you have a convenient method `SDK.whoami`, that will return basic info about the profile, you've authenticated with.
+To test the SDK, you have a convenient method [`SDK.whoami`¹](https://nebius.github.io/pysdk/nebius.sdk.SDK.html#whoami), that will return basic info about the profile, you've authenticated with.
 
 SDK is created around asyncio, so the best is to call it from async context:
 
@@ -125,7 +132,7 @@ But this may lead to problems or infinite locks, even if timeouts have been adde
 
 Now as you have your SDK initialized and tested, you can call services methods with it. We assume, that `sdk` is created.
 
-All the generated API is located in `nebius.api.nebius`.
+All the [generated API](https://nebius.github.io/pysdk/apiReference.html) is located in `nebius.api.nebius`.
 
 The following example tries to get a bucket from storage
 
@@ -160,7 +167,7 @@ result = service.get(GetBucketRequest(
 
 ##### Poll operations
 
-Some methods return `nebius.aio.Operation`, which needs to be finished, for instance `Create` request from the `BucketService`. Operations can be waited till completion.
+Some methods return [`nebius.aio.Operation`¹](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html), which needs to be finished, for instance `Create` request from the `BucketService`. Operations can be waited till completion.
 
 Assuming, we are already in async context:
 
@@ -216,9 +223,9 @@ log.info(f"Server answered: {response}; Request ID: {request_id} and Trace ID: {
 
 ##### Parse errors
 
-Sometimes things go wrong. There are many exceptions a request can raise, but some of them are created on a server. These exceptions will derive from `nebius.aio.service_error.RequestError`. This error will contain request status and additional information from the server, if there was any.
+Sometimes things go wrong. There are many exceptions a request can raise, but some of them are created on a server. These exceptions will derive from [`nebius.aio.service_error.RequestError`¹](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestError.html). This error will contain request status and additional information from the server, if there was any.
 
-You can just print the RequestError to see all the info in readable format, or you can parse `nebius.aio.service_error.RequestStatusExtended` located in `caught_error.status`, which will contain all the information in structured form.
+You can just print the RequestError to see all the info in readable format, or you can parse [`nebius.aio.service_error.RequestStatusExtended`¹](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestStatusExtended.html) located in `caught_error.status`, which will contain all the information in structured form.
 
 ```python
 from nebius.aio.service_error import RequestError
@@ -234,7 +241,7 @@ Do not forget to save request ID and trace ID from the output, in case you will 
 
 ### Call `Update` methods
 
-`Update` method requires either to pass a manually constructed `x-resetmask` or to send a fully set new specification. Here are both examples:
+Any `Update` method requires either to pass a manually constructed [`x-resetmask`¹](https://nebius.github.io/pysdk/nebius.base.fieldmask.Mask.html) or to send a fully set new specification. Here are both examples:
 
 #### Using full state modifications
 
@@ -297,14 +304,6 @@ This example will only reset `max_size_bytes` in the bucket, clearing the limit,
 **Note**: Our internal field masks have more granularity than google ones, so they are incompatible. You can read more on the masks in the Nebius API documentation.
 
 **Note**: Please read the API documentation before modifying lists and maps with manual masks.
-
-### Full documentation and reference
-
-Currently, the full documentation is not referenced anywhere, but can be viewed from sources.
-
-To see the reference, open [docs/reference/apiReference.html](docs/reference/apiReference.html) in your browser.
-
-In the future, all the documentation will be available on github pages.
 
 ### Contributing
 
