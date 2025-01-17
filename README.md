@@ -1,8 +1,10 @@
-# Nebius Python SDK
+# Nebius Python® SDK
 
-The Nebius Python SDK is a comprehensive client library for interacting with [nebius.com](https://nebius.com) services.
+The **Nebius Python® SDK** is a comprehensive client library for interacting with [nebius.com](https://nebius.com) services.
 Built on gRPC, it supports all APIs defined in the [Nebius API repository](https://github.com/nebius/api).
 This SDK simplifies resource management, authentication, and communication with Nebius services, making it a valuable tool for developers.
+
+> **Note**: "Python" and the Python logos are trademarks or registered trademarks of the Python Software Foundation, used by Nebius B.V. with permission from the Foundation.
 
 ### Full documentation and reference
 
@@ -301,9 +303,9 @@ operation = await service.update(
 ```
 This example will only reset `max_size_bytes` in the bucket, clearing the limit, but won't unset anything else.
 
-**Note**: Our internal field masks have more granularity than google ones, so they are incompatible. You can read more on the masks in the Nebius API documentation.
+> **Note**: Our internal field masks have more granularity than google ones, so they are incompatible. You can read more on the masks in the Nebius API documentation.
 
-**Note**: Please read the API documentation before modifying lists and maps with manual masks.
+> **Note**: Please read the API documentation before modifying lists and maps with manual masks.
 
 ### Contributing
 
