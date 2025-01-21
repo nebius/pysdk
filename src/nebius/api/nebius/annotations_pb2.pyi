@@ -34,8 +34,6 @@ INPUT_ONLY: FieldBehavior
 OUTPUT_ONLY: FieldBehavior
 MEANINGFUL_EMPTY_VALUE: FieldBehavior
 NON_EMPTY_DEFAULT: FieldBehavior
-UNSTABLE_FIELD_NUMBER: _ClassVar[int]
-unstable: _descriptor.FieldDescriptor
 API_SERVICE_NAME_FIELD_NUMBER: _ClassVar[int]
 api_service_name: _descriptor.FieldDescriptor
 REGION_ROUTING_FIELD_NUMBER: _ClassVar[int]

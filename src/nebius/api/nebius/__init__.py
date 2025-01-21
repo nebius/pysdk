@@ -176,7 +176,6 @@ class RegionRouting(pb_classes.Message):
         "strict":"strict",
     }
     
-unstable = annotations_pb2.unstable
 api_service_name = annotations_pb2.api_service_name
 region_routing = annotations_pb2.region_routing
 resource_behavior = annotations_pb2.resource_behavior
@@ -188,7 +187,6 @@ __all__ = [
     #@ local import names here @#
     "ResourceBehavior",
     "FieldBehavior",
-    "unstable",
     "api_service_name",
     "region_routing",
     "resource_behavior",
