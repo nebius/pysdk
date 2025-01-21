@@ -31,4 +31,8 @@ jobs:
         pip install tox
 
     - name: Run tox
-      run: tox
+      run: |
+        if [[ "${{ matrix.python-version }}" == "3.10" ]]; then
+          tox -e test_earliest
+        fi
+        tox

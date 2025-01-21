@@ -133,7 +133,7 @@ asyncio_default_fixture_loop_scope = "function"
 
 [tool.tox]
 requires = ["tox>=4.23"]
-env_list = ["test", "test_earliest_py310", "lint", "type", "format"]
+env_list = ["test", "lint", "type", "format"]
 isolated_build = true
 
 [tool.tox.env]
@@ -149,10 +149,8 @@ deps = [
 ]
 commands = [["pytest","-vv"]]
 
-[tool.tox.env.test_earliest_py310]
+[tool.tox.env.test_earliest]
 description = "Run tests with pytest and the earliest possible lib versions"
-# requires_python = "<=3.11"
-labels = ["py310"]
 deps = [
     "pytest",
     "pytest-cov",
