@@ -36,14 +36,14 @@ from nebius.sdk import SDK
 sdk = SDK()
 ```
 
-This will initialize the [SDK](https://nebius.github.io/pysdk/nebius.sdk.SDK.html) with IAM token from `NEBIUS_IAM_TOKEN` env var.
-If you want to use different ways of authorization, see next.
+This will initialize the [SDK](https://nebius.github.io/pysdk/nebius.sdk.SDK.html) with an IAM token from a `NEBIUS_IAM_TOKEN` env var.
+If you want to use different ways of authorization, read further.
 
-See the following how-to's on how to provide your crerentials.
+See the following how-to's on how to provide your crerentials:
 
-##### Initialize using IAM Token
+##### Initialize using an IAM Token
 
-You can also initialize the same token these ways:
+You can also initialize the `SDK` by providing the token directly or from the other environment variable, here are examples how to do that:
 
 ```python
 import os
@@ -61,12 +61,14 @@ sdk = SDK(credentials=Bearer(Token(os.environ.get("NEBIUS_IAM_TOKEN", ""))))
 ```
 [[1](https://nebius.github.io/pysdk/nebius.aio.token.static.html), [2](https://nebius.github.io/pysdk/nebius.aio.token.token.html)]
 
-Now, your application will get token from the local Env variable, as in the example above.
+Now, your application will get token from the local Env variable, as in the example above, but provided in several other ways.
 
 ##### Initialize with the private key file
 
-Replace in the following example IDs of your service account and the public key pair for your private key.
-You need to have `private_key.pem` file on your machine.
+If you have a private key and a service account, you may want to authorize using them. Here is an example of how to do it.
+
+Replace in the IDs in the following example with your service account and public key ID pair, related to the private key you have.
+You need to have a `private_key.pem` file on your machine, modify the file path in the example accordingly.
 
 ```python
 from nebius.sdk import SDK
@@ -88,9 +90,9 @@ sdk = SDK(
 ```
 [[1](https://nebius.github.io/pysdk/nebius.base.service_account.pk_file.Reader.html)]
 
-##### Initialize with credentials
+##### Initialize with a credentials file
 
-Assuming you have a joint credentials file with private key and all the IDs included.
+Assuming you have a joint credentials file with a private key and all the IDs inside.
 
 ```python
 from nebius.sdk import SDK
@@ -110,9 +112,9 @@ sdk = SDK(
 
 #### Test the SDK
 
-To test the SDK, you have a convenient method [`SDK.whoami`](https://nebius.github.io/pysdk/nebius.sdk.SDK.html#whoami), that will return basic info about the profile, you've authenticated with.
+Now as you've initialized the SDK, you may want to test whether your credentials are ok, everything works and you have a good connection.
 
-SDK is created around asyncio, so the best is to call it from async context:
+To test the SDK, we provide a convenient method [`SDK.whoami`](https://nebius.github.io/pysdk/nebius.sdk.SDK.html#whoami), that will return the basic information about the profile, you've authenticated with:
 
 ```python
 import asyncio
@@ -123,20 +125,21 @@ async def my_call():
 asyncio.run(my_call)
 ```
 
-But if you haven't started async loop, you can run it synchronously:
+SDK is created with asyncio in mind, so the best way to call methods of it is to use an async context. But if you haven't started async loop, you can run it synchronously:
 
 ```python
 print(sdk.whoami().wait())
 ```
-But this may lead to problems or infinite locks, even if timeouts have been added. Moreover, sync methods won't run in async call stack, if you haven't provided a dedicated separate loop for the SDK, and even then there might be issues, eg infinite blocks.
+
+*Keep in mind, that this may lead to some problems or infinite locks, even if timeouts have been added. Moreover, synchronous methods won't run inside an async call stack, if you haven't provided a dedicated separate loop for the SDK. And even when the loop is provided, there might be issues or deadlocks.*
 
 #### Call some method
 
-Now as you have your SDK initialized and tested, you can call services methods with it. We assume, that `sdk` is created.
+Now as you have your SDK initialized and tested, you may work with our services and call their methods with it. Here and further we assume, that the [SDK](https://nebius.github.io/pysdk/nebius.sdk.SDK.html) is initialized and is located in the `sdk` variable.
 
-All the [generated API](https://nebius.github.io/pysdk/apiReference.html) is located in `nebius.api.nebius`.
+All the services API classes are located in submodules of `nebius.api.nebius`. [The reference can be found here](https://nebius.github.io/pysdk/apiReference.html). The `nebius.api.nebius` also includes all the raw gRPC and ProtoBuf classes.
 
-The following example tries to get a bucket from storage
+As an example how to use the API, let's receive a bucket from a storage service by its ID:
 
 ```python
 import asyncio
@@ -153,13 +156,12 @@ async def my_call():
 asyncio.run(my_call())
 ```
 
-Same thing synchronously:
+Same thing, but synchronously:
 
 ```python
 import asyncio
 
-from nebius.api.nebius.storage.v1 import GetBucketRequest
-from nebius.api.nebius.storage.v1 import BucketServiceClient
+from nebius.api.nebius.storage.v1 import BucketServiceClient, GetBucketRequest
 
 service = BucketServiceClient(sdk)
 result = service.get(GetBucketRequest(
@@ -169,14 +171,14 @@ result = service.get(GetBucketRequest(
 
 ##### Poll operations
 
-Some methods return [`nebius.aio.Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html), which needs to be finished, for instance `Create` request from the `BucketService`. Operations can be waited till completion.
+Many core methods return a [`nebius.aio.Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html) object, representing a time-consuming asynchronous operation. For example, the `create` request from the `BucketServiceClient` above is one of such cases. The [`nebius.aio.Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html) is a wrapper class that provides convenient methods for working with operations. It can be awaited util completion.
 
-Assuming, we are already in async context:
+Here is an async example:
 
 ```python
-from nebius.api.nebius.storage.v1 import CreateBucketRequest
+from nebius.api.nebius.storage.v1 import BucketServiceClient, CreateBucketRequest
 
-service = BucketServiceStub(sdk)
+service = BucketServiceClient(sdk)
 operation = await service.create(CreateBucketRequest(
     # fill-in necessary fields
 ))
@@ -185,10 +187,11 @@ print(f"New bucket ID: {operation.resource_id}")
 ```
 
 Or synchronously:
-```python
-from nebius.api.nebius.storage.v1 import CreateBucketRequest
 
-service = BucketServiceStub(sdk)
+```python
+from nebius.api.nebius.storage.v1 import BucketServiceClient, CreateBucketRequest
+
+service = BucketServiceClient(sdk)
 operation = service.create(CreateBucketRequest(
     # fill-in necessary fields
 )).wait()
@@ -198,7 +201,9 @@ print(f"New bucket ID: {operation.resource_id}")
 
 ##### Retrieve additional metadata
 
-Sometimes you need more than just a result, for instance if you have problems, you want to provide your request ID and trace ID to Nebius support teams.
+Sometimes you need more than just a result of your request. For instance, if you have problems, you may want to provide more information about the request to the Nebius support team. Service methods do not return basic coroutines, they return [`Request`](https://nebius.github.io/pysdk/nebius.aio.request.Request.html) objects, that can provide more information about the request itself.
+
+Here is an example how to retrieve the request ID and the trace ID for referencing. In most cases, the error will contain them already, but maybe you want to reference a successful request as well. The example:
 
 ```python
 request = service.get(req)  # Note, that we don't await immediately
@@ -210,12 +215,13 @@ trace_id = await request.trace_id()
 
 log.info(f"Server answered: {response}; Request ID: {request_id} and Trace ID: {trace_id}")
 ```
-Or in case of synchronous:
+
+Or in the case of a synchronous context:
 
 ```python
 request = service.get(req)  # Note, that we don't await immediately
 
-# all three can be called in any order, the first call will start the request
+# all three can be called in any order, the first call will start the request and wait till completion
 response = request.wait()
 request_id = request.request_id_sync()
 trace_id = request.trace_id_sync()
@@ -225,27 +231,28 @@ log.info(f"Server answered: {response}; Request ID: {request_id} and Trace ID: {
 
 ##### Parse errors
 
-Sometimes things go wrong. There are many exceptions a request can raise, but some of them are created on a server. These exceptions will derive from [`nebius.aio.service_error.RequestError`](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestError.html). This error will contain request status and additional information from the server, if there was any.
+Sometimes things go wrong. There are many `Exception`s a request can raise, but some of them are created on a server and sent back. These exceptions will derive from the [`nebius.aio.service_error.RequestError`](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestError.html). This error will contain a request status and additional information from the server, if there was any.
 
-You can just print the RequestError to see all the info in readable format, or you can parse [`nebius.aio.service_error.RequestStatusExtended`](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestStatusExtended.html) located in `caught_error.status`, which will contain all the information in structured form.
+You can simply print the `RequestError` to see all the info in a readable format, or you can parse it and retrieve the [`nebius.aio.service_error.RequestStatusExtended`](https://nebius.github.io/pysdk/nebius.aio.service_error.RequestStatusExtended.html) located in the `err.status` of the excepted error `err`. It will contain all the information in the structured form.
 
 ```python
 from nebius.aio.service_error import RequestError
-from nebius.base.service_error import from_error
 
 try:
     response = await service.get(req)
-except RequestError as e:
-    log.exception(f"Caught request error {e}")
+except RequestError as err:
+    log.exception(f"Caught request error {err}")
 ```
 
-Do not forget to save request ID and trace ID from the output, in case you will submit something to support.
+Do not forget to save both the request ID and the trace ID from the output, in case you will have to submit something to the support.
 
-### Call `Update` methods
+### Calling `update` methods on resources
 
-Any `Update` method requires either to pass a manually constructed [`x-resetmask`](https://nebius.github.io/pysdk/nebius.base.fieldmask.Mask.html) or to send a fully set new specification. Here are both examples:
+Any `update` method on resources requires either to pass a manually constructed [`x-resetmask`](https://nebius.github.io/pysdk/nebius.base.fieldmask.Mask.html) or to send a full resource specification, previously obtained by the corresponding `get` method and then modified by your code. Here are both examples:
 
-#### Using full state modifications
+#### Sending a full specification
+
+Here is an example of doubling the limit on the bucket. In this example, we receive the specification, change it and then send it back.
 
 ```python
 from nebius.api.nebius.storage.v1 import UpdateBucketRequest
@@ -260,9 +267,7 @@ operation = await service.update(
 )
 ```
 
-This will double the bucket volume limit, respecting the resource version.
-
-If during your modification (between `get` and `update`) there was another concurrent one, the request will fail. You may ommit resource version check by resetting `resource_version` to **0**:
+This operation respects the resource version, thus if somebody was modifying the same resource at the same time, one of your requests will not be accepted. You may omit resource version check by resetting the `metadata.resource_version`. Simply set it to **0** and your update will be applied in any situation:
 
 ```python
 from nebius.api.nebius.storage.v1 import UpdateBucketRequest
@@ -278,12 +283,14 @@ operation = await service.update(
 )
 ```
 
-This will fully replace the bucket specification to the sent one, overwriting any changes that could have been made by any concurrent updates.
+This will **fully replace** the bucket specification with the one you've sent, overwriting any changes that could have been made by any concurrent updates.
 
 
-#### Using manually set `X-ResetMask`
+#### Updating with manually set `X-ResetMask`
 
-You may want to send partial updates without requesting full specification beforehand, this process will require manual setting of the `X-ResetMask` in the metadata. Any unset or default fields without one will not be overwritten.
+You may want to send partial updates without requesting a full specification beforehand, if your update does not require incremental changes, but only value replacements. This process will require manual setting of the `X-ResetMask` in the metadata, if you need to set any value to its default (in terms of ProtoBuf). Any unset or default fields without the mask set, will not be overwritten.
+
+Here is an example of resetting the limit on the bucket:
 
 ```python
 from nebius.api.nebius.storage.v1 import UpdateBucketRequest
@@ -301,11 +308,12 @@ operation = await service.update(
     metadata=md,
 )
 ```
-This example will only reset `max_size_bytes` in the bucket, clearing the limit, but won't unset anything else.
+
+This example will only reset `max_size_bytes` in the bucket, clearing the limit, but won't unset or change anything else.
 
 > **Note**: Our internal field masks have more granularity than google ones, so they are incompatible. You can read more on the masks in the Nebius API documentation.
 
-> **Note**: Please read the API documentation before modifying lists and maps with manual masks.
+> **Note**: Please read the API documentation before modifying lists and maps using manually set masks.
 
 ### Contributing
 
