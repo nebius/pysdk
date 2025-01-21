@@ -941,6 +941,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
         return super().request(
             method="Get",
@@ -951,6 +952,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
@@ -961,6 +963,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1_1.GetByNameRequest","Cluster"]:
         return super().request(
             method="GetByName",
@@ -971,6 +974,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
@@ -981,6 +985,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
         return super().request(
             method="List",
@@ -991,6 +996,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListClustersResponse),
         )
     
@@ -1001,6 +1007,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1011,6 +1018,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1021,6 +1029,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1032,6 +1041,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1042,6 +1052,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -1052,6 +1063,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -2959,6 +2971,7 @@ class NodeGroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetNodeGroupRequest","NodeGroup"]:
         return super().request(
             method="Get",
@@ -2969,6 +2982,7 @@ class NodeGroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(NodeGroup),
         )
     
@@ -2979,6 +2993,7 @@ class NodeGroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1_1.GetByNameRequest","NodeGroup"]:
         return super().request(
             method="GetByName",
@@ -2989,6 +3004,7 @@ class NodeGroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(NodeGroup),
         )
     
@@ -2999,6 +3015,7 @@ class NodeGroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListNodeGroupsRequest","ListNodeGroupsResponse"]:
         return super().request(
             method="List",
@@ -3009,6 +3026,7 @@ class NodeGroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListNodeGroupsResponse),
         )
     
@@ -3019,6 +3037,7 @@ class NodeGroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateNodeGroupRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -3029,6 +3048,7 @@ class NodeGroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -3039,6 +3059,7 @@ class NodeGroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdateNodeGroupRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -3050,6 +3071,7 @@ class NodeGroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -3060,6 +3082,7 @@ class NodeGroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteNodeGroupRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -3070,6 +3093,7 @@ class NodeGroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -3080,6 +3104,7 @@ class NodeGroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpgradeNodeGroupRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Upgrade",
@@ -3090,6 +3115,7 @@ class NodeGroupServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     

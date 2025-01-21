@@ -780,6 +780,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
         """
          Returns the specified cluster.
@@ -794,6 +795,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
@@ -804,6 +806,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetClusterByNameRequest","Cluster"]:
         """
          Returns the specified cluster.
@@ -818,6 +821,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
@@ -828,6 +832,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
         """
          Retrieves a list of clusters.
@@ -842,6 +847,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListClustersResponse),
         )
     
@@ -852,6 +858,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
         """
          Creates a cluster.
@@ -866,6 +873,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -876,6 +884,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
         """
          Delete a cluster.
@@ -890,6 +899,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     

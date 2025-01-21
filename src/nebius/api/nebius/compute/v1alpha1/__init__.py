@@ -854,6 +854,7 @@ class DiskServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetDiskRequest","Disk"]:
         return super().request(
             method="Get",
@@ -864,6 +865,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Disk),
         )
     
@@ -874,6 +876,7 @@ class DiskServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1_1.GetByNameRequest","Disk"]:
         return super().request(
             method="GetByName",
@@ -884,6 +887,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Disk),
         )
     
@@ -894,6 +898,7 @@ class DiskServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListDisksRequest","ListDisksResponse"]:
         return super().request(
             method="List",
@@ -904,6 +909,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListDisksResponse),
         )
     
@@ -914,6 +920,7 @@ class DiskServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateDiskRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -924,6 +931,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -934,6 +942,7 @@ class DiskServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdateDiskRequest","operation.Operation[v1alpha1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -945,6 +954,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -955,6 +965,7 @@ class DiskServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteDiskRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -965,6 +976,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -975,6 +987,7 @@ class DiskServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1alpha1_1.ListOperationsByParentRequest","v1alpha1_1.ListOperationsResponse"]:
         return super().request(
             method="ListOperationsByParent",
@@ -985,6 +998,7 @@ class DiskServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
@@ -1663,6 +1677,7 @@ class FilesystemServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetFilesystemRequest","Filesystem"]:
         return super().request(
             method="Get",
@@ -1673,6 +1688,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Filesystem),
         )
     
@@ -1683,6 +1699,7 @@ class FilesystemServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1_1.GetByNameRequest","Filesystem"]:
         return super().request(
             method="GetByName",
@@ -1693,6 +1710,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Filesystem),
         )
     
@@ -1703,6 +1721,7 @@ class FilesystemServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListFilesystemsRequest","ListFilesystemsResponse"]:
         return super().request(
             method="List",
@@ -1713,6 +1732,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListFilesystemsResponse),
         )
     
@@ -1723,6 +1743,7 @@ class FilesystemServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateFilesystemRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1733,6 +1754,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1743,6 +1765,7 @@ class FilesystemServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdateFilesystemRequest","operation.Operation[v1alpha1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1754,6 +1777,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1764,6 +1788,7 @@ class FilesystemServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteFilesystemRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -1774,6 +1799,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1784,6 +1810,7 @@ class FilesystemServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1alpha1_1.ListOperationsByParentRequest","v1alpha1_1.ListOperationsResponse"]:
         return super().request(
             method="ListOperationsByParent",
@@ -1794,6 +1821,7 @@ class FilesystemServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
@@ -2258,6 +2286,7 @@ class GpuClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetGpuClusterRequest","GpuCluster"]:
         return super().request(
             method="Get",
@@ -2268,6 +2297,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(GpuCluster),
         )
     
@@ -2278,6 +2308,7 @@ class GpuClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1_1.GetByNameRequest","GpuCluster"]:
         return super().request(
             method="GetByName",
@@ -2288,6 +2319,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(GpuCluster),
         )
     
@@ -2298,6 +2330,7 @@ class GpuClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListGpuClustersRequest","ListGpuClustersResponse"]:
         return super().request(
             method="List",
@@ -2308,6 +2341,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListGpuClustersResponse),
         )
     
@@ -2318,6 +2352,7 @@ class GpuClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateGpuClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -2328,6 +2363,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -2338,6 +2374,7 @@ class GpuClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdateGpuClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -2349,6 +2386,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -2359,6 +2397,7 @@ class GpuClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteGpuClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -2369,6 +2408,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -2379,6 +2419,7 @@ class GpuClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1alpha1_1.ListOperationsByParentRequest","v1alpha1_1.ListOperationsResponse"]:
         return super().request(
             method="ListOperationsByParent",
@@ -2389,6 +2430,7 @@ class GpuClusterServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
@@ -2880,6 +2922,7 @@ class ImageServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetImageRequest","Image"]:
         return super().request(
             method="Get",
@@ -2890,6 +2933,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Image),
         )
     
@@ -2900,6 +2944,7 @@ class ImageServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1_1.GetByNameRequest","Image"]:
         return super().request(
             method="GetByName",
@@ -2910,6 +2955,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Image),
         )
     
@@ -2920,6 +2966,7 @@ class ImageServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetImageLatestByFamilyRequest","Image"]:
         return super().request(
             method="GetLatestByFamily",
@@ -2930,6 +2977,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Image),
         )
     
@@ -2940,6 +2988,7 @@ class ImageServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListImagesRequest","ListImagesResponse"]:
         return super().request(
             method="List",
@@ -2950,6 +2999,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListImagesResponse),
         )
     
@@ -2960,6 +3010,7 @@ class ImageServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1alpha1_1.ListOperationsByParentRequest","v1alpha1_1.ListOperationsResponse"]:
         return super().request(
             method="ListOperationsByParent",
@@ -2970,6 +3021,7 @@ class ImageServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     
@@ -4044,6 +4096,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetInstanceRequest","Instance"]:
         return super().request(
             method="Get",
@@ -4054,6 +4107,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Instance),
         )
     
@@ -4064,6 +4118,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1_1.GetByNameRequest","Instance"]:
         return super().request(
             method="GetByName",
@@ -4074,6 +4129,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Instance),
         )
     
@@ -4084,6 +4140,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListInstancesRequest","ListInstancesResponse"]:
         return super().request(
             method="List",
@@ -4094,6 +4151,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListInstancesResponse),
         )
     
@@ -4104,6 +4162,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateInstanceRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -4114,6 +4173,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -4124,6 +4184,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdateInstanceRequest","operation.Operation[v1alpha1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -4135,6 +4196,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -4145,6 +4207,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteInstanceRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -4155,6 +4218,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -4165,6 +4229,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["StartInstanceRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Start",
@@ -4175,6 +4240,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -4185,6 +4251,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["StopInstanceRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Stop",
@@ -4195,6 +4262,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -4205,6 +4273,7 @@ class InstanceServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["v1alpha1_1.ListOperationsByParentRequest","v1alpha1_1.ListOperationsResponse"]:
         return super().request(
             method="ListOperationsByParent",
@@ -4215,6 +4284,7 @@ class InstanceServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(v1alpha1_1.ListOperationsResponse),
         )
     

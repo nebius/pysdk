@@ -574,6 +574,7 @@ class K8sReleaseServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetK8sReleaseRequest","K8sRelease"]:
         return super().request(
             method="Get",
@@ -584,6 +585,7 @@ class K8sReleaseServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(K8sRelease),
         )
     
@@ -594,6 +596,7 @@ class K8sReleaseServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListK8sReleasesRequest","ListK8sReleasesResponse"]:
         return super().request(
             method="List",
@@ -604,6 +607,7 @@ class K8sReleaseServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListK8sReleasesResponse),
         )
     
@@ -614,6 +618,7 @@ class K8sReleaseServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateK8sReleaseRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -624,6 +629,7 @@ class K8sReleaseServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -634,6 +640,7 @@ class K8sReleaseServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteK8sReleaseRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -644,6 +651,7 @@ class K8sReleaseServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     

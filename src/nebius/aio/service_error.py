@@ -205,8 +205,8 @@ class RequestStatusExtended(RequestStatus):
 
 
 def is_retriable_error(err: Exception) -> bool:
-    if isinstance(err, RequestStatusExtended):
-        return err.is_retriable()
+    if isinstance(err, RequestError):
+        return err.status.is_retriable()
 
     # Network and transport error handling
     if is_network_error(err) or is_transport_error(err) or is_dns_error(err):

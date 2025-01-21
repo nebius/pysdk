@@ -409,6 +409,7 @@ class ArtifactServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetArtifactRequest","Artifact"]:
         return super().request(
             method="Get",
@@ -419,6 +420,7 @@ class ArtifactServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Artifact),
         )
     
@@ -429,6 +431,7 @@ class ArtifactServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListArtifactsRequest","ListArtifactsResponse"]:
         return super().request(
             method="List",
@@ -439,6 +442,7 @@ class ArtifactServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListArtifactsResponse),
         )
     
@@ -449,6 +453,7 @@ class ArtifactServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteArtifactRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -459,6 +464,7 @@ class ArtifactServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -960,6 +966,7 @@ class RegistryServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetRegistryRequest","Registry"]:
         return super().request(
             method="Get",
@@ -970,6 +977,7 @@ class RegistryServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Registry),
         )
     
@@ -980,6 +988,7 @@ class RegistryServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListRegistriesRequest","ListRegistriesResponse"]:
         return super().request(
             method="List",
@@ -990,6 +999,7 @@ class RegistryServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListRegistriesResponse),
         )
     
@@ -1000,6 +1010,7 @@ class RegistryServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateRegistryRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1010,6 +1021,7 @@ class RegistryServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1020,6 +1032,7 @@ class RegistryServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdateRegistryRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1031,6 +1044,7 @@ class RegistryServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1041,6 +1055,7 @@ class RegistryServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteRegistryRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -1051,6 +1066,7 @@ class RegistryServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     

@@ -553,6 +553,7 @@ class VersionServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request.Request["GetVersionRequest","GetVersionResponse"]:
         return super().request(
             method="GetVersion",
@@ -563,6 +564,7 @@ class VersionServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(GetVersionResponse),
         )
     
