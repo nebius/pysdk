@@ -313,6 +313,6 @@ Contributions are welcome! Please refer to the [contributing guidelines](CONTRIB
 
 ### License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details. Some files included in this project are licensed under Mozilla Public License, see the [NOTICE](NOTICE.md) file for details.
 
-Copyright (c) 2024 Nebius B.V.
+Copyright (c) 2025 Nebius B.V.
