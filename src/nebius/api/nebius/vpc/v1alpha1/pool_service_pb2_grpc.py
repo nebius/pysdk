@@ -19,17 +19,17 @@ class PoolServiceStub(object):
                 '/nebius.vpc.v1alpha1.PoolService/Get',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_pool__service__pb2.GetPoolRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1alpha1_dot_pool__pb2.Pool.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.vpc.v1alpha1.PoolService/GetByName',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_pool__service__pb2.GetPoolByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1alpha1_dot_pool__pb2.Pool.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.vpc.v1alpha1.PoolService/List',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_pool__service__pb2.ListPoolsRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1alpha1_dot_pool__service__pb2.ListPoolsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class PoolServiceServicer(object):
@@ -75,7 +75,6 @@ def add_PoolServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.vpc.v1alpha1.PoolService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.vpc.v1alpha1.PoolService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -93,21 +92,11 @@ class PoolService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.PoolService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.PoolService/Get',
             nebius_dot_vpc_dot_v1alpha1_dot_pool__service__pb2.GetPoolRequest.SerializeToString,
             nebius_dot_vpc_dot_v1alpha1_dot_pool__pb2.Pool.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -120,21 +109,11 @@ class PoolService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.PoolService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.PoolService/GetByName',
             nebius_dot_vpc_dot_v1alpha1_dot_pool__service__pb2.GetPoolByNameRequest.SerializeToString,
             nebius_dot_vpc_dot_v1alpha1_dot_pool__pb2.Pool.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -147,18 +126,8 @@ class PoolService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.PoolService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.PoolService/List',
             nebius_dot_vpc_dot_v1alpha1_dot_pool__service__pb2.ListPoolsRequest.SerializeToString,
             nebius_dot_vpc_dot_v1alpha1_dot_pool__service__pb2.ListPoolsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

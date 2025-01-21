@@ -10,15 +10,15 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class LifecycleConfiguration(_message.Message):
-    __slots__ = ("rules",)
+    __slots__ = ["rules"]
     RULES_FIELD_NUMBER: _ClassVar[int]
     rules: _containers.RepeatedCompositeFieldContainer[LifecycleRule]
     def __init__(self, rules: _Optional[_Iterable[_Union[LifecycleRule, _Mapping]]] = ...) -> None: ...
 
 class LifecycleRule(_message.Message):
-    __slots__ = ("id", "status", "filter", "expiration", "noncurrent_version_expiration", "abort_incomplete_multipart_upload")
+    __slots__ = ["id", "status", "filter", "expiration", "noncurrent_version_expiration", "abort_incomplete_multipart_upload"]
     class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATUS_UNSPECIFIED: _ClassVar[LifecycleRule.Status]
         ENABLED: _ClassVar[LifecycleRule.Status]
         DISABLED: _ClassVar[LifecycleRule.Status]
@@ -40,7 +40,7 @@ class LifecycleRule(_message.Message):
     def __init__(self, id: _Optional[str] = ..., status: _Optional[_Union[LifecycleRule.Status, str]] = ..., filter: _Optional[_Union[LifecycleFilter, _Mapping]] = ..., expiration: _Optional[_Union[LifecycleExpiration, _Mapping]] = ..., noncurrent_version_expiration: _Optional[_Union[LifecycleNoncurrentVersionExpiration, _Mapping]] = ..., abort_incomplete_multipart_upload: _Optional[_Union[LifecycleAbortIncompleteMultipartUpload, _Mapping]] = ...) -> None: ...
 
 class LifecycleFilter(_message.Message):
-    __slots__ = ("prefix", "object_size_greater_than_bytes", "object_size_less_than_bytes")
+    __slots__ = ["prefix", "object_size_greater_than_bytes", "object_size_less_than_bytes"]
     PREFIX_FIELD_NUMBER: _ClassVar[int]
     OBJECT_SIZE_GREATER_THAN_BYTES_FIELD_NUMBER: _ClassVar[int]
     OBJECT_SIZE_LESS_THAN_BYTES_FIELD_NUMBER: _ClassVar[int]
@@ -50,7 +50,7 @@ class LifecycleFilter(_message.Message):
     def __init__(self, prefix: _Optional[str] = ..., object_size_greater_than_bytes: _Optional[int] = ..., object_size_less_than_bytes: _Optional[int] = ...) -> None: ...
 
 class LifecycleExpiration(_message.Message):
-    __slots__ = ("date", "days", "expired_object_delete_marker")
+    __slots__ = ["date", "days", "expired_object_delete_marker"]
     DATE_FIELD_NUMBER: _ClassVar[int]
     DAYS_FIELD_NUMBER: _ClassVar[int]
     EXPIRED_OBJECT_DELETE_MARKER_FIELD_NUMBER: _ClassVar[int]
@@ -60,7 +60,7 @@ class LifecycleExpiration(_message.Message):
     def __init__(self, date: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., days: _Optional[int] = ..., expired_object_delete_marker: bool = ...) -> None: ...
 
 class LifecycleNoncurrentVersionExpiration(_message.Message):
-    __slots__ = ("newer_noncurrent_versions", "noncurrent_days")
+    __slots__ = ["newer_noncurrent_versions", "noncurrent_days"]
     NEWER_NONCURRENT_VERSIONS_FIELD_NUMBER: _ClassVar[int]
     NONCURRENT_DAYS_FIELD_NUMBER: _ClassVar[int]
     newer_noncurrent_versions: int
@@ -68,7 +68,7 @@ class LifecycleNoncurrentVersionExpiration(_message.Message):
     def __init__(self, newer_noncurrent_versions: _Optional[int] = ..., noncurrent_days: _Optional[int] = ...) -> None: ...
 
 class LifecycleAbortIncompleteMultipartUpload(_message.Message):
-    __slots__ = ("days_after_initiation",)
+    __slots__ = ["days_after_initiation"]
     DAYS_AFTER_INITIATION_FIELD_NUMBER: _ClassVar[int]
     days_after_initiation: int
     def __init__(self, days_after_initiation: _Optional[int] = ...) -> None: ...

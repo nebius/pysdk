@@ -9,7 +9,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Cluster(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -19,7 +19,7 @@ class Cluster(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ClusterSpec, _Mapping]] = ..., status: _Optional[_Union[MlflowClusterStatus, _Mapping]] = ...) -> None: ...
 
 class ClusterSpec(_message.Message):
-    __slots__ = ("description", "public_access", "admin_username", "admin_password", "service_account_id", "storage_bucket_name", "network_id")
+    __slots__ = ["description", "public_access", "admin_username", "admin_password", "service_account_id", "storage_bucket_name", "network_id"]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_ACCESS_FIELD_NUMBER: _ClassVar[int]
     ADMIN_USERNAME_FIELD_NUMBER: _ClassVar[int]
@@ -37,7 +37,7 @@ class ClusterSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., public_access: bool = ..., admin_username: _Optional[str] = ..., admin_password: _Optional[str] = ..., service_account_id: _Optional[str] = ..., storage_bucket_name: _Optional[str] = ..., network_id: _Optional[str] = ...) -> None: ...
 
 class MlflowClusterStatus(_message.Message):
-    __slots__ = ("phase", "state", "tracking_endpoint", "effective_storage_bucket_name", "experiments_count", "mlflow_version", "tracking_endpoints")
+    __slots__ = ["phase", "state", "tracking_endpoint", "effective_storage_bucket_name", "experiments_count", "mlflow_version", "tracking_endpoints"]
     PHASE_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     TRACKING_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
@@ -55,7 +55,7 @@ class MlflowClusterStatus(_message.Message):
     def __init__(self, phase: _Optional[_Union[_cluster_pb2.ClusterStatus.Phase, str]] = ..., state: _Optional[_Union[_cluster_pb2.ClusterStatus.State, str]] = ..., tracking_endpoint: _Optional[str] = ..., effective_storage_bucket_name: _Optional[str] = ..., experiments_count: _Optional[int] = ..., mlflow_version: _Optional[str] = ..., tracking_endpoints: _Optional[_Union[Endpoints, _Mapping]] = ...) -> None: ...
 
 class Endpoints(_message.Message):
-    __slots__ = ("private", "public")
+    __slots__ = ["private", "public"]
     PRIVATE_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_FIELD_NUMBER: _ClassVar[int]
     private: str

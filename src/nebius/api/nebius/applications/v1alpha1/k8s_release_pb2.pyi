@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class K8sRelease(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,9 +20,9 @@ class K8sRelease(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[K8sReleaseSpec, _Mapping]] = ..., status: _Optional[_Union[K8sReleaseStatus, _Mapping]] = ...) -> None: ...
 
 class K8sReleaseSpec(_message.Message):
-    __slots__ = ("cluster_id", "product_slug", "namespace", "application_name", "values", "set")
+    __slots__ = ["cluster_id", "product_slug", "namespace", "application_name", "values", "set"]
     class SetEntry(_message.Message):
-        __slots__ = ("key", "value")
+        __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
         key: str
@@ -43,9 +43,9 @@ class K8sReleaseSpec(_message.Message):
     def __init__(self, cluster_id: _Optional[str] = ..., product_slug: _Optional[str] = ..., namespace: _Optional[str] = ..., application_name: _Optional[str] = ..., values: _Optional[str] = ..., set: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class K8sReleaseStatus(_message.Message):
-    __slots__ = ("state", "error_message")
+    __slots__ = ["state", "error_message"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[K8sReleaseStatus.State]
         CREATED: _ClassVar[K8sReleaseStatus.State]
         RUNNING: _ClassVar[K8sReleaseStatus.State]

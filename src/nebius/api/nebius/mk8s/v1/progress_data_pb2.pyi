@@ -6,13 +6,13 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ProgressData(_message.Message):
-    __slots__ = ("problems",)
+    __slots__ = ["problems"]
     PROBLEMS_FIELD_NUMBER: _ClassVar[int]
     problems: _containers.RepeatedCompositeFieldContainer[Problem]
     def __init__(self, problems: _Optional[_Iterable[_Union[Problem, _Mapping]]] = ...) -> None: ...
 
 class Problem(_message.Message):
-    __slots__ = ("stage", "message")
+    __slots__ = ["stage", "message"]
     STAGE_FIELD_NUMBER: _ClassVar[int]
     MESSAGE_FIELD_NUMBER: _ClassVar[int]
     stage: str

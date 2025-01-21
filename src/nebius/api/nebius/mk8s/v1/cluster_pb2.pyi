@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Cluster(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,7 +20,7 @@ class Cluster(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ClusterSpec, _Mapping]] = ..., status: _Optional[_Union[ClusterStatus, _Mapping]] = ...) -> None: ...
 
 class ClusterSpec(_message.Message):
-    __slots__ = ("control_plane", "kube_network")
+    __slots__ = ["control_plane", "kube_network"]
     CONTROL_PLANE_FIELD_NUMBER: _ClassVar[int]
     KUBE_NETWORK_FIELD_NUMBER: _ClassVar[int]
     control_plane: ControlPlaneSpec
@@ -28,7 +28,7 @@ class ClusterSpec(_message.Message):
     def __init__(self, control_plane: _Optional[_Union[ControlPlaneSpec, _Mapping]] = ..., kube_network: _Optional[_Union[KubeNetworkSpec, _Mapping]] = ...) -> None: ...
 
 class ControlPlaneSpec(_message.Message):
-    __slots__ = ("version", "subnet_id", "endpoints", "etcd_cluster_size")
+    __slots__ = ["version", "subnet_id", "endpoints", "etcd_cluster_size"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     SUBNET_ID_FIELD_NUMBER: _ClassVar[int]
     ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
@@ -40,25 +40,25 @@ class ControlPlaneSpec(_message.Message):
     def __init__(self, version: _Optional[str] = ..., subnet_id: _Optional[str] = ..., endpoints: _Optional[_Union[ControlPlaneEndpointsSpec, _Mapping]] = ..., etcd_cluster_size: _Optional[int] = ...) -> None: ...
 
 class ControlPlaneEndpointsSpec(_message.Message):
-    __slots__ = ("public_endpoint",)
+    __slots__ = ["public_endpoint"]
     PUBLIC_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
     public_endpoint: PublicEndpointSpec
     def __init__(self, public_endpoint: _Optional[_Union[PublicEndpointSpec, _Mapping]] = ...) -> None: ...
 
 class PublicEndpointSpec(_message.Message):
-    __slots__ = ()
+    __slots__ = []
     def __init__(self) -> None: ...
 
 class KubeNetworkSpec(_message.Message):
-    __slots__ = ("service_cidrs",)
+    __slots__ = ["service_cidrs"]
     SERVICE_CIDRS_FIELD_NUMBER: _ClassVar[int]
     service_cidrs: _containers.RepeatedScalarFieldContainer[str]
     def __init__(self, service_cidrs: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class ClusterStatus(_message.Message):
-    __slots__ = ("state", "control_plane", "reconciling")
+    __slots__ = ["state", "control_plane", "reconciling"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[ClusterStatus.State]
         PROVISIONING: _ClassVar[ClusterStatus.State]
         RUNNING: _ClassVar[ClusterStatus.State]
@@ -76,7 +76,7 @@ class ClusterStatus(_message.Message):
     def __init__(self, state: _Optional[_Union[ClusterStatus.State, str]] = ..., control_plane: _Optional[_Union[ControlPlaneStatus, _Mapping]] = ..., reconciling: bool = ...) -> None: ...
 
 class ControlPlaneStatus(_message.Message):
-    __slots__ = ("version", "endpoints", "etcd_cluster_size", "auth")
+    __slots__ = ["version", "endpoints", "etcd_cluster_size", "auth"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     ETCD_CLUSTER_SIZE_FIELD_NUMBER: _ClassVar[int]
@@ -88,7 +88,7 @@ class ControlPlaneStatus(_message.Message):
     def __init__(self, version: _Optional[str] = ..., endpoints: _Optional[_Union[ControlPlaneStatusEndpoints, _Mapping]] = ..., etcd_cluster_size: _Optional[int] = ..., auth: _Optional[_Union[ControlPlaneStatusAuth, _Mapping]] = ...) -> None: ...
 
 class ControlPlaneStatusEndpoints(_message.Message):
-    __slots__ = ("public_endpoint", "private_endpoint")
+    __slots__ = ["public_endpoint", "private_endpoint"]
     PUBLIC_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
     PRIVATE_ENDPOINT_FIELD_NUMBER: _ClassVar[int]
     public_endpoint: str
@@ -96,7 +96,7 @@ class ControlPlaneStatusEndpoints(_message.Message):
     def __init__(self, public_endpoint: _Optional[str] = ..., private_endpoint: _Optional[str] = ...) -> None: ...
 
 class ControlPlaneStatusAuth(_message.Message):
-    __slots__ = ("cluster_ca_certificate",)
+    __slots__ = ["cluster_ca_certificate"]
     CLUSTER_CA_CERTIFICATE_FIELD_NUMBER: _ClassVar[int]
     cluster_ca_certificate: str
     def __init__(self, cluster_ca_certificate: _Optional[str] = ...) -> None: ...

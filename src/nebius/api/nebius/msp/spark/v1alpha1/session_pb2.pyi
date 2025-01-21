@@ -13,7 +13,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Session(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -23,9 +23,9 @@ class Session(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[SessionSpec, _Mapping]] = ..., status: _Optional[_Union[SessionStatus, _Mapping]] = ...) -> None: ...
 
 class SessionSpec(_message.Message):
-    __slots__ = ("description", "driver", "executor", "spark_version", "file_uris", "jar_uris", "packages", "spark_conf", "python")
+    __slots__ = ["description", "driver", "executor", "spark_version", "file_uris", "jar_uris", "packages", "spark_conf", "python"]
     class SparkConfEntry(_message.Message):
-        __slots__ = ("key", "value")
+        __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
         key: str
@@ -52,7 +52,7 @@ class SessionSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., driver: _Optional[_Union[_preset_pb2.DriverTemplateSpec, _Mapping]] = ..., executor: _Optional[_Union[_preset_pb2.ExecutorTemplateSpec, _Mapping]] = ..., spark_version: _Optional[str] = ..., file_uris: _Optional[_Iterable[str]] = ..., jar_uris: _Optional[_Iterable[str]] = ..., packages: _Optional[_Iterable[str]] = ..., spark_conf: _Optional[_Mapping[str, str]] = ..., python: _Optional[_Union[_common_pb2.PythonConfig, _Mapping]] = ...) -> None: ...
 
 class SessionStatus(_message.Message):
-    __slots__ = ("phase", "state", "spark_connect_endpoint", "driver_preset_details", "executor_preset_details")
+    __slots__ = ["phase", "state", "spark_connect_endpoint", "driver_preset_details", "executor_preset_details"]
     PHASE_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     SPARK_CONNECT_ENDPOINT_FIELD_NUMBER: _ClassVar[int]

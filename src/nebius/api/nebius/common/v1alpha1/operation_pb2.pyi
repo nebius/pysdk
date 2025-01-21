@@ -11,14 +11,14 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Operation(_message.Message):
-    __slots__ = ("id", "description", "created_at", "created_by", "finished_at", "request", "request_headers", "resource_id", "resource", "progress_data", "status")
+    __slots__ = ["id", "description", "created_at", "created_by", "finished_at", "request", "request_headers", "resource_id", "resource", "progress_data", "status"]
     class request_header(_message.Message):
-        __slots__ = ("values",)
+        __slots__ = ["values"]
         VALUES_FIELD_NUMBER: _ClassVar[int]
         values: _containers.RepeatedScalarFieldContainer[str]
         def __init__(self, values: _Optional[_Iterable[str]] = ...) -> None: ...
     class RequestHeadersEntry(_message.Message):
-        __slots__ = ("key", "value")
+        __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
         key: str

@@ -14,7 +14,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class JobResultCode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     JOB_RESULT_CODE_UNSPECIFIED: _ClassVar[JobResultCode]
     SUCCEEDED: _ClassVar[JobResultCode]
     ERROR: _ClassVar[JobResultCode]
@@ -23,7 +23,7 @@ SUCCEEDED: JobResultCode
 ERROR: JobResultCode
 
 class Job(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -33,9 +33,9 @@ class Job(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[JobSpec, _Mapping]] = ..., status: _Optional[_Union[JobStatus, _Mapping]] = ...) -> None: ...
 
 class JobSpec(_message.Message):
-    __slots__ = ("description", "application_file_uri", "driver", "executor", "spark_version", "application_args", "file_uris", "jar_uris", "packages", "spark_conf", "python", "java")
+    __slots__ = ["description", "application_file_uri", "driver", "executor", "spark_version", "application_args", "file_uris", "jar_uris", "packages", "spark_conf", "python", "java"]
     class SparkConfEntry(_message.Message):
-        __slots__ = ("key", "value")
+        __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
         key: str
@@ -68,13 +68,13 @@ class JobSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., application_file_uri: _Optional[str] = ..., driver: _Optional[_Union[_preset_pb2.DriverTemplateSpec, _Mapping]] = ..., executor: _Optional[_Union[_preset_pb2.ExecutorTemplateSpec, _Mapping]] = ..., spark_version: _Optional[str] = ..., application_args: _Optional[_Iterable[str]] = ..., file_uris: _Optional[_Iterable[str]] = ..., jar_uris: _Optional[_Iterable[str]] = ..., packages: _Optional[_Iterable[str]] = ..., spark_conf: _Optional[_Mapping[str, str]] = ..., python: _Optional[_Union[_common_pb2.PythonConfig, _Mapping]] = ..., java: _Optional[_Union[_common_pb2.JavaConfig, _Mapping]] = ...) -> None: ...
 
 class JobResultDetails(_message.Message):
-    __slots__ = ("code",)
+    __slots__ = ["code"]
     CODE_FIELD_NUMBER: _ClassVar[int]
     code: JobResultCode
     def __init__(self, code: _Optional[_Union[JobResultCode, str]] = ...) -> None: ...
 
 class JobStatus(_message.Message):
-    __slots__ = ("phase", "state", "driver_endpoint", "driver_preset_details", "executor_preset_details", "result_details")
+    __slots__ = ["phase", "state", "driver_endpoint", "driver_preset_details", "executor_preset_details", "result_details"]
     PHASE_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     DRIVER_ENDPOINT_FIELD_NUMBER: _ClassVar[int]

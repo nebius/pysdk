@@ -18,7 +18,7 @@ class VersionServiceStub(object):
                 '/nebius.logging.agentmanager.v1.VersionService/GetVersion',
                 request_serializer=nebius_dot_logging_dot_v1_dot_agentmanager_dot_version__service__pb2.GetVersionRequest.SerializeToString,
                 response_deserializer=nebius_dot_logging_dot_v1_dot_agentmanager_dot_version__service__pb2.GetVersionResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class VersionServiceServicer(object):
@@ -42,7 +42,6 @@ def add_VersionServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.logging.agentmanager.v1.VersionService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.logging.agentmanager.v1.VersionService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -60,18 +59,8 @@ class VersionService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.logging.agentmanager.v1.VersionService/GetVersion',
+        return grpc.experimental.unary_unary(request, target, '/nebius.logging.agentmanager.v1.VersionService/GetVersion',
             nebius_dot_logging_dot_v1_dot_agentmanager_dot_version__service__pb2.GetVersionRequest.SerializeToString,
             nebius_dot_logging_dot_v1_dot_agentmanager_dot_version__service__pb2.GetVersionResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

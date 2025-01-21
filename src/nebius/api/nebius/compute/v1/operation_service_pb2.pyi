@@ -6,7 +6,7 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ListOperationsByParentRequest(_message.Message):
-    __slots__ = ("parent_id", "page_size", "page_token")
+    __slots__ = ["parent_id", "page_size", "page_token"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]

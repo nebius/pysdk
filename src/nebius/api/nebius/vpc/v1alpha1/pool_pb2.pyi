@@ -10,13 +10,13 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class PoolCidrState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     STATE_UNSPECIFIED: _ClassVar[PoolCidrState]
     AVAILABLE: _ClassVar[PoolCidrState]
     DISABLED: _ClassVar[PoolCidrState]
 
 class IpVersion(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     IP_VERSION_UNSPECIFIED: _ClassVar[IpVersion]
     IPV4: _ClassVar[IpVersion]
     IPV6: _ClassVar[IpVersion]
@@ -28,7 +28,7 @@ IPV4: IpVersion
 IPV6: IpVersion
 
 class Pool(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -38,7 +38,7 @@ class Pool(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[PoolSpec, _Mapping]] = ..., status: _Optional[_Union[PoolStatus, _Mapping]] = ...) -> None: ...
 
 class PoolSpec(_message.Message):
-    __slots__ = ("source_pool_id", "source_scope_id", "version", "cidrs")
+    __slots__ = ["source_pool_id", "source_scope_id", "version", "cidrs"]
     SOURCE_POOL_ID_FIELD_NUMBER: _ClassVar[int]
     SOURCE_SCOPE_ID_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -50,7 +50,7 @@ class PoolSpec(_message.Message):
     def __init__(self, source_pool_id: _Optional[str] = ..., source_scope_id: _Optional[str] = ..., version: _Optional[_Union[IpVersion, str]] = ..., cidrs: _Optional[_Iterable[_Union[PoolCidr, _Mapping]]] = ...) -> None: ...
 
 class PoolCidr(_message.Message):
-    __slots__ = ("cidr", "state", "allowed_mask")
+    __slots__ = ["cidr", "state", "allowed_mask"]
     CIDR_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     ALLOWED_MASK_FIELD_NUMBER: _ClassVar[int]
@@ -60,9 +60,9 @@ class PoolCidr(_message.Message):
     def __init__(self, cidr: _Optional[str] = ..., state: _Optional[_Union[PoolCidrState, str]] = ..., allowed_mask: _Optional[int] = ...) -> None: ...
 
 class PoolStatus(_message.Message):
-    __slots__ = ("state", "cidrs", "scope_id")
+    __slots__ = ["state", "cidrs", "scope_id"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[PoolStatus.State]
         CREATING: _ClassVar[PoolStatus.State]
         READY: _ClassVar[PoolStatus.State]

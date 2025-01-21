@@ -19,12 +19,12 @@ class TenantUserAccountWithAttributesServiceStub(object):
                 '/nebius.iam.v1.TenantUserAccountWithAttributesService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__with__attributes__service__pb2.GetTenantUserAccountWithAttributesRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__pb2.TenantUserAccountWithAttributes.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.TenantUserAccountWithAttributesService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__with__attributes__service__pb2.ListTenantUserAccountsWithAttributesRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__with__attributes__service__pb2.ListTenantUserAccountsWithAttributesResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class TenantUserAccountWithAttributesServiceServicer(object):
@@ -59,7 +59,6 @@ def add_TenantUserAccountWithAttributesServiceServicer_to_server(servicer, serve
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.TenantUserAccountWithAttributesService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.TenantUserAccountWithAttributesService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -77,21 +76,11 @@ class TenantUserAccountWithAttributesService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.TenantUserAccountWithAttributesService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantUserAccountWithAttributesService/Get',
             nebius_dot_iam_dot_v1_dot_tenant__user__account__with__attributes__service__pb2.GetTenantUserAccountWithAttributesRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_tenant__user__account__pb2.TenantUserAccountWithAttributes.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -104,18 +93,8 @@ class TenantUserAccountWithAttributesService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.TenantUserAccountWithAttributesService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantUserAccountWithAttributesService/List',
             nebius_dot_iam_dot_v1_dot_tenant__user__account__with__attributes__service__pb2.ListTenantUserAccountsWithAttributesRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_tenant__user__account__with__attributes__service__pb2.ListTenantUserAccountsWithAttributesResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

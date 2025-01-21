@@ -7,7 +7,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class DriverTemplateSpec(_message.Message):
-    __slots__ = ("disk", "resources")
+    __slots__ = ["disk", "resources"]
     DISK_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     disk: _template_pb2.DiskSpec
@@ -15,7 +15,7 @@ class DriverTemplateSpec(_message.Message):
     def __init__(self, disk: _Optional[_Union[_template_pb2.DiskSpec, _Mapping]] = ..., resources: _Optional[_Union[_template_pb2.ResourcesSpec, _Mapping]] = ...) -> None: ...
 
 class DynamicAllocationSpec(_message.Message):
-    __slots__ = ("min", "max")
+    __slots__ = ["min", "max"]
     MIN_FIELD_NUMBER: _ClassVar[int]
     MAX_FIELD_NUMBER: _ClassVar[int]
     min: int
@@ -23,7 +23,7 @@ class DynamicAllocationSpec(_message.Message):
     def __init__(self, min: _Optional[int] = ..., max: _Optional[int] = ...) -> None: ...
 
 class ExecutorTemplateSpec(_message.Message):
-    __slots__ = ("disk", "resources", "hosts", "hosts_dynamic_allocation")
+    __slots__ = ["disk", "resources", "hosts", "hosts_dynamic_allocation"]
     DISK_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     HOSTS_FIELD_NUMBER: _ClassVar[int]

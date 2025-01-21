@@ -19,17 +19,17 @@ class GroupServiceStub(object):
                 '/nebius.iam.v1.GroupService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.GetGroupRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__pb2.Group.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.iam.v1.GroupService/GetByName',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.GetGroupByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__pb2.Group.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.GroupService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class GroupServiceServicer(object):
@@ -75,7 +75,6 @@ def add_GroupServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.GroupService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.GroupService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -93,21 +92,11 @@ class GroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupService/Get',
             nebius_dot_iam_dot_v1_dot_group__service__pb2.GetGroupRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__pb2.Group.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -120,21 +109,11 @@ class GroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupService/GetByName',
             nebius_dot_iam_dot_v1_dot_group__service__pb2.GetGroupByNameRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__pb2.Group.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -147,18 +126,8 @@ class GroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupService/List',
             nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

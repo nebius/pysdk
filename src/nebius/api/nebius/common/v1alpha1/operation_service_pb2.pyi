@@ -9,13 +9,13 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class GetOperationRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class ListOperationsRequest(_message.Message):
-    __slots__ = ("resource_id", "page_size", "page_token", "filter")
+    __slots__ = ["resource_id", "page_size", "page_token", "filter"]
     RESOURCE_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -27,7 +27,7 @@ class ListOperationsRequest(_message.Message):
     def __init__(self, resource_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ...) -> None: ...
 
 class ListOperationsResponse(_message.Message):
-    __slots__ = ("operations", "next_page_token")
+    __slots__ = ["operations", "next_page_token"]
     OPERATIONS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     operations: _containers.RepeatedCompositeFieldContainer[_operation_pb2.Operation]
@@ -35,7 +35,7 @@ class ListOperationsResponse(_message.Message):
     def __init__(self, operations: _Optional[_Iterable[_Union[_operation_pb2.Operation, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
 
 class ListOperationsByParentRequest(_message.Message):
-    __slots__ = ("parent_id", "page_size", "page_token", "filter")
+    __slots__ = ["parent_id", "page_size", "page_token", "filter"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]

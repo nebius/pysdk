@@ -11,7 +11,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CreateAccessKeyRequest(_message.Message):
-    __slots__ = ("metadata", "spec")
+    __slots__ = ["metadata", "spec"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
@@ -19,7 +19,7 @@ class CreateAccessKeyRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_access_key_pb2.AccessKeySpec, _Mapping]] = ...) -> None: ...
 
 class KeyIdentity(_message.Message):
-    __slots__ = ("id", "aws_access_key_id")
+    __slots__ = ["id", "aws_access_key_id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     AWS_ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
     id: str
@@ -27,25 +27,25 @@ class KeyIdentity(_message.Message):
     def __init__(self, id: _Optional[str] = ..., aws_access_key_id: _Optional[str] = ...) -> None: ...
 
 class GetAccessKeySecretOnceRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class GetAccessKeyByIdRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class GetAccessKeyByAwsIdRequest(_message.Message):
-    __slots__ = ("aws_access_key_id",)
+    __slots__ = ["aws_access_key_id"]
     AWS_ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
     aws_access_key_id: str
     def __init__(self, aws_access_key_id: _Optional[str] = ...) -> None: ...
 
 class ListAccessKeysRequest(_message.Message):
-    __slots__ = ("parent_id", "page_size", "page_token", "filter")
+    __slots__ = ["parent_id", "page_size", "page_token", "filter"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -57,7 +57,7 @@ class ListAccessKeysRequest(_message.Message):
     def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ...) -> None: ...
 
 class ListAccessKeysByAccountRequest(_message.Message):
-    __slots__ = ("account", "page_size", "page_token", "filter")
+    __slots__ = ["account", "page_size", "page_token", "filter"]
     ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -69,7 +69,7 @@ class ListAccessKeysByAccountRequest(_message.Message):
     def __init__(self, account: _Optional[_Union[_access_pb2.Account, _Mapping]] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ...) -> None: ...
 
 class UpdateAccessKeyRequest(_message.Message):
-    __slots__ = ("metadata", "spec")
+    __slots__ = ["metadata", "spec"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
@@ -77,31 +77,31 @@ class UpdateAccessKeyRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_access_key_pb2.AccessKeySpec, _Mapping]] = ...) -> None: ...
 
 class ActivateAccessKeyRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: KeyIdentity
     def __init__(self, id: _Optional[_Union[KeyIdentity, _Mapping]] = ...) -> None: ...
 
 class DeactivateAccessKeyRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: KeyIdentity
     def __init__(self, id: _Optional[_Union[KeyIdentity, _Mapping]] = ...) -> None: ...
 
 class DeleteAccessKeyRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: KeyIdentity
     def __init__(self, id: _Optional[_Union[KeyIdentity, _Mapping]] = ...) -> None: ...
 
 class GetAccessKeySecretOnceResponse(_message.Message):
-    __slots__ = ("secret",)
+    __slots__ = ["secret"]
     SECRET_FIELD_NUMBER: _ClassVar[int]
     secret: str
     def __init__(self, secret: _Optional[str] = ...) -> None: ...
 
 class ListAccessKeysResponse(_message.Message):
-    __slots__ = ("items", "next_page_token")
+    __slots__ = ["items", "next_page_token"]
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[_access_key_pb2.AccessKey]

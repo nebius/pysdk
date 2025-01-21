@@ -20,17 +20,17 @@ class ArtifactServiceStub(object):
                 '/nebius.registry.v1.ArtifactService/Get',
                 request_serializer=nebius_dot_registry_dot_v1_dot_artifact__service__pb2.GetArtifactRequest.SerializeToString,
                 response_deserializer=nebius_dot_registry_dot_v1_dot_artifact__pb2.Artifact.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.registry.v1.ArtifactService/List',
                 request_serializer=nebius_dot_registry_dot_v1_dot_artifact__service__pb2.ListArtifactsRequest.SerializeToString,
                 response_deserializer=nebius_dot_registry_dot_v1_dot_artifact__service__pb2.ListArtifactsResponse.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.registry.v1.ArtifactService/Delete',
                 request_serializer=nebius_dot_registry_dot_v1_dot_artifact__service__pb2.DeleteArtifactRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class ArtifactServiceServicer(object):
@@ -76,7 +76,6 @@ def add_ArtifactServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.registry.v1.ArtifactService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.registry.v1.ArtifactService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -94,21 +93,11 @@ class ArtifactService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.registry.v1.ArtifactService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.registry.v1.ArtifactService/Get',
             nebius_dot_registry_dot_v1_dot_artifact__service__pb2.GetArtifactRequest.SerializeToString,
             nebius_dot_registry_dot_v1_dot_artifact__pb2.Artifact.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -121,21 +110,11 @@ class ArtifactService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.registry.v1.ArtifactService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.registry.v1.ArtifactService/List',
             nebius_dot_registry_dot_v1_dot_artifact__service__pb2.ListArtifactsRequest.SerializeToString,
             nebius_dot_registry_dot_v1_dot_artifact__service__pb2.ListArtifactsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -148,18 +127,8 @@ class ArtifactService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.registry.v1.ArtifactService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.registry.v1.ArtifactService/Delete',
             nebius_dot_registry_dot_v1_dot_artifact__service__pb2.DeleteArtifactRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

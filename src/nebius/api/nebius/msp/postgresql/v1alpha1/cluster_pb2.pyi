@@ -14,7 +14,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Cluster(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -24,9 +24,9 @@ class Cluster(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ClusterSpec, _Mapping]] = ..., status: _Optional[_Union[ClusterStatus, _Mapping]] = ...) -> None: ...
 
 class ConnectionPoolerConfig(_message.Message):
-    __slots__ = ("pooling_mode", "max_pool_size")
+    __slots__ = ["pooling_mode", "max_pool_size"]
     class PoolingMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         POOLING_MODE_UNSPECIFIED: _ClassVar[ConnectionPoolerConfig.PoolingMode]
         SESSION: _ClassVar[ConnectionPoolerConfig.PoolingMode]
         TRANSACTION: _ClassVar[ConnectionPoolerConfig.PoolingMode]
@@ -40,7 +40,7 @@ class ConnectionPoolerConfig(_message.Message):
     def __init__(self, pooling_mode: _Optional[_Union[ConnectionPoolerConfig.PoolingMode, str]] = ..., max_pool_size: _Optional[int] = ...) -> None: ...
 
 class ClusterSpec(_message.Message):
-    __slots__ = ("description", "network_id", "config", "bootstrap", "backup")
+    __slots__ = ["description", "network_id", "config", "bootstrap", "backup"]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     NETWORK_ID_FIELD_NUMBER: _ClassVar[int]
     CONFIG_FIELD_NUMBER: _ClassVar[int]
@@ -54,7 +54,7 @@ class ClusterSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., network_id: _Optional[str] = ..., config: _Optional[_Union[ConfigSpec, _Mapping]] = ..., bootstrap: _Optional[_Union[BootstrapSpec, _Mapping]] = ..., backup: _Optional[_Union[BackupSpec, _Mapping]] = ...) -> None: ...
 
 class ClusterStatus(_message.Message):
-    __slots__ = ("phase", "state", "preset_details", "connection_endpoints")
+    __slots__ = ["phase", "state", "preset_details", "connection_endpoints"]
     PHASE_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     PRESET_DETAILS_FIELD_NUMBER: _ClassVar[int]
@@ -66,7 +66,7 @@ class ClusterStatus(_message.Message):
     def __init__(self, phase: _Optional[_Union[_cluster_pb2.ClusterStatus.Phase, str]] = ..., state: _Optional[_Union[_cluster_pb2.ClusterStatus.State, str]] = ..., preset_details: _Optional[_Union[_template_pb2_1.PresetDetails, _Mapping]] = ..., connection_endpoints: _Optional[_Union[Endpoints, _Mapping]] = ...) -> None: ...
 
 class Endpoints(_message.Message):
-    __slots__ = ("private_read_write", "private_read_only", "public_read_write", "public_read_only")
+    __slots__ = ["private_read_write", "private_read_only", "public_read_write", "public_read_only"]
     PRIVATE_READ_WRITE_FIELD_NUMBER: _ClassVar[int]
     PRIVATE_READ_ONLY_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_READ_WRITE_FIELD_NUMBER: _ClassVar[int]
@@ -78,7 +78,7 @@ class Endpoints(_message.Message):
     def __init__(self, private_read_write: _Optional[str] = ..., private_read_only: _Optional[str] = ..., public_read_write: _Optional[str] = ..., public_read_only: _Optional[str] = ...) -> None: ...
 
 class ConfigSpec(_message.Message):
-    __slots__ = ("version", "pooler_config", "resources", "postgresql_config_16", "public_access", "template")
+    __slots__ = ["version", "pooler_config", "resources", "postgresql_config_16", "public_access", "template"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     POOLER_CONFIG_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
@@ -94,7 +94,7 @@ class ConfigSpec(_message.Message):
     def __init__(self, version: _Optional[str] = ..., pooler_config: _Optional[_Union[ConnectionPoolerConfig, _Mapping]] = ..., resources: _Optional[_Union[_preset_pb2.PresetSpec, _Mapping]] = ..., postgresql_config_16: _Optional[_Union[_postgresql_pb2.PostgresqlConfig16, _Mapping]] = ..., public_access: bool = ..., template: _Optional[_Union[_template_pb2.TemplateSpec, _Mapping]] = ...) -> None: ...
 
 class BootstrapSpec(_message.Message):
-    __slots__ = ("user_name", "user_password", "db_name")
+    __slots__ = ["user_name", "user_password", "db_name"]
     USER_NAME_FIELD_NUMBER: _ClassVar[int]
     USER_PASSWORD_FIELD_NUMBER: _ClassVar[int]
     DB_NAME_FIELD_NUMBER: _ClassVar[int]
@@ -104,7 +104,7 @@ class BootstrapSpec(_message.Message):
     def __init__(self, user_name: _Optional[str] = ..., user_password: _Optional[str] = ..., db_name: _Optional[str] = ...) -> None: ...
 
 class BackupSpec(_message.Message):
-    __slots__ = ("backup_window_start", "retention_policy")
+    __slots__ = ["backup_window_start", "retention_policy"]
     BACKUP_WINDOW_START_FIELD_NUMBER: _ClassVar[int]
     RETENTION_POLICY_FIELD_NUMBER: _ClassVar[int]
     backup_window_start: str

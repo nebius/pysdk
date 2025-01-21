@@ -20,27 +20,27 @@ class RegistryServiceStub(object):
                 '/nebius.registry.v1.RegistryService/Get',
                 request_serializer=nebius_dot_registry_dot_v1_dot_registry__service__pb2.GetRegistryRequest.SerializeToString,
                 response_deserializer=nebius_dot_registry_dot_v1_dot_registry__pb2.Registry.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.registry.v1.RegistryService/List',
                 request_serializer=nebius_dot_registry_dot_v1_dot_registry__service__pb2.ListRegistriesRequest.SerializeToString,
                 response_deserializer=nebius_dot_registry_dot_v1_dot_registry__service__pb2.ListRegistriesResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.registry.v1.RegistryService/Create',
                 request_serializer=nebius_dot_registry_dot_v1_dot_registry__service__pb2.CreateRegistryRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.registry.v1.RegistryService/Update',
                 request_serializer=nebius_dot_registry_dot_v1_dot_registry__service__pb2.UpdateRegistryRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.registry.v1.RegistryService/Delete',
                 request_serializer=nebius_dot_registry_dot_v1_dot_registry__service__pb2.DeleteRegistryRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class RegistryServiceServicer(object):
@@ -108,7 +108,6 @@ def add_RegistryServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.registry.v1.RegistryService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.registry.v1.RegistryService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -126,21 +125,11 @@ class RegistryService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.registry.v1.RegistryService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.registry.v1.RegistryService/Get',
             nebius_dot_registry_dot_v1_dot_registry__service__pb2.GetRegistryRequest.SerializeToString,
             nebius_dot_registry_dot_v1_dot_registry__pb2.Registry.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -153,21 +142,11 @@ class RegistryService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.registry.v1.RegistryService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.registry.v1.RegistryService/List',
             nebius_dot_registry_dot_v1_dot_registry__service__pb2.ListRegistriesRequest.SerializeToString,
             nebius_dot_registry_dot_v1_dot_registry__service__pb2.ListRegistriesResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -180,21 +159,11 @@ class RegistryService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.registry.v1.RegistryService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.registry.v1.RegistryService/Create',
             nebius_dot_registry_dot_v1_dot_registry__service__pb2.CreateRegistryRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -207,21 +176,11 @@ class RegistryService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.registry.v1.RegistryService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.registry.v1.RegistryService/Update',
             nebius_dot_registry_dot_v1_dot_registry__service__pb2.UpdateRegistryRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -234,18 +193,8 @@ class RegistryService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.registry.v1.RegistryService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.registry.v1.RegistryService/Delete',
             nebius_dot_registry_dot_v1_dot_registry__service__pb2.DeleteRegistryRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

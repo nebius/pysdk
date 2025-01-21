@@ -87,14 +87,12 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         method: str,
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
-        _registered_method: bool | None = False,
     ) -> None:
         super().__init__()
         self._channel = channel
         self._method = method
         self._request_serializer = request_serializer
         self._response_deserializer = response_deserializer
-        self._registered_method = _registered_method
         self._true_callee: UnaryUnaryMultiCallable[Req, Res] | None = None
 
     def __call__(
@@ -113,7 +111,6 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
                 self._method,
                 self._request_serializer,
                 self._response_deserializer,
-                self._registered_method,  # type: ignore[unused-ignore]
             )
         return self._true_callee(  # type: ignore[unused-ignore,misc]
             request,
@@ -366,14 +363,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         method_name: str,
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
-        _registered_method: bool | None = False,
     ) -> UnaryUnaryMultiCallable[Req, Res]:  # type: ignore[unused-ignore,override]
         return NebiusUnaryUnaryMultiCallable(
             self,
             method_name,
             request_serializer,
             response_deserializer,
-            _registered_method,
         )
 
     async def __aenter__(self) -> "Channel":
@@ -399,7 +394,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         method: str,
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
-        _registered_method: bool | None = None,
     ) -> UnaryStreamMultiCallable[Req, Res]:  # type: ignore[unused-ignore]
         raise NotImplementedError("Method not implemented")
 
@@ -408,7 +402,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         method: str,
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
-        _registered_method: bool | None = None,
     ) -> StreamUnaryMultiCallable:
         raise NotImplementedError("Method not implemented")
 
@@ -417,6 +410,5 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         method: str,
         request_serializer: SerializingFunction | None = None,
         response_deserializer: DeserializingFunction | None = None,
-        _registered_method: bool | None = None,
     ) -> StreamStreamMultiCallable:
         raise NotImplementedError("Method not implemented")

@@ -8,9 +8,9 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class DiskSpec(_message.Message):
-    __slots__ = ("size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type")
+    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type"]
     class DiskType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[DiskSpec.DiskType]
         NETWORK_SSD: _ClassVar[DiskSpec.DiskType]
         NETWORK_HDD: _ClassVar[DiskSpec.DiskType]
@@ -36,7 +36,7 @@ class DiskSpec(_message.Message):
     def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[DiskSpec.DiskType, str]] = ...) -> None: ...
 
 class ResourcesSpec(_message.Message):
-    __slots__ = ("platform", "preset")
+    __slots__ = ["platform", "preset"]
     PLATFORM_FIELD_NUMBER: _ClassVar[int]
     PRESET_FIELD_NUMBER: _ClassVar[int]
     platform: str

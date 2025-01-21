@@ -6,7 +6,7 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class PostgresqlConfig16(_message.Message):
-    __slots__ = ("autovacuum_work_mem", "statement_timeout", "idle_in_transaction_session_timeout", "autovacuum_vacuum_cost_delay", "autovacuum_vacuum_cost_limit", "autovacuum_naptime", "autovacuum_vacuum_scale_factor", "autovacuum_analyze_scale_factor", "default_transaction_read_only", "search_path", "max_connections", "shared_buffers")
+    __slots__ = ["autovacuum_work_mem", "statement_timeout", "idle_in_transaction_session_timeout", "autovacuum_vacuum_cost_delay", "autovacuum_vacuum_cost_limit", "autovacuum_naptime", "autovacuum_vacuum_scale_factor", "autovacuum_analyze_scale_factor", "default_transaction_read_only", "search_path", "max_connections", "shared_buffers"]
     AUTOVACUUM_WORK_MEM_FIELD_NUMBER: _ClassVar[int]
     STATEMENT_TIMEOUT_FIELD_NUMBER: _ClassVar[int]
     IDLE_IN_TRANSACTION_SESSION_TIMEOUT_FIELD_NUMBER: _ClassVar[int]

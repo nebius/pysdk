@@ -22,47 +22,47 @@ class InstanceServiceStub(object):
                 '/nebius.compute.v1alpha1.InstanceService/Get',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.GetInstanceRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_instance__pb2.Instance.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.compute.v1alpha1.InstanceService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_instance__pb2.Instance.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.compute.v1alpha1.InstanceService/List',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.ListInstancesRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.ListInstancesResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.compute.v1alpha1.InstanceService/Create',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.CreateInstanceRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.compute.v1alpha1.InstanceService/Update',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.UpdateInstanceRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.compute.v1alpha1.InstanceService/Delete',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.DeleteInstanceRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Start = channel.unary_unary(
                 '/nebius.compute.v1alpha1.InstanceService/Start',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.StartInstanceRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Stop = channel.unary_unary(
                 '/nebius.compute.v1alpha1.InstanceService/Stop',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.StopInstanceRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.ListOperationsByParent = channel.unary_unary(
                 '/nebius.compute.v1alpha1.InstanceService/ListOperationsByParent',
                 request_serializer=nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class InstanceServiceServicer(object):
@@ -174,7 +174,6 @@ def add_InstanceServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.compute.v1alpha1.InstanceService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.compute.v1alpha1.InstanceService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -192,21 +191,11 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/Get',
             nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.GetInstanceRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_instance__pb2.Instance.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -219,21 +208,11 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_instance__pb2.Instance.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -246,21 +225,11 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/List',
             nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.ListInstancesRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.ListInstancesResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -273,21 +242,11 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/Create',
             nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.CreateInstanceRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -300,21 +259,11 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/Update',
             nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.UpdateInstanceRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -327,21 +276,11 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/Delete',
             nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.DeleteInstanceRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Start(request,
@@ -354,21 +293,11 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/Start',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/Start',
             nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.StartInstanceRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Stop(request,
@@ -381,21 +310,11 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/Stop',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/Stop',
             nebius_dot_compute_dot_v1alpha1_dot_instance__service__pb2.StopInstanceRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListOperationsByParent(request,
@@ -408,18 +327,8 @@ class InstanceService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.InstanceService/ListOperationsByParent',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.InstanceService/ListOperationsByParent',
             nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

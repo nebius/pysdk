@@ -9,7 +9,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Registry(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -19,7 +19,7 @@ class Registry(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[RegistrySpec, _Mapping]] = ..., status: _Optional[_Union[RegistryStatus, _Mapping]] = ...) -> None: ...
 
 class RegistrySpec(_message.Message):
-    __slots__ = ("description", "images_count")
+    __slots__ = ["description", "images_count"]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     IMAGES_COUNT_FIELD_NUMBER: _ClassVar[int]
     description: str
@@ -27,9 +27,9 @@ class RegistrySpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., images_count: _Optional[int] = ...) -> None: ...
 
 class RegistryStatus(_message.Message):
-    __slots__ = ("state", "images_count")
+    __slots__ = ["state", "images_count"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         CREATING: _ClassVar[RegistryStatus.State]
         ACTIVE: _ClassVar[RegistryStatus.State]
         DELETING: _ClassVar[RegistryStatus.State]

@@ -6,9 +6,9 @@ from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ClusterStatus(_message.Message):
-    __slots__ = ("phase", "state", "reconciling")
+    __slots__ = ["phase", "state", "reconciling"]
     class Phase(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         PHASE_UNSPECIFIED: _ClassVar[ClusterStatus.Phase]
         PHASE_PROVISIONING: _ClassVar[ClusterStatus.Phase]
         PHASE_RUNNING: _ClassVar[ClusterStatus.Phase]
@@ -28,7 +28,7 @@ class ClusterStatus(_message.Message):
     PHASE_STOPPING: ClusterStatus.Phase
     PHASE_RESUMING: ClusterStatus.Phase
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[ClusterStatus.State]
         STATE_IN_PROGRESS: _ClassVar[ClusterStatus.State]
         STATE_FINISHED: _ClassVar[ClusterStatus.State]

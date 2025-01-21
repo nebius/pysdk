@@ -18,7 +18,7 @@ class IdentityServiceStub(object):
                 '/nebius.iam.v1.IdentityService/ExchangeToken',
                 request_serializer=nebius_dot_iam_dot_v1_dot_token__service__pb2.ExchangeTokenRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_token__service__pb2.CreateTokenResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class IdentityServiceServicer(object):
@@ -42,7 +42,6 @@ def add_IdentityServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.IdentityService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.IdentityService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -60,18 +59,8 @@ class IdentityService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.IdentityService/ExchangeToken',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.IdentityService/ExchangeToken',
             nebius_dot_iam_dot_v1_dot_token__service__pb2.ExchangeTokenRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_token__service__pb2.CreateTokenResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

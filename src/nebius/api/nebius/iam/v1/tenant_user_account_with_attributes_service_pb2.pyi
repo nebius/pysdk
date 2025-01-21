@@ -8,13 +8,13 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class GetTenantUserAccountWithAttributesRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class ListTenantUserAccountsWithAttributesRequest(_message.Message):
-    __slots__ = ("parent_id", "page_size", "page_token", "filter")
+    __slots__ = ["parent_id", "page_size", "page_token", "filter"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -26,7 +26,7 @@ class ListTenantUserAccountsWithAttributesRequest(_message.Message):
     def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ...) -> None: ...
 
 class ListTenantUserAccountsWithAttributesResponse(_message.Message):
-    __slots__ = ("items", "next_page_token")
+    __slots__ = ["items", "next_page_token"]
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[_tenant_user_account_pb2.TenantUserAccountWithAttributes]

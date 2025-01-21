@@ -21,32 +21,32 @@ class FederationServiceStub(object):
                 '/nebius.iam.v1.FederationService/Create',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.CreateFederationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Get = channel.unary_unary(
                 '/nebius.iam.v1.FederationService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.GetFederationRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_federation__pb2.Federation.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.iam.v1.FederationService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_federation__pb2.Federation.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.FederationService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.ListFederationsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.ListFederationsResponse.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.iam.v1.FederationService/Update',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.UpdateFederationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.FederationService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.DeleteFederationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class FederationServiceServicer(object):
@@ -125,7 +125,6 @@ def add_FederationServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.FederationService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.FederationService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -143,21 +142,11 @@ class FederationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/Create',
             nebius_dot_iam_dot_v1_dot_federation__service__pb2.CreateFederationRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Get(request,
@@ -170,21 +159,11 @@ class FederationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/Get',
             nebius_dot_iam_dot_v1_dot_federation__service__pb2.GetFederationRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_federation__pb2.Federation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -197,21 +176,11 @@ class FederationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_federation__pb2.Federation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -224,21 +193,11 @@ class FederationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/List',
             nebius_dot_iam_dot_v1_dot_federation__service__pb2.ListFederationsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_federation__service__pb2.ListFederationsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -251,21 +210,11 @@ class FederationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/Update',
             nebius_dot_iam_dot_v1_dot_federation__service__pb2.UpdateFederationRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -278,18 +227,8 @@ class FederationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/Delete',
             nebius_dot_iam_dot_v1_dot_federation__service__pb2.DeleteFederationRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

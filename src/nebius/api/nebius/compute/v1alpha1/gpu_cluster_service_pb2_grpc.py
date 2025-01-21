@@ -22,37 +22,37 @@ class GpuClusterServiceStub(object):
                 '/nebius.compute.v1alpha1.GpuClusterService/Get',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.GetGpuClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__pb2.GpuCluster.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.compute.v1alpha1.GpuClusterService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__pb2.GpuCluster.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.compute.v1alpha1.GpuClusterService/List',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.ListGpuClustersRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.ListGpuClustersResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.compute.v1alpha1.GpuClusterService/Create',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.CreateGpuClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.compute.v1alpha1.GpuClusterService/Update',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.UpdateGpuClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.compute.v1alpha1.GpuClusterService/Delete',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.DeleteGpuClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.ListOperationsByParent = channel.unary_unary(
                 '/nebius.compute.v1alpha1.GpuClusterService/ListOperationsByParent',
                 request_serializer=nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class GpuClusterServiceServicer(object):
@@ -142,7 +142,6 @@ def add_GpuClusterServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.compute.v1alpha1.GpuClusterService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.compute.v1alpha1.GpuClusterService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -160,21 +159,11 @@ class GpuClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.GpuClusterService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.GpuClusterService/Get',
             nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.GetGpuClusterRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__pb2.GpuCluster.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -187,21 +176,11 @@ class GpuClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.GpuClusterService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.GpuClusterService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__pb2.GpuCluster.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -214,21 +193,11 @@ class GpuClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.GpuClusterService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.GpuClusterService/List',
             nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.ListGpuClustersRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.ListGpuClustersResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -241,21 +210,11 @@ class GpuClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.GpuClusterService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.GpuClusterService/Create',
             nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.CreateGpuClusterRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -268,21 +227,11 @@ class GpuClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.GpuClusterService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.GpuClusterService/Update',
             nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.UpdateGpuClusterRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -295,21 +244,11 @@ class GpuClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.GpuClusterService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.GpuClusterService/Delete',
             nebius_dot_compute_dot_v1alpha1_dot_gpu__cluster__service__pb2.DeleteGpuClusterRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListOperationsByParent(request,
@@ -322,18 +261,8 @@ class GpuClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.GpuClusterService/ListOperationsByParent',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.GpuClusterService/ListOperationsByParent',
             nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

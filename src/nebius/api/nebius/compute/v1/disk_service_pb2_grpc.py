@@ -23,37 +23,37 @@ class DiskServiceStub(object):
                 '/nebius.compute.v1.DiskService/Get',
                 request_serializer=nebius_dot_compute_dot_v1_dot_disk__service__pb2.GetDiskRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_disk__pb2.Disk.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.compute.v1.DiskService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_disk__pb2.Disk.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.compute.v1.DiskService/List',
                 request_serializer=nebius_dot_compute_dot_v1_dot_disk__service__pb2.ListDisksRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_disk__service__pb2.ListDisksResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.compute.v1.DiskService/Create',
                 request_serializer=nebius_dot_compute_dot_v1_dot_disk__service__pb2.CreateDiskRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.compute.v1.DiskService/Update',
                 request_serializer=nebius_dot_compute_dot_v1_dot_disk__service__pb2.UpdateDiskRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.compute.v1.DiskService/Delete',
                 request_serializer=nebius_dot_compute_dot_v1_dot_disk__service__pb2.DeleteDiskRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.ListOperationsByParent = channel.unary_unary(
                 '/nebius.compute.v1.DiskService/ListOperationsByParent',
                 request_serializer=nebius_dot_compute_dot_v1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class DiskServiceServicer(object):
@@ -143,7 +143,6 @@ def add_DiskServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.compute.v1.DiskService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.compute.v1.DiskService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -161,21 +160,11 @@ class DiskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.DiskService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.DiskService/Get',
             nebius_dot_compute_dot_v1_dot_disk__service__pb2.GetDiskRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_disk__pb2.Disk.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -188,21 +177,11 @@ class DiskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.DiskService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.DiskService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_disk__pb2.Disk.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -215,21 +194,11 @@ class DiskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.DiskService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.DiskService/List',
             nebius_dot_compute_dot_v1_dot_disk__service__pb2.ListDisksRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_disk__service__pb2.ListDisksResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -242,21 +211,11 @@ class DiskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.DiskService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.DiskService/Create',
             nebius_dot_compute_dot_v1_dot_disk__service__pb2.CreateDiskRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -269,21 +228,11 @@ class DiskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.DiskService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.DiskService/Update',
             nebius_dot_compute_dot_v1_dot_disk__service__pb2.UpdateDiskRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -296,21 +245,11 @@ class DiskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.DiskService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.DiskService/Delete',
             nebius_dot_compute_dot_v1_dot_disk__service__pb2.DeleteDiskRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListOperationsByParent(request,
@@ -323,18 +262,8 @@ class DiskService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.DiskService/ListOperationsByParent',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.DiskService/ListOperationsByParent',
             nebius_dot_compute_dot_v1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -11,7 +11,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class AuthPublicKey(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -21,7 +21,7 @@ class AuthPublicKey(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[AuthPublicKeySpec, _Mapping]] = ..., status: _Optional[_Union[AuthPublicKeyStatus, _Mapping]] = ...) -> None: ...
 
 class AuthPublicKeySpec(_message.Message):
-    __slots__ = ("account", "expires_at", "description", "data")
+    __slots__ = ["account", "expires_at", "description", "data"]
     ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     EXPIRES_AT_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
@@ -33,9 +33,9 @@ class AuthPublicKeySpec(_message.Message):
     def __init__(self, account: _Optional[_Union[_access_pb2.Account, _Mapping]] = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., description: _Optional[str] = ..., data: _Optional[str] = ...) -> None: ...
 
 class AuthPublicKeyStatus(_message.Message):
-    __slots__ = ("state", "fingerprint", "algorithm", "key_size")
+    __slots__ = ["state", "fingerprint", "algorithm", "key_size"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[AuthPublicKeyStatus.State]
         ACTIVE: _ClassVar[AuthPublicKeyStatus.State]
         INACTIVE: _ClassVar[AuthPublicKeyStatus.State]

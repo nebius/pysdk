@@ -5,7 +5,7 @@ from typing import ClassVar as _ClassVar
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class SuspensionState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     SUSPENSION_STATE_UNSPECIFIED: _ClassVar[SuspensionState]
     NONE: _ClassVar[SuspensionState]
     SUSPENDING: _ClassVar[SuspensionState]

@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Invitation(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,7 +20,7 @@ class Invitation(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[InvitationSpec, _Mapping]] = ..., status: _Optional[_Union[InvitationStatus, _Mapping]] = ...) -> None: ...
 
 class InvitationSpec(_message.Message):
-    __slots__ = ("description", "email")
+    __slots__ = ["description", "email"]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     EMAIL_FIELD_NUMBER: _ClassVar[int]
     description: str
@@ -28,9 +28,9 @@ class InvitationSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., email: _Optional[str] = ...) -> None: ...
 
 class InvitationStatus(_message.Message):
-    __slots__ = ("tenant_user_account_id", "expires_at", "state")
+    __slots__ = ["tenant_user_account_id", "expires_at", "state"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[InvitationStatus.State]
         CREATING: _ClassVar[InvitationStatus.State]
         CREATED: _ClassVar[InvitationStatus.State]

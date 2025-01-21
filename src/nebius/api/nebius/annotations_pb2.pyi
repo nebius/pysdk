@@ -8,14 +8,14 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Op
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ResourceBehavior(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     RESOURCE_BEHAVIOR_UNSPECIFIED: _ClassVar[ResourceBehavior]
     MOVABLE: _ClassVar[ResourceBehavior]
     UNNAMED: _ClassVar[ResourceBehavior]
     IMMUTABLE_NAME: _ClassVar[ResourceBehavior]
 
 class FieldBehavior(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     FIELD_BEHAVIOR_UNSPECIFIED: _ClassVar[FieldBehavior]
     IMMUTABLE: _ClassVar[FieldBehavior]
     IDENTIFIER: _ClassVar[FieldBehavior]
@@ -50,7 +50,7 @@ ONEOF_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 oneof_behavior: _descriptor.FieldDescriptor
 
 class RegionRouting(_message.Message):
-    __slots__ = ("nid", "disabled", "strict")
+    __slots__ = ["nid", "disabled", "strict"]
     NID_FIELD_NUMBER: _ClassVar[int]
     DISABLED_FIELD_NUMBER: _ClassVar[int]
     STRICT_FIELD_NUMBER: _ClassVar[int]

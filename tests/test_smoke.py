@@ -1,3 +1,4 @@
+# type:ignore
 import logging
 
 import pytest
@@ -25,7 +26,7 @@ def test_get_instance_sync() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -43,7 +44,7 @@ def test_get_instance_sync() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
@@ -59,7 +60,7 @@ def test_get_instance_sync() -> None:
 
         async def start_server():
             # Create the gRPC server
-            srv = grpc.aio.server()  # type: ignore[unused-ignore]
+            srv = grpc.aio.server()
             add_DiskServiceServicer_to_server(MockInstanceService(), srv)
 
             # Bind to a random available port
@@ -121,7 +122,7 @@ def test_get_instance_sync() -> None:
         stop_event.set()
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_get_instance_sync_in_async_no_loop() -> None:
     import grpc
     import grpc.aio
@@ -136,7 +137,7 @@ async def test_get_instance_sync_in_async_no_loop() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -154,7 +155,7 @@ async def test_get_instance_sync_in_async_no_loop() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
@@ -164,10 +165,10 @@ async def test_get_instance_sync_in_async_no_loop() -> None:
             return ret
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -196,7 +197,7 @@ async def test_get_instance_sync_in_async_no_loop() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_get_instance_sync_in_async_same_loop() -> None:
     from asyncio import (
         get_event_loop,
@@ -215,7 +216,7 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -233,7 +234,7 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
@@ -243,10 +244,10 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
             return ret
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -277,7 +278,7 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_get_instance_v2() -> None:
     import grpc
     import grpc.aio
@@ -292,7 +293,7 @@ async def test_get_instance_v2() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -310,7 +311,7 @@ async def test_get_instance_v2() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             await context.send_initial_metadata(
@@ -327,10 +328,10 @@ async def test_get_instance_v2() -> None:
             return ret
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -359,7 +360,7 @@ async def test_get_instance_v2() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_status_not_blocks_get_instance_v2() -> None:
     import grpc
     import grpc.aio
@@ -375,7 +376,7 @@ async def test_status_not_blocks_get_instance_v2() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -393,7 +394,7 @@ async def test_status_not_blocks_get_instance_v2() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             await context.send_initial_metadata(
@@ -410,10 +411,10 @@ async def test_status_not_blocks_get_instance_v2() -> None:
             return ret
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -445,7 +446,7 @@ async def test_status_not_blocks_get_instance_v2() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_update_instance_v2() -> None:
     import grpc
     import grpc.aio
@@ -462,7 +463,7 @@ async def test_update_instance_v2() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -480,7 +481,7 @@ async def test_update_instance_v2() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
             assert (
                 md.get("x-resetmask", "")
@@ -503,10 +504,10 @@ async def test_update_instance_v2() -> None:
             return ret
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -538,7 +539,7 @@ async def test_update_instance_v2() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_get_instance_error() -> None:
     import grpc
     import grpc.aio
@@ -555,7 +556,7 @@ async def test_get_instance_error() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -573,7 +574,7 @@ async def test_get_instance_error() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             await context.send_initial_metadata(
@@ -610,10 +611,10 @@ async def test_get_instance_error() -> None:
             )
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -641,7 +642,7 @@ async def test_get_instance_error() -> None:
         )
         assert e.status.request_id == "some-req-id"
         assert e.status.trace_id == "some-trace-id"
-        status = req.current_status()  # type: ignore
+        status = req.current_status()
         assert isinstance(status, RequestStatusExtended)
         assert len(status.service_errors) == 1
         assert status.service_errors[0].quota_failure is not None
@@ -653,7 +654,7 @@ async def test_get_instance_error() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_get_instance_retry() -> None:
     import grpc
     import grpc.aio
@@ -668,7 +669,7 @@ async def test_get_instance_retry() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -689,7 +690,7 @@ async def test_get_instance_retry() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             await context.send_initial_metadata(
@@ -736,10 +737,10 @@ async def test_get_instance_retry() -> None:
                 return ret
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -764,7 +765,7 @@ async def test_get_instance_retry() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_metadata_at_error() -> None:
     import grpc
     import grpc.aio
@@ -780,7 +781,7 @@ async def test_metadata_at_error() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -798,7 +799,7 @@ async def test_metadata_at_error() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             await context.send_initial_metadata(
@@ -835,10 +836,10 @@ async def test_metadata_at_error() -> None:
             )
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -867,7 +868,7 @@ async def test_metadata_at_error() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_status_at_error() -> None:
     import grpc
     import grpc.aio
@@ -885,7 +886,7 @@ async def test_status_at_error() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -903,7 +904,7 @@ async def test_status_at_error() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             await context.send_initial_metadata(
@@ -940,10 +941,10 @@ async def test_status_at_error() -> None:
             )
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -973,7 +974,7 @@ async def test_status_at_error() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_status_does_not_block_failed_call() -> None:
     import grpc
     import grpc.aio
@@ -990,7 +991,7 @@ async def test_status_does_not_block_failed_call() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -1008,7 +1009,7 @@ async def test_status_does_not_block_failed_call() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             await context.send_initial_metadata(
@@ -1045,10 +1046,10 @@ async def test_status_does_not_block_failed_call() -> None:
             )
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -1082,7 +1083,7 @@ async def test_status_does_not_block_failed_call() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_request_id_at_error() -> None:
     import grpc
     import grpc.aio
@@ -1099,7 +1100,7 @@ async def test_request_id_at_error() -> None:
     )
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -1117,7 +1118,7 @@ async def test_request_id_at_error() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             await context.send_initial_metadata(
@@ -1154,10 +1155,10 @@ async def test_request_id_at_error() -> None:
             )
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -1186,7 +1187,7 @@ async def test_request_id_at_error() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_get_instance() -> None:
     import grpc
     import grpc.aio
@@ -1203,7 +1204,7 @@ async def test_get_instance() -> None:
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
         DiskServiceStub,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -1221,7 +1222,7 @@ async def test_get_instance() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
@@ -1231,10 +1232,10 @@ async def test_get_instance() -> None:
             return ret
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -1244,15 +1245,15 @@ async def test_get_instance() -> None:
     try:
         # Set up the client channel
         channel = Channel(domain=address, options=[(INSECURE, True)])
-        stub = DiskServiceStub(channel)  # type: ignore
+        stub = DiskServiceStub(channel)
 
         # Make a request
         req = GetDiskRequest(id="foo-bar")
-        call = stub.Get(req)  # type: ignore[unused-ignore]
+        call = stub.Get(req)
         assert isinstance(call, UnaryUnaryCall)
 
         # Await response and metadata
-        ret = await call  # type: ignore[unused-ignore]
+        ret = await call
         assert isinstance(ret, disk_pb2.Disk)
         mdi = await call.initial_metadata()
         mdt = await call.trailing_metadata()
@@ -1275,7 +1276,7 @@ async def test_get_instance() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_get_error() -> None:
     import grpc
     import grpc.aio
@@ -1293,7 +1294,7 @@ async def test_get_error() -> None:
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
         DiskServiceStub,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base._service_error import trailing_metadata_of_errors
     from nebius.base.options import INSECURE
@@ -1312,7 +1313,7 @@ async def test_get_error() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             quota_violation = error_pb2.QuotaFailure.Violation(
@@ -1335,10 +1336,10 @@ async def test_get_error() -> None:
             )
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -1348,11 +1349,11 @@ async def test_get_error() -> None:
     try:
         # Set up the client channel
         channel = Channel(domain=address, options=[(INSECURE, True)])
-        stub = DiskServiceStub(channel)  # type: ignore
+        stub = DiskServiceStub(channel)
 
         # Make a request
         req = GetDiskRequest(id="foo-bar")
-        call = stub.Get(req)  # type: ignore[unused-ignore]
+        call = stub.Get(req)
         assert isinstance(call, UnaryUnaryCall)
 
         # Await response and metadata
@@ -1361,7 +1362,7 @@ async def test_get_error() -> None:
             mdt = await call.trailing_metadata()
             code = await call.code()
             details = await call.details()
-            ret = await call  # type: ignore[unused-ignore]
+            ret = await call
             assert isinstance(ret, disk_pb2.Disk)
 
             # Assertions to validate behavior
@@ -1381,7 +1382,7 @@ async def test_get_error() -> None:
         await srv.stop(0)
 
 
-@pytest.mark.asyncio  # type: ignore
+@pytest.mark.asyncio
 async def test_custom_resolver() -> None:
     import grpc
     import grpc.aio
@@ -1398,7 +1399,7 @@ async def test_custom_resolver() -> None:
     from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
         DiskServiceServicer,
         DiskServiceStub,
-        add_DiskServiceServicer_to_server,  # type: ignore[unused-ignore]
+        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
     from nebius.base.resolver import Single
@@ -1417,7 +1418,7 @@ async def test_custom_resolver() -> None:
             md = context.invocation_metadata()
             assert md is not None
             # Recreate metadata for ease of checking
-            md = Metadata(*[v for v in md])  # type: ignore[unused-ignore]
+            md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
@@ -1427,10 +1428,10 @@ async def test_custom_resolver() -> None:
             return ret
 
     # Randomly assign an IPv6 address and port for the server
-    srv = grpc.aio.server()  # type: ignore[unused-ignore]
+    srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)  # type: ignore
+    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -1443,15 +1444,15 @@ async def test_custom_resolver() -> None:
             resolver=Single("nebius.compute.v1.DiskService", address),
             options=[(INSECURE, True)],
         )
-        stub = DiskServiceStub(channel)  # type: ignore
+        stub = DiskServiceStub(channel)
 
         # Make a request
         req = GetDiskRequest(id="foo-bar")
-        call = stub.Get(req)  # type: ignore[unused-ignore]
+        call = stub.Get(req)
         assert isinstance(call, UnaryUnaryCall)
 
         # Await response and metadata
-        ret = await call  # type: ignore[unused-ignore]
+        ret = await call
         assert isinstance(ret, disk_pb2.Disk)
         mdi = await call.initial_metadata()
         mdt = await call.trailing_metadata()

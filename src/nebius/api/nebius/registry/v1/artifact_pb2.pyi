@@ -7,9 +7,9 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Artifact(_message.Message):
-    __slots__ = ("id", "name", "media_type", "digest", "size", "status", "type", "created_at", "updated_at")
+    __slots__ = ["id", "name", "media_type", "digest", "size", "status", "type", "created_at", "updated_at"]
     class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATUS_UNSPECIFIED: _ClassVar[Artifact.Status]
         ACTIVE: _ClassVar[Artifact.Status]
         DELETING: _ClassVar[Artifact.Status]
@@ -17,7 +17,7 @@ class Artifact(_message.Message):
     ACTIVE: Artifact.Status
     DELETING: Artifact.Status
     class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         BLOB: _ClassVar[Artifact.Type]
         MANIFEST: _ClassVar[Artifact.Type]
         DEB_PACKAGE: _ClassVar[Artifact.Type]

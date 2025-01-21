@@ -5,19 +5,19 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Account(_message.Message):
-    __slots__ = ("user_account", "service_account", "anonymous_account")
+    __slots__ = ["user_account", "service_account", "anonymous_account"]
     class UserAccount(_message.Message):
-        __slots__ = ("id",)
+        __slots__ = ["id"]
         ID_FIELD_NUMBER: _ClassVar[int]
         id: str
         def __init__(self, id: _Optional[str] = ...) -> None: ...
     class ServiceAccount(_message.Message):
-        __slots__ = ("id",)
+        __slots__ = ["id"]
         ID_FIELD_NUMBER: _ClassVar[int]
         id: str
         def __init__(self, id: _Optional[str] = ...) -> None: ...
     class AnonymousAccount(_message.Message):
-        __slots__ = ()
+        __slots__ = []
         def __init__(self) -> None: ...
     USER_ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     SERVICE_ACCOUNT_FIELD_NUMBER: _ClassVar[int]

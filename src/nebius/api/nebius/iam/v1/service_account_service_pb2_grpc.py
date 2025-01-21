@@ -20,32 +20,32 @@ class ServiceAccountServiceStub(object):
                 '/nebius.iam.v1.ServiceAccountService/Create',
                 request_serializer=nebius_dot_iam_dot_v1_dot_service__account__service__pb2.CreateServiceAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Get = channel.unary_unary(
                 '/nebius.iam.v1.ServiceAccountService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_service__account__service__pb2.GetServiceAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_service__account__pb2.ServiceAccount.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.iam.v1.ServiceAccountService/GetByName',
                 request_serializer=nebius_dot_iam_dot_v1_dot_service__account__service__pb2.GetServiceAccountByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_service__account__pb2.ServiceAccount.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.ServiceAccountService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_service__account__service__pb2.ListServiceAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_service__account__service__pb2.ListServiceAccountResponse.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.iam.v1.ServiceAccountService/Update',
                 request_serializer=nebius_dot_iam_dot_v1_dot_service__account__service__pb2.UpdateServiceAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.ServiceAccountService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_service__account__service__pb2.DeleteServiceAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class ServiceAccountServiceServicer(object):
@@ -124,7 +124,6 @@ def add_ServiceAccountServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.ServiceAccountService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.ServiceAccountService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -142,21 +141,11 @@ class ServiceAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ServiceAccountService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ServiceAccountService/Create',
             nebius_dot_iam_dot_v1_dot_service__account__service__pb2.CreateServiceAccountRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Get(request,
@@ -169,21 +158,11 @@ class ServiceAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ServiceAccountService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ServiceAccountService/Get',
             nebius_dot_iam_dot_v1_dot_service__account__service__pb2.GetServiceAccountRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_service__account__pb2.ServiceAccount.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -196,21 +175,11 @@ class ServiceAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ServiceAccountService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ServiceAccountService/GetByName',
             nebius_dot_iam_dot_v1_dot_service__account__service__pb2.GetServiceAccountByNameRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_service__account__pb2.ServiceAccount.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -223,21 +192,11 @@ class ServiceAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ServiceAccountService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ServiceAccountService/List',
             nebius_dot_iam_dot_v1_dot_service__account__service__pb2.ListServiceAccountRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_service__account__service__pb2.ListServiceAccountResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -250,21 +209,11 @@ class ServiceAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ServiceAccountService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ServiceAccountService/Update',
             nebius_dot_iam_dot_v1_dot_service__account__service__pb2.UpdateServiceAccountRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -277,18 +226,8 @@ class ServiceAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ServiceAccountService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ServiceAccountService/Delete',
             nebius_dot_iam_dot_v1_dot_service__account__service__pb2.DeleteServiceAccountRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

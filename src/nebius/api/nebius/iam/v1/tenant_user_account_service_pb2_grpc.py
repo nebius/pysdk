@@ -20,22 +20,22 @@ class TenantUserAccountServiceStub(object):
                 '/nebius.iam.v1.TenantUserAccountService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.GetTenantUserAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__pb2.TenantUserAccount.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.TenantUserAccountService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.ListTenantUserAccountsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.ListTenantUserAccountsResponse.FromString,
-                _registered_method=True)
+                )
         self.Block = channel.unary_unary(
                 '/nebius.iam.v1.TenantUserAccountService/Block',
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.BlockTenantUserAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Unblock = channel.unary_unary(
                 '/nebius.iam.v1.TenantUserAccountService/Unblock',
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.UnblockTenantUserAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class TenantUserAccountServiceServicer(object):
@@ -92,7 +92,6 @@ def add_TenantUserAccountServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.TenantUserAccountService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.TenantUserAccountService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -110,21 +109,11 @@ class TenantUserAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.TenantUserAccountService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantUserAccountService/Get',
             nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.GetTenantUserAccountRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_tenant__user__account__pb2.TenantUserAccount.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -137,21 +126,11 @@ class TenantUserAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.TenantUserAccountService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantUserAccountService/List',
             nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.ListTenantUserAccountsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.ListTenantUserAccountsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Block(request,
@@ -164,21 +143,11 @@ class TenantUserAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.TenantUserAccountService/Block',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantUserAccountService/Block',
             nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.BlockTenantUserAccountRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Unblock(request,
@@ -191,18 +160,8 @@ class TenantUserAccountService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.TenantUserAccountService/Unblock',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantUserAccountService/Unblock',
             nebius_dot_iam_dot_v1_dot_tenant__user__account__service__pb2.UnblockTenantUserAccountRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

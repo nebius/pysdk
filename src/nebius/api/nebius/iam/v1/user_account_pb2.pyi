@@ -6,7 +6,7 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class UserAccountExternalId(_message.Message):
-    __slots__ = ("federation_user_account_id", "federation_id")
+    __slots__ = ["federation_user_account_id", "federation_id"]
     FEDERATION_USER_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     FEDERATION_ID_FIELD_NUMBER: _ClassVar[int]
     federation_user_account_id: str

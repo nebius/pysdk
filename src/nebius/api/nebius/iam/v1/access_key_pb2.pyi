@@ -11,7 +11,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class AccessKey(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -21,7 +21,7 @@ class AccessKey(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[AccessKeySpec, _Mapping]] = ..., status: _Optional[_Union[AccessKeyStatus, _Mapping]] = ...) -> None: ...
 
 class AccessKeySpec(_message.Message):
-    __slots__ = ("account", "expires_at", "description")
+    __slots__ = ["account", "expires_at", "description"]
     ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     EXPIRES_AT_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
@@ -31,9 +31,9 @@ class AccessKeySpec(_message.Message):
     def __init__(self, account: _Optional[_Union[_access_pb2.Account, _Mapping]] = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., description: _Optional[str] = ...) -> None: ...
 
 class AccessKeyStatus(_message.Message):
-    __slots__ = ("state", "fingerprint", "algorithm", "key_size", "aws_access_key_id", "secret")
+    __slots__ = ["state", "fingerprint", "algorithm", "key_size", "aws_access_key_id", "secret"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[AccessKeyStatus.State]
         ACTIVE: _ClassVar[AccessKeyStatus.State]
         INACTIVE: _ClassVar[AccessKeyStatus.State]

@@ -18,7 +18,7 @@ class TemplateServiceStub(object):
                 '/nebius.msp.v1alpha1.resource.TemplateService/List',
                 request_serializer=nebius_dot_msp_dot_v1alpha1_dot_resource_dot_template__service__pb2.ListTemplatesRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_v1alpha1_dot_resource_dot_template__service__pb2.ListTemplatesResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class TemplateServiceServicer(object):
@@ -42,7 +42,6 @@ def add_TemplateServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.msp.v1alpha1.resource.TemplateService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.msp.v1alpha1.resource.TemplateService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -60,18 +59,8 @@ class TemplateService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.v1alpha1.resource.TemplateService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.v1alpha1.resource.TemplateService/List',
             nebius_dot_msp_dot_v1alpha1_dot_resource_dot_template__service__pb2.ListTemplatesRequest.SerializeToString,
             nebius_dot_msp_dot_v1alpha1_dot_resource_dot_template__service__pb2.ListTemplatesResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

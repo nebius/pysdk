@@ -20,12 +20,12 @@ class PlatformServiceStub(object):
                 '/nebius.compute.v1.PlatformService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_platform__pb2.Platform.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.compute.v1.PlatformService/List',
                 request_serializer=nebius_dot_compute_dot_v1_dot_platform__service__pb2.ListPlatformsRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_platform__service__pb2.ListPlatformsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class PlatformServiceServicer(object):
@@ -60,7 +60,6 @@ def add_PlatformServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.compute.v1.PlatformService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.compute.v1.PlatformService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -78,21 +77,11 @@ class PlatformService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.PlatformService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.PlatformService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_platform__pb2.Platform.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -105,18 +94,8 @@ class PlatformService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.PlatformService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.PlatformService/List',
             nebius_dot_compute_dot_v1_dot_platform__service__pb2.ListPlatformsRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_platform__service__pb2.ListPlatformsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

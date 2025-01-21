@@ -11,7 +11,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class GroupMembership(_message.Message):
-    __slots__ = ("metadata", "spec", "status", "revoke_at")
+    __slots__ = ["metadata", "spec", "status", "revoke_at"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -23,17 +23,17 @@ class GroupMembership(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[GroupMembershipSpec, _Mapping]] = ..., status: _Optional[_Union[GroupMembershipStatus, _Mapping]] = ..., revoke_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class GroupMembershipSpec(_message.Message):
-    __slots__ = ("member_id",)
+    __slots__ = ["member_id"]
     MEMBER_ID_FIELD_NUMBER: _ClassVar[int]
     member_id: str
     def __init__(self, member_id: _Optional[str] = ...) -> None: ...
 
 class GroupMembershipStatus(_message.Message):
-    __slots__ = ()
+    __slots__ = []
     def __init__(self) -> None: ...
 
 class GroupMembershipWithAttributes(_message.Message):
-    __slots__ = ("group_membership", "user_attributes", "service_account_attributes", "error")
+    __slots__ = ["group_membership", "user_attributes", "service_account_attributes", "error"]
     GROUP_MEMBERSHIP_FIELD_NUMBER: _ClassVar[int]
     USER_ATTRIBUTES_FIELD_NUMBER: _ClassVar[int]
     SERVICE_ACCOUNT_ATTRIBUTES_FIELD_NUMBER: _ClassVar[int]

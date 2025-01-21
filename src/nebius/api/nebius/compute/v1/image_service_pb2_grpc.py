@@ -22,27 +22,27 @@ class ImageServiceStub(object):
                 '/nebius.compute.v1.ImageService/Get',
                 request_serializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.GetImageRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_image__pb2.Image.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.compute.v1.ImageService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_image__pb2.Image.FromString,
-                _registered_method=True)
+                )
         self.GetLatestByFamily = channel.unary_unary(
                 '/nebius.compute.v1.ImageService/GetLatestByFamily',
                 request_serializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.GetImageLatestByFamilyRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_image__pb2.Image.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.compute.v1.ImageService/List',
                 request_serializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.ListImagesRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.ListImagesResponse.FromString,
-                _registered_method=True)
+                )
         self.ListOperationsByParent = channel.unary_unary(
                 '/nebius.compute.v1.ImageService/ListOperationsByParent',
                 request_serializer=nebius_dot_compute_dot_v1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class ImageServiceServicer(object):
@@ -110,7 +110,6 @@ def add_ImageServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.compute.v1.ImageService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.compute.v1.ImageService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -128,21 +127,11 @@ class ImageService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.ImageService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/Get',
             nebius_dot_compute_dot_v1_dot_image__service__pb2.GetImageRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_image__pb2.Image.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -155,21 +144,11 @@ class ImageService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.ImageService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_image__pb2.Image.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetLatestByFamily(request,
@@ -182,21 +161,11 @@ class ImageService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.ImageService/GetLatestByFamily',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/GetLatestByFamily',
             nebius_dot_compute_dot_v1_dot_image__service__pb2.GetImageLatestByFamilyRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_image__pb2.Image.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -209,21 +178,11 @@ class ImageService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.ImageService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/List',
             nebius_dot_compute_dot_v1_dot_image__service__pb2.ListImagesRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_image__service__pb2.ListImagesResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListOperationsByParent(request,
@@ -236,18 +195,8 @@ class ImageService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1.ImageService/ListOperationsByParent',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/ListOperationsByParent',
             nebius_dot_compute_dot_v1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

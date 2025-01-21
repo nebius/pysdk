@@ -11,13 +11,13 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class GetClusterRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class ListClustersRequest(_message.Message):
-    __slots__ = ("parent_id", "page_size", "page_token")
+    __slots__ = ["parent_id", "page_size", "page_token"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -27,7 +27,7 @@ class ListClustersRequest(_message.Message):
     def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
 
 class ListClustersResponse(_message.Message):
-    __slots__ = ("clusters", "next_page_token")
+    __slots__ = ["clusters", "next_page_token"]
     CLUSTERS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     clusters: _containers.RepeatedCompositeFieldContainer[_cluster_pb2.Cluster]
@@ -35,7 +35,7 @@ class ListClustersResponse(_message.Message):
     def __init__(self, clusters: _Optional[_Iterable[_Union[_cluster_pb2.Cluster, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
 
 class CreateClusterRequest(_message.Message):
-    __slots__ = ("metadata", "spec")
+    __slots__ = ["metadata", "spec"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
@@ -43,13 +43,13 @@ class CreateClusterRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_cluster_pb2.ClusterSpec, _Mapping]] = ...) -> None: ...
 
 class DeleteClusterRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class UpdateClusterRequest(_message.Message):
-    __slots__ = ("metadata", "spec")
+    __slots__ = ["metadata", "spec"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
