@@ -9,9 +9,9 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ResourceMetadata(_message.Message):
-    __slots__ = ("id", "parent_id", "name", "resource_version", "created_at", "updated_at", "labels")
+    __slots__ = ["id", "parent_id", "name", "resource_version", "created_at", "updated_at", "labels"]
     class LabelsEntry(_message.Message):
-        __slots__ = ("key", "value")
+        __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
         key: str
@@ -34,7 +34,7 @@ class ResourceMetadata(_message.Message):
     def __init__(self, id: _Optional[str] = ..., parent_id: _Optional[str] = ..., name: _Optional[str] = ..., resource_version: _Optional[int] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., labels: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class GetByNameRequest(_message.Message):
-    __slots__ = ("parent_id", "name")
+    __slots__ = ["parent_id", "name"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     parent_id: str

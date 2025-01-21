@@ -21,37 +21,37 @@ class NodeGroupServiceStub(object):
                 '/nebius.mk8s.v1.NodeGroupService/Get',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.GetNodeGroupRequest.SerializeToString,
                 response_deserializer=nebius_dot_mk8s_dot_v1_dot_node__group__pb2.NodeGroup.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.mk8s.v1.NodeGroupService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_mk8s_dot_v1_dot_node__group__pb2.NodeGroup.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.mk8s.v1.NodeGroupService/List',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.ListNodeGroupsRequest.SerializeToString,
                 response_deserializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.ListNodeGroupsResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.mk8s.v1.NodeGroupService/Create',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.CreateNodeGroupRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.mk8s.v1.NodeGroupService/Update',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.UpdateNodeGroupRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.mk8s.v1.NodeGroupService/Delete',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.DeleteNodeGroupRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Upgrade = channel.unary_unary(
                 '/nebius.mk8s.v1.NodeGroupService/Upgrade',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.UpgradeNodeGroupRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class NodeGroupServiceServicer(object):
@@ -141,7 +141,6 @@ def add_NodeGroupServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.mk8s.v1.NodeGroupService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.mk8s.v1.NodeGroupService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -159,21 +158,11 @@ class NodeGroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.NodeGroupService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/Get',
             nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.GetNodeGroupRequest.SerializeToString,
             nebius_dot_mk8s_dot_v1_dot_node__group__pb2.NodeGroup.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -186,21 +175,11 @@ class NodeGroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.NodeGroupService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_mk8s_dot_v1_dot_node__group__pb2.NodeGroup.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -213,21 +192,11 @@ class NodeGroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.NodeGroupService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/List',
             nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.ListNodeGroupsRequest.SerializeToString,
             nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.ListNodeGroupsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -240,21 +209,11 @@ class NodeGroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.NodeGroupService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/Create',
             nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.CreateNodeGroupRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -267,21 +226,11 @@ class NodeGroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.NodeGroupService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/Update',
             nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.UpdateNodeGroupRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -294,21 +243,11 @@ class NodeGroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.NodeGroupService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/Delete',
             nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.DeleteNodeGroupRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Upgrade(request,
@@ -321,18 +260,8 @@ class NodeGroupService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.NodeGroupService/Upgrade',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/Upgrade',
             nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.UpgradeNodeGroupRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

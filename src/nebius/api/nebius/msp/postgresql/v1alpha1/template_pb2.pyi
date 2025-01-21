@@ -7,7 +7,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class TemplateSpec(_message.Message):
-    __slots__ = ("resources", "hosts", "disk")
+    __slots__ = ["resources", "hosts", "disk"]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     HOSTS_FIELD_NUMBER: _ClassVar[int]
     DISK_FIELD_NUMBER: _ClassVar[int]

@@ -19,17 +19,17 @@ class ProjectServiceStub(object):
                 '/nebius.iam.v1.ProjectService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.GetProjectRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_container__pb2.Container.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.iam.v1.ProjectService/GetByName',
                 request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.GetProjectByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_container__pb2.Container.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.ProjectService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class ProjectServiceServicer(object):
@@ -75,7 +75,6 @@ def add_ProjectServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.ProjectService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.ProjectService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -93,21 +92,11 @@ class ProjectService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ProjectService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/Get',
             nebius_dot_iam_dot_v1_dot_project__service__pb2.GetProjectRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_container__pb2.Container.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -120,21 +109,11 @@ class ProjectService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ProjectService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/GetByName',
             nebius_dot_iam_dot_v1_dot_project__service__pb2.GetProjectByNameRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_container__pb2.Container.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -147,18 +126,8 @@ class ProjectService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.ProjectService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/List',
             nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

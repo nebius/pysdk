@@ -20,27 +20,27 @@ class SessionServiceStub(object):
                 '/nebius.msp.spark.v1alpha1.SessionService/Get',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.GetSessionRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__pb2.Session.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.msp.spark.v1alpha1.SessionService/GetByName',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.GetSessionByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__pb2.Session.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.msp.spark.v1alpha1.SessionService/List',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.ListSessionsRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.ListSessionsResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.msp.spark.v1alpha1.SessionService/Create',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.CreateSessionRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.msp.spark.v1alpha1.SessionService/Delete',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.DeleteSessionRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class SessionServiceServicer(object):
@@ -113,7 +113,6 @@ def add_SessionServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.msp.spark.v1alpha1.SessionService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.msp.spark.v1alpha1.SessionService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -131,21 +130,11 @@ class SessionService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.SessionService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.SessionService/Get',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.GetSessionRequest.SerializeToString,
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__pb2.Session.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -158,21 +147,11 @@ class SessionService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.SessionService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.SessionService/GetByName',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.GetSessionByNameRequest.SerializeToString,
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__pb2.Session.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -185,21 +164,11 @@ class SessionService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.SessionService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.SessionService/List',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.ListSessionsRequest.SerializeToString,
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.ListSessionsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -212,21 +181,11 @@ class SessionService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.SessionService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.SessionService/Create',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.CreateSessionRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -239,18 +198,8 @@ class SessionService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.SessionService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.SessionService/Delete',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_session__service__pb2.DeleteSessionRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

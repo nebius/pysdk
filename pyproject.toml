@@ -15,12 +15,12 @@ authors = [
 license = { text = "MIT" }
 dependencies = [
     # added a dep, add the notice!
-    "cryptography>=43.0.3",
-    "grpcio>=1.68.1",
-    "PyJWT>=2.9.0",
-    "certifi>=2024.8.30",
+    "cryptography>=40.0.0",
+    "grpcio>=1.56.2",
+    "PyJWT>=2.0.0",
+    "certifi>=2022.6.15",
     "protobuf>=5.29.1",
-    "grpcio-status>=1.68.1",
+    "grpcio-status>=1.56.2",
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -41,7 +41,7 @@ dev = [
 ]
 genproto = [
     # added a dep, add the notice!
-    "grpcio-tools>=1.68.1",
+    "grpcio-tools>=1.56.2",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
 ]
@@ -149,6 +149,22 @@ deps = [
 ]
 commands = [["pytest","-vv"]]
 
+[tool.tox.env.test_earliest]
+description = "Run tests with pytest and the earliest possible lib versions"
+deps = [
+    "pytest",
+    "pytest-cov",
+    "pytest-asyncio",
+    "grpcio==1.56.2",
+    "protobuf<=5.26.1",
+    "types-protobuf<=5.26.1",
+    "cryptography==37.0.4",
+    "PyJWT==2.0.0",
+    "certifi==2022.6.15",
+    "grpcio-status==1.56.2",
+]
+commands = [["pytest","-vv"]]
+
 [tool.tox.env.lint]
 description = "Run linter checks"
 package = "skip"  # Skip installing the package
@@ -166,12 +182,12 @@ description = "Run type-checking"
 package = "skip"
 deps = [
     "mypy",
-    "cryptography>=43.0.3",
-    "grpcio>=1.68.1",
+    "cryptography==40.0.0",
+    "grpcio>=1.56.2",
     "PyJWT>=2.9.0",
     "certifi>=2024.8.30",
     "protobuf>=5.29.1",
-    "grpcio-status>=1.68.1",
+    "grpcio-status>=1.56.2",
     "pydoctor>=24.11.2",
     "beautifulsoup4>=4.12.3",
     # For mypy

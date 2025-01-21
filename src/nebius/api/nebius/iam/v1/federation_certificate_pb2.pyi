@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class FederationCertificate(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,7 +20,7 @@ class FederationCertificate(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[FederationCertificateSpec, _Mapping]] = ..., status: _Optional[_Union[FederationCertificateStatus, _Mapping]] = ...) -> None: ...
 
 class FederationCertificateSpec(_message.Message):
-    __slots__ = ("description", "data")
+    __slots__ = ["description", "data"]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     DATA_FIELD_NUMBER: _ClassVar[int]
     description: str
@@ -28,9 +28,9 @@ class FederationCertificateSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., data: _Optional[str] = ...) -> None: ...
 
 class FederationCertificateStatus(_message.Message):
-    __slots__ = ("state", "algorithm", "key_size", "not_before", "not_after")
+    __slots__ = ["state", "algorithm", "key_size", "not_before", "not_after"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[FederationCertificateStatus.State]
         ACTIVE: _ClassVar[FederationCertificateStatus.State]
         EXPIRED: _ClassVar[FederationCertificateStatus.State]

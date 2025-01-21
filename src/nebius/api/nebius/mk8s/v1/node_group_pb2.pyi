@@ -12,7 +12,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class NodeGroup(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -22,7 +22,7 @@ class NodeGroup(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[NodeGroupSpec, _Mapping]] = ..., status: _Optional[_Union[NodeGroupStatus, _Mapping]] = ...) -> None: ...
 
 class NodeGroupSpec(_message.Message):
-    __slots__ = ("version", "fixed_node_count", "autoscaling", "template", "strategy")
+    __slots__ = ["version", "fixed_node_count", "autoscaling", "template", "strategy"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     FIXED_NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
     AUTOSCALING_FIELD_NUMBER: _ClassVar[int]
@@ -36,7 +36,7 @@ class NodeGroupSpec(_message.Message):
     def __init__(self, version: _Optional[str] = ..., fixed_node_count: _Optional[int] = ..., autoscaling: _Optional[_Union[NodeGroupAutoscalingSpec, _Mapping]] = ..., template: _Optional[_Union[NodeTemplate, _Mapping]] = ..., strategy: _Optional[_Union[NodeGroupDeploymentStrategy, _Mapping]] = ...) -> None: ...
 
 class NodeTemplate(_message.Message):
-    __slots__ = ("metadata", "taints", "resources", "boot_disk", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id")
+    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     TAINTS_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
@@ -58,9 +58,9 @@ class NodeTemplate(_message.Message):
     def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ...) -> None: ...
 
 class NodeMetadataTemplate(_message.Message):
-    __slots__ = ("labels",)
+    __slots__ = ["labels"]
     class LabelsEntry(_message.Message):
-        __slots__ = ("key", "value")
+        __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
         key: str
@@ -71,13 +71,13 @@ class NodeMetadataTemplate(_message.Message):
     def __init__(self, labels: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class GpuClusterSpec(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class NetworkInterfaceTemplate(_message.Message):
-    __slots__ = ("public_ip_address", "subnet_id")
+    __slots__ = ["public_ip_address", "subnet_id"]
     PUBLIC_IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     SUBNET_ID_FIELD_NUMBER: _ClassVar[int]
     public_ip_address: PublicIPAddress
@@ -85,13 +85,13 @@ class NetworkInterfaceTemplate(_message.Message):
     def __init__(self, public_ip_address: _Optional[_Union[PublicIPAddress, _Mapping]] = ..., subnet_id: _Optional[str] = ...) -> None: ...
 
 class PublicIPAddress(_message.Message):
-    __slots__ = ()
+    __slots__ = []
     def __init__(self) -> None: ...
 
 class AttachedFilesystemSpec(_message.Message):
-    __slots__ = ("attach_mode", "mount_tag", "existing_filesystem")
+    __slots__ = ["attach_mode", "mount_tag", "existing_filesystem"]
     class AttachMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[AttachedFilesystemSpec.AttachMode]
         READ_ONLY: _ClassVar[AttachedFilesystemSpec.AttachMode]
         READ_WRITE: _ClassVar[AttachedFilesystemSpec.AttachMode]
@@ -107,13 +107,13 @@ class AttachedFilesystemSpec(_message.Message):
     def __init__(self, attach_mode: _Optional[_Union[AttachedFilesystemSpec.AttachMode, str]] = ..., mount_tag: _Optional[str] = ..., existing_filesystem: _Optional[_Union[ExistingFilesystem, _Mapping]] = ...) -> None: ...
 
 class ExistingFilesystem(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class NodeGroupAutoscalingSpec(_message.Message):
-    __slots__ = ("min_node_count", "max_node_count")
+    __slots__ = ["min_node_count", "max_node_count"]
     MIN_NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
     MAX_NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
     min_node_count: int
@@ -121,9 +121,9 @@ class NodeGroupAutoscalingSpec(_message.Message):
     def __init__(self, min_node_count: _Optional[int] = ..., max_node_count: _Optional[int] = ...) -> None: ...
 
 class NodeTaint(_message.Message):
-    __slots__ = ("key", "value", "effect")
+    __slots__ = ["key", "value", "effect"]
     class Effect(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         EFFECT_UNSPECIFIED: _ClassVar[NodeTaint.Effect]
         NO_EXECUTE: _ClassVar[NodeTaint.Effect]
         NO_SCHEDULE: _ClassVar[NodeTaint.Effect]
@@ -141,7 +141,7 @@ class NodeTaint(_message.Message):
     def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ..., effect: _Optional[_Union[NodeTaint.Effect, str]] = ...) -> None: ...
 
 class NodeGroupDeploymentStrategy(_message.Message):
-    __slots__ = ("max_unavailable", "max_surge", "drain_timeout")
+    __slots__ = ["max_unavailable", "max_surge", "drain_timeout"]
     MAX_UNAVAILABLE_FIELD_NUMBER: _ClassVar[int]
     MAX_SURGE_FIELD_NUMBER: _ClassVar[int]
     DRAIN_TIMEOUT_FIELD_NUMBER: _ClassVar[int]
@@ -151,7 +151,7 @@ class NodeGroupDeploymentStrategy(_message.Message):
     def __init__(self, max_unavailable: _Optional[_Union[PercentOrCount, _Mapping]] = ..., max_surge: _Optional[_Union[PercentOrCount, _Mapping]] = ..., drain_timeout: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ...) -> None: ...
 
 class PercentOrCount(_message.Message):
-    __slots__ = ("percent", "count")
+    __slots__ = ["percent", "count"]
     PERCENT_FIELD_NUMBER: _ClassVar[int]
     COUNT_FIELD_NUMBER: _ClassVar[int]
     percent: int
@@ -159,9 +159,9 @@ class PercentOrCount(_message.Message):
     def __init__(self, percent: _Optional[int] = ..., count: _Optional[int] = ...) -> None: ...
 
 class NodeGroupStatus(_message.Message):
-    __slots__ = ("state", "version", "target_node_count", "node_count", "outdated_node_count", "ready_node_count", "reconciling")
+    __slots__ = ["state", "version", "target_node_count", "node_count", "outdated_node_count", "ready_node_count", "reconciling"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[NodeGroupStatus.State]
         PROVISIONING: _ClassVar[NodeGroupStatus.State]
         RUNNING: _ClassVar[NodeGroupStatus.State]

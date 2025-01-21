@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Disk(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,9 +20,9 @@ class Disk(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[DiskSpec, _Mapping]] = ..., status: _Optional[_Union[DiskStatus, _Mapping]] = ...) -> None: ...
 
 class DiskSpec(_message.Message):
-    __slots__ = ("size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type", "placement_policy", "source_image_id", "source_image_family")
+    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type", "placement_policy", "source_image_id", "source_image_family"]
     class DiskType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[DiskSpec.DiskType]
         NETWORK_SSD: _ClassVar[DiskSpec.DiskType]
         NETWORK_HDD: _ClassVar[DiskSpec.DiskType]
@@ -54,7 +54,7 @@ class DiskSpec(_message.Message):
     def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[DiskSpec.DiskType, str]] = ..., placement_policy: _Optional[_Union[DiskPlacementPolicy, _Mapping]] = ..., source_image_id: _Optional[str] = ..., source_image_family: _Optional[_Union[SourceImageFamily, _Mapping]] = ...) -> None: ...
 
 class SourceImageFamily(_message.Message):
-    __slots__ = ("image_family", "parent_id")
+    __slots__ = ["image_family", "parent_id"]
     IMAGE_FAMILY_FIELD_NUMBER: _ClassVar[int]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     image_family: str
@@ -62,7 +62,7 @@ class SourceImageFamily(_message.Message):
     def __init__(self, image_family: _Optional[str] = ..., parent_id: _Optional[str] = ...) -> None: ...
 
 class DiskPlacementPolicy(_message.Message):
-    __slots__ = ("placement_group_id", "placement_group_partition")
+    __slots__ = ["placement_group_id", "placement_group_partition"]
     PLACEMENT_GROUP_ID_FIELD_NUMBER: _ClassVar[int]
     PLACEMENT_GROUP_PARTITION_FIELD_NUMBER: _ClassVar[int]
     placement_group_id: str
@@ -70,9 +70,9 @@ class DiskPlacementPolicy(_message.Message):
     def __init__(self, placement_group_id: _Optional[str] = ..., placement_group_partition: _Optional[int] = ...) -> None: ...
 
 class DiskStatus(_message.Message):
-    __slots__ = ("state", "state_description", "read_write_attachment", "read_only_attachments", "source_image_id", "size_bytes", "reconciling")
+    __slots__ = ["state", "state_description", "read_write_attachment", "read_only_attachments", "source_image_id", "size_bytes", "reconciling"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[DiskStatus.State]
         CREATING: _ClassVar[DiskStatus.State]
         READY: _ClassVar[DiskStatus.State]

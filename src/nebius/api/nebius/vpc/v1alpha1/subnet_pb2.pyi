@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Subnet(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,7 +20,7 @@ class Subnet(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[SubnetSpec, _Mapping]] = ..., status: _Optional[_Union[SubnetStatus, _Mapping]] = ...) -> None: ...
 
 class SubnetSpec(_message.Message):
-    __slots__ = ("network_id", "pools", "enable_egress_nat")
+    __slots__ = ["network_id", "pools", "enable_egress_nat"]
     NETWORK_ID_FIELD_NUMBER: _ClassVar[int]
     POOLS_FIELD_NUMBER: _ClassVar[int]
     ENABLE_EGRESS_NAT_FIELD_NUMBER: _ClassVar[int]
@@ -30,7 +30,7 @@ class SubnetSpec(_message.Message):
     def __init__(self, network_id: _Optional[str] = ..., pools: _Optional[_Iterable[_Union[SubnetPool, _Mapping]]] = ..., enable_egress_nat: bool = ...) -> None: ...
 
 class SubnetPool(_message.Message):
-    __slots__ = ("spec", "pool_id")
+    __slots__ = ["spec", "pool_id"]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     POOL_ID_FIELD_NUMBER: _ClassVar[int]
     spec: SubnetPoolSpec
@@ -38,7 +38,7 @@ class SubnetPool(_message.Message):
     def __init__(self, spec: _Optional[_Union[SubnetPoolSpec, _Mapping]] = ..., pool_id: _Optional[str] = ...) -> None: ...
 
 class SubnetPoolSpec(_message.Message):
-    __slots__ = ("version", "cidrs")
+    __slots__ = ["version", "cidrs"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     CIDRS_FIELD_NUMBER: _ClassVar[int]
     version: _pool_pb2.IpVersion
@@ -46,7 +46,7 @@ class SubnetPoolSpec(_message.Message):
     def __init__(self, version: _Optional[_Union[_pool_pb2.IpVersion, str]] = ..., cidrs: _Optional[_Iterable[_Union[SubnetCidr, _Mapping]]] = ...) -> None: ...
 
 class SubnetCidr(_message.Message):
-    __slots__ = ("cidr", "state", "allowed_mask")
+    __slots__ = ["cidr", "state", "allowed_mask"]
     CIDR_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     ALLOWED_MASK_FIELD_NUMBER: _ClassVar[int]
@@ -56,9 +56,9 @@ class SubnetCidr(_message.Message):
     def __init__(self, cidr: _Optional[str] = ..., state: _Optional[_Union[_pool_pb2.PoolCidrState, str]] = ..., allowed_mask: _Optional[int] = ...) -> None: ...
 
 class SubnetStatus(_message.Message):
-    __slots__ = ("state", "ipv4_cidrs")
+    __slots__ = ["state", "ipv4_cidrs"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[SubnetStatus.State]
         CREATING: _ClassVar[SubnetStatus.State]
         READY: _ClassVar[SubnetStatus.State]

@@ -20,37 +20,37 @@ class GroupMembershipServiceStub(object):
                 '/nebius.iam.v1.GroupMembershipService/Create',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.CreateGroupMembershipRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Get = channel.unary_unary(
                 '/nebius.iam.v1.GroupMembershipService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembership.FromString,
-                _registered_method=True)
+                )
         self.GetWithAttributes = channel.unary_unary(
                 '/nebius.iam.v1.GroupMembershipService/GetWithAttributes',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembershipWithAttributes.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.GroupMembershipService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.DeleteGroupMembershipRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.ListMembers = channel.unary_unary(
                 '/nebius.iam.v1.GroupMembershipService/ListMembers',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsResponse.FromString,
-                _registered_method=True)
+                )
         self.ListMembersWithAttributes = channel.unary_unary(
                 '/nebius.iam.v1.GroupMembershipService/ListMembersWithAttributes',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsWithAttributesResponse.FromString,
-                _registered_method=True)
+                )
         self.ListMemberOf = channel.unary_unary(
                 '/nebius.iam.v1.GroupMembershipService/ListMemberOf',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListMemberOfRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListMemberOfResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class GroupMembershipServiceServicer(object):
@@ -140,7 +140,6 @@ def add_GroupMembershipServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.GroupMembershipService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.GroupMembershipService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -158,21 +157,11 @@ class GroupMembershipService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupMembershipService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupMembershipService/Create',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.CreateGroupMembershipRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Get(request,
@@ -185,21 +174,11 @@ class GroupMembershipService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupMembershipService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupMembershipService/Get',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembership.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetWithAttributes(request,
@@ -212,21 +191,11 @@ class GroupMembershipService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupMembershipService/GetWithAttributes',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupMembershipService/GetWithAttributes',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.GetGroupMembershipRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__membership__pb2.GroupMembershipWithAttributes.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -239,21 +208,11 @@ class GroupMembershipService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupMembershipService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupMembershipService/Delete',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.DeleteGroupMembershipRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListMembers(request,
@@ -266,21 +225,11 @@ class GroupMembershipService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupMembershipService/ListMembers',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupMembershipService/ListMembers',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListMembersWithAttributes(request,
@@ -293,21 +242,11 @@ class GroupMembershipService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupMembershipService/ListMembersWithAttributes',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupMembershipService/ListMembersWithAttributes',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListGroupMembershipsWithAttributesResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListMemberOf(request,
@@ -320,18 +259,8 @@ class GroupMembershipService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.GroupMembershipService/ListMemberOf',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupMembershipService/ListMemberOf',
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListMemberOfRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__membership__service__pb2.ListMemberOfResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

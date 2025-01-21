@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Network(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,7 +20,7 @@ class Network(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[NetworkSpec, _Mapping]] = ..., status: _Optional[_Union[NetworkStatus, _Mapping]] = ...) -> None: ...
 
 class NetworkSpec(_message.Message):
-    __slots__ = ("ipv4_private_pools", "ipv4_public_pools")
+    __slots__ = ["ipv4_private_pools", "ipv4_public_pools"]
     IPV4_PRIVATE_POOLS_FIELD_NUMBER: _ClassVar[int]
     IPV4_PUBLIC_POOLS_FIELD_NUMBER: _ClassVar[int]
     ipv4_private_pools: IPv4PrivateNetworkPools
@@ -28,27 +28,27 @@ class NetworkSpec(_message.Message):
     def __init__(self, ipv4_private_pools: _Optional[_Union[IPv4PrivateNetworkPools, _Mapping]] = ..., ipv4_public_pools: _Optional[_Union[IPv4PublicNetworkPools, _Mapping]] = ...) -> None: ...
 
 class IPv4PrivateNetworkPools(_message.Message):
-    __slots__ = ("pools",)
+    __slots__ = ["pools"]
     POOLS_FIELD_NUMBER: _ClassVar[int]
     pools: _containers.RepeatedCompositeFieldContainer[NetworkPool]
     def __init__(self, pools: _Optional[_Iterable[_Union[NetworkPool, _Mapping]]] = ...) -> None: ...
 
 class IPv4PublicNetworkPools(_message.Message):
-    __slots__ = ("pools",)
+    __slots__ = ["pools"]
     POOLS_FIELD_NUMBER: _ClassVar[int]
     pools: _containers.RepeatedCompositeFieldContainer[NetworkPool]
     def __init__(self, pools: _Optional[_Iterable[_Union[NetworkPool, _Mapping]]] = ...) -> None: ...
 
 class NetworkPool(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class NetworkStatus(_message.Message):
-    __slots__ = ("state",)
+    __slots__ = ["state"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[NetworkStatus.State]
         CREATING: _ClassVar[NetworkStatus.State]
         READY: _ClassVar[NetworkStatus.State]

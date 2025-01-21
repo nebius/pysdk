@@ -20,22 +20,22 @@ class JobServiceStub(object):
                 '/nebius.msp.spark.v1alpha1.JobService/Get',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.GetJobRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__pb2.Job.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.msp.spark.v1alpha1.JobService/List',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.ListJobsRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.ListJobsResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.msp.spark.v1alpha1.JobService/Create',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.CreateJobRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Cancel = channel.unary_unary(
                 '/nebius.msp.spark.v1alpha1.JobService/Cancel',
                 request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.CancelJobRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class JobServiceServicer(object):
@@ -96,7 +96,6 @@ def add_JobServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.msp.spark.v1alpha1.JobService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.msp.spark.v1alpha1.JobService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -114,21 +113,11 @@ class JobService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.JobService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.JobService/Get',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.GetJobRequest.SerializeToString,
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__pb2.Job.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -141,21 +130,11 @@ class JobService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.JobService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.JobService/List',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.ListJobsRequest.SerializeToString,
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.ListJobsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -168,21 +147,11 @@ class JobService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.JobService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.JobService/Create',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.CreateJobRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Cancel(request,
@@ -195,18 +164,8 @@ class JobService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.spark.v1alpha1.JobService/Cancel',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.JobService/Cancel',
             nebius_dot_msp_dot_spark_dot_v1alpha1_dot_job__service__pb2.CancelJobRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

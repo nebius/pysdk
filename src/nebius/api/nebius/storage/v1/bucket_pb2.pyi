@@ -14,7 +14,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Bucket(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -24,7 +24,7 @@ class Bucket(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[BucketSpec, _Mapping]] = ..., status: _Optional[_Union[BucketStatus, _Mapping]] = ...) -> None: ...
 
 class BucketSpec(_message.Message):
-    __slots__ = ("versioning_policy", "max_size_bytes", "lifecycle_configuration")
+    __slots__ = ["versioning_policy", "max_size_bytes", "lifecycle_configuration"]
     VERSIONING_POLICY_FIELD_NUMBER: _ClassVar[int]
     MAX_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     LIFECYCLE_CONFIGURATION_FIELD_NUMBER: _ClassVar[int]
@@ -34,9 +34,9 @@ class BucketSpec(_message.Message):
     def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ...) -> None: ...
 
 class BucketStatus(_message.Message):
-    __slots__ = ("counters", "state", "suspension_state", "deleted_at", "purge_at", "domain_name")
+    __slots__ = ["counters", "state", "suspension_state", "deleted_at", "purge_at", "domain_name"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[BucketStatus.State]
         CREATING: _ClassVar[BucketStatus.State]
         ACTIVE: _ClassVar[BucketStatus.State]
@@ -48,7 +48,7 @@ class BucketStatus(_message.Message):
     UPDATING: BucketStatus.State
     SCHEDULED_FOR_DELETION: BucketStatus.State
     class SuspensionState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         SUSPENSION_STATE_UNSPECIFIED: _ClassVar[BucketStatus.SuspensionState]
         NOT_SUSPENDED: _ClassVar[BucketStatus.SuspensionState]
         SUSPENDED: _ClassVar[BucketStatus.SuspensionState]

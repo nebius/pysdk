@@ -12,7 +12,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CreateGroupMembershipRequest(_message.Message):
-    __slots__ = ("metadata", "spec", "revoke_after_hours")
+    __slots__ = ["metadata", "spec", "revoke_after_hours"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     REVOKE_AFTER_HOURS_FIELD_NUMBER: _ClassVar[int]
@@ -22,19 +22,19 @@ class CreateGroupMembershipRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_group_membership_pb2.GroupMembershipSpec, _Mapping]] = ..., revoke_after_hours: _Optional[int] = ...) -> None: ...
 
 class DeleteGroupMembershipRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class GetGroupMembershipRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class ListGroupMembershipsRequest(_message.Message):
-    __slots__ = ("parent_id", "page_size", "page_token", "filter")
+    __slots__ = ["parent_id", "page_size", "page_token", "filter"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -46,7 +46,7 @@ class ListGroupMembershipsRequest(_message.Message):
     def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ...) -> None: ...
 
 class ListMemberOfRequest(_message.Message):
-    __slots__ = ("subject_id", "page_size", "page_token", "filter")
+    __slots__ = ["subject_id", "page_size", "page_token", "filter"]
     SUBJECT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -58,7 +58,7 @@ class ListMemberOfRequest(_message.Message):
     def __init__(self, subject_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ...) -> None: ...
 
 class ListGroupMembershipsResponse(_message.Message):
-    __slots__ = ("memberships", "next_page_token")
+    __slots__ = ["memberships", "next_page_token"]
     MEMBERSHIPS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     memberships: _containers.RepeatedCompositeFieldContainer[_group_membership_pb2.GroupMembership]
@@ -66,7 +66,7 @@ class ListGroupMembershipsResponse(_message.Message):
     def __init__(self, memberships: _Optional[_Iterable[_Union[_group_membership_pb2.GroupMembership, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
 
 class ListGroupMembershipsWithAttributesResponse(_message.Message):
-    __slots__ = ("memberships", "next_page_token")
+    __slots__ = ["memberships", "next_page_token"]
     MEMBERSHIPS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     memberships: _containers.RepeatedCompositeFieldContainer[_group_membership_pb2.GroupMembershipWithAttributes]
@@ -74,7 +74,7 @@ class ListGroupMembershipsWithAttributesResponse(_message.Message):
     def __init__(self, memberships: _Optional[_Iterable[_Union[_group_membership_pb2.GroupMembershipWithAttributes, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
 
 class ListMemberOfResponse(_message.Message):
-    __slots__ = ("items", "next_page_token")
+    __slots__ = ["items", "next_page_token"]
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[_group_pb2.Group]

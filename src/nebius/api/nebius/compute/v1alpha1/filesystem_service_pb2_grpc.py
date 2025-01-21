@@ -22,37 +22,37 @@ class FilesystemServiceStub(object):
                 '/nebius.compute.v1alpha1.FilesystemService/Get',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.GetFilesystemRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_filesystem__pb2.Filesystem.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.compute.v1alpha1.FilesystemService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_filesystem__pb2.Filesystem.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.compute.v1alpha1.FilesystemService/List',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.ListFilesystemsRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.ListFilesystemsResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.compute.v1alpha1.FilesystemService/Create',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.CreateFilesystemRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.compute.v1alpha1.FilesystemService/Update',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.UpdateFilesystemRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.compute.v1alpha1.FilesystemService/Delete',
                 request_serializer=nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.DeleteFilesystemRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.ListOperationsByParent = channel.unary_unary(
                 '/nebius.compute.v1alpha1.FilesystemService/ListOperationsByParent',
                 request_serializer=nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class FilesystemServiceServicer(object):
@@ -142,7 +142,6 @@ def add_FilesystemServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.compute.v1alpha1.FilesystemService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.compute.v1alpha1.FilesystemService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -160,21 +159,11 @@ class FilesystemService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.FilesystemService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.FilesystemService/Get',
             nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.GetFilesystemRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_filesystem__pb2.Filesystem.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -187,21 +176,11 @@ class FilesystemService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.FilesystemService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.FilesystemService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_filesystem__pb2.Filesystem.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -214,21 +193,11 @@ class FilesystemService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.FilesystemService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.FilesystemService/List',
             nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.ListFilesystemsRequest.SerializeToString,
             nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.ListFilesystemsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -241,21 +210,11 @@ class FilesystemService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.FilesystemService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.FilesystemService/Create',
             nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.CreateFilesystemRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -268,21 +227,11 @@ class FilesystemService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.FilesystemService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.FilesystemService/Update',
             nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.UpdateFilesystemRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -295,21 +244,11 @@ class FilesystemService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.FilesystemService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.FilesystemService/Delete',
             nebius_dot_compute_dot_v1alpha1_dot_filesystem__service__pb2.DeleteFilesystemRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListOperationsByParent(request,
@@ -322,18 +261,8 @@ class FilesystemService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.compute.v1alpha1.FilesystemService/ListOperationsByParent',
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1alpha1.FilesystemService/ListOperationsByParent',
             nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__service__pb2.ListOperationsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

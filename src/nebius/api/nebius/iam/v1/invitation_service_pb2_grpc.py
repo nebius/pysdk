@@ -20,32 +20,32 @@ class InvitationServiceStub(object):
                 '/nebius.iam.v1.InvitationService/Create',
                 request_serializer=nebius_dot_iam_dot_v1_dot_invitation__service__pb2.CreateInvitationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Get = channel.unary_unary(
                 '/nebius.iam.v1.InvitationService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_invitation__service__pb2.GetInvitationRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_invitation__pb2.Invitation.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.InvitationService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_invitation__service__pb2.ListInvitationsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_invitation__service__pb2.ListInvitationsResponse.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.InvitationService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_invitation__service__pb2.DeleteInvitationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.iam.v1.InvitationService/Update',
                 request_serializer=nebius_dot_iam_dot_v1_dot_invitation__service__pb2.UpdateInvitationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Resend = channel.unary_unary(
                 '/nebius.iam.v1.InvitationService/Resend',
                 request_serializer=nebius_dot_iam_dot_v1_dot_invitation__service__pb2.ResendInvitationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class InvitationServiceServicer(object):
@@ -124,7 +124,6 @@ def add_InvitationServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.InvitationService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.InvitationService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -142,21 +141,11 @@ class InvitationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.InvitationService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.InvitationService/Create',
             nebius_dot_iam_dot_v1_dot_invitation__service__pb2.CreateInvitationRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Get(request,
@@ -169,21 +158,11 @@ class InvitationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.InvitationService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.InvitationService/Get',
             nebius_dot_iam_dot_v1_dot_invitation__service__pb2.GetInvitationRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_invitation__pb2.Invitation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -196,21 +175,11 @@ class InvitationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.InvitationService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.InvitationService/List',
             nebius_dot_iam_dot_v1_dot_invitation__service__pb2.ListInvitationsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_invitation__service__pb2.ListInvitationsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -223,21 +192,11 @@ class InvitationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.InvitationService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.InvitationService/Delete',
             nebius_dot_iam_dot_v1_dot_invitation__service__pb2.DeleteInvitationRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -250,21 +209,11 @@ class InvitationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.InvitationService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.InvitationService/Update',
             nebius_dot_iam_dot_v1_dot_invitation__service__pb2.UpdateInvitationRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Resend(request,
@@ -277,18 +226,8 @@ class InvitationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.InvitationService/Resend',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.InvitationService/Resend',
             nebius_dot_iam_dot_v1_dot_invitation__service__pb2.ResendInvitationRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

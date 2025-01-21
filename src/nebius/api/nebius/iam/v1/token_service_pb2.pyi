@@ -7,7 +7,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Op
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ExchangeTokenRequest(_message.Message):
-    __slots__ = ("grant_type", "requested_token_type", "subject_token", "subject_token_type", "scopes", "audience", "actor_token", "actor_token_type", "resource")
+    __slots__ = ["grant_type", "requested_token_type", "subject_token", "subject_token_type", "scopes", "audience", "actor_token", "actor_token_type", "resource"]
     GRANT_TYPE_FIELD_NUMBER: _ClassVar[int]
     REQUESTED_TOKEN_TYPE_FIELD_NUMBER: _ClassVar[int]
     SUBJECT_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -29,7 +29,7 @@ class ExchangeTokenRequest(_message.Message):
     def __init__(self, grant_type: _Optional[str] = ..., requested_token_type: _Optional[str] = ..., subject_token: _Optional[str] = ..., subject_token_type: _Optional[str] = ..., scopes: _Optional[_Iterable[str]] = ..., audience: _Optional[str] = ..., actor_token: _Optional[str] = ..., actor_token_type: _Optional[str] = ..., resource: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class CreateTokenResponse(_message.Message):
-    __slots__ = ("access_token", "issued_token_type", "token_type", "expires_in", "scopes")
+    __slots__ = ["access_token", "issued_token_type", "token_type", "expires_in", "scopes"]
     ACCESS_TOKEN_FIELD_NUMBER: _ClassVar[int]
     ISSUED_TOKEN_TYPE_FIELD_NUMBER: _ClassVar[int]
     TOKEN_TYPE_FIELD_NUMBER: _ClassVar[int]

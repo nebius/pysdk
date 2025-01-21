@@ -20,32 +20,32 @@ class AllocationServiceStub(object):
                 '/nebius.vpc.v1alpha1.AllocationService/Get',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.GetAllocationRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__pb2.Allocation.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.vpc.v1alpha1.AllocationService/GetByName',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.GetAllocationByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__pb2.Allocation.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.vpc.v1alpha1.AllocationService/List',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.ListAllocationsRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.vpc.v1alpha1.AllocationService/Create',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.CreateAllocationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.vpc.v1alpha1.AllocationService/Update',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.UpdateAllocationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.vpc.v1alpha1.AllocationService/Delete',
                 request_serializer=nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.DeleteAllocationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class AllocationServiceServicer(object):
@@ -124,7 +124,6 @@ def add_AllocationServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.vpc.v1alpha1.AllocationService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.vpc.v1alpha1.AllocationService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -142,21 +141,11 @@ class AllocationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.AllocationService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.AllocationService/Get',
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.GetAllocationRequest.SerializeToString,
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__pb2.Allocation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -169,21 +158,11 @@ class AllocationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.AllocationService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.AllocationService/GetByName',
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.GetAllocationByNameRequest.SerializeToString,
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__pb2.Allocation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -196,21 +175,11 @@ class AllocationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.AllocationService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.AllocationService/List',
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.ListAllocationsRequest.SerializeToString,
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -223,21 +192,11 @@ class AllocationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.AllocationService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.AllocationService/Create',
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.CreateAllocationRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -250,21 +209,11 @@ class AllocationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.AllocationService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.AllocationService/Update',
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.UpdateAllocationRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -277,18 +226,8 @@ class AllocationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1alpha1.AllocationService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1alpha1.AllocationService/Delete',
             nebius_dot_vpc_dot_v1alpha1_dot_allocation__service__pb2.DeleteAllocationRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

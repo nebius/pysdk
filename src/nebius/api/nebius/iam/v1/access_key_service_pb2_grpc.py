@@ -20,52 +20,52 @@ class AccessKeyServiceStub(object):
                 '/nebius.iam.v1.AccessKeyService/Create',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.CreateAccessKeyRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ListAccessKeysRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ListAccessKeysResponse.FromString,
-                _registered_method=True)
+                )
         self.ListByAccount = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/ListByAccount',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ListAccessKeysByAccountRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ListAccessKeysResponse.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/Update',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.UpdateAccessKeyRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.GetById = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/GetById',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.GetAccessKeyByIdRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_access__key__pb2.AccessKey.FromString,
-                _registered_method=True)
+                )
         self.GetByAwsId = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/GetByAwsId',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.GetAccessKeyByAwsIdRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_access__key__pb2.AccessKey.FromString,
-                _registered_method=True)
+                )
         self.GetSecretOnce = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/GetSecretOnce',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.GetAccessKeySecretOnceRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.GetAccessKeySecretOnceResponse.FromString,
-                _registered_method=True)
+                )
         self.Activate = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/Activate',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ActivateAccessKeyRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Deactivate = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/Deactivate',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.DeactivateAccessKeyRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.AccessKeyService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_access__key__service__pb2.DeleteAccessKeyRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class AccessKeyServiceServicer(object):
@@ -188,7 +188,6 @@ def add_AccessKeyServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.AccessKeyService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.AccessKeyService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -206,21 +205,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/Create',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.CreateAccessKeyRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -233,21 +222,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/List',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ListAccessKeysRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ListAccessKeysResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListByAccount(request,
@@ -260,21 +239,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/ListByAccount',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/ListByAccount',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ListAccessKeysByAccountRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ListAccessKeysResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -287,21 +256,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/Update',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.UpdateAccessKeyRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetById(request,
@@ -314,21 +273,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/GetById',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/GetById',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.GetAccessKeyByIdRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_access__key__pb2.AccessKey.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByAwsId(request,
@@ -341,21 +290,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/GetByAwsId',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/GetByAwsId',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.GetAccessKeyByAwsIdRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_access__key__pb2.AccessKey.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetSecretOnce(request,
@@ -368,21 +307,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/GetSecretOnce',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/GetSecretOnce',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.GetAccessKeySecretOnceRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.GetAccessKeySecretOnceResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Activate(request,
@@ -395,21 +324,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/Activate',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/Activate',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.ActivateAccessKeyRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Deactivate(request,
@@ -422,21 +341,11 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/Deactivate',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/Deactivate',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.DeactivateAccessKeyRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -449,18 +358,8 @@ class AccessKeyService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.AccessKeyService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.AccessKeyService/Delete',
             nebius_dot_iam_dot_v1_dot_access__key__service__pb2.DeleteAccessKeyRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

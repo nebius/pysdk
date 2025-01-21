@@ -8,7 +8,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Platform(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -18,7 +18,7 @@ class Platform(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[PlatformSpec, _Mapping]] = ..., status: _Optional[_Union[PlatformStatus, _Mapping]] = ...) -> None: ...
 
 class PlatformSpec(_message.Message):
-    __slots__ = ("presets", "gpu_count_quota_type", "human_readable_name", "allow_preset_change")
+    __slots__ = ["presets", "gpu_count_quota_type", "human_readable_name", "allow_preset_change"]
     PRESETS_FIELD_NUMBER: _ClassVar[int]
     GPU_COUNT_QUOTA_TYPE_FIELD_NUMBER: _ClassVar[int]
     HUMAN_READABLE_NAME_FIELD_NUMBER: _ClassVar[int]
@@ -30,7 +30,7 @@ class PlatformSpec(_message.Message):
     def __init__(self, presets: _Optional[_Iterable[_Union[Preset, _Mapping]]] = ..., gpu_count_quota_type: _Optional[str] = ..., human_readable_name: _Optional[str] = ..., allow_preset_change: bool = ...) -> None: ...
 
 class Preset(_message.Message):
-    __slots__ = ("name", "resources", "allow_gpu_clustering")
+    __slots__ = ["name", "resources", "allow_gpu_clustering"]
     NAME_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     ALLOW_GPU_CLUSTERING_FIELD_NUMBER: _ClassVar[int]
@@ -40,7 +40,7 @@ class Preset(_message.Message):
     def __init__(self, name: _Optional[str] = ..., resources: _Optional[_Union[PresetResources, _Mapping]] = ..., allow_gpu_clustering: bool = ...) -> None: ...
 
 class PresetResources(_message.Message):
-    __slots__ = ("vcpu_count", "memory_gibibytes", "gpu_count")
+    __slots__ = ["vcpu_count", "memory_gibibytes", "gpu_count"]
     VCPU_COUNT_FIELD_NUMBER: _ClassVar[int]
     MEMORY_GIBIBYTES_FIELD_NUMBER: _ClassVar[int]
     GPU_COUNT_FIELD_NUMBER: _ClassVar[int]
@@ -50,5 +50,5 @@ class PresetResources(_message.Message):
     def __init__(self, vcpu_count: _Optional[int] = ..., memory_gibibytes: _Optional[int] = ..., gpu_count: _Optional[int] = ...) -> None: ...
 
 class PlatformStatus(_message.Message):
-    __slots__ = ()
+    __slots__ = []
     def __init__(self) -> None: ...

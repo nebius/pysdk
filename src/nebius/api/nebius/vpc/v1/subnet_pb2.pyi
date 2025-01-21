@@ -11,7 +11,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Subnet(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -21,7 +21,7 @@ class Subnet(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[SubnetSpec, _Mapping]] = ..., status: _Optional[_Union[SubnetStatus, _Mapping]] = ...) -> None: ...
 
 class SubnetSpec(_message.Message):
-    __slots__ = ("network_id", "ipv4_private_pools", "ipv4_public_pools")
+    __slots__ = ["network_id", "ipv4_private_pools", "ipv4_public_pools"]
     NETWORK_ID_FIELD_NUMBER: _ClassVar[int]
     IPV4_PRIVATE_POOLS_FIELD_NUMBER: _ClassVar[int]
     IPV4_PUBLIC_POOLS_FIELD_NUMBER: _ClassVar[int]
@@ -31,7 +31,7 @@ class SubnetSpec(_message.Message):
     def __init__(self, network_id: _Optional[str] = ..., ipv4_private_pools: _Optional[_Union[IPv4PrivateSubnetPools, _Mapping]] = ..., ipv4_public_pools: _Optional[_Union[IPv4PublicSubnetPools, _Mapping]] = ...) -> None: ...
 
 class IPv4PrivateSubnetPools(_message.Message):
-    __slots__ = ("pools", "use_network_pools")
+    __slots__ = ["pools", "use_network_pools"]
     POOLS_FIELD_NUMBER: _ClassVar[int]
     USE_NETWORK_POOLS_FIELD_NUMBER: _ClassVar[int]
     pools: _containers.RepeatedCompositeFieldContainer[SubnetPool]
@@ -39,7 +39,7 @@ class IPv4PrivateSubnetPools(_message.Message):
     def __init__(self, pools: _Optional[_Iterable[_Union[SubnetPool, _Mapping]]] = ..., use_network_pools: bool = ...) -> None: ...
 
 class IPv4PublicSubnetPools(_message.Message):
-    __slots__ = ("pools", "use_network_pools")
+    __slots__ = ["pools", "use_network_pools"]
     POOLS_FIELD_NUMBER: _ClassVar[int]
     USE_NETWORK_POOLS_FIELD_NUMBER: _ClassVar[int]
     pools: _containers.RepeatedCompositeFieldContainer[SubnetPool]
@@ -47,13 +47,13 @@ class IPv4PublicSubnetPools(_message.Message):
     def __init__(self, pools: _Optional[_Iterable[_Union[SubnetPool, _Mapping]]] = ..., use_network_pools: bool = ...) -> None: ...
 
 class SubnetPool(_message.Message):
-    __slots__ = ("cidrs",)
+    __slots__ = ["cidrs"]
     CIDRS_FIELD_NUMBER: _ClassVar[int]
     cidrs: _containers.RepeatedCompositeFieldContainer[SubnetCidr]
     def __init__(self, cidrs: _Optional[_Iterable[_Union[SubnetCidr, _Mapping]]] = ...) -> None: ...
 
 class SubnetCidr(_message.Message):
-    __slots__ = ("cidr", "state", "max_mask_length")
+    __slots__ = ["cidr", "state", "max_mask_length"]
     CIDR_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     MAX_MASK_LENGTH_FIELD_NUMBER: _ClassVar[int]
@@ -63,9 +63,9 @@ class SubnetCidr(_message.Message):
     def __init__(self, cidr: _Optional[str] = ..., state: _Optional[_Union[_pool_pb2.AddressBlockState, str]] = ..., max_mask_length: _Optional[int] = ...) -> None: ...
 
 class SubnetStatus(_message.Message):
-    __slots__ = ("state", "ipv4_private_cidrs", "ipv4_public_cidrs")
+    __slots__ = ["state", "ipv4_private_cidrs", "ipv4_public_cidrs"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[SubnetStatus.State]
         CREATING: _ClassVar[SubnetStatus.State]
         READY: _ClassVar[SubnetStatus.State]

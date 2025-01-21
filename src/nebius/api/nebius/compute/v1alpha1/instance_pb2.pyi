@@ -11,14 +11,14 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class InstanceRecoveryPolicy(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     RECOVER: _ClassVar[InstanceRecoveryPolicy]
     FAIL: _ClassVar[InstanceRecoveryPolicy]
 RECOVER: InstanceRecoveryPolicy
 FAIL: InstanceRecoveryPolicy
 
 class Instance(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -28,7 +28,7 @@ class Instance(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[InstanceSpec, _Mapping]] = ..., status: _Optional[_Union[InstanceStatus, _Mapping]] = ...) -> None: ...
 
 class InstanceSpec(_message.Message):
-    __slots__ = ("service_account_id", "resources", "gpu_cluster", "network_interfaces", "boot_disk", "secondary_disks", "filesystems", "cloud_init_user_data", "stopped", "recovery_policy")
+    __slots__ = ["service_account_id", "resources", "gpu_cluster", "network_interfaces", "boot_disk", "secondary_disks", "filesystems", "cloud_init_user_data", "stopped", "recovery_policy"]
     SERVICE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     GPU_CLUSTER_FIELD_NUMBER: _ClassVar[int]
@@ -52,7 +52,7 @@ class InstanceSpec(_message.Message):
     def __init__(self, service_account_id: _Optional[str] = ..., resources: _Optional[_Union[ResourcesSpec, _Mapping]] = ..., gpu_cluster: _Optional[_Union[InstanceGpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceSpec, _Mapping]]] = ..., boot_disk: _Optional[_Union[AttachedDiskSpec, _Mapping]] = ..., secondary_disks: _Optional[_Iterable[_Union[AttachedDiskSpec, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., stopped: bool = ..., recovery_policy: _Optional[_Union[InstanceRecoveryPolicy, str]] = ...) -> None: ...
 
 class ResourcesSpec(_message.Message):
-    __slots__ = ("platform", "preset")
+    __slots__ = ["platform", "preset"]
     PLATFORM_FIELD_NUMBER: _ClassVar[int]
     PRESET_FIELD_NUMBER: _ClassVar[int]
     platform: str
@@ -60,15 +60,15 @@ class ResourcesSpec(_message.Message):
     def __init__(self, platform: _Optional[str] = ..., preset: _Optional[str] = ...) -> None: ...
 
 class InstanceGpuClusterSpec(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class AttachedDiskSpec(_message.Message):
-    __slots__ = ("attach_mode", "existing_disk", "device_name")
+    __slots__ = ["attach_mode", "existing_disk", "device_name"]
     class AttachMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[AttachedDiskSpec.AttachMode]
         READ_ONLY: _ClassVar[AttachedDiskSpec.AttachMode]
         READ_WRITE: _ClassVar[AttachedDiskSpec.AttachMode]
@@ -84,21 +84,21 @@ class AttachedDiskSpec(_message.Message):
     def __init__(self, attach_mode: _Optional[_Union[AttachedDiskSpec.AttachMode, str]] = ..., existing_disk: _Optional[_Union[ExistingDisk, _Mapping]] = ..., device_name: _Optional[str] = ...) -> None: ...
 
 class ExistingDisk(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class ExistingFilesystem(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class AttachedFilesystemSpec(_message.Message):
-    __slots__ = ("attach_mode", "device_name", "existing_filesystem")
+    __slots__ = ["attach_mode", "device_name", "existing_filesystem"]
     class AttachMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[AttachedFilesystemSpec.AttachMode]
         READ_ONLY: _ClassVar[AttachedFilesystemSpec.AttachMode]
         READ_WRITE: _ClassVar[AttachedFilesystemSpec.AttachMode]
@@ -114,9 +114,9 @@ class AttachedFilesystemSpec(_message.Message):
     def __init__(self, attach_mode: _Optional[_Union[AttachedFilesystemSpec.AttachMode, str]] = ..., device_name: _Optional[str] = ..., existing_filesystem: _Optional[_Union[ExistingFilesystem, _Mapping]] = ...) -> None: ...
 
 class InstanceStatus(_message.Message):
-    __slots__ = ("state", "network_interfaces", "reconciling")
+    __slots__ = ["state", "network_interfaces", "reconciling"]
     class InstanceState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[InstanceStatus.InstanceState]
         CREATING: _ClassVar[InstanceStatus.InstanceState]
         UPDATING: _ClassVar[InstanceStatus.InstanceState]

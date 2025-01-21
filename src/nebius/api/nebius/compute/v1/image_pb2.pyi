@@ -8,7 +8,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Image(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -18,7 +18,7 @@ class Image(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ImageSpec, _Mapping]] = ..., status: _Optional[_Union[ImageStatus, _Mapping]] = ...) -> None: ...
 
 class ImageSpec(_message.Message):
-    __slots__ = ("description", "image_family", "version")
+    __slots__ = ["description", "image_family", "version"]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     IMAGE_FAMILY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -28,9 +28,9 @@ class ImageSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., image_family: _Optional[str] = ..., version: _Optional[str] = ...) -> None: ...
 
 class ImageStatus(_message.Message):
-    __slots__ = ("state", "state_description", "storage_size_bytes", "min_disk_size_bytes", "reconciling")
+    __slots__ = ["state", "state_description", "storage_size_bytes", "min_disk_size_bytes", "reconciling"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[ImageStatus.State]
         CREATING: _ClassVar[ImageStatus.State]
         READY: _ClassVar[ImageStatus.State]

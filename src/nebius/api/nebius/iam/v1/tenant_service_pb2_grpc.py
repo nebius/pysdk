@@ -19,12 +19,12 @@ class TenantServiceStub(object):
                 '/nebius.iam.v1.TenantService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.GetTenantRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_container__pb2.Container.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.TenantService/List',
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class TenantServiceServicer(object):
@@ -59,7 +59,6 @@ def add_TenantServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.TenantService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.TenantService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -77,21 +76,11 @@ class TenantService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.TenantService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantService/Get',
             nebius_dot_iam_dot_v1_dot_tenant__service__pb2.GetTenantRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_container__pb2.Container.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -104,18 +93,8 @@ class TenantService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.TenantService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantService/List',
             nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

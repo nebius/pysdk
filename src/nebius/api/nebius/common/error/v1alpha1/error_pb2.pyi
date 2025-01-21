@@ -7,9 +7,9 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ServiceError(_message.Message):
-    __slots__ = ("service", "code", "bad_request", "bad_resource_state", "resource_not_found", "resource_already_exists", "out_of_range", "permission_denied", "resource_conflict", "operation_aborted", "too_many_requests", "quota_failure", "internal_error", "retry_type")
+    __slots__ = ["service", "code", "bad_request", "bad_resource_state", "resource_not_found", "resource_already_exists", "out_of_range", "permission_denied", "resource_conflict", "operation_aborted", "too_many_requests", "quota_failure", "internal_error", "retry_type"]
     class RetryType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[ServiceError.RetryType]
         CALL: _ClassVar[ServiceError.RetryType]
         UNIT_OF_WORK: _ClassVar[ServiceError.RetryType]

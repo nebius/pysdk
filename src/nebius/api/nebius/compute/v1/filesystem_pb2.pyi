@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Filesystem(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,9 +20,9 @@ class Filesystem(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[FilesystemSpec, _Mapping]] = ..., status: _Optional[_Union[FilesystemStatus, _Mapping]] = ...) -> None: ...
 
 class FilesystemSpec(_message.Message):
-    __slots__ = ("size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type")
+    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type"]
     class FilesystemType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[FilesystemSpec.FilesystemType]
         NETWORK_SSD: _ClassVar[FilesystemSpec.FilesystemType]
         NETWORK_HDD: _ClassVar[FilesystemSpec.FilesystemType]
@@ -44,9 +44,9 @@ class FilesystemSpec(_message.Message):
     def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[FilesystemSpec.FilesystemType, str]] = ...) -> None: ...
 
 class FilesystemStatus(_message.Message):
-    __slots__ = ("state", "state_description", "read_write_attachments", "read_only_attachments", "size_bytes", "reconciling")
+    __slots__ = ["state", "state_description", "read_write_attachments", "read_only_attachments", "size_bytes", "reconciling"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         UNSPECIFIED: _ClassVar[FilesystemStatus.State]
         CREATING: _ClassVar[FilesystemStatus.State]
         READY: _ClassVar[FilesystemStatus.State]

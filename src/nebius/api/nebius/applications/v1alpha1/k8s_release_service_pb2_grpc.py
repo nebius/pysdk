@@ -20,22 +20,22 @@ class K8sReleaseServiceStub(object):
                 '/nebius.applications.v1alpha1.K8sReleaseService/Get',
                 request_serializer=nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.GetK8sReleaseRequest.SerializeToString,
                 response_deserializer=nebius_dot_applications_dot_v1alpha1_dot_k8s__release__pb2.K8sRelease.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.applications.v1alpha1.K8sReleaseService/List',
                 request_serializer=nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.ListK8sReleasesRequest.SerializeToString,
                 response_deserializer=nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.ListK8sReleasesResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.applications.v1alpha1.K8sReleaseService/Create',
                 request_serializer=nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.CreateK8sReleaseRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.applications.v1alpha1.K8sReleaseService/Delete',
                 request_serializer=nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.DeleteK8sReleaseRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class K8sReleaseServiceServicer(object):
@@ -92,7 +92,6 @@ def add_K8sReleaseServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.applications.v1alpha1.K8sReleaseService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.applications.v1alpha1.K8sReleaseService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -110,21 +109,11 @@ class K8sReleaseService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.applications.v1alpha1.K8sReleaseService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.applications.v1alpha1.K8sReleaseService/Get',
             nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.GetK8sReleaseRequest.SerializeToString,
             nebius_dot_applications_dot_v1alpha1_dot_k8s__release__pb2.K8sRelease.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -137,21 +126,11 @@ class K8sReleaseService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.applications.v1alpha1.K8sReleaseService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.applications.v1alpha1.K8sReleaseService/List',
             nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.ListK8sReleasesRequest.SerializeToString,
             nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.ListK8sReleasesResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -164,21 +143,11 @@ class K8sReleaseService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.applications.v1alpha1.K8sReleaseService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.applications.v1alpha1.K8sReleaseService/Create',
             nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.CreateK8sReleaseRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -191,18 +160,8 @@ class K8sReleaseService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.applications.v1alpha1.K8sReleaseService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.applications.v1alpha1.K8sReleaseService/Delete',
             nebius_dot_applications_dot_v1alpha1_dot_k8s__release__service__pb2.DeleteK8sReleaseRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

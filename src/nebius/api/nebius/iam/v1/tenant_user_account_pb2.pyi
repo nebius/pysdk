@@ -10,7 +10,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class TenantUserAccount(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -20,7 +20,7 @@ class TenantUserAccount(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[TenantUserAccountSpec, _Mapping]] = ..., status: _Optional[_Union[TenantUserAccountStatus, _Mapping]] = ...) -> None: ...
 
 class TenantUserAccountWithAttributes(_message.Message):
-    __slots__ = ("tenant_user_account", "attributes", "error")
+    __slots__ = ["tenant_user_account", "attributes", "error"]
     TENANT_USER_ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     ATTRIBUTES_FIELD_NUMBER: _ClassVar[int]
     ERROR_FIELD_NUMBER: _ClassVar[int]
@@ -30,7 +30,7 @@ class TenantUserAccountWithAttributes(_message.Message):
     def __init__(self, tenant_user_account: _Optional[_Union[TenantUserAccount, _Mapping]] = ..., attributes: _Optional[_Union[UserAttributes, _Mapping]] = ..., error: _Optional[_Union[Error, _Mapping]] = ...) -> None: ...
 
 class UserAttributes(_message.Message):
-    __slots__ = ("sub", "name", "given_name", "family_name", "preferred_username", "picture", "email", "email_verified", "zoneinfo", "locale", "phone_number", "phone_number_verified")
+    __slots__ = ["sub", "name", "given_name", "family_name", "preferred_username", "picture", "email", "email_verified", "zoneinfo", "locale", "phone_number", "phone_number_verified"]
     SUB_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     GIVEN_NAME_FIELD_NUMBER: _ClassVar[int]
@@ -58,15 +58,15 @@ class UserAttributes(_message.Message):
     def __init__(self, sub: _Optional[str] = ..., name: _Optional[str] = ..., given_name: _Optional[str] = ..., family_name: _Optional[str] = ..., preferred_username: _Optional[str] = ..., picture: _Optional[str] = ..., email: _Optional[str] = ..., email_verified: bool = ..., zoneinfo: _Optional[str] = ..., locale: _Optional[str] = ..., phone_number: _Optional[str] = ..., phone_number_verified: bool = ...) -> None: ...
 
 class Error(_message.Message):
-    __slots__ = ("message",)
+    __slots__ = ["message"]
     MESSAGE_FIELD_NUMBER: _ClassVar[int]
     message: str
     def __init__(self, message: _Optional[str] = ...) -> None: ...
 
 class TenantUserAccountSpec(_message.Message):
-    __slots__ = ("visible_attributes",)
+    __slots__ = ["visible_attributes"]
     class VisibleAttributes(_message.Message):
-        __slots__ = ("attribute",)
+        __slots__ = ["attribute"]
         ATTRIBUTE_FIELD_NUMBER: _ClassVar[int]
         attribute: _containers.RepeatedScalarFieldContainer[str]
         def __init__(self, attribute: _Optional[_Iterable[str]] = ...) -> None: ...
@@ -75,9 +75,9 @@ class TenantUserAccountSpec(_message.Message):
     def __init__(self, visible_attributes: _Optional[_Union[TenantUserAccountSpec.VisibleAttributes, _Mapping]] = ...) -> None: ...
 
 class TenantUserAccountStatus(_message.Message):
-    __slots__ = ("state", "invitation_id", "federation_id")
+    __slots__ = ["state", "invitation_id", "federation_id"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-        __slots__ = ()
+        __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[TenantUserAccountStatus.State]
         ACTIVE: _ClassVar[TenantUserAccountStatus.State]
         INACTIVE: _ClassVar[TenantUserAccountStatus.State]

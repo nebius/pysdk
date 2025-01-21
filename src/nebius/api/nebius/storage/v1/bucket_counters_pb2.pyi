@@ -6,7 +6,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CurrentBucketCounters(_message.Message):
-    __slots__ = ("simple_objects_quantity", "simple_objects_size", "multipart_objects_quantity", "multipart_objects_size", "multipart_uploads_quantity", "inflight_parts_quantity", "inflight_parts_size")
+    __slots__ = ["simple_objects_quantity", "simple_objects_size", "multipart_objects_quantity", "multipart_objects_size", "multipart_uploads_quantity", "inflight_parts_quantity", "inflight_parts_size"]
     SIMPLE_OBJECTS_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     SIMPLE_OBJECTS_SIZE_FIELD_NUMBER: _ClassVar[int]
     MULTIPART_OBJECTS_QUANTITY_FIELD_NUMBER: _ClassVar[int]
@@ -24,7 +24,7 @@ class CurrentBucketCounters(_message.Message):
     def __init__(self, simple_objects_quantity: _Optional[int] = ..., simple_objects_size: _Optional[int] = ..., multipart_objects_quantity: _Optional[int] = ..., multipart_objects_size: _Optional[int] = ..., multipart_uploads_quantity: _Optional[int] = ..., inflight_parts_quantity: _Optional[int] = ..., inflight_parts_size: _Optional[int] = ...) -> None: ...
 
 class NonCurrentBucketCounters(_message.Message):
-    __slots__ = ("simple_objects_quantity", "simple_objects_size", "multipart_objects_quantity", "multipart_objects_size")
+    __slots__ = ["simple_objects_quantity", "simple_objects_size", "multipart_objects_quantity", "multipart_objects_size"]
     SIMPLE_OBJECTS_QUANTITY_FIELD_NUMBER: _ClassVar[int]
     SIMPLE_OBJECTS_SIZE_FIELD_NUMBER: _ClassVar[int]
     MULTIPART_OBJECTS_QUANTITY_FIELD_NUMBER: _ClassVar[int]
@@ -36,7 +36,7 @@ class NonCurrentBucketCounters(_message.Message):
     def __init__(self, simple_objects_quantity: _Optional[int] = ..., simple_objects_size: _Optional[int] = ..., multipart_objects_quantity: _Optional[int] = ..., multipart_objects_size: _Optional[int] = ...) -> None: ...
 
 class BucketCounters(_message.Message):
-    __slots__ = ("storage_class", "counters", "non_current_counters")
+    __slots__ = ["storage_class", "counters", "non_current_counters"]
     STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
     COUNTERS_FIELD_NUMBER: _ClassVar[int]
     NON_CURRENT_COUNTERS_FIELD_NUMBER: _ClassVar[int]

@@ -5,12 +5,12 @@ from typing import ClassVar as _ClassVar
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class StorageClass(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     STORAGE_CLASS_UNSPECIFIED: _ClassVar[StorageClass]
     STANDARD: _ClassVar[StorageClass]
 
 class VersioningPolicy(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
+    __slots__ = []
     VERSIONING_POLICY_UNSPECIFIED: _ClassVar[VersioningPolicy]
     DISABLED: _ClassVar[VersioningPolicy]
     ENABLED: _ClassVar[VersioningPolicy]

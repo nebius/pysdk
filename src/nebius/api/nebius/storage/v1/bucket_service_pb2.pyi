@@ -13,7 +13,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class GetBucketRequest(_message.Message):
-    __slots__ = ("id", "with_deleted")
+    __slots__ = ["id", "with_deleted"]
     ID_FIELD_NUMBER: _ClassVar[int]
     WITH_DELETED_FIELD_NUMBER: _ClassVar[int]
     id: str
@@ -21,7 +21,7 @@ class GetBucketRequest(_message.Message):
     def __init__(self, id: _Optional[str] = ..., with_deleted: bool = ...) -> None: ...
 
 class GetBucketByNameRequest(_message.Message):
-    __slots__ = ("parent_id", "name", "with_deleted")
+    __slots__ = ["parent_id", "name", "with_deleted"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     WITH_DELETED_FIELD_NUMBER: _ClassVar[int]
@@ -31,7 +31,7 @@ class GetBucketByNameRequest(_message.Message):
     def __init__(self, parent_id: _Optional[str] = ..., name: _Optional[str] = ..., with_deleted: bool = ...) -> None: ...
 
 class CreateBucketRequest(_message.Message):
-    __slots__ = ("metadata", "spec")
+    __slots__ = ["metadata", "spec"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
@@ -39,7 +39,7 @@ class CreateBucketRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_bucket_pb2.BucketSpec, _Mapping]] = ...) -> None: ...
 
 class UpdateBucketRequest(_message.Message):
-    __slots__ = ("metadata", "spec")
+    __slots__ = ["metadata", "spec"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
@@ -47,7 +47,7 @@ class UpdateBucketRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_bucket_pb2.BucketSpec, _Mapping]] = ...) -> None: ...
 
 class DeleteBucketRequest(_message.Message):
-    __slots__ = ("id", "purge_at", "ttl")
+    __slots__ = ["id", "purge_at", "ttl"]
     ID_FIELD_NUMBER: _ClassVar[int]
     PURGE_AT_FIELD_NUMBER: _ClassVar[int]
     TTL_FIELD_NUMBER: _ClassVar[int]
@@ -57,19 +57,19 @@ class DeleteBucketRequest(_message.Message):
     def __init__(self, id: _Optional[str] = ..., purge_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., ttl: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ...) -> None: ...
 
 class PurgeBucketRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class UndeleteBucketRequest(_message.Message):
-    __slots__ = ("id",)
+    __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class ListBucketsRequest(_message.Message):
-    __slots__ = ("parent_id", "page_size", "page_token", "filter", "with_deleted")
+    __slots__ = ["parent_id", "page_size", "page_token", "filter", "with_deleted"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
@@ -83,7 +83,7 @@ class ListBucketsRequest(_message.Message):
     def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ..., with_deleted: bool = ...) -> None: ...
 
 class ListBucketsResponse(_message.Message):
-    __slots__ = ("items", "next_page_token")
+    __slots__ = ["items", "next_page_token"]
     ITEMS_FIELD_NUMBER: _ClassVar[int]
     NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     items: _containers.RepeatedCompositeFieldContainer[_bucket_pb2.Bucket]

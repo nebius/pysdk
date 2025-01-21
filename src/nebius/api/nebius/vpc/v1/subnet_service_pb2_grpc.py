@@ -19,22 +19,22 @@ class SubnetServiceStub(object):
                 '/nebius.vpc.v1.SubnetService/Get',
                 request_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.GetSubnetRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__pb2.Subnet.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.vpc.v1.SubnetService/GetByName',
                 request_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.GetSubnetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__pb2.Subnet.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.vpc.v1.SubnetService/List',
                 request_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsResponse.FromString,
-                _registered_method=True)
+                )
         self.ListByNetwork = channel.unary_unary(
                 '/nebius.vpc.v1.SubnetService/ListByNetwork',
                 request_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsByNetworkRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class SubnetServiceServicer(object):
@@ -91,7 +91,6 @@ def add_SubnetServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.vpc.v1.SubnetService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.vpc.v1.SubnetService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -109,21 +108,11 @@ class SubnetService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1.SubnetService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.SubnetService/Get',
             nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.GetSubnetRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_subnet__pb2.Subnet.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -136,21 +125,11 @@ class SubnetService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1.SubnetService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.SubnetService/GetByName',
             nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.GetSubnetByNameRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_subnet__pb2.Subnet.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -163,21 +142,11 @@ class SubnetService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1.SubnetService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.SubnetService/List',
             nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListByNetwork(request,
@@ -190,18 +159,8 @@ class SubnetService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.vpc.v1.SubnetService/ListByNetwork',
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.SubnetService/ListByNetwork',
             nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsByNetworkRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

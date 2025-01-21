@@ -20,27 +20,27 @@ class FederationCertificateServiceStub(object):
                 '/nebius.iam.v1.FederationCertificateService/Create',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.CreateFederationCertificateRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Get = channel.unary_unary(
                 '/nebius.iam.v1.FederationCertificateService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.GetFederationCertificateRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_federation__certificate__pb2.FederationCertificate.FromString,
-                _registered_method=True)
+                )
         self.ListByFederation = channel.unary_unary(
                 '/nebius.iam.v1.FederationCertificateService/ListByFederation',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.ListFederationCertificateByFederationRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.ListFederationCertificateResponse.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.iam.v1.FederationCertificateService/Update',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.UpdateFederationCertificateRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.FederationCertificateService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.DeleteFederationCertificateRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class FederationCertificateServiceServicer(object):
@@ -108,7 +108,6 @@ def add_FederationCertificateServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.FederationCertificateService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.iam.v1.FederationCertificateService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -126,21 +125,11 @@ class FederationCertificateService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationCertificateService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationCertificateService/Create',
             nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.CreateFederationCertificateRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Get(request,
@@ -153,21 +142,11 @@ class FederationCertificateService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationCertificateService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationCertificateService/Get',
             nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.GetFederationCertificateRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_federation__certificate__pb2.FederationCertificate.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def ListByFederation(request,
@@ -180,21 +159,11 @@ class FederationCertificateService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationCertificateService/ListByFederation',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationCertificateService/ListByFederation',
             nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.ListFederationCertificateByFederationRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.ListFederationCertificateResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -207,21 +176,11 @@ class FederationCertificateService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationCertificateService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationCertificateService/Update',
             nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.UpdateFederationCertificateRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -234,18 +193,8 @@ class FederationCertificateService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.iam.v1.FederationCertificateService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationCertificateService/Delete',
             nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.DeleteFederationCertificateRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

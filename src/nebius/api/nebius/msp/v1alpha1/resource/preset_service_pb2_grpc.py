@@ -18,7 +18,7 @@ class PresetServiceStub(object):
                 '/nebius.msp.v1alpha1.resource.PresetService/List',
                 request_serializer=nebius_dot_msp_dot_v1alpha1_dot_resource_dot_preset__service__pb2.ListPresetsRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_v1alpha1_dot_resource_dot_preset__service__pb2.ListPresetsResponse.FromString,
-                _registered_method=True)
+                )
 
 
 class PresetServiceServicer(object):
@@ -42,7 +42,6 @@ def add_PresetServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.msp.v1alpha1.resource.PresetService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.msp.v1alpha1.resource.PresetService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -60,18 +59,8 @@ class PresetService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.msp.v1alpha1.resource.PresetService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.v1alpha1.resource.PresetService/List',
             nebius_dot_msp_dot_v1alpha1_dot_resource_dot_preset__service__pb2.ListPresetsRequest.SerializeToString,
             nebius_dot_msp_dot_v1alpha1_dot_resource_dot_preset__service__pb2.ListPresetsResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

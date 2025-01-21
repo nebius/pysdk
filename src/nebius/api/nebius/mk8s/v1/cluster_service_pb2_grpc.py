@@ -21,32 +21,32 @@ class ClusterServiceStub(object):
                 '/nebius.mk8s.v1.ClusterService/Get',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.GetClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_mk8s_dot_v1_dot_cluster__pb2.Cluster.FromString,
-                _registered_method=True)
+                )
         self.GetByName = channel.unary_unary(
                 '/nebius.mk8s.v1.ClusterService/GetByName',
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_mk8s_dot_v1_dot_cluster__pb2.Cluster.FromString,
-                _registered_method=True)
+                )
         self.List = channel.unary_unary(
                 '/nebius.mk8s.v1.ClusterService/List',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClustersRequest.SerializeToString,
                 response_deserializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClustersResponse.FromString,
-                _registered_method=True)
+                )
         self.Create = channel.unary_unary(
                 '/nebius.mk8s.v1.ClusterService/Create',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.CreateClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Update = channel.unary_unary(
                 '/nebius.mk8s.v1.ClusterService/Update',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.UpdateClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.mk8s.v1.ClusterService/Delete',
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.DeleteClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                _registered_method=True)
+                )
 
 
 class ClusterServiceServicer(object):
@@ -125,7 +125,6 @@ def add_ClusterServiceServicer_to_server(servicer, server):
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.mk8s.v1.ClusterService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('nebius.mk8s.v1.ClusterService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -143,21 +142,11 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.ClusterService/Get',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.ClusterService/Get',
             nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.GetClusterRequest.SerializeToString,
             nebius_dot_mk8s_dot_v1_dot_cluster__pb2.Cluster.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetByName(request,
@@ -170,21 +159,11 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.ClusterService/GetByName',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.ClusterService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_mk8s_dot_v1_dot_cluster__pb2.Cluster.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def List(request,
@@ -197,21 +176,11 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.ClusterService/List',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.ClusterService/List',
             nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClustersRequest.SerializeToString,
             nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClustersResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Create(request,
@@ -224,21 +193,11 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.ClusterService/Create',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.ClusterService/Create',
             nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.CreateClusterRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Update(request,
@@ -251,21 +210,11 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.ClusterService/Update',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.ClusterService/Update',
             nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.UpdateClusterRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Delete(request,
@@ -278,18 +227,8 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/nebius.mk8s.v1.ClusterService/Delete',
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.ClusterService/Delete',
             nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.DeleteClusterRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

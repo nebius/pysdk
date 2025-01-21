@@ -9,7 +9,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class GpuCluster(_message.Message):
-    __slots__ = ("metadata", "spec", "status")
+    __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
@@ -19,13 +19,13 @@ class GpuCluster(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., status: _Optional[_Union[GpuClusterStatus, _Mapping]] = ...) -> None: ...
 
 class GpuClusterSpec(_message.Message):
-    __slots__ = ("infiniband_fabric",)
+    __slots__ = ["infiniband_fabric"]
     INFINIBAND_FABRIC_FIELD_NUMBER: _ClassVar[int]
     infiniband_fabric: str
     def __init__(self, infiniband_fabric: _Optional[str] = ...) -> None: ...
 
 class GpuClusterStatus(_message.Message):
-    __slots__ = ("instances", "reconciling")
+    __slots__ = ["instances", "reconciling"]
     INSTANCES_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
     instances: _containers.RepeatedScalarFieldContainer[str]
