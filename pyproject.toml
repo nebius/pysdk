@@ -151,7 +151,7 @@ commands = [["pytest","-vv"]]
 
 [tool.tox.env.test_earliest]
 description = "Run tests with pytest and the earliest possible lib versions"
-skip_if = "sys.version_info >= (3, 12)"
+requires_python = "<=3.11"
 deps = [
     "pytest",
     "pytest-cov",
