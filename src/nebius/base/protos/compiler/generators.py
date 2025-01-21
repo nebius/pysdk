@@ -621,6 +621,11 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     ImportedSymbol("Compression", "grpc"),
                     " | None = None,",
                 )
+                g.p(
+                    "retries: ",
+                    ImportedSymbol("int", "builtins"),
+                    " | None = 3,",
+                )
             g.p(
                 ") -> ",
                 ImportedSymbol("Request", "nebius.aio.request"),
@@ -662,6 +667,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     g.p("credentials=credentials,")
                     g.p("wait_for_ready=wait_for_ready,")
                     g.p("compression=compression,")
+                    g.p("retries=retries,")
                     if is_operation_output(method):
                         g.p(
                             "result_wrapper=",

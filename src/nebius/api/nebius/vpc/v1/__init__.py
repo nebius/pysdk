@@ -1710,6 +1710,7 @@ class AllocationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetAllocationRequest","Allocation"]:
         return super().request(
             method="Get",
@@ -1720,6 +1721,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Allocation),
         )
     
@@ -1730,6 +1732,7 @@ class AllocationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetAllocationByNameRequest","Allocation"]:
         return super().request(
             method="GetByName",
@@ -1740,6 +1743,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Allocation),
         )
     
@@ -1750,6 +1754,7 @@ class AllocationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListAllocationsRequest","ListAllocationsResponse"]:
         return super().request(
             method="List",
@@ -1760,6 +1765,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListAllocationsResponse),
         )
     
@@ -1770,6 +1776,7 @@ class AllocationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListAllocationsByPoolRequest","ListAllocationsResponse"]:
         return super().request(
             method="ListByPool",
@@ -1780,6 +1787,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListAllocationsResponse),
         )
     
@@ -1790,6 +1798,7 @@ class AllocationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["CreateAllocationRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1800,6 +1809,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1810,6 +1820,7 @@ class AllocationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdateAllocationRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1821,6 +1832,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -1831,6 +1843,7 @@ class AllocationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["DeleteAllocationRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -1841,6 +1854,7 @@ class AllocationServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -2368,6 +2382,7 @@ class NetworkServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetNetworkRequest","Network"]:
         return super().request(
             method="Get",
@@ -2378,6 +2393,7 @@ class NetworkServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Network),
         )
     
@@ -2388,6 +2404,7 @@ class NetworkServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetNetworkByNameRequest","Network"]:
         return super().request(
             method="GetByName",
@@ -2398,6 +2415,7 @@ class NetworkServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Network),
         )
     
@@ -2408,6 +2426,7 @@ class NetworkServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListNetworksRequest","ListNetworksResponse"]:
         return super().request(
             method="List",
@@ -2418,6 +2437,7 @@ class NetworkServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListNetworksResponse),
         )
     
@@ -2741,6 +2761,7 @@ class PoolServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetPoolRequest","Pool"]:
         return super().request(
             method="Get",
@@ -2751,6 +2772,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Pool),
         )
     
@@ -2761,6 +2783,7 @@ class PoolServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetPoolByNameRequest","Pool"]:
         return super().request(
             method="GetByName",
@@ -2771,6 +2794,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Pool),
         )
     
@@ -2781,6 +2805,7 @@ class PoolServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListPoolsRequest","ListPoolsResponse"]:
         return super().request(
             method="List",
@@ -2791,6 +2816,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListPoolsResponse),
         )
     
@@ -2801,6 +2827,7 @@ class PoolServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListPoolsBySourcePoolRequest","ListPoolsResponse"]:
         return super().request(
             method="ListBySourcePool",
@@ -2811,6 +2838,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListPoolsResponse),
         )
     
@@ -2821,6 +2849,7 @@ class PoolServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["UpdatePoolRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -2832,6 +2861,7 @@ class PoolServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=operation.Operation,
         )
     
@@ -3603,6 +3633,7 @@ class SubnetServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetSubnetRequest","Subnet"]:
         return super().request(
             method="Get",
@@ -3613,6 +3644,7 @@ class SubnetServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Subnet),
         )
     
@@ -3623,6 +3655,7 @@ class SubnetServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["GetSubnetByNameRequest","Subnet"]:
         return super().request(
             method="GetByName",
@@ -3633,6 +3666,7 @@ class SubnetServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(Subnet),
         )
     
@@ -3643,6 +3677,7 @@ class SubnetServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListSubnetsRequest","ListSubnetsResponse"]:
         return super().request(
             method="List",
@@ -3653,6 +3688,7 @@ class SubnetServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListSubnetsResponse),
         )
     
@@ -3663,6 +3699,7 @@ class SubnetServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
     ) -> request_1.Request["ListSubnetsByNetworkRequest","ListSubnetsResponse"]:
         return super().request(
             method="ListByNetwork",
@@ -3673,6 +3710,7 @@ class SubnetServiceClient(client.Client):
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
+            retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListSubnetsResponse),
         )
     
