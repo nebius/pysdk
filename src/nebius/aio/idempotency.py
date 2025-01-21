@@ -5,7 +5,9 @@ from uuid import uuid4
 
 from grpc.aio._call import UnaryUnaryCall
 from grpc.aio._interceptor import ClientCallDetails, UnaryUnaryClientInterceptor
-from grpc.aio._metadata import Metadata
+from grpc.aio._metadata import Metadata as GRPCMetadata
+
+from nebius.base.metadata import Metadata
 
 log = getLogger(__name__)
 
@@ -19,13 +21,13 @@ def new_key() -> str:
     return str(uuid4())
 
 
-def add_key_to_metadata(metadata: Metadata) -> None:
+def add_key_to_metadata(metadata: Metadata | GRPCMetadata) -> None:
     log.debug("added idempotency key to metadata")
-    metadata.add(HEADER, new_key())
+    metadata[HEADER] = new_key()
 
 
-def ensure_key_in_metadata(metadata: Metadata) -> None:
-    if metadata.get(HEADER, "") == "":
+def ensure_key_in_metadata(metadata: Metadata | GRPCMetadata) -> None:
+    if HEADER not in metadata or metadata[HEADER] == "" or metadata[HEADER] == [""]:
         add_key_to_metadata(metadata)
 
 
@@ -37,6 +39,6 @@ class IdempotencyKeyInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[un
         request: Req,
     ) -> UnaryUnaryCall | Res:
         if client_call_details.metadata is None:
-            client_call_details.metadata = Metadata()
+            client_call_details.metadata = GRPCMetadata()
         ensure_key_in_metadata(client_call_details.metadata)
         return await continuation(client_call_details, request)  # type: ignore
