@@ -28,7 +28,7 @@ def main() -> None:
     if len(sys.argv) != 3:
         print(
             "Usage: python version_updater.py <path_to_pyproject.toml> "
-            + "<major|minor|patch>",
+            + "<major|minor|patch|print>",
         )
         sys.exit(1)
 
@@ -40,8 +40,11 @@ def main() -> None:
         with open(file_path, "r") as file:
             data = tomlkit.parse(file.read())
 
-        # Get and update the version
         version = data["project"]["version"]  # type: ignore
+        if part == "print":
+            print(f"{version}")
+            return
+
         updated_version = increment_version(version, part)  # type: ignore
         data["project"]["version"] = updated_version  # type: ignore
 

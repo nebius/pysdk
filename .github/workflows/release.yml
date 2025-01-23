@@ -47,7 +47,7 @@ jobs:
       - name: Upload pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'docs'
+          path: 'docs/generated'
 
       - name: Deploy to GitHub Pages
         id: pages_deploy

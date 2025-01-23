@@ -4,7 +4,7 @@ OUT_DIR = src/nebius/api
 OUT_NEW_DIR = src/nebius/api-new
 
 # Always execute these targets
-.PHONY: update-submodule compile-proto update-proto gen-doc
+.PHONY: update-submodule compile-proto update-proto gen-doc tag-ver tag-ver-push
 
 # Ensure that update-proto is the default target
 .DEFAULT_GOAL := update-proto
@@ -30,3 +30,9 @@ update-proto: update-submodule compile-proto move-imports
 
 gen-doc:
 	pydoctor || true
+
+tag-ver:
+	src/scripts/tag_version.sh --no-push
+
+tag-ver-push:
+	src/scripts/tag_version.sh --push
