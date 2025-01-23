@@ -12,7 +12,7 @@ authors = [
     { name = "Marat Reymers", email = "marat-reymers@nebius.com"},
     { name = "Andrei Zenkov", email = "andrei.zenkov@nebius.com"}
 ]
-license = { text = "MIT" }
+license.file = "LICENSE"
 dependencies = [
     # added a dep, add the notice!
     "cryptography>=40.0.0",
@@ -39,16 +39,14 @@ dev = [
     "grpc-stubs>=1.53",  # For mypy
     "types-protobuf>=5.29.1", # for mypy
 ]
-genproto = [
+generators = [
     # added a dep, add the notice!
     "grpcio-tools>=1.56.2",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
-]
-gendoc = [
-    # added a dep, add the notice!
     "pydoctor>=24.11.2",
     "beautifulsoup4>=4.12.3",
+    "tomlkit>=0.13.2",
 ]
 
 [tool.setuptools]
@@ -56,11 +54,12 @@ package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["nebius*"]
 
 [tool.black]
 line-length = 88
 target-version = ["py310"]
-exclude = "(docs|src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
+exclude = "(docs/generated|src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
 
 [tool.mypy]
 strict = true
@@ -95,7 +94,7 @@ exclude = [
     "__pypackages__",
     "_build",
     "buck-out",
-    "docs",
+    "docs/generated",
     "build",
     "dist",
     "node_modules",
@@ -151,6 +150,7 @@ commands = [["pytest","-vv"]]
 
 [tool.tox.env.test_earliest]
 description = "Run tests with pytest and the earliest possible lib versions"
+basepython = ["python3.10"]
 deps = [
     "pytest",
     "pytest-cov",
@@ -190,6 +190,7 @@ deps = [
     "grpcio-status>=1.56.2",
     "pydoctor>=24.11.2",
     "beautifulsoup4>=4.12.3",
+    "tomlkit>=0.13.2",
     # For mypy
     "grpc-stubs>=1.53",
     "types-protobuf>=5.29.1",
@@ -200,8 +201,8 @@ commands = [["mypy","src/"]]
 [tool.pydoctor]
 add-package = ["src/nebius"]
 project-name="nebius"
-html-output="docs"
-template-dir="templates"
+html-output="docs/generated"
+template-dir="docs/templates"
 project-url="https://github.com/nebius/pysdk"
 html-base-url="https://nebius.github.io/pysdk"
 html-writer="nebius.base.gendoc.writer.TemplateWriter"

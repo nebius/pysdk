@@ -4,10 +4,10 @@ OUT_DIR = src/nebius/api
 OUT_NEW_DIR = src/nebius/api-new
 
 # Always execute these targets
-.PHONY: update-submodule compile-proto update-proto gen-doc update-all
+.PHONY: update-submodule compile-proto update-proto gen-doc
 
 # Ensure that update-proto is the default target
-.DEFAULT_GOAL := update-all
+.DEFAULT_GOAL := update-proto
 
 update-submodule:
 	git submodule update --init --recursive --remote
@@ -26,9 +26,7 @@ move-imports:
 	find $(OUT_DIR) -type f -name "*.py" ! -name "__init__.py" -exec python3 src/nebius/base/protos/compiler/mover.py --level warning --input {} --output {} --prefix buf=nebius.api.buf nebius=nebius.api.nebius \;
 	find $(OUT_DIR) -type f -name "*.pyi" -exec python3 src/nebius/base/protos/compiler/mover.py --level warning --input {} --output {} --prefix buf=nebius.api.buf nebius=nebius.api.nebius \;
 
-update-proto: update-submodule compile-proto move-imports gen-doc
+update-proto: update-submodule compile-proto move-imports
 
 gen-doc:
 	pydoctor || true
-
-update-all: update-proto gen-doc
