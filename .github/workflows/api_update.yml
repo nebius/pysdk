@@ -30,6 +30,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install .[generators]
 
+    - uses: bufbuild/buf-action@v1
+      with:
+        token: ${{ secrets.BUF_TOKEN }}
+        setup_only: true
+
     - name: Run generation script
       run: |
         make
