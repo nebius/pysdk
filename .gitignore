@@ -159,3 +159,4 @@ dmypy.json
 cython_debug/
 
 typings/
+docs/generated
