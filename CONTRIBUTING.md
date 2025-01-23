@@ -34,6 +34,7 @@ To set up your development environment, ensure you have the following tools inst
 
 - Python 3.10 or later
 - Make
+- Buf CLI (for generating API from protos)
 - Python Setuptools (may be inside virtualenv)
 
 Then, install the module for edit with the required dependencies:

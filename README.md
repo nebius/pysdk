@@ -12,6 +12,10 @@ To see all the services and their methods, look into the [API reference](https:/
 
 ### Installation
 
+```bash
+pip install nebius
+```
+
 If you've received this module in a zip archive or checked out from git, install it as follows:
 
 ```bash
