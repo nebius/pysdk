@@ -3,7 +3,7 @@ name: Release the new version
 on:
   push:
     tags:
-    - "v.*.*.*"
+    - "v*.*.*"
 
   workflow_dispatch:
 
