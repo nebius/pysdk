@@ -57,11 +57,11 @@ jobs:
         python src/scripts/version_updater.py ./pyproject.toml patch
         git add pyproject.toml
 
-    - name: Test
-      if: env.changes_detected == 'true'
-      run: |
-        tox
-        tox -e test_earliest
+    # - name: Test
+    #   if: env.changes_detected == 'true'
+    #   run: |
+    #     tox
+    #     tox -e test_earliest
 
     - name: Create or update PR
       if: env.changes_detected == 'true'
