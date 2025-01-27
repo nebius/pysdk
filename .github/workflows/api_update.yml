@@ -62,16 +62,34 @@ jobs:
         tox
         tox -e test_earliest
 
-    - name: Commit changes
+    - name: Create or update PR
       if: env.changes_detected == 'true'
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git commit -m "Auto-update: API"
-
-    - name: Push changes
-      if: env.changes_detected == 'true'
-      uses: ad-m/github-push-action@master
+      id: cpr
+      uses: peter-evans/create-pull-request@v7
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        force_with_lease: true
+        branch: api-auto-update
+        title: "Auto-update: API change"
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        commit-message: "Auto-update: API change"
+        body: |
+          This PR was automatically created by GitHub Actions. It updates the API and regenerates necessary files.
+        base: main
+        delete-branch: true
+        labels: |
+            api update
+            automated pr
+
+    - name: Auto approve
+      if: (steps.cpr.outputs.pull-request-operation == 'created') && (secrets.APPROVER_TOKEN != '')
+      run: gh pr review --approve "${{ steps.cpr.outputs.pull-request-number }}"
+      env:
+        GH_TOKEN: ${{ secrets.APPROVER_TOKEN }}
+
+    - name: Enable Pull Request Automerge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      uses: peter-evans/enable-pull-request-automerge@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: squash
