@@ -127,14 +127,14 @@ class ClusterSpec(pb_classes.Message):
     
     @builtins.property
     def _description(self) -> __OneOfClass__description_description__|None:
-        field_name: str|None = super().which_field_in_oneof("_description")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_description")
+        match field_name_1:
             case "description":
                 return self.__OneOfClass__description_description__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -265,14 +265,14 @@ class ClusterStatus(pb_classes.Message):
     
     @builtins.property
     def _history_server_endpoint(self) -> __OneOfClass__history_server_endpoint_history_server_endpoint__|None:
-        field_name: str|None = super().which_field_in_oneof("_history_server_endpoint")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_history_server_endpoint")
+        match field_name_1:
             case "history_server_endpoint":
                 return self.__OneOfClass__history_server_endpoint_history_server_endpoint__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -621,14 +621,14 @@ class ListClustersResponse(pb_classes.Message):
     
     @builtins.property
     def _next_page_token(self) -> __OneOfClass__next_page_token_next_page_token__|None:
-        field_name: str|None = super().which_field_in_oneof("_next_page_token")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_next_page_token")
+        match field_name_1:
             case "next_page_token":
                 return self.__OneOfClass__next_page_token_next_page_token__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1230,8 +1230,8 @@ class ExecutorTemplateSpec(pb_classes.Message):
     
     @builtins.property
     def hosts_spec(self) -> __OneOfClass_hosts_spec_hosts__|__OneOfClass_hosts_spec_hosts_dynamic_allocation__|None:
-        field_name: str|None = super().which_field_in_oneof("hosts_spec")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("hosts_spec")
+        match field_name_1:
             case "hosts":
                 return self.__OneOfClass_hosts_spec_hosts__(self)
             case "hosts_dynamic_allocation":
@@ -1239,7 +1239,7 @@ class ExecutorTemplateSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1479,8 +1479,8 @@ class JobSpec(pb_classes.Message):
          Runtime-specific job config
         """
         
-        field_name: str|None = super().which_field_in_oneof("runtime_config")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("runtime_config")
+        match field_name_1:
             case "python":
                 return self.__OneOfClass_runtime_config_python__(self)
             case "java":
@@ -1488,7 +1488,7 @@ class JobSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__description__(pb_classes.OneOf):
         name: builtins.str= "_description"
@@ -1508,14 +1508,14 @@ class JobSpec(pb_classes.Message):
     
     @builtins.property
     def _description(self) -> __OneOfClass__description_description__|None:
-        field_name: str|None = super().which_field_in_oneof("_description")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_description")
+        match field_name_1:
             case "description":
                 return self.__OneOfClass__description_description__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1806,14 +1806,14 @@ class JobStatus(pb_classes.Message):
     
     @builtins.property
     def _driver_endpoint(self) -> __OneOfClass__driver_endpoint_driver_endpoint__|None:
-        field_name: str|None = super().which_field_in_oneof("_driver_endpoint")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_driver_endpoint")
+        match field_name_1:
             case "driver_endpoint":
                 return self.__OneOfClass__driver_endpoint_driver_endpoint__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2081,14 +2081,14 @@ class ListJobsResponse(pb_classes.Message):
     
     @builtins.property
     def _next_page_token(self) -> __OneOfClass__next_page_token_next_page_token__|None:
-        field_name: str|None = super().which_field_in_oneof("_next_page_token")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_next_page_token")
+        match field_name_1:
             case "next_page_token":
                 return self.__OneOfClass__next_page_token_next_page_token__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2493,14 +2493,14 @@ class SessionSpec(pb_classes.Message):
     
     @builtins.property
     def _description(self) -> __OneOfClass__description_description__|None:
-        field_name: str|None = super().which_field_in_oneof("_description")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_description")
+        match field_name_1:
             case "description":
                 return self.__OneOfClass__description_description__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2701,14 +2701,14 @@ class SessionStatus(pb_classes.Message):
     
     @builtins.property
     def _spark_connect_endpoint(self) -> __OneOfClass__spark_connect_endpoint_spark_connect_endpoint__|None:
-        field_name: str|None = super().which_field_in_oneof("_spark_connect_endpoint")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_spark_connect_endpoint")
+        match field_name_1:
             case "spark_connect_endpoint":
                 return self.__OneOfClass__spark_connect_endpoint_spark_connect_endpoint__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -3013,14 +3013,14 @@ class ListSessionsResponse(pb_classes.Message):
     
     @builtins.property
     def _next_page_token(self) -> __OneOfClass__next_page_token_next_page_token__|None:
-        field_name: str|None = super().which_field_in_oneof("_next_page_token")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_next_page_token")
+        match field_name_1:
             case "next_page_token":
                 return self.__OneOfClass__next_page_token_next_page_token__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,

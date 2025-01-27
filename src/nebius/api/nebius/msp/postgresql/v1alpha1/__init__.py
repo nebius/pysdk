@@ -272,14 +272,14 @@ class ConnectionPoolerConfig(pb_classes.Message):
     
     @builtins.property
     def _max_pool_size(self) -> __OneOfClass__max_pool_size_max_pool_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_max_pool_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_max_pool_size")
+        match field_name_1:
             case "max_pool_size":
                 return self.__OneOfClass__max_pool_size_max_pool_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -653,14 +653,14 @@ class ConfigSpec(pb_classes.Message):
          Config of the PostgreSQL cluster.
         """
         
-        field_name: str|None = super().which_field_in_oneof("config")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("config")
+        match field_name_1:
             case "postgresql_config_16":
                 return self.__OneOfClass_config_postgresql_config_16__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,

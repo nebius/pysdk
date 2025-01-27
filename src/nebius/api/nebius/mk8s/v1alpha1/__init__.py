@@ -1172,8 +1172,8 @@ class DiskSpec(pb_classes.Message):
     
     @builtins.property
     def size(self) -> __OneOfClass_size_size_bytes__|__OneOfClass_size_size_kibibytes__|__OneOfClass_size_size_mebibytes__|__OneOfClass_size_size_gibibytes__|None:
-        field_name: str|None = super().which_field_in_oneof("size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("size")
+        match field_name_1:
             case "size_bytes":
                 return self.__OneOfClass_size_size_bytes__(self)
             case "size_kibibytes":
@@ -1185,7 +1185,7 @@ class DiskSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1314,14 +1314,14 @@ class ResourcesSpec(pb_classes.Message):
     
     @builtins.property
     def size(self) -> __OneOfClass_size_preset__|None:
-        field_name: str|None = super().which_field_in_oneof("size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("size")
+        match field_name_1:
             case "preset":
                 return self.__OneOfClass_size_preset__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1474,8 +1474,8 @@ class NodeGroupSpec(pb_classes.Message):
     
     @builtins.property
     def size(self) -> __OneOfClass_size_fixed_node_count__|__OneOfClass_size_autoscaling__|None:
-        field_name: str|None = super().which_field_in_oneof("size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("size")
+        match field_name_1:
             case "fixed_node_count":
                 return self.__OneOfClass_size_fixed_node_count__(self)
             case "autoscaling":
@@ -1483,7 +1483,7 @@ class NodeGroupSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1983,14 +1983,14 @@ class AttachedFilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def type(self) -> __OneOfClass_type_existing_filesystem__|None:
-        field_name: str|None = super().which_field_in_oneof("type")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("type")
+        match field_name_1:
             case "existing_filesystem":
                 return self.__OneOfClass_type_existing_filesystem__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2349,8 +2349,8 @@ class PercentOrCount(pb_classes.Message):
     
     @builtins.property
     def value(self) -> __OneOfClass_value_percent__|__OneOfClass_value_count__|None:
-        field_name: str|None = super().which_field_in_oneof("value")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("value")
+        match field_name_1:
             case "percent":
                 return self.__OneOfClass_value_percent__(self)
             case "count":
@@ -2358,7 +2358,7 @@ class PercentOrCount(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2938,14 +2938,14 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
     
     @builtins.property
     def upgrade_type(self) -> __OneOfClass_upgrade_type_latest_infra_version__|None:
-        field_name: str|None = super().which_field_in_oneof("upgrade_type")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("upgrade_type")
+        match field_name_1:
             case "latest_infra_version":
                 return self.__OneOfClass_upgrade_type_latest_infra_version__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,

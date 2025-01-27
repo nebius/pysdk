@@ -174,8 +174,8 @@ class ServiceError(pb_classes.Message):
          Additional message describing the error, if any.
         """
         
-        field_name: str|None = super().which_field_in_oneof("details")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("details")
+        match field_name_1:
             case "bad_request":
                 return self.__OneOfClass_details_bad_request__(self)
             case "bad_resource_state":
@@ -203,7 +203,7 @@ class ServiceError(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
