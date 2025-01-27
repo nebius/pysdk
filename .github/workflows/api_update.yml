@@ -80,11 +80,12 @@ jobs:
             api update
             automated pr
 
-    - name: Auto approve
-      if: (steps.cpr.outputs.pull-request-operation == 'created') && (secrets.APPROVER_TOKEN != '')
-      run: gh pr review --approve "${{ steps.cpr.outputs.pull-request-number }}"
-      env:
-        GH_TOKEN: ${{ secrets.APPROVER_TOKEN }}
+    # enable after adding an approver robot
+    # - name: Auto approve
+    #   if: steps.cpr.outputs.pull-request-operation == 'created'
+    #   run: gh pr review --approve "${{ steps.cpr.outputs.pull-request-number }}"
+    #   env:
+    #     GH_TOKEN: ${{ secrets.APPROVER_TOKEN }}
 
     - name: Enable Pull Request Automerge
       if: steps.cpr.outputs.pull-request-operation == 'created'
