@@ -65,6 +65,7 @@ class GetVersionRequest(pb_classes.Message):
         agent_state_messages: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         last_update_error: "builtins.str|None|unset.UnsetType" = unset.Unset,
         mk8s_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        modules_health: "ModulesHealth|version_service_pb2.ModulesHealth|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -93,6 +94,8 @@ class GetVersionRequest(pb_classes.Message):
             self.last_update_error = last_update_error
         if not isinstance(mk8s_cluster_id, unset.UnsetType):
             self.mk8s_cluster_id = mk8s_cluster_id
+        if not isinstance(modules_health, unset.UnsetType):
+            self.modules_health = modules_health
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -109,6 +112,7 @@ class GetVersionRequest(pb_classes.Message):
             "agent_state_messages",
             "last_update_error",
             "mk8s_cluster_id",
+            "modules_health",
         ]
     
     @builtins.property
@@ -238,6 +242,16 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("mk8s_cluster_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def modules_health(self) -> "ModulesHealth":
+        return super()._get_field("modules_health", explicit_presence=False,
+        wrap=ModulesHealth,
+        )
+    @modules_health.setter
+    def modules_health(self, value: "ModulesHealth|version_service_pb2.ModulesHealth|None") -> None:
+        return super()._set_field("modules_health",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "type":"type",
         "agent_version":"agent_version",
@@ -252,6 +266,122 @@ class GetVersionRequest(pb_classes.Message):
         "agent_state_messages":"agent_state_messages",
         "last_update_error":"last_update_error",
         "mk8s_cluster_id":"mk8s_cluster_id",
+        "modules_health":"modules_health",
+    }
+    
+class ModulesHealth(pb_classes.Message):
+    __PB2_CLASS__ = version_service_pb2.ModulesHealth
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.ModulesHealth",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        process: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        gpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        cpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(process, unset.UnsetType):
+            self.process = process
+        if not isinstance(gpu_pipeline, unset.UnsetType):
+            self.gpu_pipeline = gpu_pipeline
+        if not isinstance(cpu_pipeline, unset.UnsetType):
+            self.cpu_pipeline = cpu_pipeline
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "process",
+            "gpu_pipeline",
+            "cpu_pipeline",
+        ]
+    
+    @builtins.property
+    def process(self) -> "ModuleHealth":
+        return super()._get_field("process", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @process.setter
+    def process(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("process",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def gpu_pipeline(self) -> "ModuleHealth":
+        return super()._get_field("gpu_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @gpu_pipeline.setter
+    def gpu_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("gpu_pipeline",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def cpu_pipeline(self) -> "ModuleHealth":
+        return super()._get_field("cpu_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @cpu_pipeline.setter
+    def cpu_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("cpu_pipeline",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "process":"process",
+        "gpu_pipeline":"gpu_pipeline",
+        "cpu_pipeline":"cpu_pipeline",
+    }
+    
+class ModuleHealth(pb_classes.Message):
+    __PB2_CLASS__ = version_service_pb2.ModuleHealth
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.ModuleHealth",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        state: "AgentState|version_service_pb2.AgentState|None|unset.UnsetType" = unset.Unset,
+        messages: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(messages, unset.UnsetType):
+            self.messages = messages
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "messages",
+        ]
+    
+    @builtins.property
+    def state(self) -> "AgentState":
+        return super()._get_field("state", explicit_presence=False,
+        wrap=AgentState,
+        )
+    @state.setter
+    def state(self, value: "AgentState|version_service_pb2.AgentState|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def messages(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("messages", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @messages.setter
+    def messages(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("messages",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "messages":"messages",
     }
     
 class OSInfo(pb_classes.Message):
@@ -575,6 +705,8 @@ __all__ = [
     "AgentState",
     "Action",
     "GetVersionRequest",
+    "ModulesHealth",
+    "ModuleHealth",
     "OSInfo",
     "GetVersionResponse",
     "NopActionParams",

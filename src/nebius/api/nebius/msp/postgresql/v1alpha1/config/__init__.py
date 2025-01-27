@@ -38,14 +38,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _autovacuum_work_mem(self) -> __OneOfClass__autovacuum_work_mem_autovacuum_work_mem__|None:
-        field_name: str|None = super().which_field_in_oneof("_autovacuum_work_mem")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_autovacuum_work_mem")
+        match field_name_1:
             case "autovacuum_work_mem":
                 return self.__OneOfClass__autovacuum_work_mem_autovacuum_work_mem__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__statement_timeout__(pb_classes.OneOf):
         name: builtins.str= "_statement_timeout"
@@ -65,14 +65,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _statement_timeout(self) -> __OneOfClass__statement_timeout_statement_timeout__|None:
-        field_name: str|None = super().which_field_in_oneof("_statement_timeout")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_statement_timeout")
+        match field_name_1:
             case "statement_timeout":
                 return self.__OneOfClass__statement_timeout_statement_timeout__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__idle_in_transaction_session_timeout__(pb_classes.OneOf):
         name: builtins.str= "_idle_in_transaction_session_timeout"
@@ -92,14 +92,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _idle_in_transaction_session_timeout(self) -> __OneOfClass__idle_in_transaction_session_timeout_idle_in_transaction_session_timeout__|None:
-        field_name: str|None = super().which_field_in_oneof("_idle_in_transaction_session_timeout")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_idle_in_transaction_session_timeout")
+        match field_name_1:
             case "idle_in_transaction_session_timeout":
                 return self.__OneOfClass__idle_in_transaction_session_timeout_idle_in_transaction_session_timeout__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__autovacuum_vacuum_cost_delay__(pb_classes.OneOf):
         name: builtins.str= "_autovacuum_vacuum_cost_delay"
@@ -119,14 +119,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _autovacuum_vacuum_cost_delay(self) -> __OneOfClass__autovacuum_vacuum_cost_delay_autovacuum_vacuum_cost_delay__|None:
-        field_name: str|None = super().which_field_in_oneof("_autovacuum_vacuum_cost_delay")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_autovacuum_vacuum_cost_delay")
+        match field_name_1:
             case "autovacuum_vacuum_cost_delay":
                 return self.__OneOfClass__autovacuum_vacuum_cost_delay_autovacuum_vacuum_cost_delay__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__autovacuum_vacuum_cost_limit__(pb_classes.OneOf):
         name: builtins.str= "_autovacuum_vacuum_cost_limit"
@@ -146,14 +146,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _autovacuum_vacuum_cost_limit(self) -> __OneOfClass__autovacuum_vacuum_cost_limit_autovacuum_vacuum_cost_limit__|None:
-        field_name: str|None = super().which_field_in_oneof("_autovacuum_vacuum_cost_limit")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_autovacuum_vacuum_cost_limit")
+        match field_name_1:
             case "autovacuum_vacuum_cost_limit":
                 return self.__OneOfClass__autovacuum_vacuum_cost_limit_autovacuum_vacuum_cost_limit__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__autovacuum_naptime__(pb_classes.OneOf):
         name: builtins.str= "_autovacuum_naptime"
@@ -173,14 +173,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _autovacuum_naptime(self) -> __OneOfClass__autovacuum_naptime_autovacuum_naptime__|None:
-        field_name: str|None = super().which_field_in_oneof("_autovacuum_naptime")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_autovacuum_naptime")
+        match field_name_1:
             case "autovacuum_naptime":
                 return self.__OneOfClass__autovacuum_naptime_autovacuum_naptime__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__autovacuum_vacuum_scale_factor__(pb_classes.OneOf):
         name: builtins.str= "_autovacuum_vacuum_scale_factor"
@@ -200,14 +200,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _autovacuum_vacuum_scale_factor(self) -> __OneOfClass__autovacuum_vacuum_scale_factor_autovacuum_vacuum_scale_factor__|None:
-        field_name: str|None = super().which_field_in_oneof("_autovacuum_vacuum_scale_factor")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_autovacuum_vacuum_scale_factor")
+        match field_name_1:
             case "autovacuum_vacuum_scale_factor":
                 return self.__OneOfClass__autovacuum_vacuum_scale_factor_autovacuum_vacuum_scale_factor__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__autovacuum_analyze_scale_factor__(pb_classes.OneOf):
         name: builtins.str= "_autovacuum_analyze_scale_factor"
@@ -227,14 +227,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _autovacuum_analyze_scale_factor(self) -> __OneOfClass__autovacuum_analyze_scale_factor_autovacuum_analyze_scale_factor__|None:
-        field_name: str|None = super().which_field_in_oneof("_autovacuum_analyze_scale_factor")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_autovacuum_analyze_scale_factor")
+        match field_name_1:
             case "autovacuum_analyze_scale_factor":
                 return self.__OneOfClass__autovacuum_analyze_scale_factor_autovacuum_analyze_scale_factor__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__default_transaction_read_only__(pb_classes.OneOf):
         name: builtins.str= "_default_transaction_read_only"
@@ -254,14 +254,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _default_transaction_read_only(self) -> __OneOfClass__default_transaction_read_only_default_transaction_read_only__|None:
-        field_name: str|None = super().which_field_in_oneof("_default_transaction_read_only")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_default_transaction_read_only")
+        match field_name_1:
             case "default_transaction_read_only":
                 return self.__OneOfClass__default_transaction_read_only_default_transaction_read_only__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__search_path__(pb_classes.OneOf):
         name: builtins.str= "_search_path"
@@ -281,14 +281,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _search_path(self) -> __OneOfClass__search_path_search_path__|None:
-        field_name: str|None = super().which_field_in_oneof("_search_path")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_search_path")
+        match field_name_1:
             case "search_path":
                 return self.__OneOfClass__search_path_search_path__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__max_connections__(pb_classes.OneOf):
         name: builtins.str= "_max_connections"
@@ -308,14 +308,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _max_connections(self) -> __OneOfClass__max_connections_max_connections__|None:
-        field_name: str|None = super().which_field_in_oneof("_max_connections")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_max_connections")
+        match field_name_1:
             case "max_connections":
                 return self.__OneOfClass__max_connections_max_connections__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__shared_buffers__(pb_classes.OneOf):
         name: builtins.str= "_shared_buffers"
@@ -335,14 +335,14 @@ class PostgresqlConfig16(pb_classes.Message):
     
     @builtins.property
     def _shared_buffers(self) -> __OneOfClass__shared_buffers_shared_buffers__|None:
-        field_name: str|None = super().which_field_in_oneof("_shared_buffers")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_shared_buffers")
+        match field_name_1:
             case "shared_buffers":
                 return self.__OneOfClass__shared_buffers_shared_buffers__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,

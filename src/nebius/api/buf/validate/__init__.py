@@ -42,4 +42,6 @@ __all__ = [
     "TimestampRules",
     "Violations",
     "Violation",
+    "FieldPath",
+    "FieldPathElement",
 ]
