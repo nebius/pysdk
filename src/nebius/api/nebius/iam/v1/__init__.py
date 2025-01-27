@@ -188,8 +188,8 @@ class Account(pb_classes.Message):
     
     @builtins.property
     def type(self) -> __OneOfClass_type_user_account__|__OneOfClass_type_service_account__|__OneOfClass_type_anonymous_account__|None:
-        field_name: str|None = super().which_field_in_oneof("type")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("type")
+        match field_name_1:
             case "user_account":
                 return self.__OneOfClass_type_user_account__(self)
             case "service_account":
@@ -199,7 +199,7 @@ class Account(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -600,8 +600,8 @@ class KeyIdentity(pb_classes.Message):
     
     @builtins.property
     def identity(self) -> __OneOfClass_identity_id__|__OneOfClass_identity_aws_access_key_id__|None:
-        field_name: str|None = super().which_field_in_oneof("identity")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("identity")
+        match field_name_1:
             case "id":
                 return self.__OneOfClass_identity_id__(self)
             case "aws_access_key_id":
@@ -609,7 +609,7 @@ class KeyIdentity(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -781,14 +781,14 @@ class ListAccessKeysRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1790,14 +1790,14 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2627,14 +2627,14 @@ class FederationSpec(pb_classes.Message):
     
     @builtins.property
     def settings(self) -> __OneOfClass_settings_saml_settings__|None:
-        field_name: str|None = super().which_field_in_oneof("settings")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("settings")
+        match field_name_1:
             case "saml_settings":
                 return self.__OneOfClass_settings_saml_settings__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2707,17 +2707,21 @@ class SamlSettings(pb_classes.Message):
         *,
         idp_issuer: "builtins.str|None|unset.UnsetType" = unset.Unset,
         sso_url: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        force_authn: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(idp_issuer, unset.UnsetType):
             self.idp_issuer = idp_issuer
         if not isinstance(sso_url, unset.UnsetType):
             self.sso_url = sso_url
+        if not isinstance(force_authn, unset.UnsetType):
+            self.force_authn = force_authn
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "idp_issuer",
             "sso_url",
+            "force_authn",
         ]
     
     @builtins.property
@@ -2738,9 +2742,23 @@ class SamlSettings(pb_classes.Message):
         return super()._set_field("sso_url",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def force_authn(self) -> "builtins.bool":
+        """
+         if "true", the identity provider MUST authenticate the presenter directly rather than rely on a previous security context.
+        """
+        
+        return super()._get_field("force_authn", explicit_presence=False,
+        )
+    @force_authn.setter
+    def force_authn(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("force_authn",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "idp_issuer":"idp_issuer",
         "sso_url":"sso_url",
+        "force_authn":"force_authn",
     }
     
 class FederationStatus(pb_classes.Message):
@@ -4279,8 +4297,8 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
     
     @builtins.property
     def attributesOptional(self) -> __OneOfClass_attributesOptional_attributes__|__OneOfClass_attributesOptional_error__|None:
-        field_name: str|None = super().which_field_in_oneof("attributesOptional")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("attributesOptional")
+        match field_name_1:
             case "attributes":
                 return self.__OneOfClass_attributesOptional_attributes__(self)
             case "error":
@@ -4288,7 +4306,7 @@ class TenantUserAccountWithAttributes(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -4379,14 +4397,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _sub(self) -> __OneOfClass__sub_sub__|None:
-        field_name: str|None = super().which_field_in_oneof("_sub")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_sub")
+        match field_name_1:
             case "sub":
                 return self.__OneOfClass__sub_sub__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__name__(pb_classes.OneOf):
         name: builtins.str= "_name"
@@ -4406,14 +4424,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _name(self) -> __OneOfClass__name_name__|None:
-        field_name: str|None = super().which_field_in_oneof("_name")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_name")
+        match field_name_1:
             case "name":
                 return self.__OneOfClass__name_name__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__given_name__(pb_classes.OneOf):
         name: builtins.str= "_given_name"
@@ -4433,14 +4451,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _given_name(self) -> __OneOfClass__given_name_given_name__|None:
-        field_name: str|None = super().which_field_in_oneof("_given_name")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_given_name")
+        match field_name_1:
             case "given_name":
                 return self.__OneOfClass__given_name_given_name__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__family_name__(pb_classes.OneOf):
         name: builtins.str= "_family_name"
@@ -4460,14 +4478,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _family_name(self) -> __OneOfClass__family_name_family_name__|None:
-        field_name: str|None = super().which_field_in_oneof("_family_name")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_family_name")
+        match field_name_1:
             case "family_name":
                 return self.__OneOfClass__family_name_family_name__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__preferred_username__(pb_classes.OneOf):
         name: builtins.str= "_preferred_username"
@@ -4487,14 +4505,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _preferred_username(self) -> __OneOfClass__preferred_username_preferred_username__|None:
-        field_name: str|None = super().which_field_in_oneof("_preferred_username")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_preferred_username")
+        match field_name_1:
             case "preferred_username":
                 return self.__OneOfClass__preferred_username_preferred_username__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__picture__(pb_classes.OneOf):
         name: builtins.str= "_picture"
@@ -4514,14 +4532,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _picture(self) -> __OneOfClass__picture_picture__|None:
-        field_name: str|None = super().which_field_in_oneof("_picture")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_picture")
+        match field_name_1:
             case "picture":
                 return self.__OneOfClass__picture_picture__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__email__(pb_classes.OneOf):
         name: builtins.str= "_email"
@@ -4541,14 +4559,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _email(self) -> __OneOfClass__email_email__|None:
-        field_name: str|None = super().which_field_in_oneof("_email")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_email")
+        match field_name_1:
             case "email":
                 return self.__OneOfClass__email_email__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__email_verified__(pb_classes.OneOf):
         name: builtins.str= "_email_verified"
@@ -4568,14 +4586,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _email_verified(self) -> __OneOfClass__email_verified_email_verified__|None:
-        field_name: str|None = super().which_field_in_oneof("_email_verified")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_email_verified")
+        match field_name_1:
             case "email_verified":
                 return self.__OneOfClass__email_verified_email_verified__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__zoneinfo__(pb_classes.OneOf):
         name: builtins.str= "_zoneinfo"
@@ -4595,14 +4613,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _zoneinfo(self) -> __OneOfClass__zoneinfo_zoneinfo__|None:
-        field_name: str|None = super().which_field_in_oneof("_zoneinfo")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_zoneinfo")
+        match field_name_1:
             case "zoneinfo":
                 return self.__OneOfClass__zoneinfo_zoneinfo__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__locale__(pb_classes.OneOf):
         name: builtins.str= "_locale"
@@ -4622,14 +4640,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _locale(self) -> __OneOfClass__locale_locale__|None:
-        field_name: str|None = super().which_field_in_oneof("_locale")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_locale")
+        match field_name_1:
             case "locale":
                 return self.__OneOfClass__locale_locale__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__phone_number__(pb_classes.OneOf):
         name: builtins.str= "_phone_number"
@@ -4649,14 +4667,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _phone_number(self) -> __OneOfClass__phone_number_phone_number__|None:
-        field_name: str|None = super().which_field_in_oneof("_phone_number")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_phone_number")
+        match field_name_1:
             case "phone_number":
                 return self.__OneOfClass__phone_number_phone_number__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass__phone_number_verified__(pb_classes.OneOf):
         name: builtins.str= "_phone_number_verified"
@@ -4676,14 +4694,14 @@ class UserAttributes(pb_classes.Message):
     
     @builtins.property
     def _phone_number_verified(self) -> __OneOfClass__phone_number_verified_phone_number_verified__|None:
-        field_name: str|None = super().which_field_in_oneof("_phone_number_verified")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_phone_number_verified")
+        match field_name_1:
             case "phone_number_verified":
                 return self.__OneOfClass__phone_number_verified_phone_number_verified__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -5276,8 +5294,8 @@ class GroupMembershipWithAttributes(pb_classes.Message):
     
     @builtins.property
     def attributesOptional(self) -> __OneOfClass_attributesOptional_user_attributes__|__OneOfClass_attributesOptional_service_account_attributes__|__OneOfClass_attributesOptional_error__|None:
-        field_name: str|None = super().which_field_in_oneof("attributesOptional")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("attributesOptional")
+        match field_name_1:
             case "user_attributes":
                 return self.__OneOfClass_attributesOptional_user_attributes__(self)
             case "service_account_attributes":
@@ -5287,7 +5305,7 @@ class GroupMembershipWithAttributes(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -5536,14 +5554,14 @@ class ListGroupMembershipsRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -5645,14 +5663,14 @@ class ListMemberOfRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -6164,14 +6182,14 @@ class ListGroupsRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -6781,14 +6799,14 @@ class InvitationSpec(pb_classes.Message):
     
     @builtins.property
     def contact(self) -> __OneOfClass_contact_email__|None:
-        field_name: str|None = super().which_field_in_oneof("contact")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("contact")
+        match field_name_1:
             case "email":
                 return self.__OneOfClass_contact_email__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -7528,8 +7546,8 @@ class GetProfileResponse(pb_classes.Message):
     
     @builtins.property
     def profile(self) -> __OneOfClass_profile_user_profile__|__OneOfClass_profile_service_account_profile__|__OneOfClass_profile_anonymous_profile__|None:
-        field_name: str|None = super().which_field_in_oneof("profile")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("profile")
+        match field_name_1:
             case "user_profile":
                 return self.__OneOfClass_profile_user_profile__(self)
             case "service_account_profile":
@@ -7539,7 +7557,7 @@ class GetProfileResponse(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -7635,8 +7653,8 @@ class UserProfile(pb_classes.Message):
     
     @builtins.property
     def attributes_optional(self) -> __OneOfClass_attributes_optional_attributes__|__OneOfClass_attributes_optional_retrieving_error__|None:
-        field_name: str|None = super().which_field_in_oneof("attributes_optional")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("attributes_optional")
+        match field_name_1:
             case "attributes":
                 return self.__OneOfClass_attributes_optional_attributes__(self)
             case "retrieving_error":
@@ -7644,7 +7662,7 @@ class UserProfile(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -7973,14 +7991,14 @@ class ListProjectsRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -8353,14 +8371,14 @@ class ListServiceAccountRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -8775,8 +8793,8 @@ class RevokeSessionRequest(pb_classes.Message):
     
     @builtins.property
     def revoke(self) -> __OneOfClass_revoke_service_account_id__|__OneOfClass_revoke_all_my_active__|__OneOfClass_revoke_tenant_user_account_id__|None:
-        field_name: str|None = super().which_field_in_oneof("revoke")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("revoke")
+        match field_name_1:
             case "service_account_id":
                 return self.__OneOfClass_revoke_service_account_id__(self)
             case "all_my_active":
@@ -8786,7 +8804,7 @@ class RevokeSessionRequest(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -8964,14 +8982,14 @@ class ListTenantsRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -9210,14 +9228,14 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -9587,14 +9605,14 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     
     @builtins.property
     def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name: str|None = super().which_field_in_oneof("_page_size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
             case "page_size":
                 return self.__OneOfClass__page_size_page_size__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,

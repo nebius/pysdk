@@ -181,8 +181,8 @@ class PoolSpec(pb_classes.Message):
     
     @builtins.property
     def source(self) -> __OneOfClass_source_source_pool_id__|__OneOfClass_source_source_scope_id__|None:
-        field_name: str|None = super().which_field_in_oneof("source")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("source")
+        match field_name_1:
             case "source_pool_id":
                 return self.__OneOfClass_source_source_pool_id__(self)
             case "source_scope_id":
@@ -190,7 +190,7 @@ class PoolSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -580,8 +580,8 @@ class AllocationSpec(pb_classes.Message):
          Holds the IP specifications for the allocation, including the type of IP (IPv4 or IPv6) and its corresponding configuration.
         """
         
-        field_name: str|None = super().which_field_in_oneof("ip_spec")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("ip_spec")
+        match field_name_1:
             case "ipv4_private":
                 return self.__OneOfClass_ip_spec_ipv4_private__(self)
             case "ipv4_public":
@@ -589,7 +589,7 @@ class AllocationSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -670,8 +670,8 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     
     @builtins.property
     def pool(self) -> __OneOfClass_pool_subnet_id__|__OneOfClass_pool_pool_id__|None:
-        field_name: str|None = super().which_field_in_oneof("pool")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("pool")
+        match field_name_1:
             case "subnet_id":
                 return self.__OneOfClass_pool_subnet_id__(self)
             case "pool_id":
@@ -679,7 +679,7 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1046,8 +1046,8 @@ class Assignment(pb_classes.Message):
          which could be a network interface or load balancer assignment.
         """
         
-        field_name: str|None = super().which_field_in_oneof("type")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("type")
+        match field_name_1:
             case "network_interface":
                 return self.__OneOfClass_type_network_interface__(self)
             case "load_balancer":
@@ -1055,7 +1055,7 @@ class Assignment(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2097,14 +2097,14 @@ class PublicIPAddress(pb_classes.Message):
          Describes different methods of public IP address allocation.
         """
         
-        field_name: str|None = super().which_field_in_oneof("allocation")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("allocation")
+        match field_name_1:
             case "allocation_id":
                 return self.__OneOfClass_allocation_allocation_id__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -3631,8 +3631,8 @@ class SubnetPool(pb_classes.Message):
     
     @builtins.property
     def pool(self) -> __OneOfClass_pool_spec__|__OneOfClass_pool_pool_id__|None:
-        field_name: str|None = super().which_field_in_oneof("pool")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("pool")
+        match field_name_1:
             case "spec":
                 return self.__OneOfClass_pool_spec__(self)
             case "pool_id":
@@ -3640,7 +3640,7 @@ class SubnetPool(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
