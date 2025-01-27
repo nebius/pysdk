@@ -609,8 +609,8 @@ class LifecycleExpiration(pb_classes.Message):
     
     @builtins.property
     def expired_with(self) -> __OneOfClass_expired_with_date__|__OneOfClass_expired_with_days__|None:
-        field_name: str|None = super().which_field_in_oneof("expired_with")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("expired_with")
+        match field_name_1:
             case "date":
                 return self.__OneOfClass_expired_with_date__(self)
             case "days":
@@ -618,7 +618,7 @@ class LifecycleExpiration(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -720,14 +720,14 @@ class LifecycleNoncurrentVersionExpiration(pb_classes.Message):
     
     @builtins.property
     def _newer_noncurrent_versions(self) -> __OneOfClass__newer_noncurrent_versions_newer_noncurrent_versions__|None:
-        field_name: str|None = super().which_field_in_oneof("_newer_noncurrent_versions")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_newer_noncurrent_versions")
+        match field_name_1:
             case "newer_noncurrent_versions":
                 return self.__OneOfClass__newer_noncurrent_versions_newer_noncurrent_versions__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1388,8 +1388,8 @@ class DeleteBucketRequest(pb_classes.Message):
          Otherwise, default ttl of 7 days will be applied.
         """
         
-        field_name: str|None = super().which_field_in_oneof("purge")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("purge")
+        match field_name_1:
             case "purge_at":
                 return self.__OneOfClass_purge_purge_at__(self)
             case "ttl":
@@ -1397,7 +1397,7 @@ class DeleteBucketRequest(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
