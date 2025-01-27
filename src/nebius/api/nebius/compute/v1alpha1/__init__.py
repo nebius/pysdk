@@ -163,8 +163,8 @@ class DiskSpec(pb_classes.Message):
     
     @builtins.property
     def size(self) -> __OneOfClass_size_size_bytes__|__OneOfClass_size_size_kibibytes__|__OneOfClass_size_size_mebibytes__|__OneOfClass_size_size_gibibytes__|None:
-        field_name: str|None = super().which_field_in_oneof("size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("size")
+        match field_name_1:
             case "size_bytes":
                 return self.__OneOfClass_size_size_bytes__(self)
             case "size_kibibytes":
@@ -176,7 +176,7 @@ class DiskSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     class __OneOfClass_source__(pb_classes.OneOf):
         name: builtins.str= "source"
@@ -205,8 +205,8 @@ class DiskSpec(pb_classes.Message):
     
     @builtins.property
     def source(self) -> __OneOfClass_source_source_image_id__|__OneOfClass_source_source_image_family__|None:
-        field_name: str|None = super().which_field_in_oneof("source")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("source")
+        match field_name_1:
             case "source_image_id":
                 return self.__OneOfClass_source_source_image_id__(self)
             case "source_image_family":
@@ -214,7 +214,7 @@ class DiskSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -1130,8 +1130,8 @@ class FilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def size(self) -> __OneOfClass_size_size_bytes__|__OneOfClass_size_size_kibibytes__|__OneOfClass_size_size_mebibytes__|__OneOfClass_size_size_gibibytes__|None:
-        field_name: str|None = super().which_field_in_oneof("size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("size")
+        match field_name_1:
             case "size_bytes":
                 return self.__OneOfClass_size_size_bytes__(self)
             case "size_kibibytes":
@@ -1143,7 +1143,7 @@ class FilesystemSpec(pb_classes.Message):
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -2525,14 +2525,14 @@ class ImageSpec(pb_classes.Message):
     
     @builtins.property
     def _description(self) -> __OneOfClass__description_description__|None:
-        field_name: str|None = super().which_field_in_oneof("_description")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("_description")
+        match field_name_1:
             case "description":
                 return self.__OneOfClass__description_description__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -3288,14 +3288,14 @@ class ResourcesSpec(pb_classes.Message):
     
     @builtins.property
     def size(self) -> __OneOfClass_size_preset__|None:
-        field_name: str|None = super().which_field_in_oneof("size")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("size")
+        match field_name_1:
             case "preset":
                 return self.__OneOfClass_size_preset__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -3405,14 +3405,14 @@ class AttachedDiskSpec(pb_classes.Message):
     
     @builtins.property
     def type(self) -> __OneOfClass_type_existing_disk__|None:
-        field_name: str|None = super().which_field_in_oneof("type")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("type")
+        match field_name_1:
             case "existing_disk":
                 return self.__OneOfClass_type_existing_disk__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -3578,14 +3578,14 @@ class AttachedFilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def type(self) -> __OneOfClass_type_existing_filesystem__|None:
-        field_name: str|None = super().which_field_in_oneof("type")
-        match field_name:
+        field_name_1: str|None = super().which_field_in_oneof("type")
+        match field_name_1:
             case "existing_filesystem":
                 return self.__OneOfClass_type_existing_filesystem__(self)
             case None:
                 return None
             case _:
-                raise pb_classes.OneOfMatchError(field_name)
+                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
