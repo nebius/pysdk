@@ -28,12 +28,14 @@ class FederationSpec(_message.Message):
     def __init__(self, user_account_auto_creation: bool = ..., active: bool = ..., saml_settings: _Optional[_Union[SamlSettings, _Mapping]] = ...) -> None: ...
 
 class SamlSettings(_message.Message):
-    __slots__ = ["idp_issuer", "sso_url"]
+    __slots__ = ["idp_issuer", "sso_url", "force_authn"]
     IDP_ISSUER_FIELD_NUMBER: _ClassVar[int]
     SSO_URL_FIELD_NUMBER: _ClassVar[int]
+    FORCE_AUTHN_FIELD_NUMBER: _ClassVar[int]
     idp_issuer: str
     sso_url: str
-    def __init__(self, idp_issuer: _Optional[str] = ..., sso_url: _Optional[str] = ...) -> None: ...
+    force_authn: bool
+    def __init__(self, idp_issuer: _Optional[str] = ..., sso_url: _Optional[str] = ..., force_authn: bool = ...) -> None: ...
 
 class FederationStatus(_message.Message):
     __slots__ = []
