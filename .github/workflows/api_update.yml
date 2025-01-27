@@ -87,6 +87,8 @@ jobs:
     - name: Push commit to restart checks
       if: steps.cpr.outputs.pull-request-operation == 'created'
       run: |
+        git config user.email '${{ github.actor }}@users.noreply.github.com'
+        git config user.name '${{ github.actor }}'
         git commit -m "retrigger checks" --allow-empty
         git push
 
