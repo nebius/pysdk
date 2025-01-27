@@ -76,9 +76,6 @@ jobs:
           This PR was automatically created by GitHub Actions. It updates the API and regenerates necessary files.
         base: main
         delete-branch: true
-        labels: |
-            api update
-            automated pr
 
     # enable after adding an approver robot
     # - name: Auto approve
