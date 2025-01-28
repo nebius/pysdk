@@ -4,8 +4,8 @@ on:
   push:
     tags:
     - "v*.*.*"
-
-  workflow_dispatch:
+  # workflow_call: # probably not necessary as the release will be triggered by the tag
+  workflow_dispatch: # if necessary to rerun the release job
 
 permissions:
   contents: read

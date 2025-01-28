@@ -11,8 +11,10 @@ on:
   #   - 'nebius-api/**'
 
 jobs:
-  update-and-commit:
+  update:
     runs-on: ubuntu-latest
+    outputs:
+      changes_detected: ${{ steps.check_changes.outputs.changes_detected }}
 
     steps:
     - name: Checkout repository with submodules
@@ -46,33 +48,45 @@ jobs:
       run: |
         git add .
         if git diff --cached --quiet; then
-          echo "changes_detected=false" >> $GITHUB_ENV
+          echo "changes_detected=false" >> $GITHUB_OUTPUT
         else
-          echo "changes_detected=true" >> $GITHUB_ENV
+          echo "changes_detected=true" >> $GITHUB_OUTPUT
         fi
 
     - name: Bump version
-      if: env.changes_detected == 'true'
+      if: steps.check_changes.outputs.changes_detected == 'true'
       run: |
         python src/scripts/version_updater.py ./pyproject.toml patch
         git add pyproject.toml
 
     - name: Test
-      if: env.changes_detected == 'true'
+      if: steps.check_changes.outputs.changes_detected == 'true'
       run: |
         tox
         tox -e test_earliest
 
     - name: Commit changes
-      if: env.changes_detected == 'true'
+      if: steps.check_changes.outputs.changes_detected == 'true'
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git commit -m "Auto-update: API"
+        git commit -m "Auto-update API to: $(git -C nebius-api log -1 --format='%h, %ci')"
+
+    - name: Tag commit
+      if: steps.check_changes.outputs.changes_detected == 'true'
+      run: |
+        make tag-ver
 
     - name: Push changes
-      if: env.changes_detected == 'true'
+      if: steps.check_changes.outputs.changes_detected == 'true'
       uses: ad-m/github-push-action@master
       with:
+        tags: true
         ssh: true
         force_with_lease: true
+
+  # Probably no need, as the release will be triggered by the tag
+  # release:
+  #   if: ${{ needs.update.outputs.changes_detected == 'true' }}
+  #   needs: update
+  #   uses: ./.github/workflows/release.yml
