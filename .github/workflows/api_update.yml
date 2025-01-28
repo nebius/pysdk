@@ -43,10 +43,11 @@ jobs:
 
     - name: Check for Changes
       id: check_changes
+      # TODO: fix changes_detected after testing
       run: |
         git add .
         if git diff --cached --quiet; then
-          echo "changes_detected=false" >> $GITHUB_ENV
+          echo "changes_detected=true" >> $GITHUB_ENV
         else
           echo "changes_detected=true" >> $GITHUB_ENV
         fi
