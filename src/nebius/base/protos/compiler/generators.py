@@ -612,11 +612,6 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     " | None = None,",
                 )
                 g.p(
-                    "wait_for_ready: ",
-                    ImportedSymbol("bool", "builtins"),
-                    " | None = None,",
-                )
-                g.p(
                     "compression: ",
                     ImportedSymbol("Compression", "grpc"),
                     " | None = None,",
@@ -665,7 +660,6 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     g.p("metadata=metadata,")
                     g.p("timeout=timeout,")
                     g.p("credentials=credentials,")
-                    g.p("wait_for_ready=wait_for_ready,")
                     g.p("compression=compression,")
                     g.p("retries=retries,")
                     if is_operation_output(method):

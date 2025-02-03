@@ -96,7 +96,6 @@ class Operation(Generic[OperationPb]):
         metadata: Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
-        wait_for_ready: bool | None = None,
         compression: Compression | None = None,
     ) -> None:
         if self.done():
@@ -107,7 +106,6 @@ class Operation(Generic[OperationPb]):
             metadata=metadata,
             timeout=timeout,
             credentials=credentials,
-            wait_for_ready=wait_for_ready,
             compression=compression,
         )
         new_op = await req
@@ -125,7 +123,6 @@ class Operation(Generic[OperationPb]):
         metadata: Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
-        wait_for_ready: bool | None = None,
         compression: Compression | None = None,
     ) -> None:
         start = time()
@@ -136,7 +133,6 @@ class Operation(Generic[OperationPb]):
                 metadata=metadata,
                 timeout=timeout,
                 credentials=credentials,
-                wait_for_ready=wait_for_ready,
                 compression=compression,
             )
         while not self.done():
@@ -147,7 +143,6 @@ class Operation(Generic[OperationPb]):
                 metadata=metadata,
                 timeout=timeout,
                 credentials=credentials,
-                wait_for_ready=wait_for_ready,
                 compression=compression,
             )
 

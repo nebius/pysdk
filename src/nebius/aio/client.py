@@ -31,7 +31,6 @@ class Client:
         metadata: Metadata | Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
-        wait_for_ready: bool | None = None,
         compression: Compression | None = None,
         result_wrapper: (
             Callable[[GRPCChannel, SyncronizerInterface, Any], Res] | None
@@ -47,7 +46,6 @@ class Client:
             result_pb2_class=result_pb2_class,
             timeout=timeout,
             credentials=credentials,
-            wait_for_ready=wait_for_ready,
             compression=compression,
             result_wrapper=result_wrapper,
             retries=retries,
