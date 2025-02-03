@@ -58,7 +58,6 @@ class Request(Generic[Req, Res]):
         metadata: Metadata | Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
-        wait_for_ready: bool | None = None,
         compression: Compression | None = None,
         result_wrapper: (
             Callable[[GRPCChannel, SyncronizerInterface, Any], Res] | None
@@ -77,7 +76,6 @@ class Request(Generic[Req, Res]):
         self._grpc_channel = grpc_channel_override
         self._timeout = timeout
         self._credentials = credentials
-        self._wait_for_ready = wait_for_ready
         self._compression = compression
         self._call: UnaryUnaryCall | None = None
         self._retries = retries
@@ -195,7 +193,7 @@ class Request(Generic[Req, Res]):
             timeout=timeout,
             metadata=GrpcMetadata(*self._input_metadata),
             credentials=self._credentials,
-            wait_for_ready=self._wait_for_ready,
+            wait_for_ready=True,
             compression=self._compression,
         )
 

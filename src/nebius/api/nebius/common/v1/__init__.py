@@ -2075,7 +2075,6 @@ class OperationServiceClient(client.Client):
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
-        wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
     ) -> request_1.Request["GetOperationRequest","operation.Operation[Operation]"]:
@@ -2086,7 +2085,6 @@ class OperationServiceClient(client.Client):
             metadata=metadata,
             timeout=timeout,
             credentials=credentials,
-            wait_for_ready=wait_for_ready,
             compression=compression,
             retries=retries,
             result_wrapper=operation.Operation,
@@ -2097,7 +2095,6 @@ class OperationServiceClient(client.Client):
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
-        wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
     ) -> request_1.Request["ListOperationsRequest","ListOperationsResponse"]:
@@ -2108,7 +2105,6 @@ class OperationServiceClient(client.Client):
             metadata=metadata,
             timeout=timeout,
             credentials=credentials,
-            wait_for_ready=wait_for_ready,
             compression=compression,
             retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListOperationsResponse),

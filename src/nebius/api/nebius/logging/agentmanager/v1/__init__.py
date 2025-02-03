@@ -681,7 +681,6 @@ class VersionServiceClient(client.Client):
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
         timeout: builtins.float|None = None,
         credentials: grpc.CallCredentials | None = None,
-        wait_for_ready: builtins.bool | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
     ) -> request.Request["GetVersionRequest","GetVersionResponse"]:
@@ -692,7 +691,6 @@ class VersionServiceClient(client.Client):
             metadata=metadata,
             timeout=timeout,
             credentials=credentials,
-            wait_for_ready=wait_for_ready,
             compression=compression,
             retries=retries,
             result_wrapper=pb_classes.simple_wrapper(GetVersionResponse),
