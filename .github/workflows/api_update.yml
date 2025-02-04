@@ -72,18 +72,17 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git commit -m "Auto-update API to: $(git -C nebius-api log -1 --format='%h, %ci')"
 
-    - name: Push changes
+    - name: Push and pull changes
       if: steps.check_changes.outputs.changes_detected == 'true'
-      uses: ad-m/github-push-action@master
-      with:
-        tags: true
-        ssh: true
-        force_with_lease: true
+      run: |
+        git push origin main
+        git pull
+        git status
+        git branch -r --contains HEAD
 
     - name: Tag commit
       if: steps.check_changes.outputs.changes_detected == 'true'
       run: |
-        git pull
         make tag-ver
 
     - name: Push changes
