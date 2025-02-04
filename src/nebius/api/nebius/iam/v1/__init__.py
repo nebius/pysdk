@@ -3915,17 +3915,25 @@ class GroupStatus(pb_classes.Message):
         *,
         state: "GroupStatus.State|group_pb2.GroupStatus.State|None|unset.UnsetType" = unset.Unset,
         members_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        service_accounts_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        tenant_user_accounts_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
         if not isinstance(members_count, unset.UnsetType):
             self.members_count = members_count
+        if not isinstance(service_accounts_count, unset.UnsetType):
+            self.service_accounts_count = service_accounts_count
+        if not isinstance(tenant_user_accounts_count, unset.UnsetType):
+            self.tenant_user_accounts_count = tenant_user_accounts_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "members_count",
+            "service_accounts_count",
+            "tenant_user_accounts_count",
             "State",
         ]
     
@@ -3948,9 +3956,29 @@ class GroupStatus(pb_classes.Message):
         return super()._set_field("members_count",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def service_accounts_count(self) -> "builtins.int":
+        return super()._get_field("service_accounts_count", explicit_presence=False,
+        )
+    @service_accounts_count.setter
+    def service_accounts_count(self, value: "builtins.int|None") -> None:
+        return super()._set_field("service_accounts_count",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def tenant_user_accounts_count(self) -> "builtins.int":
+        return super()._get_field("tenant_user_accounts_count", explicit_presence=False,
+        )
+    @tenant_user_accounts_count.setter
+    def tenant_user_accounts_count(self, value: "builtins.int|None") -> None:
+        return super()._set_field("tenant_user_accounts_count",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "members_count":"members_count",
+        "service_accounts_count":"service_accounts_count",
+        "tenant_user_accounts_count":"tenant_user_accounts_count",
         "State":"State",
     }
     
@@ -5190,6 +5218,25 @@ class GroupMembershipStatus(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
     }
     
+class GroupMemberKind(pb_classes.Message):
+    __PB2_CLASS__ = group_membership_pb2.GroupMemberKind
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GroupMemberKind",group_membership_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
 class GroupMembershipWithAttributes(pb_classes.Message):
     """
      see also nebius/iam/v1/tenant_user_account.proto/TenantUserAccountWithAttributes
@@ -5254,6 +5301,7 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         group_membership: "GroupMembership|group_membership_pb2.GroupMembership|None|unset.UnsetType" = unset.Unset,
+        group_member_kind: "GroupMemberKind|group_membership_pb2.GroupMemberKind|None|unset.UnsetType" = unset.Unset,
         user_attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
         service_account_attributes: "ServiceAccountAttributes|service_account_pb2.ServiceAccountAttributes|None|unset.UnsetType" = unset.Unset,
         error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
@@ -5261,6 +5309,8 @@ class GroupMembershipWithAttributes(pb_classes.Message):
         super().__init__(initial_message)
         if not isinstance(group_membership, unset.UnsetType):
             self.group_membership = group_membership
+        if not isinstance(group_member_kind, unset.UnsetType):
+            self.group_member_kind = group_member_kind
         if not isinstance(user_attributes, unset.UnsetType):
             self.user_attributes = user_attributes
         if not isinstance(service_account_attributes, unset.UnsetType):
@@ -5271,6 +5321,7 @@ class GroupMembershipWithAttributes(pb_classes.Message):
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "group_membership",
+            "group_member_kind",
             "user_attributes",
             "service_account_attributes",
             "error",
@@ -5285,6 +5336,16 @@ class GroupMembershipWithAttributes(pb_classes.Message):
     @group_membership.setter
     def group_membership(self, value: "GroupMembership|group_membership_pb2.GroupMembership|None") -> None:
         return super()._set_field("group_membership",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def group_member_kind(self) -> "GroupMemberKind":
+        return super()._get_field("group_member_kind", explicit_presence=False,
+        wrap=GroupMemberKind,
+        )
+    @group_member_kind.setter
+    def group_member_kind(self, value: "GroupMemberKind|group_membership_pb2.GroupMemberKind|None") -> None:
+        return super()._set_field("group_member_kind",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -5333,6 +5394,7 @@ class GroupMembershipWithAttributes(pb_classes.Message):
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "group_membership":"group_membership",
+        "group_member_kind":"group_member_kind",
         "user_attributes":"user_attributes",
         "service_account_attributes":"service_account_attributes",
         "error":"error",
@@ -9778,6 +9840,7 @@ __all__ = [
     "GroupMembership",
     "GroupMembershipSpec",
     "GroupMembershipStatus",
+    "GroupMemberKind",
     "GroupMembershipWithAttributes",
     "CreateGroupMembershipRequest",
     "DeleteGroupMembershipRequest",

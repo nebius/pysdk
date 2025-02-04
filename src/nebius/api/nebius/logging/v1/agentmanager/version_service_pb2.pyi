@@ -36,7 +36,7 @@ UPDATE: Action
 RESTART: Action
 
 class GetVersionRequest(_message.Message):
-    __slots__ = ["type", "agent_version", "updater_version", "parent_id", "instance_id", "os_info", "agent_state", "agent_uptime", "system_uptime", "updater_uptime", "agent_state_messages", "last_update_error", "mk8s_cluster_id", "modules_health"]
+    __slots__ = ["type", "agent_version", "updater_version", "parent_id", "instance_id", "os_info", "agent_state", "agent_uptime", "system_uptime", "updater_uptime", "agent_state_messages", "last_update_error", "mk8s_cluster_id", "modules_health", "cloud_init_status", "instance_id_used_fallback"]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     AGENT_VERSION_FIELD_NUMBER: _ClassVar[int]
     UPDATER_VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -51,6 +51,8 @@ class GetVersionRequest(_message.Message):
     LAST_UPDATE_ERROR_FIELD_NUMBER: _ClassVar[int]
     MK8S_CLUSTER_ID_FIELD_NUMBER: _ClassVar[int]
     MODULES_HEALTH_FIELD_NUMBER: _ClassVar[int]
+    CLOUD_INIT_STATUS_FIELD_NUMBER: _ClassVar[int]
+    INSTANCE_ID_USED_FALLBACK_FIELD_NUMBER: _ClassVar[int]
     type: AgentType
     agent_version: str
     updater_version: str
@@ -65,7 +67,9 @@ class GetVersionRequest(_message.Message):
     last_update_error: str
     mk8s_cluster_id: str
     modules_health: ModulesHealth
-    def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ..., mk8s_cluster_id: _Optional[str] = ..., modules_health: _Optional[_Union[ModulesHealth, _Mapping]] = ...) -> None: ...
+    cloud_init_status: str
+    instance_id_used_fallback: bool
+    def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ..., mk8s_cluster_id: _Optional[str] = ..., modules_health: _Optional[_Union[ModulesHealth, _Mapping]] = ..., cloud_init_status: _Optional[str] = ..., instance_id_used_fallback: bool = ...) -> None: ...
 
 class ModulesHealth(_message.Message):
     __slots__ = ["process", "gpu_pipeline", "cpu_pipeline"]
@@ -78,12 +82,22 @@ class ModulesHealth(_message.Message):
     def __init__(self, process: _Optional[_Union[ModuleHealth, _Mapping]] = ..., gpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ...) -> None: ...
 
 class ModuleHealth(_message.Message):
-    __slots__ = ["state", "messages"]
+    __slots__ = ["state", "messages", "parameters"]
     STATE_FIELD_NUMBER: _ClassVar[int]
     MESSAGES_FIELD_NUMBER: _ClassVar[int]
+    PARAMETERS_FIELD_NUMBER: _ClassVar[int]
     state: AgentState
     messages: _containers.RepeatedScalarFieldContainer[str]
-    def __init__(self, state: _Optional[_Union[AgentState, str]] = ..., messages: _Optional[_Iterable[str]] = ...) -> None: ...
+    parameters: _containers.RepeatedCompositeFieldContainer[Parameter]
+    def __init__(self, state: _Optional[_Union[AgentState, str]] = ..., messages: _Optional[_Iterable[str]] = ..., parameters: _Optional[_Iterable[_Union[Parameter, _Mapping]]] = ...) -> None: ...
+
+class Parameter(_message.Message):
+    __slots__ = ["name", "value"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    VALUE_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    value: str
+    def __init__(self, name: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
 
 class OSInfo(_message.Message):
     __slots__ = ["name", "uname", "architecture"]

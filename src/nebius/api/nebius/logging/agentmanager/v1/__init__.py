@@ -66,6 +66,8 @@ class GetVersionRequest(pb_classes.Message):
         last_update_error: "builtins.str|None|unset.UnsetType" = unset.Unset,
         mk8s_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         modules_health: "ModulesHealth|version_service_pb2.ModulesHealth|None|unset.UnsetType" = unset.Unset,
+        cloud_init_status: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        instance_id_used_fallback: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -96,6 +98,10 @@ class GetVersionRequest(pb_classes.Message):
             self.mk8s_cluster_id = mk8s_cluster_id
         if not isinstance(modules_health, unset.UnsetType):
             self.modules_health = modules_health
+        if not isinstance(cloud_init_status, unset.UnsetType):
+            self.cloud_init_status = cloud_init_status
+        if not isinstance(instance_id_used_fallback, unset.UnsetType):
+            self.instance_id_used_fallback = instance_id_used_fallback
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -113,6 +119,8 @@ class GetVersionRequest(pb_classes.Message):
             "last_update_error",
             "mk8s_cluster_id",
             "modules_health",
+            "cloud_init_status",
+            "instance_id_used_fallback",
         ]
     
     @builtins.property
@@ -252,6 +260,24 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("modules_health",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def cloud_init_status(self) -> "builtins.str":
+        return super()._get_field("cloud_init_status", explicit_presence=False,
+        )
+    @cloud_init_status.setter
+    def cloud_init_status(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cloud_init_status",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def instance_id_used_fallback(self) -> "builtins.bool":
+        return super()._get_field("instance_id_used_fallback", explicit_presence=False,
+        )
+    @instance_id_used_fallback.setter
+    def instance_id_used_fallback(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("instance_id_used_fallback",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "type":"type",
         "agent_version":"agent_version",
@@ -267,6 +293,8 @@ class GetVersionRequest(pb_classes.Message):
         "last_update_error":"last_update_error",
         "mk8s_cluster_id":"mk8s_cluster_id",
         "modules_health":"modules_health",
+        "cloud_init_status":"cloud_init_status",
+        "instance_id_used_fallback":"instance_id_used_fallback",
     }
     
 class ModulesHealth(pb_classes.Message):
@@ -346,17 +374,21 @@ class ModuleHealth(pb_classes.Message):
         *,
         state: "AgentState|version_service_pb2.AgentState|None|unset.UnsetType" = unset.Unset,
         messages: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        parameters: "abc.Iterable[Parameter]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
         if not isinstance(messages, unset.UnsetType):
             self.messages = messages
+        if not isinstance(parameters, unset.UnsetType):
+            self.parameters = parameters
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "messages",
+            "parameters",
         ]
     
     @builtins.property
@@ -379,9 +411,68 @@ class ModuleHealth(pb_classes.Message):
         return super()._set_field("messages",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def parameters(self) -> "abc.MutableSequence[Parameter]":
+        return super()._get_field("parameters", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Parameter,None,None),
+        )
+    @parameters.setter
+    def parameters(self, value: "abc.Iterable[Parameter]|None") -> None:
+        return super()._set_field("parameters",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "messages":"messages",
+        "parameters":"parameters",
+    }
+    
+class Parameter(pb_classes.Message):
+    __PB2_CLASS__ = version_service_pb2.Parameter
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.Parameter",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+        if not isinstance(value, unset.UnsetType):
+            self.value = value
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+            "value",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def value(self) -> "builtins.str":
+        return super()._get_field("value", explicit_presence=False,
+        )
+    @value.setter
+    def value(self, value: "builtins.str|None") -> None:
+        return super()._set_field("value",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+        "value":"value",
     }
     
 class OSInfo(pb_classes.Message):
@@ -705,6 +796,7 @@ __all__ = [
     "GetVersionRequest",
     "ModulesHealth",
     "ModuleHealth",
+    "Parameter",
     "OSInfo",
     "GetVersionResponse",
     "NopActionParams",

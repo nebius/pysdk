@@ -3,16 +3,15 @@
 # 
 
 import nebius.base.protos.pb_classes as pb_classes
-import nebius.api.nebius.msp.postgresql.v1alpha1.preset_pb2 as preset_pb2
+import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.api.nebius.msp.v1alpha1.resource as resource_1
-import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2
+import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2_1
 import nebius.base.protos.unset as unset
 import collections.abc as abc
 import builtins as builtins
-import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_pb2 as cluster_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
@@ -32,76 +31,10 @@ import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
-# file: nebius/msp/postgresql/v1alpha1/preset.proto
-class PresetSpec(pb_classes.Message):
-    __PB2_CLASS__ = preset_pb2.PresetSpec
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.PresetSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-    }
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None|unset.UnsetType" = unset.Unset,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(hosts, unset.UnsetType):
-            self.hosts = hosts
-        if not isinstance(disk, unset.UnsetType):
-            self.disk = disk
-        if not isinstance(resources, unset.UnsetType):
-            self.resources = resources
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "hosts",
-            "disk",
-            "resources",
-        ]
-    
-    @builtins.property
-    def hosts(self) -> "resource_1.HostSpec":
-        return super()._get_field("hosts", explicit_presence=False,
-        wrap=resource_1.HostSpec,
-        )
-    @hosts.setter
-    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec|None") -> None:
-        return super()._set_field("hosts",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def disk(self) -> "resource_1.DiskSpec":
-        return super()._get_field("disk", explicit_presence=False,
-        wrap=resource_1.DiskSpec,
-        )
-    @disk.setter
-    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec|None") -> None:
-        return super()._set_field("disk",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def resources(self) -> "resource_1.ResourcesSpec":
-        return super()._get_field("resources", explicit_presence=False,
-        wrap=resource_1.ResourcesSpec,
-        )
-    @resources.setter
-    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
-        return super()._set_field("resources",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "hosts":"hosts",
-        "disk":"disk",
-        "resources":"resources",
-    }
-    
 # file: nebius/msp/postgresql/v1alpha1/template.proto
 class TemplateSpec(pb_classes.Message):
-    __PB2_CLASS__ = template_pb2_1.TemplateSpec
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.TemplateSpec",template_pb2_1.DESCRIPTOR,descriptor_1.Descriptor)
+    __PB2_CLASS__ = template_pb2.TemplateSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.TemplateSpec",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -109,9 +42,9 @@ class TemplateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None|unset.UnsetType" = unset.Unset,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
+        resources: "resource_1.ResourcesSpec|template_pb2_1.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
+        hosts: "resource_1.HostSpec|template_pb2_1.HostSpec|None|unset.UnsetType" = unset.Unset,
+        disk: "resource_1.DiskSpec|template_pb2_1.DiskSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resources, unset.UnsetType):
@@ -138,7 +71,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.ResourcesSpec,
         )
     @resources.setter
-    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
+    def resources(self, value: "resource_1.ResourcesSpec|template_pb2_1.ResourcesSpec|None") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
@@ -148,7 +81,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.HostSpec,
         )
     @hosts.setter
-    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec|None") -> None:
+    def hosts(self, value: "resource_1.HostSpec|template_pb2_1.HostSpec|None") -> None:
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
@@ -158,7 +91,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.DiskSpec,
         )
     @disk.setter
-    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec|None") -> None:
+    def disk(self, value: "resource_1.DiskSpec|template_pb2_1.DiskSpec|None") -> None:
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
@@ -449,7 +382,7 @@ class ClusterStatus(pb_classes.Message):
         *,
         phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None|unset.UnsetType" = unset.Unset,
         state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None|unset.UnsetType" = unset.Unset,
-        preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None|unset.UnsetType" = unset.Unset,
+        preset_details: "resource_1.PresetDetails|template_pb2_1.PresetDetails|None|unset.UnsetType" = unset.Unset,
         connection_endpoints: "Endpoints|cluster_pb2.Endpoints|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -508,7 +441,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=resource_1.PresetDetails,
         )
     @preset_details.setter
-    def preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails|None") -> None:
+    def preset_details(self, value: "resource_1.PresetDetails|template_pb2_1.PresetDetails|None") -> None:
         return super()._set_field("preset_details",value,explicit_presence=False,
         )
     
@@ -668,18 +601,15 @@ class ConfigSpec(pb_classes.Message):
         *,
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
         pooler_config: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|None|unset.UnsetType" = unset.Unset,
-        resources: "PresetSpec|preset_pb2.PresetSpec|None|unset.UnsetType" = unset.Unset,
         postgresql_config_16: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None|unset.UnsetType" = unset.Unset,
         public_access: "builtins.bool|None|unset.UnsetType" = unset.Unset,
-        template: "TemplateSpec|template_pb2_1.TemplateSpec|None|unset.UnsetType" = unset.Unset,
+        template: "TemplateSpec|template_pb2.TemplateSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
             self.version = version
         if not isinstance(pooler_config, unset.UnsetType):
             self.pooler_config = pooler_config
-        if not isinstance(resources, unset.UnsetType):
-            self.resources = resources
         if not isinstance(postgresql_config_16, unset.UnsetType):
             self.postgresql_config_16 = postgresql_config_16
         if not isinstance(public_access, unset.UnsetType):
@@ -691,7 +621,6 @@ class ConfigSpec(pb_classes.Message):
         return [
             "version",
             "pooler_config",
-            "resources",
             "postgresql_config_16",
             "public_access",
             "template",
@@ -724,23 +653,6 @@ class ConfigSpec(pb_classes.Message):
     @pooler_config.setter
     def pooler_config(self, value: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|None") -> None:
         return super()._set_field("pooler_config",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def resources(self) -> "PresetSpec":
-        """
-         Resources allocated to PostgreSQL hosts.
-        
-        
-         use template instead
-        """
-        
-        return super()._get_field("resources", explicit_presence=False,
-        wrap=PresetSpec,
-        )
-    @resources.setter
-    def resources(self, value: "PresetSpec|preset_pb2.PresetSpec|None") -> None:
-        return super()._set_field("resources",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -780,14 +692,13 @@ class ConfigSpec(pb_classes.Message):
         wrap=TemplateSpec,
         )
     @template.setter
-    def template(self, value: "TemplateSpec|template_pb2_1.TemplateSpec|None") -> None:
+    def template(self, value: "TemplateSpec|template_pb2.TemplateSpec|None") -> None:
         return super()._set_field("template",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "version":"version",
         "pooler_config":"pooler_config",
-        "resources":"resources",
         "postgresql_config_16":"postgresql_config_16",
         "public_access":"public_access",
         "template":"template",
@@ -1413,7 +1324,6 @@ class ClusterServiceClient(client.Client):
 
 __all__ = [
     #@ local import names here @#
-    "PresetSpec",
     "TemplateSpec",
     "Cluster",
     "ConnectionPoolerConfig",
