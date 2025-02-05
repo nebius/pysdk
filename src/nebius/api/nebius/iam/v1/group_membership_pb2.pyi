@@ -4,6 +4,7 @@ from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.iam.v1 import service_account_pb2 as _service_account_pb2
 from nebius.api.nebius.iam.v1 import tenant_user_account_pb2 as _tenant_user_account_pb2
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
@@ -33,8 +34,20 @@ class GroupMembershipStatus(_message.Message):
     def __init__(self) -> None: ...
 
 class GroupMemberKind(_message.Message):
-    __slots__ = []
-    def __init__(self) -> None: ...
+    __slots__ = ["kind"]
+    class Kind(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        KIND_UNSPECIFIED: _ClassVar[GroupMemberKind.Kind]
+        ORDINARY_TENANT_USER_ACCOUNT: _ClassVar[GroupMemberKind.Kind]
+        INVITED_TENANT_USER_ACCOUNT: _ClassVar[GroupMemberKind.Kind]
+        SERVICE_ACCOUNT: _ClassVar[GroupMemberKind.Kind]
+    KIND_UNSPECIFIED: GroupMemberKind.Kind
+    ORDINARY_TENANT_USER_ACCOUNT: GroupMemberKind.Kind
+    INVITED_TENANT_USER_ACCOUNT: GroupMemberKind.Kind
+    SERVICE_ACCOUNT: GroupMemberKind.Kind
+    KIND_FIELD_NUMBER: _ClassVar[int]
+    kind: GroupMemberKind.Kind
+    def __init__(self, kind: _Optional[_Union[GroupMemberKind.Kind, str]] = ...) -> None: ...
 
 class GroupMembershipWithAttributes(_message.Message):
     __slots__ = ["group_membership", "group_member_kind", "user_attributes", "service_account_attributes", "error"]

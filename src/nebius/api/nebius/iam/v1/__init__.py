@@ -5224,17 +5224,42 @@ class GroupMemberKind(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class Kind(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.GroupMemberKind.Kind",group_membership_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        KIND_UNSPECIFIED = 0
+        ORDINARY_TENANT_USER_ACCOUNT = 1
+        INVITED_TENANT_USER_ACCOUNT = 2
+        SERVICE_ACCOUNT = 3
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
+        *,
+        kind: "GroupMemberKind.Kind|group_membership_pb2.GroupMemberKind.Kind|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(kind, unset.UnsetType):
+            self.kind = kind
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "kind",
+            "Kind",
         ]
     
+    @builtins.property
+    def kind(self) -> "GroupMemberKind.Kind":
+        return super()._get_field("kind", explicit_presence=False,
+        wrap=GroupMemberKind.Kind,
+        )
+    @kind.setter
+    def kind(self, value: "GroupMemberKind.Kind|group_membership_pb2.GroupMemberKind.Kind|None") -> None:
+        return super()._set_field("kind",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "kind":"kind",
+        "Kind":"Kind",
     }
     
 class GroupMembershipWithAttributes(pb_classes.Message):

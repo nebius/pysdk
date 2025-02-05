@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nebius"
-version = "0.2.3"
+version = "0.2.4"
 description = "Nebius Python SDK"
 authors = [
     { name = "Daniil Drizhuk", email = "complynx@nebius.com" },
