@@ -1067,6 +1067,100 @@ class CreateClusterRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class RestoreClusterRequest(pb_classes.Message):
+    __PB2_CLASS__ = cluster_service_pb2.RestoreClusterRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.RestoreClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
+        backup_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(backup_id, unset.UnsetType):
+            self.backup_id = backup_id
+        if not isinstance(source_cluster_id, unset.UnsetType):
+            self.source_cluster_id = source_cluster_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "backup_id",
+            "source_cluster_id",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the new cluster.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ClusterSpec":
+        """
+         Specification for the new cluster.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ClusterSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def backup_id(self) -> "builtins.str":
+        """
+         ID of the backup to restore from.
+        """
+        
+        return super()._get_field("backup_id", explicit_presence=False,
+        )
+    @backup_id.setter
+    def backup_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("backup_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def source_cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster to restore from.
+        """
+        
+        return super()._get_field("source_cluster_id", explicit_presence=False,
+        )
+    @source_cluster_id.setter
+    def source_cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_cluster_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "backup_id":"backup_id",
+        "source_cluster_id":"source_cluster_id",
+    }
+    
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1321,6 +1415,30 @@ class ClusterServiceClient(client.Client):
             result_wrapper=operation.Operation,
         )
     
+    def restore(self,
+        request: "RestoreClusterRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["RestoreClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Creates a new PostgreSQL cluster from a previously created backup.
+        """
+        
+        return super().request(
+            method="Restore",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation.Operation,
+        )
+    
 
 __all__ = [
     #@ local import names here @#
@@ -1337,6 +1455,7 @@ __all__ = [
     "ListClustersRequest",
     "ListClustersResponse",
     "CreateClusterRequest",
+    "RestoreClusterRequest",
     "DeleteClusterRequest",
     "UpdateClusterRequest",
     "ClusterServiceClient",

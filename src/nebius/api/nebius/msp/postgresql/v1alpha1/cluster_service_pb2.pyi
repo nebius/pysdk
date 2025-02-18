@@ -42,6 +42,18 @@ class CreateClusterRequest(_message.Message):
     spec: _cluster_pb2.ClusterSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_cluster_pb2.ClusterSpec, _Mapping]] = ...) -> None: ...
 
+class RestoreClusterRequest(_message.Message):
+    __slots__ = ["metadata", "spec", "backup_id", "source_cluster_id"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    BACKUP_ID_FIELD_NUMBER: _ClassVar[int]
+    SOURCE_CLUSTER_ID_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: _cluster_pb2.ClusterSpec
+    backup_id: str
+    source_cluster_id: str
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_cluster_pb2.ClusterSpec, _Mapping]] = ..., backup_id: _Optional[str] = ..., source_cluster_id: _Optional[str] = ...) -> None: ...
+
 class DeleteClusterRequest(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
