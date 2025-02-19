@@ -55,9 +55,11 @@ class IPAddressStatus(_message.Message):
     def __init__(self, address: _Optional[str] = ..., allocation_id: _Optional[str] = ...) -> None: ...
 
 class PublicIPAddressStatus(_message.Message):
-    __slots__ = ["address", "allocation_id"]
+    __slots__ = ["address", "allocation_id", "static"]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     ALLOCATION_ID_FIELD_NUMBER: _ClassVar[int]
+    STATIC_FIELD_NUMBER: _ClassVar[int]
     address: str
     allocation_id: str
-    def __init__(self, address: _Optional[str] = ..., allocation_id: _Optional[str] = ...) -> None: ...
+    static: bool
+    def __init__(self, address: _Optional[str] = ..., allocation_id: _Optional[str] = ..., static: bool = ...) -> None: ...

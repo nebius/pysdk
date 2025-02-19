@@ -6,7 +6,9 @@ from nebius.api.nebius.logging.v1.agentmanager import version_service_pb2 as neb
 
 
 class VersionServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """VersionService provides functionality for managing nebius-observability-agent versions and health status
+    in the Nebius observability system.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -22,10 +24,14 @@ class VersionServiceStub(object):
 
 
 class VersionServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """VersionService provides functionality for managing nebius-observability-agent versions and health status
+    in the Nebius observability system.
+    """
 
     def GetVersion(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """GetVersion retrieves version information and receives instructions for agent updates
+        or maintenance based on the current state and health of the agent.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -46,7 +52,9 @@ def add_VersionServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class VersionService(object):
-    """Missing associated documentation comment in .proto file."""
+    """VersionService provides functionality for managing nebius-observability-agent versions and health status
+    in the Nebius observability system.
+    """
 
     @staticmethod
     def GetVersion(request,

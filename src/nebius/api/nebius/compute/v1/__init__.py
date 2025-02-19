@@ -3522,17 +3522,21 @@ class PublicIPAddressStatus(pb_classes.Message):
         *,
         address: "builtins.str|None|unset.UnsetType" = unset.Unset,
         allocation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        static: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(address, unset.UnsetType):
             self.address = address
         if not isinstance(allocation_id, unset.UnsetType):
             self.allocation_id = allocation_id
+        if not isinstance(static, unset.UnsetType):
+            self.static = static
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "address",
             "allocation_id",
+            "static",
         ]
     
     @builtins.property
@@ -3561,9 +3565,25 @@ class PublicIPAddressStatus(pb_classes.Message):
         return super()._set_field("allocation_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def static(self) -> "builtins.bool":
+        """
+         If false - Allocation will be created/deleted during NetworkInterface.Allocate/NetworkInterface.Deallocate
+         If true  - Allocation will be created/deleted during NetworkInterface.Create/NetworkInterface.Delete
+         False by default
+        """
+        
+        return super()._get_field("static", explicit_presence=False,
+        )
+    @static.setter
+    def static(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("static",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "address":"address",
         "allocation_id":"allocation_id",
+        "static":"static",
     }
     
 # file: nebius/compute/v1/instance.proto
