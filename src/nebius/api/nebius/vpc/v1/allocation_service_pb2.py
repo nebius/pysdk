@@ -12,12 +12,13 @@ _sym_db = _symbol_database.Default()
 
 
 from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
+from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.vpc.v1 import allocation_pb2 as nebius_dot_vpc_dot_v1_dot_allocation__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&nebius/vpc/v1/allocation_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/vpc/v1/allocation.proto\".\n\x14GetAllocationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"]\n\x1aGetAllocationByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"y\n\x16ListAllocationsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"{\n\x1cListAllocationsByPoolRequest\x12\x1f\n\x07pool_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06poolId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"r\n\x17ListAllocationsResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.vpc.v1.AllocationR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe1\x02\n\x17\x43reateAllocationRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.AllocationSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xd6\x02\n\x17UpdateAllocationRequest\x12\x87\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc6\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')R\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.AllocationSpecR\x04spec\"1\n\x17\x44\x65leteAllocationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xd4\x04\n\x11\x41llocationService\x12\x45\n\x03Get\x12#.nebius.vpc.v1.GetAllocationRequest\x1a\x19.nebius.vpc.v1.Allocation\x12Q\n\tGetByName\x12).nebius.vpc.v1.GetAllocationByNameRequest\x1a\x19.nebius.vpc.v1.Allocation\x12U\n\x04List\x12%.nebius.vpc.v1.ListAllocationsRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12\x61\n\nListByPool\x12+.nebius.vpc.v1.ListAllocationsByPoolRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12M\n\x06\x43reate\x12&.nebius.vpc.v1.CreateAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.vpc.v1.UpdateAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.vpc.v1.DeleteAllocationRequest\x1a\x1b.nebius.common.v1.OperationB]\n\x14\x61i.nebius.pub.vpc.v1B\x16\x41llocationServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&nebius/vpc/v1/allocation_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/vpc/v1/allocation.proto\".\n\x14GetAllocationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"]\n\x1aGetAllocationByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"y\n\x16ListAllocationsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"{\n\x1cListAllocationsByPoolRequest\x12\x1f\n\x07pool_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06poolId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"r\n\x17ListAllocationsResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.vpc.v1.AllocationR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe1\x02\n\x17\x43reateAllocationRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.AllocationSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xd6\x02\n\x17UpdateAllocationRequest\x12\x87\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc6\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')R\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.AllocationSpecR\x04spec\"1\n\x17\x44\x65leteAllocationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xe3\x04\n\x11\x41llocationService\x12\x45\n\x03Get\x12#.nebius.vpc.v1.GetAllocationRequest\x1a\x19.nebius.vpc.v1.Allocation\x12Q\n\tGetByName\x12).nebius.vpc.v1.GetAllocationByNameRequest\x1a\x19.nebius.vpc.v1.Allocation\x12U\n\x04List\x12%.nebius.vpc.v1.ListAllocationsRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\x12p\n\nListByPool\x12+.nebius.vpc.v1.ListAllocationsByPoolRequest\x1a&.nebius.vpc.v1.ListAllocationsResponse\"\r\x9a\xb5\x18\t\n\x07pool_id\x12M\n\x06\x43reate\x12&.nebius.vpc.v1.CreateAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.vpc.v1.UpdateAllocationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.vpc.v1.DeleteAllocationRequest\x1a\x1b.nebius.common.v1.OperationB]\n\x14\x61i.nebius.pub.vpc.v1B\x16\x41llocationServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -44,22 +45,24 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _UPDATEALLOCATIONREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')'
   _DELETEALLOCATIONREQUEST.fields_by_name['id']._options = None
   _DELETEALLOCATIONREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
-  _globals['_GETALLOCATIONREQUEST']._serialized_start=185
-  _globals['_GETALLOCATIONREQUEST']._serialized_end=231
-  _globals['_GETALLOCATIONBYNAMEREQUEST']._serialized_start=233
-  _globals['_GETALLOCATIONBYNAMEREQUEST']._serialized_end=326
-  _globals['_LISTALLOCATIONSREQUEST']._serialized_start=328
-  _globals['_LISTALLOCATIONSREQUEST']._serialized_end=449
-  _globals['_LISTALLOCATIONSBYPOOLREQUEST']._serialized_start=451
-  _globals['_LISTALLOCATIONSBYPOOLREQUEST']._serialized_end=574
-  _globals['_LISTALLOCATIONSRESPONSE']._serialized_start=576
-  _globals['_LISTALLOCATIONSRESPONSE']._serialized_end=690
-  _globals['_CREATEALLOCATIONREQUEST']._serialized_start=693
-  _globals['_CREATEALLOCATIONREQUEST']._serialized_end=1046
-  _globals['_UPDATEALLOCATIONREQUEST']._serialized_start=1049
-  _globals['_UPDATEALLOCATIONREQUEST']._serialized_end=1391
-  _globals['_DELETEALLOCATIONREQUEST']._serialized_start=1393
-  _globals['_DELETEALLOCATIONREQUEST']._serialized_end=1442
-  _globals['_ALLOCATIONSERVICE']._serialized_start=1445
-  _globals['_ALLOCATIONSERVICE']._serialized_end=2041
+  _ALLOCATIONSERVICE.methods_by_name['ListByPool']._options = None
+  _ALLOCATIONSERVICE.methods_by_name['ListByPool']._serialized_options = b'\232\265\030\t\n\007pool_id'
+  _globals['_GETALLOCATIONREQUEST']._serialized_start=211
+  _globals['_GETALLOCATIONREQUEST']._serialized_end=257
+  _globals['_GETALLOCATIONBYNAMEREQUEST']._serialized_start=259
+  _globals['_GETALLOCATIONBYNAMEREQUEST']._serialized_end=352
+  _globals['_LISTALLOCATIONSREQUEST']._serialized_start=354
+  _globals['_LISTALLOCATIONSREQUEST']._serialized_end=475
+  _globals['_LISTALLOCATIONSBYPOOLREQUEST']._serialized_start=477
+  _globals['_LISTALLOCATIONSBYPOOLREQUEST']._serialized_end=600
+  _globals['_LISTALLOCATIONSRESPONSE']._serialized_start=602
+  _globals['_LISTALLOCATIONSRESPONSE']._serialized_end=716
+  _globals['_CREATEALLOCATIONREQUEST']._serialized_start=719
+  _globals['_CREATEALLOCATIONREQUEST']._serialized_end=1072
+  _globals['_UPDATEALLOCATIONREQUEST']._serialized_start=1075
+  _globals['_UPDATEALLOCATIONREQUEST']._serialized_end=1417
+  _globals['_DELETEALLOCATIONREQUEST']._serialized_start=1419
+  _globals['_DELETEALLOCATIONREQUEST']._serialized_end=1468
+  _globals['_ALLOCATIONSERVICE']._serialized_start=1471
+  _globals['_ALLOCATIONSERVICE']._serialized_end=2082
 # @@protoc_insertion_point(module_scope)

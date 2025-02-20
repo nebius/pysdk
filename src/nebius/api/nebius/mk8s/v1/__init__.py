@@ -1559,6 +1559,7 @@ class NodeTemplate(pb_classes.Message):
         taints: "abc.Iterable[NodeTaint]|None|unset.UnsetType" = unset.Unset,
         resources: "ResourcesSpec|instance_template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
         boot_disk: "DiskSpec|instance_template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
+        gpu_settings: "GpuSettings|node_group_pb2.GpuSettings|None|unset.UnsetType" = unset.Unset,
         gpu_cluster: "GpuClusterSpec|node_group_pb2.GpuClusterSpec|None|unset.UnsetType" = unset.Unset,
         network_interfaces: "abc.Iterable[NetworkInterfaceTemplate]|None|unset.UnsetType" = unset.Unset,
         filesystems: "abc.Iterable[AttachedFilesystemSpec]|None|unset.UnsetType" = unset.Unset,
@@ -1574,6 +1575,8 @@ class NodeTemplate(pb_classes.Message):
             self.resources = resources
         if not isinstance(boot_disk, unset.UnsetType):
             self.boot_disk = boot_disk
+        if not isinstance(gpu_settings, unset.UnsetType):
+            self.gpu_settings = gpu_settings
         if not isinstance(gpu_cluster, unset.UnsetType):
             self.gpu_cluster = gpu_cluster
         if not isinstance(network_interfaces, unset.UnsetType):
@@ -1591,6 +1594,7 @@ class NodeTemplate(pb_classes.Message):
             "taints",
             "resources",
             "boot_disk",
+            "gpu_settings",
             "gpu_cluster",
             "network_interfaces",
             "filesystems",
@@ -1652,6 +1656,20 @@ class NodeTemplate(pb_classes.Message):
     @boot_disk.setter
     def boot_disk(self, value: "DiskSpec|instance_template_pb2.DiskSpec|None") -> None:
         return super()._set_field("boot_disk",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def gpu_settings(self) -> "GpuSettings":
+        """
+         GPU-related settings.
+        """
+        
+        return super()._get_field("gpu_settings", explicit_presence=False,
+        wrap=GpuSettings,
+        )
+    @gpu_settings.setter
+    def gpu_settings(self, value: "GpuSettings|node_group_pb2.GpuSettings|None") -> None:
+        return super()._set_field("gpu_settings",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -1729,6 +1747,7 @@ class NodeTemplate(pb_classes.Message):
         "taints":"taints",
         "resources":"resources",
         "boot_disk":"boot_disk",
+        "gpu_settings":"gpu_settings",
         "gpu_cluster":"gpu_cluster",
         "network_interfaces":"network_interfaces",
         "filesystems":"filesystems",
@@ -1830,6 +1849,49 @@ class NodeMetadataTemplate(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "labels":"labels",
         "LabelsEntry":"LabelsEntry",
+    }
+    
+class GpuSettings(pb_classes.Message):
+    """
+     GPU-related settings.
+    """
+    
+    __PB2_CLASS__ = node_group_pb2.GpuSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.GpuSettings",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        drivers_preset: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(drivers_preset, unset.UnsetType):
+            self.drivers_preset = drivers_preset
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "drivers_preset",
+        ]
+    
+    @builtins.property
+    def drivers_preset(self) -> "builtins.str":
+        """
+         Identifier of the predefined set of drivers included in the ComputeImage deployed on ComputeInstances that are part of the NodeGroup.
+         Supported presets: cuda12
+        """
+        
+        return super()._get_field("drivers_preset", explicit_presence=False,
+        )
+    @drivers_preset.setter
+    def drivers_preset(self, value: "builtins.str|None") -> None:
+        return super()._set_field("drivers_preset",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "drivers_preset":"drivers_preset",
     }
     
 class GpuClusterSpec(pb_classes.Message):
@@ -3215,6 +3277,7 @@ __all__ = [
     "NodeGroupSpec",
     "NodeTemplate",
     "NodeMetadataTemplate",
+    "GpuSettings",
     "GpuClusterSpec",
     "NetworkInterfaceTemplate",
     "PublicIPAddress",

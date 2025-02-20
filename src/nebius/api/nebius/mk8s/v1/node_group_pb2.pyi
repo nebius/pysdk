@@ -36,11 +36,12 @@ class NodeGroupSpec(_message.Message):
     def __init__(self, version: _Optional[str] = ..., fixed_node_count: _Optional[int] = ..., autoscaling: _Optional[_Union[NodeGroupAutoscalingSpec, _Mapping]] = ..., template: _Optional[_Union[NodeTemplate, _Mapping]] = ..., strategy: _Optional[_Union[NodeGroupDeploymentStrategy, _Mapping]] = ...) -> None: ...
 
 class NodeTemplate(_message.Message):
-    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id"]
+    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_settings", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     TAINTS_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     BOOT_DISK_FIELD_NUMBER: _ClassVar[int]
+    GPU_SETTINGS_FIELD_NUMBER: _ClassVar[int]
     GPU_CLUSTER_FIELD_NUMBER: _ClassVar[int]
     NETWORK_INTERFACES_FIELD_NUMBER: _ClassVar[int]
     FILESYSTEMS_FIELD_NUMBER: _ClassVar[int]
@@ -50,12 +51,13 @@ class NodeTemplate(_message.Message):
     taints: _containers.RepeatedCompositeFieldContainer[NodeTaint]
     resources: _instance_template_pb2.ResourcesSpec
     boot_disk: _instance_template_pb2.DiskSpec
+    gpu_settings: GpuSettings
     gpu_cluster: GpuClusterSpec
     network_interfaces: _containers.RepeatedCompositeFieldContainer[NetworkInterfaceTemplate]
     filesystems: _containers.RepeatedCompositeFieldContainer[AttachedFilesystemSpec]
     cloud_init_user_data: str
     service_account_id: str
-    def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ...) -> None: ...
+    def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_settings: _Optional[_Union[GpuSettings, _Mapping]] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ...) -> None: ...
 
 class NodeMetadataTemplate(_message.Message):
     __slots__ = ["labels"]
@@ -69,6 +71,12 @@ class NodeMetadataTemplate(_message.Message):
     LABELS_FIELD_NUMBER: _ClassVar[int]
     labels: _containers.ScalarMap[str, str]
     def __init__(self, labels: _Optional[_Mapping[str, str]] = ...) -> None: ...
+
+class GpuSettings(_message.Message):
+    __slots__ = ["drivers_preset"]
+    DRIVERS_PRESET_FIELD_NUMBER: _ClassVar[int]
+    drivers_preset: str
+    def __init__(self, drivers_preset: _Optional[str] = ...) -> None: ...
 
 class GpuClusterSpec(_message.Message):
     __slots__ = ["id"]

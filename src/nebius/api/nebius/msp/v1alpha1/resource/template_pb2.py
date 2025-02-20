@@ -15,7 +15,7 @@ from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validat
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n+nebius/msp/v1alpha1/resource/template.proto\x12\x1cnebius.msp.v1alpha1.resource\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\x9e\x01\n\x08Template\x12J\n\x06status\x18\x01 \x01(\x0b\x32,.nebius.msp.v1alpha1.resource.TemplateStatusB\x04\xbaJ\x01\x05R\x06status\x12\x46\n\x04spec\x18\x02 \x01(\x0b\x32*.nebius.msp.v1alpha1.resource.TemplateSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"d\n\x0eTemplateStatus\x12R\n\x0epreset_details\x18\x01 \x01(\x0b\x32+.nebius.msp.v1alpha1.resource.PresetDetailsR\rpresetDetails\"\xef\x01\n\x0cTemplateSpec\x12Q\n\tresources\x18\x01 \x01(\x0b\x32+.nebius.msp.v1alpha1.resource.ResourcesSpecB\x06\xbaH\x03\xc8\x01\x01R\tresources\x12\x38\n\x05hosts\x18\x02 \x01(\x0b\x32\".nebius.msp.v1alpha1.resource.HostR\x05hosts\x12\x36\n\x04\x64isk\x18\x03 \x01(\x0b\x32\".nebius.msp.v1alpha1.resource.DiskR\x04\x64isk\x12\x1a\n\x04role\x18\x04 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04role\"S\n\rResourcesSpec\x12\"\n\x08platform\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform\x12\x1e\n\x06preset\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06preset\"\x84\x01\n\rPresetDetails\x12#\n\tcpu_count\x18\x01 \x01(\x05\x42\x06\xbaH\x03\xc8\x01\x01R\x08\x63puCount\x12\x31\n\x10memory_gibibytes\x18\x02 \x01(\x03\x42\x06\xbaH\x03\xc8\x01\x01R\x0fmemoryGibibytes\x12\x1b\n\tgpu_count\x18\x03 \x01(\x05R\x08gpuCount\"]\n\x05Range\x12\x10\n\x03min\x18\x01 \x01(\x03R\x03min\x12\x10\n\x03max\x18\x02 \x01(\x03R\x03max\x12\x12\n\x04step\x18\x03 \x01(\x03R\x04step\x12\x1c\n\x05value\x18\x04 \x01(\x03\x42\x06\xbaH\x03\xc8\x01\x01R\x05value\"v\n\x04\x44isk\x12\x1a\n\x04type\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12R\n\x0esize_gibibytes\x18\x02 \x01(\x0b\x32#.nebius.msp.v1alpha1.resource.RangeB\x06\xbaH\x03\xc8\x01\x01R\rsizeGibibytes\"U\n\x08\x44iskSpec\x12\x1a\n\x04type\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12-\n\x0esize_gibibytes\x18\x02 \x01(\x03\x42\x06\xbaH\x03\xc8\x01\x01R\rsizeGibibytes\"I\n\x04Host\x12\x41\n\x05\x63ount\x18\x01 \x01(\x0b\x32#.nebius.msp.v1alpha1.resource.RangeB\x06\xbaH\x03\xc8\x01\x01R\x05\x63ount\"(\n\x08HostSpec\x12\x1c\n\x05\x63ount\x18\x01 \x01(\x03\x42\x06\xbaH\x03\xc8\x01\x01R\x05\x63ountBr\n#ai.nebius.pub.msp.v1alpha1.resourceB\rTemplateProtoP\x01Z:github.com/nebius/gosdk/proto/nebius/msp/v1alpha1/resourceb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n+nebius/msp/v1alpha1/resource/template.proto\x12\x1cnebius.msp.v1alpha1.resource\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\x9e\x01\n\x08Template\x12J\n\x06status\x18\x01 \x01(\x0b\x32,.nebius.msp.v1alpha1.resource.TemplateStatusB\x04\xbaJ\x01\x05R\x06status\x12\x46\n\x04spec\x18\x02 \x01(\x0b\x32*.nebius.msp.v1alpha1.resource.TemplateSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"d\n\x0eTemplateStatus\x12R\n\x0epreset_details\x18\x01 \x01(\x0b\x32+.nebius.msp.v1alpha1.resource.PresetDetailsR\rpresetDetails\"\xe7\x01\n\x0cTemplateSpec\x12I\n\tresources\x18\x01 \x01(\x0b\x32+.nebius.msp.v1alpha1.resource.ResourcesSpecR\tresources\x12\x38\n\x05hosts\x18\x02 \x01(\x0b\x32\".nebius.msp.v1alpha1.resource.HostR\x05hosts\x12\x36\n\x04\x64isk\x18\x03 \x01(\x0b\x32\".nebius.msp.v1alpha1.resource.DiskR\x04\x64isk\x12\x1a\n\x04role\x18\x04 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04role\"S\n\rResourcesSpec\x12\"\n\x08platform\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform\x12\x1e\n\x06preset\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06preset\"\x84\x01\n\rPresetDetails\x12#\n\tcpu_count\x18\x01 \x01(\x05\x42\x06\xbaH\x03\xc8\x01\x01R\x08\x63puCount\x12\x31\n\x10memory_gibibytes\x18\x02 \x01(\x03\x42\x06\xbaH\x03\xc8\x01\x01R\x0fmemoryGibibytes\x12\x1b\n\tgpu_count\x18\x03 \x01(\x05R\x08gpuCount\"]\n\x05Range\x12\x10\n\x03min\x18\x01 \x01(\x03R\x03min\x12\x10\n\x03max\x18\x02 \x01(\x03R\x03max\x12\x12\n\x04step\x18\x03 \x01(\x03R\x04step\x12\x1c\n\x05value\x18\x04 \x01(\x03\x42\x06\xbaH\x03\xc8\x01\x01R\x05value\"v\n\x04\x44isk\x12\x1a\n\x04type\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12R\n\x0esize_gibibytes\x18\x02 \x01(\x0b\x32#.nebius.msp.v1alpha1.resource.RangeB\x06\xbaH\x03\xc8\x01\x01R\rsizeGibibytes\"U\n\x08\x44iskSpec\x12\x1a\n\x04type\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12-\n\x0esize_gibibytes\x18\x02 \x01(\x03\x42\x06\xbaH\x03\xc8\x01\x01R\rsizeGibibytes\"I\n\x04Host\x12\x41\n\x05\x63ount\x18\x01 \x01(\x0b\x32#.nebius.msp.v1alpha1.resource.RangeB\x06\xbaH\x03\xc8\x01\x01R\x05\x63ount\"(\n\x08HostSpec\x12\x1c\n\x05\x63ount\x18\x01 \x01(\x03\x42\x06\xbaH\x03\xc8\x01\x01R\x05\x63ountBr\n#ai.nebius.pub.msp.v1alpha1.resourceB\rTemplateProtoP\x01Z:github.com/nebius/gosdk/proto/nebius/msp/v1alpha1/resourceb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,8 +28,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _TEMPLATE.fields_by_name['status']._serialized_options = b'\272J\001\005'
   _TEMPLATE.fields_by_name['spec']._options = None
   _TEMPLATE.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
-  _TEMPLATESPEC.fields_by_name['resources']._options = None
-  _TEMPLATESPEC.fields_by_name['resources']._serialized_options = b'\272H\003\310\001\001'
   _TEMPLATESPEC.fields_by_name['role']._options = None
   _TEMPLATESPEC.fields_by_name['role']._serialized_options = b'\272H\003\310\001\001'
   _RESOURCESSPEC.fields_by_name['platform']._options = None
@@ -59,19 +57,19 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_TEMPLATESTATUS']._serialized_start=293
   _globals['_TEMPLATESTATUS']._serialized_end=393
   _globals['_TEMPLATESPEC']._serialized_start=396
-  _globals['_TEMPLATESPEC']._serialized_end=635
-  _globals['_RESOURCESSPEC']._serialized_start=637
-  _globals['_RESOURCESSPEC']._serialized_end=720
-  _globals['_PRESETDETAILS']._serialized_start=723
-  _globals['_PRESETDETAILS']._serialized_end=855
-  _globals['_RANGE']._serialized_start=857
-  _globals['_RANGE']._serialized_end=950
-  _globals['_DISK']._serialized_start=952
-  _globals['_DISK']._serialized_end=1070
-  _globals['_DISKSPEC']._serialized_start=1072
-  _globals['_DISKSPEC']._serialized_end=1157
-  _globals['_HOST']._serialized_start=1159
-  _globals['_HOST']._serialized_end=1232
-  _globals['_HOSTSPEC']._serialized_start=1234
-  _globals['_HOSTSPEC']._serialized_end=1274
+  _globals['_TEMPLATESPEC']._serialized_end=627
+  _globals['_RESOURCESSPEC']._serialized_start=629
+  _globals['_RESOURCESSPEC']._serialized_end=712
+  _globals['_PRESETDETAILS']._serialized_start=715
+  _globals['_PRESETDETAILS']._serialized_end=847
+  _globals['_RANGE']._serialized_start=849
+  _globals['_RANGE']._serialized_end=942
+  _globals['_DISK']._serialized_start=944
+  _globals['_DISK']._serialized_end=1062
+  _globals['_DISKSPEC']._serialized_start=1064
+  _globals['_DISKSPEC']._serialized_end=1149
+  _globals['_HOST']._serialized_start=1151
+  _globals['_HOST']._serialized_end=1224
+  _globals['_HOSTSPEC']._serialized_start=1226
+  _globals['_HOSTSPEC']._serialized_end=1266
 # @@protoc_insertion_point(module_scope)
