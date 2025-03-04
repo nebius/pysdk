@@ -2463,17 +2463,21 @@ class ContainerStatus(pb_classes.Message):
         *,
         suspension_state: "SuspensionState|suspension_state_pb2.SuspensionState|None|unset.UnsetType" = unset.Unset,
         container_state: "State|state_pb2.State|None|unset.UnsetType" = unset.Unset,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(suspension_state, unset.UnsetType):
             self.suspension_state = suspension_state
         if not isinstance(container_state, unset.UnsetType):
             self.container_state = container_state
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "suspension_state",
             "container_state",
+            "region",
         ]
     
     @builtins.property
@@ -2496,9 +2500,19 @@ class ContainerStatus(pb_classes.Message):
         return super()._set_field("container_state",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def region(self) -> "builtins.str":
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "suspension_state":"suspension_state",
         "container_state":"container_state",
+        "region":"region",
     }
     
 # file: nebius/iam/v1/federation.proto

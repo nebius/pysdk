@@ -489,6 +489,7 @@ class DiskStatus(pb_classes.Message):
         source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -505,6 +506,8 @@ class DiskStatus(pb_classes.Message):
             self.size_bytes = size_bytes
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
+        if not isinstance(block_size_bytes, unset.UnsetType):
+            self.block_size_bytes = block_size_bytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -515,6 +518,7 @@ class DiskStatus(pb_classes.Message):
             "source_image_id",
             "size_bytes",
             "reconciling",
+            "block_size_bytes",
             "State",
         ]
     
@@ -587,6 +591,15 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def block_size_bytes(self) -> "builtins.int":
+        return super()._get_field("block_size_bytes", explicit_presence=False,
+        )
+    @block_size_bytes.setter
+    def block_size_bytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("block_size_bytes",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "state_description":"state_description",
@@ -595,6 +608,7 @@ class DiskStatus(pb_classes.Message):
         "source_image_id":"source_image_id",
         "size_bytes":"size_bytes",
         "reconciling":"reconciling",
+        "block_size_bytes":"block_size_bytes",
         "State":"State",
     }
     
@@ -1385,6 +1399,7 @@ class FilesystemStatus(pb_classes.Message):
         read_only_attachments: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -1399,6 +1414,8 @@ class FilesystemStatus(pb_classes.Message):
             self.size_bytes = size_bytes
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
+        if not isinstance(block_size_bytes, unset.UnsetType):
+            self.block_size_bytes = block_size_bytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1408,6 +1425,7 @@ class FilesystemStatus(pb_classes.Message):
             "read_only_attachments",
             "size_bytes",
             "reconciling",
+            "block_size_bytes",
             "State",
         ]
     
@@ -1472,6 +1490,15 @@ class FilesystemStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def block_size_bytes(self) -> "builtins.int":
+        return super()._get_field("block_size_bytes", explicit_presence=False,
+        )
+    @block_size_bytes.setter
+    def block_size_bytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("block_size_bytes",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "state_description":"state_description",
@@ -1479,6 +1506,7 @@ class FilesystemStatus(pb_classes.Message):
         "read_only_attachments":"read_only_attachments",
         "size_bytes":"size_bytes",
         "reconciling":"reconciling",
+        "block_size_bytes":"block_size_bytes",
         "State":"State",
     }
     

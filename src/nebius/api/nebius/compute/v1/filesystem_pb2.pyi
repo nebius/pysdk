@@ -44,7 +44,7 @@ class FilesystemSpec(_message.Message):
     def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[FilesystemSpec.FilesystemType, str]] = ...) -> None: ...
 
 class FilesystemStatus(_message.Message):
-    __slots__ = ["state", "state_description", "read_write_attachments", "read_only_attachments", "size_bytes", "reconciling"]
+    __slots__ = ["state", "state_description", "read_write_attachments", "read_only_attachments", "size_bytes", "reconciling", "block_size_bytes"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[FilesystemStatus.State]
@@ -65,10 +65,12 @@ class FilesystemStatus(_message.Message):
     READ_ONLY_ATTACHMENTS_FIELD_NUMBER: _ClassVar[int]
     SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
+    BLOCK_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     state: FilesystemStatus.State
     state_description: str
     read_write_attachments: _containers.RepeatedScalarFieldContainer[str]
     read_only_attachments: _containers.RepeatedScalarFieldContainer[str]
     size_bytes: int
     reconciling: bool
-    def __init__(self, state: _Optional[_Union[FilesystemStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachments: _Optional[_Iterable[str]] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ...) -> None: ...
+    block_size_bytes: int
+    def __init__(self, state: _Optional[_Union[FilesystemStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachments: _Optional[_Iterable[str]] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ..., block_size_bytes: _Optional[int] = ...) -> None: ...
