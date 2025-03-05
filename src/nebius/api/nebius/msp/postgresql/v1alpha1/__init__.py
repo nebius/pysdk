@@ -3,15 +3,23 @@
 # 
 
 import nebius.base.protos.pb_classes as pb_classes
-import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2
+import nebius.api.nebius.msp.postgresql.v1alpha1.backup_pb2 as backup_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
+import nebius.base.protos.well_known as well_known_1
 import google.protobuf.message as message_1
+import builtins as builtins
+import nebius.base.protos.unset as unset
+import google.protobuf.timestamp_pb2 as timestamp_pb2
+import datetime as datetime
+import collections.abc as abc
+import nebius.api.nebius.msp.postgresql.v1alpha1.backup_service_pb2 as backup_service_pb2
+import nebius.aio.client as client
+import grpc as grpc
+import nebius.aio.request as request_1
+import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2
 import nebius.api.nebius.msp.v1alpha1.resource as resource_1
 import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2_1
-import nebius.base.protos.unset as unset
-import collections.abc as abc
-import builtins as builtins
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_pb2 as cluster_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
@@ -22,14 +30,346 @@ import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config as config_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config.postgresql_pb2 as postgresql_pb2
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_service_pb2 as cluster_service_pb2
-import nebius.aio.client as client
 import nebius.api.nebius.common.v1alpha1 as v1alpha1_2
-import grpc as grpc
-import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
+
+# file: nebius/msp/postgresql/v1alpha1/backup.proto
+class Backup(pb_classes.Message):
+    __PB2_CLASS__ = backup_pb2.Backup
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.Backup",backup_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "creation_start": well_known_1.ts_mask,
+        "creation_finish": well_known_1.ts_mask,
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        creation_start: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        creation_finish: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        source_cluster_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(source_cluster_id, unset.UnsetType):
+            self.source_cluster_id = source_cluster_id
+        if not isinstance(creation_start, unset.UnsetType):
+            self.creation_start = creation_start
+        if not isinstance(creation_finish, unset.UnsetType):
+            self.creation_finish = creation_finish
+        if not isinstance(source_cluster_name, unset.UnsetType):
+            self.source_cluster_name = source_cluster_name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "source_cluster_id",
+            "creation_start",
+            "creation_finish",
+            "source_cluster_name",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+         Required. ID of the backup.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def source_cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster that the backup was created for.
+        """
+        
+        return super()._get_field("source_cluster_id", explicit_presence=False,
+        )
+    @source_cluster_id.setter
+    def source_cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_cluster_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def creation_start(self) -> "datetime.datetime":
+        """
+         Creation start timestamp.
+        """
+        
+        return super()._get_field("creation_start", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @creation_start.setter
+    def creation_start(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("creation_start",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def creation_finish(self) -> "datetime.datetime":
+        """
+         Creation finish timestamp.
+        """
+        
+        return super()._get_field("creation_finish", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @creation_finish.setter
+    def creation_finish(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("creation_finish",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def source_cluster_name(self) -> "builtins.str":
+        """
+         Name of the ProstgreSQL cluster that the backup was created for.
+        """
+        
+        return super()._get_field("source_cluster_name", explicit_presence=False,
+        )
+    @source_cluster_name.setter
+    def source_cluster_name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_cluster_name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "source_cluster_id":"source_cluster_id",
+        "creation_start":"creation_start",
+        "creation_finish":"creation_finish",
+        "source_cluster_name":"source_cluster_name",
+    }
+    
+# file: nebius/msp/postgresql/v1alpha1/backup_service.proto
+class GetBackupRequest(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.GetBackupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.GetBackupRequest",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        backup_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cluster_id, unset.UnsetType):
+            self.cluster_id = cluster_id
+        if not isinstance(backup_id, unset.UnsetType):
+            self.backup_id = backup_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cluster_id",
+            "backup_id",
+        ]
+    
+    @builtins.property
+    def cluster_id(self) -> "builtins.str":
+        return super()._get_field("cluster_id", explicit_presence=False,
+        )
+    @cluster_id.setter
+    def cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cluster_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def backup_id(self) -> "builtins.str":
+        return super()._get_field("backup_id", explicit_presence=False,
+        )
+    @backup_id.setter
+    def backup_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("backup_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cluster_id":"cluster_id",
+        "backup_id":"backup_id",
+    }
+    
+class ListBackupsRequest(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.ListBackupsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListBackupsRequest",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+    }
+    
+class ListBackupsByClusterRequest(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.ListBackupsByClusterRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cluster_id, unset.UnsetType):
+            self.cluster_id = cluster_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cluster_id",
+        ]
+    
+    @builtins.property
+    def cluster_id(self) -> "builtins.str":
+        return super()._get_field("cluster_id", explicit_presence=False,
+        )
+    @cluster_id.setter
+    def cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cluster_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cluster_id":"cluster_id",
+    }
+    
+class ListBackupsResponse(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.ListBackupsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListBackupsResponse",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        backups: "abc.Iterable[Backup]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(backups, unset.UnsetType):
+            self.backups = backups
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "backups",
+        ]
+    
+    @builtins.property
+    def backups(self) -> "abc.MutableSequence[Backup]":
+        return super()._get_field("backups", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Backup,None,None),
+        )
+    @backups.setter
+    def backups(self, value: "abc.Iterable[Backup]|None") -> None:
+        return super()._set_field("backups",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "backups":"backups",
+    }
+    
+
+class BackupServiceClient(client.Client):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.BackupService",backup_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.msp.postgresql.v1alpha1.BackupService"
+    
+    def get(self,
+        request: "GetBackupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["GetBackupRequest","Backup"]:
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=backup_pb2.Backup,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(Backup),
+        )
+    
+    def list(self,
+        request: "ListBackupsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["ListBackupsRequest","ListBackupsResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=backup_service_pb2.ListBackupsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(ListBackupsResponse),
+        )
+    
+    def list_by_cluster(self,
+        request: "ListBackupsByClusterRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["ListBackupsByClusterRequest","ListBackupsResponse"]:
+        return super().request(
+            method="ListByCluster",
+            request=request,
+            result_pb2_class=backup_service_pb2.ListBackupsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(ListBackupsResponse),
+        )
+    
 
 # file: nebius/msp/postgresql/v1alpha1/template.proto
 class TemplateSpec(pb_classes.Message):
@@ -1442,6 +1782,12 @@ class ClusterServiceClient(client.Client):
 
 __all__ = [
     #@ local import names here @#
+    "Backup",
+    "GetBackupRequest",
+    "ListBackupsRequest",
+    "ListBackupsByClusterRequest",
+    "ListBackupsResponse",
+    "BackupServiceClient",
     "TemplateSpec",
     "Cluster",
     "ConnectionPoolerConfig",
