@@ -22,7 +22,7 @@ import nebius.api.nebius.iam.v1.access_key_service_pb2 as access_key_service_pb2
 import nebius.aio.client as client
 import grpc as grpc
 import nebius.aio.request as request_1
-import nebius.aio.operation as operation
+import nebius.aio.operation as operation_1
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.api.nebius.iam.v1.auth_public_key_pb2 as auth_public_key_pb2
@@ -49,6 +49,8 @@ import nebius.api.nebius.iam.v1.profile_service_pb2 as profile_service_pb2
 import nebius.api.nebius.iam.v1.project_service_pb2 as project_service_pb2
 import nebius.api.nebius.iam.v1.service_account_service_pb2 as service_account_service_pb2
 import nebius.api.nebius.iam.v1.session_management_service_pb2 as session_management_service_pb2
+import nebius.api.nebius.iam.v1.static_key_pb2 as static_key_pb2
+import nebius.api.nebius.iam.v1.static_key_service_pb2 as static_key_service_pb2
 import nebius.api.nebius.iam.v1.tenant_service_pb2 as tenant_service_pb2
 import nebius.api.nebius.iam.v1.tenant_user_account_service_pb2 as tenant_user_account_service_pb2
 import nebius.api.nebius.iam.v1.tenant_user_account_with_attributes_service_pb2 as tenant_user_account_with_attributes_service_pb2
@@ -1232,7 +1234,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["CreateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["CreateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
             request=request,
@@ -1242,7 +1244,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def list(self,
@@ -1292,7 +1294,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["UpdateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["UpdateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -1303,7 +1305,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def get_by_id(self,
@@ -1373,7 +1375,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["ActivateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["ActivateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Activate",
             request=request,
@@ -1383,7 +1385,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def deactivate(self,
@@ -1393,7 +1395,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeactivateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeactivateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Deactivate",
             request=request,
@@ -1403,7 +1405,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def delete(self,
@@ -1413,7 +1415,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeleteAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeleteAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
             request=request,
@@ -1423,7 +1425,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -2184,7 +2186,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["CreateAuthPublicKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["CreateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
             request=request,
@@ -2194,7 +2196,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def get(self,
@@ -2264,7 +2266,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["UpdateAuthPublicKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["UpdateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -2275,7 +2277,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def activate(self,
@@ -2285,7 +2287,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["ActivateAuthPublicKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["ActivateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Activate",
             request=request,
@@ -2295,7 +2297,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def deactivate(self,
@@ -2305,7 +2307,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeactivateAuthPublicKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeactivateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Deactivate",
             request=request,
@@ -2315,7 +2317,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def delete(self,
@@ -2325,7 +2327,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeleteAuthPublicKeyRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeleteAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
             request=request,
@@ -2335,7 +2337,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -3291,7 +3293,7 @@ class FederationCertificateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["CreateFederationCertificateRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["CreateFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
             request=request,
@@ -3301,7 +3303,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def get(self,
@@ -3351,7 +3353,7 @@ class FederationCertificateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["UpdateFederationCertificateRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["UpdateFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -3362,7 +3364,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def delete(self,
@@ -3372,7 +3374,7 @@ class FederationCertificateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeleteFederationCertificateRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeleteFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
             request=request,
@@ -3382,7 +3384,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -3712,7 +3714,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["CreateFederationRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["CreateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
             request=request,
@@ -3722,7 +3724,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def get(self,
@@ -3792,7 +3794,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["UpdateFederationRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["UpdateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -3803,7 +3805,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def delete(self,
@@ -3813,7 +3815,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeleteFederationRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeleteFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
             request=request,
@@ -3823,7 +3825,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -5970,7 +5972,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["CreateGroupMembershipRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["CreateGroupMembershipRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
             request=request,
@@ -5980,7 +5982,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def get(self,
@@ -6030,7 +6032,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeleteGroupMembershipRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeleteGroupMembershipRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
             request=request,
@@ -6040,7 +6042,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def list_members(self,
@@ -7329,7 +7331,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["CreateInvitationRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["CreateInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
             request=request,
@@ -7339,7 +7341,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def get(self,
@@ -7389,7 +7391,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeleteInvitationRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeleteInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
             request=request,
@@ -7399,7 +7401,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def update(self,
@@ -7409,7 +7411,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["UpdateInvitationRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["UpdateInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -7420,7 +7422,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def resend(self,
@@ -7430,7 +7432,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["ResendInvitationRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["ResendInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Resend",
             request=request,
@@ -7440,7 +7442,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -8624,7 +8626,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["CreateServiceAccountRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["CreateServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
             request=request,
@@ -8634,7 +8636,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def get(self,
@@ -8704,7 +8706,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["UpdateServiceAccountRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["UpdateServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -8715,7 +8717,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def delete(self,
@@ -8725,7 +8727,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["DeleteServiceAccountRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["DeleteServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
             request=request,
@@ -8735,7 +8737,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -8907,6 +8909,833 @@ class SessionManagementServiceClient(client.Client):
             compression=compression,
             retries=retries,
             result_wrapper=pb_classes.simple_wrapper(RevokeSessionResponse),
+        )
+    
+
+# file: nebius/iam/v1/static_key.proto
+class StaticKey(pb_classes.Message):
+    __PB2_CLASS__ = static_key_pb2.StaticKey
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.StaticKey",static_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "StaticKeySpec|static_key_pb2.StaticKeySpec|None|unset.UnsetType" = unset.Unset,
+        status: "StaticKeyStatus|static_key_pb2.StaticKeyStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "StaticKeySpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=StaticKeySpec,
+        )
+    @spec.setter
+    def spec(self, value: "StaticKeySpec|static_key_pb2.StaticKeySpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "StaticKeyStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=StaticKeyStatus,
+        )
+    @status.setter
+    def status(self, value: "StaticKeyStatus|static_key_pb2.StaticKeyStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class StaticKeySpec(pb_classes.Message):
+    __PB2_CLASS__ = static_key_pb2.StaticKeySpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.StaticKeySpec",static_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "expiresAt": well_known_1.ts_mask,
+    }
+    
+    class ClientService(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.StaticKeySpec.ClientService",static_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        CLIENT_SERVICE_UNSPECIFIED = 0
+        OBSERVABILITY = 1
+        CONTAINER_REGISTRY = 2
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        account: "Account|access_pb2.Account|None|unset.UnsetType" = unset.Unset,
+        service: "StaticKeySpec.ClientService|static_key_pb2.StaticKeySpec.ClientService|None|unset.UnsetType" = unset.Unset,
+        expiresAt: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(account, unset.UnsetType):
+            self.account = account
+        if not isinstance(service, unset.UnsetType):
+            self.service = service
+        if not isinstance(expiresAt, unset.UnsetType):
+            self.expiresAt = expiresAt
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "account",
+            "service",
+            "expiresAt",
+            "ClientService",
+        ]
+    
+    @builtins.property
+    def account(self) -> "Account":
+        """
+         account of the static key. only service accounts are supported for now
+        """
+        
+        return super()._get_field("account", explicit_presence=False,
+        wrap=Account,
+        )
+    @account.setter
+    def account(self, value: "Account|access_pb2.Account|None") -> None:
+        return super()._set_field("account",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def service(self) -> "StaticKeySpec.ClientService":
+        """
+         service static key is to be used for
+        """
+        
+        return super()._get_field("service", explicit_presence=False,
+        wrap=StaticKeySpec.ClientService,
+        )
+    @service.setter
+    def service(self, value: "StaticKeySpec.ClientService|static_key_pb2.StaticKeySpec.ClientService|None") -> None:
+        return super()._set_field("service",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def expiresAt(self) -> "datetime.datetime":
+        """
+         when will the static key expire
+        """
+        
+        return super()._get_field("expiresAt", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @expiresAt.setter
+    def expiresAt(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("expiresAt",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "account":"account",
+        "service":"service",
+        "expiresAt":"expiresAt",
+        "ClientService":"ClientService",
+    }
+    
+class StaticKeyStatus(pb_classes.Message):
+    __PB2_CLASS__ = static_key_pb2.StaticKeyStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.StaticKeyStatus",static_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        active: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(active, unset.UnsetType):
+            self.active = active
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "active",
+        ]
+    
+    @builtins.property
+    def active(self) -> "builtins.bool":
+        return super()._get_field("active", explicit_presence=False,
+        )
+    @active.setter
+    def active(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("active",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "active":"active",
+    }
+    
+# file: nebius/iam/v1/static_key_service.proto
+class GetStaticKeyRequest(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.GetStaticKeyRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetStaticKeyRequest",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+         id of the static key
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetStaticKeyByNameRequest(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.GetStaticKeyByNameRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetStaticKeyByNameRequest",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+         id of the parent container (service account)
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        """
+         name of the static key
+        """
+        
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
+    
+class DeleteStaticKeyRequest(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.DeleteStaticKeyRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteStaticKeyRequest",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+         id of the static key to delete
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListStaticKeysRequest(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.ListStaticKeysRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListStaticKeysRequest",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+        if not isinstance(filter, unset.UnsetType):
+            self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+         Represents the container ID.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
+        return super()._get_field("filter", explicit_presence=False,
+        )
+    @filter.setter
+    def filter(self, value: "builtins.str|None") -> None:
+        return super()._set_field("filter",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
+class ListStaticKeysResponse(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.ListStaticKeysResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListStaticKeysResponse",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[StaticKey]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[StaticKey]":
+        """
+         List of static keys returned in the response. The field should be named as `items` for consistency.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(StaticKey,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[StaticKey]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class IssueStaticKeyRequest(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.IssueStaticKeyRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.IssueStaticKeyRequest",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "StaticKeySpec|static_key_pb2.StaticKeySpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "StaticKeySpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=StaticKeySpec,
+        )
+    @spec.setter
+    def spec(self, value: "StaticKeySpec|static_key_pb2.StaticKeySpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class IssueStaticKeyResponse(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.IssueStaticKeyResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.IssueStaticKeyResponse",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        operation: "v1_1.Operation|operation_pb2.Operation|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(token, unset.UnsetType):
+            self.token = token
+        if not isinstance(operation, unset.UnsetType):
+            self.operation = operation
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "token",
+            "operation",
+        ]
+    
+    @builtins.property
+    def token(self) -> "builtins.str":
+        return super()._get_field("token", explicit_presence=False,
+        )
+    @token.setter
+    def token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def operation(self) -> "v1_1.Operation":
+        return super()._get_field("operation", explicit_presence=False,
+        wrap=v1_1.Operation,
+        )
+    @operation.setter
+    def operation(self, value: "v1_1.Operation|operation_pb2.Operation|None") -> None:
+        return super()._set_field("operation",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "token":"token",
+        "operation":"operation",
+    }
+    
+class FindStaticKeyRequest(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.FindStaticKeyRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FindStaticKeyRequest",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(token, unset.UnsetType):
+            self.token = token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "token",
+        ]
+    
+    @builtins.property
+    def token(self) -> "builtins.str":
+        """
+         the method accepts a static key token with and without signature as an input
+        """
+        
+        return super()._get_field("token", explicit_presence=False,
+        )
+    @token.setter
+    def token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "token":"token",
+    }
+    
+class FindStaticKeyResponse(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.FindStaticKeyResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FindStaticKeyResponse",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        static_key: "StaticKey|static_key_pb2.StaticKey|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(static_key, unset.UnsetType):
+            self.static_key = static_key
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "static_key",
+        ]
+    
+    @builtins.property
+    def static_key(self) -> "StaticKey":
+        return super()._get_field("static_key", explicit_presence=False,
+        wrap=StaticKey,
+        )
+    @static_key.setter
+    def static_key(self, value: "StaticKey|static_key_pb2.StaticKey|None") -> None:
+        return super()._set_field("static_key",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "static_key":"static_key",
+    }
+    
+class RevokeStaticKeyRequest(pb_classes.Message):
+    __PB2_CLASS__ = static_key_service_pb2.RevokeStaticKeyRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.RevokeStaticKeyRequest",static_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(token, unset.UnsetType):
+            self.token = token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "token",
+        ]
+    
+    @builtins.property
+    def token(self) -> "builtins.str":
+        """
+         the method accepts a static key token with and without signature as an input
+        """
+        
+        return super()._get_field("token", explicit_presence=False,
+        )
+    @token.setter
+    def token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "token":"token",
+    }
+    
+
+class StaticKeyServiceClient(client.Client):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.StaticKeyService",static_key_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.iam.v1.StaticKeyService"
+    __operation_type__ = v1_1.Operation
+    
+    def issue(self,
+        request: "IssueStaticKeyRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["IssueStaticKeyRequest","IssueStaticKeyResponse"]:
+        return super().request(
+            method="Issue",
+            request=request,
+            result_pb2_class=static_key_service_pb2.IssueStaticKeyResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(IssueStaticKeyResponse),
+        )
+    
+    def list(self,
+        request: "ListStaticKeysRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["ListStaticKeysRequest","ListStaticKeysResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=static_key_service_pb2.ListStaticKeysResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(ListStaticKeysResponse),
+        )
+    
+    def get(self,
+        request: "GetStaticKeyRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["GetStaticKeyRequest","StaticKey"]:
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=static_key_pb2.StaticKey,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(StaticKey),
+        )
+    
+    def get_by_name(self,
+        request: "GetStaticKeyByNameRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["GetStaticKeyByNameRequest","StaticKey"]:
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=static_key_pb2.StaticKey,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(StaticKey),
+        )
+    
+    def delete(self,
+        request: "DeleteStaticKeyRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["DeleteStaticKeyRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation_1.Operation,
+        )
+    
+    def find(self,
+        request: "FindStaticKeyRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["FindStaticKeyRequest","FindStaticKeyResponse"]:
+        return super().request(
+            method="Find",
+            request=request,
+            result_pb2_class=static_key_service_pb2.FindStaticKeyResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(FindStaticKeyResponse),
+        )
+    
+    def revoke(self,
+        request: "RevokeStaticKeyRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["RevokeStaticKeyRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Revoke",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -9483,7 +10312,7 @@ class TenantUserAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["BlockTenantUserAccountRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["BlockTenantUserAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Block",
             request=request,
@@ -9493,7 +10322,7 @@ class TenantUserAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
     def unblock(self,
@@ -9503,7 +10332,7 @@ class TenantUserAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-    ) -> request_1.Request["UnblockTenantUserAccountRequest","operation.Operation[v1_1.Operation]"]:
+    ) -> request_1.Request["UnblockTenantUserAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Unblock",
             request=request,
@@ -9513,7 +10342,7 @@ class TenantUserAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
-            result_wrapper=operation.Operation,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -9933,6 +10762,20 @@ __all__ = [
     "RevokeSessionRequest",
     "RevokeSessionResponse",
     "SessionManagementServiceClient",
+    "StaticKey",
+    "StaticKeySpec",
+    "StaticKeyStatus",
+    "GetStaticKeyRequest",
+    "GetStaticKeyByNameRequest",
+    "DeleteStaticKeyRequest",
+    "ListStaticKeysRequest",
+    "ListStaticKeysResponse",
+    "IssueStaticKeyRequest",
+    "IssueStaticKeyResponse",
+    "FindStaticKeyRequest",
+    "FindStaticKeyResponse",
+    "RevokeStaticKeyRequest",
+    "StaticKeyServiceClient",
     "GetTenantRequest",
     "ListTenantsRequest",
     "ListTenantsResponse",
