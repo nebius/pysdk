@@ -70,7 +70,7 @@ class DiskPlacementPolicy(_message.Message):
     def __init__(self, placement_group_id: _Optional[str] = ..., placement_group_partition: _Optional[int] = ...) -> None: ...
 
 class DiskStatus(_message.Message):
-    __slots__ = ["state", "state_description", "read_write_attachment", "read_only_attachments", "source_image_id", "size_bytes", "reconciling"]
+    __slots__ = ["state", "state_description", "read_write_attachment", "read_only_attachments", "source_image_id", "size_bytes", "reconciling", "block_size_bytes"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[DiskStatus.State]
@@ -92,6 +92,7 @@ class DiskStatus(_message.Message):
     SOURCE_IMAGE_ID_FIELD_NUMBER: _ClassVar[int]
     SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
+    BLOCK_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     state: DiskStatus.State
     state_description: str
     read_write_attachment: str
@@ -99,4 +100,5 @@ class DiskStatus(_message.Message):
     source_image_id: str
     size_bytes: int
     reconciling: bool
-    def __init__(self, state: _Optional[_Union[DiskStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachment: _Optional[str] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., source_image_id: _Optional[str] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ...) -> None: ...
+    block_size_bytes: int
+    def __init__(self, state: _Optional[_Union[DiskStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachment: _Optional[str] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., source_image_id: _Optional[str] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ..., block_size_bytes: _Optional[int] = ...) -> None: ...

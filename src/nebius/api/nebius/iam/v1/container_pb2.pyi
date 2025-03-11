@@ -24,9 +24,11 @@ class ContainerSpec(_message.Message):
     def __init__(self) -> None: ...
 
 class ContainerStatus(_message.Message):
-    __slots__ = ["suspension_state", "container_state"]
+    __slots__ = ["suspension_state", "container_state", "region"]
     SUSPENSION_STATE_FIELD_NUMBER: _ClassVar[int]
     CONTAINER_STATE_FIELD_NUMBER: _ClassVar[int]
+    REGION_FIELD_NUMBER: _ClassVar[int]
     suspension_state: _suspension_state_pb2.SuspensionState
     container_state: _state_pb2.State
-    def __init__(self, suspension_state: _Optional[_Union[_suspension_state_pb2.SuspensionState, str]] = ..., container_state: _Optional[_Union[_state_pb2.State, str]] = ...) -> None: ...
+    region: str
+    def __init__(self, suspension_state: _Optional[_Union[_suspension_state_pb2.SuspensionState, str]] = ..., container_state: _Optional[_Union[_state_pb2.State, str]] = ..., region: _Optional[str] = ...) -> None: ...

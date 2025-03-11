@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1cnebius/storage/v1/base.proto\x12\x11nebius.storage.v1*;\n\x0cStorageClass\x12\x1d\n\x19STORAGE_CLASS_UNSPECIFIED\x10\x00\x12\x0c\n\x08STANDARD\x10\x01*_\n\x10VersioningPolicy\x12!\n\x1dVERSIONING_POLICY_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x44ISABLED\x10\x01\x12\x0b\n\x07\x45NABLED\x10\x02\x12\r\n\tSUSPENDED\x10\x03\x42X\n\x18\x61i.nebius.pub.storage.v1B\tBaseProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1cnebius/storage/v1/base.proto\x12\x11nebius.storage.v1*T\n\x0cStorageClass\x12\x1d\n\x19STORAGE_CLASS_UNSPECIFIED\x10\x00\x12\x0c\n\x08STANDARD\x10\x01\x12\x17\n\x13\x45NHANCED_THROUGHPUT\x10\x02*_\n\x10VersioningPolicy\x12!\n\x1dVERSIONING_POLICY_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x44ISABLED\x10\x01\x12\x0b\n\x07\x45NABLED\x10\x02\x12\r\n\tSUSPENDED\x10\x03\x42X\n\x18\x61i.nebius.pub.storage.v1B\tBaseProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -23,7 +23,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\030ai.nebius.pub.storage.v1B\tBaseProtoP\001Z/github.com/nebius/gosdk/proto/nebius/storage/v1'
   _globals['_STORAGECLASS']._serialized_start=51
-  _globals['_STORAGECLASS']._serialized_end=110
-  _globals['_VERSIONINGPOLICY']._serialized_start=112
-  _globals['_VERSIONINGPOLICY']._serialized_end=207
+  _globals['_STORAGECLASS']._serialized_end=135
+  _globals['_VERSIONINGPOLICY']._serialized_start=137
+  _globals['_VERSIONINGPOLICY']._serialized_end=232
 # @@protoc_insertion_point(module_scope)

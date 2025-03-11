@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Manual trigger
   repository_dispatch: # when triggered remotely
     types:
-    - api_published # trigger name
+    - updated-api
   # push:
   #   paths:
   #   - 'nebius-api'

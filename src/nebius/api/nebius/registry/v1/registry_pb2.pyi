@@ -27,7 +27,7 @@ class RegistrySpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., images_count: _Optional[int] = ...) -> None: ...
 
 class RegistryStatus(_message.Message):
-    __slots__ = ["state", "images_count"]
+    __slots__ = ["state", "images_count", "registry_fqdn"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         CREATING: _ClassVar[RegistryStatus.State]
@@ -40,6 +40,8 @@ class RegistryStatus(_message.Message):
     SUSPENDED: RegistryStatus.State
     STATE_FIELD_NUMBER: _ClassVar[int]
     IMAGES_COUNT_FIELD_NUMBER: _ClassVar[int]
+    REGISTRY_FQDN_FIELD_NUMBER: _ClassVar[int]
     state: RegistryStatus.State
     images_count: int
-    def __init__(self, state: _Optional[_Union[RegistryStatus.State, str]] = ..., images_count: _Optional[int] = ...) -> None: ...
+    registry_fqdn: str
+    def __init__(self, state: _Optional[_Union[RegistryStatus.State, str]] = ..., images_count: _Optional[int] = ..., registry_fqdn: _Optional[str] = ...) -> None: ...

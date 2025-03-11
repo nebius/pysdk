@@ -3,16 +3,23 @@
 # 
 
 import nebius.base.protos.pb_classes as pb_classes
-import nebius.api.nebius.msp.postgresql.v1alpha1.preset_pb2 as preset_pb2
+import nebius.api.nebius.msp.postgresql.v1alpha1.backup_pb2 as backup_pb2
 import nebius.base.protos.descriptor as descriptor
 import google.protobuf.descriptor as descriptor_1
+import nebius.base.protos.well_known as well_known_1
 import google.protobuf.message as message_1
-import nebius.api.nebius.msp.v1alpha1.resource as resource_1
-import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2
-import nebius.base.protos.unset as unset
-import collections.abc as abc
 import builtins as builtins
-import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2_1
+import nebius.base.protos.unset as unset
+import google.protobuf.timestamp_pb2 as timestamp_pb2
+import datetime as datetime
+import collections.abc as abc
+import nebius.api.nebius.msp.postgresql.v1alpha1.backup_service_pb2 as backup_service_pb2
+import nebius.aio.client as client
+import grpc as grpc
+import nebius.aio.request as request_1
+import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2
+import nebius.api.nebius.msp.v1alpha1.resource as resource_1
+import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_pb2 as cluster_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
@@ -23,85 +30,133 @@ import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config as config_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config.postgresql_pb2 as postgresql_pb2
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_service_pb2 as cluster_service_pb2
-import nebius.aio.client as client
 import nebius.api.nebius.common.v1alpha1 as v1alpha1_2
-import grpc as grpc
-import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
-# file: nebius/msp/postgresql/v1alpha1/preset.proto
-class PresetSpec(pb_classes.Message):
-    __PB2_CLASS__ = preset_pb2.PresetSpec
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.PresetSpec",preset_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+# file: nebius/msp/postgresql/v1alpha1/backup.proto
+class Backup(pb_classes.Message):
+    __PB2_CLASS__ = backup_pb2.Backup
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.Backup",backup_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
+        "creation_start": well_known_1.ts_mask,
+        "creation_finish": well_known_1.ts_mask,
     }
     
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None|unset.UnsetType" = unset.Unset,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        creation_start: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        creation_finish: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        source_cluster_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
-        if not isinstance(hosts, unset.UnsetType):
-            self.hosts = hosts
-        if not isinstance(disk, unset.UnsetType):
-            self.disk = disk
-        if not isinstance(resources, unset.UnsetType):
-            self.resources = resources
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(source_cluster_id, unset.UnsetType):
+            self.source_cluster_id = source_cluster_id
+        if not isinstance(creation_start, unset.UnsetType):
+            self.creation_start = creation_start
+        if not isinstance(creation_finish, unset.UnsetType):
+            self.creation_finish = creation_finish
+        if not isinstance(source_cluster_name, unset.UnsetType):
+            self.source_cluster_name = source_cluster_name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
-            "hosts",
-            "disk",
-            "resources",
+            "id",
+            "source_cluster_id",
+            "creation_start",
+            "creation_finish",
+            "source_cluster_name",
         ]
     
     @builtins.property
-    def hosts(self) -> "resource_1.HostSpec":
-        return super()._get_field("hosts", explicit_presence=False,
-        wrap=resource_1.HostSpec,
+    def id(self) -> "builtins.str":
+        """
+         Required. ID of the backup.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
         )
-    @hosts.setter
-    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec|None") -> None:
-        return super()._set_field("hosts",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def disk(self) -> "resource_1.DiskSpec":
-        return super()._get_field("disk", explicit_presence=False,
-        wrap=resource_1.DiskSpec,
-        )
-    @disk.setter
-    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec|None") -> None:
-        return super()._set_field("disk",value,explicit_presence=False,
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
         )
     
     @builtins.property
-    def resources(self) -> "resource_1.ResourcesSpec":
-        return super()._get_field("resources", explicit_presence=False,
-        wrap=resource_1.ResourcesSpec,
+    def source_cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster that the backup was created for.
+        """
+        
+        return super()._get_field("source_cluster_id", explicit_presence=False,
         )
-    @resources.setter
-    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
-        return super()._set_field("resources",value,explicit_presence=False,
+    @source_cluster_id.setter
+    def source_cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_cluster_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def creation_start(self) -> "datetime.datetime":
+        """
+         Creation start timestamp.
+        """
+        
+        return super()._get_field("creation_start", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @creation_start.setter
+    def creation_start(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("creation_start",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def creation_finish(self) -> "datetime.datetime":
+        """
+         Creation finish timestamp.
+        """
+        
+        return super()._get_field("creation_finish", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @creation_finish.setter
+    def creation_finish(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("creation_finish",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def source_cluster_name(self) -> "builtins.str":
+        """
+         Name of the ProstgreSQL cluster that the backup was created for.
+        """
+        
+        return super()._get_field("source_cluster_name", explicit_presence=False,
+        )
+    @source_cluster_name.setter
+    def source_cluster_name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_cluster_name",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "hosts":"hosts",
-        "disk":"disk",
-        "resources":"resources",
+        "id":"id",
+        "source_cluster_id":"source_cluster_id",
+        "creation_start":"creation_start",
+        "creation_finish":"creation_finish",
+        "source_cluster_name":"source_cluster_name",
     }
     
-# file: nebius/msp/postgresql/v1alpha1/template.proto
-class TemplateSpec(pb_classes.Message):
-    __PB2_CLASS__ = template_pb2_1.TemplateSpec
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.TemplateSpec",template_pb2_1.DESCRIPTOR,descriptor_1.Descriptor)
+# file: nebius/msp/postgresql/v1alpha1/backup_service.proto
+class GetBackupRequest(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.GetBackupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.GetBackupRequest",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -109,9 +164,264 @@ class TemplateSpec(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        resources: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
-        hosts: "resource_1.HostSpec|template_pb2.HostSpec|None|unset.UnsetType" = unset.Unset,
-        disk: "resource_1.DiskSpec|template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
+        cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        backup_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cluster_id, unset.UnsetType):
+            self.cluster_id = cluster_id
+        if not isinstance(backup_id, unset.UnsetType):
+            self.backup_id = backup_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cluster_id",
+            "backup_id",
+        ]
+    
+    @builtins.property
+    def cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster that holds backup.
+        """
+        
+        return super()._get_field("cluster_id", explicit_presence=False,
+        )
+    @cluster_id.setter
+    def cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cluster_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def backup_id(self) -> "builtins.str":
+        """
+         ID of the designated backup.
+        """
+        
+        return super()._get_field("backup_id", explicit_presence=False,
+        )
+    @backup_id.setter
+    def backup_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("backup_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cluster_id":"cluster_id",
+        "backup_id":"backup_id",
+    }
+    
+class ListBackupsRequest(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.ListBackupsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListBackupsRequest",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+         Identifier of IAM container to list backups from.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+    }
+    
+class ListBackupsByClusterRequest(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.ListBackupsByClusterRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cluster_id, unset.UnsetType):
+            self.cluster_id = cluster_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cluster_id",
+        ]
+    
+    @builtins.property
+    def cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster to list backups from.
+        """
+        
+        return super()._get_field("cluster_id", explicit_presence=False,
+        )
+    @cluster_id.setter
+    def cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cluster_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cluster_id":"cluster_id",
+    }
+    
+class ListBackupsResponse(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.ListBackupsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListBackupsResponse",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        backups: "abc.Iterable[Backup]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(backups, unset.UnsetType):
+            self.backups = backups
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "backups",
+        ]
+    
+    @builtins.property
+    def backups(self) -> "abc.MutableSequence[Backup]":
+        """
+         List of backups.
+        """
+        
+        return super()._get_field("backups", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Backup,None,None),
+        )
+    @backups.setter
+    def backups(self, value: "abc.Iterable[Backup]|None") -> None:
+        return super()._set_field("backups",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "backups":"backups",
+    }
+    
+
+class BackupServiceClient(client.Client):
+    """
+     A set of methods for managing PostgreSQL Cluster backups.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.BackupService",backup_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.msp.postgresql.v1alpha1.BackupService"
+    
+    def get(self,
+        request: "GetBackupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["GetBackupRequest","Backup"]:
+        """
+         Returns the specified PostgreSQL Cluster backup.
+         To get the list of available PostgreSQL Cluster backups, make a [List] or [ListByCluster] request.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=backup_pb2.Backup,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(Backup),
+        )
+    
+    def list(self,
+        request: "ListBackupsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["ListBackupsRequest","ListBackupsResponse"]:
+        """
+         Retrieves the list of PostgreSQL Cluster backups by project.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=backup_service_pb2.ListBackupsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(ListBackupsResponse),
+        )
+    
+    def list_by_cluster(self,
+        request: "ListBackupsByClusterRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["ListBackupsByClusterRequest","ListBackupsResponse"]:
+        """
+         Retrieves the list of PostgreSQL Cluster backups by cluster.
+        """
+        
+        return super().request(
+            method="ListByCluster",
+            request=request,
+            result_pb2_class=backup_service_pb2.ListBackupsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(ListBackupsResponse),
+        )
+    
+
+# file: nebius/msp/postgresql/v1alpha1/template.proto
+class TemplateSpec(pb_classes.Message):
+    __PB2_CLASS__ = template_pb2.TemplateSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.TemplateSpec",template_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        resources: "resource_1.ResourcesSpec|template_pb2_1.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
+        hosts: "resource_1.HostSpec|template_pb2_1.HostSpec|None|unset.UnsetType" = unset.Unset,
+        disk: "resource_1.DiskSpec|template_pb2_1.DiskSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resources, unset.UnsetType):
@@ -138,7 +448,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.ResourcesSpec,
         )
     @resources.setter
-    def resources(self, value: "resource_1.ResourcesSpec|template_pb2.ResourcesSpec|None") -> None:
+    def resources(self, value: "resource_1.ResourcesSpec|template_pb2_1.ResourcesSpec|None") -> None:
         return super()._set_field("resources",value,explicit_presence=False,
         )
     
@@ -148,7 +458,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.HostSpec,
         )
     @hosts.setter
-    def hosts(self, value: "resource_1.HostSpec|template_pb2.HostSpec|None") -> None:
+    def hosts(self, value: "resource_1.HostSpec|template_pb2_1.HostSpec|None") -> None:
         return super()._set_field("hosts",value,explicit_presence=False,
         )
     
@@ -158,7 +468,7 @@ class TemplateSpec(pb_classes.Message):
         wrap=resource_1.DiskSpec,
         )
     @disk.setter
-    def disk(self, value: "resource_1.DiskSpec|template_pb2.DiskSpec|None") -> None:
+    def disk(self, value: "resource_1.DiskSpec|template_pb2_1.DiskSpec|None") -> None:
         return super()._set_field("disk",value,explicit_presence=False,
         )
     
@@ -449,7 +759,7 @@ class ClusterStatus(pb_classes.Message):
         *,
         phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None|unset.UnsetType" = unset.Unset,
         state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None|unset.UnsetType" = unset.Unset,
-        preset_details: "resource_1.PresetDetails|template_pb2.PresetDetails|None|unset.UnsetType" = unset.Unset,
+        preset_details: "resource_1.PresetDetails|template_pb2_1.PresetDetails|None|unset.UnsetType" = unset.Unset,
         connection_endpoints: "Endpoints|cluster_pb2.Endpoints|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -508,7 +818,7 @@ class ClusterStatus(pb_classes.Message):
         wrap=resource_1.PresetDetails,
         )
     @preset_details.setter
-    def preset_details(self, value: "resource_1.PresetDetails|template_pb2.PresetDetails|None") -> None:
+    def preset_details(self, value: "resource_1.PresetDetails|template_pb2_1.PresetDetails|None") -> None:
         return super()._set_field("preset_details",value,explicit_presence=False,
         )
     
@@ -668,18 +978,15 @@ class ConfigSpec(pb_classes.Message):
         *,
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
         pooler_config: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|None|unset.UnsetType" = unset.Unset,
-        resources: "PresetSpec|preset_pb2.PresetSpec|None|unset.UnsetType" = unset.Unset,
         postgresql_config_16: "config_1.PostgresqlConfig16|postgresql_pb2.PostgresqlConfig16|None|unset.UnsetType" = unset.Unset,
         public_access: "builtins.bool|None|unset.UnsetType" = unset.Unset,
-        template: "TemplateSpec|template_pb2_1.TemplateSpec|None|unset.UnsetType" = unset.Unset,
+        template: "TemplateSpec|template_pb2.TemplateSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
             self.version = version
         if not isinstance(pooler_config, unset.UnsetType):
             self.pooler_config = pooler_config
-        if not isinstance(resources, unset.UnsetType):
-            self.resources = resources
         if not isinstance(postgresql_config_16, unset.UnsetType):
             self.postgresql_config_16 = postgresql_config_16
         if not isinstance(public_access, unset.UnsetType):
@@ -691,7 +998,6 @@ class ConfigSpec(pb_classes.Message):
         return [
             "version",
             "pooler_config",
-            "resources",
             "postgresql_config_16",
             "public_access",
             "template",
@@ -724,23 +1030,6 @@ class ConfigSpec(pb_classes.Message):
     @pooler_config.setter
     def pooler_config(self, value: "ConnectionPoolerConfig|cluster_pb2.ConnectionPoolerConfig|None") -> None:
         return super()._set_field("pooler_config",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def resources(self) -> "PresetSpec":
-        """
-         Resources allocated to PostgreSQL hosts.
-        
-        
-         use template instead
-        """
-        
-        return super()._get_field("resources", explicit_presence=False,
-        wrap=PresetSpec,
-        )
-    @resources.setter
-    def resources(self, value: "PresetSpec|preset_pb2.PresetSpec|None") -> None:
-        return super()._set_field("resources",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -780,14 +1069,13 @@ class ConfigSpec(pb_classes.Message):
         wrap=TemplateSpec,
         )
     @template.setter
-    def template(self, value: "TemplateSpec|template_pb2_1.TemplateSpec|None") -> None:
+    def template(self, value: "TemplateSpec|template_pb2.TemplateSpec|None") -> None:
         return super()._set_field("template",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "version":"version",
         "pooler_config":"pooler_config",
-        "resources":"resources",
         "postgresql_config_16":"postgresql_config_16",
         "public_access":"public_access",
         "template":"template",
@@ -1156,6 +1444,100 @@ class CreateClusterRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class RestoreClusterRequest(pb_classes.Message):
+    __PB2_CLASS__ = cluster_service_pb2.RestoreClusterRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.RestoreClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
+        backup_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(backup_id, unset.UnsetType):
+            self.backup_id = backup_id
+        if not isinstance(source_cluster_id, unset.UnsetType):
+            self.source_cluster_id = source_cluster_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "backup_id",
+            "source_cluster_id",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata associated with the new cluster.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ClusterSpec":
+        """
+         Specification for the new cluster.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ClusterSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ClusterSpec|cluster_pb2.ClusterSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def backup_id(self) -> "builtins.str":
+        """
+         ID of the backup to restore from.
+        """
+        
+        return super()._get_field("backup_id", explicit_presence=False,
+        )
+    @backup_id.setter
+    def backup_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("backup_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def source_cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster to restore from.
+        """
+        
+        return super()._get_field("source_cluster_id", explicit_presence=False,
+        )
+    @source_cluster_id.setter
+    def source_cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_cluster_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "backup_id":"backup_id",
+        "source_cluster_id":"source_cluster_id",
+    }
+    
 class DeleteClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.DeleteClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.DeleteClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1410,10 +1792,39 @@ class ClusterServiceClient(client.Client):
             result_wrapper=operation.Operation,
         )
     
+    def restore(self,
+        request: "RestoreClusterRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["RestoreClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Creates a new PostgreSQL cluster from a previously created backup.
+        """
+        
+        return super().request(
+            method="Restore",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation.Operation,
+        )
+    
 
 __all__ = [
     #@ local import names here @#
-    "PresetSpec",
+    "Backup",
+    "GetBackupRequest",
+    "ListBackupsRequest",
+    "ListBackupsByClusterRequest",
+    "ListBackupsResponse",
+    "BackupServiceClient",
     "TemplateSpec",
     "Cluster",
     "ConnectionPoolerConfig",
@@ -1427,6 +1838,7 @@ __all__ = [
     "ListClustersRequest",
     "ListClustersResponse",
     "CreateClusterRequest",
+    "RestoreClusterRequest",
     "DeleteClusterRequest",
     "UpdateClusterRequest",
     "ClusterServiceClient",

@@ -41,12 +41,14 @@ class ResourcesSpec(_message.Message):
     def __init__(self, platform: _Optional[str] = ..., preset: _Optional[str] = ...) -> None: ...
 
 class PresetDetails(_message.Message):
-    __slots__ = ["cpu_count", "memory_gibibytes"]
+    __slots__ = ["cpu_count", "memory_gibibytes", "gpu_count"]
     CPU_COUNT_FIELD_NUMBER: _ClassVar[int]
     MEMORY_GIBIBYTES_FIELD_NUMBER: _ClassVar[int]
+    GPU_COUNT_FIELD_NUMBER: _ClassVar[int]
     cpu_count: int
     memory_gibibytes: int
-    def __init__(self, cpu_count: _Optional[int] = ..., memory_gibibytes: _Optional[int] = ...) -> None: ...
+    gpu_count: int
+    def __init__(self, cpu_count: _Optional[int] = ..., memory_gibibytes: _Optional[int] = ..., gpu_count: _Optional[int] = ...) -> None: ...
 
 class Range(_message.Message):
     __slots__ = ["min", "max", "step", "value"]

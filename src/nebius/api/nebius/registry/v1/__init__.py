@@ -614,17 +614,21 @@ class RegistryStatus(pb_classes.Message):
         *,
         state: "RegistryStatus.State|registry_pb2.RegistryStatus.State|None|unset.UnsetType" = unset.Unset,
         images_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        registry_fqdn: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
         if not isinstance(images_count, unset.UnsetType):
             self.images_count = images_count
+        if not isinstance(registry_fqdn, unset.UnsetType):
+            self.registry_fqdn = registry_fqdn
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "images_count",
+            "registry_fqdn",
             "State",
         ]
     
@@ -647,9 +651,23 @@ class RegistryStatus(pb_classes.Message):
         return super()._set_field("images_count",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def registry_fqdn(self) -> "builtins.str":
+        """
+         regional fqdn "cr.eu-north1.nebius.cloud"
+        """
+        
+        return super()._get_field("registry_fqdn", explicit_presence=False,
+        )
+    @registry_fqdn.setter
+    def registry_fqdn(self, value: "builtins.str|None") -> None:
+        return super()._set_field("registry_fqdn",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "images_count":"images_count",
+        "registry_fqdn":"registry_fqdn",
         "State":"State",
     }
     

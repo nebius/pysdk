@@ -1086,6 +1086,10 @@ class AllocationDetails(pb_classes.Message):
     
     @builtins.property
     def allocated_cidr(self) -> "builtins.str":
+        """
+         The actual CIDR block that has been allocated.
+        """
+        
         return super()._get_field("allocated_cidr", explicit_presence=False,
         )
     @allocated_cidr.setter
@@ -1095,6 +1099,10 @@ class AllocationDetails(pb_classes.Message):
     
     @builtins.property
     def pool_id(self) -> "builtins.str":
+        """
+         ID of the pool from which this allocation was made.
+        """
+        
         return super()._get_field("pool_id", explicit_presence=False,
         )
     @pool_id.setter
@@ -1104,6 +1112,10 @@ class AllocationDetails(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "IpVersion":
+        """
+         The IP version of this allocation (IPv4 or IPv6).
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         wrap=IpVersion,
         )
@@ -2083,6 +2095,10 @@ class NetworkPool(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         ID of the IP address pool.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter

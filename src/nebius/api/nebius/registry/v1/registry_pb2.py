@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/registry/v1/registry.proto\x12\x12nebius.registry.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xd2\x01\n\x08Registry\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12<\n\x04spec\x18\x02 \x01(\x0b\x32 .nebius.registry.v1.RegistrySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12@\n\x06status\x18\x03 \x01(\x0b\x32\".nebius.registry.v1.RegistryStatusB\x04\xbaJ\x01\x05R\x06status\"Y\n\x0cRegistrySpec\x12 \n\x0b\x64\x65scription\x18\x01 \x01(\tR\x0b\x64\x65scription\x12\'\n\x0cimages_count\x18\x02 \x01(\x05\x42\x04\xbaJ\x01\x05R\x0bimagesCount\"\xb3\x01\n\x0eRegistryStatus\x12>\n\x05state\x18\n \x01(\x0e\x32(.nebius.registry.v1.RegistryStatus.StateR\x05state\x12!\n\x0cimages_count\x18\x0b \x01(\x05R\x0bimagesCount\">\n\x05State\x12\x0c\n\x08\x43REATING\x10\x00\x12\n\n\x06\x41\x43TIVE\x10\x01\x12\x0c\n\x08\x44\x45LETING\x10\x02\x12\r\n\tSUSPENDED\x10\x03\x42^\n\x19\x61i.nebius.pub.registry.v1B\rRegistryProtoP\x01Z0github.com/nebius/gosdk/proto/nebius/registry/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/registry/v1/registry.proto\x12\x12nebius.registry.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xd2\x01\n\x08Registry\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12<\n\x04spec\x18\x02 \x01(\x0b\x32 .nebius.registry.v1.RegistrySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12@\n\x06status\x18\x03 \x01(\x0b\x32\".nebius.registry.v1.RegistryStatusB\x04\xbaJ\x01\x05R\x06status\"Y\n\x0cRegistrySpec\x12 \n\x0b\x64\x65scription\x18\x01 \x01(\tR\x0b\x64\x65scription\x12\'\n\x0cimages_count\x18\x02 \x01(\x05\x42\x04\xbaJ\x01\x05R\x0bimagesCount\"\xd8\x01\n\x0eRegistryStatus\x12>\n\x05state\x18\n \x01(\x0e\x32(.nebius.registry.v1.RegistryStatus.StateR\x05state\x12!\n\x0cimages_count\x18\x0b \x01(\x05R\x0bimagesCount\x12#\n\rregistry_fqdn\x18\x0f \x01(\tR\x0cregistryFqdn\">\n\x05State\x12\x0c\n\x08\x43REATING\x10\x00\x12\n\n\x06\x41\x43TIVE\x10\x01\x12\x0c\n\x08\x44\x45LETING\x10\x02\x12\r\n\tSUSPENDED\x10\x03\x42^\n\x19\x61i.nebius.pub.registry.v1B\rRegistryProtoP\x01Z0github.com/nebius/gosdk/proto/nebius/registry/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -38,7 +38,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_REGISTRYSPEC']._serialized_start=358
   _globals['_REGISTRYSPEC']._serialized_end=447
   _globals['_REGISTRYSTATUS']._serialized_start=450
-  _globals['_REGISTRYSTATUS']._serialized_end=629
-  _globals['_REGISTRYSTATUS_STATE']._serialized_start=567
-  _globals['_REGISTRYSTATUS_STATE']._serialized_end=629
+  _globals['_REGISTRYSTATUS']._serialized_end=666
+  _globals['_REGISTRYSTATUS_STATE']._serialized_start=604
+  _globals['_REGISTRYSTATUS_STATE']._serialized_end=666
 # @@protoc_insertion_point(module_scope)

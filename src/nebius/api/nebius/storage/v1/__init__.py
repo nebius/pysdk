@@ -35,6 +35,7 @@ class StorageClass(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.StorageClass",base_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     STORAGE_CLASS_UNSPECIFIED = 0
     STANDARD = 1
+    ENHANCED_THROUGHPUT = 2
 
 class VersioningPolicy(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.VersioningPolicy",base_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1139,18 +1140,14 @@ class GetBucketRequest(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        with_deleted: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
             self.id = id
-        if not isinstance(with_deleted, unset.UnsetType):
-            self.with_deleted = with_deleted
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "id",
-            "with_deleted",
         ]
     
     @builtins.property
@@ -1162,23 +1159,8 @@ class GetBucketRequest(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
-    @builtins.property
-    def with_deleted(self) -> "builtins.bool":
-        """
-         By default, only CREATING and ACTIVE buckets are visible.
-         DEPRECATED: soft-deleted buckets are shown by default.
-        """
-        
-        return super()._get_field("with_deleted", explicit_presence=False,
-        )
-    @with_deleted.setter
-    def with_deleted(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("with_deleted",value,explicit_presence=False,
-        )
-    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
-        "with_deleted":"with_deleted",
     }
     
 class GetBucketByNameRequest(pb_classes.Message):
@@ -1193,21 +1175,17 @@ class GetBucketByNameRequest(pb_classes.Message):
         *,
         parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         name: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        with_deleted: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
             self.parent_id = parent_id
         if not isinstance(name, unset.UnsetType):
             self.name = name
-        if not isinstance(with_deleted, unset.UnsetType):
-            self.with_deleted = with_deleted
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "parent_id",
             "name",
-            "with_deleted",
         ]
     
     @builtins.property
@@ -1228,24 +1206,9 @@ class GetBucketByNameRequest(pb_classes.Message):
         return super()._set_field("name",value,explicit_presence=False,
         )
     
-    @builtins.property
-    def with_deleted(self) -> "builtins.bool":
-        """
-         By default, only CREATING and ACTIVE buckets are visible.
-         DEPRECATED: soft-deleted buckets are shown by default.
-        """
-        
-        return super()._get_field("with_deleted", explicit_presence=False,
-        )
-    @with_deleted.setter
-    def with_deleted(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("with_deleted",value,explicit_presence=False,
-        )
-    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "parent_id":"parent_id",
         "name":"name",
-        "with_deleted":"with_deleted",
     }
     
 class CreateBucketRequest(pb_classes.Message):
@@ -1551,7 +1514,6 @@ class ListBucketsRequest(pb_classes.Message):
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
         page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
         filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        with_deleted: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1562,8 +1524,6 @@ class ListBucketsRequest(pb_classes.Message):
             self.page_token = page_token
         if not isinstance(filter, unset.UnsetType):
             self.filter = filter
-        if not isinstance(with_deleted, unset.UnsetType):
-            self.with_deleted = with_deleted
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1571,7 +1531,6 @@ class ListBucketsRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "with_deleted",
         ]
     
     @builtins.property
@@ -1626,26 +1585,11 @@ class ListBucketsRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
-    @builtins.property
-    def with_deleted(self) -> "builtins.bool":
-        """
-         By default, only CREATING and ACTIVE buckets are shown.
-         DEPRECATED: soft-deleted buckets are shown by default.
-        """
-        
-        return super()._get_field("with_deleted", explicit_presence=False,
-        )
-    @with_deleted.setter
-    def with_deleted(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("with_deleted",value,explicit_presence=False,
-        )
-    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "parent_id":"parent_id",
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "with_deleted":"with_deleted",
     }
     
 class ListBucketsResponse(pb_classes.Message):

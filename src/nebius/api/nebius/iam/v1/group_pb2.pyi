@@ -23,7 +23,7 @@ class GroupSpec(_message.Message):
     def __init__(self) -> None: ...
 
 class GroupStatus(_message.Message):
-    __slots__ = ["state", "members_count"]
+    __slots__ = ["state", "members_count", "service_accounts_count", "tenant_user_accounts_count"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[GroupStatus.State]
@@ -32,6 +32,10 @@ class GroupStatus(_message.Message):
     ACTIVE: GroupStatus.State
     STATE_FIELD_NUMBER: _ClassVar[int]
     MEMBERS_COUNT_FIELD_NUMBER: _ClassVar[int]
+    SERVICE_ACCOUNTS_COUNT_FIELD_NUMBER: _ClassVar[int]
+    TENANT_USER_ACCOUNTS_COUNT_FIELD_NUMBER: _ClassVar[int]
     state: GroupStatus.State
     members_count: int
-    def __init__(self, state: _Optional[_Union[GroupStatus.State, str]] = ..., members_count: _Optional[int] = ...) -> None: ...
+    service_accounts_count: int
+    tenant_user_accounts_count: int
+    def __init__(self, state: _Optional[_Union[GroupStatus.State, str]] = ..., members_count: _Optional[int] = ..., service_accounts_count: _Optional[int] = ..., tenant_user_accounts_count: _Optional[int] = ...) -> None: ...

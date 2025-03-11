@@ -22,24 +22,76 @@ import nebius.aio.request as request
 
 # file: nebius/logging/v1/agentmanager/version_service.proto
 class AgentType(pb_enum.Enum):
+    """
+     Type of the agent in the system.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.logging.agentmanager.v1.AgentType",version_service_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     AGENT_UNDEFINED = 0
+    """
+     Default undefined state.
+    """
+    
     O11Y_AGENT = 1
+    """
+     Observability agent type.
+    """
+    
 
 class AgentState(pb_enum.Enum):
+    """
+     Current operational state of the agent.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.logging.agentmanager.v1.AgentState",version_service_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     STATE_UNDEFINED = 0
+    """
+     Default undefined state.
+    """
+    
     STATE_HEALTHY = 1
+    """
+     Agent is functioning normally.
+    """
+    
     STATE_ERROR = 2
+    """
+     Agent is in error state.
+    """
+    
 
 class Action(pb_enum.Enum):
+    """
+     Action to be taken by the agent based on version check.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.logging.agentmanager.v1.Action",version_service_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     ACTION_UNDEFINED = 0
+    """
+     Default undefined action.
+    """
+    
     NOP = 1
+    """
+     No operation needed.
+    """
+    
     UPDATE = 2
+    """
+     Update to new version required.
+    """
+    
     RESTART = 3
+    """
+     Agent restart required.
+    """
+    
 
 class GetVersionRequest(pb_classes.Message):
+    """
+     Request message for GetVersion RPC containing agent status and system information.
+    """
+    
     __PB2_CLASS__ = version_service_pb2.GetVersionRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.GetVersionRequest",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -66,6 +118,9 @@ class GetVersionRequest(pb_classes.Message):
         last_update_error: "builtins.str|None|unset.UnsetType" = unset.Unset,
         mk8s_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         modules_health: "ModulesHealth|version_service_pb2.ModulesHealth|None|unset.UnsetType" = unset.Unset,
+        cloud_init_status: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        instance_id_used_fallback: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        last_agent_logs: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -96,6 +151,12 @@ class GetVersionRequest(pb_classes.Message):
             self.mk8s_cluster_id = mk8s_cluster_id
         if not isinstance(modules_health, unset.UnsetType):
             self.modules_health = modules_health
+        if not isinstance(cloud_init_status, unset.UnsetType):
+            self.cloud_init_status = cloud_init_status
+        if not isinstance(instance_id_used_fallback, unset.UnsetType):
+            self.instance_id_used_fallback = instance_id_used_fallback
+        if not isinstance(last_agent_logs, unset.UnsetType):
+            self.last_agent_logs = last_agent_logs
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -113,10 +174,17 @@ class GetVersionRequest(pb_classes.Message):
             "last_update_error",
             "mk8s_cluster_id",
             "modules_health",
+            "cloud_init_status",
+            "instance_id_used_fallback",
+            "last_agent_logs",
         ]
     
     @builtins.property
     def type(self) -> "AgentType":
+        """
+         Type of the agent. Must be O11Y_AGENT (1).
+        """
+        
         return super()._get_field("type", explicit_presence=False,
         wrap=AgentType,
         )
@@ -127,6 +195,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def agent_version(self) -> "builtins.str":
+        """
+         Current version of the agent software.
+        """
+        
         return super()._get_field("agent_version", explicit_presence=False,
         )
     @agent_version.setter
@@ -136,6 +208,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def updater_version(self) -> "builtins.str":
+        """
+         Version of the updater component.
+        """
+        
         return super()._get_field("updater_version", explicit_presence=False,
         )
     @updater_version.setter
@@ -145,6 +221,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Parent identifier for the VM
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -154,6 +234,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def instance_id(self) -> "builtins.str":
+        """
+         Unique identifier for the instance where agent is running.
+        """
+        
         return super()._get_field("instance_id", explicit_presence=False,
         )
     @instance_id.setter
@@ -163,6 +247,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def os_info(self) -> "OSInfo":
+        """
+         Detailed information about the operating system.
+        """
+        
         return super()._get_field("os_info", explicit_presence=False,
         wrap=OSInfo,
         )
@@ -173,6 +261,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def agent_state(self) -> "AgentState":
+        """
+         Current operational state of the agent.
+        """
+        
         return super()._get_field("agent_state", explicit_presence=False,
         wrap=AgentState,
         )
@@ -183,6 +275,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def agent_uptime(self) -> "datetime.timedelta":
+        """
+         Time duration since the agent started.
+        """
+        
         return super()._get_field("agent_uptime", explicit_presence=False,
         wrap=well_known.from_duration
         )
@@ -194,6 +290,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def system_uptime(self) -> "datetime.timedelta":
+        """
+         Total system uptime.
+        """
+        
         return super()._get_field("system_uptime", explicit_presence=False,
         wrap=well_known.from_duration
         )
@@ -205,6 +305,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def updater_uptime(self) -> "datetime.timedelta":
+        """
+         Time duration since the updater component started.
+        """
+        
         return super()._get_field("updater_uptime", explicit_presence=False,
         wrap=well_known.from_duration
         )
@@ -216,6 +320,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def agent_state_messages(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         Status messages from the agent describing its current state.
+        """
+        
         return super()._get_field("agent_state_messages", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -226,6 +334,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def last_update_error(self) -> "builtins.str":
+        """
+         Description of the last update failure, if any.
+        """
+        
         return super()._get_field("last_update_error", explicit_presence=False,
         )
     @last_update_error.setter
@@ -235,6 +347,10 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def mk8s_cluster_id(self) -> "builtins.str":
+        """
+         Managed Kubernetes cluster identifier, if applicable.
+        """
+        
         return super()._get_field("mk8s_cluster_id", explicit_presence=False,
         )
     @mk8s_cluster_id.setter
@@ -244,12 +360,55 @@ class GetVersionRequest(pb_classes.Message):
     
     @builtins.property
     def modules_health(self) -> "ModulesHealth":
+        """
+         Health status of individual agent modules.
+        """
+        
         return super()._get_field("modules_health", explicit_presence=False,
         wrap=ModulesHealth,
         )
     @modules_health.setter
     def modules_health(self, value: "ModulesHealth|version_service_pb2.ModulesHealth|None") -> None:
         return super()._set_field("modules_health",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def cloud_init_status(self) -> "builtins.str":
+        """
+         Status of cloud initialization process.
+        """
+        
+        return super()._get_field("cloud_init_status", explicit_presence=False,
+        )
+    @cloud_init_status.setter
+    def cloud_init_status(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cloud_init_status",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def instance_id_used_fallback(self) -> "builtins.bool":
+        """
+         Indicates if a fallback method was used to determine instance_id.
+        """
+        
+        return super()._get_field("instance_id_used_fallback", explicit_presence=False,
+        )
+    @instance_id_used_fallback.setter
+    def instance_id_used_fallback(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("instance_id_used_fallback",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def last_agent_logs(self) -> "builtins.str":
+        """
+         Recent agent log entries for diagnostic purposes.
+        """
+        
+        return super()._get_field("last_agent_logs", explicit_presence=False,
+        )
+    @last_agent_logs.setter
+    def last_agent_logs(self, value: "builtins.str|None") -> None:
+        return super()._set_field("last_agent_logs",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -267,9 +426,16 @@ class GetVersionRequest(pb_classes.Message):
         "last_update_error":"last_update_error",
         "mk8s_cluster_id":"mk8s_cluster_id",
         "modules_health":"modules_health",
+        "cloud_init_status":"cloud_init_status",
+        "instance_id_used_fallback":"instance_id_used_fallback",
+        "last_agent_logs":"last_agent_logs",
     }
     
 class ModulesHealth(pb_classes.Message):
+    """
+     Health status information for all agent modules.
+    """
+    
     __PB2_CLASS__ = version_service_pb2.ModulesHealth
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.ModulesHealth",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -300,6 +466,10 @@ class ModulesHealth(pb_classes.Message):
     
     @builtins.property
     def process(self) -> "ModuleHealth":
+        """
+         Health status of the process module.
+        """
+        
         return super()._get_field("process", explicit_presence=False,
         wrap=ModuleHealth,
         )
@@ -310,6 +480,10 @@ class ModulesHealth(pb_classes.Message):
     
     @builtins.property
     def gpu_pipeline(self) -> "ModuleHealth":
+        """
+         Health status of the GPU pipeline module.
+        """
+        
         return super()._get_field("gpu_pipeline", explicit_presence=False,
         wrap=ModuleHealth,
         )
@@ -320,6 +494,10 @@ class ModulesHealth(pb_classes.Message):
     
     @builtins.property
     def cpu_pipeline(self) -> "ModuleHealth":
+        """
+         Health status of the CPU pipeline module.
+        """
+        
         return super()._get_field("cpu_pipeline", explicit_presence=False,
         wrap=ModuleHealth,
         )
@@ -335,6 +513,10 @@ class ModulesHealth(pb_classes.Message):
     }
     
 class ModuleHealth(pb_classes.Message):
+    """
+     Health status information for an individual module.
+    """
+    
     __PB2_CLASS__ = version_service_pb2.ModuleHealth
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.ModuleHealth",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -346,21 +528,29 @@ class ModuleHealth(pb_classes.Message):
         *,
         state: "AgentState|version_service_pb2.AgentState|None|unset.UnsetType" = unset.Unset,
         messages: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        parameters: "abc.Iterable[Parameter]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
         if not isinstance(messages, unset.UnsetType):
             self.messages = messages
+        if not isinstance(parameters, unset.UnsetType):
+            self.parameters = parameters
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "messages",
+            "parameters",
         ]
     
     @builtins.property
     def state(self) -> "AgentState":
+        """
+         Current operational state of the module.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=AgentState,
         )
@@ -371,6 +561,10 @@ class ModuleHealth(pb_classes.Message):
     
     @builtins.property
     def messages(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         Status messages describing the module's state.
+        """
+        
         return super()._get_field("messages", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
@@ -379,12 +573,91 @@ class ModuleHealth(pb_classes.Message):
         return super()._set_field("messages",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def parameters(self) -> "abc.MutableSequence[Parameter]":
+        """
+         Current parameters of the module.
+        """
+        
+        return super()._get_field("parameters", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Parameter,None,None),
+        )
+    @parameters.setter
+    def parameters(self, value: "abc.Iterable[Parameter]|None") -> None:
+        return super()._set_field("parameters",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "messages":"messages",
+        "parameters":"parameters",
+    }
+    
+class Parameter(pb_classes.Message):
+    """
+     Key-value parameter for module configuration.
+    """
+    
+    __PB2_CLASS__ = version_service_pb2.Parameter
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.Parameter",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+        if not isinstance(value, unset.UnsetType):
+            self.value = value
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+            "value",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        """
+         Name of the parameter.
+        """
+        
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def value(self) -> "builtins.str":
+        """
+         Value of the parameter.
+        """
+        
+        return super()._get_field("value", explicit_presence=False,
+        )
+    @value.setter
+    def value(self, value: "builtins.str|None") -> None:
+        return super()._set_field("value",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+        "value":"value",
     }
     
 class OSInfo(pb_classes.Message):
+    """
+     Operating system information for the instance.
+    """
+    
     __PB2_CLASS__ = version_service_pb2.OSInfo
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.OSInfo",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -416,6 +689,7 @@ class OSInfo(pb_classes.Message):
     @builtins.property
     def name(self) -> "builtins.str":
         """
+         Operating system name and version.
          Example: "Ubuntu 22.04.4 LTS"
         """
         
@@ -429,6 +703,7 @@ class OSInfo(pb_classes.Message):
     @builtins.property
     def uname(self) -> "builtins.str":
         """
+         Detailed system information from uname command.
          Example: "Linux computeimage-abcdef 6.5.0-44-generic #44~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jun 18 14:36:16 UTC 2 x86_64 x86_64 x86_64 GNU/Linux"
         """
         
@@ -441,6 +716,10 @@ class OSInfo(pb_classes.Message):
     
     @builtins.property
     def architecture(self) -> "builtins.str":
+        """
+         System architecture.
+        """
+        
         return super()._get_field("architecture", explicit_presence=False,
         )
     @architecture.setter
@@ -455,6 +734,10 @@ class OSInfo(pb_classes.Message):
     }
     
 class GetVersionResponse(pb_classes.Message):
+    """
+     Response message for GetVersion RPC containing required action for the agent.
+    """
+    
     __PB2_CLASS__ = version_service_pb2.GetVersionResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.GetVersionResponse",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -496,6 +779,10 @@ class GetVersionResponse(pb_classes.Message):
     
     @builtins.property
     def response(self) -> __OneOfClass_response_nop__|__OneOfClass_response_update__|__OneOfClass_response_restart__|None:
+        """
+         Parameters specific to the required action.
+        """
+        
         field_name: str|None = super().which_field_in_oneof("response")
         match field_name:
             case "nop":
@@ -539,6 +826,10 @@ class GetVersionResponse(pb_classes.Message):
     
     @builtins.property
     def action(self) -> "Action":
+        """
+         Required action for the agent to take.
+        """
+        
         return super()._get_field("action", explicit_presence=False,
         wrap=Action,
         )
@@ -549,6 +840,10 @@ class GetVersionResponse(pb_classes.Message):
     
     @builtins.property
     def nop(self) -> "NopActionParams|None":
+        """
+         Parameters for no-operation action.
+        """
+        
         return super()._get_field("nop", explicit_presence=True,
         wrap=NopActionParams,
         )
@@ -559,6 +854,10 @@ class GetVersionResponse(pb_classes.Message):
     
     @builtins.property
     def update(self) -> "UpdateActionParams|None":
+        """
+         Parameters for update action.
+        """
+        
         return super()._get_field("update", explicit_presence=True,
         wrap=UpdateActionParams,
         )
@@ -569,6 +868,10 @@ class GetVersionResponse(pb_classes.Message):
     
     @builtins.property
     def restart(self) -> "RestartActionParams|None":
+        """
+         Parameters for restart action.
+        """
+        
         return super()._get_field("restart", explicit_presence=True,
         wrap=RestartActionParams,
         )
@@ -586,6 +889,10 @@ class GetVersionResponse(pb_classes.Message):
     }
     
 class NopActionParams(pb_classes.Message):
+    """
+     Parameters when no operation is required.
+    """
+    
     __PB2_CLASS__ = version_service_pb2.NopActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.NopActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -605,6 +912,10 @@ class NopActionParams(pb_classes.Message):
     }
     
 class UpdateActionParams(pb_classes.Message):
+    """
+     Parameters for agent update action.
+    """
+    
     __PB2_CLASS__ = version_service_pb2.UpdateActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.UpdateActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -631,6 +942,10 @@ class UpdateActionParams(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "builtins.str":
+        """
+         Target version for the update.
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
@@ -640,6 +955,10 @@ class UpdateActionParams(pb_classes.Message):
     
     @builtins.property
     def repo_url(self) -> "builtins.str":
+        """
+         URL of the repository containing the update.
+        """
+        
         return super()._get_field("repo_url", explicit_presence=False,
         )
     @repo_url.setter
@@ -653,6 +972,10 @@ class UpdateActionParams(pb_classes.Message):
     }
     
 class RestartActionParams(pb_classes.Message):
+    """
+     Parameters for agent restart action.
+    """
+    
     __PB2_CLASS__ = version_service_pb2.RestartActionParams
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.RestartActionParams",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -673,6 +996,11 @@ class RestartActionParams(pb_classes.Message):
     
 
 class VersionServiceClient(client.Client):
+    """
+     VersionService provides functionality for managing nebius-observability-agent versions and health status
+     in the Nebius observability system.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.logging.agentmanager.v1.VersionService",version_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.logging.agentmanager.v1.VersionService"
     
@@ -684,6 +1012,11 @@ class VersionServiceClient(client.Client):
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
     ) -> request.Request["GetVersionRequest","GetVersionResponse"]:
+        """
+         GetVersion retrieves version information and receives instructions for agent updates
+         or maintenance based on the current state and health of the agent.
+        """
+        
         return super().request(
             method="GetVersion",
             request=request,
@@ -705,6 +1038,7 @@ __all__ = [
     "GetVersionRequest",
     "ModulesHealth",
     "ModuleHealth",
+    "Parameter",
     "OSInfo",
     "GetVersionResponse",
     "NopActionParams",

@@ -243,17 +243,21 @@ class PresetDetails(pb_classes.Message):
         *,
         cpu_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         memory_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        gpu_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(cpu_count, unset.UnsetType):
             self.cpu_count = cpu_count
         if not isinstance(memory_gibibytes, unset.UnsetType):
             self.memory_gibibytes = memory_gibibytes
+        if not isinstance(gpu_count, unset.UnsetType):
+            self.gpu_count = gpu_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "cpu_count",
             "memory_gibibytes",
+            "gpu_count",
         ]
     
     @builtins.property
@@ -274,9 +278,19 @@ class PresetDetails(pb_classes.Message):
         return super()._set_field("memory_gibibytes",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def gpu_count(self) -> "builtins.int":
+        return super()._get_field("gpu_count", explicit_presence=False,
+        )
+    @gpu_count.setter
+    def gpu_count(self, value: "builtins.int|None") -> None:
+        return super()._set_field("gpu_count",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "cpu_count":"cpu_count",
         "memory_gibibytes":"memory_gibibytes",
+        "gpu_count":"gpu_count",
     }
     
 class Range(pb_classes.Message):

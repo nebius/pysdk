@@ -20,7 +20,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.storage.v1 import bucket_pb2 as nebius_dot_storage_dot_v1_dot_bucket__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&nebius/storage/v1/bucket_service.proto\x12\x11nebius.storage.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/storage/v1/bucket.proto\"Q\n\x10GetBucketRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12%\n\x0cwith_deleted\x18\x02 \x01(\x08\x42\x02\x18\x01R\x0bwithDeleted\"p\n\x16GetBucketByNameRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12%\n\x0cwith_deleted\x18\x03 \x01(\x08\x42\x02\x18\x01R\x0bwithDeleted\"\x96\x01\n\x13\x43reateBucketRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x37\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.storage.v1.BucketSpecB\x04\xbaJ\x01\x07R\x04spec\"\x98\x01\n\x13UpdateBucketRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.storage.v1.BucketSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\x9e\x01\n\x13\x44\x65leteBucketRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12\x37\n\x08purge_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00R\x07purgeAt\x12-\n\x03ttl\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationH\x00R\x03ttlB\x07\n\x05purge\",\n\x12PurgeBucketRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"/\n\x15UndeleteBucketRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\xb4\x01\n\x12ListBucketsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\x12%\n\x0cwith_deleted\x18\x05 \x01(\x08\x42\x02\x18\x01R\x0bwithDeleted\"n\n\x13ListBucketsResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.storage.v1.BucketR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x9d\x05\n\rBucketService\x12\x45\n\x03Get\x12#.nebius.storage.v1.GetBucketRequest\x1a\x19.nebius.storage.v1.Bucket\x12Q\n\tGetByName\x12).nebius.storage.v1.GetBucketByNameRequest\x1a\x19.nebius.storage.v1.Bucket\x12U\n\x04List\x12%.nebius.storage.v1.ListBucketsRequest\x1a&.nebius.storage.v1.ListBucketsResponse\x12M\n\x06\x43reate\x12&.nebius.storage.v1.CreateBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.storage.v1.UpdateBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.storage.v1.DeleteBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12K\n\x05Purge\x12%.nebius.storage.v1.PurgeBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12Q\n\x08Undelete\x12(.nebius.storage.v1.UndeleteBucketRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0e\xbaJ\x0b\x63pl.storageBa\n\x18\x61i.nebius.pub.storage.v1B\x12\x42ucketServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&nebius/storage/v1/bucket_service.proto\x12\x11nebius.storage.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/storage/v1/bucket.proto\"0\n\x10GetBucketRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02idJ\x04\x08\x02\x10\x03\"W\n\x16GetBucketByNameRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04nameJ\x04\x08\x03\x10\x04\"\x96\x01\n\x13\x43reateBucketRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x37\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.storage.v1.BucketSpecB\x04\xbaJ\x01\x07R\x04spec\"\x98\x01\n\x13UpdateBucketRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.storage.v1.BucketSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xa4\x01\n\x13\x44\x65leteBucketRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12\x37\n\x08purge_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00R\x07purgeAt\x12-\n\x03ttl\x18\x04 \x01(\x0b\x32\x19.google.protobuf.DurationH\x00R\x03ttlB\x07\n\x05purgeJ\x04\x08\x02\x10\x03\",\n\x12PurgeBucketRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"/\n\x15UndeleteBucketRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x93\x01\n\x12ListBucketsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilterJ\x04\x08\x05\x10\x06\"n\n\x13ListBucketsResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.storage.v1.BucketR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x9d\x05\n\rBucketService\x12\x45\n\x03Get\x12#.nebius.storage.v1.GetBucketRequest\x1a\x19.nebius.storage.v1.Bucket\x12Q\n\tGetByName\x12).nebius.storage.v1.GetBucketByNameRequest\x1a\x19.nebius.storage.v1.Bucket\x12U\n\x04List\x12%.nebius.storage.v1.ListBucketsRequest\x1a&.nebius.storage.v1.ListBucketsResponse\x12M\n\x06\x43reate\x12&.nebius.storage.v1.CreateBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.storage.v1.UpdateBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.storage.v1.DeleteBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12K\n\x05Purge\x12%.nebius.storage.v1.PurgeBucketRequest\x1a\x1b.nebius.common.v1.Operation\x12Q\n\x08Undelete\x12(.nebius.storage.v1.UndeleteBucketRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0e\xbaJ\x0b\x63pl.storageBa\n\x18\x61i.nebius.pub.storage.v1B\x12\x42ucketServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -31,10 +31,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._serialized_options = b'\n\030ai.nebius.pub.storage.v1B\022BucketServiceProtoP\001Z/github.com/nebius/gosdk/proto/nebius/storage/v1'
   _GETBUCKETREQUEST.fields_by_name['id']._options = None
   _GETBUCKETREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
-  _GETBUCKETREQUEST.fields_by_name['with_deleted']._options = None
-  _GETBUCKETREQUEST.fields_by_name['with_deleted']._serialized_options = b'\030\001'
-  _GETBUCKETBYNAMEREQUEST.fields_by_name['with_deleted']._options = None
-  _GETBUCKETBYNAMEREQUEST.fields_by_name['with_deleted']._serialized_options = b'\030\001'
+  _GETBUCKETBYNAMEREQUEST.fields_by_name['name']._options = None
+  _GETBUCKETBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _CREATEBUCKETREQUEST.fields_by_name['metadata']._options = None
   _CREATEBUCKETREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
   _CREATEBUCKETREQUEST.fields_by_name['spec']._options = None
@@ -51,28 +49,26 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _UNDELETEBUCKETREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
   _LISTBUCKETSREQUEST.fields_by_name['parent_id']._options = None
   _LISTBUCKETSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
-  _LISTBUCKETSREQUEST.fields_by_name['with_deleted']._options = None
-  _LISTBUCKETSREQUEST.fields_by_name['with_deleted']._serialized_options = b'\030\001'
   _BUCKETSERVICE._options = None
   _BUCKETSERVICE._serialized_options = b'\272J\013cpl.storage'
   _globals['_GETBUCKETREQUEST']._serialized_start=280
-  _globals['_GETBUCKETREQUEST']._serialized_end=361
-  _globals['_GETBUCKETBYNAMEREQUEST']._serialized_start=363
-  _globals['_GETBUCKETBYNAMEREQUEST']._serialized_end=475
-  _globals['_CREATEBUCKETREQUEST']._serialized_start=478
-  _globals['_CREATEBUCKETREQUEST']._serialized_end=628
-  _globals['_UPDATEBUCKETREQUEST']._serialized_start=631
-  _globals['_UPDATEBUCKETREQUEST']._serialized_end=783
-  _globals['_DELETEBUCKETREQUEST']._serialized_start=786
-  _globals['_DELETEBUCKETREQUEST']._serialized_end=944
-  _globals['_PURGEBUCKETREQUEST']._serialized_start=946
-  _globals['_PURGEBUCKETREQUEST']._serialized_end=990
-  _globals['_UNDELETEBUCKETREQUEST']._serialized_start=992
-  _globals['_UNDELETEBUCKETREQUEST']._serialized_end=1039
-  _globals['_LISTBUCKETSREQUEST']._serialized_start=1042
-  _globals['_LISTBUCKETSREQUEST']._serialized_end=1222
-  _globals['_LISTBUCKETSRESPONSE']._serialized_start=1224
-  _globals['_LISTBUCKETSRESPONSE']._serialized_end=1334
-  _globals['_BUCKETSERVICE']._serialized_start=1337
-  _globals['_BUCKETSERVICE']._serialized_end=2006
+  _globals['_GETBUCKETREQUEST']._serialized_end=328
+  _globals['_GETBUCKETBYNAMEREQUEST']._serialized_start=330
+  _globals['_GETBUCKETBYNAMEREQUEST']._serialized_end=417
+  _globals['_CREATEBUCKETREQUEST']._serialized_start=420
+  _globals['_CREATEBUCKETREQUEST']._serialized_end=570
+  _globals['_UPDATEBUCKETREQUEST']._serialized_start=573
+  _globals['_UPDATEBUCKETREQUEST']._serialized_end=725
+  _globals['_DELETEBUCKETREQUEST']._serialized_start=728
+  _globals['_DELETEBUCKETREQUEST']._serialized_end=892
+  _globals['_PURGEBUCKETREQUEST']._serialized_start=894
+  _globals['_PURGEBUCKETREQUEST']._serialized_end=938
+  _globals['_UNDELETEBUCKETREQUEST']._serialized_start=940
+  _globals['_UNDELETEBUCKETREQUEST']._serialized_end=987
+  _globals['_LISTBUCKETSREQUEST']._serialized_start=990
+  _globals['_LISTBUCKETSREQUEST']._serialized_end=1137
+  _globals['_LISTBUCKETSRESPONSE']._serialized_start=1139
+  _globals['_LISTBUCKETSRESPONSE']._serialized_end=1249
+  _globals['_BUCKETSERVICE']._serialized_start=1252
+  _globals['_BUCKETSERVICE']._serialized_end=1921
 # @@protoc_insertion_point(module_scope)
