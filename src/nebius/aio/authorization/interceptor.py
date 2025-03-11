@@ -33,7 +33,13 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
         if client_call_details.metadata is not None:
             auth_type = client_call_details.metadata.get(Internal.AUTHORIZATION)
         else:
-            client_call_details.metadata = Metadata()
+            client_call_details = ClientCallDetails(
+                method=client_call_details.method,
+                timeout=client_call_details.timeout,
+                metadata=Metadata(),
+                credentials=client_call_details.credentials,
+                wait_for_ready=client_call_details.wait_for_ready,
+            )
         if auth_type == Authorization.DISABLE:
             log.debug(
                 f"Calling {client_call_details.method}," " authentication is disabled"
@@ -59,11 +65,17 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
                 f"Authenticating {client_call_details.method},"
                 f" attempt: {attempt}, timeout: {timeout}."
             )
-            await auth.authenticate(client_call_details.metadata, timeout)
+            await auth.authenticate(client_call_details.metadata, timeout)  # type: ignore
             if deadline is not None:
                 if deadline <= time():
                     raise TimeoutError("authorization timed out")
-                client_call_details.timeout = deadline - time()
+                client_call_details = ClientCallDetails(
+                    method=client_call_details.method,
+                    timeout=client_call_details.timeout - (deadline - time()),  # type: ignore
+                    metadata=client_call_details.metadata,
+                    credentials=client_call_details.credentials,
+                    wait_for_ready=client_call_details.wait_for_ready,
+                )
             try:
                 log.debug(f"Calling authenticated {client_call_details.method}.")
                 return await continuation(client_call_details, request)  # type: ignore
