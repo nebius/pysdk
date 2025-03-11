@@ -1,10 +1,7 @@
 import argparse
-import os
 from time import time  # type: ignore[unused-ignore]
 
 from nebius.aio.service_error import RequestError
-from nebius.aio.token.static import Bearer
-from nebius.aio.token.token import Token
 from nebius.api.nebius.common.v1 import ResourceMetadata
 from nebius.api.nebius.storage.v1 import (
     BucketServiceClient,
@@ -26,18 +23,13 @@ if __name__ == "__main__":
             "examples/basic.py",
             description="basic example that creates and then deletes a bucket",
         )
+        parser.add_argument("--domain", help="domain override", default=None)
         parser.add_argument(
-            "project_id", help="project in which to create and delete " "a test bucket."
+            "project_id", help="project in which to create and delete a test bucket"
         )
         args = parser.parse_args()
 
-        sdk = SDK(
-            credentials=Bearer(
-                Token(
-                    os.environ.get("NEBIUS_IAM_TOKEN", ""),
-                )
-            ),
-        )
+        sdk = SDK(domain=args.domain)
         print(await sdk.whoami())
 
         project_id: str = args.project_id
