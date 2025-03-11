@@ -35,6 +35,7 @@ class StorageClass(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.StorageClass",base_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     STORAGE_CLASS_UNSPECIFIED = 0
     STANDARD = 1
+    ENHANCED_THROUGHPUT = 2
 
 class VersioningPolicy(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.VersioningPolicy",base_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)

@@ -1500,6 +1500,7 @@ class ResourceMetadata(pb_classes.Message):
     def labels(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         """
          Labels associated with the resource.
+        
         """
         
         return super()._get_field("labels", explicit_presence=False,

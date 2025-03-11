@@ -7,7 +7,8 @@ from nebius.api.nebius.msp.postgresql.v1alpha1 import backup_service_pb2 as nebi
 
 
 class BackupServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """A set of methods for managing PostgreSQL Cluster backups.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -33,22 +34,27 @@ class BackupServiceStub(object):
 
 
 class BackupServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """A set of methods for managing PostgreSQL Cluster backups.
+    """
 
     def Get(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Returns the specified PostgreSQL Cluster backup.
+        To get the list of available PostgreSQL Cluster backups, make a [List] or [ListByCluster] request.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def List(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Retrieves the list of PostgreSQL Cluster backups by project.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def ListByCluster(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Retrieves the list of PostgreSQL Cluster backups by cluster.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -79,7 +85,8 @@ def add_BackupServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class BackupService(object):
-    """Missing associated documentation comment in .proto file."""
+    """A set of methods for managing PostgreSQL Cluster backups.
+    """
 
     @staticmethod
     def Get(request,

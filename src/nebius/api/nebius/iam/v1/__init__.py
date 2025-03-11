@@ -40,8 +40,6 @@ import nebius.api.nebius.iam.v1.tenant_user_account_pb2 as tenant_user_account_p
 import nebius.api.nebius.iam.v1.group_membership_pb2 as group_membership_pb2
 import nebius.api.nebius.iam.v1.group_membership_service_pb2 as group_membership_service_pb2
 import nebius.api.nebius.iam.v1.group_service_pb2 as group_service_pb2
-import nebius.api.nebius.iam.v1.token_service_pb2 as token_service_pb2
-import nebius.api.nebius.iam.v1.identity_service_pb2 as identity_service_pb2
 import nebius.api.nebius.iam.v1.invitation_pb2 as invitation_pb2
 import nebius.api.nebius.iam.v1.invitation_service_pb2 as invitation_service_pb2
 import nebius.api.nebius.iam.v1.user_account_pb2 as user_account_pb2
@@ -54,6 +52,7 @@ import nebius.api.nebius.iam.v1.static_key_service_pb2 as static_key_service_pb2
 import nebius.api.nebius.iam.v1.tenant_service_pb2 as tenant_service_pb2
 import nebius.api.nebius.iam.v1.tenant_user_account_service_pb2 as tenant_user_account_service_pb2
 import nebius.api.nebius.iam.v1.tenant_user_account_with_attributes_service_pb2 as tenant_user_account_with_attributes_service_pb2
+import nebius.api.nebius.iam.v1.token_service_pb2 as token_service_pb2
 import nebius.api.nebius.iam.v1.token_exchange_service_pb2 as token_exchange_service_pb2
 #@ local imports here @#
 
@@ -6413,325 +6412,6 @@ class GroupServiceClient(client.Client):
         )
     
 
-# file: nebius/iam/v1/token_service.proto
-class ExchangeTokenRequest(pb_classes.Message):
-    """
-     https://www.rfc-editor.org/rfc/rfc8693.html
-    """
-    
-    __PB2_CLASS__ = token_service_pb2.ExchangeTokenRequest
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ExchangeTokenRequest",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-    }
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        grant_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        requested_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        subject_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        subject_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        scopes: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
-        audience: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        actor_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        actor_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        resource: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(grant_type, unset.UnsetType):
-            self.grant_type = grant_type
-        if not isinstance(requested_token_type, unset.UnsetType):
-            self.requested_token_type = requested_token_type
-        if not isinstance(subject_token, unset.UnsetType):
-            self.subject_token = subject_token
-        if not isinstance(subject_token_type, unset.UnsetType):
-            self.subject_token_type = subject_token_type
-        if not isinstance(scopes, unset.UnsetType):
-            self.scopes = scopes
-        if not isinstance(audience, unset.UnsetType):
-            self.audience = audience
-        if not isinstance(actor_token, unset.UnsetType):
-            self.actor_token = actor_token
-        if not isinstance(actor_token_type, unset.UnsetType):
-            self.actor_token_type = actor_token_type
-        if not isinstance(resource, unset.UnsetType):
-            self.resource = resource
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "grant_type",
-            "requested_token_type",
-            "subject_token",
-            "subject_token_type",
-            "scopes",
-            "audience",
-            "actor_token",
-            "actor_token_type",
-            "resource",
-        ]
-    
-    @builtins.property
-    def grant_type(self) -> "builtins.str":
-        """
-         required - urn:ietf:params:oauth:grant-type:token-exchange
-        """
-        
-        return super()._get_field("grant_type", explicit_presence=False,
-        )
-    @grant_type.setter
-    def grant_type(self, value: "builtins.str|None") -> None:
-        return super()._set_field("grant_type",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def requested_token_type(self) -> "builtins.str":
-        """
-         optional type of requested token, default is urn:ietf:params:oauth:token-type:access_token
-        """
-        
-        return super()._get_field("requested_token_type", explicit_presence=False,
-        )
-    @requested_token_type.setter
-    def requested_token_type(self, value: "builtins.str|None") -> None:
-        return super()._set_field("requested_token_type",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def subject_token(self) -> "builtins.str":
-        """
-         required - could be self signed JWT token
-        """
-        
-        return super()._get_field("subject_token", explicit_presence=False,
-        )
-    @subject_token.setter
-    def subject_token(self, value: "builtins.str|None") -> None:
-        return super()._set_field("subject_token",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def subject_token_type(self) -> "builtins.str":
-        """
-         required, in case of jwt - urn:ietf:params:oauth:token-type:jwt
-        """
-        
-        return super()._get_field("subject_token_type", explicit_presence=False,
-        )
-    @subject_token_type.setter
-    def subject_token_type(self, value: "builtins.str|None") -> None:
-        return super()._set_field("subject_token_type",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def scopes(self) -> "abc.MutableSequence[builtins.str]":
-        """
-         optional (scopes of the token)
-        """
-        
-        return super()._get_field("scopes", explicit_presence=False,
-        wrap=pb_classes.Repeated,
-        )
-    @scopes.setter
-    def scopes(self, value: "abc.Iterable[builtins.str]|None") -> None:
-        return super()._set_field("scopes",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def audience(self) -> "builtins.str":
-        """
-         optional, name of the oauth client id on which this token will be used
-        """
-        
-        return super()._get_field("audience", explicit_presence=False,
-        )
-    @audience.setter
-    def audience(self, value: "builtins.str|None") -> None:
-        return super()._set_field("audience",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def actor_token(self) -> "builtins.str":
-        """
-         optional, subject token for impersonation/delegation (who want to impersonate/delegate) in subject_token.
-        """
-        
-        return super()._get_field("actor_token", explicit_presence=False,
-        )
-    @actor_token.setter
-    def actor_token(self, value: "builtins.str|None") -> None:
-        return super()._set_field("actor_token",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def actor_token_type(self) -> "builtins.str":
-        """
-         optional, token type for the impersonation/delegation (who want to impersonate/delegate). Usually it's urn:ietf:params:oauth:token-type:access_token
-        """
-        
-        return super()._get_field("actor_token_type", explicit_presence=False,
-        )
-    @actor_token_type.setter
-    def actor_token_type(self, value: "builtins.str|None") -> None:
-        return super()._set_field("actor_token_type",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def resource(self) -> "abc.MutableSequence[builtins.str]":
-        """
-         optional, list of resources approved to use by token, if applicable
-        """
-        
-        return super()._get_field("resource", explicit_presence=False,
-        wrap=pb_classes.Repeated,
-        )
-    @resource.setter
-    def resource(self, value: "abc.Iterable[builtins.str]|None") -> None:
-        return super()._set_field("resource",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "grant_type":"grant_type",
-        "requested_token_type":"requested_token_type",
-        "subject_token":"subject_token",
-        "subject_token_type":"subject_token_type",
-        "scopes":"scopes",
-        "audience":"audience",
-        "actor_token":"actor_token",
-        "actor_token_type":"actor_token_type",
-        "resource":"resource",
-    }
-    
-class CreateTokenResponse(pb_classes.Message):
-    __PB2_CLASS__ = token_service_pb2.CreateTokenResponse
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateTokenResponse",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-    }
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        access_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        issued_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        expires_in: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        scopes: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(access_token, unset.UnsetType):
-            self.access_token = access_token
-        if not isinstance(issued_token_type, unset.UnsetType):
-            self.issued_token_type = issued_token_type
-        if not isinstance(token_type, unset.UnsetType):
-            self.token_type = token_type
-        if not isinstance(expires_in, unset.UnsetType):
-            self.expires_in = expires_in
-        if not isinstance(scopes, unset.UnsetType):
-            self.scopes = scopes
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "access_token",
-            "issued_token_type",
-            "token_type",
-            "expires_in",
-            "scopes",
-        ]
-    
-    @builtins.property
-    def access_token(self) -> "builtins.str":
-        """
-         required
-        """
-        
-        return super()._get_field("access_token", explicit_presence=False,
-        )
-    @access_token.setter
-    def access_token(self, value: "builtins.str|None") -> None:
-        return super()._set_field("access_token",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def issued_token_type(self) -> "builtins.str":
-        """
-         required
-        """
-        
-        return super()._get_field("issued_token_type", explicit_presence=False,
-        )
-    @issued_token_type.setter
-    def issued_token_type(self, value: "builtins.str|None") -> None:
-        return super()._set_field("issued_token_type",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def token_type(self) -> "builtins.str":
-        """
-         required - Bearer
-        """
-        
-        return super()._get_field("token_type", explicit_presence=False,
-        )
-    @token_type.setter
-    def token_type(self, value: "builtins.str|None") -> None:
-        return super()._set_field("token_type",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def expires_in(self) -> "builtins.int":
-        return super()._get_field("expires_in", explicit_presence=False,
-        )
-    @expires_in.setter
-    def expires_in(self, value: "builtins.int|None") -> None:
-        return super()._set_field("expires_in",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def scopes(self) -> "abc.MutableSequence[builtins.str]":
-        return super()._get_field("scopes", explicit_presence=False,
-        wrap=pb_classes.Repeated,
-        )
-    @scopes.setter
-    def scopes(self, value: "abc.Iterable[builtins.str]|None") -> None:
-        return super()._set_field("scopes",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "access_token":"access_token",
-        "issued_token_type":"issued_token_type",
-        "token_type":"token_type",
-        "expires_in":"expires_in",
-        "scopes":"scopes",
-    }
-    
-# file: nebius/iam/v1/identity_service.proto
-
-class IdentityServiceClient(client.Client):
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.IdentityService",identity_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
-    __service_name__ = ".nebius.iam.v1.IdentityService"
-    
-    def exchange_token(self,
-        request: "ExchangeTokenRequest",
-        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
-        credentials: grpc.CallCredentials | None = None,
-        compression: grpc.Compression | None = None,
-        retries: builtins.int | None = 3,
-    ) -> request_1.Request["ExchangeTokenRequest","CreateTokenResponse"]:
-        return super().request(
-            method="ExchangeToken",
-            request=request,
-            result_pb2_class=token_service_pb2.CreateTokenResponse,
-            metadata=metadata,
-            timeout=timeout,
-            credentials=credentials,
-            compression=compression,
-            retries=retries,
-            result_wrapper=pb_classes.simple_wrapper(CreateTokenResponse),
-        )
-    
-
 # file: nebius/iam/v1/invitation.proto
 class Invitation(pb_classes.Message):
     __PB2_CLASS__ = invitation_pb2.Invitation
@@ -10606,6 +10286,298 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
         )
     
 
+# file: nebius/iam/v1/token_service.proto
+class ExchangeTokenRequest(pb_classes.Message):
+    """
+     https://www.rfc-editor.org/rfc/rfc8693.html
+    """
+    
+    __PB2_CLASS__ = token_service_pb2.ExchangeTokenRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ExchangeTokenRequest",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        grant_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        requested_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        subject_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        subject_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        scopes: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        audience: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        actor_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        actor_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(grant_type, unset.UnsetType):
+            self.grant_type = grant_type
+        if not isinstance(requested_token_type, unset.UnsetType):
+            self.requested_token_type = requested_token_type
+        if not isinstance(subject_token, unset.UnsetType):
+            self.subject_token = subject_token
+        if not isinstance(subject_token_type, unset.UnsetType):
+            self.subject_token_type = subject_token_type
+        if not isinstance(scopes, unset.UnsetType):
+            self.scopes = scopes
+        if not isinstance(audience, unset.UnsetType):
+            self.audience = audience
+        if not isinstance(actor_token, unset.UnsetType):
+            self.actor_token = actor_token
+        if not isinstance(actor_token_type, unset.UnsetType):
+            self.actor_token_type = actor_token_type
+        if not isinstance(resource, unset.UnsetType):
+            self.resource = resource
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "grant_type",
+            "requested_token_type",
+            "subject_token",
+            "subject_token_type",
+            "scopes",
+            "audience",
+            "actor_token",
+            "actor_token_type",
+            "resource",
+        ]
+    
+    @builtins.property
+    def grant_type(self) -> "builtins.str":
+        """
+         required - urn:ietf:params:oauth:grant-type:token-exchange
+        """
+        
+        return super()._get_field("grant_type", explicit_presence=False,
+        )
+    @grant_type.setter
+    def grant_type(self, value: "builtins.str|None") -> None:
+        return super()._set_field("grant_type",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def requested_token_type(self) -> "builtins.str":
+        """
+         optional type of requested token, default is urn:ietf:params:oauth:token-type:access_token
+        """
+        
+        return super()._get_field("requested_token_type", explicit_presence=False,
+        )
+    @requested_token_type.setter
+    def requested_token_type(self, value: "builtins.str|None") -> None:
+        return super()._set_field("requested_token_type",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def subject_token(self) -> "builtins.str":
+        """
+         required - could be self signed JWT token
+        """
+        
+        return super()._get_field("subject_token", explicit_presence=False,
+        )
+    @subject_token.setter
+    def subject_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("subject_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def subject_token_type(self) -> "builtins.str":
+        """
+         required, in case of jwt - urn:ietf:params:oauth:token-type:jwt
+        """
+        
+        return super()._get_field("subject_token_type", explicit_presence=False,
+        )
+    @subject_token_type.setter
+    def subject_token_type(self, value: "builtins.str|None") -> None:
+        return super()._set_field("subject_token_type",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def scopes(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         optional (scopes of the token)
+        """
+        
+        return super()._get_field("scopes", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @scopes.setter
+    def scopes(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("scopes",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def audience(self) -> "builtins.str":
+        """
+         optional, name of the oauth client id on which this token will be used
+        """
+        
+        return super()._get_field("audience", explicit_presence=False,
+        )
+    @audience.setter
+    def audience(self, value: "builtins.str|None") -> None:
+        return super()._set_field("audience",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def actor_token(self) -> "builtins.str":
+        """
+         optional, subject token for impersonation/delegation (who want to impersonate/delegate) in subject_token.
+        """
+        
+        return super()._get_field("actor_token", explicit_presence=False,
+        )
+    @actor_token.setter
+    def actor_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("actor_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def actor_token_type(self) -> "builtins.str":
+        """
+         optional, token type for the impersonation/delegation (who want to impersonate/delegate). Usually it's urn:ietf:params:oauth:token-type:access_token
+        """
+        
+        return super()._get_field("actor_token_type", explicit_presence=False,
+        )
+    @actor_token_type.setter
+    def actor_token_type(self, value: "builtins.str|None") -> None:
+        return super()._set_field("actor_token_type",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def resource(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         optional, list of resources approved to use by token, if applicable
+        """
+        
+        return super()._get_field("resource", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @resource.setter
+    def resource(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("resource",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "grant_type":"grant_type",
+        "requested_token_type":"requested_token_type",
+        "subject_token":"subject_token",
+        "subject_token_type":"subject_token_type",
+        "scopes":"scopes",
+        "audience":"audience",
+        "actor_token":"actor_token",
+        "actor_token_type":"actor_token_type",
+        "resource":"resource",
+    }
+    
+class CreateTokenResponse(pb_classes.Message):
+    __PB2_CLASS__ = token_service_pb2.CreateTokenResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateTokenResponse",token_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        access_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        issued_token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        token_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        expires_in: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        scopes: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(access_token, unset.UnsetType):
+            self.access_token = access_token
+        if not isinstance(issued_token_type, unset.UnsetType):
+            self.issued_token_type = issued_token_type
+        if not isinstance(token_type, unset.UnsetType):
+            self.token_type = token_type
+        if not isinstance(expires_in, unset.UnsetType):
+            self.expires_in = expires_in
+        if not isinstance(scopes, unset.UnsetType):
+            self.scopes = scopes
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "access_token",
+            "issued_token_type",
+            "token_type",
+            "expires_in",
+            "scopes",
+        ]
+    
+    @builtins.property
+    def access_token(self) -> "builtins.str":
+        """
+         required
+        """
+        
+        return super()._get_field("access_token", explicit_presence=False,
+        )
+    @access_token.setter
+    def access_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("access_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def issued_token_type(self) -> "builtins.str":
+        """
+         required
+        """
+        
+        return super()._get_field("issued_token_type", explicit_presence=False,
+        )
+    @issued_token_type.setter
+    def issued_token_type(self, value: "builtins.str|None") -> None:
+        return super()._set_field("issued_token_type",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def token_type(self) -> "builtins.str":
+        """
+         required - Bearer
+        """
+        
+        return super()._get_field("token_type", explicit_presence=False,
+        )
+    @token_type.setter
+    def token_type(self, value: "builtins.str|None") -> None:
+        return super()._set_field("token_type",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def expires_in(self) -> "builtins.int":
+        return super()._get_field("expires_in", explicit_presence=False,
+        )
+    @expires_in.setter
+    def expires_in(self, value: "builtins.int|None") -> None:
+        return super()._set_field("expires_in",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def scopes(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("scopes", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @scopes.setter
+    def scopes(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("scopes",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "access_token":"access_token",
+        "issued_token_type":"issued_token_type",
+        "token_type":"token_type",
+        "expires_in":"expires_in",
+        "scopes":"scopes",
+    }
+    
 # file: nebius/iam/v1/token_exchange_service.proto
 
 class TokenExchangeServiceClient(client.Client):
@@ -10724,9 +10696,6 @@ __all__ = [
     "ListGroupsRequest",
     "ListGroupsResponse",
     "GroupServiceClient",
-    "ExchangeTokenRequest",
-    "CreateTokenResponse",
-    "IdentityServiceClient",
     "Invitation",
     "InvitationSpec",
     "InvitationStatus",
@@ -10790,5 +10759,7 @@ __all__ = [
     "ListTenantUserAccountsWithAttributesRequest",
     "ListTenantUserAccountsWithAttributesResponse",
     "TenantUserAccountWithAttributesServiceClient",
+    "ExchangeTokenRequest",
+    "CreateTokenResponse",
     "TokenExchangeServiceClient",
 ]

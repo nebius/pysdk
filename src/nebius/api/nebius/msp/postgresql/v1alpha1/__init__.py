@@ -181,6 +181,10 @@ class GetBackupRequest(pb_classes.Message):
     
     @builtins.property
     def cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster that holds backup.
+        """
+        
         return super()._get_field("cluster_id", explicit_presence=False,
         )
     @cluster_id.setter
@@ -190,6 +194,10 @@ class GetBackupRequest(pb_classes.Message):
     
     @builtins.property
     def backup_id(self) -> "builtins.str":
+        """
+         ID of the designated backup.
+        """
+        
         return super()._get_field("backup_id", explicit_presence=False,
         )
     @backup_id.setter
@@ -225,6 +233,10 @@ class ListBackupsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+         Identifier of IAM container to list backups from.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -259,6 +271,10 @@ class ListBackupsByClusterRequest(pb_classes.Message):
     
     @builtins.property
     def cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster to list backups from.
+        """
+        
         return super()._get_field("cluster_id", explicit_presence=False,
         )
     @cluster_id.setter
@@ -293,6 +309,10 @@ class ListBackupsResponse(pb_classes.Message):
     
     @builtins.property
     def backups(self) -> "abc.MutableSequence[Backup]":
+        """
+         List of backups.
+        """
+        
         return super()._get_field("backups", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Backup,None,None),
         )
@@ -307,6 +327,10 @@ class ListBackupsResponse(pb_classes.Message):
     
 
 class BackupServiceClient(client.Client):
+    """
+     A set of methods for managing PostgreSQL Cluster backups.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.BackupService",backup_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.postgresql.v1alpha1.BackupService"
     
@@ -318,6 +342,11 @@ class BackupServiceClient(client.Client):
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
     ) -> request_1.Request["GetBackupRequest","Backup"]:
+        """
+         Returns the specified PostgreSQL Cluster backup.
+         To get the list of available PostgreSQL Cluster backups, make a [List] or [ListByCluster] request.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -338,6 +367,10 @@ class BackupServiceClient(client.Client):
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
     ) -> request_1.Request["ListBackupsRequest","ListBackupsResponse"]:
+        """
+         Retrieves the list of PostgreSQL Cluster backups by project.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -358,6 +391,10 @@ class BackupServiceClient(client.Client):
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
     ) -> request_1.Request["ListBackupsByClusterRequest","ListBackupsResponse"]:
+        """
+         Retrieves the list of PostgreSQL Cluster backups by cluster.
+        """
+        
         return super().request(
             method="ListByCluster",
             request=request,
