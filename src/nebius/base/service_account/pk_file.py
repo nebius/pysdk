@@ -23,16 +23,16 @@ class Reader(BaseReader):
         public_key_id: str,
         service_account_id: str,
     ) -> None:
-        self._fn = filename
-        self._kid = public_key_id
-        self._said = service_account_id
-
-    def read(self) -> ServiceAccount:
-        log.debug(f"reading SA from file {self._fn}")
-        with open(self._fn, "rb") as f:
+        log.debug(f"reading SA from file {filename}")
+        with open(filename, "rb") as f:
             pk = serialization.load_pem_private_key(
                 f.read(), password=None, backend=default_backend()
             )
         if not isinstance(pk, RSAPrivateKey):
             raise WrongKeyTypeError(pk)
-        return ServiceAccount(pk, self._kid, self._said)
+        self._pk = pk
+        self._kid = public_key_id
+        self._said = service_account_id
+
+    def read(self) -> ServiceAccount:
+        return ServiceAccount(self._pk, self._kid, self._said)
