@@ -48,6 +48,7 @@ from nebius.aio.idempotency import IdempotencyKeyInterceptor
 from nebius.aio.service_descriptor import ServiceStub, from_stub_class
 from nebius.aio.token import exchangeable, renewable
 from nebius.aio.token.static import Bearer as StaticTokenBearer
+from nebius.aio.token.static import EnvBearer
 from nebius.aio.token.token import Bearer as TokenBearer
 from nebius.aio.token.token import Token
 from nebius.api.nebius.common.v1.operation_service_pb2_grpc import (
@@ -231,7 +232,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     service_account_public_key_id,
                     service_account_id,
                 )
-
+            else:
+                credentials = EnvBearer()
         if isinstance(credentials, str) or isinstance(credentials, Token):
             credentials = StaticTokenBearer(credentials)
         if isinstance(credentials, ServiceAccountReader):
@@ -244,6 +246,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             self._global_interceptors_inner.append(
                 AuthorizationInterceptor(credentials)
             )
+        elif not isinstance(credentials, NoCredentials):  # type: ignore[unused-ignore]
+            raise SDKError(f"credentials type is not supported: {type(credentials)}")
+
         self._event_loop = event_loop
 
         self._global_interceptors_inner.append(CleaningInterceptor())
