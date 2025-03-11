@@ -48,7 +48,7 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
 
         log.debug(
             f"Authentication for {client_call_details.method} is enabled, "
-            f"auth type: {auth_type!r}"
+            f"{auth_type=!r}"
         )
         start = time()
         deadline = None
@@ -62,16 +62,16 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
             if deadline is not None:
                 timeout = deadline - time()
             log.debug(
-                f"Authenticating {client_call_details.method},"
-                f" attempt: {attempt}, timeout: {timeout}."
+                f"Authenticating {client_call_details.method}, {attempt=}, {timeout=}."
             )
             await auth.authenticate(client_call_details.metadata, timeout)  # type: ignore
             if deadline is not None:
-                if deadline <= time():
+                timeout = deadline - time()
+                if timeout <= 0:
                     raise TimeoutError("authorization timed out")
                 client_call_details = ClientCallDetails(
                     method=client_call_details.method,
-                    timeout=client_call_details.timeout - (deadline - time()),  # type: ignore
+                    timeout=timeout,
                     metadata=client_call_details.metadata,
                     credentials=client_call_details.credentials,
                     wait_for_ready=client_call_details.wait_for_ready,

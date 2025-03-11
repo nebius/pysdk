@@ -1341,7 +1341,7 @@ async def test_get_instance_timeout_change() -> None:
 
         # Make a request
         req = GetDiskRequest(id="foo-bar")
-        call = stub.Get(req, timeout=10)
+        call = stub.Get(req, timeout=1)
         assert isinstance(call, UnaryUnaryCall)
 
         # Await response and metadata

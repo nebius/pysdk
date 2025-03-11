@@ -75,17 +75,15 @@ class Reader(BaseReader):
         self,
         filename: str,
     ) -> None:
-        self._fn = filename
+        log.debug(f"reading SA from Credentials file: {filename}")
+        with open(filename, "rb") as f:
+            data = json.load(f)
+        self._credentials = ServiceAccountCredentials.from_json(data)
+        self._parsed_key = self._credentials.subject_credentials.parse_private_key()
 
     def read(self) -> ServiceAccount:
-        log.debug(f"reading SA from Credentials file: {self._fn}")
-        with open(self._fn, "rb") as f:
-            data = json.load(f)
-
-        credentials = ServiceAccountCredentials.from_json(data)
-        parsed_key = credentials.subject_credentials.parse_private_key()
         return ServiceAccount(
-            parsed_key,
-            credentials.subject_credentials.kid,
-            credentials.subject_credentials.sub,
+            self._parsed_key,
+            self._credentials.subject_credentials.kid,
+            self._credentials.subject_credentials.sub,
         )
