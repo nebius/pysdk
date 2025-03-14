@@ -2,8 +2,10 @@ from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from typing import Any
 
+from grpc.aio import AioRpcError
 from grpc.aio import Channel as GRPCChannel
 from grpc.aio._metadata import Metadata
+from grpc_status import rpc_status
 
 from nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc import (
     TokenExchangeServiceStub,
@@ -11,6 +13,7 @@ from nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc import (
 from nebius.api.nebius.iam.v1.token_service_pb2 import CreateTokenResponse
 from nebius.base.error import SDKError
 from nebius.base.metadata import Authorization, Internal
+from nebius.base.metadata import Metadata as NebiusMetadata
 from nebius.base.sanitization import ellipsis_in_middle
 from nebius.base.service_account.service_account import TokenRequester
 
@@ -50,6 +53,31 @@ class Receiver(ParentReceiver):
 
         self._trial = 0
 
+    def _raise_request_error(self, err: AioRpcError) -> None:
+        initial_metadata = NebiusMetadata(err.initial_metadata())
+        request_id = initial_metadata.get_one("x-request-id", "")
+        trace_id = initial_metadata.get_one("x-trace-id", "")
+        status = rpc_status.from_call(err)  # type: ignore
+        from nebius.aio.service_error import RequestError, RequestStatusExtended
+
+        if status is None:
+            self._status = RequestStatusExtended(
+                code=err.code(),
+                message=err.details(),
+                details=[],
+                service_errors=[],
+                request_id=request_id,
+                trace_id=trace_id,
+            )
+            raise RequestError(self._status) from None
+
+        self._status = RequestStatusExtended.from_rpc_status(  # type: ignore[unused-ignore]
+            status,
+            trace_id=trace_id,
+            request_id=request_id,
+        )
+        raise RequestError(self._status) from None
+
     async def _fetch(self, timeout: float | None = None) -> Token:
         self._trial += 1
         req = self._requester.get_exchange_token_request()
@@ -61,7 +89,11 @@ class Receiver(ParentReceiver):
 
         log.debug(f"fetching new token, attempt: {self._trial}, timeout: {timeout}")
 
-        ret = await self._svc.Exchange(req, metadata=md, timeout=timeout)  # type: ignore[unused-ignore]
+        ret = None
+        try:
+            ret = await self._svc.Exchange(req, metadata=md, timeout=timeout)  # type: ignore[unused-ignore]
+        except AioRpcError as e:
+            self._raise_request_error(e)
         if not isinstance(ret, CreateTokenResponse):
             raise UnsupportedResponseError(CreateTokenResponse.__name__, ret)
 
