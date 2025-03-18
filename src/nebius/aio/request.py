@@ -317,14 +317,11 @@ class Request(Generic[Req, Res]):
         from .service_error import is_retriable_error
 
         self._start_time = time()
+        deadline = None if self._timeout is None else self._start_time + self._timeout
         attempt = 0
         while not self._cancelled:
             attempt += 1
-            timeout = (
-                None
-                if self._timeout is None
-                else self._timeout - (time() - self._start_time)
-            )
+            timeout = None if deadline is None else deadline - time()
             # somehow, this time python doesn't want to catch the raised error again
             # thus, it will be two nested try/except blocks
             try:
@@ -349,8 +346,10 @@ class Request(Generic[Req, Res]):
                 except AioRpcError as e:
                     self._raise_request_error(e)
             except Exception as e:
-                if is_retriable_error(e) and (
-                    self._retries is None or self._retries > attempt
+                if (
+                    (deadline is None or deadline > time())
+                    and is_retriable_error(e, deadline_retriable=True)
+                    and (self._retries is None or self._retries > attempt)
                 ):
                     log.error(
                         f"request attempt {attempt} for {self} failed with {e} "
