@@ -184,7 +184,7 @@ class RequestStatusExtended(RequestStatus):
             trace_id=trace_id,
         )
 
-    def is_retriable(self) -> bool:
+    def is_retriable(self, deadline_retriable: bool = False) -> bool:
         # Check service errors
         for service_error in self.service_errors:
             if hasattr(service_error, "retry_type"):
@@ -201,12 +201,15 @@ class RequestStatusExtended(RequestStatus):
         if self.code in DefaultRetriableCodes:
             return True
 
+        if deadline_retriable and self.code == StatusCode.DEADLINE_EXCEEDED:
+            return True
+
         return False
 
 
-def is_retriable_error(err: Exception) -> bool:
+def is_retriable_error(err: Exception, deadline_retriable: bool = False) -> bool:
     if isinstance(err, RequestError):
-        return err.status.is_retriable()
+        return err.status.is_retriable(deadline_retriable)
 
     # Network and transport error handling
     if is_network_error(err) or is_transport_error(err) or is_dns_error(err):
