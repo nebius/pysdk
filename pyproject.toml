@@ -146,7 +146,7 @@ deps = [
     "protobuf",
     "types-protobuf",
 ]
-commands = [["pytest","-vv"]]
+commands = [["pytest","-vv","--full-trace"]]
 
 [tool.tox.env.test_earliest]
 description = "Run tests with pytest and the earliest possible lib versions"

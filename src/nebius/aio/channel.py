@@ -1,5 +1,6 @@
 from asyncio import (
     AbstractEventLoop,
+    CancelledError,
     gather,
     get_event_loop,
     iscoroutine,
@@ -41,6 +42,7 @@ from grpc.aio._typing import (
 )
 
 from nebius.aio._cleaner import CleaningInterceptor
+from nebius.aio.abc import GracefulInterface
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
 from nebius.aio.authorization.interceptor import AuthorizationInterceptor
 from nebius.aio.authorization.token import TokenProvider
@@ -180,6 +182,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if substitutions is not None:
             substitutions_full.update(substitutions)
 
+        self._gracefuls = set[GracefulInterface]()
+
         self._resolver: Resolver = Conventional()
         if resolver is not None:
             self._resolver = Chain(resolver, self._resolver)
@@ -239,6 +243,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if isinstance(credentials, ServiceAccountReader):
             exchange = exchangeable.Bearer(credentials, self)
             cache = renewable.Bearer(exchange)
+            self._gracefuls.add(cache)
             credentials = cache
         if isinstance(credentials, TokenBearer):
             credentials = TokenProvider(credentials)
@@ -292,7 +297,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         awaits = list[Coroutine[Any, Any, Any]]()
         for chan in self._channels.values():
             awaits.append(chan.close(grace))
-        await gather(*awaits)
+        for graceful in self._gracefuls:
+            awaits.append(graceful.close(grace))
+        rets = await gather(*awaits, return_exceptions=True)
+        for ret in rets:
+            if isinstance(ret, BaseException) and not isinstance(ret, CancelledError):
+                logger.error(f"Error while graceful shutdown: {ret}", exc_info=ret)
 
     def get_corresponding_operation_service(
         self,

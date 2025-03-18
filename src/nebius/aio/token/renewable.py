@@ -1,8 +1,19 @@
 import sys
-from asyncio import Event, Task, wait_for
+from asyncio import (
+    FIRST_COMPLETED,
+    CancelledError,
+    Event,
+    Task,
+    create_task,
+    gather,
+    sleep,
+    wait,
+    wait_for,
+)
+from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
-from typing import Any
+from typing import Any, TypeVar
 
 from nebius.base.error import SDKError
 from nebius.base.sanitization import ellipsis_in_middle
@@ -49,6 +60,9 @@ class Receiver(ParentReceiver):
         return True
 
 
+T = TypeVar("T")
+
+
 class Bearer(ParentBearer):
     def __init__(
         self,
@@ -69,6 +83,7 @@ class Bearer(ParentBearer):
         self._renew_requested = Event()
 
         self._refresh_task: Task[Any] | None = None
+        self._tasks = set[Task[Any]]()
 
         self._renewal_attempt = 0
 
@@ -79,10 +94,26 @@ class Bearer(ParentBearer):
         self._retry_timeout_exponent = retry_timeout_exponent
         self._refresh_request_timeout = refresh_request_timeout
 
+    def bg_task(self, coro: Awaitable[T]) -> Task[None]:
+        """Run a coroutine without awaiting or tracking, and log any exceptions."""
+
+        async def wrapper() -> None:
+            try:
+                await coro
+            except CancelledError:
+                pass
+            except Exception as e:
+                log.error("Unhandled exception in fire-and-forget task", exc_info=e)
+
+        ret = create_task(wrapper())
+        ret.add_done_callback(lambda x: self._tasks.discard(x))
+        self._tasks.add(ret)
+        return ret
+
     async def fetch(self, timeout: float | None = None) -> Token:
         if self._refresh_task is None:
             log.debug("no refresh task yet, starting it")
-            self._refresh_task = Task(self._run())
+            self._refresh_task = self.bg_task(self._run())
         if self.is_renewal_required():
             log.debug(f"renewal required, timeout {timeout}")
             if timeout is not None:
@@ -141,7 +172,24 @@ class Bearer(ParentBearer):
                 f"Will refresh token after {retry_timeout} seconds, "
                 f"renewal attempt number {self._renewal_attempt}"
             )
-            await wait_for(self._renew_requested.wait(), retry_timeout)
+            _done, pending = await wait(
+                [
+                    self.bg_task(self._renew_requested.wait()),
+                    self.bg_task(sleep(retry_timeout)),
+                ],
+                return_when=FIRST_COMPLETED,
+            )
+            for task in pending:
+                task.cancel()
+            await gather(*pending, return_exceptions=True)
+
+    async def close(self, grace: float | None = None) -> None:
+        for task in self._tasks:
+            task.cancel()
+        rets = await gather(*self._tasks, return_exceptions=True)
+        for ret in rets:
+            if isinstance(ret, BaseException) and not isinstance(ret, CancelledError):
+                log.error(f"Error while graceful shutdown: {ret}", exc_info=ret)
 
     def is_renewal_required(self) -> bool:
         return self._cache is None or self._renew_requested.is_set()
