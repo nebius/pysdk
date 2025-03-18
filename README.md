@@ -124,7 +124,23 @@ To test the SDK, we provide a convenient method [`SDK.whoami`](https://nebius.gi
 import asyncio
 
 async def my_call():
-    print(await sdk.whoami())
+    async with sdk:
+        print(await sdk.whoami())
+
+asyncio.run(my_call)
+```
+
+It is important to close the SDK, so all the coroutines and tasks will be gracefully stopped and gathered. It can either be achieved by using `async with`, or by explicitly calling `sdk.close()`:
+
+```python
+import asyncio
+
+async def my_call():
+    try:
+        print(await sdk.whoami())
+        # Other calls to SDK
+    finally:
+        await sdk.close()
 
 asyncio.run(my_call)
 ```
@@ -132,14 +148,20 @@ asyncio.run(my_call)
 SDK is created with asyncio in mind, so the best way to call methods of it is to use an async context. But if you haven't started async loop, you can run it synchronously:
 
 ```python
-print(sdk.whoami().wait())
+try:
+    print(sdk.whoami().wait())
+    # Other calls to SDK
+finally:
+    sdk.sync_close()
 ```
 
 *Keep in mind, that this may lead to some problems or infinite locks, even if timeouts have been added. Moreover, synchronous methods won't run inside an async call stack, if you haven't provided a dedicated separate loop for the SDK. And even when the loop is provided, there might be issues or deadlocks.*
 
+Closing the SDK is not strictly necessary, but forgetting to add it may lead to a bunch of annoying errors of unterminated tasks.
+
 #### Call some method
 
-Now as you have your SDK initialized and tested, you may work with our services and call their methods with it. Here and further we assume, that the [SDK](https://nebius.github.io/pysdk/nebius.sdk.SDK.html) is initialized and is located in the `sdk` variable.
+Now as you have your SDK initialized and tested, you may work with our services and call their methods with it. Here and further we assume, that the [SDK](https://nebius.github.io/pysdk/nebius.sdk.SDK.html) is initialized and is located in the `sdk` variable. We also omit closing the SDK.
 
 All the services API classes are located in submodules of `nebius.api.nebius`. [The reference can be found here](https://nebius.github.io/pysdk/apiReference.html). The `nebius.api.nebius` also includes all the raw gRPC and ProtoBuf classes.
 
