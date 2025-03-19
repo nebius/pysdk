@@ -896,6 +896,7 @@ class PresetServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request.Request["ListPresetsRequest","ListPresetsResponse"]:
         return super().request(
             method="List",
@@ -906,6 +907,7 @@ class PresetServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListPresetsResponse),
         )
     
@@ -1020,6 +1022,7 @@ class TemplateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request.Request["ListTemplatesRequest","ListTemplatesResponse"]:
         return super().request(
             method="List",
@@ -1030,6 +1033,7 @@ class TemplateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListTemplatesResponse),
         )
     

@@ -66,6 +66,7 @@ class Request(Generic[Req, Res]):
         grpc_channel_override: GRPCChannel | None = None,
         error_wrapper: Callable[[RequestStatus], RequestError] | None = None,
         retries: int | None = 3,
+        per_retry_timeout: float | None = None,
     ) -> None:
         self._channel = channel
         self._input = request
@@ -76,6 +77,7 @@ class Request(Generic[Req, Res]):
         self._result_wrapper = result_wrapper
         self._grpc_channel = grpc_channel_override
         self._timeout = timeout
+        self._per_retry_timeout = per_retry_timeout
         self._credentials = credentials
         self._compression = compression
         self._call: UnaryUnaryCall | None = None
@@ -339,6 +341,12 @@ class Request(Generic[Req, Res]):
         while not self._cancelled:
             attempt += 1
             timeout = None if deadline is None else deadline - time()
+
+            if self._per_retry_timeout is not None and (
+                timeout is None or timeout > self._per_retry_timeout
+            ):
+                timeout = self._per_retry_timeout
+
             # somehow, this time python doesn't want to catch the raised error again
             # thus, it will be two nested try/except blocks
             try:

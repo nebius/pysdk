@@ -341,6 +341,7 @@ class BackupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetBackupRequest","Backup"]:
         """
          Returns the specified PostgreSQL Cluster backup.
@@ -356,6 +357,7 @@ class BackupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Backup),
         )
     
@@ -366,6 +368,7 @@ class BackupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListBackupsRequest","ListBackupsResponse"]:
         """
          Retrieves the list of PostgreSQL Cluster backups by project.
@@ -380,6 +383,7 @@ class BackupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListBackupsResponse),
         )
     
@@ -390,6 +394,7 @@ class BackupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListBackupsByClusterRequest","ListBackupsResponse"]:
         """
          Retrieves the list of PostgreSQL Cluster backups by cluster.
@@ -404,6 +409,7 @@ class BackupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListBackupsResponse),
         )
     
@@ -1730,6 +1736,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
         """
          Returns the specified PostgreSQL Cluster resource.
@@ -1745,6 +1752,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
@@ -1755,6 +1763,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Cluster"]:
         """
          Returns the specified PostgreSQL Cluster resource by name.
@@ -1769,6 +1778,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
@@ -1779,6 +1789,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
         """
          Retrieves the list of PostgreSQL Cluster resources that belong
@@ -1794,6 +1805,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListClustersResponse),
         )
     
@@ -1804,6 +1816,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
         """
          Creates a PostgreSQL cluster in the specified folder.
@@ -1818,6 +1831,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1828,6 +1842,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
         """
          Deletes the specified PostgreSQL cluster.
@@ -1842,6 +1857,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1852,6 +1868,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
         """
          Updates the PostgreSQL cluster.
@@ -1867,6 +1884,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1877,6 +1895,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["RestoreClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
         """
          Creates a new PostgreSQL cluster from a previously created backup.
@@ -1891,6 +1910,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1901,6 +1921,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["StopClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
         """
          Suspends the PostgreSQL cluster to save resources.
@@ -1915,6 +1936,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1925,6 +1947,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["StartClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
         """
          Wakes up suspended PostgreSQL cluster.
@@ -1939,6 +1962,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     

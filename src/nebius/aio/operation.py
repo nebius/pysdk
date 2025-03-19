@@ -97,6 +97,7 @@ class Operation(Generic[OperationPb]):
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
+        per_retry_timeout: float | None = None,
     ) -> None:
         if self.done():
             return
@@ -107,6 +108,7 @@ class Operation(Generic[OperationPb]):
             timeout=timeout,
             credentials=credentials,
             compression=compression,
+            per_retry_timeout=per_retry_timeout,
         )
         new_op = await req
         self._set_new_operation(new_op._operation)  # type: ignore

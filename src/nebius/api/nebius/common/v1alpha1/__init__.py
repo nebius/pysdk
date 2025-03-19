@@ -681,6 +681,7 @@ class OperationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetOperationRequest","operation.Operation[Operation]"]:
         """
          Returns the latest state of the specified operation.
@@ -695,6 +696,7 @@ class OperationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -705,6 +707,7 @@ class OperationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListOperationsRequest","ListOperationsResponse"]:
         """
          Lists operations for the specified resource.
@@ -719,6 +722,7 @@ class OperationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListOperationsResponse),
         )
     

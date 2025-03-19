@@ -2078,6 +2078,7 @@ class OperationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetOperationRequest","operation.Operation[Operation]"]:
         return super().request(
             method="Get",
@@ -2088,6 +2089,7 @@ class OperationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -2098,6 +2100,7 @@ class OperationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListOperationsRequest","ListOperationsResponse"]:
         return super().request(
             method="List",
@@ -2108,6 +2111,7 @@ class OperationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListOperationsResponse),
         )
     

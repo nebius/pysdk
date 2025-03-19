@@ -1011,6 +1011,7 @@ class VersionServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request.Request["GetVersionRequest","GetVersionResponse"]:
         """
          GetVersion retrieves version information and receives instructions for agent updates
@@ -1026,6 +1027,7 @@ class VersionServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(GetVersionResponse),
         )
     

@@ -1235,6 +1235,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1245,6 +1246,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -1255,6 +1257,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListAccessKeysRequest","ListAccessKeysResponse"]:
         return super().request(
             method="List",
@@ -1265,6 +1268,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListAccessKeysResponse),
         )
     
@@ -1275,6 +1279,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListAccessKeysByAccountRequest","ListAccessKeysResponse"]:
         return super().request(
             method="ListByAccount",
@@ -1285,6 +1290,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListAccessKeysResponse),
         )
     
@@ -1295,6 +1301,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1306,6 +1313,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -1316,6 +1324,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetAccessKeyByIdRequest","AccessKey"]:
         return super().request(
             method="GetById",
@@ -1326,6 +1335,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(AccessKey),
         )
     
@@ -1336,6 +1346,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetAccessKeyByAwsIdRequest","AccessKey"]:
         return super().request(
             method="GetByAwsId",
@@ -1346,6 +1357,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(AccessKey),
         )
     
@@ -1356,6 +1368,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetAccessKeySecretOnceRequest","GetAccessKeySecretOnceResponse"]:
         return super().request(
             method="GetSecretOnce",
@@ -1366,6 +1379,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(GetAccessKeySecretOnceResponse),
         )
     
@@ -1376,6 +1390,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ActivateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Activate",
@@ -1386,6 +1401,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -1396,6 +1412,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeactivateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Deactivate",
@@ -1406,6 +1423,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -1416,6 +1434,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -1426,6 +1445,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -1852,6 +1872,7 @@ class AccessPermitServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateAccessPermitRequest","operation_1.Operation[v1_1.Operation]"]:
         """
          Creates access permit for provided resource with provided role.
@@ -1869,6 +1890,7 @@ class AccessPermitServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -1879,6 +1901,7 @@ class AccessPermitServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListAccessPermitRequest","ListAccessPermitResponse"]:
         """
          Lists access permits for provided parent
@@ -1893,6 +1916,7 @@ class AccessPermitServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListAccessPermitResponse),
         )
     
@@ -1903,6 +1927,7 @@ class AccessPermitServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteAccessPermitRequest","operation_1.Operation[v1_1.Operation]"]:
         """
          Delete access permit by id
@@ -1917,6 +1942,7 @@ class AccessPermitServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -1927,6 +1953,7 @@ class AccessPermitServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetAccessPermitRequest","AccessPermit"]:
         """
          Gets access permit by id
@@ -1941,6 +1968,7 @@ class AccessPermitServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(AccessPermit),
         )
     
@@ -2702,6 +2730,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -2712,6 +2741,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -2722,6 +2752,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetAuthPublicKeyRequest","AuthPublicKey"]:
         return super().request(
             method="Get",
@@ -2732,6 +2763,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(AuthPublicKey),
         )
     
@@ -2742,6 +2774,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListAuthPublicKeyRequest","ListAuthPublicKeyResponse"]:
         return super().request(
             method="List",
@@ -2752,6 +2785,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListAuthPublicKeyResponse),
         )
     
@@ -2762,6 +2796,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListAuthPublicKeyByAccountRequest","ListAuthPublicKeyResponse"]:
         return super().request(
             method="ListByAccount",
@@ -2772,6 +2807,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListAuthPublicKeyResponse),
         )
     
@@ -2782,6 +2818,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -2793,6 +2830,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -2803,6 +2841,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ActivateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Activate",
@@ -2813,6 +2852,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -2823,6 +2863,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeactivateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Deactivate",
@@ -2833,6 +2874,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -2843,6 +2885,7 @@ class AuthPublicKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -2853,6 +2896,7 @@ class AuthPublicKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -3809,6 +3853,7 @@ class FederationCertificateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -3819,6 +3864,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -3829,6 +3875,7 @@ class FederationCertificateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetFederationCertificateRequest","FederationCertificate"]:
         return super().request(
             method="Get",
@@ -3839,6 +3886,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(FederationCertificate),
         )
     
@@ -3849,6 +3897,7 @@ class FederationCertificateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListFederationCertificateByFederationRequest","ListFederationCertificateResponse"]:
         return super().request(
             method="ListByFederation",
@@ -3859,6 +3908,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListFederationCertificateResponse),
         )
     
@@ -3869,6 +3919,7 @@ class FederationCertificateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -3880,6 +3931,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -3890,6 +3942,7 @@ class FederationCertificateServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -3900,6 +3953,7 @@ class FederationCertificateServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -4230,6 +4284,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -4240,6 +4295,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -4250,6 +4306,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetFederationRequest","Federation"]:
         return super().request(
             method="Get",
@@ -4260,6 +4317,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Federation),
         )
     
@@ -4270,6 +4328,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Federation"]:
         return super().request(
             method="GetByName",
@@ -4280,6 +4339,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Federation),
         )
     
@@ -4290,6 +4350,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListFederationsRequest","ListFederationsResponse"]:
         return super().request(
             method="List",
@@ -4300,6 +4361,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListFederationsResponse),
         )
     
@@ -4310,6 +4372,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -4321,6 +4384,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -4331,6 +4395,7 @@ class FederationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -4341,6 +4406,7 @@ class FederationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -6488,6 +6554,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateGroupMembershipRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -6498,6 +6565,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -6508,6 +6576,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetGroupMembershipRequest","GroupMembership"]:
         return super().request(
             method="Get",
@@ -6518,6 +6587,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(GroupMembership),
         )
     
@@ -6528,6 +6598,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetGroupMembershipRequest","GroupMembershipWithAttributes"]:
         return super().request(
             method="GetWithAttributes",
@@ -6538,6 +6609,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(GroupMembershipWithAttributes),
         )
     
@@ -6548,6 +6620,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteGroupMembershipRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -6558,6 +6631,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -6568,6 +6642,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListGroupMembershipsRequest","ListGroupMembershipsResponse"]:
         return super().request(
             method="ListMembers",
@@ -6578,6 +6653,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListGroupMembershipsResponse),
         )
     
@@ -6588,6 +6664,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListGroupMembershipsRequest","ListGroupMembershipsWithAttributesResponse"]:
         return super().request(
             method="ListMembersWithAttributes",
@@ -6598,6 +6675,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListGroupMembershipsWithAttributesResponse),
         )
     
@@ -6608,6 +6686,7 @@ class GroupMembershipServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListMemberOfRequest","ListMemberOfResponse"]:
         return super().request(
             method="ListMemberOf",
@@ -6618,6 +6697,7 @@ class GroupMembershipServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListMemberOfResponse),
         )
     
@@ -7010,6 +7090,7 @@ class GroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateGroupRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -7020,6 +7101,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -7030,6 +7112,7 @@ class GroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetGroupRequest","Group"]:
         return super().request(
             method="Get",
@@ -7040,6 +7123,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Group),
         )
     
@@ -7050,6 +7134,7 @@ class GroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetGroupByNameRequest","Group"]:
         return super().request(
             method="GetByName",
@@ -7060,6 +7145,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Group),
         )
     
@@ -7070,6 +7156,7 @@ class GroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListGroupsRequest","ListGroupsResponse"]:
         return super().request(
             method="List",
@@ -7080,6 +7167,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListGroupsResponse),
         )
     
@@ -7090,6 +7178,7 @@ class GroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteGroupRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -7100,6 +7189,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -7110,6 +7200,7 @@ class GroupServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateGroupRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -7121,6 +7212,7 @@ class GroupServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -7724,6 +7816,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -7734,6 +7827,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -7744,6 +7838,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetInvitationRequest","Invitation"]:
         return super().request(
             method="Get",
@@ -7754,6 +7849,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Invitation),
         )
     
@@ -7764,6 +7860,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListInvitationsRequest","ListInvitationsResponse"]:
         return super().request(
             method="List",
@@ -7774,6 +7871,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListInvitationsResponse),
         )
     
@@ -7784,6 +7882,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -7794,6 +7893,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -7804,6 +7904,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -7815,6 +7916,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -7825,6 +7927,7 @@ class InvitationServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ResendInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Resend",
@@ -7835,6 +7938,7 @@ class InvitationServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -8272,6 +8376,7 @@ class ProfileServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetProfileRequest","GetProfileResponse"]:
         return super().request(
             method="Get",
@@ -8282,6 +8387,7 @@ class ProfileServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(GetProfileResponse),
         )
     
@@ -8556,6 +8662,7 @@ class ProjectServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetProjectRequest","Container"]:
         return super().request(
             method="Get",
@@ -8566,6 +8673,7 @@ class ProjectServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Container),
         )
     
@@ -8576,6 +8684,7 @@ class ProjectServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetProjectByNameRequest","Container"]:
         return super().request(
             method="GetByName",
@@ -8586,6 +8695,7 @@ class ProjectServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Container),
         )
     
@@ -8596,6 +8706,7 @@ class ProjectServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListProjectsRequest","ListProjectsResponse"]:
         return super().request(
             method="List",
@@ -8606,6 +8717,7 @@ class ProjectServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListProjectsResponse),
         )
     
@@ -9019,6 +9131,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -9029,6 +9142,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -9039,6 +9153,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetServiceAccountRequest","ServiceAccount"]:
         return super().request(
             method="Get",
@@ -9049,6 +9164,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ServiceAccount),
         )
     
@@ -9059,6 +9175,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetServiceAccountByNameRequest","ServiceAccount"]:
         return super().request(
             method="GetByName",
@@ -9069,6 +9186,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ServiceAccount),
         )
     
@@ -9079,6 +9197,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListServiceAccountRequest","ListServiceAccountResponse"]:
         return super().request(
             method="List",
@@ -9089,6 +9208,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListServiceAccountResponse),
         )
     
@@ -9099,6 +9219,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -9110,6 +9231,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -9120,6 +9242,7 @@ class ServiceAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -9130,6 +9253,7 @@ class ServiceAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -9291,6 +9415,7 @@ class SessionManagementServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["RevokeSessionRequest","RevokeSessionResponse"]:
         return super().request(
             method="Revoke",
@@ -9301,6 +9426,7 @@ class SessionManagementServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(RevokeSessionResponse),
         )
     
@@ -9998,6 +10124,7 @@ class StaticKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["IssueStaticKeyRequest","IssueStaticKeyResponse"]:
         return super().request(
             method="Issue",
@@ -10008,6 +10135,7 @@ class StaticKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(IssueStaticKeyResponse),
         )
     
@@ -10018,6 +10146,7 @@ class StaticKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListStaticKeysRequest","ListStaticKeysResponse"]:
         return super().request(
             method="List",
@@ -10028,6 +10157,7 @@ class StaticKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListStaticKeysResponse),
         )
     
@@ -10038,6 +10168,7 @@ class StaticKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetStaticKeyRequest","StaticKey"]:
         return super().request(
             method="Get",
@@ -10048,6 +10179,7 @@ class StaticKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(StaticKey),
         )
     
@@ -10058,6 +10190,7 @@ class StaticKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetStaticKeyByNameRequest","StaticKey"]:
         return super().request(
             method="GetByName",
@@ -10068,6 +10201,7 @@ class StaticKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(StaticKey),
         )
     
@@ -10078,6 +10212,7 @@ class StaticKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteStaticKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -10088,6 +10223,7 @@ class StaticKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -10098,6 +10234,7 @@ class StaticKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["FindStaticKeyRequest","FindStaticKeyResponse"]:
         return super().request(
             method="Find",
@@ -10108,6 +10245,7 @@ class StaticKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(FindStaticKeyResponse),
         )
     
@@ -10118,6 +10256,7 @@ class StaticKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["RevokeStaticKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Revoke",
@@ -10128,6 +10267,7 @@ class StaticKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -10336,6 +10476,7 @@ class TenantServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetTenantRequest","Container"]:
         return super().request(
             method="Get",
@@ -10346,6 +10487,7 @@ class TenantServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Container),
         )
     
@@ -10356,6 +10498,7 @@ class TenantServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListTenantsRequest","ListTenantsResponse"]:
         return super().request(
             method="List",
@@ -10366,6 +10509,7 @@ class TenantServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListTenantsResponse),
         )
     
@@ -10665,6 +10809,7 @@ class TenantUserAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetTenantUserAccountRequest","TenantUserAccount"]:
         return super().request(
             method="Get",
@@ -10675,6 +10820,7 @@ class TenantUserAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(TenantUserAccount),
         )
     
@@ -10685,6 +10831,7 @@ class TenantUserAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListTenantUserAccountsRequest","ListTenantUserAccountsResponse"]:
         return super().request(
             method="List",
@@ -10695,6 +10842,7 @@ class TenantUserAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListTenantUserAccountsResponse),
         )
     
@@ -10705,6 +10853,7 @@ class TenantUserAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["BlockTenantUserAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Block",
@@ -10715,6 +10864,7 @@ class TenantUserAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -10725,6 +10875,7 @@ class TenantUserAccountServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UnblockTenantUserAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Unblock",
@@ -10735,6 +10886,7 @@ class TenantUserAccountServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation_1.Operation,
         )
     
@@ -10965,6 +11117,7 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetTenantUserAccountWithAttributesRequest","TenantUserAccountWithAttributes"]:
         return super().request(
             method="Get",
@@ -10975,6 +11128,7 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(TenantUserAccountWithAttributes),
         )
     
@@ -10985,6 +11139,7 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListTenantUserAccountsWithAttributesRequest","ListTenantUserAccountsWithAttributesResponse"]:
         return super().request(
             method="List",
@@ -10995,6 +11150,7 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListTenantUserAccountsWithAttributesResponse),
         )
     
@@ -11304,6 +11460,7 @@ class TokenExchangeServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ExchangeTokenRequest","CreateTokenResponse"]:
         return super().request(
             method="Exchange",
@@ -11314,6 +11471,7 @@ class TokenExchangeServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(CreateTokenResponse),
         )
     
