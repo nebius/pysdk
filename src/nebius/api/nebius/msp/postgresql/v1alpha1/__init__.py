@@ -1635,6 +1635,84 @@ class UpdateClusterRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class StopClusterRequest(pb_classes.Message):
+    __PB2_CLASS__ = cluster_service_pb2.StopClusterRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.StopClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL Cluster resource to pause.
+         To get the cluster ID use a [ClusterService.List] request.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class StartClusterRequest(pb_classes.Message):
+    __PB2_CLASS__ = cluster_service_pb2.StartClusterRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.StartClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL Cluster resource to resume.
+         To get the cluster ID use a [ClusterService.List] request.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
 
 class ClusterServiceClient(client.Client):
     """
@@ -1816,6 +1894,54 @@ class ClusterServiceClient(client.Client):
             result_wrapper=operation.Operation,
         )
     
+    def stop(self,
+        request: "StopClusterRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["StopClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Suspends the PostgreSQL cluster to save resources.
+        """
+        
+        return super().request(
+            method="Stop",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation.Operation,
+        )
+    
+    def start(self,
+        request: "StartClusterRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["StartClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+        """
+         Wakes up suspended PostgreSQL cluster.
+        """
+        
+        return super().request(
+            method="Start",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation.Operation,
+        )
+    
 
 __all__ = [
     #@ local import names here @#
@@ -1841,5 +1967,7 @@ __all__ = [
     "RestoreClusterRequest",
     "DeleteClusterRequest",
     "UpdateClusterRequest",
+    "StopClusterRequest",
+    "StartClusterRequest",
     "ClusterServiceClient",
 ]

@@ -25,9 +25,25 @@ class GpuClusterSpec(_message.Message):
     def __init__(self, infiniband_fabric: _Optional[str] = ...) -> None: ...
 
 class GpuClusterStatus(_message.Message):
-    __slots__ = ["instances", "reconciling"]
+    __slots__ = ["instances", "reconciling", "infiniband_topology_path"]
     INSTANCES_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
+    INFINIBAND_TOPOLOGY_PATH_FIELD_NUMBER: _ClassVar[int]
     instances: _containers.RepeatedScalarFieldContainer[str]
     reconciling: bool
-    def __init__(self, instances: _Optional[_Iterable[str]] = ..., reconciling: bool = ...) -> None: ...
+    infiniband_topology_path: GpuClusterStatusInfinibandTopologyPath
+    def __init__(self, instances: _Optional[_Iterable[str]] = ..., reconciling: bool = ..., infiniband_topology_path: _Optional[_Union[GpuClusterStatusInfinibandTopologyPath, _Mapping]] = ...) -> None: ...
+
+class GpuClusterStatusInfinibandTopologyPath(_message.Message):
+    __slots__ = ["instances"]
+    INSTANCES_FIELD_NUMBER: _ClassVar[int]
+    instances: _containers.RepeatedCompositeFieldContainer[GpuClusterStatusInfinibandTopologyPathInstance]
+    def __init__(self, instances: _Optional[_Iterable[_Union[GpuClusterStatusInfinibandTopologyPathInstance, _Mapping]]] = ...) -> None: ...
+
+class GpuClusterStatusInfinibandTopologyPathInstance(_message.Message):
+    __slots__ = ["instance_id", "path"]
+    INSTANCE_ID_FIELD_NUMBER: _ClassVar[int]
+    PATH_FIELD_NUMBER: _ClassVar[int]
+    instance_id: str
+    path: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, instance_id: _Optional[str] = ..., path: _Optional[_Iterable[str]] = ...) -> None: ...

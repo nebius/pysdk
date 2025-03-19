@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.iam.v1 import group_pb2 as nebius_dot_iam_dot_v1_dot_group__pb2
 from nebius.api.nebius.iam.v1 import group_service_pb2 as nebius_dot_iam_dot_v1_dot_group__service__pb2
 
@@ -15,6 +16,11 @@ class GroupServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.Create = channel.unary_unary(
+                '/nebius.iam.v1.GroupService/Create',
+                request_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.CreateGroupRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
         self.Get = channel.unary_unary(
                 '/nebius.iam.v1.GroupService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.GetGroupRequest.SerializeToString,
@@ -30,10 +36,26 @@ class GroupServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsResponse.FromString,
                 )
+        self.Delete = channel.unary_unary(
+                '/nebius.iam.v1.GroupService/Delete',
+                request_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.DeleteGroupRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Update = channel.unary_unary(
+                '/nebius.iam.v1.GroupService/Update',
+                request_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.UpdateGroupRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class GroupServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
+
+    def Create(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def Get(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -53,9 +75,26 @@ class GroupServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Delete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Update(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_GroupServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.CreateGroupRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
             'Get': grpc.unary_unary_rpc_method_handler(
                     servicer.Get,
                     request_deserializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.GetGroupRequest.FromString,
@@ -71,6 +110,16 @@ def add_GroupServiceServicer_to_server(servicer, server):
                     request_deserializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsRequest.FromString,
                     response_serializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsResponse.SerializeToString,
             ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.DeleteGroupRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_group__service__pb2.UpdateGroupRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.GroupService', rpc_method_handlers)
@@ -80,6 +129,23 @@ def add_GroupServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class GroupService(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupService/Create',
+            nebius_dot_iam_dot_v1_dot_group__service__pb2.CreateGroupRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Get(request,
@@ -129,5 +195,39 @@ class GroupService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupService/List',
             nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_group__service__pb2.ListGroupsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupService/Delete',
+            nebius_dot_iam_dot_v1_dot_group__service__pb2.DeleteGroupRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.GroupService/Update',
+            nebius_dot_iam_dot_v1_dot_group__service__pb2.UpdateGroupRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -53,6 +53,16 @@ class ClusterServiceStub(object):
                 request_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.RestoreClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
                 )
+        self.Stop = channel.unary_unary(
+                '/nebius.msp.postgresql.v1alpha1.ClusterService/Stop',
+                request_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.StopClusterRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Start = channel.unary_unary(
+                '/nebius.msp.postgresql.v1alpha1.ClusterService/Start',
+                request_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.StartClusterRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class ClusterServiceServicer(object):
@@ -110,6 +120,20 @@ class ClusterServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Stop(self, request, context):
+        """Suspends the PostgreSQL cluster to save resources.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Start(self, request, context):
+        """Wakes up suspended PostgreSQL cluster.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ClusterServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -146,6 +170,16 @@ def add_ClusterServiceServicer_to_server(servicer, server):
             'Restore': grpc.unary_unary_rpc_method_handler(
                     servicer.Restore,
                     request_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.RestoreClusterRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Stop': grpc.unary_unary_rpc_method_handler(
+                    servicer.Stop,
+                    request_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.StopClusterRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Start': grpc.unary_unary_rpc_method_handler(
+                    servicer.Start,
+                    request_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.StartClusterRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
@@ -274,6 +308,40 @@ class ClusterService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.msp.postgresql.v1alpha1.ClusterService/Restore',
             nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.RestoreClusterRequest.SerializeToString,
+            nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Stop(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.postgresql.v1alpha1.ClusterService/Stop',
+            nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.StopClusterRequest.SerializeToString,
+            nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Start(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.postgresql.v1alpha1.ClusterService/Start',
+            nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.StartClusterRequest.SerializeToString,
             nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

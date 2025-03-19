@@ -25,6 +25,8 @@ import nebius.aio.request as request_1
 import nebius.aio.operation as operation_1
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
+import nebius.api.nebius.iam.v1.access_permit_pb2 as access_permit_pb2
+import nebius.api.nebius.iam.v1.access_permit_service_pb2 as access_permit_service_pb2
 import nebius.api.nebius.iam.v1.auth_public_key_pb2 as auth_public_key_pb2
 import nebius.api.nebius.iam.v1.auth_public_key_service_pb2 as auth_public_key_service_pb2
 import nebius.api.nebius.iam.v1.state_pb2 as state_pb2
@@ -1425,6 +1427,521 @@ class AccessKeyServiceClient(client.Client):
             compression=compression,
             retries=retries,
             result_wrapper=operation_1.Operation,
+        )
+    
+
+# file: nebius/iam/v1/access_permit.proto
+class AccessPermit(pb_classes.Message):
+    __PB2_CLASS__ = access_permit_pb2.AccessPermit
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessPermit",access_permit_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AccessPermitSpec|access_permit_pb2.AccessPermitSpec|None|unset.UnsetType" = unset.Unset,
+        status: "AccessPermitStatus|access_permit_pb2.AccessPermitStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "AccessPermitSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=AccessPermitSpec,
+        )
+    @spec.setter
+    def spec(self, value: "AccessPermitSpec|access_permit_pb2.AccessPermitSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "AccessPermitStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=AccessPermitStatus,
+        )
+    @status.setter
+    def status(self, value: "AccessPermitStatus|access_permit_pb2.AccessPermitStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class AccessPermitSpec(pb_classes.Message):
+    __PB2_CLASS__ = access_permit_pb2.AccessPermitSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessPermitSpec",access_permit_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        role: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(resource_id, unset.UnsetType):
+            self.resource_id = resource_id
+        if not isinstance(role, unset.UnsetType):
+            self.role = role
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_id",
+            "role",
+        ]
+    
+    @builtins.property
+    def resource_id(self) -> "builtins.str":
+        """
+         Resource for granting access permit.
+        """
+        
+        return super()._get_field("resource_id", explicit_presence=False,
+        )
+    @resource_id.setter
+    def resource_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("resource_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def role(self) -> "builtins.str":
+        """
+         Role for granting access permit.
+        """
+        
+        return super()._get_field("role", explicit_presence=False,
+        )
+    @role.setter
+    def role(self, value: "builtins.str|None") -> None:
+        return super()._set_field("role",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_id":"resource_id",
+        "role":"role",
+    }
+    
+class AccessPermitStatus(pb_classes.Message):
+    __PB2_CLASS__ = access_permit_pb2.AccessPermitStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.AccessPermitStatus",access_permit_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+# file: nebius/iam/v1/access_permit_service.proto
+class CreateAccessPermitRequest(pb_classes.Message):
+    __PB2_CLASS__ = access_permit_service_pb2.CreateAccessPermitRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateAccessPermitRequest",access_permit_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AccessPermitSpec|access_permit_pb2.AccessPermitSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "AccessPermitSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=AccessPermitSpec,
+        )
+    @spec.setter
+    def spec(self, value: "AccessPermitSpec|access_permit_pb2.AccessPermitSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class ListAccessPermitRequest(pb_classes.Message):
+    __PB2_CLASS__ = access_permit_service_pb2.ListAccessPermitRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessPermitRequest",access_permit_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+        if not isinstance(filter, unset.UnsetType):
+            self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+         Represents the container ID.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
+        return super()._get_field("filter", explicit_presence=False,
+        )
+    @filter.setter
+    def filter(self, value: "builtins.str|None") -> None:
+        return super()._set_field("filter",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
+class DeleteAccessPermitRequest(pb_classes.Message):
+    __PB2_CLASS__ = access_permit_service_pb2.DeleteAccessPermitRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteAccessPermitRequest",access_permit_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetAccessPermitRequest(pb_classes.Message):
+    __PB2_CLASS__ = access_permit_service_pb2.GetAccessPermitRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetAccessPermitRequest",access_permit_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListAccessPermitResponse(pb_classes.Message):
+    __PB2_CLASS__ = access_permit_service_pb2.ListAccessPermitResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListAccessPermitResponse",access_permit_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[AccessPermit]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[AccessPermit]":
+        """
+         List of access bindings returned in the response. The field should be named as `items` for consistency.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(AccessPermit,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[AccessPermit]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+
+class AccessPermitServiceClient(client.Client):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.AccessPermitService",access_permit_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.iam.v1.AccessPermitService"
+    __operation_type__ = v1_1.Operation
+    
+    def create(self,
+        request: "CreateAccessPermitRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["CreateAccessPermitRequest","operation_1.Operation[v1_1.Operation]"]:
+        """
+         Creates access permit for provided resource with provided role.
+         Subject of access permit is also a parent of access permit.
+         If resource is unknown - NOT_FOUND will be thrown.
+         If parent of subject is not from resource's hierarchy - NOT_FOUND will be thrown.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation_1.Operation,
+        )
+    
+    def list(self,
+        request: "ListAccessPermitRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["ListAccessPermitRequest","ListAccessPermitResponse"]:
+        """
+         Lists access permits for provided parent
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=access_permit_service_pb2.ListAccessPermitResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(ListAccessPermitResponse),
+        )
+    
+    def delete(self,
+        request: "DeleteAccessPermitRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["DeleteAccessPermitRequest","operation_1.Operation[v1_1.Operation]"]:
+        """
+         Delete access permit by id
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation_1.Operation,
+        )
+    
+    def get(self,
+        request: "GetAccessPermitRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["GetAccessPermitRequest","AccessPermit"]:
+        """
+         Gets access permit by id
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=access_permit_pb2.AccessPermit,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=pb_classes.simple_wrapper(AccessPermit),
         )
     
 
@@ -6106,6 +6623,56 @@ class GroupMembershipServiceClient(client.Client):
     
 
 # file: nebius/iam/v1/group_service.proto
+class CreateGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = group_service_pb2.CreateGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateGroupRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "GroupSpec|group_pb2.GroupSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "GroupSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=GroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "GroupSpec|group_pb2.GroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = group_service_pb2.GetGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetGroupRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -6346,10 +6913,115 @@ class ListGroupsResponse(pb_classes.Message):
         "next_page_token":"next_page_token",
     }
     
+class DeleteGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = group_service_pb2.DeleteGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteGroupRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class UpdateGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = group_service_pb2.UpdateGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateGroupRequest",group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "GroupSpec|group_pb2.GroupSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "GroupSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=GroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "GroupSpec|group_pb2.GroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 
 class GroupServiceClient(client.Client):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.GroupService",group_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.GroupService"
+    __operation_type__ = v1_1.Operation
+    
+    def create(self,
+        request: "CreateGroupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["CreateGroupRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation_1.Operation,
+        )
     
     def get(self,
         request: "GetGroupRequest",
@@ -6409,6 +7081,47 @@ class GroupServiceClient(client.Client):
             compression=compression,
             retries=retries,
             result_wrapper=pb_classes.simple_wrapper(ListGroupsResponse),
+        )
+    
+    def delete(self,
+        request: "DeleteGroupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["DeleteGroupRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation_1.Operation,
+        )
+    
+    def update(self,
+        request: "UpdateGroupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+    ) -> request_1.Request["UpdateGroupRequest","operation_1.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -10625,6 +11338,15 @@ __all__ = [
     "GetAccessKeySecretOnceResponse",
     "ListAccessKeysResponse",
     "AccessKeyServiceClient",
+    "AccessPermit",
+    "AccessPermitSpec",
+    "AccessPermitStatus",
+    "CreateAccessPermitRequest",
+    "ListAccessPermitRequest",
+    "DeleteAccessPermitRequest",
+    "GetAccessPermitRequest",
+    "ListAccessPermitResponse",
+    "AccessPermitServiceClient",
     "AuthPublicKey",
     "AuthPublicKeySpec",
     "AuthPublicKeyStatus",
@@ -10691,10 +11413,13 @@ __all__ = [
     "ListGroupMembershipsWithAttributesResponse",
     "ListMemberOfResponse",
     "GroupMembershipServiceClient",
+    "CreateGroupRequest",
     "GetGroupRequest",
     "GetGroupByNameRequest",
     "ListGroupsRequest",
     "ListGroupsResponse",
+    "DeleteGroupRequest",
+    "UpdateGroupRequest",
     "GroupServiceClient",
     "Invitation",
     "InvitationSpec",

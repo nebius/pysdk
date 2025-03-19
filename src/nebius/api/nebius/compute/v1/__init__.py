@@ -2058,23 +2058,55 @@ class GpuClusterStatus(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class __OneOfClass_topology__(pb_classes.OneOf):
+        name: builtins.str= "topology"
+        
+        def __init__(self, msg: "GpuClusterStatus") -> None:
+            super().__init__()
+            self._message: "GpuClusterStatus" = msg
+    
+    class __OneOfClass_topology_infiniband_topology_path__(__OneOfClass_topology__):
+        field: typing.Literal["infiniband_topology_path"] = "infiniband_topology_path"
+        
+        def __init__(self, msg: "GpuClusterStatus") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "GpuClusterStatusInfinibandTopologyPath":
+            return self._message.infiniband_topology_path
+    
+    @builtins.property
+    def topology(self) -> __OneOfClass_topology_infiniband_topology_path__|None:
+        field_name_1: str|None = super().which_field_in_oneof("topology")
+        match field_name_1:
+            case "infiniband_topology_path":
+                return self.__OneOfClass_topology_infiniband_topology_path__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
         instances: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        infiniband_topology_path: "GpuClusterStatusInfinibandTopologyPath|gpu_cluster_pb2.GpuClusterStatusInfinibandTopologyPath|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(instances, unset.UnsetType):
             self.instances = instances
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
+        if not isinstance(infiniband_topology_path, unset.UnsetType):
+            self.infiniband_topology_path = infiniband_topology_path
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "instances",
             "reconciling",
+            "infiniband_topology_path",
+            "topology",
         ]
     
     @builtins.property
@@ -2100,9 +2132,105 @@ class GpuClusterStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def infiniband_topology_path(self) -> "GpuClusterStatusInfinibandTopologyPath|None":
+        return super()._get_field("infiniband_topology_path", explicit_presence=True,
+        wrap=GpuClusterStatusInfinibandTopologyPath,
+        )
+    @infiniband_topology_path.setter
+    def infiniband_topology_path(self, value: "GpuClusterStatusInfinibandTopologyPath|gpu_cluster_pb2.GpuClusterStatusInfinibandTopologyPath|None") -> None:
+        return super()._set_field("infiniband_topology_path",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "instances":"instances",
         "reconciling":"reconciling",
+        "infiniband_topology_path":"infiniband_topology_path",
+        "topology":"topology",
+    }
+    
+class GpuClusterStatusInfinibandTopologyPath(pb_classes.Message):
+    __PB2_CLASS__ = gpu_cluster_pb2.GpuClusterStatusInfinibandTopologyPath
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GpuClusterStatusInfinibandTopologyPath",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        instances: "abc.Iterable[GpuClusterStatusInfinibandTopologyPathInstance]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(instances, unset.UnsetType):
+            self.instances = instances
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "instances",
+        ]
+    
+    @builtins.property
+    def instances(self) -> "abc.MutableSequence[GpuClusterStatusInfinibandTopologyPathInstance]":
+        return super()._get_field("instances", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(GpuClusterStatusInfinibandTopologyPathInstance,None,None),
+        )
+    @instances.setter
+    def instances(self, value: "abc.Iterable[GpuClusterStatusInfinibandTopologyPathInstance]|None") -> None:
+        return super()._set_field("instances",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "instances":"instances",
+    }
+    
+class GpuClusterStatusInfinibandTopologyPathInstance(pb_classes.Message):
+    __PB2_CLASS__ = gpu_cluster_pb2.GpuClusterStatusInfinibandTopologyPathInstance
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GpuClusterStatusInfinibandTopologyPathInstance",gpu_cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        instance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        path: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(instance_id, unset.UnsetType):
+            self.instance_id = instance_id
+        if not isinstance(path, unset.UnsetType):
+            self.path = path
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "instance_id",
+            "path",
+        ]
+    
+    @builtins.property
+    def instance_id(self) -> "builtins.str":
+        return super()._get_field("instance_id", explicit_presence=False,
+        )
+    @instance_id.setter
+    def instance_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("instance_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def path(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("path", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @path.setter
+    def path(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("path",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "instance_id":"instance_id",
+        "path":"path",
     }
     
 # file: nebius/compute/v1/gpu_cluster_service.proto
@@ -4259,6 +4387,33 @@ class InstanceStatus(pb_classes.Message):
         DELETING = 7
         ERROR = 8
     
+    class __OneOfClass_gpu_cluster_topology__(pb_classes.OneOf):
+        name: builtins.str= "gpu_cluster_topology"
+        
+        def __init__(self, msg: "InstanceStatus") -> None:
+            super().__init__()
+            self._message: "InstanceStatus" = msg
+    
+    class __OneOfClass_gpu_cluster_topology_infiniband_topology_path__(__OneOfClass_gpu_cluster_topology__):
+        field: typing.Literal["infiniband_topology_path"] = "infiniband_topology_path"
+        
+        def __init__(self, msg: "InstanceStatus") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "InstanceStatusInfinibandTopologyPath":
+            return self._message.infiniband_topology_path
+    
+    @builtins.property
+    def gpu_cluster_topology(self) -> __OneOfClass_gpu_cluster_topology_infiniband_topology_path__|None:
+        field_name_1: str|None = super().which_field_in_oneof("gpu_cluster_topology")
+        match field_name_1:
+            case "infiniband_topology_path":
+                return self.__OneOfClass_gpu_cluster_topology_infiniband_topology_path__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -4267,6 +4422,7 @@ class InstanceStatus(pb_classes.Message):
         network_interfaces: "abc.Iterable[NetworkInterfaceStatus]|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         maintenance_event_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        infiniband_topology_path: "InstanceStatusInfinibandTopologyPath|instance_pb2.InstanceStatusInfinibandTopologyPath|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -4277,6 +4433,8 @@ class InstanceStatus(pb_classes.Message):
             self.reconciling = reconciling
         if not isinstance(maintenance_event_id, unset.UnsetType):
             self.maintenance_event_id = maintenance_event_id
+        if not isinstance(infiniband_topology_path, unset.UnsetType):
+            self.infiniband_topology_path = infiniband_topology_path
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -4284,6 +4442,8 @@ class InstanceStatus(pb_classes.Message):
             "network_interfaces",
             "reconciling",
             "maintenance_event_id",
+            "infiniband_topology_path",
+            "gpu_cluster_topology",
             "InstanceState",
         ]
     
@@ -4329,12 +4489,59 @@ class InstanceStatus(pb_classes.Message):
         return super()._set_field("maintenance_event_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def infiniband_topology_path(self) -> "InstanceStatusInfinibandTopologyPath|None":
+        return super()._get_field("infiniband_topology_path", explicit_presence=True,
+        wrap=InstanceStatusInfinibandTopologyPath,
+        )
+    @infiniband_topology_path.setter
+    def infiniband_topology_path(self, value: "InstanceStatusInfinibandTopologyPath|instance_pb2.InstanceStatusInfinibandTopologyPath|None") -> None:
+        return super()._set_field("infiniband_topology_path",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "network_interfaces":"network_interfaces",
         "reconciling":"reconciling",
         "maintenance_event_id":"maintenance_event_id",
+        "infiniband_topology_path":"infiniband_topology_path",
+        "gpu_cluster_topology":"gpu_cluster_topology",
         "InstanceState":"InstanceState",
+    }
+    
+class InstanceStatusInfinibandTopologyPath(pb_classes.Message):
+    __PB2_CLASS__ = instance_pb2.InstanceStatusInfinibandTopologyPath
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.InstanceStatusInfinibandTopologyPath",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        path: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(path, unset.UnsetType):
+            self.path = path
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "path",
+        ]
+    
+    @builtins.property
+    def path(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("path", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @path.setter
+    def path(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("path",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "path":"path",
     }
     
 # file: nebius/compute/v1/instance_service.proto
@@ -5346,6 +5553,8 @@ __all__ = [
     "GpuCluster",
     "GpuClusterSpec",
     "GpuClusterStatus",
+    "GpuClusterStatusInfinibandTopologyPath",
+    "GpuClusterStatusInfinibandTopologyPathInstance",
     "GetGpuClusterRequest",
     "ListGpuClustersRequest",
     "CreateGpuClusterRequest",
@@ -5377,6 +5586,7 @@ __all__ = [
     "ExistingFilesystem",
     "AttachedFilesystemSpec",
     "InstanceStatus",
+    "InstanceStatusInfinibandTopologyPath",
     "GetInstanceRequest",
     "ListInstancesRequest",
     "CreateInstanceRequest",
