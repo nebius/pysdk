@@ -16,7 +16,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/compute/v1/gpu_cluster.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/annotations.proto\"\xc0\x01\n\nGpuCluster\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x35\n\x04spec\x18\x02 \x01(\x0b\x32!.nebius.compute.v1.GpuClusterSpecR\x04spec\x12;\n\x06status\x18\x03 \x01(\x0b\x32#.nebius.compute.v1.GpuClusterStatusR\x06status\"I\n\x0eGpuClusterSpec\x12\x37\n\x11infiniband_fabric\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x10infinibandFabric\"R\n\x10GpuClusterStatus\x12\x1c\n\tinstances\x18\x01 \x03(\tR\tinstances\x12 \n\x0breconciling\x18\x02 \x01(\x08R\x0breconcilingB^\n\x18\x61i.nebius.pub.compute.v1B\x0fGpuClusterProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/compute/v1/gpu_cluster.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/annotations.proto\"\xc0\x01\n\nGpuCluster\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x35\n\x04spec\x18\x02 \x01(\x0b\x32!.nebius.compute.v1.GpuClusterSpecR\x04spec\x12;\n\x06status\x18\x03 \x01(\x0b\x32#.nebius.compute.v1.GpuClusterStatusR\x06status\"I\n\x0eGpuClusterSpec\x12\x37\n\x11infiniband_fabric\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x10infinibandFabric\"\xd5\x01\n\x10GpuClusterStatus\x12\x1c\n\tinstances\x18\x01 \x03(\tR\tinstances\x12 \n\x0breconciling\x18\x02 \x01(\x08R\x0breconciling\x12u\n\x18infiniband_topology_path\x18\x03 \x01(\x0b\x32\x39.nebius.compute.v1.GpuClusterStatusInfinibandTopologyPathH\x00R\x16infinibandTopologyPathB\n\n\x08topology\"\x89\x01\n&GpuClusterStatusInfinibandTopologyPath\x12_\n\tinstances\x18\x01 \x03(\x0b\x32\x41.nebius.compute.v1.GpuClusterStatusInfinibandTopologyPathInstanceR\tinstances\"e\n.GpuClusterStatusInfinibandTopologyPathInstance\x12\x1f\n\x0binstance_id\x18\x01 \x01(\tR\ninstanceId\x12\x12\n\x04path\x18\x02 \x03(\tR\x04pathB^\n\x18\x61i.nebius.pub.compute.v1B\x0fGpuClusterProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -31,6 +31,10 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_GPUCLUSTER']._serialized_end=339
   _globals['_GPUCLUSTERSPEC']._serialized_start=341
   _globals['_GPUCLUSTERSPEC']._serialized_end=414
-  _globals['_GPUCLUSTERSTATUS']._serialized_start=416
-  _globals['_GPUCLUSTERSTATUS']._serialized_end=498
+  _globals['_GPUCLUSTERSTATUS']._serialized_start=417
+  _globals['_GPUCLUSTERSTATUS']._serialized_end=630
+  _globals['_GPUCLUSTERSTATUSINFINIBANDTOPOLOGYPATH']._serialized_start=633
+  _globals['_GPUCLUSTERSTATUSINFINIBANDTOPOLOGYPATH']._serialized_end=770
+  _globals['_GPUCLUSTERSTATUSINFINIBANDTOPOLOGYPATHINSTANCE']._serialized_start=772
+  _globals['_GPUCLUSTERSTATUSINFINIBANDTOPOLOGYPATHINSTANCE']._serialized_end=873
 # @@protoc_insertion_point(module_scope)

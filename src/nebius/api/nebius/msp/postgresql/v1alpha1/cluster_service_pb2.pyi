@@ -67,3 +67,15 @@ class UpdateClusterRequest(_message.Message):
     metadata: _metadata_pb2.ResourceMetadata
     spec: _cluster_pb2.ClusterSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_cluster_pb2.ClusterSpec, _Mapping]] = ...) -> None: ...
+
+class StopClusterRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class StartClusterRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...

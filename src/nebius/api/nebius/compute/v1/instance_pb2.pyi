@@ -114,7 +114,7 @@ class AttachedFilesystemSpec(_message.Message):
     def __init__(self, attach_mode: _Optional[_Union[AttachedFilesystemSpec.AttachMode, str]] = ..., mount_tag: _Optional[str] = ..., existing_filesystem: _Optional[_Union[ExistingFilesystem, _Mapping]] = ...) -> None: ...
 
 class InstanceStatus(_message.Message):
-    __slots__ = ["state", "network_interfaces", "reconciling", "maintenance_event_id"]
+    __slots__ = ["state", "network_interfaces", "reconciling", "maintenance_event_id", "infiniband_topology_path"]
     class InstanceState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[InstanceStatus.InstanceState]
@@ -139,8 +139,16 @@ class InstanceStatus(_message.Message):
     NETWORK_INTERFACES_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
     MAINTENANCE_EVENT_ID_FIELD_NUMBER: _ClassVar[int]
+    INFINIBAND_TOPOLOGY_PATH_FIELD_NUMBER: _ClassVar[int]
     state: InstanceStatus.InstanceState
     network_interfaces: _containers.RepeatedCompositeFieldContainer[_network_interface_pb2.NetworkInterfaceStatus]
     reconciling: bool
     maintenance_event_id: str
-    def __init__(self, state: _Optional[_Union[InstanceStatus.InstanceState, str]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceStatus, _Mapping]]] = ..., reconciling: bool = ..., maintenance_event_id: _Optional[str] = ...) -> None: ...
+    infiniband_topology_path: InstanceStatusInfinibandTopologyPath
+    def __init__(self, state: _Optional[_Union[InstanceStatus.InstanceState, str]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceStatus, _Mapping]]] = ..., reconciling: bool = ..., maintenance_event_id: _Optional[str] = ..., infiniband_topology_path: _Optional[_Union[InstanceStatusInfinibandTopologyPath, _Mapping]] = ...) -> None: ...
+
+class InstanceStatusInfinibandTopologyPath(_message.Message):
+    __slots__ = ["path"]
+    PATH_FIELD_NUMBER: _ClassVar[int]
+    path: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, path: _Optional[_Iterable[str]] = ...) -> None: ...
