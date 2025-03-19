@@ -196,7 +196,8 @@ async def test_get_instance_sync_in_async_no_loop() -> None:
     except LoopError as e:
         assert (
             str(e) == "Synchronous call inside async context. Either use async/"
-            "await or provide a safe and separate loop to run."
+            "await or provide a safe and separate loop to run at the SDK "
+            "initialization."
         )
     finally:
         # Clean up
@@ -280,7 +281,7 @@ async def test_get_instance_sync_in_async_same_loop() -> None:
     except LoopError as e:
         assert (
             str(e) == "Provided loop is equal to current thread's loop. Either use "
-            "async/await or provide another loop."
+            "async/await or provide another loop at the SDK initialization."
         )
     finally:
         # Clean up
