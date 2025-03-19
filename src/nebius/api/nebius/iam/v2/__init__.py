@@ -935,6 +935,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -945,6 +946,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -955,6 +957,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetAccessKeyRequest","AccessKey"]:
         return super().request(
             method="Get",
@@ -965,6 +968,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(AccessKey),
         )
     
@@ -975,6 +979,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListAccessKeysRequest","ListAccessKeysResponse"]:
         return super().request(
             method="List",
@@ -985,6 +990,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListAccessKeysResponse),
         )
     
@@ -995,6 +1001,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1006,6 +1013,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1016,6 +1024,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -1026,6 +1035,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1036,6 +1046,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ActivateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Activate",
@@ -1046,6 +1057,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1056,6 +1068,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeactivateAccessKeyRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Deactivate",
@@ -1066,6 +1079,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1076,6 +1090,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListAccessKeysByAccountRequest","ListAccessKeysResponse"]:
         return super().request(
             method="ListByAccount",
@@ -1086,6 +1101,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListAccessKeysResponse),
         )
     
@@ -1096,6 +1112,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetAccessKeyByAwsIdRequest","AccessKey"]:
         return super().request(
             method="GetByAwsId",
@@ -1106,6 +1123,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(AccessKey),
         )
     
@@ -1116,6 +1134,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteAccessKeyByAwsIdRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="DeleteByAwsId",
@@ -1126,6 +1145,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1136,6 +1156,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ActivateAccessKeyByAwsIdRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="ActivateByAwsId",
@@ -1146,6 +1167,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1156,6 +1178,7 @@ class AccessKeyServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeactivateAccessKeyByAwsIdRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="DeactivateByAwsId",
@@ -1166,6 +1189,7 @@ class AccessKeyServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     

@@ -850,6 +850,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
         """
          Returns the specified cluster.
@@ -864,6 +865,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
@@ -874,6 +876,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetClusterByNameRequest","Cluster"]:
         """
          Returns the specified cluster by name.
@@ -888,6 +891,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
@@ -898,6 +902,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
         """
          Retrieves a list of clusters.
@@ -912,6 +917,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListClustersResponse),
         )
     
@@ -922,6 +928,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1_1.Operation]"]:
         """
          Creates a cluster.
@@ -936,6 +943,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -946,6 +954,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1_1.Operation]"]:
         """
          Updates a cluster.
@@ -961,6 +970,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -971,6 +981,7 @@ class ClusterServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1_1.Operation]"]:
         """
          Delete a cluster.
@@ -985,6 +996,7 @@ class ClusterServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -2240,6 +2252,7 @@ class JobServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetJobRequest","Job"]:
         """
          Returns the specified job.
@@ -2254,6 +2267,7 @@ class JobServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Job),
         )
     
@@ -2264,6 +2278,7 @@ class JobServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListJobsRequest","ListJobsResponse"]:
         """
          Retrieves a list of jobs.
@@ -2278,6 +2293,7 @@ class JobServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListJobsResponse),
         )
     
@@ -2288,6 +2304,7 @@ class JobServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateJobRequest","operation.Operation[v1_1.Operation]"]:
         """
          Creates a job.
@@ -2302,6 +2319,7 @@ class JobServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -2312,6 +2330,7 @@ class JobServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CancelJobRequest","operation.Operation[v1_1.Operation]"]:
         """
          Cancel the job.
@@ -2326,6 +2345,7 @@ class JobServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -3164,6 +3184,7 @@ class SessionServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetSessionRequest","Session"]:
         """
          Returns the specified session.
@@ -3178,6 +3199,7 @@ class SessionServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Session),
         )
     
@@ -3188,6 +3210,7 @@ class SessionServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetSessionByNameRequest","Session"]:
         """
          Returns the specified session by name.
@@ -3202,6 +3225,7 @@ class SessionServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Session),
         )
     
@@ -3212,6 +3236,7 @@ class SessionServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListSessionsRequest","ListSessionsResponse"]:
         """
          Retrieves a list of sessions.
@@ -3226,6 +3251,7 @@ class SessionServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListSessionsResponse),
         )
     
@@ -3236,6 +3262,7 @@ class SessionServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateSessionRequest","operation.Operation[v1_1.Operation]"]:
         """
          Creates a session.
@@ -3250,6 +3277,7 @@ class SessionServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -3260,6 +3288,7 @@ class SessionServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteSessionRequest","operation.Operation[v1_1.Operation]"]:
         """
          Deletes a session.
@@ -3274,6 +3303,7 @@ class SessionServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     

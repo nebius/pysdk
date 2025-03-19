@@ -36,6 +36,7 @@ class Client:
             Callable[[GRPCChannel, SyncronizerInterface, Any], Res] | None
         ) = None,
         retries: int | None = 3,
+        per_retry_timeout: float | None = None,
     ) -> Request[Req, Res]:
         return Request[Req, Res](
             channel=self._channel,
@@ -49,4 +50,5 @@ class Client:
             compression=compression,
             result_wrapper=result_wrapper,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
         )

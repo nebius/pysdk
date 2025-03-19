@@ -19,6 +19,7 @@ class SDK(Channel):
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
         retries: int | None = 3,
+        per_retry_timeout: float | None = None,
     ) -> Request[GetProfileRequest, GetProfileResponse]:
         client = ProfileServiceClient(self)
         return client.get(
@@ -28,4 +29,5 @@ class SDK(Channel):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
         )

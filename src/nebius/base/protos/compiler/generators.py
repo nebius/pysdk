@@ -621,6 +621,11 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     ImportedSymbol("int", "builtins"),
                     " | None = 3,",
                 )
+                g.p(
+                    "per_retry_timeout: ",
+                    ImportedSymbol("float", "builtins"),
+                    " | None = None,",
+                )
             g.p(
                 ") -> ",
                 ImportedSymbol("Request", "nebius.aio.request"),
@@ -662,6 +667,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     g.p("credentials=credentials,")
                     g.p("compression=compression,")
                     g.p("retries=retries,")
+                    g.p("per_retry_timeout=per_retry_timeout,")
                     if is_operation_output(method):
                         g.p(
                             "result_wrapper=",

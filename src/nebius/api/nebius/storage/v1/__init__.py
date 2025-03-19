@@ -1662,6 +1662,7 @@ class BucketServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetBucketRequest","Bucket"]:
         return super().request(
             method="Get",
@@ -1672,6 +1673,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Bucket),
         )
     
@@ -1682,6 +1684,7 @@ class BucketServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetBucketByNameRequest","Bucket"]:
         return super().request(
             method="GetByName",
@@ -1692,6 +1695,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(Bucket),
         )
     
@@ -1702,6 +1706,7 @@ class BucketServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListBucketsRequest","ListBucketsResponse"]:
         return super().request(
             method="List",
@@ -1712,6 +1717,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListBucketsResponse),
         )
     
@@ -1722,6 +1728,7 @@ class BucketServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateBucketRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1732,6 +1739,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1742,6 +1750,7 @@ class BucketServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateBucketRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1753,6 +1762,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1763,6 +1773,7 @@ class BucketServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteBucketRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -1773,6 +1784,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1783,6 +1795,7 @@ class BucketServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["PurgeBucketRequest","operation.Operation[v1_1.Operation]"]:
         """
          Purge instantly deletes the bucket in ScheduledForDeletion state.
@@ -1799,6 +1812,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
@@ -1809,6 +1823,7 @@ class BucketServiceClient(client.Client):
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UndeleteBucketRequest","operation.Operation[v1_1.Operation]"]:
         """
          Undelete recovers the bucket from ScheduledForDeletion state to Active.
@@ -1823,6 +1838,7 @@ class BucketServiceClient(client.Client):
             credentials=credentials,
             compression=compression,
             retries=retries,
+            per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
         )
     
