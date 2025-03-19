@@ -1,12 +1,15 @@
 from asyncio import (
+    FIRST_COMPLETED,
     AbstractEventLoop,
     CancelledError,
+    Task,
     gather,
     get_event_loop,
     iscoroutine,
     new_event_loop,
     run_coroutine_threadsafe,
-    wait_for,
+    sleep,
+    wait,
 )
 from collections.abc import Awaitable, Coroutine, Sequence
 from inspect import isawaitable
@@ -155,6 +158,35 @@ def _wrap_awaitable(awaitable: Awaitable[T]) -> Coroutine[Any, Any, T]:
     return wrap()
 
 
+async def _run_awaitable_with_timeout(
+    f: Awaitable[T],
+    timeout: float | None = None,
+) -> T:
+    task = Task(_wrap_awaitable(f), name=f"Task for {f=}")
+    tasks: list[Task[Any]] = list[Task[Any]]([task])
+    if timeout is not None:
+        timer = Task(sleep(timeout), name=f"Timer for {f=}")
+        tasks.append(timer)
+    done, pending = await wait(
+        tasks,
+        return_when=FIRST_COMPLETED,
+    )
+    for p in pending:
+        logger.debug(f"Canceling pending task {p}")
+        p.cancel()
+    await gather(*pending, return_exceptions=True)
+    try:
+        if task.exception() is not None:
+            if task not in done:
+                raise TimeoutError("Awaitable timed out") from task.exception()
+            raise task.exception()  # type: ignore
+    except CancelledError as e:
+        if task not in done:
+            raise TimeoutError("Awaitable timed out") from e
+        raise e
+    return task.result()
+
+
 class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def __init__(
         self,
@@ -273,22 +305,24 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                         raise LoopError(
                             "Provided loop is equal to current thread's "
                             "loop. Either use async/await or provide "
-                            "another loop."
+                            "another loop at the SDK initialization."
                         )
                 except RuntimeError:
                     pass
-                awaitable = _wrap_awaitable(awaitable)
-                return run_coroutine_threadsafe(awaitable, self._event_loop).result(
-                    timeout
-                )
+                return run_coroutine_threadsafe(
+                    _run_awaitable_with_timeout(awaitable, timeout),
+                    self._event_loop,
+                ).result()
             else:
                 raise LoopError(
                     "Synchronous call inside async context. Either use "
                     "async/await or provide a safe and separate loop "
-                    "to run."
+                    "to run at the SDK initialization."
                 )
 
-        return self._event_loop.run_until_complete(wait_for(awaitable, timeout))
+        return self._event_loop.run_until_complete(
+            _run_awaitable_with_timeout(awaitable, timeout)
+        )
 
     def sync_close(self, timeout: float | None = None) -> None:
         return self.run_sync(self.close(), timeout)
