@@ -1,12 +1,12 @@
 from asyncio import Future, ensure_future
-from collections.abc import Callable, Generator, Iterable
+from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
 from sys import exc_info
 from time import time
 from typing import Any, Generic, TypeVar
 
 from google.protobuf.message import Message as PMessage
-from grpc import CallCredentials, Compression
+from grpc import CallCredentials, Compression, StatusCode
 from grpc.aio import AioRpcError
 from grpc.aio import Channel as GRPCChannel
 from grpc.aio import Metadata as GrpcMetadata
@@ -24,6 +24,7 @@ from .request_status import RequestStatus, UnfinishedRequestStatus
 Req = TypeVar("Req")
 Res = TypeVar("Res")
 Err = TypeVar("Err")
+T = TypeVar("T")
 
 log = getLogger(__name__)
 
@@ -197,18 +198,34 @@ class Request(Generic[Req, Res]):
             compression=self._compression,
         )
 
+    def run_sync_with_timeout(self, func: Awaitable[T]) -> T:
+        try:
+            return self._channel.run_sync(func, timeout=self._timeout)
+        except TimeoutError as e:
+            from .service_error import RequestError, RequestStatusExtended
+
+            self._status = RequestStatusExtended(
+                code=StatusCode.DEADLINE_EXCEEDED,
+                message="Deadline Exceeded",
+                details=[],
+                service_errors=[],
+                request_id=self._request_id if self._request_id is not None else "",
+                trace_id=self._trace_id if self._trace_id is not None else "",
+            )
+            raise RequestError(self._status) from e
+
     def wait(self) -> Res:
-        return self._channel.run_sync(self, timeout=self._timeout)
+        return self.run_sync_with_timeout(self)
 
     def initial_metadata_sync(self) -> Metadata:
         if self._initial_metadata is not None:
             return self._initial_metadata
-        return self._channel.run_sync(self.initial_metadata(), timeout=self._timeout)
+        return self.run_sync_with_timeout(self.initial_metadata())
 
     def trailing_metadata_sync(self) -> Metadata:
         if self._trailing_metadata is not None:
             return self._trailing_metadata
-        return self._channel.run_sync(self.trailing_metadata(), timeout=self._timeout)
+        return self.run_sync_with_timeout(self.trailing_metadata())
 
     def current_status(self) -> RequestStatus | UnfinishedRequestStatus:
         if self._status is not None:
@@ -234,12 +251,12 @@ class Request(Generic[Req, Res]):
     def request_id_sync(self) -> str:
         if self._request_id is not None:
             return self._request_id
-        return self._channel.run_sync(self.request_id(), timeout=self._timeout)
+        return self.run_sync_with_timeout(self.request_id())
 
     def trace_id_sync(self) -> str:
         if self._trace_id is not None:
             return self._trace_id
-        return self._channel.run_sync(self.trace_id(), timeout=self._timeout)
+        return self.run_sync_with_timeout(self.trace_id())
 
     async def initial_metadata(self) -> Metadata:
         try:

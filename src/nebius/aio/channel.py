@@ -159,25 +159,31 @@ def _wrap_awaitable(awaitable: Awaitable[T]) -> Coroutine[Any, Any, T]:
 
 
 async def _run_awaitable_with_timeout(
-    awaitable: Awaitable[T],
+    f: Awaitable[T],
     timeout: float | None = None,
 ) -> T:
-    task = Task(_wrap_awaitable(awaitable))
+    task = Task(_wrap_awaitable(f), name=f"Task for {f=}")
     tasks: list[Task[Any]] = list[Task[Any]]([task])
     if timeout is not None:
-        timer = Task(sleep(timeout))
+        timer = Task(sleep(timeout), name=f"Timer for {f=}")
         tasks.append(timer)
     done, pending = await wait(
         tasks,
         return_when=FIRST_COMPLETED,
     )
     for p in pending:
+        logger.debug(f"Canceling pending task {p}")
         p.cancel()
     await gather(*pending, return_exceptions=True)
-    if task.exception() is not None:
+    try:
+        if task.exception() is not None:
+            if task not in done:
+                raise TimeoutError("Awaitable timed out") from task.exception()
+            raise task.exception()  # type: ignore
+    except CancelledError as e:
         if task not in done:
-            raise TimeoutError("Awaitable timed out") from task.exception()
-        raise task.exception()  # type: ignore
+            raise TimeoutError("Awaitable timed out") from e
+        raise e
     return task.result()
 
 
