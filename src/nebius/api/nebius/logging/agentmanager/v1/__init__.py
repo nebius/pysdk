@@ -448,6 +448,7 @@ class ModulesHealth(pb_classes.Message):
         process: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         gpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         cpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        cilium_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(process, unset.UnsetType):
@@ -456,12 +457,15 @@ class ModulesHealth(pb_classes.Message):
             self.gpu_pipeline = gpu_pipeline
         if not isinstance(cpu_pipeline, unset.UnsetType):
             self.cpu_pipeline = cpu_pipeline
+        if not isinstance(cilium_pipeline, unset.UnsetType):
+            self.cilium_pipeline = cilium_pipeline
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "process",
             "gpu_pipeline",
             "cpu_pipeline",
+            "cilium_pipeline",
         ]
     
     @builtins.property
@@ -506,10 +510,25 @@ class ModulesHealth(pb_classes.Message):
         return super()._set_field("cpu_pipeline",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def cilium_pipeline(self) -> "ModuleHealth":
+        """
+         Health status of the Cilium pipeline module.
+        """
+        
+        return super()._get_field("cilium_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @cilium_pipeline.setter
+    def cilium_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("cilium_pipeline",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "process":"process",
         "gpu_pipeline":"gpu_pipeline",
         "cpu_pipeline":"cpu_pipeline",
+        "cilium_pipeline":"cilium_pipeline",
     }
     
 class ModuleHealth(pb_classes.Message):
