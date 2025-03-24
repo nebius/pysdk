@@ -14,9 +14,8 @@ from typing import (
 
 from google.protobuf.descriptor import Descriptor
 from google.protobuf.message import Message as PMessage
-from grpc.aio import Channel as GRPCChannel
 
-from nebius.aio.abc import SyncronizerInterface
+from nebius.aio.abc import ClientChannelInterface
 from nebius.base.error import SDKError
 from nebius.base.fieldmask import FieldKey, Mask
 from nebius.base.token_sanitizer import TokenSanitizer
@@ -30,8 +29,8 @@ R = TypeVar("R")
 
 def simple_wrapper(
     wrap: Callable[[T], R],
-) -> Callable[[GRPCChannel, SyncronizerInterface, T], R]:
-    def wrapper(_: GRPCChannel, __: SyncronizerInterface, obj: T) -> R:
+) -> Callable[[str, ClientChannelInterface, T], R]:
+    def wrapper(_: str, __: ClientChannelInterface, obj: T) -> R:
         return wrap(obj)
 
     return wrapper

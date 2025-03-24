@@ -929,10 +929,12 @@ class DeleteClusterRequest(pb_classes.Message):
     }
     
 
-class ClusterServiceClient(client.Client):
+class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.mk8s.v1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.mk8s.v1.ClusterService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetClusterRequest",
@@ -3021,10 +3023,12 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
     }
     
 
-class NodeGroupServiceClient(client.Client):
+class NodeGroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.mk8s.v1.NodeGroupService",node_group_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.mk8s.v1.NodeGroupService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetNodeGroupRequest",

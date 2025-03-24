@@ -1223,10 +1223,12 @@ class ListAccessKeysResponse(pb_classes.Message):
     }
     
 
-class AccessKeyServiceClient(client.Client):
+class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.AccessKeyService",access_key_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.AccessKeyService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateAccessKeyRequest",
@@ -1860,10 +1862,12 @@ class ListAccessPermitResponse(pb_classes.Message):
     }
     
 
-class AccessPermitServiceClient(client.Client):
+class AccessPermitServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.AccessPermitService",access_permit_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.AccessPermitService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateAccessPermitRequest",
@@ -2718,10 +2722,12 @@ class ListAuthPublicKeyResponse(pb_classes.Message):
     }
     
 
-class AuthPublicKeyServiceClient(client.Client):
+class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.AuthPublicKeyService",auth_public_key_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.AuthPublicKeyService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateAuthPublicKeyRequest",
@@ -3841,10 +3847,12 @@ class ListFederationCertificateResponse(pb_classes.Message):
     }
     
 
-class FederationCertificateServiceClient(client.Client):
+class FederationCertificateServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.FederationCertificateService",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.FederationCertificateService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateFederationCertificateRequest",
@@ -4272,10 +4280,12 @@ class DeleteFederationRequest(pb_classes.Message):
     }
     
 
-class FederationServiceClient(client.Client):
+class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.FederationService",federation_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.FederationService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateFederationRequest",
@@ -6542,10 +6552,12 @@ class ListMemberOfResponse(pb_classes.Message):
     }
     
 
-class GroupMembershipServiceClient(client.Client):
+class GroupMembershipServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.GroupMembershipService",group_membership_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.GroupMembershipService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateGroupMembershipRequest",
@@ -7078,10 +7090,12 @@ class UpdateGroupRequest(pb_classes.Message):
     }
     
 
-class GroupServiceClient(client.Client):
+class GroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.GroupService",group_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.GroupService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateGroupRequest",
@@ -7804,10 +7818,12 @@ class ResendInvitationRequest(pb_classes.Message):
     }
     
 
-class InvitationServiceClient(client.Client):
+class InvitationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.InvitationService",invitation_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.InvitationService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateInvitationRequest",
@@ -9119,10 +9135,12 @@ class ListServiceAccountResponse(pb_classes.Message):
     }
     
 
-class ServiceAccountServiceClient(client.Client):
+class ServiceAccountServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.ServiceAccountService",service_account_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.ServiceAccountService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateServiceAccountRequest",
@@ -10112,10 +10130,12 @@ class RevokeStaticKeyRequest(pb_classes.Message):
     }
     
 
-class StaticKeyServiceClient(client.Client):
+class StaticKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.StaticKeyService",static_key_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.StaticKeyService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Delete"
     
     def issue(self,
         request: "IssueStaticKeyRequest",
@@ -10797,10 +10817,12 @@ class UnblockTenantUserAccountRequest(pb_classes.Message):
     }
     
 
-class TenantUserAccountServiceClient(client.Client):
+class TenantUserAccountServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.TenantUserAccountService",tenant_user_account_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.TenantUserAccountService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Block"
     
     def get(self,
         request: "GetTenantUserAccountRequest",

@@ -672,7 +672,6 @@ class ListOperationsByParentRequest(pb_classes.Message):
 class OperationServiceClient(client.Client):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.common.v1alpha1.OperationService",operation_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.common.v1alpha1.OperationService"
-    __operation_type__ = Operation
     
     def get(self,
         request: "GetOperationRequest",

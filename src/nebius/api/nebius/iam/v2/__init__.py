@@ -923,10 +923,12 @@ class ListAccessKeysResponse(pb_classes.Message):
     }
     
 
-class AccessKeyServiceClient(client.Client):
+class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v2.AccessKeyService",access_key_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v2.AccessKeyService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def create(self,
         request: "CreateAccessKeyRequest",

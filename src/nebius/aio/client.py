@@ -1,13 +1,12 @@
 from collections.abc import Callable, Iterable
-from typing import Any, TypeVar
+from typing import Any, Generic, TypeVar
 
 from google.protobuf.message import Message as PMessage
 from grpc import CallCredentials, Compression
-from grpc.aio import Channel as GRPCChannel
 
 from nebius.aio.abc import ClientChannelInterface as Channel
-from nebius.aio.abc import SyncronizerInterface
 from nebius.aio.request import Request
+from nebius.aio.static_channel import Static
 
 # from nebius.api.nebius.common.v1 import Operation
 from nebius.base.metadata import Metadata
@@ -32,9 +31,7 @@ class Client:
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
-        result_wrapper: (
-            Callable[[GRPCChannel, SyncronizerInterface, Any], Res] | None
-        ) = None,
+        result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
         retries: int | None = 3,
         per_retry_timeout: float | None = None,
     ) -> Request[Req, Res]:
@@ -52,3 +49,27 @@ class Client:
             retries=retries,
             per_retry_timeout=per_retry_timeout,
         )
+
+
+OperationPb = TypeVar("OperationPb")
+OperationService = TypeVar("OperationService", bound=Client)
+
+
+class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
+    __operation_type__: type[OperationPb]
+    __operation_service_class__: type[OperationService]
+    __operation_source_method__: str
+
+    def __init__(self, channel: Channel) -> None:
+        super().__init__(channel)
+        self.__operation_service__: OperationService | None = None
+
+    def operation_service(self) -> OperationService:
+        if self.__operation_service__ is None:
+            grpc_channel = self._channel.get_channel_by_method(
+                self.__service_name__ + "." + self.__operation_source_method__
+            )
+            self.__operation_service__ = self.__operation_service_class__(
+                Static(grpc_channel, self._channel)
+            )
+        return self.__operation_service__

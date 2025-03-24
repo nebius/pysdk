@@ -1650,10 +1650,12 @@ class ListBucketsResponse(pb_classes.Message):
     }
     
 
-class BucketServiceClient(client.Client):
+class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.storage.v1.BucketService",bucket_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.storage.v1.BucketService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetBucketRequest",

@@ -838,10 +838,12 @@ class DeleteClusterRequest(pb_classes.Message):
     }
     
 
-class ClusterServiceClient(client.Client):
+class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.spark.v1alpha1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.spark.v1alpha1.ClusterService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetClusterRequest",
@@ -2240,10 +2242,12 @@ class CancelJobRequest(pb_classes.Message):
     }
     
 
-class JobServiceClient(client.Client):
+class JobServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.spark.v1alpha1.JobService",job_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.spark.v1alpha1.JobService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetJobRequest",
@@ -3172,10 +3176,12 @@ class DeleteSessionRequest(pb_classes.Message):
     }
     
 
-class SessionServiceClient(client.Client):
+class SessionServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.spark.v1alpha1.SessionService",session_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.spark.v1alpha1.SessionService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetSessionRequest",

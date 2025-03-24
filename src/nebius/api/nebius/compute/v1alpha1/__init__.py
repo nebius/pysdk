@@ -842,10 +842,12 @@ class ListDisksResponse(pb_classes.Message):
     }
     
 
-class DiskServiceClient(client.Client):
+class DiskServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1alpha1.DiskService",disk_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.compute.v1alpha1.DiskService"
     __operation_type__ = v1alpha1_1.Operation
+    __operation_service_class__ = v1alpha1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetDiskRequest",
@@ -1665,10 +1667,12 @@ class ListFilesystemsResponse(pb_classes.Message):
     }
     
 
-class FilesystemServiceClient(client.Client):
+class FilesystemServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1alpha1.FilesystemService",filesystem_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.compute.v1alpha1.FilesystemService"
     __operation_type__ = v1alpha1_1.Operation
+    __operation_service_class__ = v1alpha1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetFilesystemRequest",
@@ -2274,10 +2278,12 @@ class ListGpuClustersResponse(pb_classes.Message):
     }
     
 
-class GpuClusterServiceClient(client.Client):
+class GpuClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1alpha1.GpuClusterService",gpu_cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.compute.v1alpha1.GpuClusterService"
     __operation_type__ = v1alpha1_1.Operation
+    __operation_service_class__ = v1alpha1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetGpuClusterRequest",
@@ -4084,10 +4090,12 @@ class StopInstanceRequest(pb_classes.Message):
     }
     
 
-class InstanceServiceClient(client.Client):
+class InstanceServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1alpha1.InstanceService",instance_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.compute.v1alpha1.InstanceService"
     __operation_type__ = v1alpha1_1.Operation
+    __operation_service_class__ = v1alpha1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetInstanceRequest",
