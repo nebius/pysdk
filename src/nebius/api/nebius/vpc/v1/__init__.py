@@ -1710,10 +1710,12 @@ class DeleteAllocationRequest(pb_classes.Message):
     }
     
 
-class AllocationServiceClient(client.Client):
+class AllocationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.vpc.v1.AllocationService",allocation_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.vpc.v1.AllocationService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetAllocationRequest",
@@ -2765,10 +2767,12 @@ class UpdatePoolRequest(pb_classes.Message):
     }
     
 
-class PoolServiceClient(client.Client):
+class PoolServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.vpc.v1.PoolService",pool_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.vpc.v1.PoolService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Update"
     
     def get(self,
         request: "GetPoolRequest",

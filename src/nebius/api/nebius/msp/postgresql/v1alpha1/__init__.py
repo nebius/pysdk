@@ -1720,7 +1720,7 @@ class StartClusterRequest(pb_classes.Message):
     }
     
 
-class ClusterServiceClient(client.Client):
+class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1alpha1_2.OperationServiceClient]):
     """
      A set of methods for managing PostgreSQL Cluster resources.
     """
@@ -1728,6 +1728,8 @@ class ClusterServiceClient(client.Client):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.postgresql.v1alpha1.ClusterService"
     __operation_type__ = v1alpha1_2.Operation
+    __operation_service_class__ = v1alpha1_2.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetClusterRequest",

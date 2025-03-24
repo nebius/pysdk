@@ -195,7 +195,7 @@ result = service.get(GetBucketRequest(
 )).wait()
 ```
 
-##### Poll operations
+##### Operations
 
 Many core methods return a [`nebius.aio.Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html) object, representing a time-consuming asynchronous operation. For example, the `create` request from the `BucketServiceClient` above is one of such cases. The [`nebius.aio.Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html) is a wrapper class that provides convenient methods for working with operations. It can be awaited util completion.
 
@@ -224,6 +224,30 @@ operation = service.create(CreateBucketRequest(
 operation.wait_sync()
 print(f"New bucket ID: {operation.resource_id}")
 ```
+
+##### Operations service
+
+If you need to get an operation or list operations, you will need an [`OperationServiceClient`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.OperationServiceClient.html).
+
+The [`OperationServiceClient`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.OperationServiceClient.html), despite being located in [`nebius.api.nebius.common.v1`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.html), **cannot** be used the same way as other services. The real operation service must be acquired from the source service of your operation using [`service.operation_service()`](https://nebius.github.io/pysdk/nebius.aio.client.ClientWithOperations.html#operation_service) method.
+
+Example of listing operations and getting operation by service (only async for brevity):
+```python
+from nebius.api.nebius.common.v1 import GetOperationRequest, ListOperationsRequest
+from nebius.api.nebius.storage.v1 import BucketServiceClient
+
+service = BucketServiceClient(sdk)
+op_service = service.operation_service()
+
+resp = await op_service.list(ListOperationsRequest(resource_id="your-bucket-id"))
+op_id = resp.operations[0].id # The elements of resp.operations are not of type Operation!
+real_operation = await op_service.get(GetOperationRequest(id=op_id))
+
+# Get returns the real operation that can be awaited.
+await real_operation.wait()
+```
+
+**NOTE** As you can see from the example, only [`get`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.OperationServiceClient.html#get) will return a fully functional [`Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html). Other methods like [`list`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.OperationServiceClient.html#list) or [`list_operations_by_parent`](https://nebius.github.io/pysdk/nebius.api.nebius.compute.v1.DiskServiceClient.html#list_operations_by_parent) from Compute will contain an internal [`Operation`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.Operation.html) representation object, that cannot be awaited or polled as a normal [`Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html).
 
 ##### Retrieve additional metadata
 

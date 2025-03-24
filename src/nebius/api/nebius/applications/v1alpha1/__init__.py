@@ -562,10 +562,12 @@ class ListK8sReleasesResponse(pb_classes.Message):
     }
     
 
-class K8sReleaseServiceClient(client.Client):
+class K8sReleaseServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.applications.v1alpha1.K8sReleaseService",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.applications.v1alpha1.K8sReleaseService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetK8sReleaseRequest",

@@ -14,7 +14,6 @@ from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
 from grpc_status import rpc_status
 
 from nebius.aio.abc import ClientChannelInterface as Channel
-from nebius.aio.abc import SyncronizerInterface
 from nebius.aio.idempotency import ensure_key_in_metadata
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata
@@ -60,9 +59,7 @@ class Request(Generic[Req, Res]):
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
-        result_wrapper: (
-            Callable[[GRPCChannel, SyncronizerInterface, Any], Res] | None
-        ) = None,
+        result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
         grpc_channel_override: GRPCChannel | None = None,
         error_wrapper: Callable[[RequestStatus], RequestError] | None = None,
         retries: int | None = 3,
@@ -363,7 +360,7 @@ class Request(Generic[Req, Res]):
                     self._convert_request_error(e)
                     if self._result_wrapper is not None:
                         return self._result_wrapper(
-                            self._grpc_channel,  # type: ignore
+                            self._service + "." + self._method,
                             self._channel,
                             ret,
                         )

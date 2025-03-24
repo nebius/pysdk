@@ -397,10 +397,12 @@ class DeleteArtifactRequest(pb_classes.Message):
     }
     
 
-class ArtifactServiceClient(client.Client):
+class ArtifactServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.registry.v1.ArtifactService",artifact_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.registry.v1.ArtifactService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Delete"
     
     def get(self,
         request: "GetArtifactRequest",
@@ -972,10 +974,12 @@ class DeleteRegistryRequest(pb_classes.Message):
     }
     
 
-class RegistryServiceClient(client.Client):
+class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.registry.v1.RegistryService",registry_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.registry.v1.RegistryService"
     __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetRegistryRequest",

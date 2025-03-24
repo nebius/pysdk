@@ -561,14 +561,48 @@ def is_operation_output(method: Method) -> bool:
 
 
 def generate_service(srv: Service, g: PyGenFile) -> None:
+    operation_type = None
+    operation_source_method = None
+    operation_service = None
+    for method in srv.methods.values():
+        if is_operation_output(method):
+            if "v1alpha1" in method.output.full_type_name:
+                operation_service = ImportedSymbol(
+                    "OperationServiceClient", "nebius.api.nebius.common.v1alpha1"
+                )
+            else:
+                operation_service = ImportedSymbol(
+                    "OperationServiceClient", "nebius.api.nebius.common.v1"
+                )
+            if (
+                operation_service.import_path == srv.export_path.import_path
+                and operation_service.name == srv.pythonic_name + "Client"
+            ):
+                break
+            operation_source_method = method.name
+            operation_type = method.output.export_path
+            break
     g.p()
     g.p(
         "class ",
         srv.pythonic_name,
         "Client(",
-        ImportedSymbol("Client", "nebius.aio.client"),
-        "):",
+        add_eol=False,
     )
+    if operation_type is None:
+        g.p(ImportedSymbol("Client", "nebius.aio.client"), noindent=True, add_eol=False)
+    else:
+        g.p(
+            ImportedSymbol("ClientWithOperations", "nebius.aio.client"),
+            "[",
+            operation_type,
+            ",",
+            operation_service,
+            "]",
+            noindent=True,
+            add_eol=False,
+        )
+    g.p("):", noindent=True)
     with g:
         generate_docstring(srv.source_info, g)
         g.p(
@@ -585,10 +619,10 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
             ")",
         )
         g.p('__service_name__ = "', srv.full_type_name, '"')
-        for method in srv.methods.values():
-            if is_operation_output(method):
-                g.p("__operation_type__ = ", method.output.export_path)
-                break
+        if operation_type is not None:
+            g.p("__operation_type__ = ", operation_type)
+            g.p("__operation_service_class__ = ", operation_service)
+            g.p('__operation_source_method__ = "', operation_source_method, '"')
         g.p()
         for method in srv.methods.values():
             g.p("def ", method.pythonic_name, "(self,")

@@ -768,10 +768,12 @@ class DeleteClusterRequest(pb_classes.Message):
     }
     
 
-class ClusterServiceClient(client.Client):
+class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1alpha1_2.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.mlflow.v1alpha1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.mlflow.v1alpha1.ClusterService"
     __operation_type__ = v1alpha1_2.Operation
+    __operation_service_class__ = v1alpha1_2.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetClusterRequest",
