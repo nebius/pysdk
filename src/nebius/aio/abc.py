@@ -1,7 +1,7 @@
 from collections.abc import Awaitable
 from typing import Protocol, TypeVar
 
-from grpc.aio import Channel as GRPCChannel
+from .base import AddressChannel
 
 T = TypeVar("T")
 
@@ -11,7 +11,9 @@ class SyncronizerInterface(Protocol):
 
 
 class ClientChannelInterface(Protocol):
-    def get_channel_by_method(self, method_name: str) -> GRPCChannel: ...
+    def get_channel_by_method(self, method_name: str) -> AddressChannel: ...
+    def return_channel(self, chan: AddressChannel | None) -> None: ...
+    def discard_channel(self, chan: AddressChannel | None) -> None: ...
 
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T: ...
 

@@ -3,6 +3,7 @@ from asyncio import (
     AbstractEventLoop,
     CancelledError,
     Task,
+    create_task,
     gather,
     get_event_loop,
     iscoroutine,
@@ -72,7 +73,7 @@ from nebius.base.service_account.service_account import (
 )
 from nebius.base.tls_certificates import get_system_certificates
 
-from .base import ChannelBase
+from .base import AddressChannel, ChannelBase
 
 logger = getLogger(__name__)
 
@@ -83,6 +84,10 @@ T = TypeVar("T")
 
 
 class LoopError(SDKError):
+    pass
+
+
+class ChannelClosedError(SDKError):
     pass
 
 
@@ -99,7 +104,6 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         self._method = method
         self._request_serializer = request_serializer
         self._response_deserializer = response_deserializer
-        self._true_callee: UnaryUnaryMultiCallable[Req, Res] | None = None
 
     def __call__(
         self,
@@ -111,21 +115,32 @@ class NebiusUnaryUnaryMultiCallable(UnaryUnaryMultiCallable[Req, Res]):  # type:
         wait_for_ready: bool | None = None,
         compression: Compression | None = None,
     ) -> UnaryUnaryCall[Req, Res]:
-        if self._true_callee is None:
-            ch = self._channel.get_channel_by_method(self._method)
-            self._true_callee = ch.unary_unary(  # type: ignore[unused-ignore,call-arg,assignment]
-                self._method,
-                self._request_serializer,
-                self._response_deserializer,
-            )
-        return self._true_callee(  # type: ignore[unused-ignore,misc]
+        ch = self._channel.get_channel_by_method(self._method)
+        ret = ch.channel.unary_unary(  # type: ignore[unused-ignore,call-arg,assignment,misc]
+            self._method,
+            self._request_serializer,
+            self._response_deserializer,
+        )(  # type: ignore[unused-ignore,call-arg,assignment,misc]
             request,
             timeout=timeout,
-            metadata=metadata,
+            metadata=metadata,  # type: ignore
             credentials=credentials,
             wait_for_ready=wait_for_ready,
             compression=compression,
         )
+
+        def return_channel(cb_arg: Any) -> None:
+            nonlocal ch
+            logger.debug(f"Done with call {self=}, {cb_arg=}")
+            try:
+                self._channel.discard_channel(ch)
+            except ChannelClosedError:
+                self._channel.run_sync(ch.channel.close(None), 0.1)
+                # pass
+            ch = None  # type: ignore
+
+        ret.add_done_callback(return_channel)
+        return ret  # type: ignore[unused-ignore,return-value]
 
 
 class NoCredentials:
@@ -205,6 +220,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         credentials_file_name: str | None = None,
         tls_credentials: ChannelCredentials | None = None,
         event_loop: AbstractEventLoop | None = None,
+        max_free_channels_per_address: int = 2,
     ) -> None:
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # noqa: F401 - load for registration
@@ -214,7 +230,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if substitutions is not None:
             substitutions_full.update(substitutions)
 
+        self._max_free_channels_per_address = max_free_channels_per_address
+
         self._gracefuls = set[GracefulInterface]()
+        self._tasks = set[Task[Any]]()
 
         self._resolver: Resolver = Conventional()
         if resolver is not None:
@@ -227,7 +246,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             tls_credentials = ssl_channel_credentials(root_certificates=trusted_certs)
         self._tls_credentials = tls_credentials
 
-        self._channels = dict[str, GRPCChannel]()
+        self._free_channels = dict[str, list[GRPCChannel]]()
         self._methods = dict[str, str]()
 
         if options is None:
@@ -287,8 +306,25 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             raise SDKError(f"credentials type is not supported: {type(credentials)}")
 
         self._event_loop = event_loop
+        self._closed = False
 
         self._global_interceptors_inner.append(CleaningInterceptor())
+
+    def bg_task(self, coro: Awaitable[T]) -> Task[None]:
+        """Run a coroutine without awaiting or tracking, and log any exceptions."""
+
+        async def wrapper() -> None:
+            try:
+                await coro
+            except CancelledError:
+                pass
+            except Exception as e:
+                logger.error("Unhandled exception in Channel.bg_task", exc_info=e)
+
+        ret = create_task(wrapper(), name=f"Channel.bg_task for {coro}")
+        ret.add_done_callback(lambda x: self._tasks.discard(x))
+        self._tasks.add(ret)
+        return ret
 
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
         loop_provided = self._event_loop is not None
@@ -328,12 +364,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         return self.run_sync(self.close(), timeout)
 
     async def close(self, grace: float | None = None) -> None:
+        self._closed = True
         awaits = list[Coroutine[Any, Any, Any]]()
-        for chan in self._channels.values():
-            awaits.append(chan.close(grace))
+        for chans in self._free_channels.values():
+            for chan in chans:
+                awaits.append(chan.close(grace))
         for graceful in self._gracefuls:
             awaits.append(graceful.close(grace))
-        rets = await gather(*awaits, return_exceptions=True)
+        for task in self._tasks:
+            task.cancel()
+        rets = await gather(*awaits, *self._tasks, return_exceptions=True)
         for ret in rets:
             if isinstance(ret, BaseException) and not isinstance(ret, CancelledError):
                 logger.error(f"Error while graceful shutdown: {ret}", exc_info=ret)
@@ -369,15 +409,44 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             self._methods[method_name] = self.get_addr_from_service_name(service_name)
         return self._methods[method_name]
 
-    def get_channel_by_addr(self, addr: str) -> GRPCChannel:
-        if (
-            addr not in self._channels
-            or self._channels[addr].get_state() == ChannelConnectivity.SHUTDOWN
-        ):
-            self._channels[addr] = self.create_address_channel(addr)
-        return self._channels[addr]
+    def get_channel_by_addr(self, addr: str) -> AddressChannel:
+        if self._closed:
+            raise ChannelClosedError("Channel closed")
+        if addr not in self._free_channels:
+            self._free_channels[addr] = []
+        chans = self._free_channels[addr]
+        while len(chans) > 0:
+            chan = chans.pop()
+            if chan.get_state() != ChannelConnectivity.SHUTDOWN:
+                return AddressChannel(chan, addr)
+            self.bg_task(chan.close(None))
 
-    def get_channel_by_method(self, method_name: str) -> GRPCChannel:
+        return self.create_address_channel(addr)
+
+    def return_channel(self, chan: AddressChannel | None) -> None:
+        if chan is None:
+            return
+        if self._closed:
+            raise ChannelClosedError("Channel closed")
+        if chan.address not in self._free_channels:
+            self._free_channels[chan.address] = []
+        if (
+            chan.channel.get_state() != ChannelConnectivity.SHUTDOWN
+            and len(self._free_channels[chan.address])
+            < self._max_free_channels_per_address
+        ):
+            self._free_channels[chan.address].append(chan.channel)
+        else:
+            self.discard_channel(chan)
+
+    def discard_channel(self, chan: AddressChannel | None) -> None:
+        if chan is None:
+            return
+        if self._closed:
+            raise ChannelClosedError("Channel closed")
+        self.bg_task(chan.channel.close(None))
+
+    def get_channel_by_method(self, method_name: str) -> AddressChannel:
         addr = self.get_addr_by_method(method_name)
         return self.get_channel_by_addr(addr)
 
@@ -394,20 +463,27 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         ret.extend(self._global_interceptors_inner)
         return ret
 
-    def create_address_channel(self, addr: str) -> GRPCChannel:
+    def create_address_channel(self, addr: str) -> AddressChannel:
+        logger.debug(f"creating channel for {addr=}")
         opts = self.get_address_options(addr)
         opts, insecure = pop_option(opts, INSECURE, bool)
         opts, compression = pop_option(opts, COMPRESSION, Compression)
         interceptors = self.get_address_interceptors(addr)
         if insecure:
-            return insecure_channel(addr, opts, compression, interceptors)  # type: ignore[unused-ignore,no-any-return]
-        else:
-            return secure_channel(  # type: ignore[unused-ignore,no-any-return]
+            return AddressChannel(
+                insecure_channel(addr, opts, compression, interceptors),  # type: ignore[unused-ignore,no-any-return]
                 addr,
-                self._tls_credentials,
-                opts,
-                compression,
-                interceptors,
+            )
+        else:
+            return AddressChannel(
+                secure_channel(  # type: ignore[unused-ignore,no-any-return]
+                    addr,
+                    self._tls_credentials,
+                    opts,
+                    compression,
+                    interceptors,
+                ),
+                addr,
             )
 
     def unary_unary(  # type: ignore[unused-ignore,override]
@@ -430,6 +506,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         await self.close(None)
 
     def get_state(self, try_to_connect: bool = False) -> ChannelConnectivity:
+        if self._closed:
+            return ChannelConnectivity.SHUTDOWN
         return ChannelConnectivity.READY
 
     async def wait_for_state_change(
