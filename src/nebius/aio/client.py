@@ -5,8 +5,8 @@ from google.protobuf.message import Message as PMessage
 from grpc import CallCredentials, Compression
 
 from nebius.aio.abc import ClientChannelInterface as Channel
+from nebius.aio.constant_channel import Constant
 from nebius.aio.request import Request
-from nebius.aio.static_channel import Static
 
 # from nebius.api.nebius.common.v1 import Operation
 from nebius.base.metadata import Metadata
@@ -66,10 +66,10 @@ class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
 
     def operation_service(self) -> OperationService:
         if self.__operation_service__ is None:
-            grpc_channel = self._channel.get_channel_by_method(
-                self.__service_name__ + "." + self.__operation_source_method__
-            )
             self.__operation_service__ = self.__operation_service_class__(
-                Static(grpc_channel, self._channel)
+                Constant(
+                    self.__service_name__ + "." + self.__operation_source_method__,
+                    self._channel,
+                )
             )
         return self.__operation_service__

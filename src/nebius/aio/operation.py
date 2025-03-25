@@ -10,8 +10,8 @@ from nebius.aio.abc import ClientChannelInterface
 from nebius.base.error import SDKError
 from nebius.base.protos.well_known import local_timezone
 
+from .constant_channel import Constant
 from .request_status import RequestStatus
-from .static_channel import Static
 
 OperationPb = TypeVar("OperationPb")
 T = TypeVar("T")
@@ -49,13 +49,13 @@ class Operation(Generic[OperationPb]):
 
         if isinstance(_operation, Operation):
             self._service: OperationServiceClient | OldClient = OperationServiceClient(
-                Static(self._grpc_channel, channel)
+                Constant(source_method, channel)
             )
             self._get_request_obj: type[GetOperationRequest | OldGet] = (
                 GetOperationRequest
             )
         elif isinstance(_operation, Old):
-            self._service = OldClient(Static(self._grpc_channel, channel))
+            self._service = OldClient(Constant(source_method, channel))
             self._get_request_obj = OldGet
         else:
             raise SDKError(f"Operation type {type(_operation)} not supported.")

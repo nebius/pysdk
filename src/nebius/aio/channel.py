@@ -370,7 +370,10 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         return self._methods[method_name]
 
     def get_channel_by_addr(self, addr: str) -> GRPCChannel:
-        if addr not in self._channels:
+        if (
+            addr not in self._channels
+            or self._channels[addr].get_state() == ChannelConnectivity.SHUTDOWN
+        ):
             self._channels[addr] = self.create_address_channel(addr)
         return self._channels[addr]
 
