@@ -1015,6 +1015,7 @@ class BucketStatus(pb_classes.Message):
         deleted_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         domain_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(counters, unset.UnsetType):
@@ -1029,6 +1030,8 @@ class BucketStatus(pb_classes.Message):
             self.purge_at = purge_at
         if not isinstance(domain_name, unset.UnsetType):
             self.domain_name = domain_name
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1038,6 +1041,7 @@ class BucketStatus(pb_classes.Message):
             "deleted_at",
             "purge_at",
             "domain_name",
+            "region",
             "State",
             "SuspensionState",
         ]
@@ -1117,6 +1121,19 @@ class BucketStatus(pb_classes.Message):
         return super()._set_field("domain_name",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def region(self) -> "builtins.str":
+        """
+         The name of the region where the bucket is located for use with S3 clients, i.e. "eu-west1".
+        """
+        
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "counters":"counters",
         "state":"state",
@@ -1124,6 +1141,7 @@ class BucketStatus(pb_classes.Message):
         "deleted_at":"deleted_at",
         "purge_at":"purge_at",
         "domain_name":"domain_name",
+        "region":"region",
         "State":"State",
         "SuspensionState":"SuspensionState",
     }
