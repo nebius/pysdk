@@ -26,20 +26,28 @@ class Receiver(ABC):
     _latest: Token | None
 
     @abstractmethod
-    async def _fetch(self, timeout: float | None = None) -> Token:
+    async def _fetch(
+        self, timeout: float | None = None, options: dict[str, str] | None = None
+    ) -> Token:
         raise NotImplementedError("Method not implemented!")
 
     @property
     def latest(self) -> Token | None:
         return self._latest
 
-    async def fetch(self, timeout: float | None = None) -> Token:
-        tok = await self._fetch(timeout=timeout)
+    async def fetch(
+        self, timeout: float | None = None, options: dict[str, str] | None = None
+    ) -> Token:
+        tok = await self._fetch(timeout=timeout, options=options)
         self._latest = tok
         return tok
 
     @abstractmethod
-    def can_retry(self, err: Exception) -> bool:
+    def can_retry(
+        self,
+        err: Exception,
+        options: dict[str, str] | None = None,
+    ) -> bool:
         return False
 
 

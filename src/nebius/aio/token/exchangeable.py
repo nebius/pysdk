@@ -23,6 +23,8 @@ from .token import Token
 
 log = getLogger(__name__)
 
+OPTION_MAX_RETRIES = "max_fetch_token_retries"
+
 
 class UnsupportedResponseError(SDKError):
     def __init__(self, expected: str, resp: Any) -> None:
@@ -78,14 +80,16 @@ class Receiver(ParentReceiver):
         )
         raise RequestError(self._status) from None
 
-    async def _fetch(self, timeout: float | None = None) -> Token:
+    async def _fetch(
+        self, timeout: float | None = None, options: dict[str, str] | None = None
+    ) -> Token:
         self._trial += 1
         req = self._requester.get_exchange_token_request()
 
         now = datetime.now(timezone.utc)
 
         md = Metadata()
-        md.add(Internal.AUTHORIZATION, Authorization.DISABLE)
+        md.add(Internal.AUTHORIZATION.lower(), Authorization.DISABLE)
 
         log.debug(f"fetching new token, attempt: {self._trial}, timeout: {timeout}")
 
@@ -108,8 +112,19 @@ class Receiver(ParentReceiver):
             token=ret.access_token, expiration=now + timedelta(seconds=ret.expires_in)
         )
 
-    def can_retry(self, err: Exception) -> bool:
-        if self._trial >= self._max_retries:
+    def can_retry(
+        self,
+        err: Exception,
+        options: dict[str, str] | None = None,
+    ) -> bool:
+        max_retries = self._max_retries
+        if options is not None and OPTION_MAX_RETRIES in options:
+            value = options[OPTION_MAX_RETRIES]
+            try:
+                max_retries = int(value)
+            except ValueError as err:
+                log.error(f"option {OPTION_MAX_RETRIES} is not valid integer: {err=}")
+        if self._trial >= max_retries:
             log.debug("token max retries reached, cannot retry")
             return False
         return True

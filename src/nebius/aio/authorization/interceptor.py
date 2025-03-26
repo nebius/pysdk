@@ -8,6 +8,7 @@ from grpc.aio._call import AioRpcError, UnaryUnaryCall
 from grpc.aio._interceptor import ClientCallDetails, UnaryUnaryClientInterceptor
 from grpc.aio._metadata import Metadata
 
+from nebius.aio.authorization.options import get_options_from_metadata
 from nebius.base.metadata import Authorization, Internal
 
 from .authorization import Provider
@@ -29,10 +30,7 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
         client_call_details: ClientCallDetails,
         request: Req,
     ) -> UnaryUnaryCall | Res:
-        auth_type = None
-        if client_call_details.metadata is not None:
-            auth_type = client_call_details.metadata.get(Internal.AUTHORIZATION)
-        else:
+        if client_call_details.metadata is None:
             client_call_details = ClientCallDetails(
                 method=client_call_details.method,
                 timeout=client_call_details.timeout,
@@ -40,6 +38,8 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
                 credentials=client_call_details.credentials,
                 wait_for_ready=client_call_details.wait_for_ready,
             )
+        auth_type = client_call_details.metadata.get(Internal.AUTHORIZATION.lower())  # type: ignore
+        auth_options = get_options_from_metadata(client_call_details.metadata)
         if auth_type == Authorization.DISABLE:
             log.debug(
                 f"Calling {client_call_details.method}," " authentication is disabled"
@@ -48,7 +48,7 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
 
         log.debug(
             f"Authentication for {client_call_details.method} is enabled, "
-            f"{auth_type=!r}"
+            f"{auth_type=!r}, {auth_options=!r}."
         )
         start = time()
         deadline = None
@@ -62,9 +62,14 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
             if deadline is not None:
                 timeout = deadline - time()
             log.debug(
-                f"Authenticating {client_call_details.method}, {attempt=}, {timeout=}."
+                f"Authenticating {client_call_details.method}, {attempt=}, "
+                f"{timeout=}."
             )
-            await auth.authenticate(client_call_details.metadata, timeout)  # type: ignore
+            await auth.authenticate(
+                client_call_details.metadata,  # type: ignore
+                timeout,
+                auth_options,
+            )
             if deadline is not None:
                 timeout = deadline - time()
                 if timeout <= 0:
@@ -82,7 +87,7 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
             except AioRpcError as e:
                 if (
                     e.code() != StatusCode.UNAUTHENTICATED
-                    or not auth.can_retry(e)
+                    or not auth.can_retry(e, auth_options)
                     or (deadline is not None and deadline <= time())
                 ):
                     raise

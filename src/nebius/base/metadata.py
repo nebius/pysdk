@@ -14,6 +14,7 @@ class Internal:
     PREFIX = ":NebiusInternal:\r\n"
 
     AUTHORIZATION = PREFIX + "authorization"
+    AUTHORIZATION_OPTION = PREFIX + "authorization_option"
 
 
 class Authorization:
@@ -29,7 +30,7 @@ class Metadata(MutableSequence[tuple[str, str]]):
                     self._contents.append((k.lower(), v))
 
     def insert(self, index: int, value: tuple[str, str]) -> None:
-        self._contents.insert(index, value)
+        self._contents.insert(index, (value[0].lower(), value[1]))
 
     def clean(self) -> "Metadata":
         return Metadata([v for v in self if v[0].startswith(Internal.PREFIX.lower())])
@@ -60,6 +61,13 @@ class Metadata(MutableSequence[tuple[str, str]]):
             return self[index][0 if first else -1]
         except IndexError:
             return default
+
+    def add(
+        self,
+        index: str,
+        value: str,
+    ) -> None:
+        self._contents.append((index.lower(), value))
 
     @overload
     def __getitem__(self, index: int) -> tuple[str, str]: ...

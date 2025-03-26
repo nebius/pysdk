@@ -159,6 +159,42 @@ finally:
 
 Closing the SDK is not strictly necessary, but forgetting to add it may lead to a bunch of annoying errors of unterminated tasks.
 
+#### Test token renewal
+
+If you use service account, credentials file or something like that, SDK will renew your tokens under the hood. This renewal process will normally report to log if any errors occur. However it might be good to get the repored errors as request errors. In that case, pass special options to the request like so:
+
+
+```python
+import asyncio
+
+from nebius.aio.authorization.options import options_to_metadata
+from nebius.aio.token.renewable import (
+    OPTION_RENEW_REQUEST_TIMEOUT,
+    OPTION_RENEW_REQUIRED,
+    OPTION_RENEW_SYNCHRONOUS,
+)
+
+async def my_call():
+    try:
+        await sdk.whoami(
+            metadata=options_to_metadata(
+                {
+                    OPTION_RENEW_REQUIRED: "true",
+                    OPTION_RENEW_SYNCHRONOUS: "true",
+                    OPTION_RENEW_REQUEST_TIMEOUT: ".9",
+                }
+            )
+        )
+    except Exception as err:
+        print(f"something is wrong with your token: {err=}")
+    finally:
+        await sdk.close()
+
+asyncio.run(my_call)
+```
+
+You can pass these options to any request, or add them to your metadata with `add_options_to_metadata`.
+
 #### Call some method
 
 Now as you have your SDK initialized and tested, you may work with our services and call their methods with it. Here and further we assume, that the [SDK](https://nebius.github.io/pysdk/nebius.sdk.SDK.html) is initialized and is located in the `sdk` variable. We also omit closing the SDK.

@@ -15,13 +15,19 @@ class Receiver(ParentReceiver):
         super().__init__()
         self._latest = token
 
-    async def _fetch(self, timeout: float | None = None) -> Token:
+    async def _fetch(
+        self, timeout: float | None = None, options: dict[str, str] | None = None
+    ) -> Token:
         if self._latest is None:
             raise Exception("Token has to be set")
         log.debug("static token fetched")
         return self._latest
 
-    def can_retry(self, err: Exception) -> bool:
+    def can_retry(
+        self,
+        err: Exception,
+        options: dict[str, str] | None = None,
+    ) -> bool:
         return False
 
 
