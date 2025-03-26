@@ -1,7 +1,10 @@
 # type:ignore
 import logging
+import tracemalloc
 
 import pytest
+
+tracemalloc.start()
 
 
 def test_get_instance_sync() -> None:
@@ -1770,8 +1773,8 @@ async def test_get_error() -> None:
 
     finally:
         # Clean up
-        if channel is not None:
-            await channel.close()
+        # if channel is not None:
+        #     await channel.close()
         await srv.stop(0)
 
 

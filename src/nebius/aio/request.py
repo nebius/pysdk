@@ -1,4 +1,4 @@
-from asyncio import Future, ensure_future
+from asyncio import CancelledError, Future, ensure_future
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
 from sys import exc_info
@@ -8,12 +8,12 @@ from typing import Any, Generic, TypeVar
 from google.protobuf.message import Message as PMessage
 from grpc import CallCredentials, Compression, StatusCode
 from grpc.aio import AioRpcError
-from grpc.aio import Channel as GRPCChannel
 from grpc.aio import Metadata as GrpcMetadata
 from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
 from grpc_status import rpc_status
 
 from nebius.aio.abc import ClientChannelInterface as Channel
+from nebius.aio.base import AddressChannel
 from nebius.aio.idempotency import ensure_key_in_metadata
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata
@@ -60,7 +60,7 @@ class Request(Generic[Req, Res]):
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
         result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
-        grpc_channel_override: GRPCChannel | None = None,
+        grpc_channel_override: AddressChannel | None = None,
         error_wrapper: Callable[[RequestStatus], RequestError] | None = None,
         retries: int | None = 3,
         per_retry_timeout: float | None = None,
@@ -184,7 +184,7 @@ class Request(Generic[Req, Res]):
         s_name = self._service
         if s_name[0] == ".":
             s_name = s_name[1:]
-        self._call = self._grpc_channel.unary_unary(  # type: ignore
+        self._call = self._grpc_channel.channel.unary_unary(  # type: ignore
             "/" + s_name + "/" + self._method,
             serializer,
             self._result_pb2_class.FromString,
@@ -199,7 +199,10 @@ class Request(Generic[Req, Res]):
 
     def run_sync_with_timeout(self, func: Awaitable[T]) -> T:
         try:
-            return self._channel.run_sync(func, timeout=self._timeout)
+            timeout = self._timeout
+            if timeout is not None:
+                timeout += 0.2  # 200 ms for an internal graceful shutdown
+            return self._channel.run_sync(func, timeout=timeout)
         except TimeoutError as e:
             from .service_error import RequestError, RequestStatusExtended
 
@@ -330,7 +333,7 @@ class Request(Generic[Req, Res]):
             pass
 
     async def _retry_loop(self) -> Res:
-        from .service_error import is_retriable_error
+        from .service_error import RequestError, is_retriable_error
 
         self._start_time = time()
         deadline = None if self._timeout is None else self._start_time + self._timeout
@@ -364,7 +367,13 @@ class Request(Generic[Req, Res]):
                             self._channel,
                             ret,
                         )
+                    self._channel.return_channel(self._grpc_channel)
+                    self._grpc_channel = None
                     return ret  # type: ignore
+                except CancelledError as e:
+                    self._channel.discard_channel(self._grpc_channel)
+                    self._grpc_channel = None
+                    raise e
                 except AioRpcError as e:
                     self._raise_request_error(e)
             except Exception as e:
@@ -379,6 +388,11 @@ class Request(Generic[Req, Res]):
                         exc_info=exc_info(),
                     )
                     continue
+                if deadline is not None and deadline <= time():
+                    if isinstance(e, RequestError) and e.status.request_id == "":
+                        self._channel.discard_channel(self._grpc_channel)
+                        self._grpc_channel = None
+                self._channel.return_channel(self._grpc_channel)
                 raise e
         raise RequestIsCancelledError()
 

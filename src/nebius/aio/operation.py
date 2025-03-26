@@ -39,7 +39,6 @@ class Operation(Generic[OperationPb]):
             OperationServiceClient as OldClient,
         )
 
-        self._grpc_channel = channel.get_channel_by_method(source_method)
         self._channel = channel
         _operation: OperationPb | Operation | Old = operation
         if isinstance(_operation, Operation.__PB2_CLASS__):
