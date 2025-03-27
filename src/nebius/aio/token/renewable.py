@@ -3,6 +3,7 @@ from asyncio import (
     FIRST_COMPLETED,
     CancelledError,
     Event,
+    Future,
     Task,
     create_task,
     gather,
@@ -18,11 +19,17 @@ from typing import Any, TypeVar
 from nebius.base.error import SDKError
 from nebius.base.sanitization import ellipsis_in_middle
 
+from .exchangeable import OPTION_MAX_RETRIES
 from .token import Bearer as ParentBearer
 from .token import Receiver as ParentReceiver
 from .token import Token
 
 log = getLogger(__name__)
+
+OPTION_RENEW_REQUIRED = "token_renew_required"
+OPTION_RENEW_SYNCHRONOUS = "token_renew_synchronous"
+OPTION_REPORT_ERROR = "token_renew_report_error"
+OPTION_RENEW_REQUEST_TIMEOUT = "token_renew_request_timeout"
 
 
 class RenewalError(SDKError):
@@ -45,18 +52,37 @@ class Receiver(ParentReceiver):
         self._max_retries = max_retries
         self._trial = 0
 
-    async def _fetch(self, timeout: float | None = None) -> Token:
+    async def _fetch(
+        self, timeout: float | None = None, options: dict[str, str] | None = None
+    ) -> Token:
         self._trial += 1
         log.debug(
             f"token fetch requested, attempt: {self._trial}," f"timeout: {timeout}"
         )
-        return await self._parent.fetch(timeout=timeout)
+        return await self._parent.fetch(timeout=timeout, options=options)
 
-    def can_retry(self, err: Exception) -> bool:
-        if self._trial >= self._max_retries:
+    def can_retry(
+        self,
+        err: Exception,
+        options: dict[str, str] | None = None,
+    ) -> bool:
+        max_retries = self._max_retries
+        synchronous = False
+        if options is not None:
+            synchronous = options.get(OPTION_RENEW_SYNCHRONOUS, "") != ""
+            if OPTION_MAX_RETRIES in options:
+                value = options[OPTION_MAX_RETRIES]
+                try:
+                    max_retries = int(value)
+                except ValueError as val_err:
+                    log.error(
+                        f"option {OPTION_MAX_RETRIES} is not valid integer: {val_err=}"
+                    )
+        if self._trial >= max_retries:
             log.debug("max retries reached, cannot retry")
             return False
-        self._parent.request_renewal()
+        if not synchronous:
+            self._parent.request_renewal()
         return True
 
 
@@ -81,6 +107,10 @@ class Bearer(ParentBearer):
         self._is_fresh = Event()
         self._is_stopped = Event()
         self._renew_requested = Event()
+        self._synchronous_can_proceed = Event()
+        self._break_previous_attempt = Event()
+
+        self._synchronous_can_proceed.set()
 
         self._refresh_task: Task[Any] | None = None
         self._tasks = set[Task[Any]]()
@@ -93,6 +123,10 @@ class Bearer(ParentBearer):
         self._max_retry_timeout = max_retry_timeout
         self._retry_timeout_exponent = retry_timeout_exponent
         self._refresh_request_timeout = refresh_request_timeout
+
+        self._renew_synchronous_timeout: float | None = None
+        self._renewal_future: Future[Token] | None = None
+        self._renew_synchronous_options: dict[str, str] | None = None
 
     def bg_task(self, coro: Awaitable[T]) -> Task[None]:
         """Run a coroutine without awaiting or tracking, and log any exceptions."""
@@ -110,50 +144,96 @@ class Bearer(ParentBearer):
         self._tasks.add(ret)
         return ret
 
-    async def fetch(self, timeout: float | None = None) -> Token:
+    async def fetch(
+        self, timeout: float | None = None, options: dict[str, str] | None = None
+    ) -> Token:
+        required = False
+        synchronous = False
+        report_error = False
+        if options is not None:
+            required = options.get(OPTION_RENEW_REQUIRED, "") != ""
+            synchronous = options.get(OPTION_RENEW_SYNCHRONOUS, "") != ""
+            report_error = options.get(OPTION_REPORT_ERROR, "") != ""
+
         if self._refresh_task is None:
             log.debug("no refresh task yet, starting it")
             self._refresh_task = self.bg_task(self._run())
-        if self.is_renewal_required():
+        if self.is_renewal_required() or required:
             log.debug(f"renewal required, timeout {timeout}")
-            if timeout is not None:
-                await wait_for(self._is_fresh.wait(), timeout)
+            if synchronous:
+                self._break_previous_attempt.set()
+                await wait_for(self._synchronous_can_proceed.wait(), timeout)
+                if OPTION_RENEW_REQUEST_TIMEOUT in options:  # type: ignore
+                    try:
+                        self._renew_synchronous_timeout = float(
+                            options[OPTION_RENEW_REQUEST_TIMEOUT]  # type: ignore
+                        )
+                    except ValueError as err:
+                        log.error(
+                            f"option {OPTION_RENEW_REQUEST_TIMEOUT} value is not float:"
+                            f" {err=}"
+                        )
+                self._renew_synchronous_options = options.copy()  # type: ignore
+            if report_error or synchronous:
+                self._renewal_future = Future[Token]()
+
+            self._renew_requested.set()
+            if report_error or synchronous:
+                return await wait_for(self._renewal_future, timeout)  # type: ignore
             else:
-                await self._is_fresh.wait()
+                await wait_for(self._is_fresh.wait(), timeout)
         if self._cache is None:
             raise RenewalError("cache is empty after renewal")
         return self._cache
 
+    async def _fetch_once(self) -> Token:
+        tok = None
+        log.debug(f"refreshing token, attempt {self._renewal_attempt}")
+        self._break_previous_attempt.clear()
+        self._synchronous_can_proceed.clear()
+        timeout = self._refresh_request_timeout.total_seconds()
+        if self._renew_synchronous_timeout is not None:
+            timeout = self._renew_synchronous_timeout
+            self._renew_synchronous_timeout = None
+        token_task = create_task(self._source.receiver().fetch(timeout))
+        breaker_task = create_task(self._break_previous_attempt.wait())
+        _done, pending = await wait(
+            [token_task, breaker_task],
+            return_when=FIRST_COMPLETED,
+        )
+        self._renew_requested.clear()
+        self._synchronous_can_proceed.set()
+        for t in pending:
+            t.cancel()
+            self.bg_task(t)
+        tok = token_task.result()
+        log.debug(
+            f"received new token: {ellipsis_in_middle(tok.token)}, "
+            f"expires in {tok.expiration}"
+        )
+        if self._renewal_future is not None and not self._renewal_future.done():
+            self._renewal_future.set_result(tok)
+        self._cache = tok
+        self._renewal_attempt = 0
+        self._is_fresh.set()
+        return tok
+
     async def _run(self) -> None:
         log.debug("refresh task started")
         while not self._is_stopped.is_set():
-            self._renew_requested.set()
-            self._renewal_attempt += 1
-            tok = None
-            log.debug(f"refreshing token, attempt {self._renewal_attempt}")
             try:
-                tok = await self._source.receiver().fetch(
-                    self._refresh_request_timeout.total_seconds(),
-                )
-                log.debug(
-                    f"received new token: {ellipsis_in_middle(tok.token)}, "
-                    f"expires in {tok.expiration}"
-                )
+                tok = await self._fetch_once()
+                retry_timeout = (
+                    tok.expiration - datetime.now(timezone.utc)
+                ).total_seconds() * self._lifetime_safe_fraction
             except Exception as e:
                 log.error(
                     f"Failed refresh token, attempt: {self._renewal_attempt}, "
                     f"error: {e}",
                     exc_info=sys.exc_info(),
                 )
-            self._renew_requested.clear()
-            if tok is not None:
-                self._cache = tok
-                self._renewal_attempt = 0
-                self._is_fresh.set()
-                retry_timeout = (
-                    tok.expiration - datetime.now(timezone.utc)
-                ).total_seconds() * self._lifetime_safe_fraction
-            else:
+                if self._renewal_future is not None and not self._renewal_future.done():
+                    self._renewal_future.set_exception(e)
                 if (
                     self._renewal_attempt <= 1
                     or abs(self._retry_timeout_exponent - 1) < 1e-9
@@ -184,6 +264,7 @@ class Bearer(ParentBearer):
             await gather(*pending, return_exceptions=True)
 
     async def close(self, grace: float | None = None) -> None:
+        self.stop()
         for task in self._tasks:
             task.cancel()
         rets = await gather(*self._tasks, return_exceptions=True)
@@ -204,6 +285,7 @@ class Bearer(ParentBearer):
         log.debug("stopping renewal task")
         self._is_stopped.set()
         self._is_fresh.clear()
+        self._break_previous_attempt.set()
         self._renew_requested.set()
 
     def receiver(self) -> Receiver:

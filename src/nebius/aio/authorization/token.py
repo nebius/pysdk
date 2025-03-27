@@ -12,13 +12,20 @@ class TokenAuthenticator(Authenticator):
         self._receiver = receiver
 
     async def authenticate(
-        self, metadata: Metadata, timeout: float | None = None
+        self,
+        metadata: Metadata,
+        timeout: float | None = None,
+        options: dict[str, str] | None = None,
     ) -> None:
-        tok = await self._receiver.fetch(timeout=timeout)
+        tok = await self._receiver.fetch(timeout=timeout, options=options)
         metadata.add(HEADER, f"Bearer {tok}")
 
-    def can_retry(self, err: Exception) -> bool:
-        return self._receiver.can_retry(err)
+    def can_retry(
+        self,
+        err: Exception,
+        options: dict[str, str] | None = None,
+    ) -> bool:
+        return self._receiver.can_retry(err, options)
 
 
 class TokenProvider(Provider):

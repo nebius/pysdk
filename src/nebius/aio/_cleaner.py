@@ -26,7 +26,7 @@ class CleaningInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unused-i
             to_delete = {
                 k
                 for k, _ in client_call_details.metadata
-                if k.startswith(metadata.Internal.PREFIX)
+                if k.lower().startswith(metadata.Internal.PREFIX.lower())
             }
             for k in to_delete:
                 client_call_details.metadata.delete_all(k)
