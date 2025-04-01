@@ -176,23 +176,88 @@ class RegionRouting(pb_classes.Message):
         "strict":"strict",
     }
     
+class DeprecationDetails(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.DeprecationDetails
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.DeprecationDetails",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        effective_at: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(effective_at, unset.UnsetType):
+            self.effective_at = effective_at
+        if not isinstance(description, unset.UnsetType):
+            self.description = description
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "effective_at",
+            "description",
+        ]
+    
+    @builtins.property
+    def effective_at(self) -> "builtins.str":
+        """
+         The date when this method, service, message or field will stop working (format: YYYY-MM-DD)
+        """
+        
+        return super()._get_field("effective_at", explicit_presence=False,
+        )
+    @effective_at.setter
+    def effective_at(self, value: "builtins.str|None") -> None:
+        return super()._set_field("effective_at",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def description(self) -> "builtins.str":
+        """
+         A description to help users understand the reason for deprecation and suggest alternatives
+        """
+        
+        return super()._get_field("description", explicit_presence=False,
+        )
+    @description.setter
+    def description(self, value: "builtins.str|None") -> None:
+        return super()._set_field("description",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "effective_at":"effective_at",
+        "description":"description",
+    }
+    
 api_service_name = annotations_pb2.api_service_name
+service_deprecation_details = annotations_pb2.service_deprecation_details
+method_deprecation_details = annotations_pb2.method_deprecation_details
 region_routing = annotations_pb2.region_routing
 resource_behavior = annotations_pb2.resource_behavior
+message_deprecation_details = annotations_pb2.message_deprecation_details
 field_behavior = annotations_pb2.field_behavior
 sensitive = annotations_pb2.sensitive
 credentials = annotations_pb2.credentials
+field_deprecation_details = annotations_pb2.field_deprecation_details
 oneof_behavior = annotations_pb2.oneof_behavior
 __all__ = [
     #@ local import names here @#
     "ResourceBehavior",
     "FieldBehavior",
     "api_service_name",
+    "service_deprecation_details",
+    "method_deprecation_details",
     "region_routing",
     "resource_behavior",
+    "message_deprecation_details",
     "field_behavior",
     "sensitive",
     "credentials",
+    "field_deprecation_details",
     "oneof_behavior",
     "RegionRouting",
+    "DeprecationDetails",
 ]

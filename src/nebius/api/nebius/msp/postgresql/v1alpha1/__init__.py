@@ -54,6 +54,7 @@ class Backup(pb_classes.Message):
         creation_start: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         creation_finish: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         source_cluster_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_cluster_visible: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -66,6 +67,8 @@ class Backup(pb_classes.Message):
             self.creation_finish = creation_finish
         if not isinstance(source_cluster_name, unset.UnsetType):
             self.source_cluster_name = source_cluster_name
+        if not isinstance(source_cluster_visible, unset.UnsetType):
+            self.source_cluster_visible = source_cluster_visible
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -74,6 +77,7 @@ class Backup(pb_classes.Message):
             "creation_start",
             "creation_finish",
             "source_cluster_name",
+            "source_cluster_visible",
         ]
     
     @builtins.property
@@ -135,7 +139,7 @@ class Backup(pb_classes.Message):
     @builtins.property
     def source_cluster_name(self) -> "builtins.str":
         """
-         Name of the ProstgreSQL cluster that the backup was created for.
+         Name of the PostgreSQL cluster that the backup was created for.
         """
         
         return super()._get_field("source_cluster_name", explicit_presence=False,
@@ -145,12 +149,26 @@ class Backup(pb_classes.Message):
         return super()._set_field("source_cluster_name",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def source_cluster_visible(self) -> "builtins.bool":
+        """
+         Is PostgreSQL cluster that the backup was created for visible.
+        """
+        
+        return super()._get_field("source_cluster_visible", explicit_presence=False,
+        )
+    @source_cluster_visible.setter
+    def source_cluster_visible(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("source_cluster_visible",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
         "source_cluster_id":"source_cluster_id",
         "creation_start":"creation_start",
         "creation_finish":"creation_finish",
         "source_cluster_name":"source_cluster_name",
+        "source_cluster_visible":"source_cluster_visible",
     }
     
 # file: nebius/msp/postgresql/v1alpha1/backup_service.proto

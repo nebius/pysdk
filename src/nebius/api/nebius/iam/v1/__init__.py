@@ -32,6 +32,8 @@ import nebius.api.nebius.iam.v1.auth_public_key_service_pb2 as auth_public_key_s
 import nebius.api.nebius.iam.v1.state_pb2 as state_pb2
 import nebius.api.nebius.iam.v1.suspension_state_pb2 as suspension_state_pb2
 import nebius.api.nebius.iam.v1.container_pb2 as container_pb2
+import nebius.api.nebius.iam.v1.federated_credentials_pb2 as federated_credentials_pb2
+import nebius.api.nebius.iam.v1.federated_credentilas_service_pb2 as federated_credentilas_service_pb2
 import nebius.api.nebius.iam.v1.federation_pb2 as federation_pb2
 import nebius.api.nebius.iam.v1.federation_certificate_pb2 as federation_certificate_pb2
 import nebius.api.nebius.iam.v1.federation_certificate_service_pb2 as federation_certificate_service_pb2
@@ -3083,6 +3085,769 @@ class ContainerStatus(pb_classes.Message):
         "region":"region",
     }
     
+# file: nebius/iam/v1/federated_credentials.proto
+class FederatedCredentials(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentials_pb2.FederatedCredentials
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederatedCredentials",federated_credentials_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederatedCredentialsSpec|federated_credentials_pb2.FederatedCredentialsSpec|None|unset.UnsetType" = unset.Unset,
+        status: "FederatedCredentialsStatus|federated_credentials_pb2.FederatedCredentialsStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "FederatedCredentialsSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=FederatedCredentialsSpec,
+        )
+    @spec.setter
+    def spec(self, value: "FederatedCredentialsSpec|federated_credentials_pb2.FederatedCredentialsSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "FederatedCredentialsStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=FederatedCredentialsStatus,
+        )
+    @status.setter
+    def status(self, value: "FederatedCredentialsStatus|federated_credentials_pb2.FederatedCredentialsStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class FederatedCredentialsSpec(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentials_pb2.FederatedCredentialsSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederatedCredentialsSpec",federated_credentials_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_credentials_provider__(pb_classes.OneOf):
+        name: builtins.str= "credentials_provider"
+        
+        def __init__(self, msg: "FederatedCredentialsSpec") -> None:
+            super().__init__()
+            self._message: "FederatedCredentialsSpec" = msg
+    
+    class __OneOfClass_credentials_provider_oidc_provider__(__OneOfClass_credentials_provider__):
+        field: typing.Literal["oidc_provider"] = "oidc_provider"
+        
+        def __init__(self, msg: "FederatedCredentialsSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "OidcCredentialsProvider":
+            return self._message.oidc_provider
+    
+    @builtins.property
+    def credentials_provider(self) -> __OneOfClass_credentials_provider_oidc_provider__|None:
+        """
+         provider of federated credentials used for federated subject authentication
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("credentials_provider")
+        match field_name_1:
+            case "oidc_provider":
+                return self.__OneOfClass_credentials_provider_oidc_provider__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        oidc_provider: "OidcCredentialsProvider|federated_credentials_pb2.OidcCredentialsProvider|None|unset.UnsetType" = unset.Unset,
+        federated_subject_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        subject_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(oidc_provider, unset.UnsetType):
+            self.oidc_provider = oidc_provider
+        if not isinstance(federated_subject_id, unset.UnsetType):
+            self.federated_subject_id = federated_subject_id
+        if not isinstance(subject_id, unset.UnsetType):
+            self.subject_id = subject_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "oidc_provider",
+            "federated_subject_id",
+            "subject_id",
+            "credentials_provider",
+        ]
+    
+    @builtins.property
+    def oidc_provider(self) -> "OidcCredentialsProvider|None":
+        return super()._get_field("oidc_provider", explicit_presence=True,
+        wrap=OidcCredentialsProvider,
+        )
+    @oidc_provider.setter
+    def oidc_provider(self, value: "OidcCredentialsProvider|federated_credentials_pb2.OidcCredentialsProvider|None") -> None:
+        return super()._set_field("oidc_provider",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def federated_subject_id(self) -> "builtins.str":
+        return super()._get_field("federated_subject_id", explicit_presence=False,
+        )
+    @federated_subject_id.setter
+    def federated_subject_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("federated_subject_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def subject_id(self) -> "builtins.str":
+        """
+         IAM subject, in which federated subject will be impersonated to.
+         E.g. for workload identities it will be IAM service account.
+        """
+        
+        return super()._get_field("subject_id", explicit_presence=False,
+        )
+    @subject_id.setter
+    def subject_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("subject_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "oidc_provider":"oidc_provider",
+        "federated_subject_id":"federated_subject_id",
+        "subject_id":"subject_id",
+        "credentials_provider":"credentials_provider",
+    }
+    
+class OidcCredentialsProvider(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentials_pb2.OidcCredentialsProvider
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.OidcCredentialsProvider",federated_credentials_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        issuer_url: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        jwk_set_json: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(issuer_url, unset.UnsetType):
+            self.issuer_url = issuer_url
+        if not isinstance(jwk_set_json, unset.UnsetType):
+            self.jwk_set_json = jwk_set_json
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "issuer_url",
+            "jwk_set_json",
+        ]
+    
+    @builtins.property
+    def issuer_url(self) -> "builtins.str":
+        """
+         *
+         It's not required provider OIDC issuer should be real OIDC provider, but should expose OIDC configuration
+         with "/.well-known/openid-configuration" endpoint. Configuration should contains the "jwks_uri" endpoint
+         where the JSON Web Key Set (JWKS) can be found; this set contains public keys used to verify
+         JSON Web Tokens (JWTs) issued by an identity provider.
+        """
+        
+        return super()._get_field("issuer_url", explicit_presence=False,
+        )
+    @issuer_url.setter
+    def issuer_url(self, value: "builtins.str|None") -> None:
+        return super()._set_field("issuer_url",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def jwk_set_json(self) -> "builtins.str":
+        """
+         *
+         Literally json, which represents JWKS with public keys for JWT verification
+        """
+        
+        return super()._get_field("jwk_set_json", explicit_presence=False,
+        )
+    @jwk_set_json.setter
+    def jwk_set_json(self, value: "builtins.str|None") -> None:
+        return super()._set_field("jwk_set_json",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "issuer_url":"issuer_url",
+        "jwk_set_json":"jwk_set_json",
+    }
+    
+class FederatedCredentialsStatus(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentials_pb2.FederatedCredentialsStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.FederatedCredentialsStatus",federated_credentials_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+# file: nebius/iam/v1/federated_credentilas_service.proto
+class GetFederatedCredentialsRequest(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentilas_service_pb2.GetFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetByNameFederatedCredentialsRequest(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentilas_service_pb2.GetByNameFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetByNameFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+         Container (project), which contains desired credentials.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        """
+         Federated credentials name.
+        """
+        
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
+    
+class CreateFederatedCredentialsRequest(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentilas_service_pb2.CreateFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederatedCredentialsSpec|federated_credentials_pb2.FederatedCredentialsSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "FederatedCredentialsSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=FederatedCredentialsSpec,
+        )
+    @spec.setter
+    def spec(self, value: "FederatedCredentialsSpec|federated_credentials_pb2.FederatedCredentialsSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateFederatedCredentialsRequest(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentilas_service_pb2.UpdateFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "FederatedCredentialsSpec|federated_credentials_pb2.FederatedCredentialsSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "FederatedCredentialsSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=FederatedCredentialsSpec,
+        )
+    @spec.setter
+    def spec(self, value: "FederatedCredentialsSpec|federated_credentials_pb2.FederatedCredentialsSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class ListFederatedCredentialsRequest(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentilas_service_pb2.ListFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+        if not isinstance(filter, unset.UnsetType):
+            self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+         Represents the parent NID
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+         Specifies the maximum number of items to return in the response. Default is 10
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
+        return super()._get_field("filter", explicit_presence=False,
+        )
+    @filter.setter
+    def filter(self, value: "builtins.str|None") -> None:
+        return super()._set_field("filter",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
+class ListFederatedCredentialsResponse(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentilas_service_pb2.ListFederatedCredentialsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederatedCredentialsResponse",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[FederatedCredentials]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[FederatedCredentials]":
+        """
+         List of user accounts returned in the response. The field should be named as `items` for consistency.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(FederatedCredentials,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[FederatedCredentials]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class DeleteFederatedCredentialsRequest(pb_classes.Message):
+    __PB2_CLASS__ = federated_credentilas_service_pb2.DeleteFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+
+class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.FederatedCredentialsService",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.iam.v1.FederatedCredentialsService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    
+    def get(self,
+        request: "GetFederatedCredentialsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["GetFederatedCredentialsRequest","FederatedCredentials"]:
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=federated_credentials_pb2.FederatedCredentials,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(FederatedCredentials),
+        )
+    
+    def get_by_name(self,
+        request: "GetByNameFederatedCredentialsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["GetByNameFederatedCredentialsRequest","FederatedCredentials"]:
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=federated_credentials_pb2.FederatedCredentials,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(FederatedCredentials),
+        )
+    
+    def list(self,
+        request: "ListFederatedCredentialsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["ListFederatedCredentialsRequest","ListFederatedCredentialsResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=federated_credentilas_service_pb2.ListFederatedCredentialsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(ListFederatedCredentialsResponse),
+        )
+    
+    def create(self,
+        request: "CreateFederatedCredentialsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["CreateFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation_1.Operation,
+        )
+    
+    def update(self,
+        request: "UpdateFederatedCredentialsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["UpdateFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation_1.Operation,
+        )
+    
+    def delete(self,
+        request: "DeleteFederatedCredentialsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["DeleteFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation_1.Operation,
+        )
+    
+
 # file: nebius/iam/v1/federation.proto
 class Federation(pb_classes.Message):
     __PB2_CLASS__ = federation_pb2.Federation
@@ -11545,6 +12310,18 @@ __all__ = [
     "Container",
     "ContainerSpec",
     "ContainerStatus",
+    "FederatedCredentials",
+    "FederatedCredentialsSpec",
+    "OidcCredentialsProvider",
+    "FederatedCredentialsStatus",
+    "GetFederatedCredentialsRequest",
+    "GetByNameFederatedCredentialsRequest",
+    "CreateFederatedCredentialsRequest",
+    "UpdateFederatedCredentialsRequest",
+    "ListFederatedCredentialsRequest",
+    "ListFederatedCredentialsResponse",
+    "DeleteFederatedCredentialsRequest",
+    "FederatedCredentialsServiceClient",
     "Federation",
     "FederationSpec",
     "SamlSettings",
