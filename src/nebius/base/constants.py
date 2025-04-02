@@ -1,1 +1,1 @@
-DOMAIN: str = "api.eu.nebius.cloud:443"
+DOMAIN: str = "api.nebius.cloud:443"
