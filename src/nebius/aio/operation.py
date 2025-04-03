@@ -108,26 +108,34 @@ class Operation(Generic[OperationPb]):
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
+        poll_iteration_timeout: float | None = None,
+        poll_per_retry_timeout: float | None = None,
     ) -> None:
         start = time()
+        if poll_iteration_timeout is None:
+            if timeout is not None:
+                poll_iteration_timeout = min(5, timeout)
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
         if not self.done():
             await self.update(
                 metadata=metadata,
-                timeout=timeout,
+                timeout=poll_iteration_timeout,
                 credentials=credentials,
                 compression=compression,
+                per_retry_timeout=poll_per_retry_timeout,
             )
         while not self.done():
-            if timeout is not None and time() < start + timeout:
+            current_time = time()
+            if timeout is not None and current_time > timeout + start:
                 raise TimeoutError("Operation wait timeout")
             await sleep(interval)
             await self.update(
                 metadata=metadata,
-                timeout=timeout,
+                timeout=poll_iteration_timeout,
                 credentials=credentials,
                 compression=compression,
+                per_retry_timeout=poll_per_retry_timeout,
             )
 
     def _set_new_operation(self, operation: OperationPb) -> None:
