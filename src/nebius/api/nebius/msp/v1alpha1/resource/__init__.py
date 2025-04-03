@@ -799,17 +799,21 @@ class ListPresetsRequest(pb_classes.Message):
         *,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
         page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
         if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "page_size",
             "page_token",
+            "parent_id",
         ]
     
     @builtins.property
@@ -830,9 +834,19 @@ class ListPresetsRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "page_size":"page_size",
         "page_token":"page_token",
+        "parent_id":"parent_id",
     }
     
 class ListPresetsResponse(pb_classes.Message):
@@ -925,17 +939,21 @@ class ListTemplatesRequest(pb_classes.Message):
         *,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
         page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(page_size, unset.UnsetType):
             self.page_size = page_size
         if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "page_size",
             "page_token",
+            "parent_id",
         ]
     
     @builtins.property
@@ -956,9 +974,19 @@ class ListTemplatesRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "page_size":"page_size",
         "page_token":"page_token",
+        "parent_id":"parent_id",
     }
     
 class ListTemplatesResponse(pb_classes.Message):

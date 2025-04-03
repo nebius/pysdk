@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 from nebius.api.nebius.msp.v1alpha1.resource import preset_pb2 as nebius_dot_msp_dot_v1alpha1_dot_resource_dot_preset__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n1nebius/msp/v1alpha1/resource/preset_service.proto\x12\x1cnebius.msp.v1alpha1.resource\x1a)nebius/msp/v1alpha1/resource/preset.proto\"P\n\x12ListPresetsRequest\x12\x1b\n\tpage_size\x18\x01 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x02 \x01(\tR\tpageToken\"y\n\x13ListPresetsResponse\x12:\n\x05items\x18\x01 \x03(\x0b\x32$.nebius.msp.v1alpha1.resource.PresetR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2|\n\rPresetService\x12k\n\x04List\x12\x30.nebius.msp.v1alpha1.resource.ListPresetsRequest\x1a\x31.nebius.msp.v1alpha1.resource.ListPresetsResponseBw\n#ai.nebius.pub.msp.v1alpha1.resourceB\x12PresetServiceProtoP\x01Z:github.com/nebius/gosdk/proto/nebius/msp/v1alpha1/resourceb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n1nebius/msp/v1alpha1/resource/preset_service.proto\x12\x1cnebius.msp.v1alpha1.resource\x1a)nebius/msp/v1alpha1/resource/preset.proto\"m\n\x12ListPresetsRequest\x12\x1b\n\tpage_size\x18\x01 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x02 \x01(\tR\tpageToken\x12\x1b\n\tparent_id\x18\x03 \x01(\tR\x08parentId\"y\n\x13ListPresetsResponse\x12:\n\x05items\x18\x01 \x03(\x0b\x32$.nebius.msp.v1alpha1.resource.PresetR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2|\n\rPresetService\x12k\n\x04List\x12\x30.nebius.msp.v1alpha1.resource.ListPresetsRequest\x1a\x31.nebius.msp.v1alpha1.resource.ListPresetsResponseBw\n#ai.nebius.pub.msp.v1alpha1.resourceB\x12PresetServiceProtoP\x01Z:github.com/nebius/gosdk/proto/nebius/msp/v1alpha1/resourceb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -24,9 +24,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n#ai.nebius.pub.msp.v1alpha1.resourceB\022PresetServiceProtoP\001Z:github.com/nebius/gosdk/proto/nebius/msp/v1alpha1/resource'
   _globals['_LISTPRESETSREQUEST']._serialized_start=126
-  _globals['_LISTPRESETSREQUEST']._serialized_end=206
-  _globals['_LISTPRESETSRESPONSE']._serialized_start=208
-  _globals['_LISTPRESETSRESPONSE']._serialized_end=329
-  _globals['_PRESETSERVICE']._serialized_start=331
-  _globals['_PRESETSERVICE']._serialized_end=455
+  _globals['_LISTPRESETSREQUEST']._serialized_end=235
+  _globals['_LISTPRESETSRESPONSE']._serialized_start=237
+  _globals['_LISTPRESETSRESPONSE']._serialized_end=358
+  _globals['_PRESETSERVICE']._serialized_start=360
+  _globals['_PRESETSERVICE']._serialized_end=484
 # @@protoc_insertion_point(module_scope)
