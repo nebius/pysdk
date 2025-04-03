@@ -3,6 +3,7 @@ from nebius.api.nebius.msp.postgresql.v1alpha1 import cluster_pb2 as _cluster_pb
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.common.v1alpha1 import operation_pb2 as _operation_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -43,16 +44,18 @@ class CreateClusterRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_cluster_pb2.ClusterSpec, _Mapping]] = ...) -> None: ...
 
 class RestoreClusterRequest(_message.Message):
-    __slots__ = ["metadata", "spec", "backup_id", "source_cluster_id"]
+    __slots__ = ["metadata", "spec", "backup_id", "source_cluster_id", "recovery_time"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     BACKUP_ID_FIELD_NUMBER: _ClassVar[int]
     SOURCE_CLUSTER_ID_FIELD_NUMBER: _ClassVar[int]
+    RECOVERY_TIME_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
     spec: _cluster_pb2.ClusterSpec
     backup_id: str
     source_cluster_id: str
-    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_cluster_pb2.ClusterSpec, _Mapping]] = ..., backup_id: _Optional[str] = ..., source_cluster_id: _Optional[str] = ...) -> None: ...
+    recovery_time: _timestamp_pb2.Timestamp
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_cluster_pb2.ClusterSpec, _Mapping]] = ..., backup_id: _Optional[str] = ..., source_cluster_id: _Optional[str] = ..., recovery_time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class DeleteClusterRequest(_message.Message):
     __slots__ = ["id"]

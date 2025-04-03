@@ -16,9 +16,10 @@ from nebius.api.nebius.msp.postgresql.v1alpha1 import cluster_pb2 as nebius_dot_
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 from nebius.api.nebius.common.v1alpha1 import operation_pb2 as nebius_dot_common_dot_v1alpha1_dot_operation__pb2
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n4nebius/msp/postgresql/v1alpha1/cluster_service.proto\x12\x1enebius.msp.postgresql.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a,nebius/msp/postgresql/v1alpha1/cluster.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a\x18nebius/annotations.proto\"+\n\x11GetClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"v\n\x13ListClustersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x83\x01\n\x14ListClustersResponse\x12\x43\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\'.nebius.msp.postgresql.v1alpha1.ClusterR\x08\x63lusters\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa7\x01\n\x14\x43reateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12G\n\x04spec\x18\x02 \x01(\x0b\x32+.nebius.msp.postgresql.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\x81\x02\n\x15RestoreClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12G\n\x04spec\x18\x02 \x01(\x0b\x32+.nebius.msp.postgresql.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12#\n\tbackup_id\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08\x62\x61\x63kupId\x12\x32\n\x11source_cluster_id\x18\x04 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0fsourceClusterId\"&\n\x14\x44\x65leteClusterRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\x9f\x01\n\x14UpdateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12?\n\x04spec\x18\x02 \x01(\x0b\x32+.nebius.msp.postgresql.v1alpha1.ClusterSpecR\x04spec\",\n\x12StopClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"-\n\x13StartClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xa1\x07\n\x0e\x43lusterService\x12\x61\n\x03Get\x12\x31.nebius.msp.postgresql.v1alpha1.GetClusterRequest\x1a\'.nebius.msp.postgresql.v1alpha1.Cluster\x12X\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\'.nebius.msp.postgresql.v1alpha1.Cluster\x12q\n\x04List\x12\x33.nebius.msp.postgresql.v1alpha1.ListClustersRequest\x1a\x34.nebius.msp.postgresql.v1alpha1.ListClustersResponse\x12\x61\n\x06\x43reate\x12\x34.nebius.msp.postgresql.v1alpha1.CreateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12\x61\n\x06\x44\x65lete\x12\x34.nebius.msp.postgresql.v1alpha1.DeleteClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12\x61\n\x06Update\x12\x34.nebius.msp.postgresql.v1alpha1.UpdateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12\x63\n\x07Restore\x12\x35.nebius.msp.postgresql.v1alpha1.RestoreClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x04Stop\x12\x32.nebius.msp.postgresql.v1alpha1.StopClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12_\n\x05Start\x12\x33.nebius.msp.postgresql.v1alpha1.StartClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\x11\xbaJ\x0epostgresql.mspB|\n%ai.nebius.pub.msp.postgresql.v1alpha1B\x13\x43lusterServiceProtoP\x01Z<github.com/nebius/gosdk/proto/nebius/msp/postgresql/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n4nebius/msp/postgresql/v1alpha1/cluster_service.proto\x12\x1enebius.msp.postgresql.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a,nebius/msp/postgresql/v1alpha1/cluster.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a\x18nebius/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"+\n\x11GetClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"v\n\x13ListClustersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x83\x01\n\x14ListClustersResponse\x12\x43\n\x08\x63lusters\x18\x01 \x03(\x0b\x32\'.nebius.msp.postgresql.v1alpha1.ClusterR\x08\x63lusters\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa7\x01\n\x14\x43reateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12G\n\x04spec\x18\x02 \x01(\x0b\x32+.nebius.msp.postgresql.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xc2\x02\n\x15RestoreClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12G\n\x04spec\x18\x02 \x01(\x0b\x32+.nebius.msp.postgresql.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12#\n\tbackup_id\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08\x62\x61\x63kupId\x12\x32\n\x11source_cluster_id\x18\x04 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0fsourceClusterId\x12?\n\rrecovery_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x0crecoveryTime\"&\n\x14\x44\x65leteClusterRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\x9f\x01\n\x14UpdateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12?\n\x04spec\x18\x02 \x01(\x0b\x32+.nebius.msp.postgresql.v1alpha1.ClusterSpecR\x04spec\",\n\x12StopClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"-\n\x13StartClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xa1\x07\n\x0e\x43lusterService\x12\x61\n\x03Get\x12\x31.nebius.msp.postgresql.v1alpha1.GetClusterRequest\x1a\'.nebius.msp.postgresql.v1alpha1.Cluster\x12X\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\'.nebius.msp.postgresql.v1alpha1.Cluster\x12q\n\x04List\x12\x33.nebius.msp.postgresql.v1alpha1.ListClustersRequest\x1a\x34.nebius.msp.postgresql.v1alpha1.ListClustersResponse\x12\x61\n\x06\x43reate\x12\x34.nebius.msp.postgresql.v1alpha1.CreateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12\x61\n\x06\x44\x65lete\x12\x34.nebius.msp.postgresql.v1alpha1.DeleteClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12\x61\n\x06Update\x12\x34.nebius.msp.postgresql.v1alpha1.UpdateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12\x63\n\x07Restore\x12\x35.nebius.msp.postgresql.v1alpha1.RestoreClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x04Stop\x12\x32.nebius.msp.postgresql.v1alpha1.StopClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12_\n\x05Start\x12\x33.nebius.msp.postgresql.v1alpha1.StartClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\x11\xbaJ\x0epostgresql.mspB|\n%ai.nebius.pub.msp.postgresql.v1alpha1B\x13\x43lusterServiceProtoP\x01Z<github.com/nebius/gosdk/proto/nebius/msp/postgresql/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -51,24 +52,24 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _STARTCLUSTERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
   _CLUSTERSERVICE._options = None
   _CLUSTERSERVICE._serialized_options = b'\272J\016postgresql.msp'
-  _globals['_GETCLUSTERREQUEST']._serialized_start=262
-  _globals['_GETCLUSTERREQUEST']._serialized_end=305
-  _globals['_LISTCLUSTERSREQUEST']._serialized_start=307
-  _globals['_LISTCLUSTERSREQUEST']._serialized_end=425
-  _globals['_LISTCLUSTERSRESPONSE']._serialized_start=428
-  _globals['_LISTCLUSTERSRESPONSE']._serialized_end=559
-  _globals['_CREATECLUSTERREQUEST']._serialized_start=562
-  _globals['_CREATECLUSTERREQUEST']._serialized_end=729
-  _globals['_RESTORECLUSTERREQUEST']._serialized_start=732
-  _globals['_RESTORECLUSTERREQUEST']._serialized_end=989
-  _globals['_DELETECLUSTERREQUEST']._serialized_start=991
-  _globals['_DELETECLUSTERREQUEST']._serialized_end=1029
-  _globals['_UPDATECLUSTERREQUEST']._serialized_start=1032
-  _globals['_UPDATECLUSTERREQUEST']._serialized_end=1191
-  _globals['_STOPCLUSTERREQUEST']._serialized_start=1193
-  _globals['_STOPCLUSTERREQUEST']._serialized_end=1237
-  _globals['_STARTCLUSTERREQUEST']._serialized_start=1239
-  _globals['_STARTCLUSTERREQUEST']._serialized_end=1284
-  _globals['_CLUSTERSERVICE']._serialized_start=1287
-  _globals['_CLUSTERSERVICE']._serialized_end=2216
+  _globals['_GETCLUSTERREQUEST']._serialized_start=295
+  _globals['_GETCLUSTERREQUEST']._serialized_end=338
+  _globals['_LISTCLUSTERSREQUEST']._serialized_start=340
+  _globals['_LISTCLUSTERSREQUEST']._serialized_end=458
+  _globals['_LISTCLUSTERSRESPONSE']._serialized_start=461
+  _globals['_LISTCLUSTERSRESPONSE']._serialized_end=592
+  _globals['_CREATECLUSTERREQUEST']._serialized_start=595
+  _globals['_CREATECLUSTERREQUEST']._serialized_end=762
+  _globals['_RESTORECLUSTERREQUEST']._serialized_start=765
+  _globals['_RESTORECLUSTERREQUEST']._serialized_end=1087
+  _globals['_DELETECLUSTERREQUEST']._serialized_start=1089
+  _globals['_DELETECLUSTERREQUEST']._serialized_end=1127
+  _globals['_UPDATECLUSTERREQUEST']._serialized_start=1130
+  _globals['_UPDATECLUSTERREQUEST']._serialized_end=1289
+  _globals['_STOPCLUSTERREQUEST']._serialized_start=1291
+  _globals['_STOPCLUSTERREQUEST']._serialized_end=1335
+  _globals['_STARTCLUSTERREQUEST']._serialized_start=1337
+  _globals['_STARTCLUSTERREQUEST']._serialized_end=1382
+  _globals['_CLUSTERSERVICE']._serialized_start=1385
+  _globals['_CLUSTERSERVICE']._serialized_end=2314
 # @@protoc_insertion_point(module_scope)

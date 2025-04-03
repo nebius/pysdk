@@ -1472,6 +1472,7 @@ class RestoreClusterRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.RestoreClusterRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.RestoreClusterRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
+        "recovery_time": well_known_1.ts_mask,
     }
     
     def __init__(
@@ -1482,6 +1483,7 @@ class RestoreClusterRequest(pb_classes.Message):
         spec: "ClusterSpec|cluster_pb2.ClusterSpec|None|unset.UnsetType" = unset.Unset,
         backup_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        recovery_time: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1492,6 +1494,8 @@ class RestoreClusterRequest(pb_classes.Message):
             self.backup_id = backup_id
         if not isinstance(source_cluster_id, unset.UnsetType):
             self.source_cluster_id = source_cluster_id
+        if not isinstance(recovery_time, unset.UnsetType):
+            self.recovery_time = recovery_time
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1499,6 +1503,7 @@ class RestoreClusterRequest(pb_classes.Message):
             "spec",
             "backup_id",
             "source_cluster_id",
+            "recovery_time",
         ]
     
     @builtins.property
@@ -1555,11 +1560,27 @@ class RestoreClusterRequest(pb_classes.Message):
         return super()._set_field("source_cluster_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def recovery_time(self) -> "datetime.datetime":
+        """
+         Timestamp for point in time recovery.
+        """
+        
+        return super()._get_field("recovery_time", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @recovery_time.setter
+    def recovery_time(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("recovery_time",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "metadata":"metadata",
         "spec":"spec",
         "backup_id":"backup_id",
         "source_cluster_id":"source_cluster_id",
+        "recovery_time":"recovery_time",
     }
     
 class DeleteClusterRequest(pb_classes.Message):

@@ -7,12 +7,14 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ListPresetsRequest(_message.Message):
-    __slots__ = ["page_size", "page_token"]
+    __slots__ = ["page_size", "page_token", "parent_id"]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     page_size: int
     page_token: str
-    def __init__(self, page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
+    parent_id: str
+    def __init__(self, page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., parent_id: _Optional[str] = ...) -> None: ...
 
 class ListPresetsResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]
