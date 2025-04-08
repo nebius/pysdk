@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.vpc.v1 import subnet_pb2 as nebius_dot_vpc_dot_v1_dot_subnet__pb2
 from nebius.api.nebius.vpc.v1 import subnet_service_pb2 as nebius_dot_vpc_dot_v1_dot_subnet__service__pb2
 
@@ -35,6 +36,21 @@ class SubnetServiceStub(object):
                 request_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsByNetworkRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsResponse.FromString,
                 )
+        self.Create = channel.unary_unary(
+                '/nebius.vpc.v1.SubnetService/Create',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.CreateSubnetRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Update = channel.unary_unary(
+                '/nebius.vpc.v1.SubnetService/Update',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.UpdateSubnetRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Delete = channel.unary_unary(
+                '/nebius.vpc.v1.SubnetService/Delete',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.DeleteSubnetRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class SubnetServiceServicer(object):
@@ -64,6 +80,24 @@ class SubnetServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Create(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Update(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Delete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SubnetServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -86,6 +120,21 @@ def add_SubnetServiceServicer_to_server(servicer, server):
                     servicer.ListByNetwork,
                     request_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsByNetworkRequest.FromString,
                     response_serializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsResponse.SerializeToString,
+            ),
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.CreateSubnetRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.UpdateSubnetRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.DeleteSubnetRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -162,5 +211,56 @@ class SubnetService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.SubnetService/ListByNetwork',
             nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsByNetworkRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.ListSubnetsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.SubnetService/Create',
+            nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.CreateSubnetRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.SubnetService/Update',
+            nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.UpdateSubnetRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.SubnetService/Delete',
+            nebius_dot_vpc_dot_v1_dot_subnet__service__pb2.DeleteSubnetRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

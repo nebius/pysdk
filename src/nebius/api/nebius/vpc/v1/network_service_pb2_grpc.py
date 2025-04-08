@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.vpc.v1 import network_pb2 as nebius_dot_vpc_dot_v1_dot_network__pb2
 from nebius.api.nebius.vpc.v1 import network_service_pb2 as nebius_dot_vpc_dot_v1_dot_network__service__pb2
 
@@ -30,6 +31,26 @@ class NetworkServiceStub(object):
                 request_serializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.ListNetworksRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.ListNetworksResponse.FromString,
                 )
+        self.Create = channel.unary_unary(
+                '/nebius.vpc.v1.NetworkService/Create',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.CreateNetworkRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.CreateDefault = channel.unary_unary(
+                '/nebius.vpc.v1.NetworkService/CreateDefault',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.CreateDefaultNetworkRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Update = channel.unary_unary(
+                '/nebius.vpc.v1.NetworkService/Update',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.UpdateNetworkRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Delete = channel.unary_unary(
+                '/nebius.vpc.v1.NetworkService/Delete',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.DeleteNetworkRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class NetworkServiceServicer(object):
@@ -53,6 +74,30 @@ class NetworkServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Create(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateDefault(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Update(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Delete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_NetworkServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -70,6 +115,26 @@ def add_NetworkServiceServicer_to_server(servicer, server):
                     servicer.List,
                     request_deserializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.ListNetworksRequest.FromString,
                     response_serializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.ListNetworksResponse.SerializeToString,
+            ),
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.CreateNetworkRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'CreateDefault': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateDefault,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.CreateDefaultNetworkRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.UpdateNetworkRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_network__service__pb2.DeleteNetworkRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,5 +194,73 @@ class NetworkService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.NetworkService/List',
             nebius_dot_vpc_dot_v1_dot_network__service__pb2.ListNetworksRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_network__service__pb2.ListNetworksResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.NetworkService/Create',
+            nebius_dot_vpc_dot_v1_dot_network__service__pb2.CreateNetworkRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CreateDefault(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.NetworkService/CreateDefault',
+            nebius_dot_vpc_dot_v1_dot_network__service__pb2.CreateDefaultNetworkRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.NetworkService/Update',
+            nebius_dot_vpc_dot_v1_dot_network__service__pb2.UpdateNetworkRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.NetworkService/Delete',
+            nebius_dot_vpc_dot_v1_dot_network__service__pb2.DeleteNetworkRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

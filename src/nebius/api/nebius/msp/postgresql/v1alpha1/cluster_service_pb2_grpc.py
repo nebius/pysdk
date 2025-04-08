@@ -28,6 +28,11 @@ class ClusterServiceStub(object):
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__pb2.Cluster.FromString,
                 )
+        self.GetForBackup = channel.unary_unary(
+                '/nebius.msp.postgresql.v1alpha1.ClusterService/GetForBackup',
+                request_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.GetClusterForBackupRequest.SerializeToString,
+                response_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__pb2.Cluster.FromString,
+                )
         self.List = channel.unary_unary(
                 '/nebius.msp.postgresql.v1alpha1.ClusterService/List',
                 request_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.ListClustersRequest.SerializeToString,
@@ -79,6 +84,14 @@ class ClusterServiceServicer(object):
 
     def GetByName(self, request, context):
         """Returns the specified PostgreSQL Cluster resource by name.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetForBackup(self, request, context):
+        """Returns the specified PostgreSQL Cluster resource for backup.
+        It should be used as a hint of cluster configuration in case of backup restoration.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -145,6 +158,11 @@ def add_ClusterServiceServicer_to_server(servicer, server):
             'GetByName': grpc.unary_unary_rpc_method_handler(
                     servicer.GetByName,
                     request_deserializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.FromString,
+                    response_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__pb2.Cluster.SerializeToString,
+            ),
+            'GetForBackup': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetForBackup,
+                    request_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.GetClusterForBackupRequest.FromString,
                     response_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__pb2.Cluster.SerializeToString,
             ),
             'List': grpc.unary_unary_rpc_method_handler(
@@ -223,6 +241,23 @@ class ClusterService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.msp.postgresql.v1alpha1.ClusterService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
+            nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__pb2.Cluster.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetForBackup(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.postgresql.v1alpha1.ClusterService/GetForBackup',
+            nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__service__pb2.GetClusterForBackupRequest.SerializeToString,
             nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_cluster__pb2.Cluster.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

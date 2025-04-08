@@ -52,6 +52,14 @@ class ListPoolsResponse(_message.Message):
     next_page_token: str
     def __init__(self, items: _Optional[_Iterable[_Union[_pool_pb2.Pool, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
 
+class CreatePoolRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: _pool_pb2.PoolSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_pool_pb2.PoolSpec, _Mapping]] = ...) -> None: ...
+
 class UpdatePoolRequest(_message.Message):
     __slots__ = ["metadata", "spec"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
@@ -59,3 +67,9 @@ class UpdatePoolRequest(_message.Message):
     metadata: _metadata_pb2.ResourceMetadata
     spec: _pool_pb2.PoolSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_pool_pb2.PoolSpec, _Mapping]] = ...) -> None: ...
+
+class DeletePoolRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...

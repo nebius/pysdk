@@ -1276,6 +1276,62 @@ class GetClusterRequest(pb_classes.Message):
         "id":"id",
     }
     
+class GetClusterForBackupRequest(pb_classes.Message):
+    __PB2_CLASS__ = cluster_service_pb2.GetClusterForBackupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.GetClusterForBackupRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        backup_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(backup_id, unset.UnsetType):
+            self.backup_id = backup_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "backup_id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster that holds backup.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def backup_id(self) -> "builtins.str":
+        """
+         ID of the backup for which source cluster is requested.
+        """
+        
+        return super()._get_field("backup_id", explicit_presence=False,
+        )
+    @backup_id.setter
+    def backup_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("backup_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "backup_id":"backup_id",
+    }
+    
 class ListClustersRequest(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ListClustersRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.ListClustersRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1823,6 +1879,33 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1al
             result_wrapper=pb_classes.simple_wrapper(Cluster),
         )
     
+    def get_for_backup(self,
+        request: "GetClusterForBackupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["GetClusterForBackupRequest","Cluster"]:
+        """
+         Returns the specified PostgreSQL Cluster resource for backup.
+         It should be used as a hint of cluster configuration in case of backup restoration.
+        """
+        
+        return super().request(
+            method="GetForBackup",
+            request=request,
+            result_pb2_class=cluster_pb2.Cluster,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(Cluster),
+        )
+    
     def list(self,
         request: "ListClustersRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
@@ -2026,6 +2109,7 @@ __all__ = [
     "BootstrapSpec",
     "BackupSpec",
     "GetClusterRequest",
+    "GetClusterForBackupRequest",
     "ListClustersRequest",
     "ListClustersResponse",
     "CreateClusterRequest",

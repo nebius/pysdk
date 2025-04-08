@@ -17,6 +17,14 @@ class GetClusterRequest(_message.Message):
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
+class GetClusterForBackupRequest(_message.Message):
+    __slots__ = ["id", "backup_id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    BACKUP_ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    backup_id: str
+    def __init__(self, id: _Optional[str] = ..., backup_id: _Optional[str] = ...) -> None: ...
+
 class ListClustersRequest(_message.Message):
     __slots__ = ["parent_id", "page_size", "page_token"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
