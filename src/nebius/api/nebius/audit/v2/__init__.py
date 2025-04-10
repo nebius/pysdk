@@ -1288,12 +1288,13 @@ class ListAuditEventRequest(pb_classes.Message):
     def filter(self) -> "builtins.str":
         """
          Example:
-         service.name = 'iam' AND resource.hierarchy.id:'container-e0t'
+         service.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.*test.*$')
         
          Supported filters:
          "=" - equals
          "!=" - not equals
          ":" - contains
+         regex - regular expression
         
          Fields that can be used for filtering:
          action
@@ -1307,6 +1308,8 @@ class ListAuditEventRequest(pb_classes.Message):
          resource.metadata.id
          resource.metadata.name
          resource.metadata.type
+         service.name
+         type
         """
         
         return super()._get_field("filter", explicit_presence=False,
