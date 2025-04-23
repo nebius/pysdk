@@ -20,8 +20,10 @@ class Container(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ContainerSpec, _Mapping]] = ..., status: _Optional[_Union[ContainerStatus, _Mapping]] = ...) -> None: ...
 
 class ContainerSpec(_message.Message):
-    __slots__ = []
-    def __init__(self) -> None: ...
+    __slots__ = ["region"]
+    REGION_FIELD_NUMBER: _ClassVar[int]
+    region: str
+    def __init__(self, region: _Optional[str] = ...) -> None: ...
 
 class ContainerStatus(_message.Message):
     __slots__ = ["suspension_state", "container_state", "region"]

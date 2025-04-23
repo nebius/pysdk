@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.iam.v1 import container_pb2 as nebius_dot_iam_dot_v1_dot_container__pb2
 from nebius.api.nebius.iam.v1 import project_service_pb2 as nebius_dot_iam_dot_v1_dot_project__service__pb2
 
@@ -15,6 +16,11 @@ class ProjectServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.Create = channel.unary_unary(
+                '/nebius.iam.v1.ProjectService/Create',
+                request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.CreateProjectRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
         self.Get = channel.unary_unary(
                 '/nebius.iam.v1.ProjectService/Get',
                 request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.GetProjectRequest.SerializeToString,
@@ -30,10 +36,21 @@ class ProjectServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsResponse.FromString,
                 )
+        self.Update = channel.unary_unary(
+                '/nebius.iam.v1.ProjectService/Update',
+                request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.UpdateProjectRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class ProjectServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
+
+    def Create(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def Get(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -53,9 +70,20 @@ class ProjectServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Update(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ProjectServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.CreateProjectRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
             'Get': grpc.unary_unary_rpc_method_handler(
                     servicer.Get,
                     request_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.GetProjectRequest.FromString,
@@ -71,6 +99,11 @@ def add_ProjectServiceServicer_to_server(servicer, server):
                     request_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsRequest.FromString,
                     response_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsResponse.SerializeToString,
             ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.UpdateProjectRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.iam.v1.ProjectService', rpc_method_handlers)
@@ -80,6 +113,23 @@ def add_ProjectServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class ProjectService(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/Create',
+            nebius_dot_iam_dot_v1_dot_project__service__pb2.CreateProjectRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def Get(request,
@@ -129,5 +179,22 @@ class ProjectService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/List',
             nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_project__service__pb2.ListProjectsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/Update',
+            nebius_dot_iam_dot_v1_dot_project__service__pb2.UpdateProjectRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

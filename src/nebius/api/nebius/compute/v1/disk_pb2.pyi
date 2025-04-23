@@ -70,7 +70,7 @@ class DiskPlacementPolicy(_message.Message):
     def __init__(self, placement_group_id: _Optional[str] = ..., placement_group_partition: _Optional[int] = ...) -> None: ...
 
 class DiskStatus(_message.Message):
-    __slots__ = ["state", "state_description", "read_write_attachment", "read_only_attachments", "source_image_id", "size_bytes", "reconciling", "block_size_bytes"]
+    __slots__ = ["state", "state_description", "read_write_attachment", "read_only_attachments", "source_image_id", "size_bytes", "reconciling", "block_size_bytes", "source_image_cpu_architecture"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[DiskStatus.State]
@@ -85,6 +85,14 @@ class DiskStatus(_message.Message):
     UPDATING: DiskStatus.State
     DELETING: DiskStatus.State
     ERROR: DiskStatus.State
+    class SourceImageCPUArchitecture(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        SOURCE_IMAGE_CPU_UNSPECIFIED: _ClassVar[DiskStatus.SourceImageCPUArchitecture]
+        AMD64: _ClassVar[DiskStatus.SourceImageCPUArchitecture]
+        ARM64: _ClassVar[DiskStatus.SourceImageCPUArchitecture]
+    SOURCE_IMAGE_CPU_UNSPECIFIED: DiskStatus.SourceImageCPUArchitecture
+    AMD64: DiskStatus.SourceImageCPUArchitecture
+    ARM64: DiskStatus.SourceImageCPUArchitecture
     STATE_FIELD_NUMBER: _ClassVar[int]
     STATE_DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     READ_WRITE_ATTACHMENT_FIELD_NUMBER: _ClassVar[int]
@@ -93,6 +101,7 @@ class DiskStatus(_message.Message):
     SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
     BLOCK_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
+    SOURCE_IMAGE_CPU_ARCHITECTURE_FIELD_NUMBER: _ClassVar[int]
     state: DiskStatus.State
     state_description: str
     read_write_attachment: str
@@ -101,4 +110,5 @@ class DiskStatus(_message.Message):
     size_bytes: int
     reconciling: bool
     block_size_bytes: int
-    def __init__(self, state: _Optional[_Union[DiskStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachment: _Optional[str] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., source_image_id: _Optional[str] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ..., block_size_bytes: _Optional[int] = ...) -> None: ...
+    source_image_cpu_architecture: DiskStatus.SourceImageCPUArchitecture
+    def __init__(self, state: _Optional[_Union[DiskStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachment: _Optional[str] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., source_image_id: _Optional[str] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ..., block_size_bytes: _Optional[int] = ..., source_image_cpu_architecture: _Optional[_Union[DiskStatus.SourceImageCPUArchitecture, str]] = ...) -> None: ...

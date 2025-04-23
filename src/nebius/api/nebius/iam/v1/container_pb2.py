@@ -18,7 +18,7 @@ from nebius.api.nebius.iam.v1 import state_pb2 as nebius_dot_iam_dot_v1_dot_stat
 from nebius.api.nebius.iam.v1 import suspension_state_pb2 as nebius_dot_iam_dot_v1_dot_suspension__state__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dnebius/iam/v1/container.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x19nebius/iam/v1/state.proto\x1a$nebius/iam/v1/suspension_state.proto\"\xcb\x01\n\tContainer\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x38\n\x04spec\x18\x02 \x01(\x0b\x32\x1c.nebius.iam.v1.ContainerSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12<\n\x06status\x18\x03 \x01(\x0b\x32\x1e.nebius.iam.v1.ContainerStatusB\x04\xbaJ\x01\x05R\x06status\"\x0f\n\rContainerSpec\"\xb3\x01\n\x0f\x43ontainerStatus\x12I\n\x10suspension_state\x18\x02 \x01(\x0e\x32\x1e.nebius.iam.v1.SuspensionStateR\x0fsuspensionState\x12=\n\x0f\x63ontainer_state\x18\x03 \x01(\x0e\x32\x14.nebius.iam.v1.StateR\x0e\x63ontainerState\x12\x16\n\x06region\x18\x04 \x01(\tR\x06regionBU\n\x14\x61i.nebius.pub.iam.v1B\x0e\x43ontainerProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dnebius/iam/v1/container.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x19nebius/iam/v1/state.proto\x1a$nebius/iam/v1/suspension_state.proto\"\xcb\x01\n\tContainer\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x38\n\x04spec\x18\x02 \x01(\x0b\x32\x1c.nebius.iam.v1.ContainerSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12<\n\x06status\x18\x03 \x01(\x0b\x32\x1e.nebius.iam.v1.ContainerStatusB\x04\xbaJ\x01\x05R\x06status\"-\n\rContainerSpec\x12\x1c\n\x06region\x18\x01 \x01(\tB\x04\xbaJ\x01\x07R\x06region\"\xb3\x01\n\x0f\x43ontainerStatus\x12I\n\x10suspension_state\x18\x02 \x01(\x0e\x32\x1e.nebius.iam.v1.SuspensionStateR\x0fsuspensionState\x12=\n\x0f\x63ontainer_state\x18\x03 \x01(\x0e\x32\x14.nebius.iam.v1.StateR\x0e\x63ontainerState\x12\x16\n\x06region\x18\x04 \x01(\tR\x06regionBU\n\x14\x61i.nebius.pub.iam.v1B\x0e\x43ontainerProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,10 +33,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CONTAINER.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _CONTAINER.fields_by_name['status']._options = None
   _CONTAINER.fields_by_name['status']._serialized_options = b'\272J\001\005'
+  _CONTAINERSPEC.fields_by_name['region']._options = None
+  _CONTAINERSPEC.fields_by_name['region']._serialized_options = b'\272J\001\007'
   _globals['_CONTAINER']._serialized_start=202
   _globals['_CONTAINER']._serialized_end=405
   _globals['_CONTAINERSPEC']._serialized_start=407
-  _globals['_CONTAINERSPEC']._serialized_end=422
-  _globals['_CONTAINERSTATUS']._serialized_start=425
-  _globals['_CONTAINERSTATUS']._serialized_end=604
+  _globals['_CONTAINERSPEC']._serialized_end=452
+  _globals['_CONTAINERSTATUS']._serialized_start=455
+  _globals['_CONTAINERSTATUS']._serialized_end=634
 # @@protoc_insertion_point(module_scope)

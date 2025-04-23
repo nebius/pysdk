@@ -18,14 +18,24 @@ class Image(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ImageSpec, _Mapping]] = ..., status: _Optional[_Union[ImageStatus, _Mapping]] = ...) -> None: ...
 
 class ImageSpec(_message.Message):
-    __slots__ = ["description", "image_family", "version"]
+    __slots__ = ["description", "image_family", "version", "cpu_architecture"]
+    class CPUArchitecture(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        UNSPECIFIED: _ClassVar[ImageSpec.CPUArchitecture]
+        AMD64: _ClassVar[ImageSpec.CPUArchitecture]
+        ARM64: _ClassVar[ImageSpec.CPUArchitecture]
+    UNSPECIFIED: ImageSpec.CPUArchitecture
+    AMD64: ImageSpec.CPUArchitecture
+    ARM64: ImageSpec.CPUArchitecture
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     IMAGE_FAMILY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
+    CPU_ARCHITECTURE_FIELD_NUMBER: _ClassVar[int]
     description: str
     image_family: str
     version: str
-    def __init__(self, description: _Optional[str] = ..., image_family: _Optional[str] = ..., version: _Optional[str] = ...) -> None: ...
+    cpu_architecture: ImageSpec.CPUArchitecture
+    def __init__(self, description: _Optional[str] = ..., image_family: _Optional[str] = ..., version: _Optional[str] = ..., cpu_architecture: _Optional[_Union[ImageSpec.CPUArchitecture, str]] = ...) -> None: ...
 
 class ImageStatus(_message.Message):
     __slots__ = ["state", "state_description", "storage_size_bytes", "min_disk_size_bytes", "reconciling"]

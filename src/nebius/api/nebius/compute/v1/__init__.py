@@ -478,6 +478,12 @@ class DiskStatus(pb_classes.Message):
         DELETING = 4
         ERROR = 5
     
+    class SourceImageCPUArchitecture(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskStatus.SourceImageCPUArchitecture",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        SOURCE_IMAGE_CPU_UNSPECIFIED = 0
+        AMD64 = 1
+        ARM64 = 2
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -490,6 +496,7 @@ class DiskStatus(pb_classes.Message):
         size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        source_image_cpu_architecture: "DiskStatus.SourceImageCPUArchitecture|disk_pb2.DiskStatus.SourceImageCPUArchitecture|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -508,6 +515,8 @@ class DiskStatus(pb_classes.Message):
             self.reconciling = reconciling
         if not isinstance(block_size_bytes, unset.UnsetType):
             self.block_size_bytes = block_size_bytes
+        if not isinstance(source_image_cpu_architecture, unset.UnsetType):
+            self.source_image_cpu_architecture = source_image_cpu_architecture
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -519,7 +528,9 @@ class DiskStatus(pb_classes.Message):
             "size_bytes",
             "reconciling",
             "block_size_bytes",
+            "source_image_cpu_architecture",
             "State",
+            "SourceImageCPUArchitecture",
         ]
     
     @builtins.property
@@ -600,6 +611,16 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("block_size_bytes",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def source_image_cpu_architecture(self) -> "DiskStatus.SourceImageCPUArchitecture":
+        return super()._get_field("source_image_cpu_architecture", explicit_presence=False,
+        wrap=DiskStatus.SourceImageCPUArchitecture,
+        )
+    @source_image_cpu_architecture.setter
+    def source_image_cpu_architecture(self, value: "DiskStatus.SourceImageCPUArchitecture|disk_pb2.DiskStatus.SourceImageCPUArchitecture|None") -> None:
+        return super()._set_field("source_image_cpu_architecture",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "state_description":"state_description",
@@ -609,7 +630,9 @@ class DiskStatus(pb_classes.Message):
         "size_bytes":"size_bytes",
         "reconciling":"reconciling",
         "block_size_bytes":"block_size_bytes",
+        "source_image_cpu_architecture":"source_image_cpu_architecture",
         "State":"State",
+        "SourceImageCPUArchitecture":"SourceImageCPUArchitecture",
     }
     
 # file: nebius/compute/v1/operation_service.proto
@@ -2795,6 +2818,12 @@ class ImageSpec(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class CPUArchitecture(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.ImageSpec.CPUArchitecture",image_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        AMD64 = 1
+        ARM64 = 2
+    
     class __OneOfClass__description__(pb_classes.OneOf):
         name: builtins.str= "_description"
         
@@ -2829,6 +2858,7 @@ class ImageSpec(pb_classes.Message):
         description: "builtins.str|None|unset.UnsetType" = unset.Unset,
         image_family: "builtins.str|None|unset.UnsetType" = unset.Unset,
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        cpu_architecture: "ImageSpec.CPUArchitecture|image_pb2.ImageSpec.CPUArchitecture|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -2837,13 +2867,17 @@ class ImageSpec(pb_classes.Message):
             self.image_family = image_family
         if not isinstance(version, unset.UnsetType):
             self.version = version
+        if not isinstance(cpu_architecture, unset.UnsetType):
+            self.cpu_architecture = cpu_architecture
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "description",
             "image_family",
             "version",
+            "cpu_architecture",
             "_description",
+            "CPUArchitecture",
         ]
     
     @builtins.property
@@ -2873,11 +2907,23 @@ class ImageSpec(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def cpu_architecture(self) -> "ImageSpec.CPUArchitecture":
+        return super()._get_field("cpu_architecture", explicit_presence=False,
+        wrap=ImageSpec.CPUArchitecture,
+        )
+    @cpu_architecture.setter
+    def cpu_architecture(self, value: "ImageSpec.CPUArchitecture|image_pb2.ImageSpec.CPUArchitecture|None") -> None:
+        return super()._set_field("cpu_architecture",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "description":"description",
         "image_family":"image_family",
         "version":"version",
+        "cpu_architecture":"cpu_architecture",
         "_description":"_description",
+        "CPUArchitecture":"CPUArchitecture",
     }
     
 class ImageStatus(pb_classes.Message):

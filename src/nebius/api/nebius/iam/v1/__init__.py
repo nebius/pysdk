@@ -3011,14 +3011,29 @@ class ContainerSpec(pb_classes.Message):
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
+        *,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "region",
         ]
     
+    @builtins.property
+    def region(self) -> "builtins.str":
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "region":"region",
     }
     
 class ContainerStatus(pb_classes.Message):
@@ -9174,6 +9189,56 @@ class ProfileServiceClient(client.Client):
     
 
 # file: nebius/iam/v1/project_service.proto
+class CreateProjectRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.CreateProjectRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ContainerSpec|container_pb2.ContainerSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ContainerSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ContainerSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ContainerSpec|container_pb2.ContainerSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetProjectRequest(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.GetProjectRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -9378,6 +9443,56 @@ class ListProjectsRequest(pb_classes.Message):
         "_page_size":"_page_size",
     }
     
+class UpdateProjectRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.UpdateProjectRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ContainerSpec|container_pb2.ContainerSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ContainerSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ContainerSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ContainerSpec|container_pb2.ContainerSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class ListProjectsResponse(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListProjectsResponse",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -9432,9 +9547,34 @@ class ListProjectsResponse(pb_classes.Message):
     }
     
 
-class ProjectServiceClient(client.Client):
+class ProjectServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.ProjectService",project_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.ProjectService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    
+    def create(self,
+        request: "CreateProjectRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["CreateProjectRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation_1.Operation,
+        )
     
     def get(self,
         request: "GetProjectRequest",
@@ -9500,6 +9640,29 @@ class ProjectServiceClient(client.Client):
             retries=retries,
             per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListProjectsResponse),
+        )
+    
+    def update(self,
+        request: "UpdateProjectRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["UpdateProjectRequest","operation_1.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -12397,9 +12560,11 @@ __all__ = [
     "ServiceAccountProfile",
     "AnonymousAccount",
     "ProfileServiceClient",
+    "CreateProjectRequest",
     "GetProjectRequest",
     "GetProjectByNameRequest",
     "ListProjectsRequest",
+    "UpdateProjectRequest",
     "ListProjectsResponse",
     "ProjectServiceClient",
     "CreateServiceAccountRequest",
