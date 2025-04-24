@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.iam.v1 import container_pb2 as nebius_dot_iam_dot_v1_dot_container__pb2
 from nebius.api.nebius.iam.v1 import tenant_service_pb2 as nebius_dot_iam_dot_v1_dot_tenant__service__pb2
 
@@ -25,6 +26,11 @@ class TenantServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsResponse.FromString,
                 )
+        self.Update = channel.unary_unary(
+                '/nebius.iam.v1.TenantService/Update',
+                request_serializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.UpdateTenantRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class TenantServiceServicer(object):
@@ -42,6 +48,12 @@ class TenantServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Update(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_TenantServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -54,6 +66,11 @@ def add_TenantServiceServicer_to_server(servicer, server):
                     servicer.List,
                     request_deserializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsRequest.FromString,
                     response_serializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsResponse.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_tenant__service__pb2.UpdateTenantRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -96,5 +113,22 @@ class TenantService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantService/List',
             nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_tenant__service__pb2.ListTenantsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.TenantService/Update',
+            nebius_dot_iam_dot_v1_dot_tenant__service__pb2.UpdateTenantRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

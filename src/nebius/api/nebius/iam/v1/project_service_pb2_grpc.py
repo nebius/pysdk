@@ -41,6 +41,16 @@ class ProjectServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.UpdateProjectRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
+        self.Delete = channel.unary_unary(
+                '/nebius.iam.v1.ProjectService/Delete',
+                request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.DeleteProjectRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Undelete = channel.unary_unary(
+                '/nebius.iam.v1.ProjectService/Undelete',
+                request_serializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.UndeleteProjectRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class ProjectServiceServicer(object):
@@ -76,6 +86,18 @@ class ProjectServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Delete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Undelete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ProjectServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -102,6 +124,16 @@ def add_ProjectServiceServicer_to_server(servicer, server):
             'Update': grpc.unary_unary_rpc_method_handler(
                     servicer.Update,
                     request_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.UpdateProjectRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.DeleteProjectRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Undelete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Undelete,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_project__service__pb2.UndeleteProjectRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
@@ -195,6 +227,40 @@ class ProjectService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/Update',
             nebius_dot_iam_dot_v1_dot_project__service__pb2.UpdateProjectRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/Delete',
+            nebius_dot_iam_dot_v1_dot_project__service__pb2.DeleteProjectRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Undelete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.ProjectService/Undelete',
+            nebius_dot_iam_dot_v1_dot_project__service__pb2.UndeleteProjectRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

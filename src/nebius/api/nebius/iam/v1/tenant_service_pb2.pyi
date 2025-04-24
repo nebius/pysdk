@@ -1,4 +1,6 @@
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
+from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
+from nebius.api.nebius.common.v1 import operation_pb2 as _operation_pb2
 from nebius.api.nebius.iam.v1 import container_pb2 as _container_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
@@ -12,6 +14,14 @@ class GetTenantRequest(_message.Message):
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class UpdateTenantRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: _container_pb2.ContainerSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_container_pb2.ContainerSpec, _Mapping]] = ...) -> None: ...
 
 class ListTenantsRequest(_message.Message):
     __slots__ = ["page_size", "page_token", "filter"]

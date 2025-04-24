@@ -9493,6 +9493,74 @@ class UpdateProjectRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class DeleteProjectRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.DeleteProjectRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class UndeleteProjectRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.UndeleteProjectRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UndeleteProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
 class ListProjectsResponse(pb_classes.Message):
     __PB2_CLASS__ = project_service_pb2.ListProjectsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListProjectsResponse",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -9654,6 +9722,50 @@ class ProjectServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation_1.Operation,
+        )
+    
+    def delete(self,
+        request: "DeleteProjectRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["DeleteProjectRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation_1.Operation,
+        )
+    
+    def undelete(self,
+        request: "UndeleteProjectRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["UndeleteProjectRequest","operation_1.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Undelete",
             request=request,
             result_pb2_class=operation_pb2.Operation,
             metadata=metadata,
@@ -11255,6 +11367,56 @@ class GetTenantRequest(pb_classes.Message):
         "id":"id",
     }
     
+class UpdateTenantRequest(pb_classes.Message):
+    __PB2_CLASS__ = tenant_service_pb2.UpdateTenantRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateTenantRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ContainerSpec|container_pb2.ContainerSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ContainerSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ContainerSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ContainerSpec|container_pb2.ContainerSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class ListTenantsRequest(pb_classes.Message):
     __PB2_CLASS__ = tenant_service_pb2.ListTenantsRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListTenantsRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -11413,9 +11575,12 @@ class ListTenantsResponse(pb_classes.Message):
     }
     
 
-class TenantServiceClient(client.Client):
+class TenantServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.TenantService",tenant_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.TenantService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Update"
     
     def get(self,
         request: "GetTenantRequest",
@@ -11459,6 +11624,29 @@ class TenantServiceClient(client.Client):
             retries=retries,
             per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListTenantsResponse),
+        )
+    
+    def update(self,
+        request: "UpdateTenantRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["UpdateTenantRequest","operation_1.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation_1.Operation,
         )
     
 
@@ -12565,6 +12753,8 @@ __all__ = [
     "GetProjectByNameRequest",
     "ListProjectsRequest",
     "UpdateProjectRequest",
+    "DeleteProjectRequest",
+    "UndeleteProjectRequest",
     "ListProjectsResponse",
     "ProjectServiceClient",
     "CreateServiceAccountRequest",
@@ -12593,6 +12783,7 @@ __all__ = [
     "RevokeStaticKeyRequest",
     "StaticKeyServiceClient",
     "GetTenantRequest",
+    "UpdateTenantRequest",
     "ListTenantsRequest",
     "ListTenantsResponse",
     "TenantServiceClient",

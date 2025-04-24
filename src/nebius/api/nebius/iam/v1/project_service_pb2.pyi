@@ -52,6 +52,18 @@ class UpdateProjectRequest(_message.Message):
     spec: _container_pb2.ContainerSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_container_pb2.ContainerSpec, _Mapping]] = ...) -> None: ...
 
+class DeleteProjectRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class UndeleteProjectRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
 class ListProjectsResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]
     ITEMS_FIELD_NUMBER: _ClassVar[int]

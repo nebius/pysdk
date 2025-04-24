@@ -1979,8 +1979,9 @@ class NetworkInterfaceSpec(pb_classes.Message):
     @builtins.property
     def name(self) -> "builtins.str":
         """
-         Name for interface.
-         Must be unique within instance's network interfaces
+         Interface name
+         Value of this field configures the name of the network interface inside VM's OS.
+         Longer values will persist in the specification but will be truncated to 15 symbols before being passed to VM configuration.
         """
         
         return super()._get_field("name", explicit_presence=False,
