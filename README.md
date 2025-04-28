@@ -67,6 +67,31 @@ sdk = SDK(credentials=Bearer(Token(os.environ.get("NEBIUS_IAM_TOKEN", ""))))
 
 Now, your application will get token from the local Env variable, as in the example above, but provided in several other ways.
 
+##### Initialize using CLI config
+
+If you've set up [Nebius AI Cloud CLI](https://docs.nebius.com/cli), you can initialize the `SDK` using [CLI config](https://nebius.github.io/pysdk/nebius.aio.cli_config.Config.html):
+
+```python
+from nebius.sdk import SDK
+from nebius.aio.cli_config import Config
+
+sdk = SDK(config_reader=Config())
+```
+
+This will also import the domain if the endpoint parameter is in the config and the domain wasn't set explicitly.
+
+*Keep in mind, that it will get the token from the `NEBIUS_IAM_TOKEN` environment variable if it is set the same way CLI does. To stop that from happening, set `Config(no_env=True)`*
+
+Config reader also helps with getting the project ID if necessary:
+
+```python
+from nebius.aio.cli_config import Config
+
+print(f"My project ID: {Config().project_id()}")
+```
+
+Check the [`Config` documentation](https://nebius.github.io/pysdk/nebius.aio.cli_config.Config.html) for more settings like file path and profile name.
+
 ##### Initialize with the private key file
 
 If you have a private key and a service account, you may want to authorize using them. Here is an example of how to do it.

@@ -50,6 +50,7 @@ from nebius.aio.abc import GracefulInterface
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
 from nebius.aio.authorization.interceptor import AuthorizationInterceptor
 from nebius.aio.authorization.token import TokenProvider
+from nebius.aio.cli_config import Config as ConfigReader
 from nebius.aio.idempotency import IdempotencyKeyInterceptor
 from nebius.aio.service_descriptor import ServiceStub, from_stub_class
 from nebius.aio.token import exchangeable, renewable
@@ -208,7 +209,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         *,
         resolver: Resolver | None = None,
         substitutions: dict[str, str] | None = None,
-        domain: str = DOMAIN,
+        domain: str | None = None,
         options: ChannelArgumentType | None = None,
         interceptors: Sequence[ClientInterceptor] | None = None,
         address_options: dict[str, ChannelArgumentType] | None = None,
@@ -218,12 +219,20 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         service_account_public_key_id: str | None = None,
         service_account_private_key_file_name: str | None = None,
         credentials_file_name: str | None = None,
+        config_reader: ConfigReader | None = None,
         tls_credentials: ChannelCredentials | None = None,
         event_loop: AbstractEventLoop | None = None,
         max_free_channels_per_address: int = 2,
     ) -> None:
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
-        import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # noqa: F401 - load for registration
+        import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # type: ignore[unused-ignore] # noqa: F401 - load for registration
+
+        if domain is None:
+            if config_reader is not None:
+                domain = config_reader.endpoint()
+
+            if domain is None or domain == "":
+                domain = DOMAIN
 
         substitutions_full = dict[str, str]()
         substitutions_full["{domain}"] = domain
@@ -287,6 +296,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     service_account_public_key_id,
                     service_account_id,
                 )
+            elif config_reader is not None:
+                credentials = config_reader.get_credentials()
             else:
                 credentials = EnvBearer()
         if isinstance(credentials, str) or isinstance(credentials, Token):

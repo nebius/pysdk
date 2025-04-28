@@ -23,8 +23,10 @@ class Reader(BaseReader):
         public_key_id: str,
         service_account_id: str,
     ) -> None:
+        from os.path import expanduser
+
         log.debug(f"reading SA from file {filename}")
-        with open(filename, "rb") as f:
+        with open(expanduser(filename), "rb") as f:
             pk = serialization.load_pem_private_key(
                 f.read(), password=None, backend=default_backend()
             )

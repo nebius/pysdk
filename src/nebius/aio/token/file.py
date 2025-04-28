@@ -1,7 +1,6 @@
-import os
 from logging import getLogger
+from os.path import expanduser
 
-from nebius.base.constants import TOKEN_ENV
 from nebius.base.error import SDKError
 
 from .token import Bearer as ParentBearer
@@ -37,21 +36,13 @@ class Receiver(ParentReceiver):
 
 
 class Bearer(ParentBearer):
-    def __init__(self, token: Token | str) -> None:
-        if isinstance(token, str):
-            token = Token(token)
-        if token.token == "":
-            raise SDKError("empty token provided")
+    def __init__(self, file: str) -> None:
         super().__init__()
-        self._tok = token
+        with open(expanduser(file), "r") as f:
+            token_value = f.read().strip()
+        if token_value == "":
+            raise SDKError("empty token file provided")
+        self._tok = Token(token_value)
 
     def receiver(self) -> Receiver:
         return Receiver(self._tok)
-
-
-class EnvBearer(Bearer):
-    def __init__(self, env_var_name: str = TOKEN_ENV) -> None:
-        val = os.environ.get(env_var_name, "")
-        if val == "":
-            raise NoTokenInEnvError(f"no token in env {env_var_name}")
-        super().__init__(val)

@@ -75,8 +75,10 @@ class Reader(BaseReader):
         self,
         filename: str,
     ) -> None:
+        from os.path import expanduser
+
         log.debug(f"reading SA from Credentials file: {filename}")
-        with open(filename, "rb") as f:
+        with open(expanduser(filename), "rb") as f:
             data = json.load(f)
         self._credentials = ServiceAccountCredentials.from_json(data)
         self._parsed_key = self._credentials.subject_credentials.parse_private_key()

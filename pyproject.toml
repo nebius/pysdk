@@ -16,6 +16,7 @@ license.file = "LICENSE"
 dependencies = [
     # added a dep, add the notice!
     "cryptography>=40.0.0",
+    "pyyaml>=5.0",
     "grpcio>=1.56.2",
     "PyJWT>=2.0.0",
     "certifi>=2022.6.15",
@@ -38,6 +39,7 @@ dev = [
     "ruff>=0.7",   # For linting
     "grpc-stubs>=1.53",  # For mypy
     "types-protobuf>=5.29.1", # for mypy
+    "types-PyYAML>=5.0",  # for mypy
 ]
 generators = [
     # added a dep, add the notice!
@@ -145,6 +147,7 @@ deps = [
     "grpcio",
     "protobuf",
     "types-protobuf",
+    "types-PyYAML",
 ]
 commands = [["pytest","-vv","--full-trace"]]
 
@@ -155,8 +158,10 @@ deps = [
     "pytest",
     "pytest-cov",
     "pytest-asyncio",
+    "pyyaml==5.0",
     "grpcio==1.56.2",
     "protobuf<=5.26.1",
+    "types-PyYAML>=5.0",
     "types-protobuf<=5.26.1",
     "cryptography==40.0.0",
     "PyJWT==2.0.0",
@@ -191,10 +196,12 @@ deps = [
     "pydoctor>=24.11.2",
     "beautifulsoup4>=4.12.3",
     "tomlkit>=0.13.2",
+    "pyyaml>=5.0",  # Added pyyaml dependency
     # For mypy
     "grpc-stubs>=1.53",
     "types-protobuf>=5.29.1",
     "types-beautifulsoup4>=4.12.0",
+    "types-PyYAML>=5.0",
 ]
 commands = [["mypy","src/"]]
 
