@@ -1,4 +1,5 @@
-from os.path import expanduser, isfile, join
+from os.path import isfile
+from pathlib import Path
 from typing import Any
 
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
@@ -19,7 +20,7 @@ Credentials = AuthorizationProvider | TokenBearer | ServiceAccountReader | Token
 class Config:
     def __init__(
         self,
-        config_file: str = join(DEFAULT_CONFIG_DIR, DEFAULT_CONFIG_FILE),
+        config_file: str | Path = Path(DEFAULT_CONFIG_DIR) / DEFAULT_CONFIG_FILE,
         profile: str | None = None,
         no_env: bool = False,
         max_retries: int = 2,
@@ -30,7 +31,7 @@ class Config:
                 self._priority_bearer = EnvBearer()
             except NoTokenInEnvError:
                 pass
-        self._config_file = expanduser(config_file)
+        self._config_file = Path(config_file).expanduser()
         self._profile_name = profile
         self._endpoint: str | None = None
         self._max_retries = max_retries

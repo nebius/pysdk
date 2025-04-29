@@ -15,6 +15,7 @@ from asyncio import (
 from collections.abc import Awaitable, Coroutine, Sequence
 from inspect import isawaitable
 from logging import getLogger
+from pathlib import Path
 from typing import Any, TypeVar
 
 from google.protobuf.message import Message
@@ -217,8 +218,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         credentials: Credentials = None,
         service_account_id: str | None = None,
         service_account_public_key_id: str | None = None,
-        service_account_private_key_file_name: str | None = None,
-        credentials_file_name: str | None = None,
+        service_account_private_key_file_name: str | Path | None = None,
+        credentials_file_name: str | Path | None = None,
         config_reader: ConfigReader | None = None,
         tls_credentials: ChannelCredentials | None = None,
         event_loop: AbstractEventLoop | None = None,

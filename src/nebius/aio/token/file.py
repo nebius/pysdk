@@ -1,5 +1,5 @@
 from logging import getLogger
-from os.path import expanduser
+from pathlib import Path
 
 from nebius.base.error import SDKError
 
@@ -36,9 +36,10 @@ class Receiver(ParentReceiver):
 
 
 class Bearer(ParentBearer):
-    def __init__(self, file: str) -> None:
+    def __init__(self, file: str | Path) -> None:
         super().__init__()
-        with open(expanduser(file), "r") as f:
+        file = Path(file).expanduser()
+        with open(file, "r") as f:
             token_value = f.read().strip()
         if token_value == "":
             raise SDKError("empty token file provided")
