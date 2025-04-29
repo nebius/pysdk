@@ -37,7 +37,7 @@ class Config:
         self._max_retries = max_retries
         self._get_profile()
 
-    def project_id(self) -> str:
+    def parent_id(self) -> str:
         if "parent-id" not in self._profile:
             raise ValueError("Missing parent-id in the profile.")
         if not isinstance(self._profile["parent-id"], str):

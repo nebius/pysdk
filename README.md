@@ -82,12 +82,12 @@ This will also import the domain if the endpoint parameter is in the config and 
 
 *Keep in mind, that it will get the token from the `NEBIUS_IAM_TOKEN` environment variable if it is set the same way CLI does. To stop that from happening, set `Config(no_env=True)`*
 
-Config reader also helps with getting the project ID if necessary:
+Config reader also helps with getting the default parent ID if necessary:
 
 ```python
 from nebius.aio.cli_config import Config
 
-print(f"My project ID: {Config().project_id()}")
+print(f"My default parent ID: {Config().parent_id()}")
 ```
 
 Check the [`Config` documentation](https://nebius.github.io/pysdk/nebius.aio.cli_config.Config.html) for more settings like file path and profile name.

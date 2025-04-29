@@ -906,7 +906,7 @@ profiles:
         )
     # Load the configuration
     config = Config()
-    assert config.project_id() == "project-e00some-id"
+    assert config.parent_id() == "project-e00some-id"
 
 
 @pytest.mark.asyncio
@@ -1028,7 +1028,7 @@ profiles:
         )
     # Load the configuration
     config = Config(profile="test")
-    assert config.project_id() == "project-e00test-id"
+    assert config.parent_id() == "project-e00test-id"
 
 
 def test_load_config_no_project(tmp_path, monkeypatch) -> None:
@@ -1051,7 +1051,7 @@ profiles:
     # Load the configuration
     config = Config()
     try:
-        config.project_id()
+        config.parent_id()
     except ValueError as e:
         assert str(e) == "Missing parent-id in the profile."
 
@@ -1092,7 +1092,7 @@ profiles:
         )
     # Load the configuration
     config = Config(config_file=str(tmp_file))
-    assert config.project_id() == "project-e00some-id"
+    assert config.parent_id() == "project-e00some-id"
 
 
 @pytest.mark.asyncio
