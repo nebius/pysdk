@@ -1,4 +1,5 @@
 from logging import getLogger
+from pathlib import Path
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
@@ -19,10 +20,12 @@ class WrongKeyTypeError(Exception):
 class Reader(BaseReader):
     def __init__(
         self,
-        filename: str,
+        filename: str | Path,
         public_key_id: str,
         service_account_id: str,
     ) -> None:
+        filename = Path(filename).expanduser()
+
         log.debug(f"reading SA from file {filename}")
         with open(filename, "rb") as f:
             pk = serialization.load_pem_private_key(

@@ -1,6 +1,7 @@
 import json
 from dataclasses import dataclass
 from logging import getLogger
+from pathlib import Path
 from typing import Any
 
 from cryptography.hazmat.backends import default_backend
@@ -73,8 +74,10 @@ class ServiceAccountCredentials:
 class Reader(BaseReader):
     def __init__(
         self,
-        filename: str,
+        filename: str | Path,
     ) -> None:
+        filename = Path(filename).expanduser()
+
         log.debug(f"reading SA from Credentials file: {filename}")
         with open(filename, "rb") as f:
             data = json.load(f)
