@@ -243,6 +243,7 @@ sensitive = annotations_pb2.sensitive
 credentials = annotations_pb2.credentials
 field_deprecation_details = annotations_pb2.field_deprecation_details
 oneof_behavior = annotations_pb2.oneof_behavior
+enum_value_deprecation_details = annotations_pb2.enum_value_deprecation_details
 __all__ = [
     #@ local import names here @#
     "ResourceBehavior",
@@ -258,6 +259,7 @@ __all__ = [
     "credentials",
     "field_deprecation_details",
     "oneof_behavior",
+    "enum_value_deprecation_details",
     "RegionRouting",
     "DeprecationDetails",
 ]

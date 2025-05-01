@@ -121,6 +121,9 @@ class GetVersionRequest(pb_classes.Message):
         cloud_init_status: "builtins.str|None|unset.UnsetType" = unset.Unset,
         instance_id_used_fallback: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         last_agent_logs: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        gpu_model: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        gpu_number: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        dcgm_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -157,6 +160,12 @@ class GetVersionRequest(pb_classes.Message):
             self.instance_id_used_fallback = instance_id_used_fallback
         if not isinstance(last_agent_logs, unset.UnsetType):
             self.last_agent_logs = last_agent_logs
+        if not isinstance(gpu_model, unset.UnsetType):
+            self.gpu_model = gpu_model
+        if not isinstance(gpu_number, unset.UnsetType):
+            self.gpu_number = gpu_number
+        if not isinstance(dcgm_version, unset.UnsetType):
+            self.dcgm_version = dcgm_version
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -177,6 +186,9 @@ class GetVersionRequest(pb_classes.Message):
             "cloud_init_status",
             "instance_id_used_fallback",
             "last_agent_logs",
+            "gpu_model",
+            "gpu_number",
+            "dcgm_version",
         ]
     
     @builtins.property
@@ -411,6 +423,45 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("last_agent_logs",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def gpu_model(self) -> "builtins.str":
+        """
+         Model of the GPU used in the system.
+        """
+        
+        return super()._get_field("gpu_model", explicit_presence=False,
+        )
+    @gpu_model.setter
+    def gpu_model(self, value: "builtins.str|None") -> None:
+        return super()._set_field("gpu_model",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def gpu_number(self) -> "builtins.int":
+        """
+         Number of GPUs available in the system.
+        """
+        
+        return super()._get_field("gpu_number", explicit_presence=False,
+        )
+    @gpu_number.setter
+    def gpu_number(self, value: "builtins.int|None") -> None:
+        return super()._set_field("gpu_number",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def dcgm_version(self) -> "builtins.str":
+        """
+         Version of the DCGM (Data Center GPU Manager) used.
+        """
+        
+        return super()._get_field("dcgm_version", explicit_presence=False,
+        )
+    @dcgm_version.setter
+    def dcgm_version(self, value: "builtins.str|None") -> None:
+        return super()._set_field("dcgm_version",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "type":"type",
         "agent_version":"agent_version",
@@ -429,6 +480,9 @@ class GetVersionRequest(pb_classes.Message):
         "cloud_init_status":"cloud_init_status",
         "instance_id_used_fallback":"instance_id_used_fallback",
         "last_agent_logs":"last_agent_logs",
+        "gpu_model":"gpu_model",
+        "gpu_number":"gpu_number",
+        "dcgm_version":"dcgm_version",
     }
     
 class ModulesHealth(pb_classes.Message):

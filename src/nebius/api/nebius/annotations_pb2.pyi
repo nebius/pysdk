@@ -56,6 +56,8 @@ FIELD_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 field_deprecation_details: _descriptor.FieldDescriptor
 ONEOF_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 oneof_behavior: _descriptor.FieldDescriptor
+ENUM_VALUE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
+enum_value_deprecation_details: _descriptor.FieldDescriptor
 
 class RegionRouting(_message.Message):
     __slots__ = ["nid", "disabled", "strict"]
