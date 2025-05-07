@@ -13,8 +13,10 @@ class Constant(ClientChannelInterface):
         self,
         method: str,
         source: ClientChannelInterface,
+        parent_id: str | None = None,
     ) -> None:
         self._method = method
+        self._parent_id = parent_id or source.parent_id()
         self._source = source
 
     def return_channel(self, chan: AddressChannel | None) -> None:
@@ -22,6 +24,9 @@ class Constant(ClientChannelInterface):
 
     def discard_channel(self, chan: AddressChannel | None) -> None:
         return self._source.discard_channel(chan)
+
+    def parent_id(self) -> str | None:
+        return self._parent_id
 
     def get_channel_by_method(self, method_name: str) -> AddressChannel:
         return self._source.get_channel_by_method(self._method)
