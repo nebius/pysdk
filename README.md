@@ -80,17 +80,17 @@ sdk = SDK(config_reader=Config())
 
 This will also import the domain if the endpoint parameter is in the config and the domain wasn't set explicitly.
 
-*Keep in mind, that it will get the token from the `NEBIUS_IAM_TOKEN` environment variable if it is set the same way CLI does. To stop that from happening, set `Config(no_env=True)`*
+*Keep in mind, that it will get the token from the `NEBIUS_IAM_TOKEN` environment variable if it is set, or use `NEBIUS_PROFILE` for selecting the profile, the same way CLI does. To stop that from happening, set `Config(no_env=True)`*
 
 Config reader also helps with getting the default parent ID if necessary:
 
 ```python
 from nebius.aio.cli_config import Config
 
-print(f"My default parent ID: {Config().parent_id()}")
+print(f"My default parent ID: {Config().parent_id}")
 ```
 
-Check the [`Config` documentation](https://nebius.github.io/pysdk/nebius.aio.cli_config.Config.html) for more settings like file path and profile name.
+Check the [`Config` documentation](https://nebius.github.io/pysdk/nebius.aio.cli_config.Config.html) for more settings like file path, profile name or environment variables names.
 
 ##### Initialize with the private key file
 
@@ -255,6 +255,14 @@ result = service.get(GetBucketRequest(
     id="some-bucket-id",
 )).wait()
 ```
+
+##### Parent ID
+
+Some methods may include `parent_id` in the requests, for certain methods this field is populated automatically:
+* Methods `list` and `get_by_name` with an empty `parent_id`
+* All other methods, except `update`, with an empty `metadata.parent_id`
+
+The `parent_id` will only be set if it was preset at the initialization, either from the [CLI `Config`](https://nebius.github.io/pysdk/nebius.aio.cli_config.Config.html) or from the `parent_id` attribute from the [SDK](https://nebius.github.io/pysdk/nebius.sdk.SDK.html). You can disable it, retaining the CLI Config, if you set it up with `no_parent_id=True`.
 
 ##### Operations
 

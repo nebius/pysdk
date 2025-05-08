@@ -176,6 +176,15 @@ class Request(Generic[Req, Res]):
             raise RequestError(f"Unsupported request type {type(req)}")
         if self._cancelled:
             raise RequestIsCancelledError()
+        channel_parent_id = self._channel.parent_id()
+        if channel_parent_id is not None:
+            if self._method == "List" or self._method == "GetByName":
+                if hasattr(req, "parent_id") and req.parent_id == "":  # type: ignore[unused-ignore]
+                    req.parent_id = channel_parent_id  # type: ignore[unused-ignore]
+            elif self._method != "Update":
+                if hasattr(req, "metadata") and hasattr(req.metadata, "parent_id"):  # type: ignore[unused-ignore]
+                    if req.metadata.parent_id == "":  # type: ignore[unused-ignore]
+                        req.metadata.parent_id = channel_parent_id  # type: ignore[unused-ignore]
         self._sent = True
         if self._grpc_channel is None:
             self._grpc_channel = self._channel.get_channel_by_method(
