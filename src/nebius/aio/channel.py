@@ -290,6 +290,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if self._parent_id == "":
             raise SDKError("Parent id is empty")
 
+        self._token_bearer: TokenBearer | None = None
         if credentials is None:
             if credentials_file_name is not None:
                 from nebius.base.service_account.credentials_file import (
@@ -321,6 +322,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             self._gracefuls.add(cache)
             credentials = cache
         if isinstance(credentials, TokenBearer):
+            self._token_bearer = credentials
             credentials = TokenProvider(credentials)
         if isinstance(credentials, AuthorizationProvider):
             self._global_interceptors_inner.append(
@@ -333,6 +335,32 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._closed = False
 
         self._global_interceptors_inner.append(CleaningInterceptor())
+
+    async def get_token(
+        self,
+        timeout: float | None,
+        options: dict[str, str] | None = None,
+    ) -> Token:
+        if self._token_bearer is None:
+            raise SDKError("Token bearer is not set")
+        receiver = self._token_bearer.receiver()
+        return await receiver.fetch(
+            timeout=timeout,
+            options=options,
+        )
+
+    def get_token_sync(
+        self,
+        timeout: float | None,
+        options: dict[str, str] | None = None,
+    ) -> Token:
+        timeout_sync = timeout
+        if timeout_sync is not None:
+            timeout_sync += 0.2  # 200 ms for graceful shutdown
+        return self.run_sync(
+            self.get_token(timeout, options),
+            timeout_sync,
+        )
 
     def parent_id(self) -> str | None:
         return self._parent_id
