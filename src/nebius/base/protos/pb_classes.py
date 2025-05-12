@@ -393,6 +393,8 @@ class Repeated(MutableSequence[CollectibleOuter]):
                 ret.any = Mask()
                 for el in self:
                     ret.any += func(el)  # type: ignore
+        else:
+            ret.any = Mask()
         return ret
 
     @overload
@@ -470,6 +472,8 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
                     if ret.any is None:
                         ret.any = Mask()
                     ret.any += m_mask
+        else:
+            ret.any = Mask()
         return ret
 
     def __init__(
