@@ -667,15 +667,6 @@ async def test_credentials_updater() -> None:
             # Recreate metadata for ease of checking
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
-            assert (
-                md.get("x-resetmask", "")
-                == "metadata.(created_at.(nanos,seconds)"
-                + ",labels,name,parent_id,resource_version,updated_at."
-                + "(nanos,seconds)),spec.(block_size_bytes,placement_policy."
-                + "(placement_group_id,placement_group_partition),size_bytes,"
-                + "size_gibibytes,size_kibibytes,size_mebibytes,source_image_family"
-                + ",source_image_id,type)"
-            )
 
             await context.send_initial_metadata(
                 (
@@ -806,15 +797,6 @@ async def test_credentials_updater_sync() -> None:
             # Recreate metadata for ease of checking
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
-            assert (
-                md.get("x-resetmask", "")
-                == "metadata.(created_at.(nanos,seconds)"
-                + ",labels,name,parent_id,resource_version,updated_at."
-                + "(nanos,seconds)),spec.(block_size_bytes,placement_policy."
-                + "(placement_group_id,placement_group_partition),size_bytes,"
-                + "size_gibibytes,size_kibibytes,size_mebibytes,source_image_family"
-                + ",source_image_id,type)"
-            )
 
             await context.send_initial_metadata(
                 (
@@ -1187,15 +1169,6 @@ async def test_credentials_updater_sync_error() -> None:
             # Recreate metadata for ease of checking
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
-            assert (
-                md.get("x-resetmask", "")
-                == "metadata.(created_at.(nanos,seconds)"
-                + ",labels,name,parent_id,resource_version,updated_at."
-                + "(nanos,seconds)),spec.(block_size_bytes,placement_policy."
-                + "(placement_group_id,placement_group_partition),size_bytes,"
-                + "size_gibibytes,size_kibibytes,size_mebibytes,source_image_family"
-                + ",source_image_id,type)"
-            )
 
             await context.send_initial_metadata(
                 (
@@ -1317,7 +1290,7 @@ async def test_update_instance_v2() -> None:
             assert (
                 md.get("x-resetmask", "")
                 == "metadata.(created_at.(nanos,seconds)"
-                + ",labels,name,parent_id,resource_version,updated_at."
+                + ",labels.*,name,parent_id,resource_version,updated_at."
                 + "(nanos,seconds)),spec.(block_size_bytes,placement_policy."
                 + "(placement_group_id,placement_group_partition),size_bytes,"
                 + "size_gibibytes,size_kibibytes,size_mebibytes,source_image_family"
@@ -1360,6 +1333,117 @@ async def test_update_instance_v2() -> None:
         client = DiskServiceClient(channel)
         upd = UpdateDiskRequest()
         upd.metadata.id = "foo-bar"
+        req = client.update(upd)
+
+        # Await response and metadata
+        ret = await req
+        assert isinstance(ret, Operation)
+    finally:
+        # Clean up
+        if channel is not None:
+            await channel.close()
+        await srv.stop(0)
+
+
+@pytest.mark.asyncio
+async def test_update_list() -> None:
+    import grpc
+    import grpc.aio
+
+    # Imports needed inside the test function
+    from grpc.aio._metadata import Metadata
+
+    import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+    import nebius.api.nebius.compute.v1.instance_pb2 as instance_pb2
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.api.nebius.compute.v1.instance_service_pb2 import (
+        GetInstanceRequest,
+        UpdateInstanceRequest,
+    )
+    from nebius.api.nebius.compute.v1.instance_service_pb2_grpc import (
+        InstanceServiceServicer,
+        add_InstanceServiceServicer_to_server,
+    )
+    from nebius.base.options import INSECURE
+
+    # Set up logging
+    logging.basicConfig(level=logging.DEBUG)
+
+    # Define a mock server class
+    class MockInstanceService(InstanceServiceServicer):
+        async def Update(  # noqa: N802 — GRPC method
+            self,
+            request: UpdateInstanceRequest,
+            context: grpc.aio.ServicerContext[
+                GetInstanceRequest, instance_pb2.Instance
+            ],
+        ) -> operation_pb2.Operation:
+            assert request.metadata.id == "foo-bar"
+            md = context.invocation_metadata()
+            assert md is not None
+            # Recreate metadata for ease of checking
+            md = Metadata(*[v for v in md])
+            assert md.get("x-idempotency-key", "") != ""
+            assert (
+                md.get("x-resetmask", "") == "metadata.("
+                "created_at.(nanos,seconds),labels.*,name,parent_id,resource_version,"
+                "updated_at.(nanos,seconds)"
+                "),"
+                "spec.("
+                "boot_disk.(attach_mode,device_id,existing_disk),"
+                "cloud_init_user_data,filesystems.*,gpu_cluster.id,"
+                "network_interfaces.*,recovery_policy,resources.(platform,preset),"
+                "secondary_disks.*,service_account_id,stopped"
+                ")"
+            )
+
+            await context.send_initial_metadata(
+                (
+                    ("x-request-id", "some-req-id"),
+                    ("x-trace-id", "some-trace-id"),
+                )
+            )
+
+            ret = operation_pb2.Operation()
+            return ret
+
+    # Randomly assign an IPv6 address and port for the server
+    srv = grpc.aio.server()
+    assert isinstance(srv, grpc.aio.Server)
+    port = srv.add_insecure_port("[::]:0")
+    add_InstanceServiceServicer_to_server(MockInstanceService(), srv)
+    await srv.start()
+
+    # Use the actual port assigned by the server
+    address = f"localhost:{port}"
+
+    channel = None
+    try:
+        # Set up the client channel
+        channel = Channel(
+            domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
+        )
+        from nebius.aio.operation import Operation
+        from nebius.api.nebius.compute.v1 import (
+            AttachedFilesystemSpec,
+            ExistingFilesystem,
+            InstanceServiceClient,
+            UpdateInstanceRequest,
+        )
+
+        client = InstanceServiceClient(channel)
+        upd = UpdateInstanceRequest()
+        upd.metadata.id = "foo-bar"
+        upd.spec.filesystems = [
+            AttachedFilesystemSpec(
+                attach_mode=AttachedFilesystemSpec.AttachMode.READ_WRITE,
+                mount_tag="/mnt/foo-bar",
+                existing_filesystem=ExistingFilesystem(
+                    id="foo-bar",
+                ),
+            )
+        ]
+        upd.spec.filesystems = []
         req = client.update(upd)
 
         # Await response and metadata
