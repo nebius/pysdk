@@ -43,7 +43,7 @@ class JobSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., network_id: _Optional[str] = ..., container: _Optional[_Union[JobContainerSpec, _Mapping]] = ...) -> None: ...
 
 class JobContainerSpec(_message.Message):
-    __slots__ = ["image", "replica_count", "template", "command", "args", "envs", "sensitive_envs"]
+    __slots__ = ["image", "replica_count", "template", "command", "args", "envs", "sensitive_envs", "timeout_seconds", "max_retries"]
     class EnvsEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -65,6 +65,8 @@ class JobContainerSpec(_message.Message):
     ARGS_FIELD_NUMBER: _ClassVar[int]
     ENVS_FIELD_NUMBER: _ClassVar[int]
     SENSITIVE_ENVS_FIELD_NUMBER: _ClassVar[int]
+    TIMEOUT_SECONDS_FIELD_NUMBER: _ClassVar[int]
+    MAX_RETRIES_FIELD_NUMBER: _ClassVar[int]
     image: str
     replica_count: int
     template: JobTemplateSpec
@@ -72,7 +74,9 @@ class JobContainerSpec(_message.Message):
     args: _containers.RepeatedScalarFieldContainer[str]
     envs: _containers.ScalarMap[str, str]
     sensitive_envs: _containers.ScalarMap[str, str]
-    def __init__(self, image: _Optional[str] = ..., replica_count: _Optional[int] = ..., template: _Optional[_Union[JobTemplateSpec, _Mapping]] = ..., command: _Optional[str] = ..., args: _Optional[_Iterable[str]] = ..., envs: _Optional[_Mapping[str, str]] = ..., sensitive_envs: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    timeout_seconds: int
+    max_retries: int
+    def __init__(self, image: _Optional[str] = ..., replica_count: _Optional[int] = ..., template: _Optional[_Union[JobTemplateSpec, _Mapping]] = ..., command: _Optional[str] = ..., args: _Optional[_Iterable[str]] = ..., envs: _Optional[_Mapping[str, str]] = ..., sensitive_envs: _Optional[_Mapping[str, str]] = ..., timeout_seconds: _Optional[int] = ..., max_retries: _Optional[int] = ...) -> None: ...
 
 class JobTemplateSpec(_message.Message):
     __slots__ = ["resources"]

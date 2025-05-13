@@ -71,16 +71,16 @@ class EndpointContainerSpec(_message.Message):
     def __init__(self, image: _Optional[str] = ..., replica_count: _Optional[int] = ..., template: _Optional[_Union[EndpointTemplateSpec, _Mapping]] = ..., command: _Optional[str] = ..., args: _Optional[_Iterable[str]] = ..., envs: _Optional[_Mapping[str, str]] = ..., sensitive_envs: _Optional[_Mapping[str, str]] = ..., liveness: _Optional[_Union[ProbeSpec, _Mapping]] = ...) -> None: ...
 
 class ProbeSpec(_message.Message):
-    __slots__ = ["path", "port", "delay", "period"]
+    __slots__ = ["path", "delay_seconds", "period_seconds", "failure_threshold"]
     PATH_FIELD_NUMBER: _ClassVar[int]
-    PORT_FIELD_NUMBER: _ClassVar[int]
-    DELAY_FIELD_NUMBER: _ClassVar[int]
-    PERIOD_FIELD_NUMBER: _ClassVar[int]
+    DELAY_SECONDS_FIELD_NUMBER: _ClassVar[int]
+    PERIOD_SECONDS_FIELD_NUMBER: _ClassVar[int]
+    FAILURE_THRESHOLD_FIELD_NUMBER: _ClassVar[int]
     path: str
-    port: int
-    delay: int
-    period: int
-    def __init__(self, path: _Optional[str] = ..., port: _Optional[int] = ..., delay: _Optional[int] = ..., period: _Optional[int] = ...) -> None: ...
+    delay_seconds: int
+    period_seconds: int
+    failure_threshold: int
+    def __init__(self, path: _Optional[str] = ..., delay_seconds: _Optional[int] = ..., period_seconds: _Optional[int] = ..., failure_threshold: _Optional[int] = ...) -> None: ...
 
 class EndpointTemplateSpec(_message.Message):
     __slots__ = ["resources"]

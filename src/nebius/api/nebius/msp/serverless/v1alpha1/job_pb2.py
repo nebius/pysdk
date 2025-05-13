@@ -18,7 +18,7 @@ from nebius.api.nebius.msp.v1alpha1 import cluster_pb2 as nebius_dot_msp_dot_v1a
 from nebius.api.nebius.msp.v1alpha1.resource import template_pb2 as nebius_dot_msp_dot_v1alpha1_dot_resource_dot_template__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n(nebius/msp/serverless/v1alpha1/job.proto\x12\x1enebius.msp.serverless.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a!nebius/msp/v1alpha1/cluster.proto\x1a+nebius/msp/v1alpha1/resource/template.proto\"\xdb\x01\n\x03Job\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x43\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.msp.serverless.v1alpha1.JobSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b\x32).nebius.msp.serverless.v1alpha1.JobStatusB\x04\xbaJ\x01\x05R\x06status\"\xa6\x01\n\x07JobSpec\x12 \n\x0b\x64\x65scription\x18\x01 \x01(\tR\x0b\x64\x65scription\x12)\n\nnetwork_id\x18\x02 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\tnetworkId\x12N\n\tcontainer\x18\x65 \x01(\x0b\x32\x30.nebius.msp.serverless.v1alpha1.JobContainerSpecR\tcontainer\"\x98\x04\n\x10JobContainerSpec\x12\x1c\n\x05image\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05image\x12#\n\rreplica_count\x18\x02 \x01(\x03R\x0creplicaCount\x12S\n\x08template\x18\x03 \x01(\x0b\x32/.nebius.msp.serverless.v1alpha1.JobTemplateSpecB\x06\xbaH\x03\xc8\x01\x01R\x08template\x12\x18\n\x07\x63ommand\x18\x65 \x01(\tR\x07\x63ommand\x12\x12\n\x04\x61rgs\x18\x66 \x03(\tR\x04\x61rgs\x12N\n\x04\x65nvs\x18g \x03(\x0b\x32:.nebius.msp.serverless.v1alpha1.JobContainerSpec.EnvsEntryR\x04\x65nvs\x12s\n\x0esensitive_envs\x18h \x03(\x0b\x32\x43.nebius.msp.serverless.v1alpha1.JobContainerSpec.SensitiveEnvsEntryB\x07\xbaJ\x01\x04\xc0J\x01R\rsensitiveEnvs\x1a\x37\n\tEnvsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\x1a@\n\x12SensitiveEnvsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\"d\n\x0fJobTemplateSpec\x12Q\n\tresources\x18\x01 \x01(\x0b\x32+.nebius.msp.v1alpha1.resource.ResourcesSpecB\x06\xbaH\x03\xc8\x01\x01R\tresources\"\xce\x01\n\tJobStatus\x12>\n\x05phase\x18\x01 \x01(\x0e\x32(.nebius.msp.v1alpha1.ClusterStatus.PhaseR\x05phase\x12>\n\x05state\x18\x02 \x01(\x0e\x32(.nebius.msp.v1alpha1.ClusterStatus.StateR\x05state\x12\x41\n\x06result\x18\x03 \x01(\x0e\x32).nebius.msp.serverless.v1alpha1.JobResultR\x06result*q\n\tJobResult\x12\x1a\n\x16JOB_RESULT_UNSPECIFIED\x10\x00\x12\x16\n\x12JOB_RESULT_SUCCESS\x10\x01\x12\x16\n\x12JOB_RESULT_FAILURE\x10\x02\x12\x18\n\x14JOB_RESULT_CANCELLED\x10\x03\x42q\n%ai.nebius.pub.msp.serverless.v1alpha1B\x08JobProtoP\x01Z<github.com/nebius/gosdk/proto/nebius/msp/serverless/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n(nebius/msp/serverless/v1alpha1/job.proto\x12\x1enebius.msp.serverless.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a!nebius/msp/v1alpha1/cluster.proto\x1a+nebius/msp/v1alpha1/resource/template.proto\"\xdb\x01\n\x03Job\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x43\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.msp.serverless.v1alpha1.JobSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b\x32).nebius.msp.serverless.v1alpha1.JobStatusB\x04\xbaJ\x01\x05R\x06status\"\xa6\x01\n\x07JobSpec\x12 \n\x0b\x64\x65scription\x18\x01 \x01(\tR\x0b\x64\x65scription\x12)\n\nnetwork_id\x18\x02 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\tnetworkId\x12N\n\tcontainer\x18\x65 \x01(\x0b\x32\x30.nebius.msp.serverless.v1alpha1.JobContainerSpecR\tcontainer\"\xe4\x04\n\x10JobContainerSpec\x12\x1c\n\x05image\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05image\x12#\n\rreplica_count\x18\x02 \x01(\x03R\x0creplicaCount\x12S\n\x08template\x18\x03 \x01(\x0b\x32/.nebius.msp.serverless.v1alpha1.JobTemplateSpecB\x06\xbaH\x03\xc8\x01\x01R\x08template\x12\x18\n\x07\x63ommand\x18\x65 \x01(\tR\x07\x63ommand\x12\x12\n\x04\x61rgs\x18\x66 \x03(\tR\x04\x61rgs\x12N\n\x04\x65nvs\x18g \x03(\x0b\x32:.nebius.msp.serverless.v1alpha1.JobContainerSpec.EnvsEntryR\x04\x65nvs\x12s\n\x0esensitive_envs\x18h \x03(\x0b\x32\x43.nebius.msp.serverless.v1alpha1.JobContainerSpec.SensitiveEnvsEntryB\x07\xbaJ\x01\x04\xc0J\x01R\rsensitiveEnvs\x12(\n\x0ftimeout_seconds\x18\xc9\x01 \x01(\x03R\x0etimeoutSeconds\x12 \n\x0bmax_retries\x18\xca\x01 \x01(\x03R\nmaxRetries\x1a\x37\n\tEnvsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\x1a@\n\x12SensitiveEnvsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\"d\n\x0fJobTemplateSpec\x12Q\n\tresources\x18\x01 \x01(\x0b\x32+.nebius.msp.v1alpha1.resource.ResourcesSpecB\x06\xbaH\x03\xc8\x01\x01R\tresources\"\xce\x01\n\tJobStatus\x12>\n\x05phase\x18\x01 \x01(\x0e\x32(.nebius.msp.v1alpha1.ClusterStatus.PhaseR\x05phase\x12>\n\x05state\x18\x02 \x01(\x0e\x32(.nebius.msp.v1alpha1.ClusterStatus.StateR\x05state\x12\x41\n\x06result\x18\x03 \x01(\x0e\x32).nebius.msp.serverless.v1alpha1.JobResultR\x06result*q\n\tJobResult\x12\x1a\n\x16JOB_RESULT_UNSPECIFIED\x10\x00\x12\x16\n\x12JOB_RESULT_SUCCESS\x10\x01\x12\x16\n\x12JOB_RESULT_FAILURE\x10\x02\x12\x18\n\x14JOB_RESULT_CANCELLED\x10\x03\x42q\n%ai.nebius.pub.msp.serverless.v1alpha1B\x08JobProtoP\x01Z<github.com/nebius/gosdk/proto/nebius/msp/serverless/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -47,20 +47,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _JOBCONTAINERSPEC.fields_by_name['sensitive_envs']._serialized_options = b'\272J\001\004\300J\001'
   _JOBTEMPLATESPEC.fields_by_name['resources']._options = None
   _JOBTEMPLATESPEC.fields_by_name['resources']._serialized_options = b'\272H\003\310\001\001'
-  _globals['_JOBRESULT']._serialized_start=1485
-  _globals['_JOBRESULT']._serialized_end=1598
+  _globals['_JOBRESULT']._serialized_start=1561
+  _globals['_JOBRESULT']._serialized_end=1674
   _globals['_JOB']._serialized_start=245
   _globals['_JOB']._serialized_end=464
   _globals['_JOBSPEC']._serialized_start=467
   _globals['_JOBSPEC']._serialized_end=633
   _globals['_JOBCONTAINERSPEC']._serialized_start=636
-  _globals['_JOBCONTAINERSPEC']._serialized_end=1172
-  _globals['_JOBCONTAINERSPEC_ENVSENTRY']._serialized_start=1051
-  _globals['_JOBCONTAINERSPEC_ENVSENTRY']._serialized_end=1106
-  _globals['_JOBCONTAINERSPEC_SENSITIVEENVSENTRY']._serialized_start=1108
-  _globals['_JOBCONTAINERSPEC_SENSITIVEENVSENTRY']._serialized_end=1172
-  _globals['_JOBTEMPLATESPEC']._serialized_start=1174
-  _globals['_JOBTEMPLATESPEC']._serialized_end=1274
-  _globals['_JOBSTATUS']._serialized_start=1277
-  _globals['_JOBSTATUS']._serialized_end=1483
+  _globals['_JOBCONTAINERSPEC']._serialized_end=1248
+  _globals['_JOBCONTAINERSPEC_ENVSENTRY']._serialized_start=1127
+  _globals['_JOBCONTAINERSPEC_ENVSENTRY']._serialized_end=1182
+  _globals['_JOBCONTAINERSPEC_SENSITIVEENVSENTRY']._serialized_start=1184
+  _globals['_JOBCONTAINERSPEC_SENSITIVEENVSENTRY']._serialized_end=1248
+  _globals['_JOBTEMPLATESPEC']._serialized_start=1250
+  _globals['_JOBTEMPLATESPEC']._serialized_end=1350
+  _globals['_JOBSTATUS']._serialized_start=1353
+  _globals['_JOBSTATUS']._serialized_end=1559
 # @@protoc_insertion_point(module_scope)

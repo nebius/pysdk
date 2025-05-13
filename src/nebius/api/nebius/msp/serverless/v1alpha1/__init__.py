@@ -504,26 +504,26 @@ class ProbeSpec(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         path: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        port: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        delay: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        period: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        delay_seconds: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        period_seconds: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        failure_threshold: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(path, unset.UnsetType):
             self.path = path
-        if not isinstance(port, unset.UnsetType):
-            self.port = port
-        if not isinstance(delay, unset.UnsetType):
-            self.delay = delay
-        if not isinstance(period, unset.UnsetType):
-            self.period = period
+        if not isinstance(delay_seconds, unset.UnsetType):
+            self.delay_seconds = delay_seconds
+        if not isinstance(period_seconds, unset.UnsetType):
+            self.period_seconds = period_seconds
+        if not isinstance(failure_threshold, unset.UnsetType):
+            self.failure_threshold = failure_threshold
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "path",
-            "port",
-            "delay",
-            "period",
+            "delay_seconds",
+            "period_seconds",
+            "failure_threshold",
         ]
     
     @builtins.property
@@ -540,49 +540,49 @@ class ProbeSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def port(self) -> "builtins.int":
+    def delay_seconds(self) -> "builtins.int":
         """
-         Probe port
+         Initial delay before starting probing in seconds
         """
         
-        return super()._get_field("port", explicit_presence=False,
+        return super()._get_field("delay_seconds", explicit_presence=False,
         )
-    @port.setter
-    def port(self, value: "builtins.int|None") -> None:
-        return super()._set_field("port",value,explicit_presence=False,
+    @delay_seconds.setter
+    def delay_seconds(self, value: "builtins.int|None") -> None:
+        return super()._set_field("delay_seconds",value,explicit_presence=False,
         )
     
     @builtins.property
-    def delay(self) -> "builtins.int":
+    def period_seconds(self) -> "builtins.int":
         """
-         Initial Delay seconds
+         Probing period in seconds
         """
         
-        return super()._get_field("delay", explicit_presence=False,
+        return super()._get_field("period_seconds", explicit_presence=False,
         )
-    @delay.setter
-    def delay(self, value: "builtins.int|None") -> None:
-        return super()._set_field("delay",value,explicit_presence=False,
+    @period_seconds.setter
+    def period_seconds(self, value: "builtins.int|None") -> None:
+        return super()._set_field("period_seconds",value,explicit_presence=False,
         )
     
     @builtins.property
-    def period(self) -> "builtins.int":
+    def failure_threshold(self) -> "builtins.int":
         """
-         Period seconds
+         Failure threshold for the probe after which the container will be restarted
         """
         
-        return super()._get_field("period", explicit_presence=False,
+        return super()._get_field("failure_threshold", explicit_presence=False,
         )
-    @period.setter
-    def period(self, value: "builtins.int|None") -> None:
-        return super()._set_field("period",value,explicit_presence=False,
+    @failure_threshold.setter
+    def failure_threshold(self, value: "builtins.int|None") -> None:
+        return super()._set_field("failure_threshold",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "path":"path",
-        "port":"port",
-        "delay":"delay",
-        "period":"period",
+        "delay_seconds":"delay_seconds",
+        "period_seconds":"period_seconds",
+        "failure_threshold":"failure_threshold",
     }
     
 class EndpointTemplateSpec(pb_classes.Message):
@@ -1293,6 +1293,8 @@ class JobContainerSpec(pb_classes.Message):
         args: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         envs: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
         sensitive_envs: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
+        timeout_seconds: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        max_retries: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(image, unset.UnsetType):
@@ -1309,6 +1311,10 @@ class JobContainerSpec(pb_classes.Message):
             self.envs = envs
         if not isinstance(sensitive_envs, unset.UnsetType):
             self.sensitive_envs = sensitive_envs
+        if not isinstance(timeout_seconds, unset.UnsetType):
+            self.timeout_seconds = timeout_seconds
+        if not isinstance(max_retries, unset.UnsetType):
+            self.max_retries = max_retries
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1319,6 +1325,8 @@ class JobContainerSpec(pb_classes.Message):
             "args",
             "envs",
             "sensitive_envs",
+            "timeout_seconds",
+            "max_retries",
             "EnvsEntry",
             "SensitiveEnvsEntry",
         ]
@@ -1418,6 +1426,32 @@ class JobContainerSpec(pb_classes.Message):
         return super()._set_field("sensitive_envs",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def timeout_seconds(self) -> "builtins.int":
+        """
+         Job timeout in seconds (0 - no timeout)
+        """
+        
+        return super()._get_field("timeout_seconds", explicit_presence=False,
+        )
+    @timeout_seconds.setter
+    def timeout_seconds(self, value: "builtins.int|None") -> None:
+        return super()._set_field("timeout_seconds",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def max_retries(self) -> "builtins.int":
+        """
+         Max retries (0 - no retries)
+        """
+        
+        return super()._get_field("max_retries", explicit_presence=False,
+        )
+    @max_retries.setter
+    def max_retries(self, value: "builtins.int|None") -> None:
+        return super()._set_field("max_retries",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "image":"image",
         "replica_count":"replica_count",
@@ -1426,6 +1460,8 @@ class JobContainerSpec(pb_classes.Message):
         "args":"args",
         "envs":"envs",
         "sensitive_envs":"sensitive_envs",
+        "timeout_seconds":"timeout_seconds",
+        "max_retries":"max_retries",
         "EnvsEntry":"EnvsEntry",
         "SensitiveEnvsEntry":"SensitiveEnvsEntry",
     }

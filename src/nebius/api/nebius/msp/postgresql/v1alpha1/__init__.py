@@ -15,8 +15,11 @@ import datetime as datetime
 import collections.abc as abc
 import nebius.api.nebius.msp.postgresql.v1alpha1.backup_service_pb2 as backup_service_pb2
 import nebius.aio.client as client
+import nebius.api.nebius.common.v1alpha1 as v1alpha1_1
 import grpc as grpc
 import nebius.aio.request as request_1
+import nebius.aio.operation as operation
+import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.api.nebius.msp.postgresql.v1alpha1.template_pb2 as template_pb2
 import nebius.api.nebius.msp.v1alpha1.resource as resource_1
 import nebius.api.nebius.msp.v1alpha1.resource.template_pb2 as template_pb2_1
@@ -25,14 +28,11 @@ import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.base.protos.pb_enum as pb_enum
 import typing as typing
-import nebius.api.nebius.msp.v1alpha1 as v1alpha1_1
+import nebius.api.nebius.msp.v1alpha1 as v1alpha1_2
 import nebius.api.nebius.msp.v1alpha1.cluster_pb2 as cluster_pb2_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config as config_1
 import nebius.api.nebius.msp.postgresql.v1alpha1.config.postgresql_pb2 as postgresql_pb2
 import nebius.api.nebius.msp.postgresql.v1alpha1.cluster_service_pb2 as cluster_service_pb2
-import nebius.api.nebius.common.v1alpha1 as v1alpha1_2
-import nebius.aio.operation as operation
-import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
@@ -343,14 +343,55 @@ class ListBackupsResponse(pb_classes.Message):
         "backups":"backups",
     }
     
+class CreateBackupRequest(pb_classes.Message):
+    __PB2_CLASS__ = backup_service_pb2.CreateBackupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.postgresql.v1alpha1.CreateBackupRequest",backup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cluster_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cluster_id, unset.UnsetType):
+            self.cluster_id = cluster_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cluster_id",
+        ]
+    
+    @builtins.property
+    def cluster_id(self) -> "builtins.str":
+        """
+         ID of the PostgreSQL cluster that holds backup.
+        """
+        
+        return super()._get_field("cluster_id", explicit_presence=False,
+        )
+    @cluster_id.setter
+    def cluster_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cluster_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cluster_id":"cluster_id",
+    }
+    
 
-class BackupServiceClient(client.Client):
+class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     """
      A set of methods for managing PostgreSQL Cluster backups.
     """
     
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.BackupService",backup_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.postgresql.v1alpha1.BackupService"
+    __operation_type__ = v1alpha1_1.Operation
+    __operation_service_class__ = v1alpha1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
     
     def get(self,
         request: "GetBackupRequest",
@@ -429,6 +470,32 @@ class BackupServiceClient(client.Client):
             retries=retries,
             per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListBackupsResponse),
+        )
+    
+    def create(self,
+        request: "CreateBackupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["CreateBackupRequest","operation.Operation[v1alpha1_1.Operation]"]:
+        """
+         Creates a new on-demand backup.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
         )
     
 
@@ -781,8 +848,8 @@ class ClusterStatus(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
-        phase: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None|unset.UnsetType" = unset.Unset,
-        state: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None|unset.UnsetType" = unset.Unset,
+        phase: "v1alpha1_2.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None|unset.UnsetType" = unset.Unset,
+        state: "v1alpha1_2.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None|unset.UnsetType" = unset.Unset,
         preset_details: "resource_1.PresetDetails|template_pb2_1.PresetDetails|None|unset.UnsetType" = unset.Unset,
         connection_endpoints: "Endpoints|cluster_pb2.Endpoints|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -805,30 +872,30 @@ class ClusterStatus(pb_classes.Message):
         ]
     
     @builtins.property
-    def phase(self) -> "v1alpha1_1.ClusterStatus.Phase":
+    def phase(self) -> "v1alpha1_2.ClusterStatus.Phase":
         """
          Current phase of the cluster.
         """
         
         return super()._get_field("phase", explicit_presence=False,
-        wrap=v1alpha1_1.ClusterStatus.Phase,
+        wrap=v1alpha1_2.ClusterStatus.Phase,
         )
     @phase.setter
-    def phase(self, value: "v1alpha1_1.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None") -> None:
+    def phase(self, value: "v1alpha1_2.ClusterStatus.Phase|cluster_pb2_1.ClusterStatus.Phase|None") -> None:
         return super()._set_field("phase",value,explicit_presence=False,
         )
     
     @builtins.property
-    def state(self) -> "v1alpha1_1.ClusterStatus.State":
+    def state(self) -> "v1alpha1_2.ClusterStatus.State":
         """
          State reflects substatus of the phase to define whether it's healthy or not.
         """
         
         return super()._get_field("state", explicit_presence=False,
-        wrap=v1alpha1_1.ClusterStatus.State,
+        wrap=v1alpha1_2.ClusterStatus.State,
         )
     @state.setter
-    def state(self, value: "v1alpha1_1.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None") -> None:
+    def state(self, value: "v1alpha1_2.ClusterStatus.State|cluster_pb2_1.ClusterStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
         )
     
@@ -1815,15 +1882,15 @@ class StartClusterRequest(pb_classes.Message):
     }
     
 
-class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1alpha1_2.OperationServiceClient]):
+class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     """
      A set of methods for managing PostgreSQL Cluster resources.
     """
     
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.postgresql.v1alpha1.ClusterService"
-    __operation_type__ = v1alpha1_2.Operation
-    __operation_service_class__ = v1alpha1_2.OperationServiceClient
+    __operation_type__ = v1alpha1_1.Operation
+    __operation_service_class__ = v1alpha1_1.OperationServiceClient
     __operation_source_method__ = "Create"
     
     def get(self,
@@ -1941,7 +2008,7 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1al
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
-    ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+    ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
          Creates a PostgreSQL cluster in the specified folder.
         """
@@ -1967,7 +2034,7 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1al
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
-    ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+    ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
          Deletes the specified PostgreSQL cluster.
         """
@@ -1993,7 +2060,7 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1al
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
-    ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+    ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
          Updates the PostgreSQL cluster.
         """
@@ -2020,7 +2087,7 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1al
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
-    ) -> request_1.Request["RestoreClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+    ) -> request_1.Request["RestoreClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
          Creates a new PostgreSQL cluster from a previously created backup.
         """
@@ -2046,7 +2113,7 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1al
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
-    ) -> request_1.Request["StopClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+    ) -> request_1.Request["StopClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
          Suspends the PostgreSQL cluster to save resources.
         """
@@ -2072,7 +2139,7 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_2.Operation,v1al
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
-    ) -> request_1.Request["StartClusterRequest","operation.Operation[v1alpha1_2.Operation]"]:
+    ) -> request_1.Request["StartClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
          Wakes up suspended PostgreSQL cluster.
         """
@@ -2098,6 +2165,7 @@ __all__ = [
     "ListBackupsRequest",
     "ListBackupsByClusterRequest",
     "ListBackupsResponse",
+    "CreateBackupRequest",
     "BackupServiceClient",
     "TemplateSpec",
     "Cluster",
