@@ -945,6 +945,10 @@ class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
+        """
+         Returns a specific mk8s cluster by its unique identifier.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -967,6 +971,10 @@ class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Cluster"]:
+        """
+         Returns a specific mk8s cluster by its unique name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -989,6 +997,10 @@ class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
+        """
+         Returns a list of all mk8s clusters in the specified project.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -1011,6 +1023,10 @@ class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Creates a new mk8s cluster.
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -1033,6 +1049,10 @@ class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Modifies an existing mk8s cluster.
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -1056,6 +1076,10 @@ class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Deletes an mk8s cluster.
+        """
+        
         return super().request(
             method="Delete",
             request=request,

@@ -1,5 +1,4 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
-from nebius.api.nebius.common.v1alpha1 import operation_pb2 as _operation_pb2
 from nebius.api.nebius.msp.postgresql.v1alpha1 import backup_pb2 as _backup_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import containers as _containers
@@ -34,9 +33,3 @@ class ListBackupsResponse(_message.Message):
     BACKUPS_FIELD_NUMBER: _ClassVar[int]
     backups: _containers.RepeatedCompositeFieldContainer[_backup_pb2.Backup]
     def __init__(self, backups: _Optional[_Iterable[_Union[_backup_pb2.Backup, _Mapping]]] = ...) -> None: ...
-
-class CreateBackupRequest(_message.Message):
-    __slots__ = ["cluster_id"]
-    CLUSTER_ID_FIELD_NUMBER: _ClassVar[int]
-    cluster_id: str
-    def __init__(self, cluster_id: _Optional[str] = ...) -> None: ...
