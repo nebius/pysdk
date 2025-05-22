@@ -110,6 +110,7 @@ class ClusterSpec(pb_classes.Message):
         service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         storage_bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        size: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -126,6 +127,8 @@ class ClusterSpec(pb_classes.Message):
             self.storage_bucket_name = storage_bucket_name
         if not isinstance(network_id, unset.UnsetType):
             self.network_id = network_id
+        if not isinstance(size, unset.UnsetType):
+            self.size = size
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -136,6 +139,7 @@ class ClusterSpec(pb_classes.Message):
             "service_account_id",
             "storage_bucket_name",
             "network_id",
+            "size",
         ]
     
     @builtins.property
@@ -229,6 +233,20 @@ class ClusterSpec(pb_classes.Message):
         return super()._set_field("network_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def size(self) -> "builtins.str":
+        """
+         Size defines how much resources will be allocated to mlflow
+         See supported sizes in the documentation. Default size is the smallest available in the region.
+        """
+        
+        return super()._get_field("size", explicit_presence=False,
+        )
+    @size.setter
+    def size(self, value: "builtins.str|None") -> None:
+        return super()._set_field("size",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "description":"description",
         "public_access":"public_access",
@@ -237,6 +255,7 @@ class ClusterSpec(pb_classes.Message):
         "service_account_id":"service_account_id",
         "storage_bucket_name":"storage_bucket_name",
         "network_id":"network_id",
+        "size":"size",
     }
     
 class MlflowClusterStatus(pb_classes.Message):

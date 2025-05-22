@@ -19,7 +19,7 @@ class Cluster(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ClusterSpec, _Mapping]] = ..., status: _Optional[_Union[MlflowClusterStatus, _Mapping]] = ...) -> None: ...
 
 class ClusterSpec(_message.Message):
-    __slots__ = ["description", "public_access", "admin_username", "admin_password", "service_account_id", "storage_bucket_name", "network_id"]
+    __slots__ = ["description", "public_access", "admin_username", "admin_password", "service_account_id", "storage_bucket_name", "network_id", "size"]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_ACCESS_FIELD_NUMBER: _ClassVar[int]
     ADMIN_USERNAME_FIELD_NUMBER: _ClassVar[int]
@@ -27,6 +27,7 @@ class ClusterSpec(_message.Message):
     SERVICE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     STORAGE_BUCKET_NAME_FIELD_NUMBER: _ClassVar[int]
     NETWORK_ID_FIELD_NUMBER: _ClassVar[int]
+    SIZE_FIELD_NUMBER: _ClassVar[int]
     description: str
     public_access: bool
     admin_username: str
@@ -34,7 +35,8 @@ class ClusterSpec(_message.Message):
     service_account_id: str
     storage_bucket_name: str
     network_id: str
-    def __init__(self, description: _Optional[str] = ..., public_access: bool = ..., admin_username: _Optional[str] = ..., admin_password: _Optional[str] = ..., service_account_id: _Optional[str] = ..., storage_bucket_name: _Optional[str] = ..., network_id: _Optional[str] = ...) -> None: ...
+    size: str
+    def __init__(self, description: _Optional[str] = ..., public_access: bool = ..., admin_username: _Optional[str] = ..., admin_password: _Optional[str] = ..., service_account_id: _Optional[str] = ..., storage_bucket_name: _Optional[str] = ..., network_id: _Optional[str] = ..., size: _Optional[str] = ...) -> None: ...
 
 class MlflowClusterStatus(_message.Message):
     __slots__ = ["phase", "state", "tracking_endpoint", "effective_storage_bucket_name", "experiments_count", "mlflow_version", "tracking_endpoints"]
