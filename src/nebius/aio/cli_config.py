@@ -1,9 +1,13 @@
+from logging import getLogger
 from os import environ
 from os.path import isfile
 from pathlib import Path
-from typing import Any
+from ssl import SSLContext
+from typing import Any, TextIO
 
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
+from nebius.aio.base import ChannelBase
+from nebius.aio.token.service_account import ServiceAccountBearer
 from nebius.aio.token.static import EnvBearer, NoTokenInEnvError
 from nebius.aio.token.token import Bearer as TokenBearer
 from nebius.aio.token.token import Token
@@ -15,10 +19,13 @@ from nebius.base.constants import (
 )
 from nebius.base.error import SDKError
 from nebius.base.service_account.service_account import (
-    TokenRequester as ServiceAccountReader,
+    TokenRequester as TokenRequestReader,
 )
 
-Credentials = AuthorizationProvider | TokenBearer | ServiceAccountReader | Token | str
+Credentials = AuthorizationProvider | TokenBearer | TokenRequestReader | Token | str
+
+
+log = getLogger(__name__)
 
 
 class ConfigError(SDKError):
@@ -32,6 +39,7 @@ class NoParentIdError(ConfigError):
 class Config:
     def __init__(
         self,
+        client_id: str,
         config_file: str | Path = Path(DEFAULT_CONFIG_DIR) / DEFAULT_CONFIG_FILE,
         profile: str | None = None,
         profile_env: str = PROFILE_ENV,
@@ -40,6 +48,7 @@ class Config:
         no_parent_id: bool = False,
         max_retries: int = 2,
     ) -> None:
+        self._client_id = client_id
         self._priority_bearer: EnvBearer | None = None
         self._profile_name = profile
         if not no_env:
@@ -133,6 +142,10 @@ class Config:
 
     def get_credentials(
         self,
+        channel: ChannelBase,
+        writer: TextIO | None = None,
+        no_browser_open: bool = False,
+        ssl_ctx: SSLContext | None = None,
     ) -> Credentials:
         if self._priority_bearer is not None:
             return self._priority_bearer
@@ -149,18 +162,42 @@ class Config:
             raise ConfigError("Missing auth-type in the profile.")
         auth_type = self._profile["auth-type"]
         if auth_type == "federation":
-            raise NotImplementedError(
-                "Federation authentication is not implemented yet."
+            if "federation-endpoint" not in self._profile:
+                raise ConfigError("Missing federation-endpoint in the profile.")
+            if not isinstance(self._profile["federation-endpoint"], str):
+                raise ConfigError(
+                    "Federation endpoint should be a string, got "
+                    f"{type(self._profile['federation-endpoint'])}."
+                )
+            if "federation-id" not in self._profile:
+                raise ConfigError("Missing federation-id in the profile.")
+            if not isinstance(self._profile["federation-id"], str):
+                raise ConfigError(
+                    "Federation id should be a string, got "
+                    f"{type(self._profile['federation-id'])}."
+                )
+            from nebius.aio.token.federation_account import FederationBearer
+
+            log.debug(
+                f"Creating FederationBearer with profile {self._profile_name}, "
+                f"client_id {self._client_id}, "
+                f"federation_url {self._profile['federation-endpoint']}, "
+                f"federation_id {self._profile['federation-id']}, "
+                f"writer {writer}, no_browser_open {no_browser_open}."
+            )
+            return FederationBearer(
+                profile_name=self._profile_name,  # type: ignore
+                client_id=self._client_id,
+                federation_endpoint=self._profile["federation-endpoint"],
+                federation_id=self._profile["federation-id"],
+                writer=writer,
+                no_browser_open=no_browser_open,
+                ssl_ctx=ssl_ctx,
             )
         elif auth_type == "service account":
             from cryptography.hazmat.backends import default_backend
             from cryptography.hazmat.primitives import serialization
             from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
-
-            from nebius.base.service_account.service_account import ServiceAccount
-            from nebius.base.service_account.static import (
-                Reader as ServiceAccountReaderStatic,
-            )
 
             if "service-account-id" not in self._profile:
                 raise ConfigError("Missing service-account-id in the profile.")
@@ -194,12 +231,11 @@ class Config:
                 raise ConfigError(
                     f"Private key should be of type RSAPrivateKey, got {type(pk)}."
                 )
-            return ServiceAccountReaderStatic(
-                service_account=ServiceAccount(
-                    private_key=pk,
-                    public_key_id=pk_id,
-                    service_account_id=sa_id,
-                )
+            return ServiceAccountBearer(
+                service_account=sa_id,
+                public_key_id=pk_id,
+                private_key=pk,
+                channel=channel,
             )
         else:
             raise ConfigError(f"Unsupported auth-type {auth_type} in the profile.")
