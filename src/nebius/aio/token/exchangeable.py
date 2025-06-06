@@ -1,3 +1,4 @@
+from collections.abc import Awaitable, Coroutine
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from typing import Any
@@ -7,6 +8,7 @@ from grpc.aio import Channel as GRPCChannel
 from grpc.aio._metadata import Metadata
 from grpc_status import rpc_status
 
+from nebius.aio.token.deferred_channel import DeferredChannel
 from nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc import (
     TokenExchangeServiceStub,
 )
@@ -17,13 +19,12 @@ from nebius.base.metadata import Metadata as NebiusMetadata
 from nebius.base.sanitization import ellipsis_in_middle
 from nebius.base.service_account.service_account import TokenRequester
 
+from .options import OPTION_MAX_RETRIES
 from .token import Bearer as ParentBearer
 from .token import Receiver as ParentReceiver
 from .token import Token
 
 log = getLogger(__name__)
-
-OPTION_MAX_RETRIES = "max_fetch_token_retries"
 
 
 class UnsupportedResponseError(SDKError):
@@ -45,7 +46,7 @@ class Receiver(ParentReceiver):
     def __init__(
         self,
         requester: TokenRequester,
-        service: TokenExchangeServiceStub,
+        service: TokenExchangeServiceStub | Awaitable[TokenExchangeServiceStub],
         max_retries: int = 2,
     ) -> None:
         super().__init__()
@@ -95,6 +96,8 @@ class Receiver(ParentReceiver):
 
         ret = None
         try:
+            if isinstance(self._svc, Awaitable):
+                self._svc = await self._svc
             ret = await self._svc.Exchange(req, metadata=md, timeout=timeout)  # type: ignore[unused-ignore]
         except AioRpcError as e:
             self._raise_request_error(e)
@@ -134,13 +137,40 @@ class Bearer(ParentBearer):
     def __init__(
         self,
         requester: TokenRequester,
-        channel: GRPCChannel,
+        channel: GRPCChannel | DeferredChannel | None = None,
         max_retries: int = 2,
     ) -> None:
         super().__init__()
         self._requester = requester
         self._max_retries = max_retries
-        self._svc = TokenExchangeServiceStub(channel)  # type:ignore
+
+        self._svc: (
+            TokenExchangeServiceStub
+            | Coroutine[Any, Any, TokenExchangeServiceStub]
+            | None
+        ) = None
+        self.set_channel(channel)
+
+    def set_channel(self, channel: GRPCChannel | DeferredChannel | None) -> None:
+        """
+        Set the gRPC channel for the bearer.
+        """
+        if isinstance(channel, Awaitable):  # type: ignore[unused-ignore]
+
+            async def token_exchange_service_stub() -> TokenExchangeServiceStub:
+                chan = await channel
+                if not isinstance(chan, GRPCChannel):  # type: ignore[unused-ignore]
+                    raise TypeError(f"Expected GRPCChannel, got {type(chan)} instead.")
+                return TokenExchangeServiceStub(chan)  # type: ignore
+
+            self._svc = token_exchange_service_stub()
+
+        elif channel is not None:
+            self._svc = TokenExchangeServiceStub(channel)  # type:ignore
+        else:
+            self._svc = None
 
     def receiver(self) -> Receiver:
+        if self._svc is None:
+            raise ValueError("gRPC channel is not set for the bearer.")
         return Receiver(self._requester, self._svc, max_retries=self._max_retries)

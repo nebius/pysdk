@@ -887,12 +887,15 @@ profiles:
 """
         )
     # Load the configuration
-    config = Config()
+    config = Config("foo")
     assert config.parent_id == "project-e00some-id"
 
 
 @pytest.mark.asyncio
 async def test_load_config_env_token(tmp_path, monkeypatch) -> None:
+    from asyncio import Future
+
+    from nebius.aio.base import ChannelBase
     from nebius.aio.cli_config import Config
     from nebius.aio.token.static import EnvBearer
 
@@ -913,8 +916,9 @@ profiles:
 """
         )
     # Load the configuration
-    config = Config()
-    tok = config.get_credentials()
+    config = Config("foo")
+    fut = Future[ChannelBase]()
+    tok = config.get_credentials(fut)
     assert isinstance(tok, EnvBearer)
     receiver = tok.receiver()
     tok = await receiver.fetch()
@@ -923,6 +927,9 @@ profiles:
 
 @pytest.mark.asyncio
 async def test_load_config_token_file(tmp_path, monkeypatch) -> None:
+    from asyncio import Future
+
+    from nebius.aio.base import ChannelBase
     from nebius.aio.cli_config import Config
     from nebius.aio.token.file import Bearer as FileBearer
 
@@ -946,8 +953,9 @@ profiles:
     with open(tmp_path / "token.txt", "w+") as f:
         f.write("my-token")
     # Load the configuration
-    config = Config()
-    tok = config.get_credentials()
+    config = Config("foo")
+    fut = Future[ChannelBase]()
+    tok = config.get_credentials(fut)
     assert isinstance(tok, FileBearer)
     receiver = tok.receiver()
     tok = await receiver.fetch()
@@ -956,6 +964,9 @@ profiles:
 
 @pytest.mark.asyncio
 async def test_load_config_no_env(tmp_path, monkeypatch) -> None:
+    from asyncio import Future
+
+    from nebius.aio.base import ChannelBase
     from nebius.aio.cli_config import Config
     from nebius.aio.token.file import Bearer as FileBearer
 
@@ -979,8 +990,9 @@ profiles:
     with open(tmp_path / "token.txt", "w+") as f:
         f.write("my-token")
     # Load the configuration
-    config = Config(no_env=True)
-    tok = config.get_credentials()
+    config = Config("foo", no_env=True)
+    fut = Future[ChannelBase]()
+    tok = config.get_credentials(fut)
     assert isinstance(tok, FileBearer)
     receiver = tok.receiver()
     tok = await receiver.fetch()
@@ -1009,7 +1021,7 @@ profiles:
 """
         )
     # Load the configuration
-    config = Config(profile="test")
+    config = Config("foo", profile="test")
     assert config.parent_id == "project-e00test-id"
 
 
@@ -1031,7 +1043,7 @@ profiles:
 """
         )
     # Load the configuration
-    config = Config()
+    config = Config("foo")
     try:
         config.parent_id
     except Exception as e:
@@ -1047,7 +1059,7 @@ def test_load_config_from_home_fail(tmp_path, monkeypatch) -> None:
     monkeypatch.setenv("HOME", str(tmp_path))
 
     try:
-        Config()
+        Config("foo")
     except FileNotFoundError as e:
         assert str(e).startswith("Config file ")
         assert str(e).endswith("/.nebius/config.yaml not found.")
@@ -1073,7 +1085,7 @@ profiles:
 """
         )
     # Load the configuration
-    config = Config(config_file=str(tmp_file))
+    config = Config("foo", config_file=str(tmp_file))
     assert config.parent_id == "project-e00some-id"
 
 

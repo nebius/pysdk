@@ -18,7 +18,7 @@ class TokenAuthenticator(Authenticator):
         options: dict[str, str] | None = None,
     ) -> None:
         tok = await self._receiver.fetch(timeout=timeout, options=options)
-        metadata.add(HEADER, f"Bearer {tok}")
+        metadata.add(HEADER, f"Bearer {tok.token}")
 
     def can_retry(
         self,

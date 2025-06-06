@@ -16,7 +16,7 @@ from collections.abc import Awaitable, Coroutine, Sequence
 from inspect import isawaitable
 from logging import getLogger
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any, TextIO, TypeVar
 
 from google.protobuf.message import Message
 from grpc import (
@@ -71,7 +71,10 @@ from nebius.base.methods import service_from_method_name
 from nebius.base.options import COMPRESSION, INSECURE, pop_option
 from nebius.base.resolver import Chain, Conventional, Resolver, TemplateExpander
 from nebius.base.service_account.service_account import (
-    TokenRequester as ServiceAccountReader,
+    Reader as ServiceAccountReader,
+)
+from nebius.base.service_account.service_account import (
+    TokenRequester as TokenRequestReader,
 )
 from nebius.base.tls_certificates import get_system_certificates
 
@@ -152,7 +155,7 @@ class NoCredentials:
 Credentials = (
     AuthorizationProvider
     | TokenBearer
-    | ServiceAccountReader
+    | TokenRequestReader
     | NoCredentials
     | Token
     | str
@@ -225,6 +228,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         event_loop: AbstractEventLoop | None = None,
         max_free_channels_per_address: int = 2,
         parent_id: str | None = None,
+        federation_invitation_writer: TextIO | None = None,
+        federation_invitation_no_browser_open: bool = False,
     ) -> None:
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # type: ignore[unused-ignore] # noqa: F401 - load for registration
@@ -311,17 +316,28 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     service_account_id,
                 )
             elif config_reader is not None:
-                credentials = config_reader.get_credentials()
+                credentials = config_reader.get_credentials(
+                    self,
+                    writer=federation_invitation_writer,
+                    no_browser_open=federation_invitation_no_browser_open,
+                )
             else:
                 credentials = EnvBearer()
         if isinstance(credentials, str) or isinstance(credentials, Token):
             credentials = StaticTokenBearer(credentials)
         if isinstance(credentials, ServiceAccountReader):
+            from nebius.aio.token.service_account import ServiceAccountBearer
+
+            credentials = ServiceAccountBearer(
+                credentials,
+                self,
+            )
+        if isinstance(credentials, TokenRequestReader):
             exchange = exchangeable.Bearer(credentials, self)
             cache = renewable.Bearer(exchange)
-            self._gracefuls.add(cache)
             credentials = cache
         if isinstance(credentials, TokenBearer):
+            self._gracefuls.add(credentials)
             self._token_bearer = credentials
             credentials = TokenProvider(credentials)
         if isinstance(credentials, AuthorizationProvider):

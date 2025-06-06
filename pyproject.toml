@@ -22,6 +22,8 @@ dependencies = [
     "certifi>=2022.6.15",
     "protobuf>=5.29.1",
     "grpcio-status>=1.56.2",
+    "portalocker>=2.8.1",
+    "aiohttp>=3.8.5",
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -148,6 +150,8 @@ deps = [
     "protobuf",
     "types-protobuf",
     "types-PyYAML",
+    "portalocker",
+    "aiohttp",
 ]
 commands = [["pytest","-vv","--full-trace"]]
 
@@ -164,6 +168,8 @@ deps = [
     "types-PyYAML>=5.1.1",
     "types-protobuf<=5.26.1",
     "cryptography==40.0.0",
+    "portalocker==2.8.1",
+    "aiohttp==3.8.5",
     "PyJWT==2.0.0",
     "certifi==2022.6.15",
     "grpcio-status==1.56.2",
@@ -195,6 +201,8 @@ deps = [
     "grpcio-status>=1.56.2",
     "pydoctor>=24.11.2",
     "beautifulsoup4>=4.12.3",
+    "aiohttp>=3.8.5",
+    "portalocker>=2.8.1",
     "tomlkit>=0.13.2",
     "pyyaml>=5",  # Added pyyaml dependency
     # For mypy

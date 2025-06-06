@@ -35,75 +35,75 @@ def to_str(err: ServiceError) -> str:
         match err.details.field:
             case "bad_request":
                 ret.write(" bad request, violations:")
-                for violation in err.details.value.violations:  # type: ignore[union-attr]
+                for violation in err.details.value.violations:
                     ret.write(" ")
-                    ret.write(violation.field)  # type: ignore[union-attr]
+                    ret.write(violation.field)
                     ret.write(" - ")
                     ret.write(violation.message)
                     ret.write(";")
             case "bad_resource_state":
                 ret.write(" bad resource ")
-                ret.write(err.details.value.resource_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.resource_id)
                 ret.write(" state: ")
-                ret.write(err.details.value.message)  # type: ignore[union-attr]
+                ret.write(err.details.value.message)
             case "resource_not_found":
                 ret.write(" resource ")
-                ret.write(err.details.value.resource_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.resource_id)
                 ret.write(" not found")
             case "resource_already_exists":
                 ret.write(" resource ")
-                ret.write(err.details.value.resource_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.resource_id)
                 ret.write(" already exists")
             case "out_of_range":
                 ret.write(" out of range ")
-                ret.write(err.details.value.limit)  # type: ignore[union-attr]
+                ret.write(err.details.value.limit)
                 ret.write(", requested ")
-                ret.write(err.details.value.requested)  # type: ignore[union-attr]
+                ret.write(err.details.value.requested)
             case "permission_denied":
                 ret.write(" permission denied for resource ")
-                ret.write(err.details.value.resource_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.resource_id)
             case "resource_conflict":
                 ret.write(" resource conflict for ")
-                ret.write(err.details.value.resource_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.resource_id)
                 ret.write(": ")
-                ret.write(err.details.value.message)  # type: ignore[union-attr]
+                ret.write(err.details.value.message)
             case "operation_aborted":
                 ret.write(" operation ")
-                ret.write(err.details.value.operation_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.operation_id)
                 ret.write(" over resource ")
-                ret.write(err.details.value.resource_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.resource_id)
                 ret.write(" aborted by newer operation ")
-                ret.write(err.details.value.aborted_by_operation_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.aborted_by_operation_id)
             case "too_many_requests":
                 ret.write(" too many requests: ")
-                ret.write(err.details.value.violation)  # type: ignore[union-attr]
+                ret.write(err.details.value.violation)
             case "quota_failure":
                 ret.write(" quota failure, violations: ")
-                for violation in err.details.value.violations:  # type: ignore[union-attr]
+                for quota_violation in err.details.value.violations:
                     ret.write(" ")
-                    ret.write(violation.quota)  # type: ignore[union-attr]
+                    ret.write(quota_violation.quota)
                     ret.write(" ")
-                    ret.write(violation.requested)  # type: ignore[union-attr]
+                    ret.write(quota_violation.requested)
                     ret.write(" of ")
-                    ret.write(violation.limit)  # type: ignore[union-attr]
+                    ret.write(quota_violation.limit)
                     ret.write(": ")
-                    ret.write(violation.message)
+                    ret.write(quota_violation.message)
                     ret.write(";")
             case "not_enough_resources":
                 ret.write(" not enough resources: ")
-                for violation in err.details.value.violations:  # type: ignore[union-attr]
+                for ner_violation in err.details.value.violations:
                     ret.write(" ")
-                    ret.write(violation.resource_type)  # type: ignore[union-attr]
+                    ret.write(ner_violation.resource_type)
                     ret.write(" requested ")
-                    ret.write(violation.requested)  # type: ignore[union-attr]
+                    ret.write(ner_violation.requested)
                     ret.write(": ")
-                    ret.write(violation.message)
+                    ret.write(ner_violation.message)
                     ret.write(";")
             case "internal_error":
                 ret.write(" internal service error: request ID: ")
-                ret.write(err.details.value.request_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.request_id)
                 ret.write(" trace ID: ")
-                ret.write(err.details.value.trace_id)  # type: ignore[union-attr]
+                ret.write(err.details.value.trace_id)
     return ret.getvalue()
 
 
