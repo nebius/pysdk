@@ -2,7 +2,9 @@ from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from typing import Any
 
-from nebius.base.sanitization import ellipsis_in_middle
+from nebius.base.token_sanitizer import TokenSanitizer
+
+sanitizer = TokenSanitizer.access_token_sanitizer()
 
 
 class Token:
@@ -11,7 +13,18 @@ class Token:
         self._exp = expiration
 
     def __str__(self) -> str:
-        return f"Token(token={ellipsis_in_middle(self._tok)}, expiration={self._exp})"
+        if self.is_empty():
+            return "Token(empty)"
+        ret = ["Token("]
+        ret.append(sanitizer.sanitize(self._tok))
+        if self._exp is not None:
+            ret.append(f", expiration={self._exp.isoformat()}")
+            expires_in = self._exp - datetime.now(timezone.utc)
+            ret.append(f", expires_in={expires_in}")
+        else:
+            ret.append(", expiration=None")
+        ret.append(")")
+        return "".join(ret)
 
     @classmethod
     def empty(cls) -> "Token":
