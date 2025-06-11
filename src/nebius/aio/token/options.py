@@ -1,0 +1,5 @@
+OPTION_MAX_RETRIES = "max_fetch_token_retries"
+OPTION_RENEW_REQUIRED = "token_renew_required"
+OPTION_RENEW_SYNCHRONOUS = "token_renew_synchronous"
+OPTION_REPORT_ERROR = "token_renew_report_error"
+OPTION_RENEW_REQUEST_TIMEOUT = "token_renew_request_timeout"

@@ -1,4 +1,3 @@
-import sys
 from asyncio import (
     FIRST_COMPLETED,
     CancelledError,
@@ -14,42 +13,37 @@ from asyncio import (
 from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
+from pathlib import Path
 from typing import Any, TypeVar
 
-from nebius.base.error import SDKError
-from nebius.base.sanitization import ellipsis_in_middle
+from nebius.aio.token.token import Bearer as ParentBearer
+from nebius.aio.token.token import Receiver as ParentReceiver
+from nebius.aio.token.token import Token
+from nebius.base.constants import DEFAULT_CONFIG_DIR, DEFAULT_CREDENTIALS_FILE
 
-from .options import (
+from ..options import (
     OPTION_MAX_RETRIES,
     OPTION_RENEW_REQUEST_TIMEOUT,
     OPTION_RENEW_REQUIRED,
     OPTION_RENEW_SYNCHRONOUS,
     OPTION_REPORT_ERROR,
 )
-from .token import Bearer as ParentBearer
-from .token import Receiver as ParentReceiver
-from .token import Token
+from ..renewable import (
+    RenewalError,
+)
+from .throttled_token_cache import ThrottledTokenCache
 
 log = getLogger(__name__)
 
 
-class RenewalError(SDKError):
-    pass
-
-
-class IsStoppedError(RenewalError):
-    def __init__(self) -> None:
-        super().__init__("Renewal is stopped.")
-
-
-class Receiver(ParentReceiver):
+class AsynchronousRenewableFileCacheReceiver(ParentReceiver):
     def __init__(
         self,
-        parent: "Bearer",
+        bearer: "AsynchronousRenewableFileCacheBearer",
         max_retries: int = 2,
     ) -> None:
         super().__init__()
-        self._parent = parent
+        self._parent = bearer
         self._max_retries = max_retries
         self._trial = 0
 
@@ -87,26 +81,39 @@ class Receiver(ParentReceiver):
         return True
 
 
+VERY_LONG_TIMEOUT = timedelta(days=365 * 10)  # 10 years, should be enough for anyone
+
 T = TypeVar("T")
 
 
-VERY_LONG_TIMEOUT = timedelta(days=365 * 10)  # 10 years, should be enough for anyone
-
-
-class Bearer(ParentBearer):
+class AsynchronousRenewableFileCacheBearer(ParentBearer):
     def __init__(
         self,
         source: ParentBearer,
         max_retries: int = 2,
+        initial_safety_margin: timedelta | float | None = timedelta(hours=2),
+        retry_safety_margin: timedelta = timedelta(hours=2),
         lifetime_safe_fraction: float = 0.9,
         initial_retry_timeout: timedelta = timedelta(seconds=1),
         max_retry_timeout: timedelta = timedelta(minutes=1),
         retry_timeout_exponent: float = 1.5,
         refresh_request_timeout: timedelta = timedelta(seconds=5),
+        file_cache_throttle: timedelta | float = timedelta(minutes=5),
     ) -> None:
         super().__init__()
         self._source = source
-        self._cache: Token | None = None
+        if isinstance(initial_safety_margin, (float, int)):
+            initial_safety_margin = timedelta(seconds=initial_safety_margin)
+        self._retry_safety_margin = retry_safety_margin
+        self.safety_margin = initial_safety_margin
+        name = self._source.name
+        if name is None:
+            raise ValueError("Source bearer must have a name for the cache.")
+        self._file_cache = ThrottledTokenCache(
+            name=name,
+            cache_file=Path(DEFAULT_CONFIG_DIR) / DEFAULT_CREDENTIALS_FILE,
+            throttle=file_cache_throttle,
+        )
 
         self._is_fresh = Event()
         self._is_stopped = Event()
@@ -164,6 +171,19 @@ class Bearer(ParentBearer):
             synchronous = options.get(OPTION_RENEW_SYNCHRONOUS, "") != ""
             report_error = options.get(OPTION_REPORT_ERROR, "") != ""
 
+        tok = await self._file_cache.get()
+        if not required and tok is not None and not tok.is_expired():
+            if self.safety_margin is None or (
+                not tok.expiration
+                or (tok.expiration - self.safety_margin > datetime.now(timezone.utc))
+            ):
+                log.debug(f"token is fresh: {tok}")
+                if self._refresh_task is None:
+                    log.debug("no refresh task yet, starting it")
+                    self._refresh_task = self.bg_task(self._run(True))
+                return tok
+        self.safety_margin = None  # reset safety margin after first fetch
+
         if self._refresh_task is None:
             log.debug("no refresh task yet, starting it")
             self._refresh_task = self.bg_task(self._run())
@@ -191,9 +211,10 @@ class Bearer(ParentBearer):
                 return await wait_for(self._renewal_future, timeout)  # type: ignore
             else:
                 await wait_for(self._is_fresh.wait(), timeout)
-        if self._cache is None:
+        tok = await self._file_cache.get()
+        if tok is None:
             raise RenewalError("cache is empty after renewal")
-        return self._cache
+        return tok
 
     async def _fetch_once(self) -> Token:
         tok = None
@@ -216,20 +237,46 @@ class Bearer(ParentBearer):
             t.cancel()
             self.bg_task(t)
         tok = token_task.result()
-        log.debug(
-            f"received new token: {ellipsis_in_middle(tok.token)}, "
-            f"expires in {tok.expiration}"
-        )
+        log.debug(f"received new token: {tok}")
         if self._renewal_future is not None and not self._renewal_future.done():
             self._renewal_future.set_result(tok)
-        self._cache = tok
+        await self._file_cache.set(tok)
         self._renewal_attempt = 0
         self._is_fresh.set()
         return tok
 
-    async def _run(self) -> None:
+    async def _run(self, wait_for_timeout: bool = False) -> None:
         log.debug("refresh task started")
+
+        if wait_for_timeout:
+            tok = await self._file_cache.get()
+            if tok is not None and not tok.is_expired():
+                if tok.expiration is not None:
+                    retry_timeout = (
+                        tok.expiration - datetime.now(timezone.utc)
+                    ).total_seconds() - self._retry_safety_margin.total_seconds()
+                else:
+                    retry_timeout = VERY_LONG_TIMEOUT.total_seconds()
+            else:
+                retry_timeout = 0
+        else:
+            retry_timeout = 0
+
         while not self._is_stopped.is_set():
+            log.debug(
+                f"Will refresh token after {retry_timeout} seconds, "
+                f"renewal attempt number {self._renewal_attempt}"
+            )
+            _done, pending = await wait(
+                [
+                    self.bg_task(self._renew_requested.wait()),
+                    self.bg_task(sleep(retry_timeout)),
+                ],
+                return_when=FIRST_COMPLETED,
+            )
+            for task in pending:
+                task.cancel()
+            await gather(*pending, return_exceptions=True)
             try:
                 tok = await self._fetch_once()
                 exp = tok.expiration
@@ -243,7 +290,7 @@ class Bearer(ParentBearer):
                 log.error(
                     f"Failed refresh token, attempt: {self._renewal_attempt}, "
                     f"error: {e}",
-                    exc_info=sys.exc_info(),
+                    exc_info=e,
                 )
                 if self._renewal_future is not None and not self._renewal_future.done():
                     self._renewal_future.set_exception(e)
@@ -261,21 +308,6 @@ class Bearer(ParentBearer):
             if retry_timeout < self._initial_retry_timeout.total_seconds():
                 retry_timeout = self._initial_retry_timeout.total_seconds()
 
-            log.debug(
-                f"Will refresh token after {retry_timeout} seconds, "
-                f"renewal attempt number {self._renewal_attempt}"
-            )
-            _done, pending = await wait(
-                [
-                    self.bg_task(self._renew_requested.wait()),
-                    self.bg_task(sleep(retry_timeout)),
-                ],
-                return_when=FIRST_COMPLETED,
-            )
-            for task in pending:
-                task.cancel()
-            await gather(*pending, return_exceptions=True)
-
     async def close(self, grace: float | None = None) -> None:
         source_close = create_task(self._source.close(grace=grace))
         self.stop()
@@ -291,7 +323,7 @@ class Bearer(ParentBearer):
                 log.error(f"Error while graceful shutdown: {ret}", exc_info=ret)
 
     def is_renewal_required(self) -> bool:
-        return self._cache is None or self._renew_requested.is_set()
+        return self._file_cache.get_cached() is None or self._renew_requested.is_set()
 
     def request_renewal(self) -> None:
         if not self._is_stopped.is_set():
@@ -306,5 +338,8 @@ class Bearer(ParentBearer):
         self._break_previous_attempt.set()
         self._renew_requested.set()
 
-    def receiver(self) -> Receiver:
-        return Receiver(self, max_retries=self._max_retries)
+    def receiver(self) -> AsynchronousRenewableFileCacheReceiver:
+        return AsynchronousRenewableFileCacheReceiver(
+            self,
+            max_retries=self._max_retries,
+        )
