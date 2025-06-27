@@ -12,12 +12,13 @@ _sym_db = _symbol_database.Default()
 
 
 from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
+from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 from nebius.api.nebius.common.v1alpha1 import operation_pb2 as nebius_dot_common_dot_v1alpha1_dot_operation__pb2
 from nebius.api.nebius.mk8s.v1alpha1 import cluster_pb2 as nebius_dot_mk8s_dot_v1alpha1_dot_cluster__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n*nebius/mk8s/v1alpha1/cluster_service.proto\x12\x14nebius.mk8s.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a\"nebius/mk8s/v1alpha1/cluster.proto\"\x9d\x01\n\x14\x43reateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12=\n\x04spec\x18\x02 \x01(\x0b\x32!.nebius.mk8s.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"V\n\x11GetClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12)\n\x10resource_version\x18\x02 \x01(\tR\x0fresourceVersion\"Z\n\x17GetClusterByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"v\n\x13ListClustersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"s\n\x14ListClustersResponse\x12\x33\n\x05items\x18\x01 \x03(\x0b\x32\x1d.nebius.mk8s.v1alpha1.ClusterR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x95\x01\n\x14UpdateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x35\n\x04spec\x18\x02 \x01(\x0b\x32!.nebius.mk8s.v1alpha1.ClusterSpecR\x04spec\".\n\x14\x44\x65leteClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xa4\x04\n\x0e\x43lusterService\x12M\n\x03Get\x12\'.nebius.mk8s.v1alpha1.GetClusterRequest\x1a\x1d.nebius.mk8s.v1alpha1.Cluster\x12Y\n\tGetByName\x12-.nebius.mk8s.v1alpha1.GetClusterByNameRequest\x1a\x1d.nebius.mk8s.v1alpha1.Cluster\x12]\n\x04List\x12).nebius.mk8s.v1alpha1.ListClustersRequest\x1a*.nebius.mk8s.v1alpha1.ListClustersResponse\x12W\n\x06\x43reate\x12*.nebius.mk8s.v1alpha1.CreateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12W\n\x06Update\x12*.nebius.mk8s.v1alpha1.UpdateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12W\n\x06\x44\x65lete\x12*.nebius.mk8s.v1alpha1.DeleteClusterRequest\x1a!.nebius.common.v1alpha1.OperationBh\n\x1b\x61i.nebius.pub.mk8s.v1alpha1B\x13\x43lusterServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mk8s/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n*nebius/mk8s/v1alpha1/cluster_service.proto\x12\x14nebius.mk8s.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a\"nebius/mk8s/v1alpha1/cluster.proto\"\x9d\x01\n\x14\x43reateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12=\n\x04spec\x18\x02 \x01(\x0b\x32!.nebius.mk8s.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"V\n\x11GetClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12)\n\x10resource_version\x18\x02 \x01(\tR\x0fresourceVersion\"Z\n\x17GetClusterByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"v\n\x13ListClustersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"s\n\x14ListClustersResponse\x12\x33\n\x05items\x18\x01 \x03(\x0b\x32\x1d.nebius.mk8s.v1alpha1.ClusterR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x95\x01\n\x14UpdateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x35\n\x04spec\x18\x02 \x01(\x0b\x32!.nebius.mk8s.v1alpha1.ClusterSpecR\x04spec\".\n\x14\x44\x65leteClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xad\x04\n\x0e\x43lusterService\x12M\n\x03Get\x12\'.nebius.mk8s.v1alpha1.GetClusterRequest\x1a\x1d.nebius.mk8s.v1alpha1.Cluster\x12Y\n\tGetByName\x12-.nebius.mk8s.v1alpha1.GetClusterByNameRequest\x1a\x1d.nebius.mk8s.v1alpha1.Cluster\x12]\n\x04List\x12).nebius.mk8s.v1alpha1.ListClustersRequest\x1a*.nebius.mk8s.v1alpha1.ListClustersResponse\x12W\n\x06\x43reate\x12*.nebius.mk8s.v1alpha1.CreateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12W\n\x06Update\x12*.nebius.mk8s.v1alpha1.UpdateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12W\n\x06\x44\x65lete\x12*.nebius.mk8s.v1alpha1.DeleteClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\x07\xbaJ\x04mk8sBh\n\x1b\x61i.nebius.pub.mk8s.v1alpha1B\x13\x43lusterServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mk8s/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -42,20 +43,22 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _UPDATECLUSTERREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
   _DELETECLUSTERREQUEST.fields_by_name['id']._options = None
   _DELETECLUSTERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
-  _globals['_CREATECLUSTERREQUEST']._serialized_start=207
-  _globals['_CREATECLUSTERREQUEST']._serialized_end=364
-  _globals['_GETCLUSTERREQUEST']._serialized_start=366
-  _globals['_GETCLUSTERREQUEST']._serialized_end=452
-  _globals['_GETCLUSTERBYNAMEREQUEST']._serialized_start=454
-  _globals['_GETCLUSTERBYNAMEREQUEST']._serialized_end=544
-  _globals['_LISTCLUSTERSREQUEST']._serialized_start=546
-  _globals['_LISTCLUSTERSREQUEST']._serialized_end=664
-  _globals['_LISTCLUSTERSRESPONSE']._serialized_start=666
-  _globals['_LISTCLUSTERSRESPONSE']._serialized_end=781
-  _globals['_UPDATECLUSTERREQUEST']._serialized_start=784
-  _globals['_UPDATECLUSTERREQUEST']._serialized_end=933
-  _globals['_DELETECLUSTERREQUEST']._serialized_start=935
-  _globals['_DELETECLUSTERREQUEST']._serialized_end=981
-  _globals['_CLUSTERSERVICE']._serialized_start=984
-  _globals['_CLUSTERSERVICE']._serialized_end=1532
+  _CLUSTERSERVICE._options = None
+  _CLUSTERSERVICE._serialized_options = b'\272J\004mk8s'
+  _globals['_CREATECLUSTERREQUEST']._serialized_start=233
+  _globals['_CREATECLUSTERREQUEST']._serialized_end=390
+  _globals['_GETCLUSTERREQUEST']._serialized_start=392
+  _globals['_GETCLUSTERREQUEST']._serialized_end=478
+  _globals['_GETCLUSTERBYNAMEREQUEST']._serialized_start=480
+  _globals['_GETCLUSTERBYNAMEREQUEST']._serialized_end=570
+  _globals['_LISTCLUSTERSREQUEST']._serialized_start=572
+  _globals['_LISTCLUSTERSREQUEST']._serialized_end=690
+  _globals['_LISTCLUSTERSRESPONSE']._serialized_start=692
+  _globals['_LISTCLUSTERSRESPONSE']._serialized_end=807
+  _globals['_UPDATECLUSTERREQUEST']._serialized_start=810
+  _globals['_UPDATECLUSTERREQUEST']._serialized_end=959
+  _globals['_DELETECLUSTERREQUEST']._serialized_start=961
+  _globals['_DELETECLUSTERREQUEST']._serialized_end=1007
+  _globals['_CLUSTERSERVICE']._serialized_start=1010
+  _globals['_CLUSTERSERVICE']._serialized_end=1567
 # @@protoc_insertion_point(module_scope)

@@ -226,7 +226,6 @@ class DiskSpec(pb_classes.Message):
         size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None|unset.UnsetType" = unset.Unset,
-        placement_policy: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|None|unset.UnsetType" = unset.Unset,
         source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_image_family: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -243,8 +242,6 @@ class DiskSpec(pb_classes.Message):
             self.block_size_bytes = block_size_bytes
         if not isinstance(type, unset.UnsetType):
             self.type = type
-        if not isinstance(placement_policy, unset.UnsetType):
-            self.placement_policy = placement_policy
         if not isinstance(source_image_id, unset.UnsetType):
             self.source_image_id = source_image_id
         if not isinstance(source_image_family, unset.UnsetType):
@@ -258,7 +255,6 @@ class DiskSpec(pb_classes.Message):
             "size_gibibytes",
             "block_size_bytes",
             "type",
-            "placement_policy",
             "source_image_id",
             "source_image_family",
             "size",
@@ -322,16 +318,6 @@ class DiskSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def placement_policy(self) -> "DiskPlacementPolicy":
-        return super()._get_field("placement_policy", explicit_presence=False,
-        wrap=DiskPlacementPolicy,
-        )
-    @placement_policy.setter
-    def placement_policy(self, value: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|None") -> None:
-        return super()._set_field("placement_policy",value,explicit_presence=False,
-        )
-    
-    @builtins.property
     def source_image_id(self) -> "builtins.str|None":
         return super()._get_field("source_image_id", explicit_presence=True,
         )
@@ -356,60 +342,11 @@ class DiskSpec(pb_classes.Message):
         "size_gibibytes":"size_gibibytes",
         "block_size_bytes":"block_size_bytes",
         "type":"type",
-        "placement_policy":"placement_policy",
         "source_image_id":"source_image_id",
         "source_image_family":"source_image_family",
         "size":"size",
         "source":"source",
         "DiskType":"DiskType",
-    }
-    
-class DiskPlacementPolicy(pb_classes.Message):
-    __PB2_CLASS__ = disk_pb2.DiskPlacementPolicy
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1alpha1.DiskPlacementPolicy",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-    }
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        placement_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        placement_group_partition: "builtins.int|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(placement_group_id, unset.UnsetType):
-            self.placement_group_id = placement_group_id
-        if not isinstance(placement_group_partition, unset.UnsetType):
-            self.placement_group_partition = placement_group_partition
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "placement_group_id",
-            "placement_group_partition",
-        ]
-    
-    @builtins.property
-    def placement_group_id(self) -> "builtins.str":
-        return super()._get_field("placement_group_id", explicit_presence=False,
-        )
-    @placement_group_id.setter
-    def placement_group_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("placement_group_id",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def placement_group_partition(self) -> "builtins.int":
-        return super()._get_field("placement_group_partition", explicit_presence=False,
-        )
-    @placement_group_partition.setter
-    def placement_group_partition(self, value: "builtins.int|None") -> None:
-        return super()._set_field("placement_group_partition",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "placement_group_id":"placement_group_id",
-        "placement_group_partition":"placement_group_partition",
     }
     
 class DiskStatus(pb_classes.Message):
@@ -4308,7 +4245,6 @@ __all__ = [
     #@ local import names here @#
     "Disk",
     "DiskSpec",
-    "DiskPlacementPolicy",
     "DiskStatus",
     "GetDiskRequest",
     "ListDisksRequest",

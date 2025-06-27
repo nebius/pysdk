@@ -1301,12 +1301,10 @@ async def test_update_instance_v2() -> None:
             assert md.get("x-idempotency-key", "") != ""
             assert (
                 md.get("x-resetmask", "")
-                == "metadata.(created_at.(nanos,seconds)"
-                + ",labels.*,name,parent_id,resource_version,updated_at."
-                + "(nanos,seconds)),spec.(block_size_bytes,placement_policy."
-                + "(placement_group_id,placement_group_partition),size_bytes,"
-                + "size_gibibytes,size_kibibytes,size_mebibytes,source_image_family"
-                + ",source_image_id,type)"
+                == "metadata.(created_at.(nanos,seconds),labels.*,name,parent_id,"
+                + "resource_version,updated_at.(nanos,seconds)),spec.(block_size_bytes"
+                + ",size_bytes,size_gibibytes,size_kibibytes,size_mebibytes,"
+                + "source_image_family,source_image_id,type)"
             )
 
             await context.send_initial_metadata(

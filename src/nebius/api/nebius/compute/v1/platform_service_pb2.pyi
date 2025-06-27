@@ -1,4 +1,5 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
+from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.compute.v1 import platform_pb2 as _platform_pb2
 from google.protobuf.internal import containers as _containers

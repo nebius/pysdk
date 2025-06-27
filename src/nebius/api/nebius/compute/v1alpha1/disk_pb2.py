@@ -16,7 +16,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/compute/v1alpha1/disk.proto\x12\x17nebius.compute.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/annotations.proto\"\xba\x01\n\x04\x44isk\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x35\n\x04spec\x18\x02 \x01(\x0b\x32!.nebius.compute.v1alpha1.DiskSpecR\x04spec\x12;\n\x06status\x18\x03 \x01(\x0b\x32#.nebius.compute.v1alpha1.DiskStatusR\x06status\"\x90\x05\n\x08\x44iskSpec\x12%\n\nsize_bytes\x18\x01 \x01(\x03\x42\x04\xbaJ\x01\x02H\x00R\tsizeBytes\x12-\n\x0esize_kibibytes\x18\x02 \x01(\x03\x42\x04\xbaJ\x01\x02H\x00R\rsizeKibibytes\x12-\n\x0esize_mebibytes\x18\x03 \x01(\x03\x42\x04\xbaJ\x01\x02H\x00R\rsizeMebibytes\x12-\n\x0esize_gibibytes\x18\x04 \x01(\x03\x42\x04\xbaJ\x01\x02H\x00R\rsizeGibibytes\x12.\n\x10\x62lock_size_bytes\x18\x05 \x01(\x03\x42\x04\xbaJ\x01\x02R\x0e\x62lockSizeBytes\x12J\n\x04type\x18\x06 \x01(\x0e\x32*.nebius.compute.v1alpha1.DiskSpec.DiskTypeB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x04type\x12]\n\x10placement_policy\x18\x07 \x01(\x0b\x32,.nebius.compute.v1alpha1.DiskPlacementPolicyB\x04\xbaJ\x01\x02R\x0fplacementPolicy\x12.\n\x0fsource_image_id\x18\x08 \x01(\tB\x04\xbaJ\x01\x02H\x01R\rsourceImageId\x12\x36\n\x13source_image_family\x18\t \x01(\tB\x04\xbaJ\x01\x02H\x01R\x11sourceImageFamily\"t\n\x08\x44iskType\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0f\n\x0bNETWORK_SSD\x10\x01\x12\x0f\n\x0bNETWORK_HDD\x10\x02\x12\x1e\n\x1aNETWORK_SSD_NON_REPLICATED\x10\x03\x12\x15\n\x11NETWORK_SSD_IO_M3\x10\x04\x42\r\n\x04size\x12\x05\xbaH\x02\x08\x01\x42\x08\n\x06source\"\x7f\n\x13\x44iskPlacementPolicy\x12,\n\x12placement_group_id\x18\x01 \x01(\tR\x10placementGroupId\x12:\n\x19placement_group_partition\x18\x02 \x01(\x03R\x17placementGroupPartition\"\xa5\x03\n\nDiskStatus\x12?\n\x05state\x18\x01 \x01(\x0e\x32).nebius.compute.v1alpha1.DiskStatus.StateR\x05state\x12+\n\x11state_description\x18\x02 \x01(\tR\x10stateDescription\x12\x32\n\x15read_write_attachment\x18\x03 \x01(\tR\x13readWriteAttachment\x12\x32\n\x15read_only_attachments\x18\x04 \x03(\tR\x13readOnlyAttachments\x12&\n\x0fsource_image_id\x18\x05 \x01(\tR\rsourceImageId\x12\x1d\n\nsize_bytes\x18\x06 \x01(\x03R\tsizeBytes\x12 \n\x0breconciling\x18\x07 \x01(\x08R\x0breconciling\"X\n\x05State\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x0c\n\x08\x44\x45LETING\x10\x04\x12\t\n\x05\x45RROR\x10\x05\x42g\n\x1e\x61i.nebius.pub.compute.v1alpha1B\tDiskProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/compute/v1alpha1\xb8\x01\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/compute/v1alpha1/disk.proto\x12\x17nebius.compute.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/annotations.proto\"\xba\x01\n\x04\x44isk\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x35\n\x04spec\x18\x02 \x01(\x0b\x32!.nebius.compute.v1alpha1.DiskSpecR\x04spec\x12;\n\x06status\x18\x03 \x01(\x0b\x32#.nebius.compute.v1alpha1.DiskStatusR\x06status\"\xb7\x04\n\x08\x44iskSpec\x12%\n\nsize_bytes\x18\x01 \x01(\x03\x42\x04\xbaJ\x01\x02H\x00R\tsizeBytes\x12-\n\x0esize_kibibytes\x18\x02 \x01(\x03\x42\x04\xbaJ\x01\x02H\x00R\rsizeKibibytes\x12-\n\x0esize_mebibytes\x18\x03 \x01(\x03\x42\x04\xbaJ\x01\x02H\x00R\rsizeMebibytes\x12-\n\x0esize_gibibytes\x18\x04 \x01(\x03\x42\x04\xbaJ\x01\x02H\x00R\rsizeGibibytes\x12.\n\x10\x62lock_size_bytes\x18\x05 \x01(\x03\x42\x04\xbaJ\x01\x02R\x0e\x62lockSizeBytes\x12J\n\x04type\x18\x06 \x01(\x0e\x32*.nebius.compute.v1alpha1.DiskSpec.DiskTypeB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x04type\x12.\n\x0fsource_image_id\x18\x08 \x01(\tB\x04\xbaJ\x01\x02H\x01R\rsourceImageId\x12\x36\n\x13source_image_family\x18\t \x01(\tB\x04\xbaJ\x01\x02H\x01R\x11sourceImageFamily\"t\n\x08\x44iskType\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0f\n\x0bNETWORK_SSD\x10\x01\x12\x0f\n\x0bNETWORK_HDD\x10\x02\x12\x1e\n\x1aNETWORK_SSD_NON_REPLICATED\x10\x03\x12\x15\n\x11NETWORK_SSD_IO_M3\x10\x04\x42\r\n\x04size\x12\x05\xbaH\x02\x08\x01\x42\x08\n\x06sourceJ\x04\x08\x07\x10\x08\"\xa5\x03\n\nDiskStatus\x12?\n\x05state\x18\x01 \x01(\x0e\x32).nebius.compute.v1alpha1.DiskStatus.StateR\x05state\x12+\n\x11state_description\x18\x02 \x01(\tR\x10stateDescription\x12\x32\n\x15read_write_attachment\x18\x03 \x01(\tR\x13readWriteAttachment\x12\x32\n\x15read_only_attachments\x18\x04 \x03(\tR\x13readOnlyAttachments\x12&\n\x0fsource_image_id\x18\x05 \x01(\tR\rsourceImageId\x12\x1d\n\nsize_bytes\x18\x06 \x01(\x03R\tsizeBytes\x12 \n\x0breconciling\x18\x07 \x01(\x08R\x0breconciling\"X\n\x05State\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x0c\n\x08\x44\x45LETING\x10\x04\x12\t\n\x05\x45RROR\x10\x05\x42g\n\x1e\x61i.nebius.pub.compute.v1alpha1B\tDiskProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/compute/v1alpha1\xb8\x01\x01\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -39,8 +39,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _DISKSPEC.fields_by_name['block_size_bytes']._serialized_options = b'\272J\001\002'
   _DISKSPEC.fields_by_name['type']._options = None
   _DISKSPEC.fields_by_name['type']._serialized_options = b'\272H\003\310\001\001\272J\001\002'
-  _DISKSPEC.fields_by_name['placement_policy']._options = None
-  _DISKSPEC.fields_by_name['placement_policy']._serialized_options = b'\272J\001\002'
   _DISKSPEC.fields_by_name['source_image_id']._options = None
   _DISKSPEC.fields_by_name['source_image_id']._serialized_options = b'\272J\001\002'
   _DISKSPEC.fields_by_name['source_image_family']._options = None
@@ -48,13 +46,11 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_DISK']._serialized_start=152
   _globals['_DISK']._serialized_end=338
   _globals['_DISKSPEC']._serialized_start=341
-  _globals['_DISKSPEC']._serialized_end=997
-  _globals['_DISKSPEC_DISKTYPE']._serialized_start=856
-  _globals['_DISKSPEC_DISKTYPE']._serialized_end=972
-  _globals['_DISKPLACEMENTPOLICY']._serialized_start=999
-  _globals['_DISKPLACEMENTPOLICY']._serialized_end=1126
-  _globals['_DISKSTATUS']._serialized_start=1129
-  _globals['_DISKSTATUS']._serialized_end=1550
-  _globals['_DISKSTATUS_STATE']._serialized_start=1462
-  _globals['_DISKSTATUS_STATE']._serialized_end=1550
+  _globals['_DISKSPEC']._serialized_end=908
+  _globals['_DISKSPEC_DISKTYPE']._serialized_start=761
+  _globals['_DISKSPEC_DISKTYPE']._serialized_end=877
+  _globals['_DISKSTATUS']._serialized_start=911
+  _globals['_DISKSTATUS']._serialized_end=1332
+  _globals['_DISKSTATUS_STATE']._serialized_start=1244
+  _globals['_DISKSTATUS_STATE']._serialized_end=1332
 # @@protoc_insertion_point(module_scope)

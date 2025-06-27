@@ -12,10 +12,11 @@ _sym_db = _symbol_database.Default()
 
 
 from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
+from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.vpc.v1alpha1 import scope_pb2 as nebius_dot_vpc_dot_v1alpha1_dot_scope__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'nebius/vpc/v1alpha1/scope_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/vpc/v1alpha1/scope.proto\")\n\x0fGetScopeRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"X\n\x15GetScopeByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x8c\x01\n\x11ListScopesRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"n\n\x12ListScopesResponse\x12\x30\n\x05items\x18\x01 \x03(\x0b\x32\x1a.nebius.vpc.v1alpha1.ScopeR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x85\x02\n\x0cScopeService\x12G\n\x03Get\x12$.nebius.vpc.v1alpha1.GetScopeRequest\x1a\x1a.nebius.vpc.v1alpha1.Scope\x12S\n\tGetByName\x12*.nebius.vpc.v1alpha1.GetScopeByNameRequest\x1a\x1a.nebius.vpc.v1alpha1.Scope\x12W\n\x04List\x12&.nebius.vpc.v1alpha1.ListScopesRequest\x1a\'.nebius.vpc.v1alpha1.ListScopesResponseBd\n\x1a\x61i.nebius.pub.vpc.v1alpha1B\x11ScopeServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'nebius/vpc/v1alpha1/scope_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/vpc/v1alpha1/scope.proto\")\n\x0fGetScopeRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"X\n\x15GetScopeByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x8c\x01\n\x11ListScopesRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"n\n\x12ListScopesResponse\x12\x30\n\x05items\x18\x01 \x03(\x0b\x32\x1a.nebius.vpc.v1alpha1.ScopeR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x8d\x02\n\x0cScopeService\x12G\n\x03Get\x12$.nebius.vpc.v1alpha1.GetScopeRequest\x1a\x1a.nebius.vpc.v1alpha1.Scope\x12S\n\tGetByName\x12*.nebius.vpc.v1alpha1.GetScopeByNameRequest\x1a\x1a.nebius.vpc.v1alpha1.Scope\x12W\n\x04List\x12&.nebius.vpc.v1alpha1.ListScopesRequest\x1a\'.nebius.vpc.v1alpha1.ListScopesResponse\x1a\x06\xbaJ\x03vpcBd\n\x1a\x61i.nebius.pub.vpc.v1alpha1B\x11ScopeServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,14 +33,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _GETSCOPEBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTSCOPESREQUEST.fields_by_name['parent_id']._options = None
   _LISTSCOPESREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
-  _globals['_GETSCOPEREQUEST']._serialized_start=126
-  _globals['_GETSCOPEREQUEST']._serialized_end=167
-  _globals['_GETSCOPEBYNAMEREQUEST']._serialized_start=169
-  _globals['_GETSCOPEBYNAMEREQUEST']._serialized_end=257
-  _globals['_LISTSCOPESREQUEST']._serialized_start=260
-  _globals['_LISTSCOPESREQUEST']._serialized_end=400
-  _globals['_LISTSCOPESRESPONSE']._serialized_start=402
-  _globals['_LISTSCOPESRESPONSE']._serialized_end=512
-  _globals['_SCOPESERVICE']._serialized_start=515
-  _globals['_SCOPESERVICE']._serialized_end=776
+  _SCOPESERVICE._options = None
+  _SCOPESERVICE._serialized_options = b'\272J\003vpc'
+  _globals['_GETSCOPEREQUEST']._serialized_start=152
+  _globals['_GETSCOPEREQUEST']._serialized_end=193
+  _globals['_GETSCOPEBYNAMEREQUEST']._serialized_start=195
+  _globals['_GETSCOPEBYNAMEREQUEST']._serialized_end=283
+  _globals['_LISTSCOPESREQUEST']._serialized_start=286
+  _globals['_LISTSCOPESREQUEST']._serialized_end=426
+  _globals['_LISTSCOPESRESPONSE']._serialized_start=428
+  _globals['_LISTSCOPESRESPONSE']._serialized_end=538
+  _globals['_SCOPESERVICE']._serialized_start=541
+  _globals['_SCOPESERVICE']._serialized_end=810
 # @@protoc_insertion_point(module_scope)

@@ -2,6 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from nebius.api.nebius.common.v1alpha1 import operation_pb2 as nebius_dot_common_dot_v1alpha1_dot_operation__pb2
 from nebius.api.nebius.msp.postgresql.v1alpha1 import backup_pb2 as nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__pb2
 from nebius.api.nebius.msp.postgresql.v1alpha1 import backup_service_pb2 as nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2
 
@@ -31,6 +32,16 @@ class BackupServiceStub(object):
                 request_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.ListBackupsByClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.ListBackupsResponse.FromString,
                 )
+        self.Create = channel.unary_unary(
+                '/nebius.msp.postgresql.v1alpha1.BackupService/Create',
+                request_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.CreateBackupRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Delete = channel.unary_unary(
+                '/nebius.msp.postgresql.v1alpha1.BackupService/Delete',
+                request_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.DeleteBackupRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class BackupServiceServicer(object):
@@ -59,6 +70,20 @@ class BackupServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Create(self, request, context):
+        """Creates a new on-demand backup.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Delete(self, request, context):
+        """Deletes an on-demand backup.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_BackupServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -76,6 +101,16 @@ def add_BackupServiceServicer_to_server(servicer, server):
                     servicer.ListByCluster,
                     request_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.ListBackupsByClusterRequest.FromString,
                     response_serializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.ListBackupsResponse.SerializeToString,
+            ),
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.CreateBackupRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.DeleteBackupRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -136,5 +171,39 @@ class BackupService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.msp.postgresql.v1alpha1.BackupService/ListByCluster',
             nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.ListBackupsByClusterRequest.SerializeToString,
             nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.ListBackupsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.postgresql.v1alpha1.BackupService/Create',
+            nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.CreateBackupRequest.SerializeToString,
+            nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.msp.postgresql.v1alpha1.BackupService/Delete',
+            nebius_dot_msp_dot_postgresql_dot_v1alpha1_dot_backup__service__pb2.DeleteBackupRequest.SerializeToString,
+            nebius_dot_common_dot_v1alpha1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

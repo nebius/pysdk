@@ -18,10 +18,11 @@ import nebius.api.nebius.audit.v2.subject_pb2 as subject_pb2
 import typing as typing
 import nebius.api.nebius.audit.v2.authentication_pb2 as authentication_pb2
 import nebius.api.nebius.audit.v2.authorization_pb2 as authorization_pb2
+import nebius.api.nebius.audit.v2.region_pb2 as region_pb2
 import nebius.api.nebius.audit.v2.request_pb2 as request_pb2
+import google.protobuf.struct_pb2 as struct_pb2
 import nebius.api.nebius.audit.v2.resource_metadata_pb2 as resource_metadata_pb2
 import nebius.api.nebius.audit.v2.resource_state_pb2 as resource_state_pb2
-import google.protobuf.struct_pb2 as struct_pb2
 import nebius.api.nebius.audit.v2.resource_pb2 as resource_pb2
 import nebius.api.nebius.audit.v2.response_pb2 as response_pb2
 import google.rpc.code_pb2 as code_pb2
@@ -507,6 +508,45 @@ class Authorization(pb_classes.Message):
         "authorized":"authorized",
     }
     
+# file: nebius/audit/v2/region.proto
+class Region(pb_classes.Message):
+    __PB2_CLASS__ = region_pb2.Region
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.Region",region_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        """
+         Region name
+        """
+        
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+    }
+    
 # file: nebius/audit/v2/request.proto
 class Request(pb_classes.Message):
     __PB2_CLASS__ = request_pb2.Request
@@ -519,12 +559,15 @@ class Request(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         request_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        parameters: "struct_pb2.Struct|None|unset.UnsetType" = unset.Unset,
         idempotency_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         trace_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(request_id, unset.UnsetType):
             self.request_id = request_id
+        if not isinstance(parameters, unset.UnsetType):
+            self.parameters = parameters
         if not isinstance(idempotency_id, unset.UnsetType):
             self.idempotency_id = idempotency_id
         if not isinstance(trace_id, unset.UnsetType):
@@ -533,6 +576,7 @@ class Request(pb_classes.Message):
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "request_id",
+            "parameters",
             "idempotency_id",
             "trace_id",
         ]
@@ -548,6 +592,19 @@ class Request(pb_classes.Message):
     @request_id.setter
     def request_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("request_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def parameters(self) -> "struct_pb2.Struct|None":
+        """
+         Parameters of the request.
+        """
+        
+        return super()._get_field("parameters", explicit_presence=True,
+        )
+    @parameters.setter
+    def parameters(self, value: "struct_pb2.Struct|None") -> None:
+        return super()._set_field("parameters",value,explicit_presence=True,
         )
     
     @builtins.property
@@ -578,6 +635,7 @@ class Request(pb_classes.Message):
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "request_id":"request_id",
+        "parameters":"parameters",
         "idempotency_id":"idempotency_id",
         "trace_id":"trace_id",
     }
@@ -805,17 +863,21 @@ class Response(pb_classes.Message):
         *,
         status_code: "code_pb2.Code|None|unset.UnsetType" = unset.Unset,
         error_message: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        payload: "struct_pb2.Struct|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(status_code, unset.UnsetType):
             self.status_code = status_code
         if not isinstance(error_message, unset.UnsetType):
             self.error_message = error_message
+        if not isinstance(payload, unset.UnsetType):
+            self.payload = payload
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "status_code",
             "error_message",
+            "payload",
         ]
     
     @builtins.property
@@ -844,9 +906,23 @@ class Response(pb_classes.Message):
         return super()._set_field("error_message",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def payload(self) -> "struct_pb2.Struct|None":
+        """
+         The payload of the response.
+        """
+        
+        return super()._get_field("payload", explicit_presence=True,
+        )
+    @payload.setter
+    def payload(self, value: "struct_pb2.Struct|None") -> None:
+        return super()._set_field("payload",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "status_code":"status_code",
         "error_message":"error_message",
+        "payload":"payload",
     }
     
 # file: nebius/audit/v2/service.proto
@@ -930,6 +1006,7 @@ class AuditEvent(pb_classes.Message):
         request: "Request|request_pb2.Request|None|unset.UnsetType" = unset.Unset,
         response: "Response|response_pb2.Response|None|unset.UnsetType" = unset.Unset,
         status: "Status|status_pb2.Status|None|unset.UnsetType" = unset.Unset,
+        project_region: "Region|region_pb2.Region|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -960,6 +1037,8 @@ class AuditEvent(pb_classes.Message):
             self.response = response
         if not isinstance(status, unset.UnsetType):
             self.status = status
+        if not isinstance(project_region, unset.UnsetType):
+            self.project_region = project_region
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -977,6 +1056,7 @@ class AuditEvent(pb_classes.Message):
             "request",
             "response",
             "status",
+            "project_region",
         ]
     
     @builtins.property
@@ -1170,6 +1250,20 @@ class AuditEvent(pb_classes.Message):
         return super()._set_field("status",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def project_region(self) -> "Region":
+        """
+         Region of an application
+        """
+        
+        return super()._get_field("project_region", explicit_presence=False,
+        wrap=Region,
+        )
+    @project_region.setter
+    def project_region(self, value: "Region|region_pb2.Region|None") -> None:
+        return super()._set_field("project_region",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
         "source":"source",
@@ -1185,6 +1279,7 @@ class AuditEvent(pb_classes.Message):
         "request":"request",
         "response":"response",
         "status":"status",
+        "project_region":"project_region",
     }
     
 # file: nebius/audit/v2/audit_event_service.proto
@@ -1303,6 +1398,7 @@ class ListAuditEventRequest(pb_classes.Message):
          authentication.subject.service_account_id
          authentication.subject.tenant_user_id
          authentication.token_credential.masked_token
+         project_region.name
          resource.hierarchy.id
          resource.hierarchy.name
          resource.metadata.id
@@ -1414,6 +1510,7 @@ __all__ = [
     "Subject",
     "Authentication",
     "Authorization",
+    "Region",
     "Request",
     "ResourceMetadata",
     "ResourceState",

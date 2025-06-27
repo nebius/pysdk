@@ -33,18 +33,20 @@ class PublicIPAddress(_message.Message):
     def __init__(self, allocation_id: _Optional[str] = ..., static: bool = ...) -> None: ...
 
 class NetworkInterfaceStatus(_message.Message):
-    __slots__ = ["index", "name", "ip_address", "public_ip_address", "mac_address"]
+    __slots__ = ["index", "name", "ip_address", "public_ip_address", "mac_address", "fqdn"]
     INDEX_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     MAC_ADDRESS_FIELD_NUMBER: _ClassVar[int]
+    FQDN_FIELD_NUMBER: _ClassVar[int]
     index: int
     name: str
     ip_address: IPAddressStatus
     public_ip_address: PublicIPAddressStatus
     mac_address: str
-    def __init__(self, index: _Optional[int] = ..., name: _Optional[str] = ..., ip_address: _Optional[_Union[IPAddressStatus, _Mapping]] = ..., public_ip_address: _Optional[_Union[PublicIPAddressStatus, _Mapping]] = ..., mac_address: _Optional[str] = ...) -> None: ...
+    fqdn: str
+    def __init__(self, index: _Optional[int] = ..., name: _Optional[str] = ..., ip_address: _Optional[_Union[IPAddressStatus, _Mapping]] = ..., public_ip_address: _Optional[_Union[PublicIPAddressStatus, _Mapping]] = ..., mac_address: _Optional[str] = ..., fqdn: _Optional[str] = ...) -> None: ...
 
 class IPAddressStatus(_message.Message):
     __slots__ = ["address", "allocation_id"]

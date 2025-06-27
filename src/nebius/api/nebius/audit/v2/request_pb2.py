@@ -11,9 +11,10 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dnebius/audit/v2/request.proto\x12\x0fnebius.audit.v2\"j\n\x07Request\x12\x1d\n\nrequest_id\x18\x03 \x01(\tR\trequestId\x12%\n\x0eidempotency_id\x18\x05 \x01(\tR\ridempotencyId\x12\x19\n\x08trace_id\x18\x06 \x01(\tR\x07traceIdBW\n\x16\x61i.nebius.pub.audit.v2B\x0cRequestProtoP\x01Z-github.com/nebius/gosdk/proto/nebius/audit/v2b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dnebius/audit/v2/request.proto\x12\x0fnebius.audit.v2\x1a\x1cgoogle/protobuf/struct.proto\"\xa3\x01\n\x07Request\x12\x1d\n\nrequest_id\x18\x03 \x01(\tR\trequestId\x12\x37\n\nparameters\x18\x04 \x01(\x0b\x32\x17.google.protobuf.StructR\nparameters\x12%\n\x0eidempotency_id\x18\x05 \x01(\tR\ridempotencyId\x12\x19\n\x08trace_id\x18\x06 \x01(\tR\x07traceIdBW\n\x16\x61i.nebius.pub.audit.v2B\x0cRequestProtoP\x01Z-github.com/nebius/gosdk/proto/nebius/audit/v2b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,6 +23,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\026ai.nebius.pub.audit.v2B\014RequestProtoP\001Z-github.com/nebius/gosdk/proto/nebius/audit/v2'
-  _globals['_REQUEST']._serialized_start=50
-  _globals['_REQUEST']._serialized_end=156
+  _globals['_REQUEST']._serialized_start=81
+  _globals['_REQUEST']._serialized_end=244
 # @@protoc_insertion_point(module_scope)
