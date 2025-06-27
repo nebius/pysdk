@@ -15,6 +15,7 @@ class Lock:
         self,
         file_path: str | Path,
         mode: Mode = "a",
+        create_mode: int = 0o644,
         shared: bool = False,
         timeout: timedelta | float | None = None,
         polling_interval: timedelta | float = timedelta(milliseconds=250),
@@ -22,6 +23,7 @@ class Lock:
     ):
         self.file_path = Path(file_path)
         self.shared = shared
+        self.create_mode = create_mode
         self.timeout = (
             timeout.total_seconds() if isinstance(timeout, timedelta) else timeout
         )
@@ -46,6 +48,10 @@ class Lock:
         start = time()
         while True:
             try:
+                try:
+                    self.file_path.touch(mode=self.create_mode, exist_ok=False)
+                except FileExistsError:
+                    pass
                 return self.lock.acquire()
             except AlreadyLocked:
                 if self.timeout is not None and time() - start > self.timeout:
