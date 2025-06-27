@@ -26,6 +26,8 @@ import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
+import nebius.api.nebius.iam.v2.tenant_pb2 as tenant_pb2
+import nebius.api.nebius.iam.v2.tenant_service_pb2 as tenant_service_pb2
 #@ local imports here @#
 
 # file: nebius/iam/v2/access_key.proto
@@ -1196,6 +1198,545 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
         )
     
 
+# file: nebius/iam/v2/tenant.proto
+class Tenant(pb_classes.Message):
+    __PB2_CLASS__ = tenant_pb2.Tenant
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.Tenant",tenant_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "TenantSpec|tenant_pb2.TenantSpec|None|unset.UnsetType" = unset.Unset,
+        status: "TenantStatus|tenant_pb2.TenantStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "TenantSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=TenantSpec,
+        )
+    @spec.setter
+    def spec(self, value: "TenantSpec|tenant_pb2.TenantSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "TenantStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=TenantStatus,
+        )
+    @status.setter
+    def status(self, value: "TenantStatus|tenant_pb2.TenantStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class TenantSpec(pb_classes.Message):
+    __PB2_CLASS__ = tenant_pb2.TenantSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.TenantSpec",tenant_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+class TenantStatus(pb_classes.Message):
+    __PB2_CLASS__ = tenant_pb2.TenantStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.TenantStatus",tenant_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class TenantState(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v2.TenantStatus.TenantState",tenant_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        CREATING = 1
+        ACTIVE = 2
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        tenant_state: "TenantStatus.TenantState|tenant_pb2.TenantStatus.TenantState|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(tenant_state, unset.UnsetType):
+            self.tenant_state = tenant_state
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "tenant_state",
+            "TenantState",
+        ]
+    
+    @builtins.property
+    def tenant_state(self) -> "TenantStatus.TenantState":
+        return super()._get_field("tenant_state", explicit_presence=False,
+        wrap=TenantStatus.TenantState,
+        )
+    @tenant_state.setter
+    def tenant_state(self, value: "TenantStatus.TenantState|tenant_pb2.TenantStatus.TenantState|None") -> None:
+        return super()._set_field("tenant_state",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "tenant_state":"tenant_state",
+        "TenantState":"TenantState",
+    }
+    
+# file: nebius/iam/v2/tenant_service.proto
+class GetTenantRequest(pb_classes.Message):
+    __PB2_CLASS__ = tenant_service_pb2.GetTenantRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.GetTenantRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetTenantByNameRequest(pb_classes.Message):
+    __PB2_CLASS__ = tenant_service_pb2.GetTenantByNameRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.GetTenantByNameRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+         Only empty value is allowed. Field is needed for compatibility.
+         parent_id parameter for tenants doesn't make real sense, because tenants are top-level objects.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
+    
+class UpdateTenantRequest(pb_classes.Message):
+    __PB2_CLASS__ = tenant_service_pb2.UpdateTenantRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.UpdateTenantRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "TenantSpec|tenant_pb2.TenantSpec|None|unset.UnsetType" = unset.Unset,
+        name_prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(name_prefix, unset.UnsetType):
+            self.name_prefix = name_prefix
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "name_prefix",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "TenantSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=TenantSpec,
+        )
+    @spec.setter
+    def spec(self, value: "TenantSpec|tenant_pb2.TenantSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name_prefix(self) -> "builtins.str":
+        """
+         Tenant name prefix. A few random characters will be added to this prefix.
+        """
+        
+        return super()._get_field("name_prefix", explicit_presence=False,
+        )
+    @name_prefix.setter
+    def name_prefix(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name_prefix",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "name_prefix":"name_prefix",
+    }
+    
+class ListTenantsRequest(pb_classes.Message):
+    __PB2_CLASS__ = tenant_service_pb2.ListTenantsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.ListTenantsRequest",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass__page_size__(pb_classes.OneOf):
+        name: builtins.str= "_page_size"
+        
+        def __init__(self, msg: "ListTenantsRequest") -> None:
+            super().__init__()
+            self._message: "ListTenantsRequest" = msg
+    
+    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
+        field: typing.Literal["page_size"] = "page_size"
+        
+        def __init__(self, msg: "ListTenantsRequest") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.page_size
+    
+    @builtins.property
+    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
+        field_name_1: str|None = super().which_field_in_oneof("_page_size")
+        match field_name_1:
+            case "page_size":
+                return self.__OneOfClass__page_size_page_size__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+        if not isinstance(filter, unset.UnsetType):
+            self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "page_size",
+            "page_token",
+            "filter",
+            "_page_size",
+        ]
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int|None":
+        """
+         Specifies the maximum number of items to return in the response.
+         Default value: 10
+        """
+        
+        return super()._get_field("page_size", explicit_presence=True,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+         Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def filter(self) -> "builtins.str":
+        """
+         A filter to narrow down the results based on specific criteria.
+        """
+        
+        return super()._get_field("filter", explicit_presence=False,
+        )
+    @filter.setter
+    def filter(self, value: "builtins.str|None") -> None:
+        return super()._set_field("filter",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+        "_page_size":"_page_size",
+    }
+    
+class ListTenantsResponse(pb_classes.Message):
+    __PB2_CLASS__ = tenant_service_pb2.ListTenantsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.ListTenantsResponse",tenant_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[Tenant]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[Tenant]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Tenant,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[Tenant]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+         Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+
+class TenantServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v2.TenantService",tenant_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.iam.v2.TenantService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Update"
+    
+    def get(self,
+        request: "GetTenantRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["GetTenantRequest","Tenant"]:
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=tenant_pb2.Tenant,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(Tenant),
+        )
+    
+    def get_by_name(self,
+        request: "GetTenantByNameRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["GetTenantByNameRequest","Tenant"]:
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=tenant_pb2.Tenant,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(Tenant),
+        )
+    
+    def list(self,
+        request: "ListTenantsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["ListTenantsRequest","ListTenantsResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=tenant_service_pb2.ListTenantsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(ListTenantsResponse),
+        )
+    
+    def update(self,
+        request: "UpdateTenantRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["UpdateTenantRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
+
 __all__ = [
     #@ local import names here @#
     "AccessKey",
@@ -1215,4 +1756,13 @@ __all__ = [
     "DeleteAccessKeyByAwsIdRequest",
     "ListAccessKeysResponse",
     "AccessKeyServiceClient",
+    "Tenant",
+    "TenantSpec",
+    "TenantStatus",
+    "GetTenantRequest",
+    "GetTenantByNameRequest",
+    "UpdateTenantRequest",
+    "ListTenantsRequest",
+    "ListTenantsResponse",
+    "TenantServiceClient",
 ]

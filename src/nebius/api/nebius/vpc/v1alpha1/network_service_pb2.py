@@ -12,10 +12,11 @@ _sym_db = _symbol_database.Default()
 
 
 from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
+from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.vpc.v1alpha1 import network_pb2 as nebius_dot_vpc_dot_v1alpha1_dot_network__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/vpc/v1alpha1/network_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a!nebius/vpc/v1alpha1/network.proto\"+\n\x11GetNetworkRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Z\n\x17GetNetworkByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x8e\x01\n\x13ListNetworksRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"r\n\x14ListNetworksResponse\x12\x32\n\x05items\x18\x01 \x03(\x0b\x32\x1c.nebius.vpc.v1alpha1.NetworkR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x93\x02\n\x0eNetworkService\x12K\n\x03Get\x12&.nebius.vpc.v1alpha1.GetNetworkRequest\x1a\x1c.nebius.vpc.v1alpha1.Network\x12W\n\tGetByName\x12,.nebius.vpc.v1alpha1.GetNetworkByNameRequest\x1a\x1c.nebius.vpc.v1alpha1.Network\x12[\n\x04List\x12(.nebius.vpc.v1alpha1.ListNetworksRequest\x1a).nebius.vpc.v1alpha1.ListNetworksResponseBf\n\x1a\x61i.nebius.pub.vpc.v1alpha1B\x13NetworkServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/vpc/v1alpha1/network_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a!nebius/vpc/v1alpha1/network.proto\"+\n\x11GetNetworkRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Z\n\x17GetNetworkByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x8e\x01\n\x13ListNetworksRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"r\n\x14ListNetworksResponse\x12\x32\n\x05items\x18\x01 \x03(\x0b\x32\x1c.nebius.vpc.v1alpha1.NetworkR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x9b\x02\n\x0eNetworkService\x12K\n\x03Get\x12&.nebius.vpc.v1alpha1.GetNetworkRequest\x1a\x1c.nebius.vpc.v1alpha1.Network\x12W\n\tGetByName\x12,.nebius.vpc.v1alpha1.GetNetworkByNameRequest\x1a\x1c.nebius.vpc.v1alpha1.Network\x12[\n\x04List\x12(.nebius.vpc.v1alpha1.ListNetworksRequest\x1a).nebius.vpc.v1alpha1.ListNetworksResponse\x1a\x06\xbaJ\x03vpcBf\n\x1a\x61i.nebius.pub.vpc.v1alpha1B\x13NetworkServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,14 +33,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _GETNETWORKBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTNETWORKSREQUEST.fields_by_name['parent_id']._options = None
   _LISTNETWORKSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
-  _globals['_GETNETWORKREQUEST']._serialized_start=130
-  _globals['_GETNETWORKREQUEST']._serialized_end=173
-  _globals['_GETNETWORKBYNAMEREQUEST']._serialized_start=175
-  _globals['_GETNETWORKBYNAMEREQUEST']._serialized_end=265
-  _globals['_LISTNETWORKSREQUEST']._serialized_start=268
-  _globals['_LISTNETWORKSREQUEST']._serialized_end=410
-  _globals['_LISTNETWORKSRESPONSE']._serialized_start=412
-  _globals['_LISTNETWORKSRESPONSE']._serialized_end=526
-  _globals['_NETWORKSERVICE']._serialized_start=529
-  _globals['_NETWORKSERVICE']._serialized_end=804
+  _NETWORKSERVICE._options = None
+  _NETWORKSERVICE._serialized_options = b'\272J\003vpc'
+  _globals['_GETNETWORKREQUEST']._serialized_start=156
+  _globals['_GETNETWORKREQUEST']._serialized_end=199
+  _globals['_GETNETWORKBYNAMEREQUEST']._serialized_start=201
+  _globals['_GETNETWORKBYNAMEREQUEST']._serialized_end=291
+  _globals['_LISTNETWORKSREQUEST']._serialized_start=294
+  _globals['_LISTNETWORKSREQUEST']._serialized_end=436
+  _globals['_LISTNETWORKSRESPONSE']._serialized_start=438
+  _globals['_LISTNETWORKSRESPONSE']._serialized_end=552
+  _globals['_NETWORKSERVICE']._serialized_start=555
+  _globals['_NETWORKSERVICE']._serialized_end=838
 # @@protoc_insertion_point(module_scope)

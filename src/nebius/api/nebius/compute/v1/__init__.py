@@ -32,6 +32,12 @@ import nebius.api.nebius.compute.v1.image_service_pb2 as image_service_pb2
 import nebius.api.nebius.compute.v1.network_interface_pb2 as network_interface_pb2
 import nebius.api.nebius.compute.v1.instance_pb2 as instance_pb2
 import nebius.api.nebius.compute.v1.instance_service_pb2 as instance_service_pb2
+import nebius.api.nebius.compute.v1.maintenance_event_pb2 as maintenance_event_pb2
+import nebius.base.protos.well_known as well_known_1
+import google.protobuf.timestamp_pb2 as timestamp_pb2
+import datetime as datetime
+import nebius.api.nebius.compute.v1.maintenance_service_pb2 as maintenance_service_pb2
+import nebius.api.nebius.compute.v1.node_service_pb2 as node_service_pb2
 import nebius.api.nebius.compute.v1.platform_pb2 as platform_pb2
 import nebius.api.nebius.compute.v1.platform_service_pb2 as platform_service_pb2
 #@ local imports here @#
@@ -165,6 +171,11 @@ class DiskSpec(pb_classes.Message):
     
     @builtins.property
     def size(self) -> __OneOfClass_size_size_bytes__|__OneOfClass_size_size_kibibytes__|__OneOfClass_size_size_mebibytes__|__OneOfClass_size_size_gibibytes__|None:
+        """
+         Size of the disk. The size must be within the limits for the selected disk type.
+         For current limits, see https://docs.nebius.com/compute/storage/types#disks-types-comparison
+        """
+        
         field_name_1: str|None = super().which_field_in_oneof("size")
         match field_name_1:
             case "size_bytes":
@@ -207,6 +218,12 @@ class DiskSpec(pb_classes.Message):
     
     @builtins.property
     def source(self) -> __OneOfClass_source_source_image_id__|__OneOfClass_source_source_image_family__|None:
+        """
+         Source for disk creation.
+         Boot disk must be created from an image https://docs.nebius.com/compute/storage/manage#boot
+         Additional disks can be created as an empty volume https://docs.nebius.com/compute/storage/manage#additional
+        """
+        
         field_name_1: str|None = super().which_field_in_oneof("source")
         match field_name_1:
             case "source_image_id":
@@ -228,7 +245,6 @@ class DiskSpec(pb_classes.Message):
         size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None|unset.UnsetType" = unset.Unset,
-        placement_policy: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|None|unset.UnsetType" = unset.Unset,
         source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_image_family: "SourceImageFamily|disk_pb2.SourceImageFamily|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -245,8 +261,6 @@ class DiskSpec(pb_classes.Message):
             self.block_size_bytes = block_size_bytes
         if not isinstance(type, unset.UnsetType):
             self.type = type
-        if not isinstance(placement_policy, unset.UnsetType):
-            self.placement_policy = placement_policy
         if not isinstance(source_image_id, unset.UnsetType):
             self.source_image_id = source_image_id
         if not isinstance(source_image_family, unset.UnsetType):
@@ -260,7 +274,6 @@ class DiskSpec(pb_classes.Message):
             "size_gibibytes",
             "block_size_bytes",
             "type",
-            "placement_policy",
             "source_image_id",
             "source_image_family",
             "size",
@@ -306,6 +319,12 @@ class DiskSpec(pb_classes.Message):
     
     @builtins.property
     def block_size_bytes(self) -> "builtins.int":
+        """
+         Block size in bytes.
+         The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+         The default value is 4096 bytes (4 KiB).
+        """
+        
         return super()._get_field("block_size_bytes", explicit_presence=False,
         )
     @block_size_bytes.setter
@@ -315,22 +334,17 @@ class DiskSpec(pb_classes.Message):
     
     @builtins.property
     def type(self) -> "DiskSpec.DiskType":
+        """
+         The type of disk defines the performance and reliability characteristics of the block device.
+         For details, see https://docs.nebius.com/compute/storage/types#disks-types
+        """
+        
         return super()._get_field("type", explicit_presence=False,
         wrap=DiskSpec.DiskType,
         )
     @type.setter
     def type(self, value: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None") -> None:
         return super()._set_field("type",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def placement_policy(self) -> "DiskPlacementPolicy":
-        return super()._get_field("placement_policy", explicit_presence=False,
-        wrap=DiskPlacementPolicy,
-        )
-    @placement_policy.setter
-    def placement_policy(self, value: "DiskPlacementPolicy|disk_pb2.DiskPlacementPolicy|None") -> None:
-        return super()._set_field("placement_policy",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -359,7 +373,6 @@ class DiskSpec(pb_classes.Message):
         "size_gibibytes":"size_gibibytes",
         "block_size_bytes":"block_size_bytes",
         "type":"type",
-        "placement_policy":"placement_policy",
         "source_image_id":"source_image_id",
         "source_image_family":"source_image_family",
         "size":"size",
@@ -413,54 +426,6 @@ class SourceImageFamily(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "image_family":"image_family",
         "parent_id":"parent_id",
-    }
-    
-class DiskPlacementPolicy(pb_classes.Message):
-    __PB2_CLASS__ = disk_pb2.DiskPlacementPolicy
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskPlacementPolicy",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-    }
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        placement_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        placement_group_partition: "builtins.int|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(placement_group_id, unset.UnsetType):
-            self.placement_group_id = placement_group_id
-        if not isinstance(placement_group_partition, unset.UnsetType):
-            self.placement_group_partition = placement_group_partition
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "placement_group_id",
-            "placement_group_partition",
-        ]
-    
-    @builtins.property
-    def placement_group_id(self) -> "builtins.str":
-        return super()._get_field("placement_group_id", explicit_presence=False,
-        )
-    @placement_group_id.setter
-    def placement_group_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("placement_group_id",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def placement_group_partition(self) -> "builtins.int":
-        return super()._get_field("placement_group_partition", explicit_presence=False,
-        )
-    @placement_group_partition.setter
-    def placement_group_partition(self, value: "builtins.int|None") -> None:
-        return super()._set_field("placement_group_partition",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "placement_group_id":"placement_group_id",
-        "placement_group_partition":"placement_group_partition",
     }
     
 class DiskStatus(pb_classes.Message):
@@ -1021,6 +986,10 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetDiskRequest","Disk"]:
+        """
+         Retrieves information about a disk by its ID.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -1043,6 +1012,10 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Disk"]:
+        """
+         Retrieves information about a disk by its parent and name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -1065,6 +1038,10 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListDisksRequest","ListDisksResponse"]:
+        """
+         Lists all disks within a specified parent.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -1087,6 +1064,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateDiskRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Creates a new disk with the specified configuration.
+         For details, see https://docs.nebius.com/compute/storage/manage
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -1109,6 +1091,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateDiskRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Updates an existing disk with new configuration parameters.
+         For details, see https://docs.nebius.com/compute/storage/manage#parameters
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -1132,6 +1119,10 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteDiskRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Deletes a disk by its ID.
+        """
+        
         return super().request(
             method="Delete",
             request=request,
@@ -1154,6 +1145,10 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
+        """
+         Lists all operations that were performed within a specific parent resource.
+        """
+        
         return super().request(
             method="ListOperationsByParent",
             request=request,
@@ -1249,6 +1244,8 @@ class FilesystemSpec(pb_classes.Message):
         """
         
         NETWORK_HDD = 2
+        WEKA = 3
+        VAST = 4
     
     class __OneOfClass_size__(pb_classes.OneOf):
         name: builtins.str= "size"
@@ -1295,6 +1292,12 @@ class FilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def size(self) -> __OneOfClass_size_size_bytes__|__OneOfClass_size_size_kibibytes__|__OneOfClass_size_size_mebibytes__|__OneOfClass_size_size_gibibytes__|None:
+        """
+         Size of the disk. Only one size unit can be specified.
+         The size must be within the limits for the selected disk type.
+         For current limits, see https://docs.nebius.com/compute/storage/types#disks-types-comparison
+        """
+        
         field_name_1: str|None = super().which_field_in_oneof("size")
         match field_name_1:
             case "size_bytes":
@@ -1385,6 +1388,12 @@ class FilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def block_size_bytes(self) -> "builtins.int":
+        """
+         Block size in bytes.
+         The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+         The default value is 4096 bytes (4 KiB).
+        """
+        
         return super()._get_field("block_size_bytes", explicit_presence=False,
         )
     @block_size_bytes.setter
@@ -1394,6 +1403,11 @@ class FilesystemSpec(pb_classes.Message):
     
     @builtins.property
     def type(self) -> "FilesystemSpec.FilesystemType":
+        """
+         The Shared Filesystem type determines its limits and performance characteristics.
+         For details, see https://docs.nebius.com/compute/storage/types#filesystems-types
+        """
+        
         return super()._get_field("type", explicit_presence=False,
         wrap=FilesystemSpec.FilesystemType,
         )
@@ -1860,6 +1874,10 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetFilesystemRequest","Filesystem"]:
+        """
+         Retrieves information about a filesystem by its ID.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -1882,6 +1900,10 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Filesystem"]:
+        """
+         Retrieves information about a filesystem by its parent and name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -1904,6 +1926,10 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListFilesystemsRequest","ListFilesystemsResponse"]:
+        """
+         Lists all filesystems within a specified parent.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -1926,6 +1952,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateFilesystemRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Creates a new filesystem with the specified configuration.
+         For details, see https://docs.nebius.com/compute/storage/manage
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -1948,6 +1979,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateFilesystemRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Updates an existing filesystem with new configuration parameters.
+         For details, see https://docs.nebius.com/compute/storage/manage#parameters
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -1971,6 +2007,10 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteFilesystemRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Deletes a disk by its ID.
+        """
+        
         return super().request(
             method="Delete",
             request=request,
@@ -1993,6 +2033,10 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
+        """
+         Lists all operations that were performed within a specific parent resource.
+        """
+        
         return super().request(
             method="ListOperationsByParent",
             request=request,
@@ -2096,6 +2140,11 @@ class GpuClusterSpec(pb_classes.Message):
     
     @builtins.property
     def infiniband_fabric(self) -> "builtins.str":
+        """
+         The identifier of the physical InfiniBand fabric to connect GPU instances to.
+         For details, see https://docs.nebius.com/compute/clusters/gpu#fabrics
+        """
+        
         return super()._get_field("infiniband_fabric", explicit_presence=False,
         )
     @infiniband_fabric.setter
@@ -2599,6 +2648,10 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetGpuClusterRequest","GpuCluster"]:
+        """
+         Retrieves the specified GPU Cluster by its ID.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -2621,6 +2674,10 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","GpuCluster"]:
+        """
+         Retrieves the specified GPU Cluster by its parent and name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -2643,6 +2700,10 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListGpuClustersRequest","ListGpuClustersResponse"]:
+        """
+         Lists GPU Clusters in the specified parent.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -2665,6 +2726,11 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateGpuClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Creates a new GPU Cluster.
+         For details, see https://docs.nebius.com/compute/clusters/gpu#create-cluster
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -2687,6 +2753,10 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateGpuClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Modifies the configuration of an existing GPU Cluster.
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -2710,6 +2780,10 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteGpuClusterRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Deletes a GPU Cluster by its ID.
+        """
+        
         return super().request(
             method="Delete",
             request=request,
@@ -2732,6 +2806,10 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
+        """
+         Lists all operations that were performed within a specific parent resource.
+        """
+        
         return super().request(
             method="ListOperationsByParent",
             request=request,
@@ -3258,6 +3336,10 @@ class ImageServiceClient(client.Client):
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetImageRequest","Image"]:
+        """
+         Retrieves detailed information about a specific image by its ID.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -3280,6 +3362,10 @@ class ImageServiceClient(client.Client):
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Image"]:
+        """
+         Retrieves detailed information about a specific image by its parent and name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -3302,6 +3388,11 @@ class ImageServiceClient(client.Client):
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetImageLatestByFamilyRequest","Image"]:
+        """
+         Retrieves the most recent image from a specified family.
+         Image families are used to organize related images and ensure easy access to the latest version.
+        """
+        
         return super().request(
             method="GetLatestByFamily",
             request=request,
@@ -3324,6 +3415,10 @@ class ImageServiceClient(client.Client):
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListImagesRequest","ListImagesResponse"]:
+        """
+         Lists all images in a specific parent resource.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -3346,6 +3441,10 @@ class ImageServiceClient(client.Client):
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
+        """
+         Lists all operations that were performed within a specific parent resource.
+        """
+        
         return super().request(
             method="ListOperationsByParent",
             request=request,
@@ -3617,6 +3716,7 @@ class NetworkInterfaceStatus(pb_classes.Message):
         ip_address: "IPAddressStatus|network_interface_pb2.IPAddressStatus|None|unset.UnsetType" = unset.Unset,
         public_ip_address: "PublicIPAddressStatus|network_interface_pb2.PublicIPAddressStatus|None|unset.UnsetType" = unset.Unset,
         mac_address: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        fqdn: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(index, unset.UnsetType):
@@ -3629,6 +3729,8 @@ class NetworkInterfaceStatus(pb_classes.Message):
             self.public_ip_address = public_ip_address
         if not isinstance(mac_address, unset.UnsetType):
             self.mac_address = mac_address
+        if not isinstance(fqdn, unset.UnsetType):
+            self.fqdn = fqdn
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -3637,6 +3739,7 @@ class NetworkInterfaceStatus(pb_classes.Message):
             "ip_address",
             "public_ip_address",
             "mac_address",
+            "fqdn",
         ]
     
     @builtins.property
@@ -3707,12 +3810,26 @@ class NetworkInterfaceStatus(pb_classes.Message):
         return super()._set_field("mac_address",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def fqdn(self) -> "builtins.str":
+        """
+         FQDN of the interface
+        """
+        
+        return super()._get_field("fqdn", explicit_presence=False,
+        )
+    @fqdn.setter
+    def fqdn(self, value: "builtins.str|None") -> None:
+        return super()._set_field("fqdn",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "index":"index",
         "name":"name",
         "ip_address":"ip_address",
         "public_ip_address":"public_ip_address",
         "mac_address":"mac_address",
+        "fqdn":"fqdn",
     }
     
 class IPAddressStatus(pb_classes.Message):
@@ -3977,6 +4094,11 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def service_account_id(self) -> "builtins.str":
+        """
+         Unique identifier of the service account associated with this instance.
+         For details, see https://docs.nebius.dev/en/iam/about-iam/concepts/service-accounts
+        """
+        
         return super()._get_field("service_account_id", explicit_presence=False,
         )
     @service_account_id.setter
@@ -3986,6 +4108,11 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def resources(self) -> "ResourcesSpec":
+        """
+         Specification of compute resources allocated to the instance.
+         For details, see https://docs.nebius.com/compute/virtual-machines/types
+        """
+        
         return super()._get_field("resources", explicit_presence=False,
         wrap=ResourcesSpec,
         )
@@ -3996,6 +4123,13 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def gpu_cluster(self) -> "InstanceGpuClusterSpec":
+        """
+         If you want to interconnect several instances in a GPU cluster via NVIDIA InfiniBand,
+         set the ID of an existing GPU cluster.
+         You can only add the VM to the cluster when creating the VM.
+         For details, see https://docs.nebius.com/compute/clusters/gpu
+        """
+        
         return super()._get_field("gpu_cluster", explicit_presence=False,
         wrap=InstanceGpuClusterSpec,
         )
@@ -4006,6 +4140,10 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def network_interfaces(self) -> "abc.MutableSequence[NetworkInterfaceSpec]":
+        """
+         List of network interfaces attached to the instance.
+        """
+        
         return super()._get_field("network_interfaces", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(NetworkInterfaceSpec,None,None),
         )
@@ -4016,6 +4154,10 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def boot_disk(self) -> "AttachedDiskSpec":
+        """
+         Specified boot disk attached to the instance.
+        """
+        
         return super()._get_field("boot_disk", explicit_presence=False,
         wrap=AttachedDiskSpec,
         )
@@ -4026,6 +4168,10 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def secondary_disks(self) -> "abc.MutableSequence[AttachedDiskSpec]":
+        """
+         List of additional data disks attached to the instance beyond the boot disk.
+        """
+        
         return super()._get_field("secondary_disks", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AttachedDiskSpec,None,None),
         )
@@ -4036,6 +4182,10 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def filesystems(self) -> "abc.MutableSequence[AttachedFilesystemSpec]":
+        """
+         List of Shared Filesystems attached to the instance.
+        """
+        
         return super()._get_field("filesystems", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(AttachedFilesystemSpec,None,None),
         )
@@ -4046,6 +4196,11 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def cloud_init_user_data(self) -> "builtins.str":
+        """
+         Data in cloud-init format for customizing instance initialization.
+         For details, see https://docs.nebius.com/compute/virtual-machines/manage#user-data
+        """
+        
         return super()._get_field("cloud_init_user_data", explicit_presence=False,
         )
     @cloud_init_user_data.setter
@@ -4055,6 +4210,10 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def stopped(self) -> "builtins.bool":
+        """
+         Indicates whether the instance should be stopped.
+        """
+        
         return super()._get_field("stopped", explicit_presence=False,
         )
     @stopped.setter
@@ -5021,6 +5180,10 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetInstanceRequest","Instance"]:
+        """
+         Retrieves detailed information about a specific VM instance by its ID.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -5043,6 +5206,10 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Instance"]:
+        """
+         Retrieves detailed information about a specific VM instance by its parent and name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -5065,6 +5232,10 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListInstancesRequest","ListInstancesResponse"]:
+        """
+         Lists all VM instances within a specified parent.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -5087,6 +5258,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["CreateInstanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Creates a new VM instance based on the provided specification.
+         For details, see https://docs.nebius.com/compute/virtual-machines/manage
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -5109,6 +5285,10 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["UpdateInstanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Updates an existing VM instance with new configuration parameters.
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -5132,6 +5312,10 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["DeleteInstanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Deletes a VM instance by its ID.
+        """
+        
         return super().request(
             method="Delete",
             request=request,
@@ -5154,6 +5338,10 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["StartInstanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Starts a stopped VM instance.
+        """
+        
         return super().request(
             method="Start",
             request=request,
@@ -5176,6 +5364,10 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["StopInstanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+         Stops a running VM instance.
+        """
+        
         return super().request(
             method="Stop",
             request=request,
@@ -5198,6 +5390,10 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
+        """
+         Lists all operations that were performed within a specific parent resource.
+        """
+        
         return super().request(
             method="ListOperationsByParent",
             request=request,
@@ -5209,6 +5405,621 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
             retries=retries,
             per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(v1_1.ListOperationsResponse),
+        )
+    
+
+# file: nebius/compute/v1/maintenance_event.proto
+class MaintenanceEvent(pb_classes.Message):
+    __PB2_CLASS__ = maintenance_event_pb2.MaintenanceEvent
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.MaintenanceEvent",maintenance_event_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        spec: "MaintenanceEventSpec|maintenance_event_pb2.MaintenanceEventSpec|None|unset.UnsetType" = unset.Unset,
+        status: "MaintenanceEventStatus|maintenance_event_pb2.MaintenanceEventStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "MaintenanceEventSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=MaintenanceEventSpec,
+        )
+    @spec.setter
+    def spec(self, value: "MaintenanceEventSpec|maintenance_event_pb2.MaintenanceEventSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "MaintenanceEventStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=MaintenanceEventStatus,
+        )
+    @status.setter
+    def status(self, value: "MaintenanceEventStatus|maintenance_event_pb2.MaintenanceEventStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class MaintenanceEventSpec(pb_classes.Message):
+    __PB2_CLASS__ = maintenance_event_pb2.MaintenanceEventSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.MaintenanceEventSpec",maintenance_event_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        is_planned: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(is_planned, unset.UnsetType):
+            self.is_planned = is_planned
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "is_planned",
+        ]
+    
+    @builtins.property
+    def is_planned(self) -> "builtins.bool":
+        """
+         If the maintenance event is planned or not
+        """
+        
+        return super()._get_field("is_planned", explicit_presence=False,
+        )
+    @is_planned.setter
+    def is_planned(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("is_planned",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "is_planned":"is_planned",
+    }
+    
+class MaintenanceEventStatus(pb_classes.Message):
+    __PB2_CLASS__ = maintenance_event_pb2.MaintenanceEventStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.MaintenanceEventStatus",maintenance_event_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "created_at": well_known_1.ts_mask,
+        "finished_at": well_known_1.ts_mask,
+        "sla_deadline_ts": well_known_1.ts_mask,
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        maintenance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        created_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        sla_deadline_ts: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        support_center_ticket_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(maintenance_id, unset.UnsetType):
+            self.maintenance_id = maintenance_id
+        if not isinstance(created_at, unset.UnsetType):
+            self.created_at = created_at
+        if not isinstance(finished_at, unset.UnsetType):
+            self.finished_at = finished_at
+        if not isinstance(sla_deadline_ts, unset.UnsetType):
+            self.sla_deadline_ts = sla_deadline_ts
+        if not isinstance(support_center_ticket_id, unset.UnsetType):
+            self.support_center_ticket_id = support_center_ticket_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "maintenance_id",
+            "created_at",
+            "finished_at",
+            "sla_deadline_ts",
+            "support_center_ticket_id",
+        ]
+    
+    @builtins.property
+    def maintenance_id(self) -> "builtins.str":
+        return super()._get_field("maintenance_id", explicit_presence=False,
+        )
+    @maintenance_id.setter
+    def maintenance_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("maintenance_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def created_at(self) -> "datetime.datetime":
+        """
+         Time when the maintenance event is created
+        """
+        
+        return super()._get_field("created_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @created_at.setter
+    def created_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("created_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def finished_at(self) -> "datetime.datetime":
+        """
+         Time when the maintenance event is finished
+        """
+        
+        return super()._get_field("finished_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @finished_at.setter
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("finished_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def sla_deadline_ts(self) -> "datetime.datetime":
+        """
+         Time when the instance will be force stopped
+        """
+        
+        return super()._get_field("sla_deadline_ts", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @sla_deadline_ts.setter
+    def sla_deadline_ts(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("sla_deadline_ts",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def support_center_ticket_id(self) -> "builtins.str":
+        """
+         Ticket key, can be transformed into url where support is talking with the client
+        """
+        
+        return super()._get_field("support_center_ticket_id", explicit_presence=False,
+        )
+    @support_center_ticket_id.setter
+    def support_center_ticket_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("support_center_ticket_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "maintenance_id":"maintenance_id",
+        "created_at":"created_at",
+        "finished_at":"finished_at",
+        "sla_deadline_ts":"sla_deadline_ts",
+        "support_center_ticket_id":"support_center_ticket_id",
+    }
+    
+# file: nebius/compute/v1/maintenance_service.proto
+class GetMaintenanceEventByInstanceRequest(pb_classes.Message):
+    __PB2_CLASS__ = maintenance_service_pb2.GetMaintenanceEventByInstanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetMaintenanceEventByInstanceRequest",maintenance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        instance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(instance_id, unset.UnsetType):
+            self.instance_id = instance_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "instance_id",
+        ]
+    
+    @builtins.property
+    def instance_id(self) -> "builtins.str":
+        return super()._get_field("instance_id", explicit_presence=False,
+        )
+    @instance_id.setter
+    def instance_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("instance_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "instance_id":"instance_id",
+    }
+    
+class ListMaintenanceEventsRequest(pb_classes.Message):
+    __PB2_CLASS__ = maintenance_service_pb2.ListMaintenanceEventsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListMaintenanceEventsRequest",maintenance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListMaintenanceEventsResponse(pb_classes.Message):
+    __PB2_CLASS__ = maintenance_service_pb2.ListMaintenanceEventsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListMaintenanceEventsResponse",maintenance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[MaintenanceEvent]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[MaintenanceEvent]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(MaintenanceEvent,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[MaintenanceEvent]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+
+class MaintenanceServiceClient(client.Client):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1.MaintenanceService",maintenance_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.compute.v1.MaintenanceService"
+    
+    def get_by_instance(self,
+        request: "GetMaintenanceEventByInstanceRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["GetMaintenanceEventByInstanceRequest","MaintenanceEvent"]:
+        """
+         Returns only active maintenance event for the instance
+        """
+        
+        return super().request(
+            method="GetByInstance",
+            request=request,
+            result_pb2_class=maintenance_event_pb2.MaintenanceEvent,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(MaintenanceEvent),
+        )
+    
+    def list_active(self,
+        request: "ListMaintenanceEventsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["ListMaintenanceEventsRequest","ListMaintenanceEventsResponse"]:
+        """
+         Returns all unfinished maintenance events for the parent
+        """
+        
+        return super().request(
+            method="ListActive",
+            request=request,
+            result_pb2_class=maintenance_service_pb2.ListMaintenanceEventsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(ListMaintenanceEventsResponse),
+        )
+    
+
+# file: nebius/compute/v1/node_service.proto
+class NodeSetUnhealthyRequest(pb_classes.Message):
+    __PB2_CLASS__ = node_service_pb2.NodeSetUnhealthyRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NodeSetUnhealthyRequest",node_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class HealthCheckInfo(pb_classes.Message):
+        __PB2_CLASS__ = node_service_pb2.NodeSetUnhealthyRequest.HealthCheckInfo
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NodeSetUnhealthyRequest.HealthCheckInfo",node_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+            "observed_at": well_known_1.ts_mask,
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            observed_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+            check_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(observed_at, unset.UnsetType):
+                self.observed_at = observed_at
+            if not isinstance(check_id, unset.UnsetType):
+                self.check_id = check_id
+            if not isinstance(description, unset.UnsetType):
+                self.description = description
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "observed_at",
+                "check_id",
+                "description",
+            ]
+        
+        @builtins.property
+        def observed_at(self) -> "datetime.datetime":
+            """
+             Time when the unhealthy node was observed
+            """
+            
+            return super()._get_field("observed_at", explicit_presence=False,
+            wrap=well_known_1.from_timestamp
+            )
+        @observed_at.setter
+        def observed_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+            return super()._set_field("observed_at",value,explicit_presence=False,
+            unwrap=well_known_1.to_timestamp
+            )
+        
+        @builtins.property
+        def check_id(self) -> "builtins.str":
+            """
+             Identifies specific GPU check that failed in soperator (key for observability)
+            """
+            
+            return super()._get_field("check_id", explicit_presence=False,
+            )
+        @check_id.setter
+        def check_id(self, value: "builtins.str|None") -> None:
+            return super()._set_field("check_id",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def description(self) -> "builtins.str":
+            """
+             Human-readable description of the error for further investigation
+            """
+            
+            return super()._get_field("description", explicit_presence=False,
+            )
+        @description.setter
+        def description(self, value: "builtins.str|None") -> None:
+            return super()._set_field("description",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "observed_at":"observed_at",
+            "check_id":"check_id",
+            "description":"description",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        instance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        health_check_info: "NodeSetUnhealthyRequest.HealthCheckInfo|node_service_pb2.NodeSetUnhealthyRequest.HealthCheckInfo|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(instance_id, unset.UnsetType):
+            self.instance_id = instance_id
+        if not isinstance(health_check_info, unset.UnsetType):
+            self.health_check_info = health_check_info
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "instance_id",
+            "health_check_info",
+            "HealthCheckInfo",
+        ]
+    
+    @builtins.property
+    def instance_id(self) -> "builtins.str":
+        return super()._get_field("instance_id", explicit_presence=False,
+        )
+    @instance_id.setter
+    def instance_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("instance_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def health_check_info(self) -> "NodeSetUnhealthyRequest.HealthCheckInfo":
+        return super()._get_field("health_check_info", explicit_presence=False,
+        wrap=NodeSetUnhealthyRequest.HealthCheckInfo,
+        )
+    @health_check_info.setter
+    def health_check_info(self, value: "NodeSetUnhealthyRequest.HealthCheckInfo|node_service_pb2.NodeSetUnhealthyRequest.HealthCheckInfo|None") -> None:
+        return super()._set_field("health_check_info",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "instance_id":"instance_id",
+        "health_check_info":"health_check_info",
+        "HealthCheckInfo":"HealthCheckInfo",
+    }
+    
+class NodeSetUnhealthyResponse(pb_classes.Message):
+    __PB2_CLASS__ = node_service_pb2.NodeSetUnhealthyResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NodeSetUnhealthyResponse",node_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+
+class NodeServiceClient(client.Client):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1.NodeService",node_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.compute.v1.NodeService"
+    
+    def set_unhealthy(self,
+        request: "NodeSetUnhealthyRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["NodeSetUnhealthyRequest","NodeSetUnhealthyResponse"]:
+        """
+         SetUnhealthy marks the node underlying the Compute VM as unhealthy,
+         which has the following effect:
+         1. Scheduler makes its best effort not to assign new VMs to the unhealthy node,
+            but in case of no capacity the VM can be assigned there.
+         2. The existing VMs continue to work on the node, but after stop/start via
+            Compute API they most probably will be assigned to different node (see 1.)
+        
+         If the node was already marked unhealthy, the consecutive calls to SetUnhealthy
+         will return grpc code AlreadyExists.
+        
+         To use this rpc one needs to obtain `compute.node.setUnhealthy` permission
+         for the VM's parent container. The permission is granted to the TSA inside the VM
+        
+        """
+        
+        return super().request(
+            method="SetUnhealthy",
+            request=request,
+            result_pb2_class=node_service_pb2.NodeSetUnhealthyResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(NodeSetUnhealthyResponse),
         )
     
 
@@ -5625,6 +6436,10 @@ class PlatformServiceClient(client.Client):
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["v1_1.GetByNameRequest","Platform"]:
+        """
+         Retrieves detailed information about a specific compute platform by its parent and name.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -5647,6 +6462,10 @@ class PlatformServiceClient(client.Client):
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["ListPlatformsRequest","ListPlatformsResponse"]:
+        """
+         Lists all compute platforms within a specified parent.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -5666,7 +6485,6 @@ __all__ = [
     "Disk",
     "DiskSpec",
     "SourceImageFamily",
-    "DiskPlacementPolicy",
     "DiskStatus",
     "ListOperationsByParentRequest",
     "GetDiskRequest",
@@ -5732,6 +6550,16 @@ __all__ = [
     "StartInstanceRequest",
     "StopInstanceRequest",
     "InstanceServiceClient",
+    "MaintenanceEvent",
+    "MaintenanceEventSpec",
+    "MaintenanceEventStatus",
+    "GetMaintenanceEventByInstanceRequest",
+    "ListMaintenanceEventsRequest",
+    "ListMaintenanceEventsResponse",
+    "MaintenanceServiceClient",
+    "NodeSetUnhealthyRequest",
+    "NodeSetUnhealthyResponse",
+    "NodeServiceClient",
     "Platform",
     "PlatformSpec",
     "Preset",

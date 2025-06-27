@@ -32,13 +32,15 @@ class PlatformServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetByName(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Retrieves detailed information about a specific compute platform by its parent and name.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def List(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Lists all compute platforms within a specified parent.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')

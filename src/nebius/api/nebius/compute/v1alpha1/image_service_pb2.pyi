@@ -1,3 +1,4 @@
+from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.common.v1alpha1 import operation_service_pb2 as _operation_service_pb2
 from nebius.api.nebius.compute.v1alpha1 import image_pb2 as _image_pb2
