@@ -98,3 +98,21 @@ jobs:
   #   if: ${{ needs.update.outputs.changes_detected == 'true' }}
   #   needs: update
   #   uses: ./.github/workflows/release.yml
+
+  notify-slack-on-failure:
+    if: failure()
+    needs: [update]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack notification
+        env:
+          SLACK_OAUTH_TOKEN: ${{ secrets.SLACK_OAUTH_TOKEN }}
+          SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+        run: |
+          curl -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer $SLACK_OAUTH_TOKEN" \
+            -H 'Content-type: application/json' \
+            --data "{
+              \"channel\":\"$SLACK_CHANNEL\",
+              \"text\":\"🚨 Workflow *${{ env.WORKFLOW_NAME }}* failed on \`${{ github.repository }}\`\"
+            }"
