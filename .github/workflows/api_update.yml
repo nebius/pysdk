@@ -100,19 +100,16 @@ jobs:
   #   uses: ./.github/workflows/release.yml
 
   notify-slack-on-failure:
+    name: Notify Slack on failure
     if: failure()
     needs: [update]
     runs-on: ubuntu-latest
     steps:
-      - name: Send Slack notification
-        env:
-          SLACK_OAUTH_TOKEN: ${{ secrets.SLACK_OAUTH_TOKEN }}
-          SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
-        run: |
-          curl -X POST https://slack.com/api/chat.postMessage \
-            -H "Authorization: Bearer $SLACK_OAUTH_TOKEN" \
-            -H 'Content-type: application/json' \
-            --data "{
-              \"channel\":\"$SLACK_CHANNEL\",
-              \"text\":\"🚨 Workflow *${{ env.WORKFLOW_NAME }}* failed on \`${{ github.repository }}\`\"
-            }"
+      - name: Post text to a Slack channel
+        uses: slackapi/slack-github-action@v2.1.0
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_OAUTH_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL }}
+            text: "🚨 Workflow *${{ env.WORKFLOW_NAME }}* failed on `${{ github.repository }}`"
