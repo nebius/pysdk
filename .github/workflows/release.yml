@@ -95,4 +95,8 @@ jobs:
           token: ${{ secrets.SLACK_OAUTH_TOKEN }}
           payload: |
             channel: ${{ secrets.SLACK_CHANNEL }}
-            text: "🚨 Workflow *${{ env.WORKFLOW_NAME }}* failed on `${{ github.repository }}`"
+            text:
+              type: mrkdwn
+              text: |
+                🚨 Workflow *${{ github.workflow }}* failed on `${{ github.repository }}`
+                <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>
