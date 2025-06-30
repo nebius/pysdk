@@ -25,19 +25,19 @@ class NodeServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def SetUnhealthy(self, request, context):
-        """SetUnhealthy marks the node underlying the Compute VM as unhealthy,
-        which has the following effect:
-        1. Scheduler makes its best effort not to assign new VMs to the unhealthy node,
-        but in case of no capacity the VM can be assigned there.
+        """SetUnhealthy marks the node underlying the Compute VM as unhealthy, which has the following effect:
+
+        1. Scheduler makes the best effort not to assign new VMs to the unhealthy node,
+        but in case of no capacity, the VM can be assigned to an unhealthy node.
         2. The existing VMs continue to work on the node, but after stop/start via
-        Compute API they most probably will be assigned to different node (see 1.)
+        Compute API they most probably will be assigned to a different node.
 
         If the node was already marked unhealthy, the consecutive calls to SetUnhealthy
         will return grpc code AlreadyExists.
 
         To use this rpc one needs to obtain `compute.node.setUnhealthy` permission
-        for the VM's parent container. The permission is granted to the TSA inside the VM
-
+        for the VM's parent container. The permission is granted to the TSA inside the VM.
+        .
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
