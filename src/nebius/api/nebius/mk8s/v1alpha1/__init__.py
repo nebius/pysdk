@@ -191,7 +191,7 @@ class ControlPlaneSpec(pb_classes.Message):
     def version(self) -> "builtins.str":
         """
          Version is desired Kubernetes version of the cluster. For now only acceptable format is
-         `MAJOR.MINOR` like "1.30". Option for patch version update will be added later.
+         `MAJOR.MINOR` like "1.31". Option for patch version update will be added later.
         """
         
         return super()._get_field("version", explicit_presence=False,
@@ -1757,7 +1757,7 @@ class NodeGroupSpec(pb_classes.Message):
     def version(self) -> "builtins.str":
         """
          Version is desired Kubernetes version of the cluster. For now only acceptable format is
-         `MAJOR.MINOR` like "1.30". Option for patch version update will be added later.
+         `MAJOR.MINOR` like "1.31". Option for patch version update will be added later.
          By default the cluster control plane MAJOR.MINOR version will be used.
         """
         

@@ -24,14 +24,18 @@ class Bucket(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[BucketSpec, _Mapping]] = ..., status: _Optional[_Union[BucketStatus, _Mapping]] = ...) -> None: ...
 
 class BucketSpec(_message.Message):
-    __slots__ = ["versioning_policy", "max_size_bytes", "lifecycle_configuration"]
+    __slots__ = ["versioning_policy", "max_size_bytes", "lifecycle_configuration", "default_storage_class", "override_storage_class"]
     VERSIONING_POLICY_FIELD_NUMBER: _ClassVar[int]
     MAX_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     LIFECYCLE_CONFIGURATION_FIELD_NUMBER: _ClassVar[int]
+    DEFAULT_STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
+    OVERRIDE_STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
     versioning_policy: _base_pb2.VersioningPolicy
     max_size_bytes: int
     lifecycle_configuration: _lifecycle_pb2.LifecycleConfiguration
-    def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ...) -> None: ...
+    default_storage_class: _base_pb2.StorageClass
+    override_storage_class: _base_pb2.StorageClass
+    def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ..., default_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., override_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ...) -> None: ...
 
 class BucketStatus(_message.Message):
     __slots__ = ["counters", "state", "suspension_state", "deleted_at", "purge_at", "domain_name", "region"]
