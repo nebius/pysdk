@@ -1406,6 +1406,7 @@ class ListAuditEventRequest(pb_classes.Message):
          resource.metadata.type
          service.name
          type
+         status
         """
         
         return super()._get_field("filter", explicit_presence=False,

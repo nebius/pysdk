@@ -8,7 +8,9 @@ from nebius.api.nebius.iam.v1 import access_key_service_pb2 as nebius_dot_iam_do
 
 
 class AccessKeyServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Access keys API v1 is depricated. It's known to malfunction under certain conditions.
+    Use Access keys API v2 instead. Access keys create by API v1 are available using Access keys API v2.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -69,7 +71,9 @@ class AccessKeyServiceStub(object):
 
 
 class AccessKeyServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Access keys API v1 is depricated. It's known to malfunction under certain conditions.
+    Use Access keys API v2 instead. Access keys create by API v1 are available using Access keys API v2.
+    """
 
     def Create(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -192,7 +196,9 @@ def add_AccessKeyServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class AccessKeyService(object):
-    """Missing associated documentation comment in .proto file."""
+    """Access keys API v1 is depricated. It's known to malfunction under certain conditions.
+    Use Access keys API v2 instead. Access keys create by API v1 are available using Access keys API v2.
+    """
 
     @staticmethod
     def Create(request,

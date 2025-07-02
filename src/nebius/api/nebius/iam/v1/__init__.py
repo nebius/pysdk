@@ -1226,6 +1226,11 @@ class ListAccessKeysResponse(pb_classes.Message):
     
 
 class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+     Access keys API v1 is depricated. It's known to malfunction under certain conditions.
+     Use Access keys API v2 instead. Access keys create by API v1 are available using Access keys API v2.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.AccessKeyService",access_key_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.AccessKeyService"
     __operation_type__ = v1_1.Operation
