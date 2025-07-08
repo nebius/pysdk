@@ -4055,6 +4055,7 @@ class InstanceSpec(pb_classes.Message):
         cloud_init_user_data: "builtins.str|None|unset.UnsetType" = unset.Unset,
         stopped: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None|unset.UnsetType" = unset.Unset,
+        preemptible: "PreemptibleSpec|instance_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service_account_id, unset.UnsetType):
@@ -4077,6 +4078,8 @@ class InstanceSpec(pb_classes.Message):
             self.stopped = stopped
         if not isinstance(recovery_policy, unset.UnsetType):
             self.recovery_policy = recovery_policy
+        if not isinstance(preemptible, unset.UnsetType):
+            self.preemptible = preemptible
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -4090,6 +4093,7 @@ class InstanceSpec(pb_classes.Message):
             "cloud_init_user_data",
             "stopped",
             "recovery_policy",
+            "preemptible",
         ]
     
     @builtins.property
@@ -4238,6 +4242,16 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("recovery_policy",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def preemptible(self) -> "PreemptibleSpec":
+        return super()._get_field("preemptible", explicit_presence=False,
+        wrap=PreemptibleSpec,
+        )
+    @preemptible.setter
+    def preemptible(self, value: "PreemptibleSpec|instance_pb2.PreemptibleSpec|None") -> None:
+        return super()._set_field("preemptible",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "service_account_id":"service_account_id",
         "resources":"resources",
@@ -4249,6 +4263,63 @@ class InstanceSpec(pb_classes.Message):
         "cloud_init_user_data":"cloud_init_user_data",
         "stopped":"stopped",
         "recovery_policy":"recovery_policy",
+        "preemptible":"preemptible",
+    }
+    
+class PreemptibleSpec(pb_classes.Message):
+    __PB2_CLASS__ = instance_pb2.PreemptibleSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PreemptibleSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class PreemptionPolicy(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.PreemptibleSpec.PreemptionPolicy",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        STOP = 1
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        on_preemption: "PreemptibleSpec.PreemptionPolicy|instance_pb2.PreemptibleSpec.PreemptionPolicy|None|unset.UnsetType" = unset.Unset,
+        priority: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(on_preemption, unset.UnsetType):
+            self.on_preemption = on_preemption
+        if not isinstance(priority, unset.UnsetType):
+            self.priority = priority
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "on_preemption",
+            "priority",
+            "PreemptionPolicy",
+        ]
+    
+    @builtins.property
+    def on_preemption(self) -> "PreemptibleSpec.PreemptionPolicy":
+        return super()._get_field("on_preemption", explicit_presence=False,
+        wrap=PreemptibleSpec.PreemptionPolicy,
+        )
+    @on_preemption.setter
+    def on_preemption(self, value: "PreemptibleSpec.PreemptionPolicy|instance_pb2.PreemptibleSpec.PreemptionPolicy|None") -> None:
+        return super()._set_field("on_preemption",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def priority(self) -> "builtins.int":
+        return super()._get_field("priority", explicit_presence=False,
+        )
+    @priority.setter
+    def priority(self, value: "builtins.int|None") -> None:
+        return super()._set_field("priority",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "on_preemption":"on_preemption",
+        "priority":"priority",
+        "PreemptionPolicy":"PreemptionPolicy",
     }
     
 class ResourcesSpec(pb_classes.Message):
@@ -6533,6 +6604,7 @@ __all__ = [
     "InstanceRecoveryPolicy",
     "Instance",
     "InstanceSpec",
+    "PreemptibleSpec",
     "ResourcesSpec",
     "InstanceGpuClusterSpec",
     "AttachedDiskSpec",

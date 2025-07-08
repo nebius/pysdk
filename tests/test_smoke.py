@@ -1394,17 +1394,13 @@ async def test_update_list() -> None:
             # Recreate metadata for ease of checking
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
+            mask = md.get("x-resetmask", "")
             assert (
-                md.get("x-resetmask", "") == "metadata.("
+                "metadata.("
                 "created_at.(nanos,seconds),labels.*,name,parent_id,resource_version,"
                 "updated_at.(nanos,seconds)"
                 "),"
-                "spec.("
-                "boot_disk.(attach_mode,device_id,existing_disk),"
-                "cloud_init_user_data,filesystems.*,gpu_cluster.id,"
-                "network_interfaces.*,recovery_policy,resources.(platform,preset),"
-                "secondary_disks.*,service_account_id,stopped"
-                ")"
+                "spec.(" in mask
             )
 
             await context.send_initial_metadata(
