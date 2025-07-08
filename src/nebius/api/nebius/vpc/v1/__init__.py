@@ -27,6 +27,8 @@ import nebius.api.nebius.vpc.v1.network_service_pb2 as network_service_pb2
 import nebius.api.nebius.vpc.v1.pool_service_pb2 as pool_service_pb2
 import nebius.api.nebius.vpc.v1.subnet_pb2 as subnet_pb2
 import nebius.api.nebius.vpc.v1.subnet_service_pb2 as subnet_service_pb2
+import nebius.api.nebius.vpc.v1.target_group_pb2 as target_group_pb2
+import nebius.api.nebius.vpc.v1.target_group_service_pb2 as target_group_service_pb2
 #@ local imports here @#
 
 # file: nebius/vpc/v1/pool.proto
@@ -4328,6 +4330,527 @@ class SubnetServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         )
     
 
+# file: nebius/vpc/v1/target_group.proto
+class TargetGroup(pb_classes.Message):
+    """
+     Target group represents the set of resources that receive traffic from a load balancer listener
+    """
+    
+    __PB2_CLASS__ = target_group_pb2.TargetGroup
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.TargetGroup",target_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "TargetGroupSpec|target_group_pb2.TargetGroupSpec|None|unset.UnsetType" = unset.Unset,
+        status: "TargetGroupStatus|target_group_pb2.TargetGroupStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+         Metadata for the TargetGroup resource.
+         `metadata.parent_id` represents IAM container
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "TargetGroupSpec":
+        """
+         Specification of the TargetGroup.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=TargetGroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "TargetGroupSpec|target_group_pb2.TargetGroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "TargetGroupStatus":
+        """
+         Status of the TargetGroup.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=TargetGroupStatus,
+        )
+    @status.setter
+    def status(self, value: "TargetGroupStatus|target_group_pb2.TargetGroupStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class TargetGroupSpec(pb_classes.Message):
+    __PB2_CLASS__ = target_group_pb2.TargetGroupSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.TargetGroupSpec",target_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        targets: "abc.Iterable[Target]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(targets, unset.UnsetType):
+            self.targets = targets
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "targets",
+        ]
+    
+    @builtins.property
+    def targets(self) -> "abc.MutableSequence[Target]":
+        """
+         Targets of the TargetGroup
+        """
+        
+        return super()._get_field("targets", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Target,None,None),
+        )
+    @targets.setter
+    def targets(self, value: "abc.Iterable[Target]|None") -> None:
+        return super()._set_field("targets",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "targets":"targets",
+    }
+    
+class Target(pb_classes.Message):
+    """
+     Represents the target which can receive traffic from a load balancer listener
+    """
+    
+    __PB2_CLASS__ = target_group_pb2.Target
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Target",target_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_target__(pb_classes.OneOf):
+        name: builtins.str= "target"
+        
+        def __init__(self, msg: "Target") -> None:
+            super().__init__()
+            self._message: "Target" = msg
+    
+    class __OneOfClass_target_compute_instance__(__OneOfClass_target__):
+        field: typing.Literal["compute_instance"] = "compute_instance"
+        
+        def __init__(self, msg: "Target") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ComputeInstance":
+            return self._message.compute_instance
+    
+    @builtins.property
+    def target(self) -> __OneOfClass_target_compute_instance__|None:
+        field_name_1: str|None = super().which_field_in_oneof("target")
+        match field_name_1:
+            case "compute_instance":
+                return self.__OneOfClass_target_compute_instance__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        compute_instance: "ComputeInstance|target_group_pb2.ComputeInstance|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(compute_instance, unset.UnsetType):
+            self.compute_instance = compute_instance
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "compute_instance",
+            "target",
+        ]
+    
+    @builtins.property
+    def compute_instance(self) -> "ComputeInstance|None":
+        """
+         Compute instance used as a target
+        """
+        
+        return super()._get_field("compute_instance", explicit_presence=True,
+        wrap=ComputeInstance,
+        )
+    @compute_instance.setter
+    def compute_instance(self, value: "ComputeInstance|target_group_pb2.ComputeInstance|None") -> None:
+        return super()._set_field("compute_instance",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "compute_instance":"compute_instance",
+        "target":"target",
+    }
+    
+class ComputeInstance(pb_classes.Message):
+    """
+     Target representing compute instance
+    """
+    
+    __PB2_CLASS__ = target_group_pb2.ComputeInstance
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ComputeInstance",target_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        network_interface_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(network_interface_name, unset.UnsetType):
+            self.network_interface_name = network_interface_name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "network_interface_name",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+         Compute instance id to send traffic to
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def network_interface_name(self) -> "builtins.str":
+        """
+         Name of the compute instance's NetworkInterface to send traffic to. If not specified the first one will be used.
+        """
+        
+        return super()._get_field("network_interface_name", explicit_presence=False,
+        )
+    @network_interface_name.setter
+    def network_interface_name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("network_interface_name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "network_interface_name":"network_interface_name",
+    }
+    
+class TargetGroupStatus(pb_classes.Message):
+    __PB2_CLASS__ = target_group_pb2.TargetGroupStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.TargetGroupStatus",target_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        load_balancer_ids: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        target_statuses: "abc.Iterable[TargetStatus]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(load_balancer_ids, unset.UnsetType):
+            self.load_balancer_ids = load_balancer_ids
+        if not isinstance(target_statuses, unset.UnsetType):
+            self.target_statuses = target_statuses
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "load_balancer_ids",
+            "target_statuses",
+        ]
+    
+    @builtins.property
+    def load_balancer_ids(self) -> "abc.MutableSequence[builtins.str]":
+        """
+         LoadBalancer ids target group is attached to
+        """
+        
+        return super()._get_field("load_balancer_ids", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @load_balancer_ids.setter
+    def load_balancer_ids(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("load_balancer_ids",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def target_statuses(self) -> "abc.MutableSequence[TargetStatus]":
+        """
+         Statuses of specified targets
+        """
+        
+        return super()._get_field("target_statuses", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(TargetStatus,None,None),
+        )
+    @target_statuses.setter
+    def target_statuses(self, value: "abc.Iterable[TargetStatus]|None") -> None:
+        return super()._set_field("target_statuses",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "load_balancer_ids":"load_balancer_ids",
+        "target_statuses":"target_statuses",
+    }
+    
+class TargetStatus(pb_classes.Message):
+    __PB2_CLASS__ = target_group_pb2.TargetStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.TargetStatus",target_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class TargetState(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.TargetStatus.TargetState",target_group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        TARGET_STATE_UNSPECIFIED = 0
+        READY = 1
+        """
+         The target exists and ready to receive traffic
+        """
+        
+        DISABLED = 2
+        """
+         The target exists, but not ready to receive traffic (i.e. network interface is not allocated)
+        """
+        
+        DELETED = 3
+        """
+         The target does not exist anymore (i.e. network interface was deleted)
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        compute_instance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        target_state: "TargetStatus.TargetState|target_group_pb2.TargetStatus.TargetState|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(compute_instance_id, unset.UnsetType):
+            self.compute_instance_id = compute_instance_id
+        if not isinstance(target_state, unset.UnsetType):
+            self.target_state = target_state
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "compute_instance_id",
+            "target_state",
+            "TargetState",
+        ]
+    
+    @builtins.property
+    def compute_instance_id(self) -> "builtins.str":
+        return super()._get_field("compute_instance_id", explicit_presence=False,
+        )
+    @compute_instance_id.setter
+    def compute_instance_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("compute_instance_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def target_state(self) -> "TargetStatus.TargetState":
+        return super()._get_field("target_state", explicit_presence=False,
+        wrap=TargetStatus.TargetState,
+        )
+    @target_state.setter
+    def target_state(self, value: "TargetStatus.TargetState|target_group_pb2.TargetStatus.TargetState|None") -> None:
+        return super()._set_field("target_state",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "compute_instance_id":"compute_instance_id",
+        "target_state":"target_state",
+        "TargetState":"TargetState",
+    }
+    
+# file: nebius/vpc/v1/target_group_service.proto
+class GetTargetGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = target_group_service_pb2.GetTargetGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetTargetGroupRequest",target_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class UpdateTargetGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = target_group_service_pb2.UpdateTargetGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdateTargetGroupRequest",target_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "TargetGroupSpec|target_group_pb2.TargetGroupSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "TargetGroupSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=TargetGroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "TargetGroupSpec|target_group_pb2.TargetGroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+
+class TargetGroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.vpc.v1.TargetGroupService",target_group_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.vpc.v1.TargetGroupService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Update"
+    
+    def get(self,
+        request: "GetTargetGroupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["GetTargetGroupRequest","TargetGroup"]:
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=target_group_pb2.TargetGroup,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(TargetGroup),
+        )
+    
+    def update(self,
+        request: "UpdateTargetGroupRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["UpdateTargetGroupRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
+
 __all__ = [
     #@ local import names here @#
     "AddressBlockState",
@@ -4396,4 +4919,13 @@ __all__ = [
     "UpdateSubnetRequest",
     "DeleteSubnetRequest",
     "SubnetServiceClient",
+    "TargetGroup",
+    "TargetGroupSpec",
+    "Target",
+    "ComputeInstance",
+    "TargetGroupStatus",
+    "TargetStatus",
+    "GetTargetGroupRequest",
+    "UpdateTargetGroupRequest",
+    "TargetGroupServiceClient",
 ]
