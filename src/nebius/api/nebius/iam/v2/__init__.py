@@ -19,7 +19,6 @@ import google.protobuf.timestamp_pb2 as timestamp_pb2
 import datetime as datetime
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.api.nebius.iam.v2.access_key_service_pb2 as access_key_service_pb2
-import typing as typing
 import nebius.aio.client as client
 import grpc as grpc
 import nebius.aio.request as request_1
@@ -403,33 +402,6 @@ class ListAccessKeysRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListAccessKeysRequest") -> None:
-            super().__init__()
-            self._message: "ListAccessKeysRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListAccessKeysRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -455,7 +427,6 @@ class ListAccessKeysRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -472,17 +443,17 @@ class ListAccessKeysRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
          Specifies the maximum number of items to return in the response.
          Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -516,7 +487,6 @@ class ListAccessKeysRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListAccessKeysByAccountRequest(pb_classes.Message):
@@ -1488,33 +1458,6 @@ class ListTenantsRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListTenantsRequest") -> None:
-            super().__init__()
-            self._message: "ListTenantsRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListTenantsRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -1536,21 +1479,20 @@ class ListTenantsRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
          Specifies the maximum number of items to return in the response.
          Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -1583,7 +1525,6 @@ class ListTenantsRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListTenantsResponse(pb_classes.Message):

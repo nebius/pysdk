@@ -37,7 +37,7 @@ class NodeGroupSpec(_message.Message):
     def __init__(self, version: _Optional[str] = ..., fixed_node_count: _Optional[int] = ..., autoscaling: _Optional[_Union[NodeGroupAutoscalingSpec, _Mapping]] = ..., template: _Optional[_Union[NodeTemplate, _Mapping]] = ..., strategy: _Optional[_Union[NodeGroupDeploymentStrategy, _Mapping]] = ...) -> None: ...
 
 class NodeTemplate(_message.Message):
-    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_settings", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id"]
+    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_settings", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id", "preemptible"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     TAINTS_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
@@ -48,6 +48,7 @@ class NodeTemplate(_message.Message):
     FILESYSTEMS_FIELD_NUMBER: _ClassVar[int]
     CLOUD_INIT_USER_DATA_FIELD_NUMBER: _ClassVar[int]
     SERVICE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
     metadata: NodeMetadataTemplate
     taints: _containers.RepeatedCompositeFieldContainer[NodeTaint]
     resources: _instance_template_pb2.ResourcesSpec
@@ -58,7 +59,8 @@ class NodeTemplate(_message.Message):
     filesystems: _containers.RepeatedCompositeFieldContainer[AttachedFilesystemSpec]
     cloud_init_user_data: str
     service_account_id: str
-    def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_settings: _Optional[_Union[GpuSettings, _Mapping]] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ...) -> None: ...
+    preemptible: PreemptibleSpec
+    def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_settings: _Optional[_Union[GpuSettings, _Mapping]] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ...) -> None: ...
 
 class NodeMetadataTemplate(_message.Message):
     __slots__ = ["labels"]
@@ -166,6 +168,10 @@ class PercentOrCount(_message.Message):
     percent: int
     count: int
     def __init__(self, percent: _Optional[int] = ..., count: _Optional[int] = ...) -> None: ...
+
+class PreemptibleSpec(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
 
 class NodeGroupStatus(_message.Message):
     __slots__ = ["state", "version", "target_node_count", "node_count", "outdated_node_count", "ready_node_count", "conditions", "reconciling"]

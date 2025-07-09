@@ -28,7 +28,7 @@ class Instance(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[InstanceSpec, _Mapping]] = ..., status: _Optional[_Union[InstanceStatus, _Mapping]] = ...) -> None: ...
 
 class InstanceSpec(_message.Message):
-    __slots__ = ["service_account_id", "resources", "gpu_cluster", "network_interfaces", "boot_disk", "secondary_disks", "filesystems", "cloud_init_user_data", "stopped", "recovery_policy", "preemptible"]
+    __slots__ = ["service_account_id", "resources", "gpu_cluster", "network_interfaces", "boot_disk", "secondary_disks", "filesystems", "cloud_init_user_data", "stopped", "recovery_policy", "preemptible", "hostname"]
     SERVICE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     GPU_CLUSTER_FIELD_NUMBER: _ClassVar[int]
@@ -40,6 +40,7 @@ class InstanceSpec(_message.Message):
     STOPPED_FIELD_NUMBER: _ClassVar[int]
     RECOVERY_POLICY_FIELD_NUMBER: _ClassVar[int]
     PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
+    HOSTNAME_FIELD_NUMBER: _ClassVar[int]
     service_account_id: str
     resources: ResourcesSpec
     gpu_cluster: InstanceGpuClusterSpec
@@ -51,7 +52,8 @@ class InstanceSpec(_message.Message):
     stopped: bool
     recovery_policy: InstanceRecoveryPolicy
     preemptible: PreemptibleSpec
-    def __init__(self, service_account_id: _Optional[str] = ..., resources: _Optional[_Union[ResourcesSpec, _Mapping]] = ..., gpu_cluster: _Optional[_Union[InstanceGpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceSpec, _Mapping]]] = ..., boot_disk: _Optional[_Union[AttachedDiskSpec, _Mapping]] = ..., secondary_disks: _Optional[_Iterable[_Union[AttachedDiskSpec, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., stopped: bool = ..., recovery_policy: _Optional[_Union[InstanceRecoveryPolicy, str]] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ...) -> None: ...
+    hostname: str
+    def __init__(self, service_account_id: _Optional[str] = ..., resources: _Optional[_Union[ResourcesSpec, _Mapping]] = ..., gpu_cluster: _Optional[_Union[InstanceGpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceSpec, _Mapping]]] = ..., boot_disk: _Optional[_Union[AttachedDiskSpec, _Mapping]] = ..., secondary_disks: _Optional[_Iterable[_Union[AttachedDiskSpec, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., stopped: bool = ..., recovery_policy: _Optional[_Union[InstanceRecoveryPolicy, str]] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ..., hostname: _Optional[str] = ...) -> None: ...
 
 class PreemptibleSpec(_message.Message):
     __slots__ = ["on_preemption", "priority"]

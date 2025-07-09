@@ -4056,6 +4056,7 @@ class InstanceSpec(pb_classes.Message):
         stopped: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None|unset.UnsetType" = unset.Unset,
         preemptible: "PreemptibleSpec|instance_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
+        hostname: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service_account_id, unset.UnsetType):
@@ -4080,6 +4081,8 @@ class InstanceSpec(pb_classes.Message):
             self.recovery_policy = recovery_policy
         if not isinstance(preemptible, unset.UnsetType):
             self.preemptible = preemptible
+        if not isinstance(hostname, unset.UnsetType):
+            self.hostname = hostname
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -4094,6 +4097,7 @@ class InstanceSpec(pb_classes.Message):
             "stopped",
             "recovery_policy",
             "preemptible",
+            "hostname",
         ]
     
     @builtins.property
@@ -4252,6 +4256,20 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("preemptible",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def hostname(self) -> "builtins.str":
+        """
+         Instance's hostname. Used to generate default DNS record in format `<hostname>.<network_id>.compute.internal.`
+         or `<instance_id>.<network_id>.compute.internal.` if hostname is not specified.
+        """
+        
+        return super()._get_field("hostname", explicit_presence=False,
+        )
+    @hostname.setter
+    def hostname(self, value: "builtins.str|None") -> None:
+        return super()._set_field("hostname",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "service_account_id":"service_account_id",
         "resources":"resources",
@@ -4264,6 +4282,7 @@ class InstanceSpec(pb_classes.Message):
         "stopped":"stopped",
         "recovery_policy":"recovery_policy",
         "preemptible":"preemptible",
+        "hostname":"hostname",
     }
     
 class PreemptibleSpec(pb_classes.Message):

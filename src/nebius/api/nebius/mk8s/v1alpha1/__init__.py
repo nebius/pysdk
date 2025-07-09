@@ -1836,6 +1836,7 @@ class NodeTemplate(pb_classes.Message):
         filesystems: "abc.Iterable[AttachedFilesystemSpec]|None|unset.UnsetType" = unset.Unset,
         cloud_init_user_data: "builtins.str|None|unset.UnsetType" = unset.Unset,
         service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        preemptible: "PreemptibleSpec|node_group_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1858,6 +1859,8 @@ class NodeTemplate(pb_classes.Message):
             self.cloud_init_user_data = cloud_init_user_data
         if not isinstance(service_account_id, unset.UnsetType):
             self.service_account_id = service_account_id
+        if not isinstance(preemptible, unset.UnsetType):
+            self.preemptible = preemptible
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1871,6 +1874,7 @@ class NodeTemplate(pb_classes.Message):
             "filesystems",
             "cloud_init_user_data",
             "service_account_id",
+            "preemptible",
         ]
     
     @builtins.property
@@ -1987,6 +1991,16 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("service_account_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def preemptible(self) -> "PreemptibleSpec|None":
+        return super()._get_field("preemptible", explicit_presence=True,
+        wrap=PreemptibleSpec,
+        )
+    @preemptible.setter
+    def preemptible(self, value: "PreemptibleSpec|node_group_pb2.PreemptibleSpec|None") -> None:
+        return super()._set_field("preemptible",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "metadata":"metadata",
         "taints":"taints",
@@ -1998,6 +2012,7 @@ class NodeTemplate(pb_classes.Message):
         "filesystems":"filesystems",
         "cloud_init_user_data":"cloud_init_user_data",
         "service_account_id":"service_account_id",
+        "preemptible":"preemptible",
     }
     
 class NodeMetadataTemplate(pb_classes.Message):
@@ -2432,6 +2447,25 @@ class NodeGroupAutoscalingSpec(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "min_node_count":"min_node_count",
         "max_node_count":"max_node_count",
+    }
+    
+class PreemptibleSpec(pb_classes.Message):
+    __PB2_CLASS__ = node_group_pb2.PreemptibleSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.PreemptibleSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
     }
     
 class NodeTaint(pb_classes.Message):
@@ -3602,6 +3636,7 @@ __all__ = [
     "AttachedFilesystemSpec",
     "ExistingFilesystem",
     "NodeGroupAutoscalingSpec",
+    "PreemptibleSpec",
     "NodeTaint",
     "NodeGroupDeploymentStrategy",
     "PercentOrCount",
