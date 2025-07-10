@@ -38,6 +38,14 @@ class CreateK8sReleaseRequest(_message.Message):
     spec: _k8s_release_pb2.K8sReleaseSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_k8s_release_pb2.K8sReleaseSpec, _Mapping]] = ...) -> None: ...
 
+class UpdateK8sReleaseRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: _k8s_release_pb2.K8sReleaseSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_k8s_release_pb2.K8sReleaseSpec, _Mapping]] = ...) -> None: ...
+
 class DeleteK8sReleaseRequest(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]

@@ -19,6 +19,7 @@ import grpc as grpc
 import nebius.aio.request as request_1
 import nebius.aio.operation as operation
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 #@ local imports here @#
 
 # file: nebius/applications/v1alpha1/k8s_release.proto
@@ -478,6 +479,56 @@ class CreateK8sReleaseRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class UpdateK8sReleaseRequest(pb_classes.Message):
+    __PB2_CLASS__ = k8s_release_service_pb2.UpdateK8sReleaseRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.UpdateK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "K8sReleaseSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=K8sReleaseSpec,
+        )
+    @spec.setter
+    def spec(self, value: "K8sReleaseSpec|k8s_release_pb2.K8sReleaseSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteK8sReleaseRequest(pb_classes.Message):
     __PB2_CLASS__ = k8s_release_service_pb2.DeleteK8sReleaseRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.applications.v1alpha1.DeleteK8sReleaseRequest",k8s_release_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -635,6 +686,29 @@ class K8sReleaseServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
             result_wrapper=operation.Operation,
         )
     
+    def update(self,
+        request: "UpdateK8sReleaseRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|None = None,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float | None = None,
+    ) -> request_1.Request["UpdateK8sReleaseRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
     def delete(self,
         request: "DeleteK8sReleaseRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
@@ -666,6 +740,7 @@ __all__ = [
     "GetK8sReleaseRequest",
     "ListK8sReleasesRequest",
     "CreateK8sReleaseRequest",
+    "UpdateK8sReleaseRequest",
     "DeleteK8sReleaseRequest",
     "ListK8sReleasesResponse",
     "K8sReleaseServiceClient",
