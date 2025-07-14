@@ -2005,7 +2005,7 @@ class NodeTemplate(pb_classes.Message):
     def service_account_id(self) -> "builtins.str":
         """
          the Nebius service account whose credentials will be available on the nodes of the group.
-         With these credentials, it is possible to make `npc` or public API requests from the nodes without the need for extra authentication.
+         With these credentials, it is possible to make `nebius` CLI or public API requests from the nodes without the need for extra authentication.
          This service account is also used to make requests to container registry.
         
          `resource.serviceaccount.issueAccessToken` permission is required to use this field.
