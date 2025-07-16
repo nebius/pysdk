@@ -2020,6 +2020,11 @@ class NodeTemplate(pb_classes.Message):
     
     @builtins.property
     def preemptible(self) -> "PreemptibleSpec|None":
+        """
+         Configures whether the nodes in the group are preemptible.
+         Set to empty value to enable preemptible nodes.
+        """
+        
         return super()._get_field("preemptible", explicit_presence=True,
         wrap=PreemptibleSpec,
         )
