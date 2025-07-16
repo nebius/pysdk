@@ -9179,6 +9179,10 @@ class ProfileServiceClient(client.Client):
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float | None = None,
     ) -> request_1.Request["GetProfileRequest","GetProfileResponse"]:
+        """
+         Returns the current user's profile.
+        """
+        
         return super().request(
             method="Get",
             request=request,

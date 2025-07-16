@@ -408,7 +408,7 @@ class Repeated(MutableSequence[CollectibleOuter]):
     ) -> CollectibleOuter | MutableSequence[CollectibleOuter]:
         if isinstance(index, int):
             ret = self._source[index]
-            return wrap_type(ret, self._wrap)  # type: ignore [unused-ignore]
+            return wrap_type(ret, self._wrap)  # type: ignore [unused-ignore,no-any-return]
         elif isinstance(index, slice):  # type: ignore [unused-ignore]
             return [wrap_type(ret, self._wrap) for ret in self._source[index]]  # type: ignore [unused-ignore]
         else:
@@ -498,7 +498,7 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
 
     def __getitem__(self, key: MapKey) -> CollectibleOuter:
         ret = self._source[key]  # type: ignore[assignment,unused-ignore]
-        return wrap_type(ret, self._wrap)  # type: ignore[unused-ignore,arg-type]
+        return wrap_type(ret, self._wrap)  # type: ignore[unused-ignore,arg-type,return-value]
 
     def __setitem__(self, key: MapKey, value: CollectibleOuter) -> None:
         value = unwrap_type(value, self._unwrap)  # type: ignore[unused-ignore]
