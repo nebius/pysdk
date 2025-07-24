@@ -140,6 +140,8 @@ def main() -> None:
             )
         results[file.package].append_used_names(list(file.collect_all_names()))
 
+    file_set.check_names()
+
     for file in file_set.files_generated:
         generate_file(
             file,

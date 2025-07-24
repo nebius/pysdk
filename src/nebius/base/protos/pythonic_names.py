@@ -1,6 +1,15 @@
 import re
 from keyword import iskeyword, issoftkeyword
 
+pep8_const_re = re.compile(r"^_?[A-Z][A-Z0-9_]*$")
+pep8_class_re = re.compile(r"^_?[A-Z][a-zA-Z0-9_]*$")
+pep8_method_re = re.compile(r"^_?[a-z][a-z0-9_]*$")
+pep8_attr_re = re.compile(r"^_?[a-z][a-z0-9_]*$")
+
+
+class NameError(Exception):
+    pass
+
 
 def first_non_underscore(s: str) -> str:
     for char in s:
@@ -54,7 +63,26 @@ def _modify_name(
     return suggested_name
 
 
-def _class_name(full_name: str) -> str:
+def _class_name(full_name: str, annotated_name: str = "") -> str:
+    if annotated_name != "":
+        if is_reserved_name(annotated_name):
+            raise NameError(
+                f"Class name '{annotated_name}' is reserved in Python and cannot be "
+                "used."
+            )
+        if re.match(r"^__.*__$", annotated_name):
+            raise NameError(
+                f"Class name '{annotated_name}' conflicts with Python magic methods."
+            )
+        if not pep8_class_re.match(annotated_name):
+            raise NameError(
+                f"Class name '{annotated_name}' is not a canonical Python class name."
+            )
+        if annotated_name.startswith("_"):
+            raise NameError(
+                f"Class name '{annotated_name}' should not start with an underscore."
+            )
+        return annotated_name
     name_parts = full_name.split(".")
     class_name = name_parts[-1]
     container_name = name_parts[-2] if len(name_parts) > 1 else ""
@@ -62,31 +90,93 @@ def _class_name(full_name: str) -> str:
 
 
 # canonical enum names are already pythonic, we have to only check for conflicts
-def enum(full_enum_name: str) -> str:
-    return _class_name(full_enum_name)
+def enum(full_enum_name: str, annotated_name: str = "") -> str:
+    return _class_name(full_enum_name, annotated_name)
 
 
 # canonical message names are already pythonic, we have to only check for conflicts
-def message(full_enum_name: str) -> str:
-    return _class_name(full_enum_name)
+def message(full_enum_name: str, annotated_name: str = "") -> str:
+    return _class_name(full_enum_name, annotated_name)
 
 
 # canonical one-of names are already pythonic, we have to only check for conflicts
-def one_of(field_name: str, message_name: str) -> str:
+def one_of(field_name: str, message_name: str, annotated_name: str = "") -> str:
+    if annotated_name != "":
+        if is_reserved_name(annotated_name):
+            raise NameError(
+                f"OneOf name '{annotated_name}' is reserved in Python and cannot be"
+                " used."
+            )
+        if re.match(r"^__.*__$", annotated_name):
+            raise NameError(
+                f"OneOf name '{annotated_name}' conflicts with Python magic methods."
+            )
+        if not pep8_attr_re.match(annotated_name):
+            raise NameError(
+                f"OneOf name '{annotated_name}' is not a canonical Python attribute"
+                " name."
+            )
+        if annotated_name.startswith("_"):
+            raise NameError(
+                f"OneOf name '{annotated_name}' should not start with an underscore."
+            )
+        return annotated_name
     return _modify_name(field_name, message_name)
 
 
-def service(full_service_name: str) -> str:
-    return _class_name(full_service_name)
+def service(full_service_name: str, annotated_name: str = "") -> str:
+    return _class_name(full_service_name, annotated_name)
 
 
 # canonical field names are already pythonic, we have to only check for conflicts
-def field(field_name: str, message_name: str) -> str:
+def field(field_name: str, message_name: str, annotated_name: str = "") -> str:
+    if annotated_name != "":
+        if is_reserved_name(annotated_name):
+            raise NameError(
+                f"Field name '{annotated_name}' is reserved in Python and cannot be"
+                " used."
+            )
+        if re.match(r"^__.*__$", annotated_name):
+            raise NameError(
+                f"Field name '{annotated_name}' conflicts with Python magic methods."
+            )
+        if not pep8_attr_re.match(annotated_name):
+            raise NameError(
+                f"Field name '{annotated_name}' is not a canonical Python attribute"
+                " name."
+            )
+        if annotated_name.startswith("_"):
+            raise NameError(
+                f"Field name '{annotated_name}' should not start with an underscore."
+            )
+        return annotated_name
     return _modify_name(field_name, message_name)
 
 
 # canonical enum value names are already pythonic, we have to only check for conflicts
-def enum_value(value_name: str, enum_name: str) -> str:
+def enum_value(value_name: str, enum_name: str, annotated_name: str = "") -> str:
+    if annotated_name != "":
+        if is_reserved_name(annotated_name):
+            raise NameError(
+                f"Enum value name '{annotated_name}' is reserved in Python and cannot "
+                "be used."
+            )
+        if re.match(r"^__.*__$", annotated_name):
+            raise NameError(
+                f"Enum value name '{annotated_name}' conflicts with Python magic "
+                "methods."
+            )
+        if not pep8_const_re.match(annotated_name):
+            raise NameError(
+                f"Enum value name '{annotated_name}' is not a canonical Python constant"
+                " name."
+            )
+        if annotated_name.startswith("_"):
+            raise NameError(
+                f"Enum value name '{annotated_name}' should not start with an"
+                " underscore."
+            )
+        return annotated_name
     return _modify_name(value_name, enum_name, lower=False)
 
 
@@ -110,7 +200,24 @@ def pascal_to_snake_case(name: str) -> str:
 
 
 # convert all pascal methods to snake case
-# TODO: create deterministic version that will convert all the names to some
-# variant with no collisions, favoring pascal names.
-def method(method_name: str, service_name: str) -> str:
+def method(method_name: str, service_name: str, annotated_name: str = "") -> str:
+    if annotated_name != "":
+        if is_reserved_name(annotated_name):
+            raise NameError(
+                f"Method name '{annotated_name}' is reserved in Python and cannot be"
+                " used."
+            )
+        if re.match(r"^__.*__$", annotated_name):
+            raise NameError(
+                f"Method name '{annotated_name}' conflicts with Python magic methods."
+            )
+        if not pep8_method_re.match(annotated_name):
+            raise NameError(
+                f"Method name '{annotated_name}' is not a canonical Python method name."
+            )
+        if annotated_name.startswith("_"):
+            raise NameError(
+                f"Method name '{annotated_name}' should not start with an underscore."
+            )
+        return annotated_name
     return _modify_name(pascal_to_snake_case(method_name), service_name)
