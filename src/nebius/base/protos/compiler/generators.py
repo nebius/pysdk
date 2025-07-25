@@ -1,9 +1,26 @@
 from logging import getLogger
 
-from nebius.api.nebius import FieldBehavior
+from nebius.api.nebius import (
+    FieldBehavior,
+    enum_value_deprecation_details,
+    field_deprecation_details,
+    message_deprecation_details,
+    method_deprecation_details,
+    service_deprecation_details,
+)
 
-from .annotations import field_behavior
-from .descriptors import Enum, Field, File, Message, Method, OneOf, Service, SourceInfo
+from .annotations import DeprecationDetails, field_behavior, get_deprecation_details
+from .descriptors import (
+    Enum,
+    EnumValue,
+    Field,
+    File,
+    Message,
+    Method,
+    OneOf,
+    Service,
+    SourceInfo,
+)
 from .pygen import ImportedSymbol, PyGenFile
 from .recursion_detector import is_recursive
 from .well_known import converter_dict
@@ -50,16 +67,32 @@ def print_triple_quoted_string(s: str, g: PyGenFile) -> None:
         g.p(line)
 
 
-def generate_docstring(info: SourceInfo, g: PyGenFile) -> None:
+def remove_first_spaces(s: str) -> str:
+    ss = s.split("\n")
+    all_have_space = all(line.startswith(" ") or line == "" for line in ss)
+    if all_have_space:
+        return "\n".join(line[1:] if line != "" else "" for line in ss)
+    return s
+
+
+def generate_docstring(
+    info: SourceInfo,
+    g: PyGenFile,
+    deprecation_details: DeprecationDetails | None = None,
+) -> None:
     comment = "\n\n".join(
         filter(
             lambda x: x != "",
             [
-                info.leading_comments,
-                info.trailing_comments,
+                remove_first_spaces(info.leading_comments),
+                remove_first_spaces(info.trailing_comments),
             ],
         )
     )
+    if deprecation_details:
+        if comment != "":
+            comment += "\n\n"
+        comment += str(deprecation_details) + "\n"
     if comment != "":
         print_triple_quoted_string("\n" + comment, g)
         g.p()
@@ -171,12 +204,24 @@ def setter_type(field: Field, g: PyGenFile, always_none: bool = False) -> None:
 
 
 def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
+    deprecation_details = get_deprecation_details(field, field_deprecation_details)
     g.p("@", ImportedSymbol("property", "builtins"))
     g.p("def ", field.pythonic_name, "(", self_name, ') -> "', add_eol=False)
     getter_type(field, g)
     g.p('":', noindent=True)
     with g:
-        generate_docstring(field.source_info, g)
+        generate_docstring(field.source_info, g, deprecation_details)
+        if deprecation_details is not None:
+            g.p(
+                ImportedSymbol("getLogger", "logging"),
+                '("deprecation").warning(',
+            )
+            print_triple_quoted_string(
+                f"Field {field.full_type_name} is deprecated. {deprecation_details}",
+                g,
+            )
+            g.p(", stack_info=True, stacklevel=2)")
+            g.p()
         g.p(
             "return super()._get_field(",
             '"',
@@ -248,6 +293,48 @@ def generate_field(field: Field, g: PyGenFile, self_name: str) -> None:
     setter_type(field, g, always_none=True)
     g.p('") -> None:', noindent=True)
     with g:
+        if deprecation_details is not None:
+            g.p(
+                ImportedSymbol("getLogger", "logging"),
+                '("deprecation").warning(',
+            )
+            print_triple_quoted_string(
+                f"Field {field.full_type_name} is deprecated. {deprecation_details}",
+                g,
+            )
+            g.p(", stack_info=True, stacklevel=2)")
+            g.p()
+
+        if field.is_enum():
+            deprecated_values = dict[str, tuple[EnumValue, DeprecationDetails]]()
+            for val in field.enum.values:
+                ev_depr_details = get_deprecation_details(
+                    val, enum_value_deprecation_details
+                )
+                if ev_depr_details is not None:
+                    deprecated_values[val.name] = (val, ev_depr_details)
+            if len(deprecated_values) > 0:
+                for val, details in deprecated_values.values():
+                    g.p(
+                        "if value == ",
+                        val.containing_enum.export_path,
+                        ".",
+                        val.name,
+                        ":",
+                    )
+                    with g:
+                        g.p(
+                            ImportedSymbol("getLogger", "logging"),
+                            '("deprecation").warning(',
+                        )
+                        print_triple_quoted_string(
+                            f"Setting deprecated value {val.name} for field "
+                            f"{field.full_type_name}. {details}",
+                            g,
+                        )
+                        g.p(", stack_info=True, stacklevel=2)")
+                g.p()
+
         g.p(
             "return super()._set_field(",
             '"',
@@ -317,7 +404,11 @@ def generate_enum(enum: Enum, g: PyGenFile) -> None:
         )
         for val in enum.values:
             g.p(val.name, " = ", val.number)
-            generate_docstring(val.source_info, g)
+            generate_docstring(
+                val.source_info,
+                g,
+                get_deprecation_details(val, enum_value_deprecation_details),
+            )
 
 
 def generate_oneof(oneof: OneOf, g: PyGenFile) -> None:
@@ -447,7 +538,10 @@ def generate_message(message: Message, g: PyGenFile) -> None:
     initial_message_name = g.suggest_name("initial_message")
     self_name = g.suggest_name("self")
     with g:
-        generate_docstring(message.source_info, g)
+        deprecation_details = get_deprecation_details(
+            message, message_deprecation_details
+        )
+        generate_docstring(message.source_info, g, deprecation_details)
         g.p("__PB2_CLASS__ = ", message.pb2)
         g.p(
             "__PB2_DESCRIPTOR__ = ",
@@ -500,6 +594,19 @@ def generate_message(message: Message, g: PyGenFile) -> None:
         g.p(") -> None:")
         with g:
             g.p("super().__init__(", initial_message_name, ")")
+
+            if deprecation_details is not None:
+                g.p(
+                    ImportedSymbol("getLogger", "logging"),
+                    '("deprecation").warning(',
+                )
+                print_triple_quoted_string(
+                    f"Message {message.full_type_name} is deprecated. "
+                    f"{deprecation_details}",
+                    g,
+                )
+                g.p(", stack_info=True, stacklevel=2)")
+                g.p()
 
             for field in message.fields():
                 generate_field_init_setter(field, g, self_name)
@@ -604,7 +711,8 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
         )
     g.p("):", noindent=True)
     with g:
-        generate_docstring(srv.source_info, g)
+        deprecation_details = get_deprecation_details(srv, service_deprecation_details)
+        generate_docstring(srv.source_info, g, deprecation_details)
         g.p(
             "__PB2_DESCRIPTOR__ = ",
             ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
@@ -623,8 +731,19 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
             g.p("__operation_type__ = ", operation_type)
             g.p("__operation_service_class__ = ", operation_service)
             g.p('__operation_source_method__ = "', operation_source_method, '"')
+        if deprecation_details is not None:
+            g.p("__service_deprecation_details__ = (")
+            print_triple_quoted_string(
+                f"Service {srv.full_type_name} is deprecated. "
+                f"{deprecation_details}",
+                g,
+            )
+            g.p(")")
         g.p()
         for method in srv.methods.values():
+            method_deprecation_details_obj = get_deprecation_details(
+                method, method_deprecation_details
+            )
             g.p("def ", method.pythonic_name, "(self,")
             with g:
                 g.p('request: "', method.input.export_path, '",')
@@ -681,7 +800,22 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                 g.p(method.output.export_path, noindent=True, add_eol=False)
             g.p('"]:', noindent=True)
             with g:
-                generate_docstring(method.source_info, g)
+                generate_docstring(
+                    method.source_info, g, method_deprecation_details_obj
+                )
+                if method_deprecation_details_obj is not None:
+                    g.p(
+                        ImportedSymbol("getLogger", "logging"),
+                        '("deprecation").warning(',
+                    )
+                    print_triple_quoted_string(
+                        f"Method {method.full_type_name} is deprecated. "
+                        f"{method_deprecation_details_obj}",
+                        g,
+                    )
+                    g.p(", stack_info=True, stacklevel=2)")
+                    g.p()
+
                 if method.name == "Update" and is_operation_output(method):
                     g.p(
                         "metadata = ",

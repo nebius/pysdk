@@ -1,4 +1,5 @@
 from collections.abc import Callable, Iterable
+from logging import getLogger
 from typing import Any, Generic, TypeVar
 
 from google.protobuf.message import Message as PMessage
@@ -18,9 +19,18 @@ Res = TypeVar("Res")
 class Client:
     # __operation_type__: Message = Operation
     __service_name__: str
+    __service_deprecation_details__: str | None = None
 
     def __init__(self, channel: Channel) -> None:
         self._channel = channel
+
+        if self.__service_deprecation_details__ is not None:
+            getLogger("deprecation").warning(
+                f"Service {self.__service_name__} is deprecated. "
+                f"{self.__service_deprecation_details__}",
+                stack_info=True,
+                stacklevel=2,
+            )
 
     def request(
         self,

@@ -227,7 +227,11 @@ class PyGenFile:
             writer.write(line)
             writer.write("\n")
         writer.write("\n")
-        for _imp in self._imports.values():
+        sorted_imports = sorted(
+            self._imports.values(),
+            key=lambda x: x.import_path,
+        )
+        for _imp in sorted_imports:
             writer.write("import ")
             writer.write(_imp.import_path)
             writer.write(" as ")
