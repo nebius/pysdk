@@ -247,6 +247,7 @@ class DiskSpec(pb_classes.Message):
         type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None|unset.UnsetType" = unset.Unset,
         source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_image_family: "SourceImageFamily|disk_pb2.SourceImageFamily|None|unset.UnsetType" = unset.Unset,
+        disk_encryption: "DiskEncryption|disk_pb2.DiskEncryption|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(size_bytes, unset.UnsetType):
@@ -265,6 +266,8 @@ class DiskSpec(pb_classes.Message):
             self.source_image_id = source_image_id
         if not isinstance(source_image_family, unset.UnsetType):
             self.source_image_family = source_image_family
+        if not isinstance(disk_encryption, unset.UnsetType):
+            self.disk_encryption = disk_encryption
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -276,6 +279,7 @@ class DiskSpec(pb_classes.Message):
             "type",
             "source_image_id",
             "source_image_family",
+            "disk_encryption",
             "size",
             "source",
             "DiskType",
@@ -366,6 +370,21 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("source_image_family",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def disk_encryption(self) -> "DiskEncryption":
+        """
+         Defines how data on the disk is encrypted. By default, no encryption is applied.
+         This field applies for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
+        """
+        
+        return super()._get_field("disk_encryption", explicit_presence=False,
+        wrap=DiskEncryption,
+        )
+    @disk_encryption.setter
+    def disk_encryption(self, value: "DiskEncryption|disk_pb2.DiskEncryption|None") -> None:
+        return super()._set_field("disk_encryption",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "size_bytes":"size_bytes",
         "size_kibibytes":"size_kibibytes",
@@ -375,6 +394,7 @@ class DiskSpec(pb_classes.Message):
         "type":"type",
         "source_image_id":"source_image_id",
         "source_image_family":"source_image_family",
+        "disk_encryption":"disk_encryption",
         "size":"size",
         "source":"source",
         "DiskType":"DiskType",
@@ -598,6 +618,56 @@ class DiskStatus(pb_classes.Message):
         "source_image_cpu_architecture":"source_image_cpu_architecture",
         "State":"State",
         "SourceImageCPUArchitecture":"SourceImageCPUArchitecture",
+    }
+    
+class DiskEncryption(pb_classes.Message):
+    __PB2_CLASS__ = disk_pb2.DiskEncryption
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskEncryption",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class DiskEncryptionType(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskEncryption.DiskEncryptionType",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        DISK_ENCRYPTION_UNSPECIFIED = 0
+        """
+         No encryption is applied unless explicitly specified.
+        """
+        
+        DISK_ENCRYPTION_MANAGED = 1
+        """
+         Enables encryption using the platform's default root key from KMS.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        type: "DiskEncryption.DiskEncryptionType|disk_pb2.DiskEncryption.DiskEncryptionType|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(type, unset.UnsetType):
+            self.type = type
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "type",
+            "DiskEncryptionType",
+        ]
+    
+    @builtins.property
+    def type(self) -> "DiskEncryption.DiskEncryptionType":
+        return super()._get_field("type", explicit_presence=False,
+        wrap=DiskEncryption.DiskEncryptionType,
+        )
+    @type.setter
+    def type(self, value: "DiskEncryption.DiskEncryptionType|disk_pb2.DiskEncryption.DiskEncryptionType|None") -> None:
+        return super()._set_field("type",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "type":"type",
+        "DiskEncryptionType":"DiskEncryptionType",
     }
     
 # file: nebius/compute/v1/operation_service.proto
@@ -4057,6 +4127,7 @@ class InstanceSpec(pb_classes.Message):
         recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None|unset.UnsetType" = unset.Unset,
         preemptible: "PreemptibleSpec|instance_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
         hostname: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        nvl_partition_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service_account_id, unset.UnsetType):
@@ -4083,6 +4154,8 @@ class InstanceSpec(pb_classes.Message):
             self.preemptible = preemptible
         if not isinstance(hostname, unset.UnsetType):
             self.hostname = hostname
+        if not isinstance(nvl_partition_id, unset.UnsetType):
+            self.nvl_partition_id = nvl_partition_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -4098,6 +4171,7 @@ class InstanceSpec(pb_classes.Message):
             "recovery_policy",
             "preemptible",
             "hostname",
+            "nvl_partition_id",
         ]
     
     @builtins.property
@@ -4248,6 +4322,11 @@ class InstanceSpec(pb_classes.Message):
     
     @builtins.property
     def preemptible(self) -> "PreemptibleSpec":
+        """
+         Include these parameters to create a Preemptible VM and omit them to create a Regular VM
+         For details, see https://docs.nebius.com/compute/virtual-machines/preemptible
+        """
+        
         return super()._get_field("preemptible", explicit_presence=False,
         wrap=PreemptibleSpec,
         )
@@ -4270,6 +4349,19 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("hostname",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def nvl_partition_id(self) -> "builtins.str":
+        """
+         NVLink partition ID associated with the VM
+        """
+        
+        return super()._get_field("nvl_partition_id", explicit_presence=False,
+        )
+    @nvl_partition_id.setter
+    def nvl_partition_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("nvl_partition_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "service_account_id":"service_account_id",
         "resources":"resources",
@@ -4283,6 +4375,7 @@ class InstanceSpec(pb_classes.Message):
         "recovery_policy":"recovery_policy",
         "preemptible":"preemptible",
         "hostname":"hostname",
+        "nvl_partition_id":"nvl_partition_id",
     }
     
 class PreemptibleSpec(pb_classes.Message):
@@ -4318,6 +4411,11 @@ class PreemptibleSpec(pb_classes.Message):
     
     @builtins.property
     def on_preemption(self) -> "PreemptibleSpec.PreemptionPolicy":
+        """
+         Specifies what happens when the VM is preempted. The only supported value is STOP:
+         Compute stops the VM without deleting or restarting it.
+        """
+        
         return super()._get_field("on_preemption", explicit_presence=False,
         wrap=PreemptibleSpec.PreemptionPolicy,
         )
@@ -4328,6 +4426,11 @@ class PreemptibleSpec(pb_classes.Message):
     
     @builtins.property
     def priority(self) -> "builtins.int":
+        """
+         The value can range from 1 to 5, where 5 indicates the highest priority.
+         Affects the order in which Compute tries to preempt VMs, but does not guarantee the exact order.
+        """
+        
         return super()._get_field("priority", explicit_presence=False,
         )
     @priority.setter
@@ -4441,6 +4544,13 @@ class InstanceGpuClusterSpec(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+         If you want to interconnect several instances in a GPU cluster via NVIDIA InfiniBand,
+         set the ID of an existing GPU cluster.
+         You can only add the VM to the cluster when creating the VM.
+         For details, see https://docs.nebius.com/compute/clusters/gpu
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -6096,7 +6206,6 @@ class NodeServiceClient(client.Client):
         
          To use this rpc one needs to obtain `compute.node.setUnhealthy` permission
          for the VM's parent container. The permission is granted to the TSA inside the VM.
-        
         """
         
         return super().request(
@@ -6576,6 +6685,7 @@ __all__ = [
     "DiskSpec",
     "SourceImageFamily",
     "DiskStatus",
+    "DiskEncryption",
     "ListOperationsByParentRequest",
     "GetDiskRequest",
     "ListDisksRequest",

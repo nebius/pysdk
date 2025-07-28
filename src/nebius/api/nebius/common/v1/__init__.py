@@ -1456,7 +1456,6 @@ class ResourceMetadata(pb_classes.Message):
          Positive and monotonically increases on each resource spec change (but *not* on each change of the
          resource's container(s) or status).
          Service allows zero value or current.
-        
         """
         
         return super()._get_field("resource_version", explicit_presence=False,
@@ -1500,7 +1499,6 @@ class ResourceMetadata(pb_classes.Message):
     def labels(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         """
          Labels associated with the resource.
-        
         """
         
         return super()._get_field("labels", explicit_presence=False,
