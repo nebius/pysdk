@@ -15,7 +15,7 @@ class Enum(IntEnum):
         if desc is None:
             for val in cls.__dict__.values():
                 if isinstance(val, DescriptorWrap):
-                    desc = val()
+                    desc = val()  # type: ignore[unused-ignore]
         if isinstance(desc, pb.EnumDescriptor):
             return desc
         raise ValueError(f"Descriptor not found in {cls.__name__}.")

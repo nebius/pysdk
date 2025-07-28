@@ -155,6 +155,7 @@ class EnumValue(Descriptor):
                     self.name,
                     self.containing_enum.name,
                     self._settings.name,
+                    self.containing_enum.full_type_name + "." + self.name,
                 )
             except names.NameError as e:
                 raise DescriptorNameError(self, e) from None
@@ -365,6 +366,7 @@ class Field(Descriptor):
                     self.name,
                     self.containing_message.name,
                     self._settings.name,
+                    self.full_type_name,
                 )
             except names.NameError as e:
                 raise DescriptorNameError(self, e) from None
@@ -556,6 +558,7 @@ class OneOf(Descriptor):
                     self.name,
                     self.containing_message.name,
                     self._settings.name,
+                    self.full_type_name,
                 )
             except names.NameError as e:
                 raise DescriptorNameError(self, e) from None
@@ -891,6 +894,7 @@ class Method(Descriptor):
                     self.name,
                     self.containing_service.pythonic_name,
                     self._settings.name,
+                    self.full_type_name,
                 )
             except names.NameError as e:
                 raise DescriptorNameError(self, e) from None
