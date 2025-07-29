@@ -8,9 +8,9 @@ import google.protobuf.descriptor as descriptor_1
 import nebius.api.nebius.annotations_pb2 as annotations_pb2
 import nebius.base.protos.pb_classes as pb_classes
 import google.protobuf.message as message
-import collections.abc as abc
 import builtins as builtins
 import nebius.base.protos.unset as unset
+import collections.abc as abc
 #@ local imports here @#
 
 # file: nebius/annotations.proto
@@ -96,6 +96,244 @@ class FieldBehavior(pb_enum.Enum):
     """
     
 
+class ServicePySDKSettings(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.ServicePySDKSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ServicePySDKSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+    }
+    
+class MethodPySDKSettings(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.MethodPySDKSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.MethodPySDKSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+    }
+    
+class FieldPySDKSettings(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.FieldPySDKSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.FieldPySDKSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+    }
+    
+class MessagePySDKSettings(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.MessagePySDKSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.MessagePySDKSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+    }
+    
+class OneofPySDKSettings(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.OneofPySDKSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.OneofPySDKSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+    }
+    
+class EnumPySDKSettings(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.EnumPySDKSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.EnumPySDKSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+    }
+    
+class EnumValuePySDKSettings(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.EnumValuePySDKSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.EnumValuePySDKSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+    }
+    
 class RegionRouting(pb_classes.Message):
     __PB2_CLASS__ = annotations_pb2.RegionRouting
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.RegionRouting",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -234,32 +472,53 @@ class DeprecationDetails(pb_classes.Message):
     
 api_service_name = annotations_pb2.api_service_name
 service_deprecation_details = annotations_pb2.service_deprecation_details
+service_py_sdk = annotations_pb2.service_py_sdk
 method_deprecation_details = annotations_pb2.method_deprecation_details
+method_py_sdk = annotations_pb2.method_py_sdk
 region_routing = annotations_pb2.region_routing
 resource_behavior = annotations_pb2.resource_behavior
 message_deprecation_details = annotations_pb2.message_deprecation_details
+message_py_sdk = annotations_pb2.message_py_sdk
 field_behavior = annotations_pb2.field_behavior
 sensitive = annotations_pb2.sensitive
 credentials = annotations_pb2.credentials
 field_deprecation_details = annotations_pb2.field_deprecation_details
+field_py_sdk = annotations_pb2.field_py_sdk
 oneof_behavior = annotations_pb2.oneof_behavior
+oneof_py_sdk = annotations_pb2.oneof_py_sdk
+enum_py_sdk = annotations_pb2.enum_py_sdk
 enum_value_deprecation_details = annotations_pb2.enum_value_deprecation_details
+enum_value_py_sdk = annotations_pb2.enum_value_py_sdk
 __all__ = [
     #@ local import names here @#
     "ResourceBehavior",
     "FieldBehavior",
     "api_service_name",
     "service_deprecation_details",
+    "service_py_sdk",
     "method_deprecation_details",
+    "method_py_sdk",
     "region_routing",
     "resource_behavior",
     "message_deprecation_details",
+    "message_py_sdk",
     "field_behavior",
     "sensitive",
     "credentials",
     "field_deprecation_details",
+    "field_py_sdk",
     "oneof_behavior",
+    "oneof_py_sdk",
+    "enum_py_sdk",
     "enum_value_deprecation_details",
+    "enum_value_py_sdk",
+    "ServicePySDKSettings",
+    "MethodPySDKSettings",
+    "FieldPySDKSettings",
+    "MessagePySDKSettings",
+    "OneofPySDKSettings",
+    "EnumPySDKSettings",
+    "EnumValuePySDKSettings",
     "RegionRouting",
     "DeprecationDetails",
 ]

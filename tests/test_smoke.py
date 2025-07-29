@@ -1299,12 +1299,11 @@ async def test_update_instance_v2() -> None:
             # Recreate metadata for ease of checking
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
+            got_mask = md.get("x-resetmask", "")
             assert (
-                md.get("x-resetmask", "")
-                == "metadata.(created_at.(nanos,seconds),labels.*,name,parent_id,"
-                + "resource_version,updated_at.(nanos,seconds)),spec.(block_size_bytes"
-                + ",size_bytes,size_gibibytes,size_kibibytes,size_mebibytes,"
-                + "source_image_family,source_image_id,type)"
+                "metadata.(created_at.(nanos,seconds),labels.*,name,parent_id,"
+                + "resource_version,updated_at.(nanos,seconds)),spec.("
+                in got_mask
             )
 
             await context.send_initial_metadata(

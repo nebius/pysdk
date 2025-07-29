@@ -37,7 +37,6 @@ class NodeServiceServicer(object):
 
         To use this rpc one needs to obtain `compute.node.setUnhealthy` permission
         for the VM's parent container. The permission is granted to the TSA inside the VM.
-
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')

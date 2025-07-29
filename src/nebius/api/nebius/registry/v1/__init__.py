@@ -588,7 +588,7 @@ class RegistrySpec(pb_classes.Message):
     @builtins.property
     def images_count(self) -> "builtins.int":
         """
-          Registry.Type type = 2;
+         Registry.Type type = 2;
         """
         
         return super()._get_field("images_count", explicit_presence=False,

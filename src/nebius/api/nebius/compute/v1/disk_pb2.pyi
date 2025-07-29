@@ -20,7 +20,7 @@ class Disk(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[DiskSpec, _Mapping]] = ..., status: _Optional[_Union[DiskStatus, _Mapping]] = ...) -> None: ...
 
 class DiskSpec(_message.Message):
-    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type", "source_image_id", "source_image_family"]
+    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type", "source_image_id", "source_image_family", "disk_encryption"]
     class DiskType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[DiskSpec.DiskType]
@@ -41,6 +41,7 @@ class DiskSpec(_message.Message):
     TYPE_FIELD_NUMBER: _ClassVar[int]
     SOURCE_IMAGE_ID_FIELD_NUMBER: _ClassVar[int]
     SOURCE_IMAGE_FAMILY_FIELD_NUMBER: _ClassVar[int]
+    DISK_ENCRYPTION_FIELD_NUMBER: _ClassVar[int]
     size_bytes: int
     size_kibibytes: int
     size_mebibytes: int
@@ -49,7 +50,8 @@ class DiskSpec(_message.Message):
     type: DiskSpec.DiskType
     source_image_id: str
     source_image_family: SourceImageFamily
-    def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[DiskSpec.DiskType, str]] = ..., source_image_id: _Optional[str] = ..., source_image_family: _Optional[_Union[SourceImageFamily, _Mapping]] = ...) -> None: ...
+    disk_encryption: DiskEncryption
+    def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[DiskSpec.DiskType, str]] = ..., source_image_id: _Optional[str] = ..., source_image_family: _Optional[_Union[SourceImageFamily, _Mapping]] = ..., disk_encryption: _Optional[_Union[DiskEncryption, _Mapping]] = ...) -> None: ...
 
 class SourceImageFamily(_message.Message):
     __slots__ = ["image_family", "parent_id"]
@@ -102,3 +104,15 @@ class DiskStatus(_message.Message):
     block_size_bytes: int
     source_image_cpu_architecture: DiskStatus.SourceImageCPUArchitecture
     def __init__(self, state: _Optional[_Union[DiskStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachment: _Optional[str] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., source_image_id: _Optional[str] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ..., block_size_bytes: _Optional[int] = ..., source_image_cpu_architecture: _Optional[_Union[DiskStatus.SourceImageCPUArchitecture, str]] = ...) -> None: ...
+
+class DiskEncryption(_message.Message):
+    __slots__ = ["type"]
+    class DiskEncryptionType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        DISK_ENCRYPTION_UNSPECIFIED: _ClassVar[DiskEncryption.DiskEncryptionType]
+        DISK_ENCRYPTION_MANAGED: _ClassVar[DiskEncryption.DiskEncryptionType]
+    DISK_ENCRYPTION_UNSPECIFIED: DiskEncryption.DiskEncryptionType
+    DISK_ENCRYPTION_MANAGED: DiskEncryption.DiskEncryptionType
+    TYPE_FIELD_NUMBER: _ClassVar[int]
+    type: DiskEncryption.DiskEncryptionType
+    def __init__(self, type: _Optional[_Union[DiskEncryption.DiskEncryptionType, str]] = ...) -> None: ...
