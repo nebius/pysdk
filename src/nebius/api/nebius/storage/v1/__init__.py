@@ -380,6 +380,8 @@ class LifecycleRule(pb_classes.Message):
         expiration: "LifecycleExpiration|lifecycle_pb2.LifecycleExpiration|None|unset.UnsetType" = unset.Unset,
         noncurrent_version_expiration: "LifecycleNoncurrentVersionExpiration|lifecycle_pb2.LifecycleNoncurrentVersionExpiration|None|unset.UnsetType" = unset.Unset,
         abort_incomplete_multipart_upload: "LifecycleAbortIncompleteMultipartUpload|lifecycle_pb2.LifecycleAbortIncompleteMultipartUpload|None|unset.UnsetType" = unset.Unset,
+        transition: "LifecycleTransition|lifecycle_pb2.LifecycleTransition|None|unset.UnsetType" = unset.Unset,
+        noncurrent_version_transition: "LifecycleNoncurrentVersionTransition|lifecycle_pb2.LifecycleNoncurrentVersionTransition|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -394,6 +396,10 @@ class LifecycleRule(pb_classes.Message):
             self.noncurrent_version_expiration = noncurrent_version_expiration
         if not isinstance(abort_incomplete_multipart_upload, unset.UnsetType):
             self.abort_incomplete_multipart_upload = abort_incomplete_multipart_upload
+        if not isinstance(transition, unset.UnsetType):
+            self.transition = transition
+        if not isinstance(noncurrent_version_transition, unset.UnsetType):
+            self.noncurrent_version_transition = noncurrent_version_transition
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -403,6 +409,8 @@ class LifecycleRule(pb_classes.Message):
             "expiration",
             "noncurrent_version_expiration",
             "abort_incomplete_multipart_upload",
+            "transition",
+            "noncurrent_version_transition",
             "Status",
         ]
     
@@ -491,6 +499,36 @@ class LifecycleRule(pb_classes.Message):
         return super()._set_field("abort_incomplete_multipart_upload",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def transition(self) -> "LifecycleTransition":
+        """
+         Specifies the transition for the lifecycle of an object in the form of date or days and
+         target storage class to transit object to.
+        """
+        
+        return super()._get_field("transition", explicit_presence=False,
+        wrap=LifecycleTransition,
+        )
+    @transition.setter
+    def transition(self, value: "LifecycleTransition|lifecycle_pb2.LifecycleTransition|None") -> None:
+        return super()._set_field("transition",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def noncurrent_version_transition(self) -> "LifecycleNoncurrentVersionTransition":
+        """
+         Spicifies the transition for the lifecycle of a noncurrent object.
+         It works only on a bucket that has versioning enabled (or suspended).
+        """
+        
+        return super()._get_field("noncurrent_version_transition", explicit_presence=False,
+        wrap=LifecycleNoncurrentVersionTransition,
+        )
+    @noncurrent_version_transition.setter
+    def noncurrent_version_transition(self, value: "LifecycleNoncurrentVersionTransition|lifecycle_pb2.LifecycleNoncurrentVersionTransition|None") -> None:
+        return super()._set_field("noncurrent_version_transition",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
         "status":"status",
@@ -498,6 +536,8 @@ class LifecycleRule(pb_classes.Message):
         "expiration":"expiration",
         "noncurrent_version_expiration":"noncurrent_version_expiration",
         "abort_incomplete_multipart_upload":"abort_incomplete_multipart_upload",
+        "transition":"transition",
+        "noncurrent_version_transition":"noncurrent_version_transition",
         "Status":"Status",
     }
     
@@ -819,6 +859,229 @@ class LifecycleAbortIncompleteMultipartUpload(pb_classes.Message):
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "days_after_initiation":"days_after_initiation",
+    }
+    
+class LifecycleTransition(pb_classes.Message):
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleTransition
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleTransition",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "date": well_known_1.ts_mask,
+    }
+    
+    class __OneOfClass_transited_with__(pb_classes.OneOf):
+        name: builtins.str= "transited_with"
+        
+        def __init__(self, msg: "LifecycleTransition") -> None:
+            super().__init__()
+            self._message: "LifecycleTransition" = msg
+    
+    class __OneOfClass_transited_with_date__(__OneOfClass_transited_with__):
+        field: typing.Literal["date"] = "date"
+        
+        def __init__(self, msg: "LifecycleTransition") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "datetime.datetime":
+            return self._message.date
+    
+    class __OneOfClass_transited_with_days__(__OneOfClass_transited_with__):
+        field: typing.Literal["days"] = "days"
+        
+        def __init__(self, msg: "LifecycleTransition") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.days
+    
+    @builtins.property
+    def transited_with(self) -> __OneOfClass_transited_with_date__|__OneOfClass_transited_with_days__|None:
+        field_name_1: str|None = super().which_field_in_oneof("transited_with")
+        match field_name_1:
+            case "date":
+                return self.__OneOfClass_transited_with_date__(self)
+            case "days":
+                return self.__OneOfClass_transited_with_days__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        date: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        days: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(date, unset.UnsetType):
+            self.date = date
+        if not isinstance(days, unset.UnsetType):
+            self.days = days
+        if not isinstance(storage_class, unset.UnsetType):
+            self.storage_class = storage_class
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "date",
+            "days",
+            "storage_class",
+            "transited_with",
+        ]
+    
+    @builtins.property
+    def date(self) -> "datetime.datetime|None":
+        """
+         Indicates at what date the object will be transited. The time is always midnight UTC.
+        """
+        
+        return super()._get_field("date", explicit_presence=True,
+        wrap=well_known_1.from_timestamp
+        )
+    @date.setter
+    def date(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("date",value,explicit_presence=True,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def days(self) -> "builtins.int|None":
+        """
+         Amount of days since object was uploaded before it's transited to a new storage class.
+         The value must be a non-zero positive integer.
+        """
+        
+        return super()._get_field("days", explicit_presence=True,
+        )
+    @days.setter
+    def days(self, value: "builtins.int|None") -> None:
+        return super()._set_field("days",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def storage_class(self) -> "StorageClass":
+        """
+         Target storage class to transit to.
+        """
+        
+        return super()._get_field("storage_class", explicit_presence=False,
+        wrap=StorageClass,
+        )
+    @storage_class.setter
+    def storage_class(self, value: "StorageClass|base_pb2.StorageClass|None") -> None:
+        return super()._set_field("storage_class",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "date":"date",
+        "days":"days",
+        "storage_class":"storage_class",
+        "transited_with":"transited_with",
+    }
+    
+class LifecycleNoncurrentVersionTransition(pb_classes.Message):
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleNoncurrentVersionTransition
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleNoncurrentVersionTransition",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass__newer_noncurrent_versions__(pb_classes.OneOf):
+        name: builtins.str= "_newer_noncurrent_versions"
+        
+        def __init__(self, msg: "LifecycleNoncurrentVersionTransition") -> None:
+            super().__init__()
+            self._message: "LifecycleNoncurrentVersionTransition" = msg
+    
+    class __OneOfClass__newer_noncurrent_versions_newer_noncurrent_versions__(__OneOfClass__newer_noncurrent_versions__):
+        field: typing.Literal["newer_noncurrent_versions"] = "newer_noncurrent_versions"
+        
+        def __init__(self, msg: "LifecycleNoncurrentVersionTransition") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.newer_noncurrent_versions
+    
+    @builtins.property
+    def _newer_noncurrent_versions(self) -> __OneOfClass__newer_noncurrent_versions_newer_noncurrent_versions__|None:
+        field_name_1: str|None = super().which_field_in_oneof("_newer_noncurrent_versions")
+        match field_name_1:
+            case "newer_noncurrent_versions":
+                return self.__OneOfClass__newer_noncurrent_versions_newer_noncurrent_versions__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        newer_noncurrent_versions: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        noncurrent_days: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(newer_noncurrent_versions, unset.UnsetType):
+            self.newer_noncurrent_versions = newer_noncurrent_versions
+        if not isinstance(noncurrent_days, unset.UnsetType):
+            self.noncurrent_days = noncurrent_days
+        if not isinstance(storage_class, unset.UnsetType):
+            self.storage_class = storage_class
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "newer_noncurrent_versions",
+            "noncurrent_days",
+            "storage_class",
+            "_newer_noncurrent_versions",
+        ]
+    
+    @builtins.property
+    def newer_noncurrent_versions(self) -> "builtins.int|None":
+        """
+         Specifies how many noncurrent versions the system will retain without transition.
+        """
+        
+        return super()._get_field("newer_noncurrent_versions", explicit_presence=True,
+        )
+    @newer_noncurrent_versions.setter
+    def newer_noncurrent_versions(self, value: "builtins.int|None") -> None:
+        return super()._set_field("newer_noncurrent_versions",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def noncurrent_days(self) -> "builtins.int":
+        """
+         Specifies the number of days an object is noncurrent before the system will transit it.
+        """
+        
+        return super()._get_field("noncurrent_days", explicit_presence=False,
+        )
+    @noncurrent_days.setter
+    def noncurrent_days(self, value: "builtins.int|None") -> None:
+        return super()._set_field("noncurrent_days",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def storage_class(self) -> "StorageClass":
+        """
+         Target storage class to transit to.
+        """
+        
+        return super()._get_field("storage_class", explicit_presence=False,
+        wrap=StorageClass,
+        )
+    @storage_class.setter
+    def storage_class(self, value: "StorageClass|base_pb2.StorageClass|None") -> None:
+        return super()._set_field("storage_class",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "newer_noncurrent_versions":"newer_noncurrent_versions",
+        "noncurrent_days":"noncurrent_days",
+        "storage_class":"storage_class",
+        "_newer_noncurrent_versions":"_newer_noncurrent_versions",
     }
     
 # file: nebius/storage/v1/bucket.proto
@@ -1917,6 +2180,8 @@ __all__ = [
     "LifecycleExpiration",
     "LifecycleNoncurrentVersionExpiration",
     "LifecycleAbortIncompleteMultipartUpload",
+    "LifecycleTransition",
+    "LifecycleNoncurrentVersionTransition",
     "Bucket",
     "BucketSpec",
     "BucketStatus",

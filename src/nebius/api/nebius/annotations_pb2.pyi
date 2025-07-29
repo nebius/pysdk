@@ -38,14 +38,20 @@ API_SERVICE_NAME_FIELD_NUMBER: _ClassVar[int]
 api_service_name: _descriptor.FieldDescriptor
 SERVICE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 service_deprecation_details: _descriptor.FieldDescriptor
+SERVICE_PY_SDK_FIELD_NUMBER: _ClassVar[int]
+service_py_sdk: _descriptor.FieldDescriptor
 METHOD_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 method_deprecation_details: _descriptor.FieldDescriptor
+METHOD_PY_SDK_FIELD_NUMBER: _ClassVar[int]
+method_py_sdk: _descriptor.FieldDescriptor
 REGION_ROUTING_FIELD_NUMBER: _ClassVar[int]
 region_routing: _descriptor.FieldDescriptor
 RESOURCE_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 resource_behavior: _descriptor.FieldDescriptor
 MESSAGE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 message_deprecation_details: _descriptor.FieldDescriptor
+MESSAGE_PY_SDK_FIELD_NUMBER: _ClassVar[int]
+message_py_sdk: _descriptor.FieldDescriptor
 FIELD_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 field_behavior: _descriptor.FieldDescriptor
 SENSITIVE_FIELD_NUMBER: _ClassVar[int]
@@ -54,10 +60,60 @@ CREDENTIALS_FIELD_NUMBER: _ClassVar[int]
 credentials: _descriptor.FieldDescriptor
 FIELD_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 field_deprecation_details: _descriptor.FieldDescriptor
+FIELD_PY_SDK_FIELD_NUMBER: _ClassVar[int]
+field_py_sdk: _descriptor.FieldDescriptor
 ONEOF_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 oneof_behavior: _descriptor.FieldDescriptor
+ONEOF_PY_SDK_FIELD_NUMBER: _ClassVar[int]
+oneof_py_sdk: _descriptor.FieldDescriptor
+ENUM_PY_SDK_FIELD_NUMBER: _ClassVar[int]
+enum_py_sdk: _descriptor.FieldDescriptor
 ENUM_VALUE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 enum_value_deprecation_details: _descriptor.FieldDescriptor
+ENUM_VALUE_PY_SDK_FIELD_NUMBER: _ClassVar[int]
+enum_value_py_sdk: _descriptor.FieldDescriptor
+
+class ServicePySDKSettings(_message.Message):
+    __slots__ = ["name"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
+
+class MethodPySDKSettings(_message.Message):
+    __slots__ = ["name"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
+
+class FieldPySDKSettings(_message.Message):
+    __slots__ = ["name"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
+
+class MessagePySDKSettings(_message.Message):
+    __slots__ = ["name"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
+
+class OneofPySDKSettings(_message.Message):
+    __slots__ = ["name"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
+
+class EnumPySDKSettings(_message.Message):
+    __slots__ = ["name"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
+
+class EnumValuePySDKSettings(_message.Message):
+    __slots__ = ["name"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
 
 class RegionRouting(_message.Message):
     __slots__ = ["nid", "disabled", "strict"]

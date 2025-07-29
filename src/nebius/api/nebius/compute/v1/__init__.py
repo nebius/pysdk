@@ -4127,7 +4127,6 @@ class InstanceSpec(pb_classes.Message):
         recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None|unset.UnsetType" = unset.Unset,
         preemptible: "PreemptibleSpec|instance_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
         hostname: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        nvl_partition_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service_account_id, unset.UnsetType):
@@ -4154,8 +4153,6 @@ class InstanceSpec(pb_classes.Message):
             self.preemptible = preemptible
         if not isinstance(hostname, unset.UnsetType):
             self.hostname = hostname
-        if not isinstance(nvl_partition_id, unset.UnsetType):
-            self.nvl_partition_id = nvl_partition_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -4171,7 +4168,6 @@ class InstanceSpec(pb_classes.Message):
             "recovery_policy",
             "preemptible",
             "hostname",
-            "nvl_partition_id",
         ]
     
     @builtins.property
@@ -4349,19 +4345,6 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("hostname",value,explicit_presence=False,
         )
     
-    @builtins.property
-    def nvl_partition_id(self) -> "builtins.str":
-        """
-         NVLink partition ID associated with the VM
-        """
-        
-        return super()._get_field("nvl_partition_id", explicit_presence=False,
-        )
-    @nvl_partition_id.setter
-    def nvl_partition_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("nvl_partition_id",value,explicit_presence=False,
-        )
-    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "service_account_id":"service_account_id",
         "resources":"resources",
@@ -4375,7 +4358,6 @@ class InstanceSpec(pb_classes.Message):
         "recovery_policy":"recovery_policy",
         "preemptible":"preemptible",
         "hostname":"hostname",
-        "nvl_partition_id":"nvl_partition_id",
     }
     
 class PreemptibleSpec(pb_classes.Message):
