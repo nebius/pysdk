@@ -1,3 +1,4 @@
+from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from logging import getLogger
 
@@ -93,20 +94,34 @@ class Descriptor:
     def name(self) -> str:
         return self.descriptor.name  # type: ignore
 
+    @property
+    def pythonic_name(self) -> str:
+        raise NotImplementedError("Subclasses must implement pythonic_name property")
+
 
 class DescriptorNameError(DescriptorError):
     def __init__(self, descriptor: Descriptor, error: Exception) -> None:
         super().__init__(f"{descriptor!r} has error with name: {error}")
 
 
-class DuplicateNameError(DescriptorError):
+class DuplicatesError(DescriptorError):
     def __init__(
-        self, descriptor: Descriptor, name: str, child1: Descriptor, child2: Descriptor
+        self,
+        descriptor: Descriptor,
+        duplicates: Iterable[list[Descriptor]],
+        inner_errors: list["DuplicatesError"] | None = None,
     ) -> None:
-        super().__init__(
-            f"{descriptor!r} has duplicate name '{name}' for children "
-            f"{child1!r} and {child2!r}."
+        lines = "\n".join(
+            f"{group[0].pythonic_name}: {group!r}" for group in duplicates
         )
+        if lines != "":
+            lines = f"{descriptor!r} has duplicate names for children:\n{lines}"
+        if inner_errors is not None and len(inner_errors) > 0:
+            if len(lines) != 0:
+                lines += "\n"
+            lines += "\n".join(str(e) for e in inner_errors)
+
+        super().__init__(lines)
 
 
 class EnumValue(Descriptor):
@@ -198,13 +213,15 @@ class Enum(Descriptor):
     def check_names(self) -> None:
         if self._checked:
             return
-        val_names = dict[str, EnumValue]()
+        val_names = defaultdict[str, list[Descriptor]](list[Descriptor])
         for val in self.values:
-            if val.pythonic_name in val_names:
-                raise DuplicateNameError(
-                    self, val.pythonic_name, val, val_names[val.pythonic_name]
-                )
-            val_names[val.pythonic_name] = val
+            val_names[val.pythonic_name].append(val)
+
+        duplicates: list[list[Descriptor]] = [
+            group for group in val_names.values() if len(group) > 1
+        ]
+        if duplicates:
+            raise DuplicatesError(self, duplicates)
         self._checked = True
 
     @property
@@ -600,33 +617,29 @@ class Message(Descriptor):
     def check_names(self) -> None:
         if self._checked:
             return
-        child_names = dict[str, Descriptor]()
+        val_names = defaultdict[str, list[Descriptor]](list[Descriptor])
+        inner_errors: list[DuplicatesError] = []
         for field in self.fields():
-            if field.pythonic_name in child_names:
-                raise DuplicateNameError(
-                    self, field.pythonic_name, field, child_names[field.pythonic_name]
-                )
-            child_names[field.pythonic_name] = field
+            val_names[field.pythonic_name].append(field)
         for msg in self.messages():
-            if msg.pythonic_name in child_names:
-                raise DuplicateNameError(
-                    self, msg.pythonic_name, msg, child_names[msg.pythonic_name]
-                )
-            child_names[msg.pythonic_name] = msg
-            msg.check_names()
+            val_names[msg.pythonic_name].append(msg)
+            try:
+                msg.check_names()
+            except DuplicatesError as e:
+                inner_errors.append(e)
         for enum in self.enums:
-            if enum.pythonic_name in child_names:
-                raise DuplicateNameError(
-                    self, enum.pythonic_name, enum, child_names[enum.pythonic_name]
-                )
-            child_names[enum.pythonic_name] = enum
-            enum.check_names()
+            val_names[enum.pythonic_name].append(enum)
+            try:
+                enum.check_names()
+            except DuplicatesError as e:
+                inner_errors.append(e)
         for oneof in self.oneofs:
-            if oneof.pythonic_name in child_names:
-                raise DuplicateNameError(
-                    self, oneof.pythonic_name, oneof, child_names[oneof.pythonic_name]
-                )
-            child_names[oneof.pythonic_name] = oneof
+            val_names[oneof.pythonic_name].append(oneof)
+        duplicates: list[list[Descriptor]] = [
+            v for v in val_names.values() if len(v) > 1
+        ]
+        if duplicates or len(inner_errors) > 0:
+            raise DuplicatesError(self, duplicates, inner_errors)
         self._checked = True
 
     @property
@@ -922,16 +935,15 @@ class Service(Descriptor):
     def check_names(self) -> None:
         if self._checked:
             return
-        method_names = dict[str, Method]()
+
+        val_names = defaultdict[str, list[Descriptor]](list[Descriptor])
         for method in self.methods.values():
-            if method.pythonic_name in method_names:
-                raise DuplicateNameError(
-                    self,
-                    method.pythonic_name,
-                    method,
-                    method_names[method.pythonic_name],
-                )
-            method_names[method.pythonic_name] = method
+            val_names[method.pythonic_name].append(method)
+        duplicates: list[list[Descriptor]] = [
+            v for v in val_names.values() if len(v) > 1
+        ]
+        if duplicates:
+            raise DuplicatesError(self, duplicates)
         self._checked = True
 
     @property
@@ -1032,40 +1044,40 @@ class File(Descriptor):
         self._source_code_info: (
             dict[Sequence[int], pb.SourceCodeInfo.Location] | None
         ) = None
-        self._checked: dict[str, Descriptor] | None = None
+        self._checked: defaultdict[str, list[Descriptor]] | None = None
 
-    def check_names(self) -> dict[str, Descriptor]:
+    def check_names(self) -> defaultdict[str, list[Descriptor]]:
         if self._checked is not None:
             return self._checked
-        children_names = dict[str, Descriptor]()
+        val_names = defaultdict[str, list[Descriptor]](list[Descriptor])
+        inner_errors = list[DuplicatesError]()
         for srv in self.services_dict.values():
-            if srv.pythonic_name in children_names:
-                raise DuplicateNameError(
-                    self, srv.pythonic_name, srv, children_names[srv.pythonic_name]
-                )
-            children_names[srv.pythonic_name] = srv
-            srv.check_names()
+            val_names[srv.pythonic_name].append(srv)
+            try:
+                srv.check_names()
+            except DuplicatesError as e:
+                inner_errors.append(e)
         for msg in self.messages():
-            if msg.pythonic_name in children_names:
-                raise DuplicateNameError(
-                    self, msg.pythonic_name, msg, children_names[msg.pythonic_name]
-                )
-            children_names[msg.pythonic_name] = msg
-            msg.check_names()
+            val_names[msg.pythonic_name].append(msg)
+            try:
+                msg.check_names()
+            except DuplicatesError as e:
+                inner_errors.append(e)
         for enum in self.enums:
-            if enum.pythonic_name in children_names:
-                raise DuplicateNameError(
-                    self, enum.pythonic_name, enum, children_names[enum.pythonic_name]
-                )
-            children_names[enum.pythonic_name] = enum
-            enum.check_names()
+            val_names[enum.pythonic_name].append(enum)
+            try:
+                enum.check_names()
+            except DuplicatesError as e:
+                inner_errors.append(e)
         for ext in self.extensions.values():
-            if ext.pythonic_name in children_names:
-                raise DuplicateNameError(
-                    self, ext.pythonic_name, ext, children_names[ext.pythonic_name]
-                )
-            children_names[ext.pythonic_name] = ext
-        self._checked = children_names
+            val_names[ext.pythonic_name].append(ext)
+
+        duplicates: list[list[Descriptor]] = [
+            v for v in val_names.values() if len(v) > 1
+        ]
+        if duplicates or len(inner_errors) > 0:
+            raise DuplicatesError(self, duplicates, inner_errors)
+        self._checked = val_names
         return self._checked
 
     @property
@@ -1275,17 +1287,29 @@ class FileSet(Descriptor):
     def check_names(self) -> None:
         if self._checked:
             return
-        children_names = dict[str, dict[str, Descriptor]]()
+
+        val_names = defaultdict[str, defaultdict[str, list[Descriptor]]](
+            lambda: defaultdict(list[Descriptor])
+        )
+        inner_errors: list[DuplicatesError] = []
         for file in self.files_generated:
-            if file.package not in children_names:
-                children_names[file.package] = dict[str, Descriptor]()
-            file_children = file.check_names()
-            for name, child in file_children.items():
-                if name in children_names[file.package]:
-                    raise DuplicateNameError(
-                        self, name, child, children_names[file.package][name]
+            try:
+                file_children = file.check_names()
+                for name, child in file_children.items():
+                    val_names[file.package][name].extend(child)
+            except DuplicatesError as e:
+                inner_errors.append(e)
+        for pkg_names in val_names.values():
+            duplicates = [v for v in pkg_names.values() if len(v) > 1]
+            if duplicates:
+                inner_errors.append(
+                    DuplicatesError(
+                        self,
+                        duplicates,
                     )
-                children_names[file.package][name] = child
+                )
+        if inner_errors:
+            raise DuplicatesError(self, [], inner_errors)
         self._checked = True
 
     def is_package_skipped(self, package: str) -> bool:
