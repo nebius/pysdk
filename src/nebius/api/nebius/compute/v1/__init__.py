@@ -375,7 +375,6 @@ class DiskSpec(pb_classes.Message):
     def disk_encryption(self) -> "DiskEncryption":
         """
         Defines how data on the disk is encrypted. By default, no encryption is applied.
-        This field applies for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
         """
         
         return super()._get_field("disk_encryption", explicit_presence=False,
@@ -637,6 +636,8 @@ class DiskEncryption(pb_classes.Message):
         DISK_ENCRYPTION_MANAGED = 1
         """
         Enables encryption using the platform's default root key from KMS.
+        Available for blank disks only.
+        Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
         """
         
     
