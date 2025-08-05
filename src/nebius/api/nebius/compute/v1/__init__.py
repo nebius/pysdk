@@ -6531,14 +6531,29 @@ class PlatformStatus(pb_classes.Message):
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
+        *,
+        allowed_for_preemptibles: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(allowed_for_preemptibles, unset.UnsetType):
+            self.allowed_for_preemptibles = allowed_for_preemptibles
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "allowed_for_preemptibles",
         ]
     
+    @builtins.property
+    def allowed_for_preemptibles(self) -> "builtins.bool":
+        return super()._get_field("allowed_for_preemptibles", explicit_presence=False,
+        )
+    @allowed_for_preemptibles.setter
+    def allowed_for_preemptibles(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("allowed_for_preemptibles",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allowed_for_preemptibles":"allowed_for_preemptibles",
     }
     
 # file: nebius/compute/v1/platform_service.proto
