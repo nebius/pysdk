@@ -3250,6 +3250,10 @@ class FederatedCredentialsSpec(pb_classes.Message):
     
     @builtins.property
     def federated_subject_id(self) -> "builtins.str":
+        """
+        Federated subject ID.For oidc_provider subject will be calculated based on the “sub” claim of the JWT federation token.
+        """
+        
         return super()._get_field("federated_subject_id", explicit_presence=False,
         )
     @federated_subject_id.setter
@@ -3260,8 +3264,7 @@ class FederatedCredentialsSpec(pb_classes.Message):
     @builtins.property
     def subject_id(self) -> "builtins.str":
         """
-        IAM subject, in which federated subject will be impersonated to.
-        E.g. for workload identities it will be IAM service account.
+        IAM subject, in which federated subject will be impersonated to. E.g. for workload identities it will be IAM service account.
         """
         
         return super()._get_field("subject_id", explicit_presence=False,
@@ -3311,6 +3314,11 @@ class OidcCredentialsProvider(pb_classes.Message):
         with "/.well-known/openid-configuration" endpoint. Configuration should contains the "jwks_uri" endpoint
         where the JSON Web Key Set (JWKS) can be found; this set contains public keys used to verify
         JSON Web Tokens (JWTs) issued by an identity provider.
+        
+        Limitations for external OIDC providers:
+        - token service limits the number of handled keys by 50. If your JWKS return more than 50,
+        the only first 50  will be used for signature verifying.
+        - response size for jwks_uri and "/.well-known/openid-configuration limited by 100KB.
         """
         
         return super()._get_field("issuer_url", explicit_presence=False,
@@ -3324,7 +3332,9 @@ class OidcCredentialsProvider(pb_classes.Message):
     def jwk_set_json(self) -> "builtins.str":
         """
         *
-        Literally json, which represents JWKS with public keys for JWT verification
+        Literally json, which represents JWKS with public keys for JWT verification.
+        It worth mentioned that in a case of adding/rotating keys the jwk_set_json also should be updated here.
+        Besides, the "issuer" parameter should be set even if the JWKS will be resolved locally.
         """
         
         return super()._get_field("jwk_set_json", explicit_presence=False,
