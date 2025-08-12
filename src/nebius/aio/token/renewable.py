@@ -17,7 +17,6 @@ from logging import getLogger
 from typing import Any, TypeVar
 
 from nebius.base.error import SDKError
-from nebius.base.sanitization import ellipsis_in_middle
 
 from .options import (
     OPTION_MAX_RETRIES,
@@ -216,10 +215,7 @@ class Bearer(ParentBearer):
             t.cancel()
             self.bg_task(t)
         tok = token_task.result()
-        log.debug(
-            f"received new token: {ellipsis_in_middle(tok.token)}, "
-            f"expires in {tok.expiration}"
-        )
+        log.debug(f"received new token: {tok}")
         if self._renewal_future is not None and not self._renewal_future.done():
             self._renewal_future.set_result(tok)
         self._cache = tok
