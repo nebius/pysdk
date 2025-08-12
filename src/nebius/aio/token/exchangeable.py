@@ -16,13 +16,15 @@ from nebius.api.nebius.iam.v1.token_service_pb2 import CreateTokenResponse
 from nebius.base.error import SDKError
 from nebius.base.metadata import Authorization, Internal
 from nebius.base.metadata import Metadata as NebiusMetadata
-from nebius.base.sanitization import ellipsis_in_middle
 from nebius.base.service_account.service_account import TokenRequester
+from nebius.base.token_sanitizer import TokenSanitizer
 
 from .options import OPTION_MAX_RETRIES
 from .token import Bearer as ParentBearer
 from .token import Receiver as ParentReceiver
 from .token import Token
+
+sanitizer = TokenSanitizer.access_token_sanitizer()
 
 log = getLogger(__name__)
 
@@ -108,7 +110,7 @@ class Receiver(ParentReceiver):
             raise UnsupportedTokenTypeError(ret.token_type)
 
         log.debug(
-            f"token fetched: {ellipsis_in_middle(ret.access_token)},"
+            f"token fetched: {sanitizer.sanitize(ret.access_token)},"
             f" expires in: {ret.expires_in} seconds."
         )
         return Token(
