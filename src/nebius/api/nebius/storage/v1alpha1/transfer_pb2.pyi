@@ -33,16 +33,18 @@ class TransferSpec(_message.Message):
     IF_NEWER: TransferSpec.OverwriteStrategy
     ALWAYS: TransferSpec.OverwriteStrategy
     class SourceBucket(_message.Message):
-        __slots__ = ["endpoint", "bucket_name", "region", "credentials"]
+        __slots__ = ["endpoint", "bucket_name", "region", "credentials", "limiters"]
         ENDPOINT_FIELD_NUMBER: _ClassVar[int]
         BUCKET_NAME_FIELD_NUMBER: _ClassVar[int]
         REGION_FIELD_NUMBER: _ClassVar[int]
         CREDENTIALS_FIELD_NUMBER: _ClassVar[int]
+        LIMITERS_FIELD_NUMBER: _ClassVar[int]
         endpoint: str
         bucket_name: str
         region: str
         credentials: TransferSpec.BucketCredentials
-        def __init__(self, endpoint: _Optional[str] = ..., bucket_name: _Optional[str] = ..., region: _Optional[str] = ..., credentials: _Optional[_Union[TransferSpec.BucketCredentials, _Mapping]] = ...) -> None: ...
+        limiters: TransferSpec.Limiters
+        def __init__(self, endpoint: _Optional[str] = ..., bucket_name: _Optional[str] = ..., region: _Optional[str] = ..., credentials: _Optional[_Union[TransferSpec.BucketCredentials, _Mapping]] = ..., limiters: _Optional[_Union[TransferSpec.Limiters, _Mapping]] = ...) -> None: ...
     class DestinationBucket(_message.Message):
         __slots__ = ["bucket_name", "credentials"]
         BUCKET_NAME_FIELD_NUMBER: _ClassVar[int]
@@ -67,6 +69,13 @@ class TransferSpec(_message.Message):
         anonymous: TransferSpec.BucketCredentials.CredentialsAnonymous
         access_key: TransferSpec.BucketCredentials.CredentialsAccessKey
         def __init__(self, anonymous: _Optional[_Union[TransferSpec.BucketCredentials.CredentialsAnonymous, _Mapping]] = ..., access_key: _Optional[_Union[TransferSpec.BucketCredentials.CredentialsAccessKey, _Mapping]] = ...) -> None: ...
+    class Limiters(_message.Message):
+        __slots__ = ["bandwidth_bytes_per_second", "requests_per_second"]
+        BANDWIDTH_BYTES_PER_SECOND_FIELD_NUMBER: _ClassVar[int]
+        REQUESTS_PER_SECOND_FIELD_NUMBER: _ClassVar[int]
+        bandwidth_bytes_per_second: int
+        requests_per_second: int
+        def __init__(self, bandwidth_bytes_per_second: _Optional[int] = ..., requests_per_second: _Optional[int] = ...) -> None: ...
     class StopConditionAfterOneIteration(_message.Message):
         __slots__ = []
         def __init__(self) -> None: ...

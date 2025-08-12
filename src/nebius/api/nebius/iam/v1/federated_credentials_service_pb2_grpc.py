@@ -4,7 +4,7 @@ import grpc
 
 from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.iam.v1 import federated_credentials_pb2 as nebius_dot_iam_dot_v1_dot_federated__credentials__pb2
-from nebius.api.nebius.iam.v1 import federated_credentilas_service_pb2 as nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2
+from nebius.api.nebius.iam.v1 import federated_credentials_service_pb2 as nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2
 
 
 class FederatedCredentialsServiceStub(object):
@@ -18,32 +18,32 @@ class FederatedCredentialsServiceStub(object):
         """
         self.Get = channel.unary_unary(
                 '/nebius.iam.v1.FederatedCredentialsService/Get',
-                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.GetFederatedCredentialsRequest.SerializeToString,
+                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.GetFederatedCredentialsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__pb2.FederatedCredentials.FromString,
                 )
         self.GetByName = channel.unary_unary(
                 '/nebius.iam.v1.FederatedCredentialsService/GetByName',
-                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.GetByNameFederatedCredentialsRequest.SerializeToString,
+                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.GetByNameFederatedCredentialsRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__pb2.FederatedCredentials.FromString,
                 )
         self.List = channel.unary_unary(
                 '/nebius.iam.v1.FederatedCredentialsService/List',
-                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.ListFederatedCredentialsRequest.SerializeToString,
-                response_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.ListFederatedCredentialsResponse.FromString,
+                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.ListFederatedCredentialsRequest.SerializeToString,
+                response_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.ListFederatedCredentialsResponse.FromString,
                 )
         self.Create = channel.unary_unary(
                 '/nebius.iam.v1.FederatedCredentialsService/Create',
-                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.CreateFederatedCredentialsRequest.SerializeToString,
+                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.CreateFederatedCredentialsRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
         self.Update = channel.unary_unary(
                 '/nebius.iam.v1.FederatedCredentialsService/Update',
-                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.UpdateFederatedCredentialsRequest.SerializeToString,
+                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.UpdateFederatedCredentialsRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.FederatedCredentialsService/Delete',
-                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.DeleteFederatedCredentialsRequest.SerializeToString,
+                request_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.DeleteFederatedCredentialsRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
 
@@ -92,32 +92,32 @@ def add_FederatedCredentialsServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Get': grpc.unary_unary_rpc_method_handler(
                     servicer.Get,
-                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.GetFederatedCredentialsRequest.FromString,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.GetFederatedCredentialsRequest.FromString,
                     response_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__pb2.FederatedCredentials.SerializeToString,
             ),
             'GetByName': grpc.unary_unary_rpc_method_handler(
                     servicer.GetByName,
-                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.GetByNameFederatedCredentialsRequest.FromString,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.GetByNameFederatedCredentialsRequest.FromString,
                     response_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__pb2.FederatedCredentials.SerializeToString,
             ),
             'List': grpc.unary_unary_rpc_method_handler(
                     servicer.List,
-                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.ListFederatedCredentialsRequest.FromString,
-                    response_serializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.ListFederatedCredentialsResponse.SerializeToString,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.ListFederatedCredentialsRequest.FromString,
+                    response_serializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.ListFederatedCredentialsResponse.SerializeToString,
             ),
             'Create': grpc.unary_unary_rpc_method_handler(
                     servicer.Create,
-                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.CreateFederatedCredentialsRequest.FromString,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.CreateFederatedCredentialsRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Update': grpc.unary_unary_rpc_method_handler(
                     servicer.Update,
-                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.UpdateFederatedCredentialsRequest.FromString,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.UpdateFederatedCredentialsRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
                     servicer.Delete,
-                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.DeleteFederatedCredentialsRequest.FromString,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.DeleteFederatedCredentialsRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
@@ -142,7 +142,7 @@ class FederatedCredentialsService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederatedCredentialsService/Get',
-            nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.GetFederatedCredentialsRequest.SerializeToString,
+            nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.GetFederatedCredentialsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_federated__credentials__pb2.FederatedCredentials.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -159,7 +159,7 @@ class FederatedCredentialsService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederatedCredentialsService/GetByName',
-            nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.GetByNameFederatedCredentialsRequest.SerializeToString,
+            nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.GetByNameFederatedCredentialsRequest.SerializeToString,
             nebius_dot_iam_dot_v1_dot_federated__credentials__pb2.FederatedCredentials.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -176,8 +176,8 @@ class FederatedCredentialsService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederatedCredentialsService/List',
-            nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.ListFederatedCredentialsRequest.SerializeToString,
-            nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.ListFederatedCredentialsResponse.FromString,
+            nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.ListFederatedCredentialsRequest.SerializeToString,
+            nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.ListFederatedCredentialsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -193,7 +193,7 @@ class FederatedCredentialsService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederatedCredentialsService/Create',
-            nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.CreateFederatedCredentialsRequest.SerializeToString,
+            nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.CreateFederatedCredentialsRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -210,7 +210,7 @@ class FederatedCredentialsService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederatedCredentialsService/Update',
-            nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.UpdateFederatedCredentialsRequest.SerializeToString,
+            nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.UpdateFederatedCredentialsRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -227,7 +227,7 @@ class FederatedCredentialsService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederatedCredentialsService/Delete',
-            nebius_dot_iam_dot_v1_dot_federated__credentilas__service__pb2.DeleteFederatedCredentialsRequest.SerializeToString,
+            nebius_dot_iam_dot_v1_dot_federated__credentials__service__pb2.DeleteFederatedCredentialsRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

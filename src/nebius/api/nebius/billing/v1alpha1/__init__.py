@@ -11,12 +11,14 @@ import nebius.aio.client as client
 import nebius.aio.request as request_1
 import nebius.api.nebius.billing.v1alpha1.calculator_pb2 as calculator_pb2
 import nebius.api.nebius.billing.v1alpha1.calculator_service_pb2 as calculator_service_pb2
+import nebius.api.nebius.billing.v1alpha1.offer_type_pb2 as offer_type_pb2
 import nebius.api.nebius.compute.v1 as v1_1
 import nebius.api.nebius.compute.v1.disk_service_pb2 as disk_service_pb2
 import nebius.api.nebius.compute.v1.filesystem_service_pb2 as filesystem_service_pb2
 import nebius.api.nebius.compute.v1.instance_service_pb2 as instance_service_pb2
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
+import nebius.base.protos.pb_enum as pb_enum
 import nebius.base.protos.unset as unset
 import typing as typing
 #@ local imports here @#
@@ -708,6 +710,20 @@ class CalculatorServiceClient(client.Client):
         )
     
 
+# file: nebius/billing/v1alpha1/offer_type.proto
+class OfferType(pb_enum.Enum):
+    """
+    OfferType is a enum that specifies the type of offer.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.billing.v1alpha1.OfferType",offer_type_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    OFFER_TYPE_UNSPECIFIED = 0
+    OFFER_TYPE_CONTRACT_PRICE = 1
+    """
+    Contract price is a special price for SKU.
+    """
+    
+
 __all__ = [
     #@ local import names here @#
     "ResourceSpec",
@@ -720,4 +736,5 @@ __all__ = [
     "EstimateBatchRequest",
     "EstimateBatchResponse",
     "CalculatorServiceClient",
+    "OfferType",
 ]

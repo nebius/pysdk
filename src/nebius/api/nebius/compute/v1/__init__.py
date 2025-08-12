@@ -375,7 +375,6 @@ class DiskSpec(pb_classes.Message):
     def disk_encryption(self) -> "DiskEncryption":
         """
         Defines how data on the disk is encrypted. By default, no encryption is applied.
-        This field applies for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
         """
         
         return super()._get_field("disk_encryption", explicit_presence=False,
@@ -637,6 +636,8 @@ class DiskEncryption(pb_classes.Message):
         DISK_ENCRYPTION_MANAGED = 1
         """
         Enables encryption using the platform's default root key from KMS.
+        Available for blank disks only.
+        Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
         """
         
     
@@ -6530,14 +6531,29 @@ class PlatformStatus(pb_classes.Message):
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
+        *,
+        allowed_for_preemptibles: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(allowed_for_preemptibles, unset.UnsetType):
+            self.allowed_for_preemptibles = allowed_for_preemptibles
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "allowed_for_preemptibles",
         ]
     
+    @builtins.property
+    def allowed_for_preemptibles(self) -> "builtins.bool":
+        return super()._get_field("allowed_for_preemptibles", explicit_presence=False,
+        )
+    @allowed_for_preemptibles.setter
+    def allowed_for_preemptibles(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("allowed_for_preemptibles",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allowed_for_preemptibles":"allowed_for_preemptibles",
     }
     
 # file: nebius/compute/v1/platform_service.proto

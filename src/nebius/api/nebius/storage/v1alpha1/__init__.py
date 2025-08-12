@@ -114,6 +114,7 @@ class TransferSpec(pb_classes.Message):
             bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
             region: "builtins.str|None|unset.UnsetType" = unset.Unset,
             credentials: "TransferSpec.BucketCredentials|transfer_pb2.TransferSpec.BucketCredentials|None|unset.UnsetType" = unset.Unset,
+            limiters: "TransferSpec.Limiters|transfer_pb2.TransferSpec.Limiters|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(endpoint, unset.UnsetType):
@@ -124,6 +125,8 @@ class TransferSpec(pb_classes.Message):
                 self.region = region
             if not isinstance(credentials, unset.UnsetType):
                 self.credentials = credentials
+            if not isinstance(limiters, unset.UnsetType):
+                self.limiters = limiters
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
@@ -131,6 +134,7 @@ class TransferSpec(pb_classes.Message):
                 "bucket_name",
                 "region",
                 "credentials",
+                "limiters",
             ]
         
         @builtins.property
@@ -181,11 +185,32 @@ class TransferSpec(pb_classes.Message):
             return super()._set_field("credentials",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def limiters(self) -> "TransferSpec.Limiters":
+            """
+            Limiters applied to source bucket operations. These limits include all operations
+            required for transfer (HeadObject, GetObject, ListObjects). For details about
+            which operations are used, see public documentation: http://docs.nebius.com/object-storage/transfer/quickstart#background.
+            
+            Note: Since the service performs comparable request volumes and data transfers
+            to both source and destination, these limits will indirectly constrain
+            destination operations as well.
+            """
+            
+            return super()._get_field("limiters", explicit_presence=False,
+            wrap=TransferSpec.Limiters,
+            )
+        @limiters.setter
+        def limiters(self, value: "TransferSpec.Limiters|transfer_pb2.TransferSpec.Limiters|None") -> None:
+            return super()._set_field("limiters",value,explicit_presence=False,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "endpoint":"endpoint",
             "bucket_name":"bucket_name",
             "region":"region",
             "credentials":"credentials",
+            "limiters":"limiters",
         }
         
     
@@ -408,6 +433,63 @@ class TransferSpec(pb_classes.Message):
         }
         
     
+    class Limiters(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferSpec.Limiters
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1alpha1.TransferSpec.Limiters",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            bandwidth_bytes_per_second: "builtins.int|None|unset.UnsetType" = unset.Unset,
+            requests_per_second: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(bandwidth_bytes_per_second, unset.UnsetType):
+                self.bandwidth_bytes_per_second = bandwidth_bytes_per_second
+            if not isinstance(requests_per_second, unset.UnsetType):
+                self.requests_per_second = requests_per_second
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "bandwidth_bytes_per_second",
+                "requests_per_second",
+            ]
+        
+        @builtins.property
+        def bandwidth_bytes_per_second(self) -> "builtins.int":
+            """
+            Maximum bandwidth in bytes per second. If set to zero, default limit will be applied.
+            """
+            
+            return super()._get_field("bandwidth_bytes_per_second", explicit_presence=False,
+            )
+        @bandwidth_bytes_per_second.setter
+        def bandwidth_bytes_per_second(self, value: "builtins.int|None") -> None:
+            return super()._set_field("bandwidth_bytes_per_second",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def requests_per_second(self) -> "builtins.int":
+            """
+            Maximum number of requests per second. If set to zero, default limit will be applied.
+            """
+            
+            return super()._get_field("requests_per_second", explicit_presence=False,
+            )
+        @requests_per_second.setter
+        def requests_per_second(self, value: "builtins.int|None") -> None:
+            return super()._set_field("requests_per_second",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "bandwidth_bytes_per_second":"bandwidth_bytes_per_second",
+            "requests_per_second":"requests_per_second",
+        }
+        
+    
     class StopConditionAfterOneIteration(pb_classes.Message):
         __PB2_CLASS__ = transfer_pb2.TransferSpec.StopConditionAfterOneIteration
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1alpha1.TransferSpec.StopConditionAfterOneIteration",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -605,6 +687,7 @@ class TransferSpec(pb_classes.Message):
             "SourceBucket",
             "DestinationBucket",
             "BucketCredentials",
+            "Limiters",
             "StopConditionAfterOneIteration",
             "StopConditionAfterNEmptyIterations",
             "StopConditionInfinite",
@@ -706,6 +789,7 @@ class TransferSpec(pb_classes.Message):
         "SourceBucket":"SourceBucket",
         "DestinationBucket":"DestinationBucket",
         "BucketCredentials":"BucketCredentials",
+        "Limiters":"Limiters",
         "StopConditionAfterOneIteration":"StopConditionAfterOneIteration",
         "StopConditionAfterNEmptyIterations":"StopConditionAfterNEmptyIterations",
         "StopConditionInfinite":"StopConditionInfinite",

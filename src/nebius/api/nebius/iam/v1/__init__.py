@@ -24,7 +24,7 @@ import nebius.api.nebius.iam.v1.auth_public_key_pb2 as auth_public_key_pb2
 import nebius.api.nebius.iam.v1.auth_public_key_service_pb2 as auth_public_key_service_pb2
 import nebius.api.nebius.iam.v1.container_pb2 as container_pb2
 import nebius.api.nebius.iam.v1.federated_credentials_pb2 as federated_credentials_pb2
-import nebius.api.nebius.iam.v1.federated_credentilas_service_pb2 as federated_credentilas_service_pb2
+import nebius.api.nebius.iam.v1.federated_credentials_service_pb2 as federated_credentials_service_pb2
 import nebius.api.nebius.iam.v1.federation_certificate_pb2 as federation_certificate_pb2
 import nebius.api.nebius.iam.v1.federation_certificate_service_pb2 as federation_certificate_service_pb2
 import nebius.api.nebius.iam.v1.federation_pb2 as federation_pb2
@@ -3250,6 +3250,10 @@ class FederatedCredentialsSpec(pb_classes.Message):
     
     @builtins.property
     def federated_subject_id(self) -> "builtins.str":
+        """
+        Federated subject ID.For oidc_provider subject will be calculated based on the “sub” claim of the JWT federation token.
+        """
+        
         return super()._get_field("federated_subject_id", explicit_presence=False,
         )
     @federated_subject_id.setter
@@ -3260,8 +3264,7 @@ class FederatedCredentialsSpec(pb_classes.Message):
     @builtins.property
     def subject_id(self) -> "builtins.str":
         """
-        IAM subject, in which federated subject will be impersonated to.
-        E.g. for workload identities it will be IAM service account.
+        IAM subject, in which federated subject will be impersonated to. E.g. for workload identities it will be IAM service account.
         """
         
         return super()._get_field("subject_id", explicit_presence=False,
@@ -3311,6 +3314,11 @@ class OidcCredentialsProvider(pb_classes.Message):
         with "/.well-known/openid-configuration" endpoint. Configuration should contains the "jwks_uri" endpoint
         where the JSON Web Key Set (JWKS) can be found; this set contains public keys used to verify
         JSON Web Tokens (JWTs) issued by an identity provider.
+        
+        Limitations for external OIDC providers:
+        - token service limits the number of handled keys by 50. If your JWKS return more than 50,
+        the only first 50  will be used for signature verifying.
+        - response size for jwks_uri and "/.well-known/openid-configuration limited by 100KB.
         """
         
         return super()._get_field("issuer_url", explicit_presence=False,
@@ -3324,7 +3332,9 @@ class OidcCredentialsProvider(pb_classes.Message):
     def jwk_set_json(self) -> "builtins.str":
         """
         *
-        Literally json, which represents JWKS with public keys for JWT verification
+        Literally json, which represents JWKS with public keys for JWT verification.
+        It worth mentioned that in a case of adding/rotating keys the jwk_set_json also should be updated here.
+        Besides, the "issuer" parameter should be set even if the JWKS will be resolved locally.
         """
         
         return super()._get_field("jwk_set_json", explicit_presence=False,
@@ -3358,10 +3368,10 @@ class FederatedCredentialsStatus(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
     }
     
-# file: nebius/iam/v1/federated_credentilas_service.proto
+# file: nebius/iam/v1/federated_credentials_service.proto
 class GetFederatedCredentialsRequest(pb_classes.Message):
-    __PB2_CLASS__ = federated_credentilas_service_pb2.GetFederatedCredentialsRequest
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __PB2_CLASS__ = federated_credentials_service_pb2.GetFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetFederatedCredentialsRequest",federated_credentials_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -3394,8 +3404,8 @@ class GetFederatedCredentialsRequest(pb_classes.Message):
     }
     
 class GetByNameFederatedCredentialsRequest(pb_classes.Message):
-    __PB2_CLASS__ = federated_credentilas_service_pb2.GetByNameFederatedCredentialsRequest
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetByNameFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __PB2_CLASS__ = federated_credentials_service_pb2.GetByNameFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.GetByNameFederatedCredentialsRequest",federated_credentials_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -3450,8 +3460,8 @@ class GetByNameFederatedCredentialsRequest(pb_classes.Message):
     }
     
 class CreateFederatedCredentialsRequest(pb_classes.Message):
-    __PB2_CLASS__ = federated_credentilas_service_pb2.CreateFederatedCredentialsRequest
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __PB2_CLASS__ = federated_credentials_service_pb2.CreateFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateFederatedCredentialsRequest",federated_credentials_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -3500,8 +3510,8 @@ class CreateFederatedCredentialsRequest(pb_classes.Message):
     }
     
 class UpdateFederatedCredentialsRequest(pb_classes.Message):
-    __PB2_CLASS__ = federated_credentilas_service_pb2.UpdateFederatedCredentialsRequest
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __PB2_CLASS__ = federated_credentials_service_pb2.UpdateFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateFederatedCredentialsRequest",federated_credentials_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -3550,8 +3560,8 @@ class UpdateFederatedCredentialsRequest(pb_classes.Message):
     }
     
 class ListFederatedCredentialsRequest(pb_classes.Message):
-    __PB2_CLASS__ = federated_credentilas_service_pb2.ListFederatedCredentialsRequest
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __PB2_CLASS__ = federated_credentials_service_pb2.ListFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederatedCredentialsRequest",federated_credentials_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -3642,8 +3652,8 @@ class ListFederatedCredentialsRequest(pb_classes.Message):
     }
     
 class ListFederatedCredentialsResponse(pb_classes.Message):
-    __PB2_CLASS__ = federated_credentilas_service_pb2.ListFederatedCredentialsResponse
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederatedCredentialsResponse",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __PB2_CLASS__ = federated_credentials_service_pb2.ListFederatedCredentialsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListFederatedCredentialsResponse",federated_credentials_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -3699,8 +3709,8 @@ class ListFederatedCredentialsResponse(pb_classes.Message):
     }
     
 class DeleteFederatedCredentialsRequest(pb_classes.Message):
-    __PB2_CLASS__ = federated_credentilas_service_pb2.DeleteFederatedCredentialsRequest
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederatedCredentialsRequest",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __PB2_CLASS__ = federated_credentials_service_pb2.DeleteFederatedCredentialsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederatedCredentialsRequest",federated_credentials_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -3734,7 +3744,7 @@ class DeleteFederatedCredentialsRequest(pb_classes.Message):
     
 
 class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.FederatedCredentialsService",federated_credentilas_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.FederatedCredentialsService",federated_credentials_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.iam.v1.FederatedCredentialsService"
     __operation_type__ = v1_1.Operation
     __operation_service_class__ = v1_1.OperationServiceClient
@@ -3796,7 +3806,7 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
         return super().request(
             method="List",
             request=request,
-            result_pb2_class=federated_credentilas_service_pb2.ListFederatedCredentialsResponse,
+            result_pb2_class=federated_credentials_service_pb2.ListFederatedCredentialsResponse,
             metadata=metadata,
             timeout=timeout,
             credentials=credentials,

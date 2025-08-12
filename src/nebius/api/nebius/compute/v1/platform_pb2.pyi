@@ -50,5 +50,7 @@ class PresetResources(_message.Message):
     def __init__(self, vcpu_count: _Optional[int] = ..., memory_gibibytes: _Optional[int] = ..., gpu_count: _Optional[int] = ...) -> None: ...
 
 class PlatformStatus(_message.Message):
-    __slots__ = []
-    def __init__(self) -> None: ...
+    __slots__ = ["allowed_for_preemptibles"]
+    ALLOWED_FOR_PREEMPTIBLES_FIELD_NUMBER: _ClassVar[int]
+    allowed_for_preemptibles: bool
+    def __init__(self, allowed_for_preemptibles: bool = ...) -> None: ...
