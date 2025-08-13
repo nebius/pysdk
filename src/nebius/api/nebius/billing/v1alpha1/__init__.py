@@ -447,6 +447,20 @@ class CostBreakdown(pb_classes.Message):
         "cost_rounded":"cost_rounded",
     }
     
+# file: nebius/billing/v1alpha1/offer_type.proto
+class OfferType(pb_enum.Enum):
+    """
+    OfferType is a enum that specifies the type of offer.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.billing.v1alpha1.OfferType",offer_type_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    OFFER_TYPE_UNSPECIFIED = 0
+    OFFER_TYPE_CONTRACT_PRICE = 1
+    """
+    Contract price is a special price for SKU.
+    """
+    
+
 # file: nebius/billing/v1alpha1/calculator_service.proto
 class EstimateRequest(pb_classes.Message):
     __PB2_CLASS__ = calculator_service_pb2.EstimateRequest
@@ -459,14 +473,18 @@ class EstimateRequest(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         resource_spec: "ResourceSpec|calculator_pb2.ResourceSpec|None|unset.UnsetType" = unset.Unset,
+        offer_types: "abc.Iterable[OfferType]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_spec, unset.UnsetType):
             self.resource_spec = resource_spec
+        if not isinstance(offer_types, unset.UnsetType):
+            self.offer_types = offer_types
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "resource_spec",
+            "offer_types",
         ]
     
     @builtins.property
@@ -484,8 +502,23 @@ class EstimateRequest(pb_classes.Message):
         return super()._set_field("resource_spec",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def offer_types(self) -> "abc.MutableSequence[OfferType]":
+        """
+        Type of offers to be applied to the cost estimate.
+        """
+        
+        return super()._get_field("offer_types", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @offer_types.setter
+    def offer_types(self, value: "abc.Iterable[OfferType]|None") -> None:
+        return super()._set_field("offer_types",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "resource_spec":"resource_spec",
+        "offer_types":"offer_types",
     }
     
 class EstimateResponse(pb_classes.Message):
@@ -558,14 +591,18 @@ class EstimateBatchRequest(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         resource_specs: "abc.Iterable[ResourceSpec]|None|unset.UnsetType" = unset.Unset,
+        offer_types: "abc.Iterable[OfferType]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(resource_specs, unset.UnsetType):
             self.resource_specs = resource_specs
+        if not isinstance(offer_types, unset.UnsetType):
+            self.offer_types = offer_types
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "resource_specs",
+            "offer_types",
         ]
     
     @builtins.property
@@ -583,8 +620,23 @@ class EstimateBatchRequest(pb_classes.Message):
         return super()._set_field("resource_specs",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def offer_types(self) -> "abc.MutableSequence[OfferType]":
+        """
+        Type of offers to be applied to the cost estimate.
+        """
+        
+        return super()._get_field("offer_types", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @offer_types.setter
+    def offer_types(self, value: "abc.Iterable[OfferType]|None") -> None:
+        return super()._set_field("offer_types",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "resource_specs":"resource_specs",
+        "offer_types":"offer_types",
     }
     
 class EstimateBatchResponse(pb_classes.Message):
@@ -710,20 +762,6 @@ class CalculatorServiceClient(client.Client):
         )
     
 
-# file: nebius/billing/v1alpha1/offer_type.proto
-class OfferType(pb_enum.Enum):
-    """
-    OfferType is a enum that specifies the type of offer.
-    """
-    
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.billing.v1alpha1.OfferType",offer_type_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
-    OFFER_TYPE_UNSPECIFIED = 0
-    OFFER_TYPE_CONTRACT_PRICE = 1
-    """
-    Contract price is a special price for SKU.
-    """
-    
-
 __all__ = [
     #@ local import names here @#
     "ResourceSpec",
@@ -731,10 +769,10 @@ __all__ = [
     "GeneralTotalCost",
     "GeneralResourceCost",
     "CostBreakdown",
+    "OfferType",
     "EstimateRequest",
     "EstimateResponse",
     "EstimateBatchRequest",
     "EstimateBatchResponse",
     "CalculatorServiceClient",
-    "OfferType",
 ]

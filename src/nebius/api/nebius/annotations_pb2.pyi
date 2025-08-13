@@ -1,9 +1,8 @@
 from google.protobuf import descriptor_pb2 as _descriptor_pb2
-from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Optional
+from typing import ClassVar as _ClassVar, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -44,8 +43,6 @@ METHOD_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 method_deprecation_details: _descriptor.FieldDescriptor
 METHOD_PY_SDK_FIELD_NUMBER: _ClassVar[int]
 method_py_sdk: _descriptor.FieldDescriptor
-REGION_ROUTING_FIELD_NUMBER: _ClassVar[int]
-region_routing: _descriptor.FieldDescriptor
 RESOURCE_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 resource_behavior: _descriptor.FieldDescriptor
 MESSAGE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
@@ -114,16 +111,6 @@ class EnumValuePySDKSettings(_message.Message):
     NAME_FIELD_NUMBER: _ClassVar[int]
     name: str
     def __init__(self, name: _Optional[str] = ...) -> None: ...
-
-class RegionRouting(_message.Message):
-    __slots__ = ["nid", "disabled", "strict"]
-    NID_FIELD_NUMBER: _ClassVar[int]
-    DISABLED_FIELD_NUMBER: _ClassVar[int]
-    STRICT_FIELD_NUMBER: _ClassVar[int]
-    nid: _containers.RepeatedScalarFieldContainer[str]
-    disabled: bool
-    strict: bool
-    def __init__(self, nid: _Optional[_Iterable[str]] = ..., disabled: bool = ..., strict: bool = ...) -> None: ...
 
 class DeprecationDetails(_message.Message):
     __slots__ = ["effective_at", "description"]

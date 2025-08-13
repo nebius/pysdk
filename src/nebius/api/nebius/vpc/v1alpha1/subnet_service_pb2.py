@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.vpc.v1alpha1 import subnet_pb2 as nebius_dot_vpc_dot_v1alpha1_dot_subnet__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n(nebius/vpc/v1alpha1/subnet_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a nebius/vpc/v1alpha1/subnet.proto\"*\n\x10GetSubnetRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Y\n\x16GetSubnetByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x8d\x01\n\x12ListSubnetsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"\x98\x01\n\x1bListSubnetsByNetworkRequest\x12%\n\nnetwork_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"p\n\x13ListSubnetsResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.vpc.v1alpha1.SubnetR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x93\x03\n\rSubnetService\x12I\n\x03Get\x12%.nebius.vpc.v1alpha1.GetSubnetRequest\x1a\x1b.nebius.vpc.v1alpha1.Subnet\x12U\n\tGetByName\x12+.nebius.vpc.v1alpha1.GetSubnetByNameRequest\x1a\x1b.nebius.vpc.v1alpha1.Subnet\x12Y\n\x04List\x12\'.nebius.vpc.v1alpha1.ListSubnetsRequest\x1a(.nebius.vpc.v1alpha1.ListSubnetsResponse\x12}\n\rListByNetwork\x12\x30.nebius.vpc.v1alpha1.ListSubnetsByNetworkRequest\x1a(.nebius.vpc.v1alpha1.ListSubnetsResponse\"\x10\x9a\xb5\x18\x0c\n\nnetwork_id\x1a\x06\xbaJ\x03vpcBe\n\x1a\x61i.nebius.pub.vpc.v1alpha1B\x12SubnetServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n(nebius/vpc/v1alpha1/subnet_service.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a nebius/vpc/v1alpha1/subnet.proto\"*\n\x10GetSubnetRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Y\n\x16GetSubnetByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x8d\x01\n\x12ListSubnetsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"\x98\x01\n\x1bListSubnetsByNetworkRequest\x12%\n\nnetwork_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"p\n\x13ListSubnetsResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.vpc.v1alpha1.SubnetR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\x81\x03\n\rSubnetService\x12I\n\x03Get\x12%.nebius.vpc.v1alpha1.GetSubnetRequest\x1a\x1b.nebius.vpc.v1alpha1.Subnet\x12U\n\tGetByName\x12+.nebius.vpc.v1alpha1.GetSubnetByNameRequest\x1a\x1b.nebius.vpc.v1alpha1.Subnet\x12Y\n\x04List\x12\'.nebius.vpc.v1alpha1.ListSubnetsRequest\x1a(.nebius.vpc.v1alpha1.ListSubnetsResponse\x12k\n\rListByNetwork\x12\x30.nebius.vpc.v1alpha1.ListSubnetsByNetworkRequest\x1a(.nebius.vpc.v1alpha1.ListSubnetsResponse\x1a\x06\xbaJ\x03vpcBe\n\x1a\x61i.nebius.pub.vpc.v1alpha1B\x12SubnetServiceProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,8 +37,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _LISTSUBNETSBYNETWORKREQUEST.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001'
   _SUBNETSERVICE._options = None
   _SUBNETSERVICE._serialized_options = b'\272J\003vpc'
-  _SUBNETSERVICE.methods_by_name['ListByNetwork']._options = None
-  _SUBNETSERVICE.methods_by_name['ListByNetwork']._serialized_options = b'\232\265\030\014\n\nnetwork_id'
   _globals['_GETSUBNETREQUEST']._serialized_start=154
   _globals['_GETSUBNETREQUEST']._serialized_end=196
   _globals['_GETSUBNETBYNAMEREQUEST']._serialized_start=198
@@ -50,5 +48,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_LISTSUBNETSRESPONSE']._serialized_start=588
   _globals['_LISTSUBNETSRESPONSE']._serialized_end=700
   _globals['_SUBNETSERVICE']._serialized_start=703
-  _globals['_SUBNETSERVICE']._serialized_end=1106
+  _globals['_SUBNETSERVICE']._serialized_end=1088
 # @@protoc_insertion_point(module_scope)

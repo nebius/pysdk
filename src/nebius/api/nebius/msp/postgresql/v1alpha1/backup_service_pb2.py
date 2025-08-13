@@ -17,7 +17,7 @@ from nebius.api.nebius.msp.postgresql.v1alpha1 import backup_pb2 as nebius_dot_m
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n3nebius/msp/postgresql/v1alpha1/backup_service.proto\x12\x1enebius.msp.postgresql.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a+nebius/msp/postgresql/v1alpha1/backup.proto\x1a\x18nebius/annotations.proto\"^\n\x10GetBackupRequest\x12%\n\ncluster_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tclusterId\x12#\n\tbackup_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08\x62\x61\x63kupId\"9\n\x12ListBackupsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\"D\n\x1bListBackupsByClusterRequest\x12%\n\ncluster_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tclusterId\"W\n\x13ListBackupsResponse\x12@\n\x07\x62\x61\x63kups\x18\x01 \x03(\x0b\x32&.nebius.msp.postgresql.v1alpha1.BackupR\x07\x62\x61\x63kups\"<\n\x13\x43reateBackupRequest\x12%\n\ncluster_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tclusterId\"a\n\x13\x44\x65leteBackupRequest\x12%\n\ncluster_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tclusterId\x12#\n\tbackup_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08\x62\x61\x63kupId2\x84\x05\n\rBackupService\x12q\n\x03Get\x12\x30.nebius.msp.postgresql.v1alpha1.GetBackupRequest\x1a&.nebius.msp.postgresql.v1alpha1.Backup\"\x10\x9a\xb5\x18\x0c\n\ncluster_id\x12o\n\x04List\x12\x32.nebius.msp.postgresql.v1alpha1.ListBackupsRequest\x1a\x33.nebius.msp.postgresql.v1alpha1.ListBackupsResponse\x12\x93\x01\n\rListByCluster\x12;.nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest\x1a\x33.nebius.msp.postgresql.v1alpha1.ListBackupsResponse\"\x10\x9a\xb5\x18\x0c\n\ncluster_id\x12r\n\x06\x43reate\x12\x33.nebius.msp.postgresql.v1alpha1.CreateBackupRequest\x1a!.nebius.common.v1alpha1.Operation\"\x10\x9a\xb5\x18\x0c\n\ncluster_id\x12r\n\x06\x44\x65lete\x12\x33.nebius.msp.postgresql.v1alpha1.DeleteBackupRequest\x1a!.nebius.common.v1alpha1.Operation\"\x10\x9a\xb5\x18\x0c\n\ncluster_id\x1a\x11\xbaJ\x0epostgresql.mspB{\n%ai.nebius.pub.msp.postgresql.v1alpha1B\x12\x42\x61\x63kupServiceProtoP\x01Z<github.com/nebius/gosdk/proto/nebius/msp/postgresql/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n3nebius/msp/postgresql/v1alpha1/backup_service.proto\x12\x1enebius.msp.postgresql.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a+nebius/msp/postgresql/v1alpha1/backup.proto\x1a\x18nebius/annotations.proto\"^\n\x10GetBackupRequest\x12%\n\ncluster_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tclusterId\x12#\n\tbackup_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08\x62\x61\x63kupId\"9\n\x12ListBackupsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\"D\n\x1bListBackupsByClusterRequest\x12%\n\ncluster_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tclusterId\"W\n\x13ListBackupsResponse\x12@\n\x07\x62\x61\x63kups\x18\x01 \x03(\x0b\x32&.nebius.msp.postgresql.v1alpha1.BackupR\x07\x62\x61\x63kups\"<\n\x13\x43reateBackupRequest\x12%\n\ncluster_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tclusterId\"a\n\x13\x44\x65leteBackupRequest\x12%\n\ncluster_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tclusterId\x12#\n\tbackup_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08\x62\x61\x63kupId2\xbc\x04\n\rBackupService\x12_\n\x03Get\x12\x30.nebius.msp.postgresql.v1alpha1.GetBackupRequest\x1a&.nebius.msp.postgresql.v1alpha1.Backup\x12o\n\x04List\x12\x32.nebius.msp.postgresql.v1alpha1.ListBackupsRequest\x1a\x33.nebius.msp.postgresql.v1alpha1.ListBackupsResponse\x12\x81\x01\n\rListByCluster\x12;.nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest\x1a\x33.nebius.msp.postgresql.v1alpha1.ListBackupsResponse\x12`\n\x06\x43reate\x12\x33.nebius.msp.postgresql.v1alpha1.CreateBackupRequest\x1a!.nebius.common.v1alpha1.Operation\x12`\n\x06\x44\x65lete\x12\x33.nebius.msp.postgresql.v1alpha1.DeleteBackupRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\x11\xbaJ\x0epostgresql.mspB{\n%ai.nebius.pub.msp.postgresql.v1alpha1B\x12\x42\x61\x63kupServiceProtoP\x01Z<github.com/nebius/gosdk/proto/nebius/msp/postgresql/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -42,14 +42,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _DELETEBACKUPREQUEST.fields_by_name['backup_id']._serialized_options = b'\272H\003\310\001\001'
   _BACKUPSERVICE._options = None
   _BACKUPSERVICE._serialized_options = b'\272J\016postgresql.msp'
-  _BACKUPSERVICE.methods_by_name['Get']._options = None
-  _BACKUPSERVICE.methods_by_name['Get']._serialized_options = b'\232\265\030\014\n\ncluster_id'
-  _BACKUPSERVICE.methods_by_name['ListByCluster']._options = None
-  _BACKUPSERVICE.methods_by_name['ListByCluster']._serialized_options = b'\232\265\030\014\n\ncluster_id'
-  _BACKUPSERVICE.methods_by_name['Create']._options = None
-  _BACKUPSERVICE.methods_by_name['Create']._serialized_options = b'\232\265\030\014\n\ncluster_id'
-  _BACKUPSERVICE.methods_by_name['Delete']._options = None
-  _BACKUPSERVICE.methods_by_name['Delete']._serialized_options = b'\232\265\030\014\n\ncluster_id'
   _globals['_GETBACKUPREQUEST']._serialized_start=227
   _globals['_GETBACKUPREQUEST']._serialized_end=321
   _globals['_LISTBACKUPSREQUEST']._serialized_start=323
@@ -63,5 +55,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_DELETEBACKUPREQUEST']._serialized_start=603
   _globals['_DELETEBACKUPREQUEST']._serialized_end=700
   _globals['_BACKUPSERVICE']._serialized_start=703
-  _globals['_BACKUPSERVICE']._serialized_end=1347
+  _globals['_BACKUPSERVICE']._serialized_end=1275
 # @@protoc_insertion_point(module_scope)

@@ -334,86 +334,6 @@ class EnumValuePySDKSettings(pb_classes.Message):
         "name":"name",
     }
     
-class RegionRouting(pb_classes.Message):
-    __PB2_CLASS__ = annotations_pb2.RegionRouting
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.RegionRouting",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-    }
-    
-    def __init__(
-        self,
-        initial_message: message.Message|None = None,
-        *,
-        nid: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
-        disabled: "builtins.bool|None|unset.UnsetType" = unset.Unset,
-        strict: "builtins.bool|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(nid, unset.UnsetType):
-            self.nid = nid
-        if not isinstance(disabled, unset.UnsetType):
-            self.disabled = disabled
-        if not isinstance(strict, unset.UnsetType):
-            self.strict = strict
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "nid",
-            "disabled",
-            "strict",
-        ]
-    
-    @builtins.property
-    def nid(self) -> "abc.MutableSequence[builtins.str]":
-        """
-        A list of fields to extract the NID from, in order of priority.
-        The API Gateway will check each field in sequence and use the first valid NID it finds.
-        This overrides the default NID lookup order: `id`, `parent_id`, `metadata.id`, `metadata.parent_id`.
-        If the field contains a non-empty list of strings, all NIDs in the array must be valid and have the same routing code.
-        """
-        
-        return super()._get_field("nid", explicit_presence=False,
-        wrap=pb_classes.Repeated,
-        )
-    @nid.setter
-    def nid(self, value: "abc.Iterable[builtins.str]|None") -> None:
-        return super()._set_field("nid",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def disabled(self) -> "builtins.bool":
-        """
-        If true, region routing is disabled for the method.
-        When this is set, requests will not be forwarded to a different region, even if an NID is present.
-        """
-        
-        return super()._get_field("disabled", explicit_presence=False,
-        )
-    @disabled.setter
-    def disabled(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("disabled",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def strict(self) -> "builtins.bool":
-        """
-        In strict mode, the API Gateway returns an INVALID_ARGUMENT error to the user when a routing error occurs,
-        rather than forwarding the request to the local region.
-        """
-        
-        return super()._get_field("strict", explicit_presence=False,
-        )
-    @strict.setter
-    def strict(self, value: "builtins.bool|None") -> None:
-        return super()._set_field("strict",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "nid":"nid",
-        "disabled":"disabled",
-        "strict":"strict",
-    }
-    
 class DeprecationDetails(pb_classes.Message):
     __PB2_CLASS__ = annotations_pb2.DeprecationDetails
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.DeprecationDetails",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -475,7 +395,6 @@ service_deprecation_details = annotations_pb2.service_deprecation_details
 service_py_sdk = annotations_pb2.service_py_sdk
 method_deprecation_details = annotations_pb2.method_deprecation_details
 method_py_sdk = annotations_pb2.method_py_sdk
-region_routing = annotations_pb2.region_routing
 resource_behavior = annotations_pb2.resource_behavior
 message_deprecation_details = annotations_pb2.message_deprecation_details
 message_py_sdk = annotations_pb2.message_py_sdk
@@ -498,7 +417,6 @@ __all__ = [
     "service_py_sdk",
     "method_deprecation_details",
     "method_py_sdk",
-    "region_routing",
     "resource_behavior",
     "message_deprecation_details",
     "message_py_sdk",
@@ -519,6 +437,5 @@ __all__ = [
     "OneofPySDKSettings",
     "EnumPySDKSettings",
     "EnumValuePySDKSettings",
-    "RegionRouting",
     "DeprecationDetails",
 ]
