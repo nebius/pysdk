@@ -39,7 +39,7 @@ class NoParentIdError(ConfigError):
 class Config:
     def __init__(
         self,
-        client_id: str,
+        client_id: str | None = None,
         config_file: str | Path = Path(DEFAULT_CONFIG_DIR) / DEFAULT_CONFIG_FILE,
         profile: str | None = None,
         profile_env: str = PROFILE_ENV,
@@ -177,6 +177,11 @@ class Config:
                     f"{type(self._profile['federation-id'])}."
                 )
             from nebius.aio.token.federation_account import FederationBearer
+
+            if not self._client_id:
+                raise ConfigError(
+                    "Client ID is required for federation authentication."
+                )
 
             log.debug(
                 f"Creating FederationBearer with profile {self._profile_name}, "

@@ -154,6 +154,11 @@ deps = [
     "aiohttp",
 ]
 commands = [["pytest","-vv","--full-trace"]]
+passenv = [
+    "NEBIUS_E2E_CONFIG_FILE",
+    "NEBIUS_E2E_CONFIG_B64",
+    "NEBIUS_PROFILE",
+]
 
 [tool.tox.env.test_earliest]
 description = "Run tests with pytest and the earliest possible lib versions"
@@ -175,6 +180,11 @@ deps = [
     "grpcio-status==1.56.2",
 ]
 commands = [["pytest","-vv"]]
+passenv = [
+    "NEBIUS_E2E_CONFIG_FILE",
+    "NEBIUS_E2E_CONFIG_B64",
+    "NEBIUS_PROFILE",
+]
 
 [tool.tox.env.lint]
 description = "Run linter checks"

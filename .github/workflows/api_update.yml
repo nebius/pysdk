@@ -61,6 +61,8 @@ jobs:
 
     - name: Test
       if: steps.check_changes.outputs.changes_detected == 'true'
+      env:
+        NEBIUS_E2E_CONFIG_B64: ${{ secrets.NEBIUS_E2E_CONFIG_B64 }}
       run: |
         tox
         tox -e test_earliest
