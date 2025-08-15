@@ -48,7 +48,7 @@ if [[ -n $(git status --porcelain) ]]; then
   exit 3
 fi
 
-app_version=$(python src/scripts/version_updater.py pyproject.toml print)
+app_version=$(python src/scripts/version_updater.py pyproject.toml src/nebius/base/version.py print)
 
 echo "Tagging commit $(git rev-parse HEAD) with version v$app_version"
 git tag "v$app_version"
