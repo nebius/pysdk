@@ -440,11 +440,13 @@ You can add your own user-agent parts to the user-agent sent to the server.
 You can do it either by adding `grpc.primary_user_agent` option in your SDK `options` or `address_options`, or by setting `user_agent_prefix` option of the SDK. The resulting user-agents will be combined together roughly as:
 ```python
 " ".join([
-    [option['grpc.primary_user_agent'] from options + address_options][-1] if set,
+    [all option['grpc.primary_user_agent'] from options],
+    [all option['grpc.primary_user_agent'] from address_options for current address],
     user_agent_prefix if set,
     pysdk user agent,
     grpc user agent,  # added by gRPC itself
-    [option['grpc.secondary_user_agent'] from options + address_options][-1] if set  # resolved by gRPC itself
+    [all option['grpc.secondary_user_agent'] from options],
+    [all option['grpc.secondary_user_agent'] from address_options for current address],
 ])
 ```
 
