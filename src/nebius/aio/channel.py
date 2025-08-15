@@ -212,12 +212,15 @@ async def _run_awaitable_with_timeout(
 def set_user_agent_option(
     user_agent: str, options: ChannelArgumentType | None
 ) -> ChannelArgumentType:
+    user_agent_prefix: str | None = None
     if options is None:
         options = []
     else:
         for opt in options:
             if opt[0] == "grpc.primary_user_agent":
-                user_agent = f"{opt[1]} {user_agent}"
+                user_agent_prefix = opt[1]
+    if user_agent_prefix is not None:
+        user_agent = f"{user_agent_prefix} {user_agent}"
     options = list(options)
     options.append(("grpc.primary_user_agent", user_agent))
     return options

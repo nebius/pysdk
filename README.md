@@ -434,6 +434,20 @@ This example will only reset `max_size_bytes` in the bucket, clearing the limit,
 
 > **Note**: Please read the API documentation before modifying lists and maps using manually set masks.
 
+### User-agent
+
+You can add your own user-agent parts to the user-agent sent to the server.
+You can do it either by adding `grpc.primary_user_agent` option in your SDK `options` or `address_options`, or by setting `user_agent_prefix` option of the SDK. The resulting user-agents will be combined together roughly as:
+```python
+" ".join([
+    [option['grpc.primary_user_agent'] from options + address_options][-1] if set,
+    user_agent_prefix if set,
+    pysdk user agent,
+    grpc user agent,  # added by gRPC itself
+    [option['grpc.secondary_user_agent'] from options + address_options][-1] if set  # resolved by gRPC itself
+])
+```
+
 ### Contributing
 
 Contributions are welcome! Please refer to the [contributing guidelines](CONTRIBUTING.md) for more information.
