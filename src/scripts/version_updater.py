@@ -25,15 +25,17 @@ def increment_version(version: str, part: str) -> str:
 
 # Main script
 def main() -> None:
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print(
-            "Usage: python version_updater.py <path_to_pyproject.toml> "
-            + "<major|minor|patch|print>",
+            "Usage: python version_updater.py <path_to_pyproject.toml>"
+            + " <path_to_version.py>"
+            + " <major|minor|patch|print>",
         )
         sys.exit(1)
 
     file_path = sys.argv[1]
-    part = sys.argv[2]
+    version_file_path = sys.argv[2]
+    part = sys.argv[3]
 
     try:
         # Read pyproject.toml
@@ -47,6 +49,9 @@ def main() -> None:
 
         updated_version = increment_version(version, part)  # type: ignore
         data["project"]["version"] = updated_version  # type: ignore
+
+        with open(version_file_path, "w") as version_file:
+            version_file.write(f'version = "{updated_version}"' + "\n")
 
         # Write the updated pyproject.toml back
         with open(file_path, "w") as file:
