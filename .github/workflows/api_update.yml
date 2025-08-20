@@ -56,7 +56,7 @@ jobs:
     - name: Bump version
       if: steps.check_changes.outputs.changes_detected == 'true'
       run: |
-        python src/scripts/version_updater.py ./pyproject.toml patch
+        python src/scripts/version_updater.py ./pyproject.toml ./src/nebius/base/version.py patch
         git add pyproject.toml
 
     - name: Test

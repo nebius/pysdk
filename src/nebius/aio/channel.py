@@ -1,3 +1,4 @@
+import sys
 from asyncio import (
     FIRST_COMPLETED,
     AbstractEventLoop,
@@ -77,6 +78,7 @@ from nebius.base.service_account.service_account import (
     TokenRequester as TokenRequestReader,
 )
 from nebius.base.tls_certificates import get_system_certificates
+from nebius.base.version import version
 
 from .base import AddressChannel, ChannelBase
 
@@ -207,12 +209,21 @@ async def _run_awaitable_with_timeout(
     return task.result()
 
 
+def set_user_agent_option(
+    user_agent: str, options: ChannelArgumentType | None
+) -> ChannelArgumentType:
+    options = list(options or [])
+    options.append(("grpc.primary_user_agent", user_agent))
+    return options
+
+
 class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def __init__(
         self,
         *,
         resolver: Resolver | None = None,
         substitutions: dict[str, str] | None = None,
+        user_agent_prefix: str | None = None,
         domain: str | None = None,
         options: ChannelArgumentType | None = None,
         interceptors: Sequence[ClientInterceptor] | None = None,
@@ -264,12 +275,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._free_channels = dict[str, list[GRPCChannel]]()
         self._methods = dict[str, str]()
+        self.user_agent = "nebius-python-sdk/" + version
+        self.user_agent += f" (python/{sys.version_info.major}.{sys.version_info.minor}"
+        self.user_agent += f".{sys.version_info.micro})"
 
-        if options is None:
-            options = []
+        if user_agent_prefix is not None:
+            self.user_agent = f"{user_agent_prefix} {self.user_agent}"
+
         if interceptors is None:
             interceptors = []
-        self._global_options = options
+        self._global_options = options or []
         self._global_interceptors: list[ClientInterceptor] = [
             IdempotencyKeyInterceptor()
         ]
@@ -525,6 +540,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         ret = [opt for opt in self._global_options]
         if addr in self._address_options:
             ret.extend(self._address_options[addr])
+        ret = set_user_agent_option(self.user_agent, ret)  # type: ignore[assignment]
         return ret
 
     def get_address_interceptors(self, addr: str) -> Sequence[ClientInterceptor]:
