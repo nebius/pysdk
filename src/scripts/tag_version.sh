@@ -45,6 +45,7 @@ if ! (git branch -r --contains HEAD | grep -q "\borigin/main\b"); then
 fi
 if [[ -n $(git status --porcelain) ]]; then
   echo "Working tree is dirty. Publish is not possible"
+  git status --verbose
   exit 3
 fi
 
