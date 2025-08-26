@@ -315,6 +315,10 @@ class Request(Generic[Req, Res]):
         status = rpc_status.from_call(err)  # type: ignore
         from .service_error import RequestError, RequestStatusExtended
 
+        debug_info = err.debug_error_string()
+        if debug_info:
+            log.debug(f"RPC Debug info: {debug_info}")
+
         if status is None:
             self._status = RequestStatusExtended(
                 code=err.code(),
