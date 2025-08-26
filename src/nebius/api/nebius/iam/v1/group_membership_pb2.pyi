@@ -30,8 +30,12 @@ class GroupMembershipSpec(_message.Message):
     def __init__(self, member_id: _Optional[str] = ...) -> None: ...
 
 class GroupMembershipStatus(_message.Message):
-    __slots__ = []
-    def __init__(self) -> None: ...
+    __slots__ = ["tenant_user_account_status", "service_account_status"]
+    TENANT_USER_ACCOUNT_STATUS_FIELD_NUMBER: _ClassVar[int]
+    SERVICE_ACCOUNT_STATUS_FIELD_NUMBER: _ClassVar[int]
+    tenant_user_account_status: _tenant_user_account_pb2.TenantUserAccountStatus
+    service_account_status: _service_account_pb2.ServiceAccountStatus
+    def __init__(self, tenant_user_account_status: _Optional[_Union[_tenant_user_account_pb2.TenantUserAccountStatus, _Mapping]] = ..., service_account_status: _Optional[_Union[_service_account_pb2.ServiceAccountStatus, _Mapping]] = ...) -> None: ...
 
 class GroupMemberKind(_message.Message):
     __slots__ = ["kind"]

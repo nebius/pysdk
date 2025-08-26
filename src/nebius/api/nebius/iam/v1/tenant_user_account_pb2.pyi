@@ -1,6 +1,7 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
+from nebius.api.nebius.iam.v1 import user_account_pb2 as _user_account_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -75,7 +76,7 @@ class TenantUserAccountSpec(_message.Message):
     def __init__(self, visible_attributes: _Optional[_Union[TenantUserAccountSpec.VisibleAttributes, _Mapping]] = ...) -> None: ...
 
 class TenantUserAccountStatus(_message.Message):
-    __slots__ = ["state", "invitation_id", "federation_id"]
+    __slots__ = ["state", "invitation_id", "federation_id", "user_account_state"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[TenantUserAccountStatus.State]
@@ -89,7 +90,9 @@ class TenantUserAccountStatus(_message.Message):
     STATE_FIELD_NUMBER: _ClassVar[int]
     INVITATION_ID_FIELD_NUMBER: _ClassVar[int]
     FEDERATION_ID_FIELD_NUMBER: _ClassVar[int]
+    USER_ACCOUNT_STATE_FIELD_NUMBER: _ClassVar[int]
     state: TenantUserAccountStatus.State
     invitation_id: str
     federation_id: str
-    def __init__(self, state: _Optional[_Union[TenantUserAccountStatus.State, str]] = ..., invitation_id: _Optional[str] = ..., federation_id: _Optional[str] = ...) -> None: ...
+    user_account_state: _user_account_pb2.UserAccountStatus.State
+    def __init__(self, state: _Optional[_Union[TenantUserAccountStatus.State, str]] = ..., invitation_id: _Optional[str] = ..., federation_id: _Optional[str] = ..., user_account_state: _Optional[_Union[_user_account_pb2.UserAccountStatus.State, str]] = ...) -> None: ...

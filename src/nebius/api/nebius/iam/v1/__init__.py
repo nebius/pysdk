@@ -5577,6 +5577,111 @@ class ServiceAccountAttributes(pb_classes.Message):
         "description":"description",
     }
     
+# file: nebius/iam/v1/user_account.proto
+class UserAccountExternalId(pb_classes.Message):
+    __PB2_CLASS__ = user_account_pb2.UserAccountExternalId
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAccountExternalId",user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        federation_user_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(federation_user_account_id, unset.UnsetType):
+            self.federation_user_account_id = federation_user_account_id
+        if not isinstance(federation_id, unset.UnsetType):
+            self.federation_id = federation_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "federation_user_account_id",
+            "federation_id",
+        ]
+    
+    @builtins.property
+    def federation_user_account_id(self) -> "builtins.str":
+        return super()._get_field("federation_user_account_id", explicit_presence=False,
+        )
+    @federation_user_account_id.setter
+    def federation_user_account_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("federation_user_account_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def federation_id(self) -> "builtins.str":
+        return super()._get_field("federation_id", explicit_presence=False,
+        )
+    @federation_id.setter
+    def federation_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("federation_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "federation_user_account_id":"federation_user_account_id",
+        "federation_id":"federation_id",
+    }
+    
+class UserAccountStatus(pb_classes.Message):
+    __PB2_CLASS__ = user_account_pb2.UserAccountStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAccountStatus",user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class State(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.UserAccountStatus.State",user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        """
+        usual state when federated user can log into the system and view/manage granted resources in one or more tenants
+        """
+        
+        INACTIVE = 2
+        """
+        federated user can be blocked (manually or by any specific automated process), in this state user cannot log into the system
+        """
+        
+        DELETING = 3
+        """
+        federated user can be deleted/forgot, in this state user cannot log into the system and various internal removal interactions are in progress
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "UserAccountStatus.State|user_account_pb2.UserAccountStatus.State|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "State",
+        ]
+    
+    @builtins.property
+    def state(self) -> "UserAccountStatus.State":
+        return super()._get_field("state", explicit_presence=False,
+        wrap=UserAccountStatus.State,
+        )
+    @state.setter
+    def state(self, value: "UserAccountStatus.State|user_account_pb2.UserAccountStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "State":"State",
+    }
+    
 # file: nebius/iam/v1/tenant_user_account.proto
 class TenantUserAccount(pb_classes.Message):
     __PB2_CLASS__ = tenant_user_account_pb2.TenantUserAccount
@@ -6412,8 +6517,22 @@ class TenantUserAccountStatus(pb_classes.Message):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.TenantUserAccountStatus.State",tenant_user_account_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         STATE_UNSPECIFIED = 0
         ACTIVE = 1
+        """
+        in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
+        in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources immediately
+        """
+        
         INACTIVE = 2
+        """
+        unused
+        """
+        
         BLOCKED = 3
+        """
+        in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant resources
+        in case of invited tenant user account once the invitation is accepted a corresponding user cannot start using granted resources until is unblocked
+        """
+        
     
     def __init__(
         self,
@@ -6422,6 +6541,7 @@ class TenantUserAccountStatus(pb_classes.Message):
         state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None|unset.UnsetType" = unset.Unset,
         invitation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        user_account_state: "UserAccountStatus.State|user_account_pb2.UserAccountStatus.State|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -6430,12 +6550,15 @@ class TenantUserAccountStatus(pb_classes.Message):
             self.invitation_id = invitation_id
         if not isinstance(federation_id, unset.UnsetType):
             self.federation_id = federation_id
+        if not isinstance(user_account_state, unset.UnsetType):
+            self.user_account_state = user_account_state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "invitation_id",
             "federation_id",
+            "user_account_state",
             "State",
         ]
     
@@ -6476,10 +6599,25 @@ class TenantUserAccountStatus(pb_classes.Message):
         return super()._set_field("federation_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def user_account_state(self) -> "UserAccountStatus.State":
+        """
+        user account state can help distinguish case when account is blocked globally
+        """
+        
+        return super()._get_field("user_account_state", explicit_presence=False,
+        wrap=UserAccountStatus.State,
+        )
+    @user_account_state.setter
+    def user_account_state(self, value: "UserAccountStatus.State|user_account_pb2.UserAccountStatus.State|None") -> None:
+        return super()._set_field("user_account_state",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "invitation_id":"invitation_id",
         "federation_id":"federation_id",
+        "user_account_state":"user_account_state",
         "State":"State",
     }
     
@@ -6540,10 +6678,6 @@ class GroupMembership(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "GroupMembershipStatus":
-        """
-        Dummy field for compliance with terraform resource generator.
-        """
-        
         return super()._get_field("status", explicit_presence=False,
         wrap=GroupMembershipStatus,
         )
@@ -6614,17 +6748,88 @@ class GroupMembershipStatus(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class __OneOfClass_group_member_status__(pb_classes.OneOf):
+        name: builtins.str= "group_member_status"
+        
+        def __init__(self, msg: "GroupMembershipStatus") -> None:
+            super().__init__()
+            self._message: "GroupMembershipStatus" = msg
+    
+    class __OneOfClass_group_member_status_tenant_user_account_status__(__OneOfClass_group_member_status__):
+        field: typing.Literal["tenant_user_account_status"] = "tenant_user_account_status"
+        
+        def __init__(self, msg: "GroupMembershipStatus") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TenantUserAccountStatus":
+            return self._message.tenant_user_account_status
+    
+    class __OneOfClass_group_member_status_service_account_status__(__OneOfClass_group_member_status__):
+        field: typing.Literal["service_account_status"] = "service_account_status"
+        
+        def __init__(self, msg: "GroupMembershipStatus") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ServiceAccountStatus":
+            return self._message.service_account_status
+    
+    @builtins.property
+    def group_member_status(self) -> __OneOfClass_group_member_status_tenant_user_account_status__|__OneOfClass_group_member_status_service_account_status__|None:
+        field_name_1: str|None = super().which_field_in_oneof("group_member_status")
+        match field_name_1:
+            case "tenant_user_account_status":
+                return self.__OneOfClass_group_member_status_tenant_user_account_status__(self)
+            case "service_account_status":
+                return self.__OneOfClass_group_member_status_service_account_status__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
+        *,
+        tenant_user_account_status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None|unset.UnsetType" = unset.Unset,
+        service_account_status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(tenant_user_account_status, unset.UnsetType):
+            self.tenant_user_account_status = tenant_user_account_status
+        if not isinstance(service_account_status, unset.UnsetType):
+            self.service_account_status = service_account_status
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "tenant_user_account_status",
+            "service_account_status",
+            "group_member_status",
         ]
     
+    @builtins.property
+    def tenant_user_account_status(self) -> "TenantUserAccountStatus|None":
+        return super()._get_field("tenant_user_account_status", explicit_presence=True,
+        wrap=TenantUserAccountStatus,
+        )
+    @tenant_user_account_status.setter
+    def tenant_user_account_status(self, value: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None") -> None:
+        return super()._set_field("tenant_user_account_status",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def service_account_status(self) -> "ServiceAccountStatus|None":
+        return super()._get_field("service_account_status", explicit_presence=True,
+        wrap=ServiceAccountStatus,
+        )
+    @service_account_status.setter
+    def service_account_status(self, value: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None") -> None:
+        return super()._set_field("service_account_status",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "tenant_user_account_status":"tenant_user_account_status",
+        "service_account_status":"service_account_status",
+        "group_member_status":"group_member_status",
     }
     
 class GroupMemberKind(pb_classes.Message):
@@ -8760,55 +8965,6 @@ class InvitationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         )
     
 
-# file: nebius/iam/v1/user_account.proto
-class UserAccountExternalId(pb_classes.Message):
-    __PB2_CLASS__ = user_account_pb2.UserAccountExternalId
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UserAccountExternalId",user_account_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-    }
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        federation_user_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(federation_user_account_id, unset.UnsetType):
-            self.federation_user_account_id = federation_user_account_id
-        if not isinstance(federation_id, unset.UnsetType):
-            self.federation_id = federation_id
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "federation_user_account_id",
-            "federation_id",
-        ]
-    
-    @builtins.property
-    def federation_user_account_id(self) -> "builtins.str":
-        return super()._get_field("federation_user_account_id", explicit_presence=False,
-        )
-    @federation_user_account_id.setter
-    def federation_user_account_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("federation_user_account_id",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def federation_id(self) -> "builtins.str":
-        return super()._get_field("federation_id", explicit_presence=False,
-        )
-    @federation_id.setter
-    def federation_id(self, value: "builtins.str|None") -> None:
-        return super()._set_field("federation_id",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "federation_user_account_id":"federation_user_account_id",
-        "federation_id":"federation_id",
-    }
-    
 # file: nebius/iam/v1/profile_service.proto
 class GetProfileRequest(pb_classes.Message):
     __PB2_CLASS__ = profile_service_pb2.GetProfileRequest
@@ -12538,6 +12694,8 @@ __all__ = [
     "ServiceAccountSpec",
     "ServiceAccountStatus",
     "ServiceAccountAttributes",
+    "UserAccountExternalId",
+    "UserAccountStatus",
     "TenantUserAccount",
     "TenantUserAccountWithAttributes",
     "UserAttributes",
@@ -12577,7 +12735,6 @@ __all__ = [
     "UpdateInvitationRequest",
     "ResendInvitationRequest",
     "InvitationServiceClient",
-    "UserAccountExternalId",
     "GetProfileRequest",
     "GetProfileResponse",
     "UserProfile",

@@ -71,12 +71,14 @@ class DiskStatus(_message.Message):
         UPDATING: _ClassVar[DiskStatus.State]
         DELETING: _ClassVar[DiskStatus.State]
         ERROR: _ClassVar[DiskStatus.State]
+        BROKEN: _ClassVar[DiskStatus.State]
     UNSPECIFIED: DiskStatus.State
     CREATING: DiskStatus.State
     READY: DiskStatus.State
     UPDATING: DiskStatus.State
     DELETING: DiskStatus.State
     ERROR: DiskStatus.State
+    BROKEN: DiskStatus.State
     class SourceImageCPUArchitecture(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         SOURCE_IMAGE_CPU_UNSPECIFIED: _ClassVar[DiskStatus.SourceImageCPUArchitecture]

@@ -462,6 +462,15 @@ class DiskStatus(pb_classes.Message):
         UPDATING = 3
         DELETING = 4
         ERROR = 5
+        """
+        Indicates that error happened during disk creation, and the disk cannot be recovered.
+        """
+        
+        BROKEN = 6
+        """
+        Indicates that an error has occurred during the disk's life cycle, and the disk is broken or unhealthy, but can still be recovered.
+        """
+        
     
     class SourceImageCPUArchitecture(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskStatus.SourceImageCPUArchitecture",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
