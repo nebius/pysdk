@@ -558,12 +558,19 @@ class Request(pb_classes.Message):
         self,
         initial_message: message_1.Message|None = None,
         *,
+        client_ip: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        user_agent: "builtins.str|None|unset.UnsetType" = unset.Unset,
         request_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         parameters: "struct_pb2.Struct|None|unset.UnsetType" = unset.Unset,
         idempotency_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         trace_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ja3_fingerprint: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(client_ip, unset.UnsetType):
+            self.client_ip = client_ip
+        if not isinstance(user_agent, unset.UnsetType):
+            self.user_agent = user_agent
         if not isinstance(request_id, unset.UnsetType):
             self.request_id = request_id
         if not isinstance(parameters, unset.UnsetType):
@@ -572,14 +579,45 @@ class Request(pb_classes.Message):
             self.idempotency_id = idempotency_id
         if not isinstance(trace_id, unset.UnsetType):
             self.trace_id = trace_id
+        if not isinstance(ja3_fingerprint, unset.UnsetType):
+            self.ja3_fingerprint = ja3_fingerprint
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "client_ip",
+            "user_agent",
             "request_id",
             "parameters",
             "idempotency_id",
             "trace_id",
+            "ja3_fingerprint",
         ]
+    
+    @builtins.property
+    def client_ip(self) -> "builtins.str":
+        """
+        Ip of the subject who initiated the RPC call.
+        """
+        
+        return super()._get_field("client_ip", explicit_presence=False,
+        )
+    @client_ip.setter
+    def client_ip(self, value: "builtins.str|None") -> None:
+        return super()._set_field("client_ip",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def user_agent(self) -> "builtins.str":
+        """
+        User agent of the subject who initiated operation.
+        """
+        
+        return super()._get_field("user_agent", explicit_presence=False,
+        )
+    @user_agent.setter
+    def user_agent(self, value: "builtins.str|None") -> None:
+        return super()._set_field("user_agent",value,explicit_presence=False,
+        )
     
     @builtins.property
     def request_id(self) -> "builtins.str":
@@ -633,11 +671,27 @@ class Request(pb_classes.Message):
         return super()._set_field("trace_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def ja3_fingerprint(self) -> "builtins.str":
+        """
+        Client Ja3 fingerprint
+        """
+        
+        return super()._get_field("ja3_fingerprint", explicit_presence=False,
+        )
+    @ja3_fingerprint.setter
+    def ja3_fingerprint(self, value: "builtins.str|None") -> None:
+        return super()._set_field("ja3_fingerprint",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "client_ip":"client_ip",
+        "user_agent":"user_agent",
         "request_id":"request_id",
         "parameters":"parameters",
         "idempotency_id":"idempotency_id",
         "trace_id":"trace_id",
+        "ja3_fingerprint":"ja3_fingerprint",
     }
     
 # file: nebius/audit/v2/resource_metadata.proto
