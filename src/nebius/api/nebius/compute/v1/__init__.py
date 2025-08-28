@@ -6162,17 +6162,21 @@ class NodeSetUnhealthyRequest(pb_classes.Message):
         *,
         instance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         health_check_info: "NodeSetUnhealthyRequest.HealthCheckInfo|node_service_pb2.NodeSetUnhealthyRequest.HealthCheckInfo|None|unset.UnsetType" = unset.Unset,
+        dry_run: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(instance_id, unset.UnsetType):
             self.instance_id = instance_id
         if not isinstance(health_check_info, unset.UnsetType):
             self.health_check_info = health_check_info
+        if not isinstance(dry_run, unset.UnsetType):
+            self.dry_run = dry_run
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "instance_id",
             "health_check_info",
+            "dry_run",
             "HealthCheckInfo",
         ]
     
@@ -6195,9 +6199,24 @@ class NodeSetUnhealthyRequest(pb_classes.Message):
         return super()._set_field("health_check_info",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def dry_run(self) -> "builtins.bool":
+        """
+        If set to true, the call performs the authorization and limit checks, but does not mark node unhealthy.
+        False by default
+        """
+        
+        return super()._get_field("dry_run", explicit_presence=False,
+        )
+    @dry_run.setter
+    def dry_run(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("dry_run",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "instance_id":"instance_id",
         "health_check_info":"health_check_info",
+        "dry_run":"dry_run",
         "HealthCheckInfo":"HealthCheckInfo",
     }
     

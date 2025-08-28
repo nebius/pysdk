@@ -8,7 +8,7 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class NodeSetUnhealthyRequest(_message.Message):
-    __slots__ = ["instance_id", "health_check_info"]
+    __slots__ = ["instance_id", "health_check_info", "dry_run"]
     class HealthCheckInfo(_message.Message):
         __slots__ = ["observed_at", "check_id", "description"]
         OBSERVED_AT_FIELD_NUMBER: _ClassVar[int]
@@ -20,9 +20,11 @@ class NodeSetUnhealthyRequest(_message.Message):
         def __init__(self, observed_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., check_id: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
     INSTANCE_ID_FIELD_NUMBER: _ClassVar[int]
     HEALTH_CHECK_INFO_FIELD_NUMBER: _ClassVar[int]
+    DRY_RUN_FIELD_NUMBER: _ClassVar[int]
     instance_id: str
     health_check_info: NodeSetUnhealthyRequest.HealthCheckInfo
-    def __init__(self, instance_id: _Optional[str] = ..., health_check_info: _Optional[_Union[NodeSetUnhealthyRequest.HealthCheckInfo, _Mapping]] = ...) -> None: ...
+    dry_run: bool
+    def __init__(self, instance_id: _Optional[str] = ..., health_check_info: _Optional[_Union[NodeSetUnhealthyRequest.HealthCheckInfo, _Mapping]] = ..., dry_run: bool = ...) -> None: ...
 
 class NodeSetUnhealthyResponse(_message.Message):
     __slots__ = []
