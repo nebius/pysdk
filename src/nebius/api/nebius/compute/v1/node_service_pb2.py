@@ -16,7 +16,7 @@ from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validat
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n$nebius/compute/v1/node_service.proto\x12\x11nebius.compute.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\xd8\x02\n\x17NodeSetUnhealthyRequest\x12\'\n\x0binstance_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\ninstanceId\x12n\n\x11health_check_info\x18\x02 \x01(\x0b\x32:.nebius.compute.v1.NodeSetUnhealthyRequest.HealthCheckInfoB\x06\xbaH\x03\xc8\x01\x01R\x0fhealthCheckInfo\x1a\xa3\x01\n\x0fHealthCheckInfo\x12\x43\n\x0bobserved_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\nobservedAt\x12!\n\x08\x63heck_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x07\x63heckId\x12(\n\x0b\x64\x65scription\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0b\x64\x65scription\"\x1a\n\x18NodeSetUnhealthyResponse2\x82\x01\n\x0bNodeService\x12g\n\x0cSetUnhealthy\x12*.nebius.compute.v1.NodeSetUnhealthyRequest\x1a+.nebius.compute.v1.NodeSetUnhealthyResponse\x1a\n\xbaJ\x07\x63omputeB_\n\x18\x61i.nebius.pub.compute.v1B\x10NodeServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n$nebius/compute/v1/node_service.proto\x12\x11nebius.compute.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\xf1\x02\n\x17NodeSetUnhealthyRequest\x12\'\n\x0binstance_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\ninstanceId\x12n\n\x11health_check_info\x18\x02 \x01(\x0b\x32:.nebius.compute.v1.NodeSetUnhealthyRequest.HealthCheckInfoB\x06\xbaH\x03\xc8\x01\x01R\x0fhealthCheckInfo\x12\x17\n\x07\x64ry_run\x18\x03 \x01(\x08R\x06\x64ryRun\x1a\xa3\x01\n\x0fHealthCheckInfo\x12\x43\n\x0bobserved_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\nobservedAt\x12!\n\x08\x63heck_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x07\x63heckId\x12(\n\x0b\x64\x65scription\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0b\x64\x65scription\"\x1a\n\x18NodeSetUnhealthyResponse2\x82\x01\n\x0bNodeService\x12g\n\x0cSetUnhealthy\x12*.nebius.compute.v1.NodeSetUnhealthyRequest\x1a+.nebius.compute.v1.NodeSetUnhealthyResponse\x1a\n\xbaJ\x07\x63omputeB_\n\x18\x61i.nebius.pub.compute.v1B\x10NodeServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -38,11 +38,11 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _NODESERVICE._options = None
   _NODESERVICE._serialized_options = b'\272J\007compute'
   _globals['_NODESETUNHEALTHYREQUEST']._serialized_start=148
-  _globals['_NODESETUNHEALTHYREQUEST']._serialized_end=492
-  _globals['_NODESETUNHEALTHYREQUEST_HEALTHCHECKINFO']._serialized_start=329
-  _globals['_NODESETUNHEALTHYREQUEST_HEALTHCHECKINFO']._serialized_end=492
-  _globals['_NODESETUNHEALTHYRESPONSE']._serialized_start=494
-  _globals['_NODESETUNHEALTHYRESPONSE']._serialized_end=520
-  _globals['_NODESERVICE']._serialized_start=523
-  _globals['_NODESERVICE']._serialized_end=653
+  _globals['_NODESETUNHEALTHYREQUEST']._serialized_end=517
+  _globals['_NODESETUNHEALTHYREQUEST_HEALTHCHECKINFO']._serialized_start=354
+  _globals['_NODESETUNHEALTHYREQUEST_HEALTHCHECKINFO']._serialized_end=517
+  _globals['_NODESETUNHEALTHYRESPONSE']._serialized_start=519
+  _globals['_NODESETUNHEALTHYRESPONSE']._serialized_end=545
+  _globals['_NODESERVICE']._serialized_start=548
+  _globals['_NODESERVICE']._serialized_end=678
 # @@protoc_insertion_point(module_scope)
