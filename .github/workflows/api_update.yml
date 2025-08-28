@@ -58,6 +58,7 @@ jobs:
       run: |
         python src/scripts/version_updater.py ./pyproject.toml ./src/nebius/base/version.py patch
         git add pyproject.toml
+        git add ./src/nebius/base/version.py
 
     - name: Test
       if: steps.check_changes.outputs.changes_detected == 'true'
