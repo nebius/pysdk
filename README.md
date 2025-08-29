@@ -318,6 +318,18 @@ await real_operation.wait()
 
 **NOTE** As you can see from the example, only [`get`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.OperationServiceClient.html#get) will return a fully functional [`Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html). Other methods like [`list`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.OperationServiceClient.html#list) or [`list_operations_by_parent`](https://nebius.github.io/pysdk/nebius.api.nebius.compute.v1.DiskServiceClient.html#list_operations_by_parent) from Compute will contain an internal [`Operation`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.Operation.html) representation object, that cannot be awaited or polled as a normal [`Operation`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html).
 
+##### Timeouts and retries
+
+Requests made through the SDK include an internal retry layer and two related timeout concepts:
+
+- Overall request timeout: a deadline that bounds the whole request call including all retries.
+- Per-retry timeout: an optional timeout applied to each individual retry attempt. If a per-retry timeout is not explicitly provided, it defaults to the overall request timeout.
+
+Retries may fail for many reasons (not only timeouts) — network errors, resource exhaustion, quota errors, or service-side failures can all stop a retry loop. If you expect retries to sometimes hang (for example, waiting on a slow resource), consider setting a smaller per-retry timeout so stuck attempts fail faster and allow the retry logic to continue or surface an error sooner.
+
+Operations add one more timeout level: an operation-level timeout that bounds the entire operation lifecycle (waiting for completion). Because of that, the timeouts for each operation update request are prefixed with `poll_`.
+
+
 ##### Retrieve additional metadata
 
 Sometimes you need more than just a result of your request. For instance, if you have problems, you may want to provide more information about the request to the Nebius support team. Service methods do not return basic coroutines, they return [`Request`](https://nebius.github.io/pysdk/nebius.aio.request.Request.html) objects, that can provide more information about the request itself.
