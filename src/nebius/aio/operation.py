@@ -80,6 +80,7 @@ class Operation(Generic[OperationPb]):
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
         per_retry_timeout: float | None = None,
+        retries: int | None = None,
     ) -> None:
         if self.done():
             return
@@ -91,15 +92,58 @@ class Operation(Generic[OperationPb]):
             credentials=credentials,
             compression=compression,
             per_retry_timeout=per_retry_timeout,
+            retries=retries,
         )
         new_op = await req
         self._set_new_operation(new_op._operation)  # type: ignore
 
-    def sync_wait(self, timeout: float | None = None) -> None:
-        return self._channel.run_sync(self.wait(), timeout)
+    def sync_wait(
+        self,
+        interval: float | timedelta = 1,
+        metadata: Iterable[tuple[str, str]] | None = None,
+        timeout: float | None = None,
+        credentials: CallCredentials | None = None,
+        compression: Compression | None = None,
+        poll_iteration_timeout: float | None = None,
+        poll_per_retry_timeout: float | None = None,
+        poll_retries: int | None = None,
+    ) -> None:
+        run_timeout = None if timeout is None else timeout + 0.2
+        return self._channel.run_sync(
+            self.wait(
+                interval=interval,
+                metadata=metadata,
+                timeout=timeout,
+                credentials=credentials,
+                compression=compression,
+                poll_iteration_timeout=poll_iteration_timeout,
+                poll_per_retry_timeout=poll_per_retry_timeout,
+                poll_retries=poll_retries,
+            ),
+            run_timeout,
+        )
 
-    def sync_update(self, timeout: float | None = None) -> None:
-        return self._channel.run_sync(self.update(), timeout)
+    def sync_update(
+        self,
+        metadata: Iterable[tuple[str, str]] | None = None,
+        timeout: float | None = None,
+        credentials: CallCredentials | None = None,
+        compression: Compression | None = None,
+        per_retry_timeout: float | None = None,
+        retries: int | None = None,
+    ) -> None:
+        run_timeout = None if timeout is None else timeout + 0.2
+        return self._channel.run_sync(
+            self.update(
+                metadata=metadata,
+                timeout=timeout,
+                credentials=credentials,
+                compression=compression,
+                per_retry_timeout=per_retry_timeout,
+                retries=retries,
+            ),
+            run_timeout,
+        )
 
     async def wait(
         self,
@@ -110,6 +154,7 @@ class Operation(Generic[OperationPb]):
         compression: Compression | None = None,
         poll_iteration_timeout: float | None = None,
         poll_per_retry_timeout: float | None = None,
+        poll_retries: int | None = None,
     ) -> None:
         start = time()
         if poll_iteration_timeout is None:
@@ -117,26 +162,41 @@ class Operation(Generic[OperationPb]):
                 poll_iteration_timeout = min(5, timeout)
         if isinstance(interval, timedelta):
             interval = interval.total_seconds()
+        from nebius.aio.service_error import RequestError as ServiceRequestError
+
+        def _is_ignorable(err: Exception) -> bool:
+            # TimeoutError raised locally or RequestError with DEADLINE_EXCEEDED
+            if isinstance(err, TimeoutError):
+                return True
+            if isinstance(err, ServiceRequestError):
+                try:
+                    return err.status.code == StatusCode.DEADLINE_EXCEEDED
+                except Exception:  # pragma: no cover - defensive
+                    return False
+            return False
+
+        async def _safe_update() -> None:
+            try:
+                await self.update(
+                    metadata=metadata,
+                    timeout=poll_iteration_timeout,
+                    credentials=credentials,
+                    compression=compression,
+                    per_retry_timeout=poll_per_retry_timeout,
+                    retries=poll_retries,
+                )
+            except Exception as e:  # noqa: S110
+                if not _is_ignorable(e):
+                    raise
+
         if not self.done():
-            await self.update(
-                metadata=metadata,
-                timeout=poll_iteration_timeout,
-                credentials=credentials,
-                compression=compression,
-                per_retry_timeout=poll_per_retry_timeout,
-            )
+            await _safe_update()
         while not self.done():
             current_time = time()
             if timeout is not None and current_time > timeout + start:
                 raise TimeoutError("Operation wait timeout")
             await sleep(interval)
-            await self.update(
-                metadata=metadata,
-                timeout=poll_iteration_timeout,
-                credentials=credentials,
-                compression=compression,
-                per_retry_timeout=poll_per_retry_timeout,
-            )
+            await _safe_update()
 
     def _set_new_operation(self, operation: OperationPb) -> None:
         if isinstance(operation, self._operation.__class__):
@@ -155,7 +215,7 @@ class Operation(Generic[OperationPb]):
     @property
     def created_at(self) -> datetime:
         ca = self._operation.created_at
-        if ca is None:
+        if ca is None:  # type: ignore[unused-ignore]
             return datetime.now(local_timezone)
         return ca
 
