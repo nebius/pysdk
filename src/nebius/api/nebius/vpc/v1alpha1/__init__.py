@@ -1550,11 +1550,11 @@ class AllocationServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v
     def get(self,
         request: "GetAllocationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetAllocationRequest","Allocation"]:
         return super().request(
             method="Get",
@@ -1572,11 +1572,11 @@ class AllocationServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v
     def get_by_name(self,
         request: "GetAllocationByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetAllocationByNameRequest","Allocation"]:
         return super().request(
             method="GetByName",
@@ -1594,11 +1594,11 @@ class AllocationServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v
     def list(self,
         request: "ListAllocationsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListAllocationsRequest","ListAllocationsResponse"]:
         return super().request(
             method="List",
@@ -1616,11 +1616,11 @@ class AllocationServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v
     def create(self,
         request: "CreateAllocationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateAllocationRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1638,11 +1638,11 @@ class AllocationServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v
     def update(self,
         request: "UpdateAllocationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateAllocationRequest","operation.Operation[v1alpha1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1661,11 +1661,11 @@ class AllocationServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v
     def delete(self,
         request: "DeleteAllocationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteAllocationRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -2608,11 +2608,11 @@ class NetworkServiceClient(client.Client):
     def get(self,
         request: "GetNetworkRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetNetworkRequest","Network"]:
         return super().request(
             method="Get",
@@ -2630,11 +2630,11 @@ class NetworkServiceClient(client.Client):
     def get_by_name(self,
         request: "GetNetworkByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetNetworkByNameRequest","Network"]:
         return super().request(
             method="GetByName",
@@ -2652,11 +2652,11 @@ class NetworkServiceClient(client.Client):
     def list(self,
         request: "ListNetworksRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListNetworksRequest","ListNetworksResponse"]:
         return super().request(
             method="List",
@@ -2888,11 +2888,11 @@ class PoolServiceClient(client.Client):
     def get(self,
         request: "GetPoolRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetPoolRequest","Pool"]:
         return super().request(
             method="Get",
@@ -2910,11 +2910,11 @@ class PoolServiceClient(client.Client):
     def get_by_name(self,
         request: "GetPoolByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetPoolByNameRequest","Pool"]:
         return super().request(
             method="GetByName",
@@ -2932,11 +2932,11 @@ class PoolServiceClient(client.Client):
     def list(self,
         request: "ListPoolsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListPoolsRequest","ListPoolsResponse"]:
         return super().request(
             method="List",
@@ -3378,11 +3378,11 @@ class ScopeServiceClient(client.Client):
     def get(self,
         request: "GetScopeRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetScopeRequest","Scope"]:
         return super().request(
             method="Get",
@@ -3400,11 +3400,11 @@ class ScopeServiceClient(client.Client):
     def get_by_name(self,
         request: "GetScopeByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetScopeByNameRequest","Scope"]:
         return super().request(
             method="GetByName",
@@ -3422,11 +3422,11 @@ class ScopeServiceClient(client.Client):
     def list(self,
         request: "ListScopesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListScopesRequest","ListScopesResponse"]:
         return super().request(
             method="List",
@@ -4195,11 +4195,11 @@ class SubnetServiceClient(client.Client):
     def get(self,
         request: "GetSubnetRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetSubnetRequest","Subnet"]:
         return super().request(
             method="Get",
@@ -4217,11 +4217,11 @@ class SubnetServiceClient(client.Client):
     def get_by_name(self,
         request: "GetSubnetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetSubnetByNameRequest","Subnet"]:
         return super().request(
             method="GetByName",
@@ -4239,11 +4239,11 @@ class SubnetServiceClient(client.Client):
     def list(self,
         request: "ListSubnetsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListSubnetsRequest","ListSubnetsResponse"]:
         return super().request(
             method="List",
@@ -4261,11 +4261,11 @@ class SubnetServiceClient(client.Client):
     def list_by_network(self,
         request: "ListSubnetsByNetworkRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListSubnetsByNetworkRequest","ListSubnetsResponse"]:
         return super().request(
             method="ListByNetwork",

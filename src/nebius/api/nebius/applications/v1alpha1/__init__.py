@@ -623,11 +623,11 @@ class K8sReleaseServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def get(self,
         request: "GetK8sReleaseRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetK8sReleaseRequest","K8sRelease"]:
         return super().request(
             method="Get",
@@ -645,11 +645,11 @@ class K8sReleaseServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def list(self,
         request: "ListK8sReleasesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListK8sReleasesRequest","ListK8sReleasesResponse"]:
         return super().request(
             method="List",
@@ -667,11 +667,11 @@ class K8sReleaseServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def create(self,
         request: "CreateK8sReleaseRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateK8sReleaseRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -689,11 +689,11 @@ class K8sReleaseServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def update(self,
         request: "UpdateK8sReleaseRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateK8sReleaseRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -712,11 +712,11 @@ class K8sReleaseServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def delete(self,
         request: "DeleteK8sReleaseRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteK8sReleaseRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",

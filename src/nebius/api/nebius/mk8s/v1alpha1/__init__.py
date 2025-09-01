@@ -982,11 +982,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def get(self,
         request: "GetClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
         return super().request(
             method="Get",
@@ -1004,11 +1004,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def get_by_name(self,
         request: "GetClusterByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetClusterByNameRequest","Cluster"]:
         return super().request(
             method="GetByName",
@@ -1026,11 +1026,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def list(self,
         request: "ListClustersRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
         return super().request(
             method="List",
@@ -1048,11 +1048,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def create(self,
         request: "CreateClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1070,11 +1070,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def update(self,
         request: "UpdateClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1093,11 +1093,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def delete(self,
         request: "DeleteClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -3371,11 +3371,11 @@ class NodeGroupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1
     def get(self,
         request: "GetNodeGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetNodeGroupRequest","NodeGroup"]:
         return super().request(
             method="Get",
@@ -3393,11 +3393,11 @@ class NodeGroupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1
     def get_by_name(self,
         request: "GetNodeGroupByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetNodeGroupByNameRequest","NodeGroup"]:
         return super().request(
             method="GetByName",
@@ -3415,11 +3415,11 @@ class NodeGroupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1
     def list(self,
         request: "ListNodeGroupsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListNodeGroupsRequest","ListNodeGroupsResponse"]:
         return super().request(
             method="List",
@@ -3437,11 +3437,11 @@ class NodeGroupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1
     def create(self,
         request: "CreateNodeGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateNodeGroupRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -3459,11 +3459,11 @@ class NodeGroupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1
     def update(self,
         request: "UpdateNodeGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateNodeGroupRequest","operation.Operation[v1alpha1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -3482,11 +3482,11 @@ class NodeGroupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1
     def delete(self,
         request: "DeleteNodeGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteNodeGroupRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -3504,11 +3504,11 @@ class NodeGroupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1
     def upgrade(self,
         request: "UpgradeNodeGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpgradeNodeGroupRequest","operation.Operation[v1alpha1_1.Operation]"]:
         return super().request(
             method="Upgrade",

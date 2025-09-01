@@ -1609,11 +1609,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get(self,
         request: "GetTransferRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetTransferRequest","Transfer"]:
         return super().request(
             method="Get",
@@ -1631,11 +1631,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","Transfer"]:
         return super().request(
             method="GetByName",
@@ -1653,11 +1653,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def list(self,
         request: "ListTransfersRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListTransfersRequest","ListTransfersResponse"]:
         return super().request(
             method="List",
@@ -1675,11 +1675,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def create(self,
         request: "CreateTransferRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateTransferRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1697,11 +1697,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def update(self,
         request: "UpdateTransferRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateTransferRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1720,11 +1720,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def stop(self,
         request: "StopTransferRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["StopTransferRequest","operation.Operation[v1_1.Operation]"]:
         """
         Stop active transfer. If the transfer is currently moving data,
@@ -1749,11 +1749,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def resume(self,
         request: "ResumeTransferRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ResumeTransferRequest","operation.Operation[v1_1.Operation]"]:
         """
         Resume stopped or failed transfer.
@@ -1775,11 +1775,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def delete(self,
         request: "DeleteTransferRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteTransferRequest","operation.Operation[v1_1.Operation]"]:
         """
         Fully delete a transfer along with its history. Only stopped or failed transfers can be deleted.
@@ -1801,11 +1801,11 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get_iteration_history(self,
         request: "GetIterationHistoryRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetIterationHistoryRequest","GetIterationHistoryResponse"]:
         return super().request(
             method="GetIterationHistory",

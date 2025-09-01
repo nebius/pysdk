@@ -325,6 +325,8 @@ Requests made through the SDK include an internal retry layer and two related ti
 - Overall request timeout: a deadline that bounds the whole request call including all retries.
 - Per-retry timeout: an optional timeout applied to each individual retry attempt. If a per-retry timeout is not explicitly provided, it defaults to the overall request timeout.
 
+By default the SDK sets an overall request timeout of 60 seconds and a per-retry timeout of 20 seconds (i.e. 60/3). If you want to disable timeouts for a specific call, pass an explicit timeout of `None` (for example: `service.get(req, timeout=None)`); note that disabling timeouts can lead to requests hanging indefinitely.
+
 Retries may fail for many reasons (not only timeouts) — network errors, resource exhaustion, quota errors, or service-side failures can all stop a retry loop. If you expect retries to sometimes hang (for example, waiting on a slow resource), consider setting a smaller per-retry timeout so stuck attempts fail faster and allow the retry logic to continue or surface an error sooner.
 
 Operations add one more timeout level: an operation-level timeout that bounds the entire operation lifecycle (waiting for completion). Because of that, the timeouts for each operation update request are prefixed with `poll_`.

@@ -463,11 +463,11 @@ class MaintenanceServiceClient(client.Client):
     def get(self,
         request: "GetMaintenanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request.Request["GetMaintenanceRequest","Maintenance"]:
         """
         Returns the specified maintenance operation.
@@ -490,11 +490,11 @@ class MaintenanceServiceClient(client.Client):
     def list(self,
         request: "ListMaintenancesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request.Request["ListMaintenancesRequest","ListMaintenancesResponse"]:
         """
         Retrieves the list of maintenance operations that belong
