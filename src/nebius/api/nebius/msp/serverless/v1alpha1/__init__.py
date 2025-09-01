@@ -834,11 +834,11 @@ class EndpointServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get(self,
         request: "v1alpha1_1.GetRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.GetRequest","Endpoint"]:
         """
         Returns the specified endpoint.
@@ -860,11 +860,11 @@ class EndpointServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get_by_name(self,
         request: "v1alpha1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.GetByNameRequest","Endpoint"]:
         """
         Returns the specified endpoint by name.
@@ -886,11 +886,11 @@ class EndpointServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def list(self,
         request: "v1alpha1_1.ListRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.ListRequest","ListEndpointsResponse"]:
         """
         Retrieves a list of Endpoints.
@@ -912,11 +912,11 @@ class EndpointServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def create(self,
         request: "CreateEndpointRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateEndpointRequest","operation.Operation[v1_1.Operation]"]:
         """
         Creates an endpoint.
@@ -938,11 +938,11 @@ class EndpointServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def delete(self,
         request: "v1alpha1_1.DeleteRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.DeleteRequest","operation.Operation[v1_1.Operation]"]:
         """
         Delete an endpoint.
@@ -964,11 +964,11 @@ class EndpointServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def start(self,
         request: "v1alpha1_1.StartRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.StartRequest","operation.Operation[v1_1.Operation]"]:
         """
         Start an endpoint.
@@ -990,11 +990,11 @@ class EndpointServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def stop(self,
         request: "v1alpha1_1.StopRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.StopRequest","operation.Operation[v1_1.Operation]"]:
         """
         Stop an endpoint.
@@ -1754,11 +1754,11 @@ class JobServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operation
     def get(self,
         request: "v1alpha1_1.GetRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.GetRequest","Job"]:
         """
         Returns the specified job.
@@ -1780,11 +1780,11 @@ class JobServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operation
     def list(self,
         request: "v1alpha1_1.ListRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.ListRequest","ListJobsResponse"]:
         """
         Retrieves a list of jobs.
@@ -1806,11 +1806,11 @@ class JobServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operation
     def create(self,
         request: "CreateJobRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateJobRequest","operation.Operation[v1_1.Operation]"]:
         """
         Creates a job.
@@ -1832,11 +1832,11 @@ class JobServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operation
     def delete(self,
         request: "v1alpha1_1.DeleteRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1alpha1_1.DeleteRequest","operation.Operation[v1_1.Operation]"]:
         """
         Delete a job.
@@ -1858,11 +1858,11 @@ class JobServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operation
     def cancel(self,
         request: "CancelJobRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CancelJobRequest","operation.Operation[v1_1.Operation]"]:
         """
         Cancel a job.

@@ -470,11 +470,11 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     def get(self,
         request: "GetBackupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetBackupRequest","Backup"]:
         """
         Returns the specified PostgreSQL Cluster backup.
@@ -497,11 +497,11 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     def list(self,
         request: "ListBackupsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListBackupsRequest","ListBackupsResponse"]:
         """
         Retrieves the list of PostgreSQL Cluster backups by project.
@@ -523,11 +523,11 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     def list_by_cluster(self,
         request: "ListBackupsByClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListBackupsByClusterRequest","ListBackupsResponse"]:
         """
         Retrieves the list of PostgreSQL Cluster backups by cluster.
@@ -549,11 +549,11 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     def create(self,
         request: "CreateBackupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateBackupRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Creates a new on-demand backup.
@@ -575,11 +575,11 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     def delete(self,
         request: "DeleteBackupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteBackupRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Deletes an on-demand backup.
@@ -1996,11 +1996,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def get(self,
         request: "GetClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetClusterRequest","Cluster"]:
         """
         Returns the specified PostgreSQL Cluster resource.
@@ -2023,11 +2023,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","Cluster"]:
         """
         Returns the specified PostgreSQL Cluster resource by name.
@@ -2049,11 +2049,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def get_for_backup(self,
         request: "GetClusterForBackupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetClusterForBackupRequest","Cluster"]:
         """
         Returns the specified PostgreSQL Cluster resource for backup.
@@ -2076,11 +2076,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def list(self,
         request: "ListClustersRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListClustersRequest","ListClustersResponse"]:
         """
         Retrieves the list of PostgreSQL Cluster resources that belong
@@ -2103,11 +2103,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def create(self,
         request: "CreateClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Creates a PostgreSQL cluster in the specified folder.
@@ -2129,11 +2129,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def delete(self,
         request: "DeleteClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Deletes the specified PostgreSQL cluster.
@@ -2155,11 +2155,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def update(self,
         request: "UpdateClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Updates the PostgreSQL cluster.
@@ -2182,11 +2182,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def restore(self,
         request: "RestoreClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["RestoreClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Creates a new PostgreSQL cluster from a previously created backup.
@@ -2208,11 +2208,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def stop(self,
         request: "StopClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["StopClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Suspends the PostgreSQL cluster to save resources.
@@ -2234,11 +2234,11 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     def start(self,
         request: "StartClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["StartClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Wakes up suspended PostgreSQL cluster.

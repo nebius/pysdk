@@ -1246,11 +1246,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def create(self,
         request: "CreateAccessKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1268,11 +1268,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def list(self,
         request: "ListAccessKeysRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListAccessKeysRequest","ListAccessKeysResponse"]:
         return super().request(
             method="List",
@@ -1290,11 +1290,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def list_by_account(self,
         request: "ListAccessKeysByAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListAccessKeysByAccountRequest","ListAccessKeysResponse"]:
         return super().request(
             method="ListByAccount",
@@ -1312,11 +1312,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def update(self,
         request: "UpdateAccessKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1335,11 +1335,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def get_by_id(self,
         request: "GetAccessKeyByIdRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetAccessKeyByIdRequest","AccessKey"]:
         return super().request(
             method="GetById",
@@ -1357,11 +1357,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def get_by_aws_id(self,
         request: "GetAccessKeyByAwsIdRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetAccessKeyByAwsIdRequest","AccessKey"]:
         return super().request(
             method="GetByAwsId",
@@ -1379,11 +1379,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def get_secret_once(self,
         request: "GetAccessKeySecretOnceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetAccessKeySecretOnceRequest","GetAccessKeySecretOnceResponse"]:
         return super().request(
             method="GetSecretOnce",
@@ -1401,11 +1401,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def activate(self,
         request: "ActivateAccessKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ActivateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Activate",
@@ -1423,11 +1423,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def deactivate(self,
         request: "DeactivateAccessKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeactivateAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Deactivate",
@@ -1445,11 +1445,11 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def delete(self,
         request: "DeleteAccessKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteAccessKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -1885,11 +1885,11 @@ class AccessPermitServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.
     def create(self,
         request: "CreateAccessPermitRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateAccessPermitRequest","operation_1.Operation[v1_1.Operation]"]:
         """
         Creates access permit for provided resource with provided role.
@@ -1914,11 +1914,11 @@ class AccessPermitServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.
     def list(self,
         request: "ListAccessPermitRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListAccessPermitRequest","ListAccessPermitResponse"]:
         """
         Lists access permits for provided parent
@@ -1940,11 +1940,11 @@ class AccessPermitServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.
     def delete(self,
         request: "DeleteAccessPermitRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteAccessPermitRequest","operation_1.Operation[v1_1.Operation]"]:
         """
         Delete access permit by id
@@ -1966,11 +1966,11 @@ class AccessPermitServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.
     def get(self,
         request: "GetAccessPermitRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetAccessPermitRequest","AccessPermit"]:
         """
         Gets access permit by id
@@ -2745,11 +2745,11 @@ class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1
     def create(self,
         request: "CreateAuthPublicKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -2767,11 +2767,11 @@ class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1
     def get(self,
         request: "GetAuthPublicKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetAuthPublicKeyRequest","AuthPublicKey"]:
         return super().request(
             method="Get",
@@ -2789,11 +2789,11 @@ class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1
     def list(self,
         request: "ListAuthPublicKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListAuthPublicKeyRequest","ListAuthPublicKeyResponse"]:
         return super().request(
             method="List",
@@ -2811,11 +2811,11 @@ class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1
     def list_by_account(self,
         request: "ListAuthPublicKeyByAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListAuthPublicKeyByAccountRequest","ListAuthPublicKeyResponse"]:
         return super().request(
             method="ListByAccount",
@@ -2833,11 +2833,11 @@ class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1
     def update(self,
         request: "UpdateAuthPublicKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -2856,11 +2856,11 @@ class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1
     def activate(self,
         request: "ActivateAuthPublicKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ActivateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Activate",
@@ -2878,11 +2878,11 @@ class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1
     def deactivate(self,
         request: "DeactivateAuthPublicKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeactivateAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Deactivate",
@@ -2900,11 +2900,11 @@ class AuthPublicKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1
     def delete(self,
         request: "DeleteAuthPublicKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteAuthPublicKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -3753,11 +3753,11 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
     def get(self,
         request: "GetFederatedCredentialsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetFederatedCredentialsRequest","FederatedCredentials"]:
         return super().request(
             method="Get",
@@ -3775,11 +3775,11 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
     def get_by_name(self,
         request: "GetByNameFederatedCredentialsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetByNameFederatedCredentialsRequest","FederatedCredentials"]:
         return super().request(
             method="GetByName",
@@ -3797,11 +3797,11 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
     def list(self,
         request: "ListFederatedCredentialsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListFederatedCredentialsRequest","ListFederatedCredentialsResponse"]:
         return super().request(
             method="List",
@@ -3819,11 +3819,11 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
     def create(self,
         request: "CreateFederatedCredentialsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -3841,11 +3841,11 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
     def update(self,
         request: "UpdateFederatedCredentialsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -3864,11 +3864,11 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
     def delete(self,
         request: "DeleteFederatedCredentialsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -4658,11 +4658,11 @@ class FederationCertificateServiceClient(client.ClientWithOperations[v1_1.Operat
     def create(self,
         request: "CreateFederationCertificateRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -4680,11 +4680,11 @@ class FederationCertificateServiceClient(client.ClientWithOperations[v1_1.Operat
     def get(self,
         request: "GetFederationCertificateRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetFederationCertificateRequest","FederationCertificate"]:
         return super().request(
             method="Get",
@@ -4702,11 +4702,11 @@ class FederationCertificateServiceClient(client.ClientWithOperations[v1_1.Operat
     def list_by_federation(self,
         request: "ListFederationCertificateByFederationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListFederationCertificateByFederationRequest","ListFederationCertificateResponse"]:
         return super().request(
             method="ListByFederation",
@@ -4724,11 +4724,11 @@ class FederationCertificateServiceClient(client.ClientWithOperations[v1_1.Operat
     def update(self,
         request: "UpdateFederationCertificateRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -4747,11 +4747,11 @@ class FederationCertificateServiceClient(client.ClientWithOperations[v1_1.Operat
     def delete(self,
         request: "DeleteFederationCertificateRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -5091,11 +5091,11 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def create(self,
         request: "CreateFederationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -5113,11 +5113,11 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def get(self,
         request: "GetFederationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetFederationRequest","Federation"]:
         return super().request(
             method="Get",
@@ -5135,11 +5135,11 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","Federation"]:
         return super().request(
             method="GetByName",
@@ -5157,11 +5157,11 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def list(self,
         request: "ListFederationsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListFederationsRequest","ListFederationsResponse"]:
         return super().request(
             method="List",
@@ -5179,11 +5179,11 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def update(self,
         request: "UpdateFederationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -5202,11 +5202,11 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def delete(self,
         request: "DeleteFederationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -7568,11 +7568,11 @@ class GroupMembershipServiceClient(client.ClientWithOperations[v1_1.Operation,v1
     def create(self,
         request: "CreateGroupMembershipRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateGroupMembershipRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -7590,11 +7590,11 @@ class GroupMembershipServiceClient(client.ClientWithOperations[v1_1.Operation,v1
     def get(self,
         request: "GetGroupMembershipRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetGroupMembershipRequest","GroupMembership"]:
         return super().request(
             method="Get",
@@ -7612,11 +7612,11 @@ class GroupMembershipServiceClient(client.ClientWithOperations[v1_1.Operation,v1
     def get_with_attributes(self,
         request: "GetGroupMembershipRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetGroupMembershipRequest","GroupMembershipWithAttributes"]:
         return super().request(
             method="GetWithAttributes",
@@ -7634,11 +7634,11 @@ class GroupMembershipServiceClient(client.ClientWithOperations[v1_1.Operation,v1
     def delete(self,
         request: "DeleteGroupMembershipRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteGroupMembershipRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -7656,11 +7656,11 @@ class GroupMembershipServiceClient(client.ClientWithOperations[v1_1.Operation,v1
     def list_members(self,
         request: "ListGroupMembershipsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListGroupMembershipsRequest","ListGroupMembershipsResponse"]:
         return super().request(
             method="ListMembers",
@@ -7678,11 +7678,11 @@ class GroupMembershipServiceClient(client.ClientWithOperations[v1_1.Operation,v1
     def list_members_with_attributes(self,
         request: "ListGroupMembershipsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListGroupMembershipsRequest","ListGroupMembershipsWithAttributesResponse"]:
         return super().request(
             method="ListMembersWithAttributes",
@@ -7700,11 +7700,11 @@ class GroupMembershipServiceClient(client.ClientWithOperations[v1_1.Operation,v1
     def list_member_of(self,
         request: "ListMemberOfRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListMemberOfRequest","ListMemberOfResponse"]:
         return super().request(
             method="ListMemberOf",
@@ -8106,11 +8106,11 @@ class GroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operati
     def create(self,
         request: "CreateGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateGroupRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -8128,11 +8128,11 @@ class GroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operati
     def get(self,
         request: "GetGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetGroupRequest","Group"]:
         return super().request(
             method="Get",
@@ -8150,11 +8150,11 @@ class GroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operati
     def get_by_name(self,
         request: "GetGroupByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetGroupByNameRequest","Group"]:
         return super().request(
             method="GetByName",
@@ -8172,11 +8172,11 @@ class GroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operati
     def list(self,
         request: "ListGroupsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListGroupsRequest","ListGroupsResponse"]:
         return super().request(
             method="List",
@@ -8194,11 +8194,11 @@ class GroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operati
     def delete(self,
         request: "DeleteGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteGroupRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -8216,11 +8216,11 @@ class GroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operati
     def update(self,
         request: "UpdateGroupRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateGroupRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -8834,11 +8834,11 @@ class InvitationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def create(self,
         request: "CreateInvitationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -8856,11 +8856,11 @@ class InvitationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def get(self,
         request: "GetInvitationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetInvitationRequest","Invitation"]:
         return super().request(
             method="Get",
@@ -8878,11 +8878,11 @@ class InvitationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def list(self,
         request: "ListInvitationsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListInvitationsRequest","ListInvitationsResponse"]:
         return super().request(
             method="List",
@@ -8900,11 +8900,11 @@ class InvitationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def delete(self,
         request: "DeleteInvitationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -8922,11 +8922,11 @@ class InvitationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def update(self,
         request: "UpdateInvitationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -8945,11 +8945,11 @@ class InvitationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def resend(self,
         request: "ResendInvitationRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ResendInvitationRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Resend",
@@ -9345,11 +9345,11 @@ class ProfileServiceClient(client.Client):
     def get(self,
         request: "GetProfileRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetProfileRequest","GetProfileResponse"]:
         """
         Returns the current user's profile.
@@ -9738,11 +9738,11 @@ class ProjectServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
     def create(self,
         request: "CreateProjectRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateProjectRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -9760,11 +9760,11 @@ class ProjectServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
     def get(self,
         request: "GetProjectRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetProjectRequest","Container"]:
         return super().request(
             method="Get",
@@ -9782,11 +9782,11 @@ class ProjectServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
     def get_by_name(self,
         request: "GetProjectByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetProjectByNameRequest","Container"]:
         return super().request(
             method="GetByName",
@@ -9804,11 +9804,11 @@ class ProjectServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
     def list(self,
         request: "ListProjectsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListProjectsRequest","ListProjectsResponse"]:
         return super().request(
             method="List",
@@ -9826,11 +9826,11 @@ class ProjectServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Opera
     def update(self,
         request: "UpdateProjectRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateProjectRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -10254,11 +10254,11 @@ class ServiceAccountServiceClient(client.ClientWithOperations[v1_1.Operation,v1_
     def create(self,
         request: "CreateServiceAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -10276,11 +10276,11 @@ class ServiceAccountServiceClient(client.ClientWithOperations[v1_1.Operation,v1_
     def get(self,
         request: "GetServiceAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetServiceAccountRequest","ServiceAccount"]:
         return super().request(
             method="Get",
@@ -10298,11 +10298,11 @@ class ServiceAccountServiceClient(client.ClientWithOperations[v1_1.Operation,v1_
     def get_by_name(self,
         request: "GetServiceAccountByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetServiceAccountByNameRequest","ServiceAccount"]:
         return super().request(
             method="GetByName",
@@ -10320,11 +10320,11 @@ class ServiceAccountServiceClient(client.ClientWithOperations[v1_1.Operation,v1_
     def list(self,
         request: "ListServiceAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListServiceAccountRequest","ListServiceAccountResponse"]:
         return super().request(
             method="List",
@@ -10342,11 +10342,11 @@ class ServiceAccountServiceClient(client.ClientWithOperations[v1_1.Operation,v1_
     def update(self,
         request: "UpdateServiceAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -10365,11 +10365,11 @@ class ServiceAccountServiceClient(client.ClientWithOperations[v1_1.Operation,v1_
     def delete(self,
         request: "DeleteServiceAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteServiceAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -10538,11 +10538,11 @@ class SessionManagementServiceClient(client.Client):
     def revoke(self,
         request: "RevokeSessionRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["RevokeSessionRequest","RevokeSessionResponse"]:
         return super().request(
             method="Revoke",
@@ -11249,11 +11249,11 @@ class StaticKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def issue(self,
         request: "IssueStaticKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["IssueStaticKeyRequest","IssueStaticKeyResponse"]:
         return super().request(
             method="Issue",
@@ -11271,11 +11271,11 @@ class StaticKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def list(self,
         request: "ListStaticKeysRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListStaticKeysRequest","ListStaticKeysResponse"]:
         return super().request(
             method="List",
@@ -11293,11 +11293,11 @@ class StaticKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def get(self,
         request: "GetStaticKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetStaticKeyRequest","StaticKey"]:
         return super().request(
             method="Get",
@@ -11315,11 +11315,11 @@ class StaticKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def get_by_name(self,
         request: "GetStaticKeyByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetStaticKeyByNameRequest","StaticKey"]:
         return super().request(
             method="GetByName",
@@ -11337,11 +11337,11 @@ class StaticKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def delete(self,
         request: "DeleteStaticKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteStaticKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -11359,11 +11359,11 @@ class StaticKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def find(self,
         request: "FindStaticKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["FindStaticKeyRequest","FindStaticKeyResponse"]:
         return super().request(
             method="Find",
@@ -11381,11 +11381,11 @@ class StaticKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     def revoke(self,
         request: "RevokeStaticKeyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["RevokeStaticKeyRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Revoke",
@@ -11601,11 +11601,11 @@ class TenantServiceClient(client.Client):
     def get(self,
         request: "GetTenantRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetTenantRequest","Container"]:
         return super().request(
             method="Get",
@@ -11623,11 +11623,11 @@ class TenantServiceClient(client.Client):
     def list(self,
         request: "ListTenantsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListTenantsRequest","ListTenantsResponse"]:
         return super().request(
             method="List",
@@ -11936,11 +11936,11 @@ class TenantUserAccountServiceClient(client.ClientWithOperations[v1_1.Operation,
     def get(self,
         request: "GetTenantUserAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetTenantUserAccountRequest","TenantUserAccount"]:
         return super().request(
             method="Get",
@@ -11958,11 +11958,11 @@ class TenantUserAccountServiceClient(client.ClientWithOperations[v1_1.Operation,
     def list(self,
         request: "ListTenantUserAccountsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListTenantUserAccountsRequest","ListTenantUserAccountsResponse"]:
         return super().request(
             method="List",
@@ -11980,11 +11980,11 @@ class TenantUserAccountServiceClient(client.ClientWithOperations[v1_1.Operation,
     def block(self,
         request: "BlockTenantUserAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["BlockTenantUserAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Block",
@@ -12002,11 +12002,11 @@ class TenantUserAccountServiceClient(client.ClientWithOperations[v1_1.Operation,
     def unblock(self,
         request: "UnblockTenantUserAccountRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UnblockTenantUserAccountRequest","operation_1.Operation[v1_1.Operation]"]:
         return super().request(
             method="Unblock",
@@ -12244,11 +12244,11 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
     def get(self,
         request: "GetTenantUserAccountWithAttributesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetTenantUserAccountWithAttributesRequest","TenantUserAccountWithAttributes"]:
         return super().request(
             method="Get",
@@ -12266,11 +12266,11 @@ class TenantUserAccountWithAttributesServiceClient(client.Client):
     def list(self,
         request: "ListTenantUserAccountsWithAttributesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListTenantUserAccountsWithAttributesRequest","ListTenantUserAccountsWithAttributesResponse"]:
         return super().request(
             method="List",
@@ -12587,11 +12587,11 @@ class TokenExchangeServiceClient(client.Client):
     def exchange(self,
         request: "ExchangeTokenRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ExchangeTokenRequest","CreateTokenResponse"]:
         return super().request(
             method="Exchange",

@@ -7,7 +7,9 @@ from typing import Generic, TypeVar
 from grpc import CallCredentials, Compression, StatusCode
 
 from nebius.aio.abc import ClientChannelInterface
+from nebius.aio.request import DEFAULT_TIMEOUT
 from nebius.base.error import SDKError
+from nebius.base.protos.unset import Unset, UnsetType
 from nebius.base.protos.well_known import local_timezone
 
 from .constant_channel import Constant
@@ -76,10 +78,10 @@ class Operation(Generic[OperationPb]):
     async def update(
         self,
         metadata: Iterable[tuple[str, str]] | None = None,
-        timeout: float | None = None,
+        timeout: float | None | UnsetType = Unset,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
-        per_retry_timeout: float | None = None,
+        per_retry_timeout: float | None | UnsetType = Unset,
         retries: int | None = None,
     ) -> None:
         if self.done():
@@ -104,8 +106,8 @@ class Operation(Generic[OperationPb]):
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
-        poll_iteration_timeout: float | None = None,
-        poll_per_retry_timeout: float | None = None,
+        poll_iteration_timeout: float | None | UnsetType = Unset,
+        poll_per_retry_timeout: float | None | UnsetType = Unset,
         poll_retries: int | None = None,
     ) -> None:
         run_timeout = None if timeout is None else timeout + 0.2
@@ -126,13 +128,17 @@ class Operation(Generic[OperationPb]):
     def sync_update(
         self,
         metadata: Iterable[tuple[str, str]] | None = None,
-        timeout: float | None = None,
+        timeout: float | None | UnsetType = Unset,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
-        per_retry_timeout: float | None = None,
+        per_retry_timeout: float | None | UnsetType = Unset,
         retries: int | None = None,
     ) -> None:
-        run_timeout = None if timeout is None else timeout + 0.2
+        run_timeout: float | None = None
+        if isinstance(timeout, (int, float)):
+            run_timeout = timeout + 0.2
+        elif isinstance(timeout, UnsetType):
+            run_timeout = DEFAULT_TIMEOUT + 0.2
         return self._channel.run_sync(
             self.update(
                 metadata=metadata,
@@ -152,8 +158,8 @@ class Operation(Generic[OperationPb]):
         timeout: float | None = None,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
-        poll_iteration_timeout: float | None = None,
-        poll_per_retry_timeout: float | None = None,
+        poll_iteration_timeout: float | UnsetType | None = Unset,
+        poll_per_retry_timeout: float | UnsetType | None = Unset,
         poll_retries: int | None = None,
     ) -> None:
         start = time()

@@ -1080,11 +1080,11 @@ class VersionServiceClient(client.Client):
     def get_version(self,
         request: "GetVersionRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request.Request["GetVersionRequest","GetVersionResponse"]:
         """
         GetVersion retrieves version information and receives instructions for agent updates

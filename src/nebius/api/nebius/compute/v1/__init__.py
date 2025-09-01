@@ -1073,11 +1073,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
     def get(self,
         request: "GetDiskRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetDiskRequest","Disk"]:
         """
         Retrieves information about a disk by its ID.
@@ -1099,11 +1099,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","Disk"]:
         """
         Retrieves information about a disk by its parent and name.
@@ -1125,11 +1125,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
     def list(self,
         request: "ListDisksRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListDisksRequest","ListDisksResponse"]:
         """
         Lists all disks within a specified parent.
@@ -1151,11 +1151,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
     def create(self,
         request: "CreateDiskRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateDiskRequest","operation.Operation[v1_1.Operation]"]:
         """
         Creates a new disk with the specified configuration.
@@ -1178,11 +1178,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
     def update(self,
         request: "UpdateDiskRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateDiskRequest","operation.Operation[v1_1.Operation]"]:
         """
         Updates an existing disk with new configuration parameters.
@@ -1206,11 +1206,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
     def delete(self,
         request: "DeleteDiskRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteDiskRequest","operation.Operation[v1_1.Operation]"]:
         """
         Deletes a disk by its ID.
@@ -1232,11 +1232,11 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
     def list_operations_by_parent(self,
         request: "ListOperationsByParentRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
         """
         Lists all operations that were performed within a specific parent resource.
@@ -1973,11 +1973,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def get(self,
         request: "GetFilesystemRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetFilesystemRequest","Filesystem"]:
         """
         Retrieves information about a filesystem by its ID.
@@ -1999,11 +1999,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","Filesystem"]:
         """
         Retrieves information about a filesystem by its parent and name.
@@ -2025,11 +2025,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def list(self,
         request: "ListFilesystemsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListFilesystemsRequest","ListFilesystemsResponse"]:
         """
         Lists all filesystems within a specified parent.
@@ -2051,11 +2051,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def create(self,
         request: "CreateFilesystemRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateFilesystemRequest","operation.Operation[v1_1.Operation]"]:
         """
         Creates a new filesystem with the specified configuration.
@@ -2078,11 +2078,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def update(self,
         request: "UpdateFilesystemRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateFilesystemRequest","operation.Operation[v1_1.Operation]"]:
         """
         Updates an existing filesystem with new configuration parameters.
@@ -2106,11 +2106,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def delete(self,
         request: "DeleteFilesystemRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteFilesystemRequest","operation.Operation[v1_1.Operation]"]:
         """
         Deletes a disk by its ID.
@@ -2132,11 +2132,11 @@ class FilesystemServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def list_operations_by_parent(self,
         request: "ListOperationsByParentRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
         """
         Lists all operations that were performed within a specific parent resource.
@@ -2759,11 +2759,11 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def get(self,
         request: "GetGpuClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetGpuClusterRequest","GpuCluster"]:
         """
         Retrieves the specified GPU Cluster by its ID.
@@ -2785,11 +2785,11 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","GpuCluster"]:
         """
         Retrieves the specified GPU Cluster by its parent and name.
@@ -2811,11 +2811,11 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def list(self,
         request: "ListGpuClustersRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListGpuClustersRequest","ListGpuClustersResponse"]:
         """
         Lists GPU Clusters in the specified parent.
@@ -2837,11 +2837,11 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def create(self,
         request: "CreateGpuClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateGpuClusterRequest","operation.Operation[v1_1.Operation]"]:
         """
         Creates a new GPU Cluster.
@@ -2864,11 +2864,11 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def update(self,
         request: "UpdateGpuClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateGpuClusterRequest","operation.Operation[v1_1.Operation]"]:
         """
         Modifies the configuration of an existing GPU Cluster.
@@ -2891,11 +2891,11 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def delete(self,
         request: "DeleteGpuClusterRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteGpuClusterRequest","operation.Operation[v1_1.Operation]"]:
         """
         Deletes a GPU Cluster by its ID.
@@ -2917,11 +2917,11 @@ class GpuClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     def list_operations_by_parent(self,
         request: "ListOperationsByParentRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
         """
         Lists all operations that were performed within a specific parent resource.
@@ -3459,11 +3459,11 @@ class ImageServiceClient(client.Client):
     def get(self,
         request: "GetImageRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetImageRequest","Image"]:
         """
         Retrieves detailed information about a specific image by its ID.
@@ -3485,11 +3485,11 @@ class ImageServiceClient(client.Client):
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","Image"]:
         """
         Retrieves detailed information about a specific image by its parent and name.
@@ -3511,11 +3511,11 @@ class ImageServiceClient(client.Client):
     def get_latest_by_family(self,
         request: "GetImageLatestByFamilyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetImageLatestByFamilyRequest","Image"]:
         """
         Retrieves the most recent image from a specified family.
@@ -3538,11 +3538,11 @@ class ImageServiceClient(client.Client):
     def list(self,
         request: "ListImagesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListImagesRequest","ListImagesResponse"]:
         """
         Lists all images in a specific parent resource.
@@ -3564,11 +3564,11 @@ class ImageServiceClient(client.Client):
     def list_operations_by_parent(self,
         request: "ListOperationsByParentRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
         """
         Lists all operations that were performed within a specific parent resource.
@@ -5415,11 +5415,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get(self,
         request: "GetInstanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetInstanceRequest","Instance"]:
         """
         Retrieves detailed information about a specific VM instance by its ID.
@@ -5441,11 +5441,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","Instance"]:
         """
         Retrieves detailed information about a specific VM instance by its parent and name.
@@ -5467,11 +5467,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def list(self,
         request: "ListInstancesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListInstancesRequest","ListInstancesResponse"]:
         """
         Lists all VM instances within a specified parent.
@@ -5493,11 +5493,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def create(self,
         request: "CreateInstanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateInstanceRequest","operation.Operation[v1_1.Operation]"]:
         """
         Creates a new VM instance based on the provided specification.
@@ -5520,11 +5520,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def update(self,
         request: "UpdateInstanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateInstanceRequest","operation.Operation[v1_1.Operation]"]:
         """
         Updates an existing VM instance with new configuration parameters.
@@ -5547,11 +5547,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def delete(self,
         request: "DeleteInstanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteInstanceRequest","operation.Operation[v1_1.Operation]"]:
         """
         Deletes a VM instance by its ID.
@@ -5573,11 +5573,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def start(self,
         request: "StartInstanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["StartInstanceRequest","operation.Operation[v1_1.Operation]"]:
         """
         Starts a stopped VM instance.
@@ -5599,11 +5599,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def stop(self,
         request: "StopInstanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["StopInstanceRequest","operation.Operation[v1_1.Operation]"]:
         """
         Stops a running VM instance.
@@ -5625,11 +5625,11 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def list_operations_by_parent(self,
         request: "ListOperationsByParentRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListOperationsByParentRequest","v1_1.ListOperationsResponse"]:
         """
         Lists all operations that were performed within a specific parent resource.
@@ -6021,11 +6021,11 @@ class MaintenanceServiceClient(client.Client):
     def get_by_instance(self,
         request: "GetMaintenanceEventByInstanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetMaintenanceEventByInstanceRequest","MaintenanceEvent"]:
         """
         Returns only active maintenance event for the instance
@@ -6047,11 +6047,11 @@ class MaintenanceServiceClient(client.Client):
     def list_active(self,
         request: "ListMaintenanceEventsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListMaintenanceEventsRequest","ListMaintenanceEventsResponse"]:
         """
         Returns all unfinished maintenance events for the parent
@@ -6247,11 +6247,11 @@ class NodeServiceClient(client.Client):
     def set_unhealthy(self,
         request: "NodeSetUnhealthyRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["NodeSetUnhealthyRequest","NodeSetUnhealthyResponse"]:
         """
         SetUnhealthy marks the node underlying the Compute VM as unhealthy, which has the following effect:
@@ -6701,11 +6701,11 @@ class PlatformServiceClient(client.Client):
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["v1_1.GetByNameRequest","Platform"]:
         """
         Retrieves detailed information about a specific compute platform by its parent and name.
@@ -6727,11 +6727,11 @@ class PlatformServiceClient(client.Client):
     def list(self,
         request: "ListPlatformsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListPlatformsRequest","ListPlatformsResponse"]:
         """
         Lists all compute platforms within a specified parent.

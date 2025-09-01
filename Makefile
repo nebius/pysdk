@@ -26,7 +26,9 @@ move-imports:
 	find $(OUT_DIR) -type f -name "*.py" ! -name "__init__.py" -exec python3 src/nebius/base/protos/compiler/mover.py --level warning --input {} --output {} --prefix buf=nebius.api.buf nebius=nebius.api.nebius \;
 	find $(OUT_DIR) -type f -name "*.pyi" -exec python3 src/nebius/base/protos/compiler/mover.py --level warning --input {} --output {} --prefix buf=nebius.api.buf nebius=nebius.api.nebius \;
 
-update-proto: update-submodule compile-proto move-imports
+generate: compile-proto move-imports
+
+update-proto: update-submodule generate
 
 gen-doc:
 	pydoctor || true
