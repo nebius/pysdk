@@ -710,11 +710,11 @@ class CalculatorServiceClient(client.Client):
     def estimate(self,
         request: "EstimateRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["EstimateRequest","EstimateResponse"]:
         """
         Estimates prices for a single resource.
@@ -737,11 +737,11 @@ class CalculatorServiceClient(client.Client):
     def estimate_batch(self,
         request: "EstimateBatchRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["EstimateBatchRequest","EstimateBatchResponse"]:
         """
         Estimates prices for multiple resources.

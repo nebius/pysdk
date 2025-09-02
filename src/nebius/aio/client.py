@@ -11,6 +11,7 @@ from nebius.aio.request import Request
 
 # from nebius.api.nebius.common.v1 import Operation
 from nebius.base.metadata import Metadata
+from nebius.base.protos.unset import Unset, UnsetType
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
@@ -38,12 +39,12 @@ class Client:
         request: Req,
         result_pb2_class: type[PMessage],
         metadata: Metadata | Iterable[tuple[str, str]] | None = None,
-        timeout: float | None = None,
+        timeout: float | None | UnsetType = Unset,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
         result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
         retries: int | None = 3,
-        per_retry_timeout: float | None = None,
+        per_retry_timeout: float | None | UnsetType = Unset,
     ) -> Request[Req, Res]:
         return Request[Req, Res](
             channel=self._channel,

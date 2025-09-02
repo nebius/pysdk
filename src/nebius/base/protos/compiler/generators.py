@@ -758,7 +758,15 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     ImportedSymbol("str", "builtins"),
                     "]]|None = None,",
                 )
-                g.p("timeout: ", ImportedSymbol("float", "builtins"), "|None = None,")
+                g.p(
+                    "timeout: ",
+                    ImportedSymbol("float", "builtins"),
+                    "|",
+                    ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
+                    "|None = ",
+                    ImportedSymbol("Unset", "nebius.base.protos.unset"),
+                    ",",
+                )
                 g.p(
                     "credentials: ",
                     ImportedSymbol("CallCredentials", "grpc"),
@@ -777,7 +785,11 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                 g.p(
                     "per_retry_timeout: ",
                     ImportedSymbol("float", "builtins"),
-                    " | None = None,",
+                    "|",
+                    ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
+                    "|None = ",
+                    ImportedSymbol("Unset", "nebius.base.protos.unset"),
+                    ",",
                 )
             g.p(
                 ") -> ",

@@ -17,6 +17,7 @@ from nebius.aio.base import AddressChannel
 from nebius.aio.idempotency import ensure_key_in_metadata
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata
+from nebius.base.protos.unset import Unset, UnsetType
 
 from .request_status import RequestStatus, UnfinishedRequestStatus
 
@@ -47,6 +48,10 @@ class RequestSentNoCallError(RequestError):
         super().__init__("Request marked as sent without call.")
 
 
+DEFAULT_TIMEOUT = 60.0  # second
+DEFAULT_PER_RETRY_TIMEOUT = DEFAULT_TIMEOUT / 3
+
+
 class Request(Generic[Req, Res]):
     def __init__(
         self,
@@ -56,14 +61,14 @@ class Request(Generic[Req, Res]):
         request: Req,
         result_pb2_class: type[PMessage],
         metadata: Metadata | Iterable[tuple[str, str]] | None = None,
-        timeout: float | None = None,
+        timeout: float | None | UnsetType = Unset,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
         result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
         grpc_channel_override: AddressChannel | None = None,
         error_wrapper: Callable[[RequestStatus], RequestError] | None = None,
         retries: int | None = 3,
-        per_retry_timeout: float | None = None,
+        per_retry_timeout: float | None | UnsetType = Unset,
     ) -> None:
         self._channel = channel
         self._input = request
@@ -73,8 +78,14 @@ class Request(Generic[Req, Res]):
         self._input_metadata = Metadata(metadata)
         self._result_wrapper = result_wrapper
         self._grpc_channel = grpc_channel_override
-        self._timeout = timeout
-        self._per_retry_timeout = per_retry_timeout
+        self._timeout: float | None = (
+            timeout if not isinstance(timeout, UnsetType) else DEFAULT_TIMEOUT
+        )
+        self._per_retry_timeout: float | None = (
+            per_retry_timeout
+            if not isinstance(per_retry_timeout, UnsetType)
+            else DEFAULT_PER_RETRY_TIMEOUT
+        )
         self._credentials = credentials
         self._compression = compression
         self._call: UnaryUnaryCall | None = None

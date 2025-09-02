@@ -643,11 +643,11 @@ class QuotaAllowanceServiceClient(client.Client):
     def list(self,
         request: "ListQuotaAllowancesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request.Request["ListQuotaAllowancesRequest","ListQuotaAllowancesResponse"]:
         """
         Lists quotas by an ID of a Tenant or a Project.
@@ -669,11 +669,11 @@ class QuotaAllowanceServiceClient(client.Client):
     def get(self,
         request: "GetQuotaAllowanceRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request.Request["GetQuotaAllowanceRequest","QuotaAllowance"]:
         """
         Gets a quota by its ID.
@@ -695,11 +695,11 @@ class QuotaAllowanceServiceClient(client.Client):
     def get_by_name(self,
         request: "GetByNameRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request.Request["GetByNameRequest","QuotaAllowance"]:
         """
         Gets a quota by an ID of a Tenant or a Project, its region, and name.

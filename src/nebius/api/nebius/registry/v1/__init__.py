@@ -407,11 +407,11 @@ class ArtifactServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get(self,
         request: "GetArtifactRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetArtifactRequest","Artifact"]:
         return super().request(
             method="Get",
@@ -429,11 +429,11 @@ class ArtifactServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def list(self,
         request: "ListArtifactsRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListArtifactsRequest","ListArtifactsResponse"]:
         return super().request(
             method="List",
@@ -451,11 +451,11 @@ class ArtifactServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def delete(self,
         request: "DeleteArtifactRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteArtifactRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
@@ -984,11 +984,11 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def get(self,
         request: "GetRegistryRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetRegistryRequest","Registry"]:
         return super().request(
             method="Get",
@@ -1006,11 +1006,11 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def list(self,
         request: "ListRegistriesRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListRegistriesRequest","ListRegistriesResponse"]:
         return super().request(
             method="List",
@@ -1028,11 +1028,11 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def create(self,
         request: "CreateRegistryRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateRegistryRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Create",
@@ -1050,11 +1050,11 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def update(self,
         request: "UpdateRegistryRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateRegistryRequest","operation.Operation[v1_1.Operation]"]:
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
@@ -1073,11 +1073,11 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     def delete(self,
         request: "DeleteRegistryRequest",
         metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
         credentials: grpc.CallCredentials | None = None,
         compression: grpc.Compression | None = None,
         retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float | None = None,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteRegistryRequest","operation.Operation[v1_1.Operation]"]:
         return super().request(
             method="Delete",
