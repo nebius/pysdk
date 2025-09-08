@@ -1231,7 +1231,7 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     Use Access keys API v2 instead. Access keys create by API v1 are available using Access keys API v2.
     
     
-    Supported until 09/01/25. Access keys API v1 is deprecated, use the v2 version instead. Keys produced by API v1 are available using v2.
+    Supported until 09/01/26. Access keys API v1 is deprecated, use the v2 version instead. Keys produced by API v1 are available using v2.
     """
     
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v1.AccessKeyService",access_key_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
@@ -1240,7 +1240,7 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     __operation_service_class__ = v1_1.OperationServiceClient
     __operation_source_method__ = "Create"
     __service_deprecation_details__ = (
-    """Service .nebius.iam.v1.AccessKeyService is deprecated. Supported until 09/01/25. Access keys API v1 is deprecated, use the v2 version instead. Keys produced by API v1 are available using v2."""
+    """Service .nebius.iam.v1.AccessKeyService is deprecated. Supported until 09/01/26. Access keys API v1 is deprecated, use the v2 version instead. Keys produced by API v1 are available using v2."""
     )
     
     def create(self,

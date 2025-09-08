@@ -1585,8 +1585,7 @@ class Operation(pb_classes.Message):
     
     class RequestHeader(pb_classes.Message):
         """
-        Request header is a container for all the values of a particular header of a request
-        as there is no such thing as map<string, repeated string>
+        Request header is a container for all the values of a particular header of a request because there is no such thing as `map<string, repeated string>`
         """
         
         __PB2_CLASS__ = operation_pb2.Operation.RequestHeader
@@ -1854,8 +1853,7 @@ class Operation(pb_classes.Message):
         Additional information about the progress of an operation, e.g., a progress percentage.
         MAY be absent while the operation is running, MUST be absent after the operation has completed.
         
-        Format of message inside [progress_data] is service-dependent and MUST be documented by the
-        service, IF it is used.
+        Type of message that's stored inside [progress_data] is service-dependent.
         """
         
         return super()._get_field("progress_data", explicit_presence=False,
@@ -1875,8 +1873,7 @@ class Operation(pb_classes.Message):
         - If [status.code] == OK, the operation has completed successfully.
         - If [status.code] != OK, the operation has failed or has been cancelled.
           - [status.message] will contain a user-readable and actionable error message.
-          - [status.details] will contain additional diagnostic information in the form of
-            [ServiceError] from nebius/common/v1/error.proto
+          - [status.details] will contain additional diagnostic information in the form of [ServiceError] from nebius/common/v1/error.proto
         - [status.code] must belong to an Operation-compatible subset of GRPC codes:
           OK, CANCELLED, PERMISSION_DENIED, RESOURCE_EXHAUSTED, FAILED_PRECONDITION, ABORTED, INTERNAL
         """

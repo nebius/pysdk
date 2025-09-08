@@ -126,6 +126,11 @@ class QuotaAllowanceStatus(pb_classes.Message):
         Quota is allocated and can be used.
         """
         
+        STATE_FROZEN = 3
+        """
+        Quota is allocated but cannot be used any longer
+        """
+        
         STATE_DELETED = 10
         """
         Quota has been removed and is no longer allocated.

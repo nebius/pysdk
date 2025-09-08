@@ -839,11 +839,18 @@ class DeleteClusterRequest(pb_classes.Message):
     
 
 class ClusterServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    Supported until 08/12/25. Nebius AI Cloud no longer supports the service. Instead, use Application for Apache Spark™ Connect in Standalone Applications.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.spark.v1alpha1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.spark.v1alpha1.ClusterService"
     __operation_type__ = v1_1.Operation
     __operation_service_class__ = v1_1.OperationServiceClient
     __operation_source_method__ = "Create"
+    __service_deprecation_details__ = (
+    """Service .nebius.msp.spark.v1alpha1.ClusterService is deprecated. Supported until 08/12/25. Nebius AI Cloud no longer supports the service. Instead, use Application for Apache Spark™ Connect in Standalone Applications."""
+    )
     
     def get(self,
         request: "GetClusterRequest",
@@ -2243,11 +2250,18 @@ class CancelJobRequest(pb_classes.Message):
     
 
 class JobServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    Supported until 08/12/25. Nebius AI Cloud no longer supports the service. Instead, use Application for Apache Spark™ Connect in Standalone Applications.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.spark.v1alpha1.JobService",job_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.spark.v1alpha1.JobService"
     __operation_type__ = v1_1.Operation
     __operation_service_class__ = v1_1.OperationServiceClient
     __operation_source_method__ = "Create"
+    __service_deprecation_details__ = (
+    """Service .nebius.msp.spark.v1alpha1.JobService is deprecated. Supported until 08/12/25. Nebius AI Cloud no longer supports the service. Instead, use Application for Apache Spark™ Connect in Standalone Applications."""
+    )
     
     def get(self,
         request: "GetJobRequest",
@@ -3177,11 +3191,18 @@ class DeleteSessionRequest(pb_classes.Message):
     
 
 class SessionServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    Supported until 08/12/25. Nebius AI Cloud no longer supports the service. Instead, use Application for Apache Spark™ Connect in Standalone Applications.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.spark.v1alpha1.SessionService",session_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     __service_name__ = ".nebius.msp.spark.v1alpha1.SessionService"
     __operation_type__ = v1_1.Operation
     __operation_service_class__ = v1_1.OperationServiceClient
     __operation_source_method__ = "Create"
+    __service_deprecation_details__ = (
+    """Service .nebius.msp.spark.v1alpha1.SessionService is deprecated. Supported until 08/12/25. Nebius AI Cloud no longer supports the service. Instead, use Application for Apache Spark™ Connect in Standalone Applications."""
+    )
     
     def get(self,
         request: "GetSessionRequest",

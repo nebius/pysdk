@@ -23,10 +23,12 @@ class QuotaAllowanceStatus(_message.Message):
         STATE_UNSPECIFIED: _ClassVar[QuotaAllowanceStatus.State]
         STATE_PROVISIONING: _ClassVar[QuotaAllowanceStatus.State]
         STATE_ACTIVE: _ClassVar[QuotaAllowanceStatus.State]
+        STATE_FROZEN: _ClassVar[QuotaAllowanceStatus.State]
         STATE_DELETED: _ClassVar[QuotaAllowanceStatus.State]
     STATE_UNSPECIFIED: QuotaAllowanceStatus.State
     STATE_PROVISIONING: QuotaAllowanceStatus.State
     STATE_ACTIVE: QuotaAllowanceStatus.State
+    STATE_FROZEN: QuotaAllowanceStatus.State
     STATE_DELETED: QuotaAllowanceStatus.State
     class UsageState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
