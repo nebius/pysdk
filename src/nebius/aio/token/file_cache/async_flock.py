@@ -7,14 +7,13 @@ from typing import IO, Any, AnyStr
 from portalocker import Lock as PortalockerLock
 from portalocker.constants import LockFlags
 from portalocker.exceptions import AlreadyLocked
-from portalocker.types import Mode
 
 
 class Lock:
     def __init__(
         self,
         file_path: str | Path,
-        mode: Mode = "a",
+        mode: str = "a",
         create_mode: int = 0o644,
         shared: bool = False,
         timeout: timedelta | float | None = None,
@@ -27,7 +26,7 @@ class Lock:
         self.timeout = (
             timeout.total_seconds() if isinstance(timeout, timedelta) else timeout
         )
-        self.mode: Mode = mode
+        self.mode: str = mode
         self.fopen_kwargs = fopen_kwargs
         self.polling_interval = (
             polling_interval.total_seconds()
@@ -38,7 +37,7 @@ class Lock:
         lock_flags |= LockFlags.NON_BLOCKING
         self.lock = PortalockerLock(
             self.file_path,
-            mode=self.mode,
+            mode=self.mode,  # type: ignore
             timeout=0,
             flags=lock_flags,
             **self.fopen_kwargs,
