@@ -190,6 +190,9 @@ class Config:
                 f"federation_id {self._profile['federation-id']}, "
                 f"writer {writer}, no_browser_open {no_browser_open}."
             )
+
+            # Federation bearer already wraps underlying signer with a file-cache
+            # renewable bearer. Return it directly.
             return FederationBearer(
                 profile_name=self._profile_name,  # type: ignore
                 client_id=self._client_id,
@@ -204,14 +207,68 @@ class Config:
             from cryptography.hazmat.primitives import serialization
             from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
-            if "service-account-id" not in self._profile:
-                raise ConfigError("Missing service-account-id in the profile.")
-            if not isinstance(self._profile["service-account-id"], str):
-                raise ConfigError(
-                    "Service account should be a string, got "
-                    f"{type(self._profile['service-account-id'])}."
+            # Possible sources (priority):
+            # 1) federated-subject-credentials-file-path + service-account-id
+            # 2) service-account-credentials-file-path
+            # 3) inline private-key with service-account-id + public-key-id
+            # 4) private-key-file-path with service-account-id + public-key-id
+
+            svc_id: str | None = None
+            if "service-account-id" in self._profile:
+                if not isinstance(self._profile["service-account-id"], str):
+                    raise ConfigError(
+                        "Service account should be a string, got "
+                        f"{type(self._profile['service-account-id'])}."
+                    )
+                svc_id = self._profile["service-account-id"]
+
+            # 1) federated subject credentials file
+            if (
+                svc_id is not None
+                and "federated-subject-credentials-file-path" in self._profile
+            ):
+                if not isinstance(
+                    self._profile["federated-subject-credentials-file-path"], str
+                ):
+                    raise ConfigError(
+                        "federated-subject-credentials-file-path should be a string"
+                    )
+                # Use the federated credentials bearer (file-backed) to supply
+                # the actor token for token-exchange. Do not treat this as a
+                # service-account credentials file.
+                from nebius.aio.token.federated_credentials import (
+                    FederatedCredentialsBearer,
                 )
-            sa_id = self._profile["service-account-id"]
+
+                return FederatedCredentialsBearer(
+                    self._profile["federated-subject-credentials-file-path"],
+                    service_account_id=svc_id,
+                    channel=channel,
+                )
+
+            # 2) service account credentials file
+            if "service-account-credentials-file-path" in self._profile:
+                if not isinstance(
+                    self._profile["service-account-credentials-file-path"], str
+                ):
+                    raise ConfigError(
+                        "service-account-credentials-file-path should be a string"
+                    )
+                from nebius.base.service_account.credentials_file import (
+                    Reader as CredentialsFileReader,
+                )
+
+                return ServiceAccountBearer(
+                    service_account=CredentialsFileReader(
+                        self._profile["service-account-credentials-file-path"]
+                    ),
+                    channel=channel,
+                )
+
+            # 3 & 4) inline private-key or private-key file path
+            if svc_id is None:
+                raise ConfigError("Missing service-account-id in the profile.")
+
             if "public-key-id" not in self._profile:
                 raise ConfigError("Missing public-key-id in the profile.")
             if not isinstance(self._profile["public-key-id"], str):
@@ -220,27 +277,50 @@ class Config:
                     f"{type(self._profile['public-key-id'])}."
                 )
             pk_id = self._profile["public-key-id"]
-            if "private-key" not in self._profile:
-                raise ConfigError("Missing private-key in the profile.")
-            if not isinstance(self._profile["private-key"], str):
-                raise ConfigError(
-                    "Private key should be a string, got "
-                    f"{type(self._profile['private-key'])}."
+
+            # inline private-key
+            if "private-key" in self._profile:
+                if not isinstance(self._profile["private-key"], str):
+                    raise ConfigError(
+                        "Private key should be a string, got "
+                        f"{type(self._profile['private-key'])}."
+                    )
+                pk = serialization.load_pem_private_key(
+                    self._profile["private-key"].encode("utf-8"),
+                    password=None,
+                    backend=default_backend(),
                 )
-            pk = serialization.load_pem_private_key(
-                self._profile["private-key"].encode("utf-8"),
-                password=None,
-                backend=default_backend(),
-            )
-            if not isinstance(pk, RSAPrivateKey):
-                raise ConfigError(
-                    f"Private key should be of type RSAPrivateKey, got {type(pk)}."
+                if not isinstance(pk, RSAPrivateKey):
+                    raise ConfigError(
+                        f"Private key should be of type RSAPrivateKey, got {type(pk)}."
+                    )
+                return ServiceAccountBearer(
+                    service_account=svc_id,
+                    public_key_id=pk_id,
+                    private_key=pk,
+                    channel=channel,
                 )
-            return ServiceAccountBearer(
-                service_account=sa_id,
-                public_key_id=pk_id,
-                private_key=pk,
-                channel=channel,
+
+            # private-key file path
+            if "private-key-file-path" in self._profile:
+                if not isinstance(self._profile["private-key-file-path"], str):
+                    raise ConfigError("private-key-file-path should be a string")
+                from nebius.base.service_account.pk_file import Reader as PKFileReader
+
+                return ServiceAccountBearer(
+                    service_account=PKFileReader(
+                        self._profile["private-key-file-path"], pk_id, svc_id
+                    ),
+                    channel=channel,
+                )
+
+            # Nothing matched
+            raise ConfigError(
+                "Incomplete service account configuration: provide either "
+                "(service-account-id and federated-subject-credentials-file-path) OR "
+                "(service-account-credentials-file-path) OR "
+                "(service-account-id, public-key-id and one of "
+                "private-key / private-key-file-path)"
             )
         else:
             raise ConfigError(f"Unsupported auth-type {auth_type} in the profile.")
