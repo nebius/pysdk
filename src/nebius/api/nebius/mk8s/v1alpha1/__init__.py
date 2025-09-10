@@ -1832,6 +1832,7 @@ class NodeTemplate(pb_classes.Message):
         resources: "ResourcesSpec|instance_template_pb2.ResourcesSpec|None|unset.UnsetType" = unset.Unset,
         boot_disk: "DiskSpec|instance_template_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
         gpu_settings: "GpuSettings|node_group_pb2.GpuSettings|None|unset.UnsetType" = unset.Unset,
+        os: "builtins.str|None|unset.UnsetType" = unset.Unset,
         gpu_cluster: "GpuClusterSpec|node_group_pb2.GpuClusterSpec|None|unset.UnsetType" = unset.Unset,
         network_interfaces: "abc.Iterable[NetworkInterfaceTemplate]|None|unset.UnsetType" = unset.Unset,
         filesystems: "abc.Iterable[AttachedFilesystemSpec]|None|unset.UnsetType" = unset.Unset,
@@ -1850,6 +1851,8 @@ class NodeTemplate(pb_classes.Message):
             self.boot_disk = boot_disk
         if not isinstance(gpu_settings, unset.UnsetType):
             self.gpu_settings = gpu_settings
+        if not isinstance(os, unset.UnsetType):
+            self.os = os
         if not isinstance(gpu_cluster, unset.UnsetType):
             self.gpu_cluster = gpu_cluster
         if not isinstance(network_interfaces, unset.UnsetType):
@@ -1870,6 +1873,7 @@ class NodeTemplate(pb_classes.Message):
             "resources",
             "boot_disk",
             "gpu_settings",
+            "os",
             "gpu_cluster",
             "network_interfaces",
             "filesystems",
@@ -1930,6 +1934,38 @@ class NodeTemplate(pb_classes.Message):
     @gpu_settings.setter
     def gpu_settings(self, value: "GpuSettings|node_group_pb2.GpuSettings|None") -> None:
         return super()._set_field("gpu_settings",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def os(self) -> "builtins.str":
+        """
+        OS version that will be used to create the boot disk of Compute Instances in the NodeGroup.
+        Supported platform / k8s version /  OS / driver presets combinations
+          gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm, cpu-e1, cpu-e2, cpu-d3:
+            drivers_preset: ""
+              k8s: 1.30 → "ubuntu22.04"
+              k8s: 1.31 → "ubuntu22.04" (default), "ubuntu24.04"
+          gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm:
+            drivers_preset: "cuda12" (CUDA 12.4)
+              k8s: 1.30, 1.31 → "ubuntu22.04"
+            drivers_preset: "cuda12.4"
+              k8s: 1.31 → "ubuntu22.04"
+            drivers_preset: "cuda12.8"
+              k8s: 1.31 → "ubuntu24.04"
+          gpu-b200-sxm:
+            drivers_preset: ""
+              k8s: 1.30, 1.31 → "ubuntu24.04"
+            drivers_preset: "cuda12" (CUDA 12.8)
+              k8s: 1.30, 1.31 → "ubuntu24.04"
+            drivers_preset: "cuda12.8"
+              k8s: 1.31 → "ubuntu24.04"
+        """
+        
+        return super()._get_field("os", explicit_presence=False,
+        )
+    @os.setter
+    def os(self, value: "builtins.str|None") -> None:
+        return super()._set_field("os",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -2013,6 +2049,7 @@ class NodeTemplate(pb_classes.Message):
         "resources":"resources",
         "boot_disk":"boot_disk",
         "gpu_settings":"gpu_settings",
+        "os":"os",
         "gpu_cluster":"gpu_cluster",
         "network_interfaces":"network_interfaces",
         "filesystems":"filesystems",
