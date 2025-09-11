@@ -47,6 +47,11 @@ class ClusterServiceStub(object):
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.DeleteClusterRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
+        self.ListControlPlaneVersions = channel.unary_unary(
+                '/nebius.mk8s.v1.ClusterService/ListControlPlaneVersions',
+                request_serializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClusterControlPlaneVersionsRequest.SerializeToString,
+                response_deserializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClusterControlPlaneVersionsResponse.FromString,
+                )
 
 
 class ClusterServiceServicer(object):
@@ -94,6 +99,13 @@ class ClusterServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListControlPlaneVersions(self, request, context):
+        """ListControlPlaneVersions returns all k8s release versions available in Nebius API.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ClusterServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -126,6 +138,11 @@ def add_ClusterServiceServicer_to_server(servicer, server):
                     servicer.Delete,
                     request_deserializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.DeleteClusterRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'ListControlPlaneVersions': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListControlPlaneVersions,
+                    request_deserializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClusterControlPlaneVersionsRequest.FromString,
+                    response_serializer=nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClusterControlPlaneVersionsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -236,5 +253,22 @@ class ClusterService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.ClusterService/Delete',
             nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.DeleteClusterRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListControlPlaneVersions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.ClusterService/ListControlPlaneVersions',
+            nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClusterControlPlaneVersionsRequest.SerializeToString,
+            nebius_dot_mk8s_dot_v1_dot_cluster__service__pb2.ListClusterControlPlaneVersionsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

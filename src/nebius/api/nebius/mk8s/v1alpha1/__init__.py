@@ -971,6 +971,98 @@ class DeleteClusterRequest(pb_classes.Message):
         "id":"id",
     }
     
+class ListClusterControlPlaneVersionsRequest(pb_classes.Message):
+    __PB2_CLASS__ = cluster_service_pb2.ListClusterControlPlaneVersionsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ListClusterControlPlaneVersionsRequest",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+class ListClusterControlPlaneVersionsResponse(pb_classes.Message):
+    __PB2_CLASS__ = cluster_service_pb2.ListClusterControlPlaneVersionsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ListClusterControlPlaneVersionsResponse",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[ClusterControlPlaneVersion]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[ClusterControlPlaneVersion]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(ClusterControlPlaneVersion,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[ClusterControlPlaneVersion]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+    }
+    
+class ClusterControlPlaneVersion(pb_classes.Message):
+    __PB2_CLASS__ = cluster_service_pb2.ClusterControlPlaneVersion
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.ClusterControlPlaneVersion",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(version, unset.UnsetType):
+            self.version = version
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "version",
+        ]
+    
+    @builtins.property
+    def version(self) -> "builtins.str":
+        """
+        Format of the version includes only MAJOR.MINOR, the same as can be passed to cluster creation API. For example "1.31".
+        """
+        
+        return super()._get_field("version", explicit_presence=False,
+        )
+    @version.setter
+    def version(self, value: "builtins.str|None") -> None:
+        return super()._set_field("version",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "version":"version",
+    }
+    
 
 class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.mk8s.v1alpha1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
@@ -1110,6 +1202,32 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
             retries=retries,
             per_retry_timeout=per_retry_timeout,
             result_wrapper=operation.Operation,
+        )
+    
+    def list_control_plane_versions(self,
+        request: "ListClusterControlPlaneVersionsRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["ListClusterControlPlaneVersionsRequest","ListClusterControlPlaneVersionsResponse"]:
+        """
+        ListControlPlaneVersions returns all k8s release versions available in Nebius API.
+        """
+        
+        return super().request(
+            method="ListControlPlaneVersions",
+            request=request,
+            result_pb2_class=cluster_service_pb2.ListClusterControlPlaneVersionsResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(ListClusterControlPlaneVersionsResponse),
         )
     
 
@@ -3681,6 +3799,9 @@ __all__ = [
     "ListClustersResponse",
     "UpdateClusterRequest",
     "DeleteClusterRequest",
+    "ListClusterControlPlaneVersionsRequest",
+    "ListClusterControlPlaneVersionsResponse",
+    "ClusterControlPlaneVersion",
     "ClusterServiceClient",
     "Condition",
     "DiskSpec",
