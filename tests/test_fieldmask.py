@@ -1,6 +1,7 @@
 # type: ignore
 
 import pytest
+from pytest_subtests import SubTests
 
 
 def test_fieldkey() -> None:
@@ -14,7 +15,7 @@ def test_fieldkey() -> None:
     )
 
 
-def test_fieldpath_join() -> None:
+def test_fieldpath_join(subtests) -> None:
     from nebius.base.fieldmask import FieldKey, FieldPath
 
     cases = [
@@ -51,13 +52,14 @@ def test_fieldpath_join() -> None:
     ]
 
     for i, case in enumerate(cases):
-        # Perform the join operation
-        result = case["A"] + case["B"]
-        # Assert the result matches the expected output
-        assert result == case["R"], f"Failed on case {i}: {result} != {case['R']}"
+        with subtests.test(msg=f"case_{i}"):
+            # Perform the join operation
+            result = case["A"] + case["B"]
+            # Assert the result matches the expected output
+            assert result == case["R"], f"Failed on case {i}: {result} != {case['R']}"
 
 
-def test_fieldpath_parent() -> None:
+def test_fieldpath_parent(subtests) -> None:
     from nebius.base.fieldmask import FieldKey, FieldPath
 
     # Define test cases
@@ -81,13 +83,14 @@ def test_fieldpath_parent() -> None:
     ]
 
     for i, case in enumerate(cases):
-        # Perform the parent operation
-        result = case["A"].parent()
-        # Assert the result matches the expected output
-        assert result == case["R"], f"Failed on case {i}: {result} != {case['R']}"
+        with subtests.test(msg=f"case_{i}"):
+            # Perform the parent operation
+            result = case["A"].parent()
+            # Assert the result matches the expected output
+            assert result == case["R"], f"Failed on case {i}: {result} != {case['R']}"
 
 
-def test_fieldpath_copy() -> None:
+def test_fieldpath_copy(subtests) -> None:
     from nebius.base.fieldmask import FieldKey, FieldPath
 
     # Define test cases
@@ -107,29 +110,32 @@ def test_fieldpath_copy() -> None:
     ]
 
     for i, case in enumerate(cases):
-        # Perform the copy operation
-        cp = case["A"].copy()
-        # Assert the copy matches the original
-        assert cp == case["A"], f"Failed on case {i}: {cp} != {case['A']}"
-        assert case["A"] == FieldPath(
-            case["A"]
-        ), f"Failed on case {i}: FieldPath doesn't match"  # noqa: E501
-        assert case["A"] == cp, f"Failed on case {i}: A != cp"
-        assert cp == case["A"], f"Failed on case {i}: cp != A"
+        with subtests.test(msg=f"case_{i}"):
+            # Perform the copy operation
+            cp = case["A"].copy()
+            # Assert the copy matches the original
+            assert cp == case["A"], f"Failed on case {i}: {cp} != {case['A']}"
+            assert case["A"] == FieldPath(
+                case["A"]
+            ), f"Failed on case {i}: FieldPath doesn't match"  # noqa: E501
+            assert case["A"] == cp, f"Failed on case {i}: A != cp"
+            assert cp == case["A"], f"Failed on case {i}: cp != A"
 
-        if len(case["A"]) > 0:
-            # Modify the original and assert copy is unaffected
-            case["A"][0] = FieldKey("changed")
-            assert cp != case["A"], f"Failed on case {i}: cp == A after modification"
-            assert (
-                case["A"] != cp
-            ), f"Failed on case {i}: A equal to cp after modification"  # noqa: E501
-            assert (
-                cp != case["A"]
-            ), f"Failed on case {i}: cp equal to A after modification"  # noqa: E501
+            if len(case["A"]) > 0:
+                # Modify the original and assert copy is unaffected
+                case["A"][0] = FieldKey("changed")
+                assert (
+                    cp != case["A"]
+                ), f"Failed on case {i}: cp == A after modification"
+                assert (
+                    case["A"] != cp
+                ), f"Failed on case {i}: A equal to cp after modification"  # noqa: E501
+                assert (
+                    cp != case["A"]
+                ), f"Failed on case {i}: cp equal to A after modification"  # noqa: E501
 
 
-def test_fieldpath_equality():
+def test_fieldpath_equality(subtests) -> None:
     from nebius.base.fieldmask import FieldKey, FieldPath
 
     # Define test cases
@@ -153,19 +159,20 @@ def test_fieldpath_equality():
 
     for i, a in enumerate(paths):
         for j, b in enumerate(paths):
-            # Test equality
-            assert a == a, f"Self-equality failed for case {i}"
-            assert b == b, f"Self-equality failed for case {j}"
+            with subtests.test(msg=f"case_{i}_{j}"):
+                # Test equality
+                assert a == a, f"Self-equality failed for case {i}"
+                assert b == b, f"Self-equality failed for case {j}"
 
-            if i == j:
-                assert a == b, f"Equality failed for cases {i}, {j}"
-                assert b == a, f"Equality symmetry failed for cases {i}, {j}"
-            else:
-                assert a != b, f"Inequality failed for cases {i}, {j}"
-                assert b != a, f"Inequality symmetry failed for cases {i}, {j}"
+                if i == j:
+                    assert a == b, f"Equality failed for cases {i}, {j}"
+                    assert b == a, f"Equality symmetry failed for cases {i}, {j}"
+                else:
+                    assert a != b, f"Inequality failed for cases {i}, {j}"
+                    assert b != a, f"Inequality symmetry failed for cases {i}, {j}"
 
 
-def test_fieldpath_to_mask():
+def test_fieldpath_to_mask(subtests):
     from nebius.base.fieldmask import FieldKey, FieldPath, Mask
 
     # Define test cases
@@ -180,22 +187,25 @@ def test_fieldpath_to_mask():
     ]
 
     for i, case in enumerate(cases):
-        # Convert FieldPath to Mask
-        m = case["FP"].to_mask()
+        with subtests.test(msg=f"case_{i}"):
+            # Convert FieldPath to Mask
+            m = case["FP"].to_mask()
 
-        # Check that the result is an instance of Mask
-        assert isinstance(m, Mask), f"Failed on case {i}: Result is not a Mask instance"
+            # Check that the result is an instance of Mask
+            assert isinstance(
+                m, Mask
+            ), f"Failed on case {i}: Result is not a Mask instance"
 
-        # Marshal the mask to a string
-        str_representation = m.marshal()
+            # Marshal the mask to a string
+            str_representation = m.marshal()
 
-        # Assert no error and correct string representation
-        assert str_representation == case["Res"], (
-            f"Failed on case {i}: " f"{str_representation} !=" f" {case['Res']}"
-        )
+            # Assert no error and correct string representation
+            assert str_representation == case["Res"], (
+                f"Failed on case {i}: " f"{str_representation} !=" f" {case['Res']}"
+            )
 
 
-def test_fieldpath_is_prefix_of():
+def test_fieldpath_is_prefix_of(subtests):
     from nebius.base.fieldmask import FieldKey, FieldPath
 
     # Define test cases
@@ -285,11 +295,12 @@ def test_fieldpath_is_prefix_of():
     ]
 
     for i, case in enumerate(cases):
-        res = case["A"].is_prefix_of(case["B"])
-        assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
+        with subtests.test(msg=f"case_{i}"):
+            res = case["A"].is_prefix_of(case["B"])
+            assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
 
 
-def test_fieldpath_matches_reset_mask() -> None:
+def test_fieldpath_matches_reset_mask(subtests) -> None:
     from nebius.base.fieldmask import FieldKey, FieldPath, Mask
 
     cases = [
@@ -433,15 +444,17 @@ def test_fieldpath_matches_reset_mask() -> None:
     ]
 
     for i, case in enumerate(cases):
-        res = case["FP"].matches_reset_mask(case["M"])
-        res_final = case["FP"].matches_reset_mask_final(case["M"])
-        assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
-        assert (
-            res_final == case["Final"]
-        ), f"Failed on case {i}: {res} != {case['Final']}"  # noqa: E501
+        with subtests.test(msg=f"case_{i}"):
+            # Test the MatchesResetMask method
+            res = case["FP"].matches_reset_mask(case["M"])
+            res_final = case["FP"].matches_reset_mask_final(case["M"])
+            assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
+            assert (
+                res_final == case["Final"]
+            ), f"Failed on case {i}: {res} != {case['Final']}"  # noqa: E501
 
 
-def test_fieldpath_matches_select_mask() -> None:
+def test_fieldpath_matches_select_mask(subtests) -> None:
     from nebius.base.fieldmask import FieldKey, FieldPath, Mask
 
     cases = [
@@ -545,19 +558,20 @@ def test_fieldpath_matches_select_mask() -> None:
     ]
 
     for i, case in enumerate(cases):
-        # Test the MatchesSelectMask method
-        res = case["FP"].matches_select_mask(case["M"])
-        res2, inner = case["FP"].matches_select_mask_inner(case["M"])
+        with subtests.test(msg=f"case_{i}"):
+            # Test the MatchesSelectMask method
+            res = case["FP"].matches_select_mask(case["M"])
+            res2, inner = case["FP"].matches_select_mask_inner(case["M"])
 
-        # Assert the results
-        assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
-        assert res2 == case["Res"], f"Failed on case {i}: {res2} != {case['Res']}"
-        assert inner == case.get(
-            "Inner", False
-        ), f"Failed on case {i}: {inner} != {case.get('Inner', False)}"  # noqa: E501
+            # Assert the results
+            assert res == case["Res"], f"Failed on case {i}: {res} != {case['Res']}"
+            assert res2 == case["Res"], f"Failed on case {i}: {res2} != {case['Res']}"
+            assert inner == case.get(
+                "Inner", False
+            ), f"Failed on case {i}: {inner} != {case.get('Inner', False)}"  # noqa: E501
 
 
-def test_fieldpath_marshal() -> None:
+def test_fieldpath_marshal(subtests) -> None:
     from nebius.base.fieldmask import FieldKey, FieldPath
 
     cases = [
@@ -584,11 +598,14 @@ def test_fieldpath_marshal() -> None:
     ]
 
     for i, case in enumerate(cases):
-        res = case["FP"].marshal()
-        assert res == case["M"], f"Failed on case {i}: expected {case['M']}, got {res}"
+        with subtests.test(msg=f"case_{i}"):
+            res = case["FP"].marshal()
+            assert (
+                res == case["M"]
+            ), f"Failed on case {i}: expected {case['M']}, got {res}"
 
 
-def test_fieldpath_unmarshal() -> None:
+def test_fieldpath_unmarshal(subtests) -> None:
     from nebius.base.fieldmask import Error, FieldKey, FieldPath
 
     cases = [
@@ -611,18 +628,19 @@ def test_fieldpath_unmarshal() -> None:
     ]
 
     for i, case in enumerate(cases):
-        mask = None if case.get("NoStarter", False) else case["Mask"]
-        if "Err" in case:
-            with pytest.raises((Error), match=case["Err"]):
-                FieldPath.unmarshal(mask)
-        else:
-            res = FieldPath.unmarshal(mask)
-            assert (
-                res == case["Result"]
-            ), f"Failed on case {i}: expected {case['Result']}, got {res}"  # noqa: E501
+        with subtests.test(msg=f"case_{i}"):
+            mask = None if case.get("NoStarter", False) else case["Mask"]
+            if "Err" in case:
+                with pytest.raises((Error), match=case["Err"]):
+                    FieldPath.unmarshal(mask)
+            else:
+                res = FieldPath.unmarshal(mask)
+                assert (
+                    res == case["Result"]
+                ), f"Failed on case {i}: expected {case['Result']}, got {res}"  # noqa: E501
 
 
-def test_parse_fieldmask() -> None:
+def test_parse_fieldmask(subtests) -> None:
     from nebius.base.fieldmask import Mask
     from nebius.base.fieldmask_parser import ParseError, parse
 
@@ -712,16 +730,17 @@ def test_parse_fieldmask() -> None:
     ]
 
     for i, case in enumerate(cases):
-        if "Err" in case:
-            with pytest.raises(ParseError, match=case["Err"]):
-                parse(case["Input"])
-        else:
-            result = parse(case["Input"])
-            assert isinstance(result, Mask)
-            normalized = result.marshal()
-            assert (
-                normalized == case["Output"]
-            ), f"Failed on case {i}: expected {case['Output']}, got {normalized}"  # noqa: E501
+        with subtests.test(msg=f"case_{i}"):
+            if "Err" in case:
+                with pytest.raises(ParseError, match=case["Err"]):
+                    parse(case["Input"])
+            else:
+                result = parse(case["Input"])
+                assert isinstance(result, Mask)
+                normalized = result.marshal()
+                assert (
+                    normalized == case["Output"]
+                ), f"Failed on case {i}: expected {case['Output']}, got {normalized}"  # noqa: E501
 
 
 def test_mask_is_empty() -> None:
@@ -736,7 +755,7 @@ def test_mask_is_empty() -> None:
     assert not Mask(field_parts=dict[FieldKey, Mask]({FieldKey(""): Mask()})).is_empty()
 
 
-def test_mask_marshal() -> None:
+def test_mask_marshal(subtests: SubTests) -> None:
     from nebius.base.fieldmask import Mask
 
     infinite_mask = Mask()
@@ -1128,19 +1147,20 @@ def test_mask_marshal() -> None:
     ]
 
     for i, case in enumerate(cases):
-        mask = case["Mask"]
-        expected_result = case.get("Result")
-        expected_err = case.get("Err")
+        with subtests.test(msg=f"case_{i}"):
+            mask = case["Mask"]
+            expected_result = case.get("Result")
+            expected_err = case.get("Err")
 
-        if expected_err:
-            with pytest.raises(expected_err):
-                mask.marshal()
-        else:
-            result = mask.marshal()
-            assert result == expected_result, f"Failed on case {i}"
+            if expected_err:
+                with pytest.raises(expected_err):
+                    mask.marshal()
+            else:
+                result = mask.marshal()
+                assert result == expected_result, f"Failed on case {i}"
 
 
-def test_mask_unmarshal_text() -> None:
+def test_mask_unmarshal_text(subtests: SubTests) -> None:
     from nebius.base.fieldmask import Error, Mask
 
     cases = [
@@ -1178,19 +1198,20 @@ def test_mask_unmarshal_text() -> None:
     ]
 
     for i, case in enumerate(cases):
-        expected_result = case.get("result")
-        expected_err = case.get("err")
+        with subtests.test(msg=f"case_{i}"):
+            expected_result = case.get("result")
+            expected_err = case.get("err")
 
-        if expected_err:
-            with pytest.raises(Error) as exc_info:
-                Mask.unmarshal(case["mask"])
-            assert str(exc_info.value) == str(expected_err), f"Failed on case {i}"
-        else:
-            mask = Mask.unmarshal(case["mask"])
-            assert mask == expected_result, f"Failed on case {i}"
+            if expected_err:
+                with pytest.raises(Error) as exc_info:
+                    Mask.unmarshal(case["mask"])
+                assert str(exc_info.value) == str(expected_err), f"Failed on case {i}"
+            else:
+                mask = Mask.unmarshal(case["mask"])
+                assert mask == expected_result, f"Failed on case {i}"
 
 
-def test_mask_equality() -> None:
+def test_mask_equality(subtests: SubTests) -> None:
     from nebius.base.fieldmask import Mask
 
     infinite_mask = Mask()
@@ -1216,27 +1237,29 @@ def test_mask_equality() -> None:
     ]
 
     for i, mask1 in enumerate(masks):
-        assert mask1 == mask1
-        assert mask1 == mask1.copy()
-        assert mask1.copy() == mask1
-        assert mask1 != infinite_mask
-        assert infinite_mask != mask1
-        for j, mask2 in enumerate(masks):
-            if i != j:
-                assert mask1 != mask2, f"mask{i} must not be equal to mask{j}"
-                assert mask2 != mask1, f"mask{j} must not be equal to mask{i}"
-                assert (
-                    mask2.copy() != mask1
-                ), f"mask{j} copy must not be equal to mask{i}"  # noqa: E501
-                assert (
-                    mask1.copy() != mask2
-                ), f"mask{i} copy must not be equal to mask{j}"  # noqa: E501
-                assert (
-                    mask1 != mask2.copy()
-                ), f"mask{i} must not be equal to mask{j} copy"  # noqa: E501
-                assert (
-                    mask2 != mask1.copy()
-                ), f"mask{j} must not be equal to mask{i} copy"  # noqa: E501
+        with subtests.test(msg=f"mask_{i}"):
+            assert mask1 == mask1
+            assert mask1 == mask1.copy()
+            assert mask1.copy() == mask1
+            assert mask1 != infinite_mask
+            assert infinite_mask != mask1
+            for j, mask2 in enumerate(masks):
+                with subtests.test(msg=f"mask_{i}_vs_mask_{j}"):
+                    if i != j:
+                        assert mask1 != mask2, f"mask{i} must not be equal to mask{j}"
+                        assert mask2 != mask1, f"mask{j} must not be equal to mask{i}"
+                        assert (
+                            mask2.copy() != mask1
+                        ), f"mask{j} copy must not be equal to mask{i}"  # noqa: E501
+                        assert (
+                            mask1.copy() != mask2
+                        ), f"mask{i} copy must not be equal to mask{j}"  # noqa: E501
+                        assert (
+                            mask1 != mask2.copy()
+                        ), f"mask{i} must not be equal to mask{j} copy"  # noqa: E501
+                        assert (
+                            mask2 != mask1.copy()
+                        ), f"mask{j} must not be equal to mask{i} copy"  # noqa: E501
 
 
 def test_mask_copy() -> None:
@@ -1289,7 +1312,7 @@ def test_mask_copy() -> None:
     assert c != m
 
 
-def test_mask_merge_infinite_recursion() -> None:
+def test_mask_merge_infinite_recursion(subtests) -> None:
     from nebius.base.fieldmask import Mask
 
     infinite_mask = Mask()
@@ -1301,12 +1324,13 @@ def test_mask_merge_infinite_recursion() -> None:
         (Mask(), Mask(any=infinite_mask), RecursionError),
     ]
 
-    for a, b, expected_exception in cases:
-        with pytest.raises(expected_exception):
-            a += b
+    for i, (a, b, expected_exception) in enumerate(cases):
+        with subtests.test(msg=f"case_{i}"):
+            with pytest.raises(expected_exception):
+                a += b
 
 
-def test_mask_merge_success() -> None:
+def test_mask_merge_success(subtests) -> None:
     from nebius.base.fieldmask import Mask
 
     cases = [
@@ -1437,13 +1461,14 @@ def test_mask_merge_success() -> None:
         ),
     ]
 
-    for a, b, expected_result in cases:
-        a += b
-        result = a.marshal()
-        assert result == expected_result
+    for i, (a, b, expected_result) in enumerate(cases):
+        with subtests.test(msg=f"case_{i}"):
+            a += b
+            result = a.marshal()
+            assert result == expected_result
 
 
-def test_to_field_path() -> None:
+def test_to_field_path(subtests) -> None:
     from nebius.base.fieldmask import Error, FieldPath, Mask
 
     cases = [
@@ -1469,18 +1494,19 @@ def test_to_field_path() -> None:
         ),
     ]
 
-    for mask, expected in cases:
-        if isinstance(expected, Error):
-            with pytest.raises(Error) as exc_info:
-                mask.to_field_path()
-            assert str(exc_info.value) == str(expected)
-            assert not mask.is_field_path()
-        else:
-            assert mask.to_field_path() == expected
-            assert mask.is_field_path()
+    for i, (mask, expected) in enumerate(cases):
+        with subtests.test(msg=f"case_{i}"):
+            if isinstance(expected, Error):
+                with pytest.raises(Error) as exc_info:
+                    mask.to_field_path()
+                assert str(exc_info.value) == str(expected)
+                assert not mask.is_field_path()
+            else:
+                assert mask.to_field_path() == expected
+                assert mask.is_field_path()
 
 
-def test_mask_sub_mask():
+def test_mask_sub_mask(subtests):
     from nebius.base.fieldmask import FieldKey, Mask
 
     inf_mask = Mask()
@@ -1528,20 +1554,21 @@ def test_mask_sub_mask():
     ]
 
     for i, case in enumerate(cases):
-        mask = case["mask"]
-        key = FieldKey(case["key"])
-        expected_result = case["result"]
-        expected_error = case["err"]
+        with subtests.test(msg=f"case_{i}"):
+            mask = case["mask"]
+            key = FieldKey(case["key"])
+            expected_result = case["result"]
+            expected_error = case["err"]
 
-        if expected_error:
-            with pytest.raises(expected_error):
+            if expected_error:
+                with pytest.raises(expected_error):
+                    result = mask.sub_mask(key) if mask else None
+            else:
                 result = mask.sub_mask(key) if mask else None
-        else:
-            result = mask.sub_mask(key) if mask else None
-            assert result == expected_result, f"Case {i} failed"
+                assert result == expected_result, f"Case {i} failed"
 
 
-def test_mask_sub_mask_by_path():
+def test_mask_sub_mask_by_path(subtests):
     from nebius.base.fieldmask import FieldPath, Mask
 
     inf_mask = Mask()
@@ -1588,20 +1615,21 @@ def test_mask_sub_mask_by_path():
     ]
 
     for i, case in enumerate(cases):
-        mask = case["mask"]
-        path = case["path"]
-        expected_result = case["result"]
-        expected_error = case["err"]
+        with subtests.test(msg=f"case_{i}"):
+            mask = case["mask"]
+            path = case["path"]
+            expected_result = case["result"]
+            expected_error = case["err"]
 
-        if expected_error:
-            with pytest.raises(expected_error):
+            if expected_error:
+                with pytest.raises(expected_error):
+                    result = mask.sub_mask(path) if mask else None
+            else:
                 result = mask.sub_mask(path) if mask else None
-        else:
-            result = mask.sub_mask(path) if mask else None
-            assert result == expected_result, f"Case {i} failed"
+                assert result == expected_result, f"Case {i} failed"
 
 
-def test_mask_intesect_reset_mask():
+def test_mask_intesect_reset_mask(subtests):
     from nebius.base.fieldmask import Mask
 
     inf_mask = Mask()
@@ -1622,12 +1650,15 @@ def test_mask_intesect_reset_mask():
         ("a", "*", "a"),
     ]
     for i, case in enumerate(cases):
-        a, b, r = case
-        m = Mask.unmarshal(a).intersect_reset_mask(Mask.unmarshal(b))
-        assert m == Mask.unmarshal(r), f"Case {i} failed"
+        with subtests.test(msg=f"case_{i}"):
+            a, b, r = case
+            m = Mask.unmarshal(a).intersect_reset_mask(Mask.unmarshal(b))
+            assert m == Mask.unmarshal(r), f"Case {i} failed"
 
 
-def test_mask_intesect_dumb():
+def test_mask_intesect_dumb(
+    subtests: SubTests,
+):
     from nebius.base.fieldmask import Mask
 
     inf_mask = Mask()
@@ -1650,12 +1681,13 @@ def test_mask_intesect_dumb():
         ("*.(a,b),x,y", "*.(a,y),x,f", "*.a,x"),
     ]
     for i, case in enumerate(cases):
-        a, b, r = case
-        m = Mask.unmarshal(a).intersect_dumb(Mask.unmarshal(b))
-        assert m == Mask.unmarshal(r), f"Case {i} failed"
+        with subtests.test(msg=f"case_{i}"):
+            a, b, r = case
+            m = Mask.unmarshal(a).intersect_dumb(Mask.unmarshal(b))
+            assert m == Mask.unmarshal(r), f"Case {i} failed"
 
 
-def test_mask_subtract_dumb():
+def test_mask_subtract_dumb(subtests: SubTests) -> None:
     from nebius.base.fieldmask import Mask
 
     inf_mask = Mask()
@@ -1678,18 +1710,19 @@ def test_mask_subtract_dumb():
         ("a", "b", "a"),
     ]
     for i, case in enumerate(cases):
-        a, b, r = case
-        mask_a = Mask.unmarshal(a)
-        mask_b = Mask.unmarshal(b)
-        mask_r = Mask.unmarshal(r)
-        assert isinstance(mask_a, Mask), f"Case {i} failed: {a} must be mask"
-        assert isinstance(mask_b, Mask), f"Case {i} failed: {b} must be mask"
-        assert isinstance(mask_r, Mask), f"Case {i} failed: {r} must be mask"
-        mask_a.subtract_dumb(mask_b)
-        assert mask_a == mask_r, f"Case {i} failed: {mask_a} != {mask_r}"
+        with subtests.test(msg=f"case_{i}"):
+            a, b, r = case
+            mask_a = Mask.unmarshal(a)
+            mask_b = Mask.unmarshal(b)
+            mask_r = Mask.unmarshal(r)
+            assert isinstance(mask_a, Mask), f"Case {i} failed: {a} must be mask"
+            assert isinstance(mask_b, Mask), f"Case {i} failed: {b} must be mask"
+            assert isinstance(mask_r, Mask), f"Case {i} failed: {r} must be mask"
+            mask_a.subtract_dumb(mask_b)
+            assert mask_a == mask_r, f"Case {i} failed: {mask_a} != {mask_r}"
 
 
-def test_mask_subtract_reset_mask():
+def test_mask_subtract_reset_mask(subtests: SubTests) -> None:
     from nebius.base.fieldmask import Mask
 
     inf_mask = Mask()
@@ -1709,12 +1742,13 @@ def test_mask_subtract_reset_mask():
         ("x.(a,b),*.(c,d),e,f", "x.(a),*.(c),e", "x.b,*.d"),
     ]
     for i, case in enumerate(cases):
-        a, b, r = case
-        mask_a = Mask.unmarshal(a)
-        mask_b = Mask.unmarshal(b)
-        mask_r = Mask.unmarshal(r)
-        assert isinstance(mask_a, Mask), f"Case {i} failed: {a} must be mask"
-        assert isinstance(mask_b, Mask), f"Case {i} failed: {b} must be mask"
-        assert isinstance(mask_r, Mask), f"Case {i} failed: {r} must be mask"
-        mask_a.subtract_reset_mask(mask_b)
-        assert mask_a == mask_r, f"Case {i} failed: {mask_a} != {mask_r}"
+        with subtests.test(msg=f"case_{i}"):
+            a, b, r = case
+            mask_a = Mask.unmarshal(a)
+            mask_b = Mask.unmarshal(b)
+            mask_r = Mask.unmarshal(r)
+            assert isinstance(mask_a, Mask), f"Case {i} failed: {a} must be mask"
+            assert isinstance(mask_b, Mask), f"Case {i} failed: {b} must be mask"
+            assert isinstance(mask_r, Mask), f"Case {i} failed: {r} must be mask"
+            mask_a.subtract_reset_mask(mask_b)
+            assert mask_a == mask_r, f"Case {i} failed: {mask_a} != {mask_r}"

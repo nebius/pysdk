@@ -286,6 +286,8 @@ class Mask:
     def __repr__(self) -> str:
         try:
             return f"Mask({self.marshal()})"
+        except RecursionError:
+            return "Mask(not-marshalable <too deep>)"
         except Exception as e:
             return f"Mask(not-marshalable {e})"
 
