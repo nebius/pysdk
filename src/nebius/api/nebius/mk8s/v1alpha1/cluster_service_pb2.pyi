@@ -65,3 +65,19 @@ class DeleteClusterRequest(_message.Message):
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class ListClusterControlPlaneVersionsRequest(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
+
+class ListClusterControlPlaneVersionsResponse(_message.Message):
+    __slots__ = ["items"]
+    ITEMS_FIELD_NUMBER: _ClassVar[int]
+    items: _containers.RepeatedCompositeFieldContainer[ClusterControlPlaneVersion]
+    def __init__(self, items: _Optional[_Iterable[_Union[ClusterControlPlaneVersion, _Mapping]]] = ...) -> None: ...
+
+class ClusterControlPlaneVersion(_message.Message):
+    __slots__ = ["version"]
+    VERSION_FIELD_NUMBER: _ClassVar[int]
+    version: str
+    def __init__(self, version: _Optional[str] = ...) -> None: ...
