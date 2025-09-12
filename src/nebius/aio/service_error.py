@@ -107,7 +107,7 @@ def to_str(err: ServiceError) -> str:
     return ret.getvalue()
 
 
-code_map = {i.value[0]: i for i in StatusCode}  # type: ignore[index]
+code_map = {i.value[0]: i for i in StatusCode}  # type: ignore[index,unused-ignore]
 
 
 def int_to_status_code(i: int | StatusCode) -> StatusCode:
