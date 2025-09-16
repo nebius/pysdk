@@ -42,12 +42,12 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
         auth_options = get_options_from_metadata(client_call_details.metadata)
         if auth_type == Authorization.DISABLE:
             log.debug(
-                f"Calling {client_call_details.method}," " authentication is disabled"
+                f"Calling {client_call_details.method!s}, authentication is disabled"
             )
             return await continuation(client_call_details, request)  # type: ignore
 
         log.debug(
-            f"Authentication for {client_call_details.method} is enabled, "
+            f"Authentication for {client_call_details.method!s} is enabled, "
             f"{auth_type=!r}, {auth_options=!r}."
         )
         start = time()
@@ -62,7 +62,7 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
             if deadline is not None:
                 timeout = deadline - time()
             log.debug(
-                f"Authenticating {client_call_details.method}, {attempt=}, "
+                f"Authenticating {client_call_details.method!s}, {attempt=}, "
                 f"{timeout=}."
             )
             await auth.authenticate(
@@ -82,7 +82,7 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
                     wait_for_ready=client_call_details.wait_for_ready,
                 )
             try:
-                log.debug(f"Calling authenticated {client_call_details.method}.")
+                log.debug(f"Calling authenticated {client_call_details.method!s}.")
                 return await continuation(client_call_details, request)  # type: ignore
             except AioRpcError as e:
                 if (
@@ -92,6 +92,6 @@ class AuthorizationInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unu
                 ):
                     raise
                 log.debug(
-                    f"Call to {client_call_details.method},"
+                    f"Call to {client_call_details.method!s},"
                     f" returned UNAUTHENTICATED, trying authentication again"
                 )
