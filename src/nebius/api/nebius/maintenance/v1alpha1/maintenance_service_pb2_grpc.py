@@ -26,6 +26,11 @@ class MaintenanceServiceStub(object):
                 request_serializer=nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.ListMaintenancesRequest.SerializeToString,
                 response_deserializer=nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.ListMaintenancesResponse.FromString,
                 )
+        self.Update = channel.unary_unary(
+                '/nebius.maintenance.v1alpha1.MaintenanceService/Update',
+                request_serializer=nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.UpdateMaintenanceRequest.SerializeToString,
+                response_deserializer=nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.UpdateMaintenanceResponse.FromString,
+                )
 
 
 class MaintenanceServiceServicer(object):
@@ -48,6 +53,13 @@ class MaintenanceServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Update(self, request, context):
+        """Updates the specified maintenance operation.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_MaintenanceServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -60,6 +72,11 @@ def add_MaintenanceServiceServicer_to_server(servicer, server):
                     servicer.List,
                     request_deserializer=nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.ListMaintenancesRequest.FromString,
                     response_serializer=nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.ListMaintenancesResponse.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.UpdateMaintenanceRequest.FromString,
+                    response_serializer=nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.UpdateMaintenanceResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -103,5 +120,22 @@ class MaintenanceService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.maintenance.v1alpha1.MaintenanceService/List',
             nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.ListMaintenancesRequest.SerializeToString,
             nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.ListMaintenancesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.maintenance.v1alpha1.MaintenanceService/Update',
+            nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.UpdateMaintenanceRequest.SerializeToString,
+            nebius_dot_maintenance_dot_v1alpha1_dot_maintenance__service__pb2.UpdateMaintenanceResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

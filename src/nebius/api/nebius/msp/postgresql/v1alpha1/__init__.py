@@ -56,6 +56,7 @@ class Backup(pb_classes.Message):
         source_cluster_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_cluster_visible: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         on_demand: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -72,6 +73,8 @@ class Backup(pb_classes.Message):
             self.source_cluster_visible = source_cluster_visible
         if not isinstance(on_demand, unset.UnsetType):
             self.on_demand = on_demand
+        if not isinstance(size_bytes, unset.UnsetType):
+            self.size_bytes = size_bytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -82,6 +85,7 @@ class Backup(pb_classes.Message):
             "source_cluster_name",
             "source_cluster_visible",
             "on_demand",
+            "size_bytes",
         ]
     
     @builtins.property
@@ -179,6 +183,19 @@ class Backup(pb_classes.Message):
         return super()._set_field("on_demand",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def size_bytes(self) -> "builtins.int":
+        """
+        Size of the backup in bytes.
+        """
+        
+        return super()._get_field("size_bytes", explicit_presence=False,
+        )
+    @size_bytes.setter
+    def size_bytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("size_bytes",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
         "source_cluster_id":"source_cluster_id",
@@ -187,6 +204,7 @@ class Backup(pb_classes.Message):
         "source_cluster_name":"source_cluster_name",
         "source_cluster_visible":"source_cluster_visible",
         "on_demand":"on_demand",
+        "size_bytes":"size_bytes",
     }
     
 # file: nebius/msp/postgresql/v1alpha1/backup_service.proto

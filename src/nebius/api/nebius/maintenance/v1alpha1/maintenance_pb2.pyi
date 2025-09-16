@@ -41,16 +41,18 @@ class MaintenanceSpec(_message.Message):
     def __init__(self, scheduled_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class MaintenanceStatus(_message.Message):
-    __slots__ = ["affected_resources", "started_at", "finished_at", "state"]
+    __slots__ = ["affected_resources", "started_at", "finished_at", "state", "reschedulable"]
     AFFECTED_RESOURCES_FIELD_NUMBER: _ClassVar[int]
     STARTED_AT_FIELD_NUMBER: _ClassVar[int]
     FINISHED_AT_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
+    RESCHEDULABLE_FIELD_NUMBER: _ClassVar[int]
     affected_resources: _containers.RepeatedCompositeFieldContainer[Resource]
     started_at: _timestamp_pb2.Timestamp
     finished_at: _timestamp_pb2.Timestamp
     state: State
-    def __init__(self, affected_resources: _Optional[_Iterable[_Union[Resource, _Mapping]]] = ..., started_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., finished_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., state: _Optional[_Union[State, str]] = ...) -> None: ...
+    reschedulable: bool
+    def __init__(self, affected_resources: _Optional[_Iterable[_Union[Resource, _Mapping]]] = ..., started_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., finished_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., state: _Optional[_Union[State, str]] = ..., reschedulable: bool = ...) -> None: ...
 
 class Resource(_message.Message):
     __slots__ = ["id", "parent_id"]

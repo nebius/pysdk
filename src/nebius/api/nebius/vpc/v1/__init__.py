@@ -19,6 +19,10 @@ import nebius.api.nebius.vpc.v1.network_pb2 as network_pb2
 import nebius.api.nebius.vpc.v1.network_service_pb2 as network_service_pb2
 import nebius.api.nebius.vpc.v1.pool_pb2 as pool_pb2
 import nebius.api.nebius.vpc.v1.pool_service_pb2 as pool_service_pb2
+import nebius.api.nebius.vpc.v1.route_pb2 as route_pb2
+import nebius.api.nebius.vpc.v1.route_service_pb2 as route_service_pb2
+import nebius.api.nebius.vpc.v1.route_table_pb2 as route_table_pb2
+import nebius.api.nebius.vpc.v1.route_table_service_pb2 as route_table_service_pb2
 import nebius.api.nebius.vpc.v1.subnet_pb2 as subnet_pb2
 import nebius.api.nebius.vpc.v1.subnet_service_pb2 as subnet_service_pb2
 import nebius.api.nebius.vpc.v1.target_group_pb2 as target_group_pb2
@@ -2166,14 +2170,18 @@ class NetworkStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         state: "NetworkStatus.State|network_pb2.NetworkStatus.State|None|unset.UnsetType" = unset.Unset,
+        default_route_table_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
+        if not isinstance(default_route_table_id, unset.UnsetType):
+            self.default_route_table_id = default_route_table_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
+            "default_route_table_id",
             "State",
         ]
     
@@ -2191,8 +2199,22 @@ class NetworkStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def default_route_table_id(self) -> "builtins.str":
+        """
+        ID of the network's default route table.
+        """
+        
+        return super()._get_field("default_route_table_id", explicit_presence=False,
+        )
+    @default_route_table_id.setter
+    def default_route_table_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("default_route_table_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
+        "default_route_table_id":"default_route_table_id",
         "State":"State",
     }
     
@@ -3277,6 +3299,1886 @@ class PoolServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
         )
     
 
+# file: nebius/vpc/v1/route.proto
+class Route(pb_classes.Message):
+    """
+    Routes determine how network traffic is directed within a VPC network,
+    specifying the path that traffic should take based on destination addresses.
+    """
+    
+    __PB2_CLASS__ = route_pb2.Route
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.Route",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RouteSpec|route_pb2.RouteSpec|None|unset.UnsetType" = unset.Unset,
+        status: "RouteStatus|route_pb2.RouteStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        `metadata.parent_id` represents the RouteTable.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "RouteSpec":
+        """
+        Specification of the route's configuration.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=RouteSpec,
+        )
+    @spec.setter
+    def spec(self, value: "RouteSpec|route_pb2.RouteSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "RouteStatus":
+        """
+        Current status of the route.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=RouteStatus,
+        )
+    @status.setter
+    def status(self, value: "RouteStatus|route_pb2.RouteStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class RouteSpec(pb_classes.Message):
+    __PB2_CLASS__ = route_pb2.RouteSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RouteSpec",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        destination: "DestinationMatch|route_pb2.DestinationMatch|None|unset.UnsetType" = unset.Unset,
+        next_hop: "NextHop|route_pb2.NextHop|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(description, unset.UnsetType):
+            self.description = description
+        if not isinstance(destination, unset.UnsetType):
+            self.destination = destination
+        if not isinstance(next_hop, unset.UnsetType):
+            self.next_hop = next_hop
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "destination",
+            "next_hop",
+        ]
+    
+    @builtins.property
+    def description(self) -> "builtins.str":
+        """
+        Optional description of the route.
+        """
+        
+        return super()._get_field("description", explicit_presence=False,
+        )
+    @description.setter
+    def description(self, value: "builtins.str|None") -> None:
+        return super()._set_field("description",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def destination(self) -> "DestinationMatch":
+        """
+        Destination for the route.
+        Each destination CIDR must be unique within a route table.
+        When multiple routes match a destination IP, the route with the longest
+        matching prefix (most specific match) is selected.
+        """
+        
+        return super()._get_field("destination", explicit_presence=False,
+        wrap=DestinationMatch,
+        )
+    @destination.setter
+    def destination(self, value: "DestinationMatch|route_pb2.DestinationMatch|None") -> None:
+        return super()._set_field("destination",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_hop(self) -> "NextHop":
+        """
+        Next hop configuration specifying where to send matching traffic.
+        """
+        
+        return super()._get_field("next_hop", explicit_presence=False,
+        wrap=NextHop,
+        )
+    @next_hop.setter
+    def next_hop(self, value: "NextHop|route_pb2.NextHop|None") -> None:
+        return super()._set_field("next_hop",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "destination":"destination",
+        "next_hop":"next_hop",
+    }
+    
+class DestinationMatch(pb_classes.Message):
+    __PB2_CLASS__ = route_pb2.DestinationMatch
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.DestinationMatch",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cidr: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cidr, unset.UnsetType):
+            self.cidr = cidr
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cidr",
+        ]
+    
+    @builtins.property
+    def cidr(self) -> "builtins.str":
+        """
+        Destination CIDR block in IPv4 format (e.g., "0.0.0.0/0" for default route, "192.168.100.0/24" for specific subnet).
+        The CIDR notation specifies the range of IP addresses that this route will match.
+        Must be unique within a route table.
+        """
+        
+        return super()._get_field("cidr", explicit_presence=False,
+        )
+    @cidr.setter
+    def cidr(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cidr",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cidr":"cidr",
+    }
+    
+class NextHop(pb_classes.Message):
+    __PB2_CLASS__ = route_pb2.NextHop
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NextHop",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_next_hop__(pb_classes.OneOf):
+        name: builtins.str= "next_hop"
+        
+        def __init__(self, msg: "NextHop") -> None:
+            super().__init__()
+            self._message: "NextHop" = msg
+    
+    class __OneOfClass_next_hop_allocation__(__OneOfClass_next_hop__):
+        field: typing.Literal["allocation"] = "allocation"
+        
+        def __init__(self, msg: "NextHop") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "AllocationNextHop":
+            return self._message.allocation
+    
+    class __OneOfClass_next_hop_default_egress_gateway__(__OneOfClass_next_hop__):
+        field: typing.Literal["default_egress_gateway"] = "default_egress_gateway"
+        
+        def __init__(self, msg: "NextHop") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.default_egress_gateway
+    
+    @builtins.property
+    def next_hop(self) -> __OneOfClass_next_hop_allocation__|__OneOfClass_next_hop_default_egress_gateway__|None:
+        """
+        Configuration for the next hop, which must be one of the following options.
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("next_hop")
+        match field_name_1:
+            case "allocation":
+                return self.__OneOfClass_next_hop_allocation__(self)
+            case "default_egress_gateway":
+                return self.__OneOfClass_next_hop_default_egress_gateway__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        allocation: "AllocationNextHop|route_pb2.AllocationNextHop|None|unset.UnsetType" = unset.Unset,
+        default_egress_gateway: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(allocation, unset.UnsetType):
+            self.allocation = allocation
+        if not isinstance(default_egress_gateway, unset.UnsetType):
+            self.default_egress_gateway = default_egress_gateway
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "allocation",
+            "default_egress_gateway",
+            "next_hop",
+        ]
+    
+    @builtins.property
+    def allocation(self) -> "AllocationNextHop|None":
+        """
+        Forward traffic to a specific IP allocation (/32 address only).
+        The allocation must be from the same network as the route table.
+        The allocation must be assigned to either a Compute instance or a Load Balancer.
+        Warning: If the allocation exists but is not assigned to any resource,
+        traffic will be forwarded to a "black hole" and dropped.
+        """
+        
+        return super()._get_field("allocation", explicit_presence=True,
+        wrap=AllocationNextHop,
+        )
+    @allocation.setter
+    def allocation(self, value: "AllocationNextHop|route_pb2.AllocationNextHop|None") -> None:
+        return super()._set_field("allocation",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def default_egress_gateway(self) -> "builtins.bool|None":
+        """
+        Use the default egress gateway for outbound traffic.
+        Note: For VMs with public addresses (Floating IPs/FIPs), the FIP-specific route
+        takes precedence over this default egress gateway route.
+        """
+        
+        return super()._get_field("default_egress_gateway", explicit_presence=True,
+        )
+    @default_egress_gateway.setter
+    def default_egress_gateway(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("default_egress_gateway",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allocation":"allocation",
+        "default_egress_gateway":"default_egress_gateway",
+        "next_hop":"next_hop",
+    }
+    
+class AllocationNextHop(pb_classes.Message):
+    """
+    AllocationNextHop specifies an IP allocation as the next hop.
+    """
+    
+    __PB2_CLASS__ = route_pb2.AllocationNextHop
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationNextHop",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of the IP allocation to use as the next hop.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class RouteStatus(pb_classes.Message):
+    __PB2_CLASS__ = route_pb2.RouteStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RouteStatus",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class State(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.RouteStatus.State",route_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        """
+        The state is unknown or not yet set.
+        """
+        
+        READY = 10
+        """
+        The route is configured and operational.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "RouteStatus.State|route_pb2.RouteStatus.State|None|unset.UnsetType" = unset.Unset,
+        next_hop: "NextHopState|route_pb2.NextHopState|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(next_hop, unset.UnsetType):
+            self.next_hop = next_hop
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "next_hop",
+            "State",
+        ]
+    
+    @builtins.property
+    def state(self) -> "RouteStatus.State":
+        """
+        Current state of the route.
+        """
+        
+        return super()._get_field("state", explicit_presence=False,
+        wrap=RouteStatus.State,
+        )
+    @state.setter
+    def state(self, value: "RouteStatus.State|route_pb2.RouteStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_hop(self) -> "NextHopState":
+        """
+        Detailed status of the next hop configuration.
+        """
+        
+        return super()._get_field("next_hop", explicit_presence=False,
+        wrap=NextHopState,
+        )
+    @next_hop.setter
+    def next_hop(self, value: "NextHopState|route_pb2.NextHopState|None") -> None:
+        return super()._set_field("next_hop",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "next_hop":"next_hop",
+        "State":"State",
+    }
+    
+class NextHopState(pb_classes.Message):
+    __PB2_CLASS__ = route_pb2.NextHopState
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.NextHopState",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_next_hop__(pb_classes.OneOf):
+        name: builtins.str= "next_hop"
+        
+        def __init__(self, msg: "NextHopState") -> None:
+            super().__init__()
+            self._message: "NextHopState" = msg
+    
+    class __OneOfClass_next_hop_allocation__(__OneOfClass_next_hop__):
+        field: typing.Literal["allocation"] = "allocation"
+        
+        def __init__(self, msg: "NextHopState") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "AllocationNextHopState":
+            return self._message.allocation
+    
+    class __OneOfClass_next_hop_default_egress_gateway__(__OneOfClass_next_hop__):
+        field: typing.Literal["default_egress_gateway"] = "default_egress_gateway"
+        
+        def __init__(self, msg: "NextHopState") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "DefaultEgressGatewayState":
+            return self._message.default_egress_gateway
+    
+    @builtins.property
+    def next_hop(self) -> __OneOfClass_next_hop_allocation__|__OneOfClass_next_hop_default_egress_gateway__|None:
+        """
+        Current state of the next hop configuration.
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("next_hop")
+        match field_name_1:
+            case "allocation":
+                return self.__OneOfClass_next_hop_allocation__(self)
+            case "default_egress_gateway":
+                return self.__OneOfClass_next_hop_default_egress_gateway__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        allocation: "AllocationNextHopState|route_pb2.AllocationNextHopState|None|unset.UnsetType" = unset.Unset,
+        default_egress_gateway: "DefaultEgressGatewayState|route_pb2.DefaultEgressGatewayState|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(allocation, unset.UnsetType):
+            self.allocation = allocation
+        if not isinstance(default_egress_gateway, unset.UnsetType):
+            self.default_egress_gateway = default_egress_gateway
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "allocation",
+            "default_egress_gateway",
+            "next_hop",
+        ]
+    
+    @builtins.property
+    def allocation(self) -> "AllocationNextHopState|None":
+        """
+        Status of an allocation-based next hop.
+        """
+        
+        return super()._get_field("allocation", explicit_presence=True,
+        wrap=AllocationNextHopState,
+        )
+    @allocation.setter
+    def allocation(self, value: "AllocationNextHopState|route_pb2.AllocationNextHopState|None") -> None:
+        return super()._set_field("allocation",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def default_egress_gateway(self) -> "DefaultEgressGatewayState|None":
+        """
+        Status of the default egress gateway configuration.
+        """
+        
+        return super()._get_field("default_egress_gateway", explicit_presence=True,
+        wrap=DefaultEgressGatewayState,
+        )
+    @default_egress_gateway.setter
+    def default_egress_gateway(self, value: "DefaultEgressGatewayState|route_pb2.DefaultEgressGatewayState|None") -> None:
+        return super()._set_field("default_egress_gateway",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allocation":"allocation",
+        "default_egress_gateway":"default_egress_gateway",
+        "next_hop":"next_hop",
+    }
+    
+class AllocationNextHopState(pb_classes.Message):
+    __PB2_CLASS__ = route_pb2.AllocationNextHopState
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.AllocationNextHopState",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cidr: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cidr, unset.UnsetType):
+            self.cidr = cidr
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cidr",
+        ]
+    
+    @builtins.property
+    def cidr(self) -> "builtins.str":
+        """
+        The CIDR of the allocation being used as the next hop.
+        """
+        
+        return super()._get_field("cidr", explicit_presence=False,
+        )
+    @cidr.setter
+    def cidr(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cidr",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cidr":"cidr",
+    }
+    
+class DefaultEgressGatewayState(pb_classes.Message):
+    __PB2_CLASS__ = route_pb2.DefaultEgressGatewayState
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.DefaultEgressGatewayState",route_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+# file: nebius/vpc/v1/route_service.proto
+class GetRouteRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_service_pb2.GetRouteRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetRouteRequest",route_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetRouteByNameRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_service_pb2.GetRouteByNameRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetRouteByNameRequest",route_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the RouteTable.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
+    
+class ListRoutesRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_service_pb2.ListRoutesRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListRoutesRequest",route_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the RouteTable.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListRoutesResponse(pb_classes.Message):
+    __PB2_CLASS__ = route_service_pb2.ListRoutesResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListRoutesResponse",route_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[Route]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[Route]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Route,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[Route]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class CreateRouteRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_service_pb2.CreateRouteRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.CreateRouteRequest",route_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RouteSpec|route_pb2.RouteSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "RouteSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=RouteSpec,
+        )
+    @spec.setter
+    def spec(self, value: "RouteSpec|route_pb2.RouteSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateRouteRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_service_pb2.UpdateRouteRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdateRouteRequest",route_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RouteSpec|route_pb2.RouteSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "RouteSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=RouteSpec,
+        )
+    @spec.setter
+    def spec(self, value: "RouteSpec|route_pb2.RouteSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteRouteRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_service_pb2.DeleteRouteRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.DeleteRouteRequest",route_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+
+class RouteServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.vpc.v1.RouteService",route_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.vpc.v1.RouteService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    
+    def get(self,
+        request: "GetRouteRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["GetRouteRequest","Route"]:
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=route_pb2.Route,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(Route),
+        )
+    
+    def get_by_name(self,
+        request: "GetRouteByNameRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["GetRouteByNameRequest","Route"]:
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=route_pb2.Route,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(Route),
+        )
+    
+    def list(self,
+        request: "ListRoutesRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["ListRoutesRequest","ListRoutesResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=route_service_pb2.ListRoutesResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(ListRoutesResponse),
+        )
+    
+    def create(self,
+        request: "CreateRouteRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["CreateRouteRequest","operation.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
+    def update(self,
+        request: "UpdateRouteRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["UpdateRouteRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
+    def delete(self,
+        request: "DeleteRouteRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["DeleteRouteRequest","operation.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
+
+# file: nebius/vpc/v1/route_table.proto
+class RouteTable(pb_classes.Message):
+    """
+    RouteTable represents a routing configuration for a VPC network.
+    Each route table can be associated with multiple subnets
+    and contains rules for routing traffic to different destinations.
+    """
+    
+    __PB2_CLASS__ = route_table_pb2.RouteTable
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RouteTable",route_table_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RouteTableSpec|route_table_pb2.RouteTableSpec|None|unset.UnsetType" = unset.Unset,
+        status: "RouteTableStatus|route_table_pb2.RouteTableStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        `metadata.parent_id` represents the Project.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "RouteTableSpec":
+        """
+        Specification of the route table's configuration.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=RouteTableSpec,
+        )
+    @spec.setter
+    def spec(self, value: "RouteTableSpec|route_table_pb2.RouteTableSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "RouteTableStatus":
+        """
+        Current status of the route table.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=RouteTableStatus,
+        )
+    @status.setter
+    def status(self, value: "RouteTableStatus|route_table_pb2.RouteTableStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class RouteTableSpec(pb_classes.Message):
+    __PB2_CLASS__ = route_table_pb2.RouteTableSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RouteTableSpec",route_table_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(network_id, unset.UnsetType):
+            self.network_id = network_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "network_id",
+        ]
+    
+    @builtins.property
+    def network_id(self) -> "builtins.str":
+        """
+        ID of the VPC network this route table belongs to.
+        """
+        
+        return super()._get_field("network_id", explicit_presence=False,
+        )
+    @network_id.setter
+    def network_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("network_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "network_id":"network_id",
+    }
+    
+class RouteTableStatus(pb_classes.Message):
+    __PB2_CLASS__ = route_table_pb2.RouteTableStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RouteTableStatus",route_table_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class State(pb_enum.Enum):
+        """
+        State indicates the current operational state of the route table.
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.RouteTableStatus.State",route_table_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        """
+        The state is unknown or not yet set.
+        """
+        
+        READY = 10
+        """
+        The route table is configured and operational.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "RouteTableStatus.State|route_table_pb2.RouteTableStatus.State|None|unset.UnsetType" = unset.Unset,
+        default: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        assignment: "RouteTableAssignment|route_table_pb2.RouteTableAssignment|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(default, unset.UnsetType):
+            self.default = default
+        if not isinstance(assignment, unset.UnsetType):
+            self.assignment = assignment
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "default",
+            "assignment",
+            "State",
+        ]
+    
+    @builtins.property
+    def state(self) -> "RouteTableStatus.State":
+        """
+        Current state of the route table.
+        """
+        
+        return super()._get_field("state", explicit_presence=False,
+        wrap=RouteTableStatus.State,
+        )
+    @state.setter
+    def state(self, value: "RouteTableStatus.State|route_table_pb2.RouteTableStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def default(self) -> "builtins.bool":
+        """
+        Indicates if this is the default route table for the network.
+        Only one route table can be default per network.
+        """
+        
+        return super()._get_field("default", explicit_presence=False,
+        )
+    @default.setter
+    def default(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("default",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def assignment(self) -> "RouteTableAssignment":
+        """
+        Information about which subnets are using this route table.
+        """
+        
+        return super()._get_field("assignment", explicit_presence=False,
+        wrap=RouteTableAssignment,
+        )
+    @assignment.setter
+    def assignment(self, value: "RouteTableAssignment|route_table_pb2.RouteTableAssignment|None") -> None:
+        return super()._set_field("assignment",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "default":"default",
+        "assignment":"assignment",
+        "State":"State",
+    }
+    
+class RouteTableAssignment(pb_classes.Message):
+    __PB2_CLASS__ = route_table_pb2.RouteTableAssignment
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RouteTableAssignment",route_table_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        subnets: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(subnets, unset.UnsetType):
+            self.subnets = subnets
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "subnets",
+        ]
+    
+    @builtins.property
+    def subnets(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        List of subnet IDs that use this route table for their routing configuration.
+        """
+        
+        return super()._get_field("subnets", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @subnets.setter
+    def subnets(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("subnets",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "subnets":"subnets",
+    }
+    
+# file: nebius/vpc/v1/route_table_service.proto
+class GetRouteTableRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_table_service_pb2.GetRouteTableRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetRouteTableRequest",route_table_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetRouteTableByNameRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_table_service_pb2.GetRouteTableByNameRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetRouteTableByNameRequest",route_table_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the Project.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
+    
+class ListRouteTablesRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_table_service_pb2.ListRouteTablesRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListRouteTablesRequest",route_table_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the Project.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListRouteTablesByNetworkRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_table_service_pb2.ListRouteTablesByNetworkRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListRouteTablesByNetworkRequest",route_table_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(network_id, unset.UnsetType):
+            self.network_id = network_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "network_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def network_id(self) -> "builtins.str":
+        return super()._get_field("network_id", explicit_presence=False,
+        )
+    @network_id.setter
+    def network_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("network_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "network_id":"network_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListRouteTablesResponse(pb_classes.Message):
+    __PB2_CLASS__ = route_table_service_pb2.ListRouteTablesResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListRouteTablesResponse",route_table_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[RouteTable]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[RouteTable]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(RouteTable,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[RouteTable]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class CreateRouteTableRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_table_service_pb2.CreateRouteTableRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.CreateRouteTableRequest",route_table_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RouteTableSpec|route_table_pb2.RouteTableSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "RouteTableSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=RouteTableSpec,
+        )
+    @spec.setter
+    def spec(self, value: "RouteTableSpec|route_table_pb2.RouteTableSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateRouteTableRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_table_service_pb2.UpdateRouteTableRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdateRouteTableRequest",route_table_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RouteTableSpec|route_table_pb2.RouteTableSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "RouteTableSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=RouteTableSpec,
+        )
+    @spec.setter
+    def spec(self, value: "RouteTableSpec|route_table_pb2.RouteTableSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteRouteTableRequest(pb_classes.Message):
+    __PB2_CLASS__ = route_table_service_pb2.DeleteRouteTableRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.DeleteRouteTableRequest",route_table_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+
+class RouteTableServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.vpc.v1.RouteTableService",route_table_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    __service_name__ = ".nebius.vpc.v1.RouteTableService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    
+    def get(self,
+        request: "GetRouteTableRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["GetRouteTableRequest","RouteTable"]:
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=route_table_pb2.RouteTable,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(RouteTable),
+        )
+    
+    def get_by_name(self,
+        request: "GetRouteTableByNameRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["GetRouteTableByNameRequest","RouteTable"]:
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=route_table_pb2.RouteTable,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(RouteTable),
+        )
+    
+    def list(self,
+        request: "ListRouteTablesRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["ListRouteTablesRequest","ListRouteTablesResponse"]:
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=route_table_service_pb2.ListRouteTablesResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(ListRouteTablesResponse),
+        )
+    
+    def list_by_network(self,
+        request: "ListRouteTablesByNetworkRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["ListRouteTablesByNetworkRequest","ListRouteTablesResponse"]:
+        return super().request(
+            method="ListByNetwork",
+            request=request,
+            result_pb2_class=route_table_service_pb2.ListRouteTablesResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(ListRouteTablesResponse),
+        )
+    
+    def create(self,
+        request: "CreateRouteTableRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["CreateRouteTableRequest","operation.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
+    def update(self,
+        request: "UpdateRouteTableRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["UpdateRouteTableRequest","operation.Operation[v1_1.Operation]"]:
+        metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
+    def delete(self,
+        request: "DeleteRouteTableRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["DeleteRouteTableRequest","operation.Operation[v1_1.Operation]"]:
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=operation.Operation,
+        )
+    
+
 # file: nebius/vpc/v1/subnet.proto
 class Subnet(pb_classes.Message):
     """
@@ -3374,6 +5276,7 @@ class SubnetSpec(pb_classes.Message):
         network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ipv4_private_pools: "IPv4PrivateSubnetPools|subnet_pb2.IPv4PrivateSubnetPools|None|unset.UnsetType" = unset.Unset,
         ipv4_public_pools: "IPv4PublicSubnetPools|subnet_pb2.IPv4PublicSubnetPools|None|unset.UnsetType" = unset.Unset,
+        route_table_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(network_id, unset.UnsetType):
@@ -3382,12 +5285,15 @@ class SubnetSpec(pb_classes.Message):
             self.ipv4_private_pools = ipv4_private_pools
         if not isinstance(ipv4_public_pools, unset.UnsetType):
             self.ipv4_public_pools = ipv4_public_pools
+        if not isinstance(route_table_id, unset.UnsetType):
+            self.route_table_id = route_table_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "network_id",
             "ipv4_private_pools",
             "ipv4_public_pools",
+            "route_table_id",
         ]
     
     @builtins.property
@@ -3433,10 +5339,26 @@ class SubnetSpec(pb_classes.Message):
         return super()._set_field("ipv4_public_pools",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def route_table_id(self) -> "builtins.str":
+        """
+        ID of the custom route table to associate with this subnet.
+        Must be one of the route tables associated with network.
+        If not specified, the subnet will use the network's default route table.
+        """
+        
+        return super()._get_field("route_table_id", explicit_presence=False,
+        )
+    @route_table_id.setter
+    def route_table_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("route_table_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "network_id":"network_id",
         "ipv4_private_pools":"ipv4_private_pools",
         "ipv4_public_pools":"ipv4_public_pools",
+        "route_table_id":"route_table_id",
     }
     
 class IPv4PrivateSubnetPools(pb_classes.Message):
@@ -3710,6 +5632,7 @@ class SubnetStatus(pb_classes.Message):
         state: "SubnetStatus.State|subnet_pb2.SubnetStatus.State|None|unset.UnsetType" = unset.Unset,
         ipv4_private_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         ipv4_public_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        route_table: "SubnetAssociatedRouteTable|subnet_pb2.SubnetAssociatedRouteTable|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -3718,12 +5641,15 @@ class SubnetStatus(pb_classes.Message):
             self.ipv4_private_cidrs = ipv4_private_cidrs
         if not isinstance(ipv4_public_cidrs, unset.UnsetType):
             self.ipv4_public_cidrs = ipv4_public_cidrs
+        if not isinstance(route_table, unset.UnsetType):
+            self.route_table = route_table
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "ipv4_private_cidrs",
             "ipv4_public_cidrs",
+            "route_table",
             "State",
         ]
     
@@ -3769,11 +5695,85 @@ class SubnetStatus(pb_classes.Message):
         return super()._set_field("ipv4_public_cidrs",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def route_table(self) -> "SubnetAssociatedRouteTable":
+        """
+        Information about the route table associated with this subnet.
+        Can be either a custom route table or the network's default route table.
+        """
+        
+        return super()._get_field("route_table", explicit_presence=False,
+        wrap=SubnetAssociatedRouteTable,
+        )
+    @route_table.setter
+    def route_table(self, value: "SubnetAssociatedRouteTable|subnet_pb2.SubnetAssociatedRouteTable|None") -> None:
+        return super()._set_field("route_table",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "ipv4_private_cidrs":"ipv4_private_cidrs",
         "ipv4_public_cidrs":"ipv4_public_cidrs",
+        "route_table":"route_table",
         "State":"State",
+    }
+    
+class SubnetAssociatedRouteTable(pb_classes.Message):
+    __PB2_CLASS__ = subnet_pb2.SubnetAssociatedRouteTable
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetAssociatedRouteTable",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        default: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(default, unset.UnsetType):
+            self.default = default
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "default",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of the route table.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def default(self) -> "builtins.bool":
+        """
+        Indicates whether this is the network's default route table.
+        If true, this is the default route table inherited from the network.
+        If false, this is a custom route table explicitly associated with the subnet via spec.
+        """
+        
+        return super()._get_field("default", explicit_presence=False,
+        )
+    @default.setter
+    def default(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("default",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "default":"default",
     }
     
 # file: nebius/vpc/v1/subnet_service.proto
@@ -4903,6 +6903,36 @@ __all__ = [
     "UpdatePoolRequest",
     "DeletePoolRequest",
     "PoolServiceClient",
+    "Route",
+    "RouteSpec",
+    "DestinationMatch",
+    "NextHop",
+    "AllocationNextHop",
+    "RouteStatus",
+    "NextHopState",
+    "AllocationNextHopState",
+    "DefaultEgressGatewayState",
+    "GetRouteRequest",
+    "GetRouteByNameRequest",
+    "ListRoutesRequest",
+    "ListRoutesResponse",
+    "CreateRouteRequest",
+    "UpdateRouteRequest",
+    "DeleteRouteRequest",
+    "RouteServiceClient",
+    "RouteTable",
+    "RouteTableSpec",
+    "RouteTableStatus",
+    "RouteTableAssignment",
+    "GetRouteTableRequest",
+    "GetRouteTableByNameRequest",
+    "ListRouteTablesRequest",
+    "ListRouteTablesByNetworkRequest",
+    "ListRouteTablesResponse",
+    "CreateRouteTableRequest",
+    "UpdateRouteTableRequest",
+    "DeleteRouteTableRequest",
+    "RouteTableServiceClient",
     "Subnet",
     "SubnetSpec",
     "IPv4PrivateSubnetPools",
@@ -4910,6 +6940,7 @@ __all__ = [
     "SubnetPool",
     "SubnetCidr",
     "SubnetStatus",
+    "SubnetAssociatedRouteTable",
     "GetSubnetRequest",
     "GetSubnetByNameRequest",
     "ListSubnetsRequest",

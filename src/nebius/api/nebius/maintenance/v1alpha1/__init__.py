@@ -194,6 +194,7 @@ class MaintenanceStatus(pb_classes.Message):
         started_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         state: "State|maintenance_pb2.State|None|unset.UnsetType" = unset.Unset,
+        reschedulable: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(affected_resources, unset.UnsetType):
@@ -204,6 +205,8 @@ class MaintenanceStatus(pb_classes.Message):
             self.finished_at = finished_at
         if not isinstance(state, unset.UnsetType):
             self.state = state
+        if not isinstance(reschedulable, unset.UnsetType):
+            self.reschedulable = reschedulable
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -211,6 +214,7 @@ class MaintenanceStatus(pb_classes.Message):
             "started_at",
             "finished_at",
             "state",
+            "reschedulable",
         ]
     
     @builtins.property
@@ -271,11 +275,25 @@ class MaintenanceStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def reschedulable(self) -> "builtins.bool":
+        """
+        Indicates whether the maintenance operation's scheduled_at time can be changed.
+        """
+        
+        return super()._get_field("reschedulable", explicit_presence=False,
+        )
+    @reschedulable.setter
+    def reschedulable(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("reschedulable",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "affected_resources":"affected_resources",
         "started_at":"started_at",
         "finished_at":"finished_at",
         "state":"state",
+        "reschedulable":"reschedulable",
     }
     
 class Resource(pb_classes.Message):
@@ -451,6 +469,104 @@ class GetMaintenanceRequest(pb_classes.Message):
         "id":"id",
     }
     
+class UpdateMaintenanceRequest(pb_classes.Message):
+    __PB2_CLASS__ = maintenance_service_pb2.UpdateMaintenanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.maintenance.v1alpha1.UpdateMaintenanceRequest",maintenance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "MaintenanceSpec|maintenance_pb2.MaintenanceSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Metadata associated with the maintenance operation.
+        Must include ID of the maintenance operation to update.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "MaintenanceSpec":
+        """
+        Updated specification for the maintenance operation.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=MaintenanceSpec,
+        )
+    @spec.setter
+    def spec(self, value: "MaintenanceSpec|maintenance_pb2.MaintenanceSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateMaintenanceResponse(pb_classes.Message):
+    __PB2_CLASS__ = maintenance_service_pb2.UpdateMaintenanceResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.maintenance.v1alpha1.UpdateMaintenanceResponse",maintenance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        maintenance: "Maintenance|maintenance_pb2.Maintenance|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(maintenance, unset.UnsetType):
+            self.maintenance = maintenance
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "maintenance",
+        ]
+    
+    @builtins.property
+    def maintenance(self) -> "Maintenance":
+        """
+        Updated maintenance operation.
+        """
+        
+        return super()._get_field("maintenance", explicit_presence=False,
+        wrap=Maintenance,
+        )
+    @maintenance.setter
+    def maintenance(self, value: "Maintenance|maintenance_pb2.Maintenance|None") -> None:
+        return super()._set_field("maintenance",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "maintenance":"maintenance",
+    }
+    
 
 class MaintenanceServiceClient(client.Client):
     """
@@ -514,6 +630,32 @@ class MaintenanceServiceClient(client.Client):
             result_wrapper=pb_classes.simple_wrapper(ListMaintenancesResponse),
         )
     
+    def update(self,
+        request: "UpdateMaintenanceRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request.Request["UpdateMaintenanceRequest","UpdateMaintenanceResponse"]:
+        """
+        Updates the specified maintenance operation.
+        """
+        
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=maintenance_service_pb2.UpdateMaintenanceResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(UpdateMaintenanceResponse),
+        )
+    
 
 __all__ = [
     #@ local import names here @#
@@ -525,5 +667,7 @@ __all__ = [
     "ListMaintenancesRequest",
     "ListMaintenancesResponse",
     "GetMaintenanceRequest",
+    "UpdateMaintenanceRequest",
+    "UpdateMaintenanceResponse",
     "MaintenanceServiceClient",
 ]

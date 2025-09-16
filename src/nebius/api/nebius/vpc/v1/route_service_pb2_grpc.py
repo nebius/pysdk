@@ -3,11 +3,11 @@
 import grpc
 
 from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
-from nebius.api.nebius.msp.spark.v1alpha1 import cluster_pb2 as nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__pb2
-from nebius.api.nebius.msp.spark.v1alpha1 import cluster_service_pb2 as nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2
+from nebius.api.nebius.vpc.v1 import route_pb2 as nebius_dot_vpc_dot_v1_dot_route__pb2
+from nebius.api.nebius.vpc.v1 import route_service_pb2 as nebius_dot_vpc_dot_v1_dot_route__service__pb2
 
 
-class ClusterServiceStub(object):
+class RouteServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -17,123 +17,117 @@ class ClusterServiceStub(object):
             channel: A grpc.Channel.
         """
         self.Get = channel.unary_unary(
-                '/nebius.msp.spark.v1alpha1.ClusterService/Get',
-                request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.GetClusterRequest.SerializeToString,
-                response_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__pb2.Cluster.FromString,
+                '/nebius.vpc.v1.RouteService/Get',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.GetRouteRequest.SerializeToString,
+                response_deserializer=nebius_dot_vpc_dot_v1_dot_route__pb2.Route.FromString,
                 )
         self.GetByName = channel.unary_unary(
-                '/nebius.msp.spark.v1alpha1.ClusterService/GetByName',
-                request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.GetClusterByNameRequest.SerializeToString,
-                response_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__pb2.Cluster.FromString,
+                '/nebius.vpc.v1.RouteService/GetByName',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.GetRouteByNameRequest.SerializeToString,
+                response_deserializer=nebius_dot_vpc_dot_v1_dot_route__pb2.Route.FromString,
                 )
         self.List = channel.unary_unary(
-                '/nebius.msp.spark.v1alpha1.ClusterService/List',
-                request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.ListClustersRequest.SerializeToString,
-                response_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.ListClustersResponse.FromString,
+                '/nebius.vpc.v1.RouteService/List',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.ListRoutesRequest.SerializeToString,
+                response_deserializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.ListRoutesResponse.FromString,
                 )
         self.Create = channel.unary_unary(
-                '/nebius.msp.spark.v1alpha1.ClusterService/Create',
-                request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.CreateClusterRequest.SerializeToString,
+                '/nebius.vpc.v1.RouteService/Create',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.CreateRouteRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
         self.Update = channel.unary_unary(
-                '/nebius.msp.spark.v1alpha1.ClusterService/Update',
-                request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.UpdateClusterRequest.SerializeToString,
+                '/nebius.vpc.v1.RouteService/Update',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.UpdateRouteRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
         self.Delete = channel.unary_unary(
-                '/nebius.msp.spark.v1alpha1.ClusterService/Delete',
-                request_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.DeleteClusterRequest.SerializeToString,
+                '/nebius.vpc.v1.RouteService/Delete',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.DeleteRouteRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
 
 
-class ClusterServiceServicer(object):
+class RouteServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Get(self, request, context):
-        """Returns the specified cluster.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetByName(self, request, context):
-        """Returns the specified cluster by name.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def List(self, request, context):
-        """Retrieves a list of clusters.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Create(self, request, context):
-        """Creates a cluster.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Update(self, request, context):
-        """Updates a cluster.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Delete(self, request, context):
-        """Delete a cluster.
-        """
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_ClusterServiceServicer_to_server(servicer, server):
+def add_RouteServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Get': grpc.unary_unary_rpc_method_handler(
                     servicer.Get,
-                    request_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.GetClusterRequest.FromString,
-                    response_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__pb2.Cluster.SerializeToString,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.GetRouteRequest.FromString,
+                    response_serializer=nebius_dot_vpc_dot_v1_dot_route__pb2.Route.SerializeToString,
             ),
             'GetByName': grpc.unary_unary_rpc_method_handler(
                     servicer.GetByName,
-                    request_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.GetClusterByNameRequest.FromString,
-                    response_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__pb2.Cluster.SerializeToString,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.GetRouteByNameRequest.FromString,
+                    response_serializer=nebius_dot_vpc_dot_v1_dot_route__pb2.Route.SerializeToString,
             ),
             'List': grpc.unary_unary_rpc_method_handler(
                     servicer.List,
-                    request_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.ListClustersRequest.FromString,
-                    response_serializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.ListClustersResponse.SerializeToString,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.ListRoutesRequest.FromString,
+                    response_serializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.ListRoutesResponse.SerializeToString,
             ),
             'Create': grpc.unary_unary_rpc_method_handler(
                     servicer.Create,
-                    request_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.CreateClusterRequest.FromString,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.CreateRouteRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Update': grpc.unary_unary_rpc_method_handler(
                     servicer.Update,
-                    request_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.UpdateClusterRequest.FromString,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.UpdateRouteRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
                     servicer.Delete,
-                    request_deserializer=nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.DeleteClusterRequest.FromString,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_route__service__pb2.DeleteRouteRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'nebius.msp.spark.v1alpha1.ClusterService', rpc_method_handlers)
+            'nebius.vpc.v1.RouteService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class ClusterService(object):
+class RouteService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -147,9 +141,9 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.ClusterService/Get',
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.GetClusterRequest.SerializeToString,
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__pb2.Cluster.FromString,
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.RouteService/Get',
+            nebius_dot_vpc_dot_v1_dot_route__service__pb2.GetRouteRequest.SerializeToString,
+            nebius_dot_vpc_dot_v1_dot_route__pb2.Route.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -164,9 +158,9 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.ClusterService/GetByName',
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.GetClusterByNameRequest.SerializeToString,
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__pb2.Cluster.FromString,
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.RouteService/GetByName',
+            nebius_dot_vpc_dot_v1_dot_route__service__pb2.GetRouteByNameRequest.SerializeToString,
+            nebius_dot_vpc_dot_v1_dot_route__pb2.Route.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -181,9 +175,9 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.ClusterService/List',
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.ListClustersRequest.SerializeToString,
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.ListClustersResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.RouteService/List',
+            nebius_dot_vpc_dot_v1_dot_route__service__pb2.ListRoutesRequest.SerializeToString,
+            nebius_dot_vpc_dot_v1_dot_route__service__pb2.ListRoutesResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -198,8 +192,8 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.ClusterService/Create',
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.CreateClusterRequest.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.RouteService/Create',
+            nebius_dot_vpc_dot_v1_dot_route__service__pb2.CreateRouteRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -215,8 +209,8 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.ClusterService/Update',
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.UpdateClusterRequest.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.RouteService/Update',
+            nebius_dot_vpc_dot_v1_dot_route__service__pb2.UpdateRouteRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -232,8 +226,8 @@ class ClusterService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/nebius.msp.spark.v1alpha1.ClusterService/Delete',
-            nebius_dot_msp_dot_spark_dot_v1alpha1_dot_cluster__service__pb2.DeleteClusterRequest.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.RouteService/Delete',
+            nebius_dot_vpc_dot_v1_dot_route__service__pb2.DeleteRouteRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

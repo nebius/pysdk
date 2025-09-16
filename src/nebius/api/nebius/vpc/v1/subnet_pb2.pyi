@@ -21,14 +21,16 @@ class Subnet(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[SubnetSpec, _Mapping]] = ..., status: _Optional[_Union[SubnetStatus, _Mapping]] = ...) -> None: ...
 
 class SubnetSpec(_message.Message):
-    __slots__ = ["network_id", "ipv4_private_pools", "ipv4_public_pools"]
+    __slots__ = ["network_id", "ipv4_private_pools", "ipv4_public_pools", "route_table_id"]
     NETWORK_ID_FIELD_NUMBER: _ClassVar[int]
     IPV4_PRIVATE_POOLS_FIELD_NUMBER: _ClassVar[int]
     IPV4_PUBLIC_POOLS_FIELD_NUMBER: _ClassVar[int]
+    ROUTE_TABLE_ID_FIELD_NUMBER: _ClassVar[int]
     network_id: str
     ipv4_private_pools: IPv4PrivateSubnetPools
     ipv4_public_pools: IPv4PublicSubnetPools
-    def __init__(self, network_id: _Optional[str] = ..., ipv4_private_pools: _Optional[_Union[IPv4PrivateSubnetPools, _Mapping]] = ..., ipv4_public_pools: _Optional[_Union[IPv4PublicSubnetPools, _Mapping]] = ...) -> None: ...
+    route_table_id: str
+    def __init__(self, network_id: _Optional[str] = ..., ipv4_private_pools: _Optional[_Union[IPv4PrivateSubnetPools, _Mapping]] = ..., ipv4_public_pools: _Optional[_Union[IPv4PublicSubnetPools, _Mapping]] = ..., route_table_id: _Optional[str] = ...) -> None: ...
 
 class IPv4PrivateSubnetPools(_message.Message):
     __slots__ = ["pools", "use_network_pools"]
@@ -63,7 +65,7 @@ class SubnetCidr(_message.Message):
     def __init__(self, cidr: _Optional[str] = ..., state: _Optional[_Union[_pool_pb2.AddressBlockState, str]] = ..., max_mask_length: _Optional[int] = ...) -> None: ...
 
 class SubnetStatus(_message.Message):
-    __slots__ = ["state", "ipv4_private_cidrs", "ipv4_public_cidrs"]
+    __slots__ = ["state", "ipv4_private_cidrs", "ipv4_public_cidrs", "route_table"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[SubnetStatus.State]
@@ -77,7 +79,17 @@ class SubnetStatus(_message.Message):
     STATE_FIELD_NUMBER: _ClassVar[int]
     IPV4_PRIVATE_CIDRS_FIELD_NUMBER: _ClassVar[int]
     IPV4_PUBLIC_CIDRS_FIELD_NUMBER: _ClassVar[int]
+    ROUTE_TABLE_FIELD_NUMBER: _ClassVar[int]
     state: SubnetStatus.State
     ipv4_private_cidrs: _containers.RepeatedScalarFieldContainer[str]
     ipv4_public_cidrs: _containers.RepeatedScalarFieldContainer[str]
-    def __init__(self, state: _Optional[_Union[SubnetStatus.State, str]] = ..., ipv4_private_cidrs: _Optional[_Iterable[str]] = ..., ipv4_public_cidrs: _Optional[_Iterable[str]] = ...) -> None: ...
+    route_table: SubnetAssociatedRouteTable
+    def __init__(self, state: _Optional[_Union[SubnetStatus.State, str]] = ..., ipv4_private_cidrs: _Optional[_Iterable[str]] = ..., ipv4_public_cidrs: _Optional[_Iterable[str]] = ..., route_table: _Optional[_Union[SubnetAssociatedRouteTable, _Mapping]] = ...) -> None: ...
+
+class SubnetAssociatedRouteTable(_message.Message):
+    __slots__ = ["id", "default"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    DEFAULT_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    default: bool
+    def __init__(self, id: _Optional[str] = ..., default: bool = ...) -> None: ...

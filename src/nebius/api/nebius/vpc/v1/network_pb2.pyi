@@ -46,7 +46,7 @@ class NetworkPool(_message.Message):
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class NetworkStatus(_message.Message):
-    __slots__ = ["state"]
+    __slots__ = ["state", "default_route_table_id"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[NetworkStatus.State]
@@ -58,5 +58,7 @@ class NetworkStatus(_message.Message):
     READY: NetworkStatus.State
     DELETING: NetworkStatus.State
     STATE_FIELD_NUMBER: _ClassVar[int]
+    DEFAULT_ROUTE_TABLE_ID_FIELD_NUMBER: _ClassVar[int]
     state: NetworkStatus.State
-    def __init__(self, state: _Optional[_Union[NetworkStatus.State, str]] = ...) -> None: ...
+    default_route_table_id: str
+    def __init__(self, state: _Optional[_Union[NetworkStatus.State, str]] = ..., default_route_table_id: _Optional[str] = ...) -> None: ...
