@@ -10636,6 +10636,7 @@ class StaticKeySpec(pb_classes.Message):
         CLIENT_SERVICE_UNSPECIFIED = 0
         OBSERVABILITY = 1
         CONTAINER_REGISTRY = 2
+        AI_STUDIO = 3
     
     def __init__(
         self,

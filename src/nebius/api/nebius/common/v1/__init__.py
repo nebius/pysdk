@@ -1689,8 +1689,8 @@ class Operation(pb_classes.Message):
         request: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
         request_headers: "abc.Mapping[builtins.str,Operation.RequestHeader]|None|unset.UnsetType" = unset.Unset,
         resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        progress_data: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
         status: "status_pb2.Status|request_status.RequestStatus|None|unset.UnsetType" = unset.Unset,
+        progress_data: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -1709,10 +1709,10 @@ class Operation(pb_classes.Message):
             self.request_headers = request_headers
         if not isinstance(resource_id, unset.UnsetType):
             self.resource_id = resource_id
-        if not isinstance(progress_data, unset.UnsetType):
-            self.progress_data = progress_data
         if not isinstance(status, unset.UnsetType):
             self.status = status
+        if not isinstance(progress_data, unset.UnsetType):
+            self.progress_data = progress_data
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1724,8 +1724,8 @@ class Operation(pb_classes.Message):
             "request",
             "request_headers",
             "resource_id",
-            "progress_data",
             "status",
+            "progress_data",
             "RequestHeader",
             "RequestHeadersEntry",
         ]
@@ -1848,22 +1848,6 @@ class Operation(pb_classes.Message):
         )
     
     @builtins.property
-    def progress_data(self) -> "any_pb2.Any":
-        """
-        Additional information about the progress of an operation, e.g., a progress percentage.
-        MAY be absent while the operation is running, MUST be absent after the operation has completed.
-        
-        Type of message that's stored inside [progress_data] is service-dependent.
-        """
-        
-        return super()._get_field("progress_data", explicit_presence=False,
-        )
-    @progress_data.setter
-    def progress_data(self, value: "any_pb2.Any|None") -> None:
-        return super()._set_field("progress_data",value,explicit_presence=False,
-        )
-    
-    @builtins.property
     def status(self) -> "request_status.RequestStatus|None":
         """
         The status of this operation. Set when this operation is completed.
@@ -1887,6 +1871,21 @@ class Operation(pb_classes.Message):
         unwrap=request_status.request_status_to_rpc_status
         )
     
+    @builtins.property
+    def progress_data(self) -> "any_pb2.Any":
+        """
+        Extra information about this operation's progress. MAY be absent while the operation is running, MUST be absent after the operation has completed.
+        
+        Type of message that's stored inside [progress_data] is service-dependent.
+        """
+        
+        return super()._get_field("progress_data", explicit_presence=False,
+        )
+    @progress_data.setter
+    def progress_data(self, value: "any_pb2.Any|None") -> None:
+        return super()._set_field("progress_data",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
         "description":"description",
@@ -1896,8 +1895,8 @@ class Operation(pb_classes.Message):
         "request":"request",
         "request_headers":"request_headers",
         "resource_id":"resource_id",
-        "progress_data":"progress_data",
         "status":"status",
+        "progress_data":"progress_data",
         "RequestHeader":"RequestHeader",
         "RequestHeadersEntry":"RequestHeadersEntry",
     }

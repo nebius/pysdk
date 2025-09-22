@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.iam.v1 import access_pb2 as nebius_dot_iam_dot_v1_dot_access__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1enebius/iam/v1/static_key.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1anebius/iam/v1/access.proto\"\xcb\x01\n\tStaticKey\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x38\n\x04spec\x18\x02 \x01(\x0b\x32\x1c.nebius.iam.v1.StaticKeySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12<\n\x06status\x18\x03 \x01(\x0b\x32\x1e.nebius.iam.v1.StaticKeyStatusB\x04\xbaJ\x01\x05R\x06status\"\xab\x02\n\rStaticKeySpec\x12\x36\n\x07\x61\x63\x63ount\x18\x01 \x01(\x0b\x32\x16.nebius.iam.v1.AccountB\x04\xbaJ\x01\x02R\x07\x61\x63\x63ount\x12L\n\x07service\x18\x02 \x01(\x0e\x32*.nebius.iam.v1.StaticKeySpec.ClientServiceB\x06\xbaH\x03\xc8\x01\x01R\x07service\x12\x38\n\texpiresAt\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\texpiresAt\"Z\n\rClientService\x12\x1e\n\x1a\x43LIENT_SERVICE_UNSPECIFIED\x10\x00\x12\x11\n\rOBSERVABILITY\x10\x01\x12\x16\n\x12\x43ONTAINER_REGISTRY\x10\x02\")\n\x0fStaticKeyStatus\x12\x16\n\x06\x61\x63tive\x18\x01 \x01(\x08R\x06\x61\x63tiveBU\n\x14\x61i.nebius.pub.iam.v1B\x0eStaticKeyProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1enebius/iam/v1/static_key.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1anebius/iam/v1/access.proto\"\xcb\x01\n\tStaticKey\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x38\n\x04spec\x18\x02 \x01(\x0b\x32\x1c.nebius.iam.v1.StaticKeySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12<\n\x06status\x18\x03 \x01(\x0b\x32\x1e.nebius.iam.v1.StaticKeyStatusB\x04\xbaJ\x01\x05R\x06status\"\xba\x02\n\rStaticKeySpec\x12\x36\n\x07\x61\x63\x63ount\x18\x01 \x01(\x0b\x32\x16.nebius.iam.v1.AccountB\x04\xbaJ\x01\x02R\x07\x61\x63\x63ount\x12L\n\x07service\x18\x02 \x01(\x0e\x32*.nebius.iam.v1.StaticKeySpec.ClientServiceB\x06\xbaH\x03\xc8\x01\x01R\x07service\x12\x38\n\texpiresAt\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\texpiresAt\"i\n\rClientService\x12\x1e\n\x1a\x43LIENT_SERVICE_UNSPECIFIED\x10\x00\x12\x11\n\rOBSERVABILITY\x10\x01\x12\x16\n\x12\x43ONTAINER_REGISTRY\x10\x02\x12\r\n\tAI_STUDIO\x10\x03\")\n\x0fStaticKeyStatus\x12\x16\n\x06\x61\x63tive\x18\x01 \x01(\x08R\x06\x61\x63tiveBU\n\x14\x61i.nebius.pub.iam.v1B\x0eStaticKeyProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -40,9 +40,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_STATICKEY']._serialized_start=199
   _globals['_STATICKEY']._serialized_end=402
   _globals['_STATICKEYSPEC']._serialized_start=405
-  _globals['_STATICKEYSPEC']._serialized_end=704
+  _globals['_STATICKEYSPEC']._serialized_end=719
   _globals['_STATICKEYSPEC_CLIENTSERVICE']._serialized_start=614
-  _globals['_STATICKEYSPEC_CLIENTSERVICE']._serialized_end=704
-  _globals['_STATICKEYSTATUS']._serialized_start=706
-  _globals['_STATICKEYSTATUS']._serialized_end=747
+  _globals['_STATICKEYSPEC_CLIENTSERVICE']._serialized_end=719
+  _globals['_STATICKEYSTATUS']._serialized_start=721
+  _globals['_STATICKEYSTATUS']._serialized_end=762
 # @@protoc_insertion_point(module_scope)
