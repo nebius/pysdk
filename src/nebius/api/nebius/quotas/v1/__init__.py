@@ -426,7 +426,7 @@ class ListQuotaAllowancesRequest(pb_classes.Message):
     @builtins.property
     def parent_id(self) -> "builtins.str":
         """
-        ID of the Tenant or Project to list quotas for.
+        ID of the Container to list quotas for.
         """
         
         return super()._get_field("parent_id", explicit_presence=False,
@@ -596,7 +596,7 @@ class GetByNameRequest(pb_classes.Message):
     @builtins.property
     def parent_id(self) -> "builtins.str":
         """
-        ID of the Tenant or Project to list quotas for.
+        ID of the Container to list quotas for.
         """
         
         return super()._get_field("parent_id", explicit_presence=False,

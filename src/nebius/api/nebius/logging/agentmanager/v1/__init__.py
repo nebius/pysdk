@@ -371,17 +371,17 @@ class GetVersionRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def modules_health(self) -> "ModulesHealth":
+    def modules_health(self) -> "ModulesHealth|None":
         """
         Health status of individual agent modules.
         """
         
-        return super()._get_field("modules_health", explicit_presence=False,
+        return super()._get_field("modules_health", explicit_presence=True,
         wrap=ModulesHealth,
         )
     @modules_health.setter
     def modules_health(self, value: "ModulesHealth|version_service_pb2.ModulesHealth|None") -> None:
-        return super()._set_field("modules_health",value,explicit_presence=False,
+        return super()._set_field("modules_health",value,explicit_presence=True,
         )
     
     @builtins.property
@@ -503,6 +503,7 @@ class ModulesHealth(pb_classes.Message):
         gpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         cpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         cilium_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        vmapps_pipeline: "ModulesHealth|version_service_pb2.ModulesHealth|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(process, unset.UnsetType):
@@ -513,6 +514,8 @@ class ModulesHealth(pb_classes.Message):
             self.cpu_pipeline = cpu_pipeline
         if not isinstance(cilium_pipeline, unset.UnsetType):
             self.cilium_pipeline = cilium_pipeline
+        if not isinstance(vmapps_pipeline, unset.UnsetType):
+            self.vmapps_pipeline = vmapps_pipeline
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -520,6 +523,7 @@ class ModulesHealth(pb_classes.Message):
             "gpu_pipeline",
             "cpu_pipeline",
             "cilium_pipeline",
+            "vmapps_pipeline",
         ]
     
     @builtins.property
@@ -578,11 +582,26 @@ class ModulesHealth(pb_classes.Message):
         return super()._set_field("cilium_pipeline",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def vmapps_pipeline(self) -> "ModulesHealth|None":
+        """
+        Health status of the VM applications pipeline module.
+        """
+        
+        return super()._get_field("vmapps_pipeline", explicit_presence=True,
+        wrap=ModulesHealth,
+        )
+    @vmapps_pipeline.setter
+    def vmapps_pipeline(self, value: "ModulesHealth|version_service_pb2.ModulesHealth|None") -> None:
+        return super()._set_field("vmapps_pipeline",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "process":"process",
         "gpu_pipeline":"gpu_pipeline",
         "cpu_pipeline":"cpu_pipeline",
         "cilium_pipeline":"cilium_pipeline",
+        "vmapps_pipeline":"vmapps_pipeline",
     }
     
 class ModuleHealth(pb_classes.Message):
