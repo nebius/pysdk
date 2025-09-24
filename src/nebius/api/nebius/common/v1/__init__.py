@@ -19,6 +19,7 @@ import nebius.api.nebius.common.v1.error_pb2 as error_pb2
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.common.v1.operation_service_pb2 as operation_service_pb2
+import nebius.api.nebius.common.v1.resource_event_pb2 as resource_event_pb2
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -2109,6 +2110,158 @@ class OperationServiceClient(client.Client):
         )
     
 
+# file: nebius/common/v1/resource_event.proto
+class ResourceEvent(pb_classes.Message):
+    """
+    Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be reported is service-dependent
+    """
+    
+    __PB2_CLASS__ = resource_event_pb2.ResourceEvent
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ResourceEvent",resource_event_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "occurred_at": well_known_1.ts_mask,
+        "error": well_known_1.status_mask,
+    }
+    
+    class Level(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.common.v1.ResourceEvent.Level",resource_event_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        """
+        Unspecified event severity level
+        """
+        
+        DEBUG = 1
+        """
+        A debug event providing detailed insight. Such events are used to debug problems with specific resource(s) and process(es)
+        """
+        
+        INFO = 2
+        """
+        A normal event or state change. Informs what is happening with the API resource. Does not require user attention or interaction
+        """
+        
+        WARN = 3
+        """
+        Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention, but requires no immediate action (yet)
+        """
+        
+        ERROR = 4
+        """
+        Error event. Indicates a serious problem with the API resource and/or the corresponding processes. Requires immediate user action
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        occurred_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        level: "ResourceEvent.Level|resource_event_pb2.ResourceEvent.Level|None|unset.UnsetType" = unset.Unset,
+        code: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        error: "status_pb2.Status|request_status.RequestStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(occurred_at, unset.UnsetType):
+            self.occurred_at = occurred_at
+        if not isinstance(level, unset.UnsetType):
+            self.level = level
+        if not isinstance(code, unset.UnsetType):
+            self.code = code
+        if not isinstance(message, unset.UnsetType):
+            self.message = message
+        if not isinstance(error, unset.UnsetType):
+            self.error = error
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "occurred_at",
+            "level",
+            "code",
+            "message",
+            "error",
+            "Level",
+        ]
+    
+    @builtins.property
+    def occurred_at(self) -> "datetime.datetime":
+        """
+        Time at which the event has occurred
+        """
+        
+        return super()._get_field("occurred_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @occurred_at.setter
+    def occurred_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("occurred_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def level(self) -> "ResourceEvent.Level":
+        """
+        Severity level for the event
+        """
+        
+        return super()._get_field("level", explicit_presence=False,
+        wrap=ResourceEvent.Level,
+        )
+    @level.setter
+    def level(self, value: "ResourceEvent.Level|resource_event_pb2.ResourceEvent.Level|None") -> None:
+        return super()._set_field("level",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def code(self) -> "builtins.str":
+        """
+        Event code (unique within the API service), in UpperCamelCase, e.g. `"DiskAttached"`
+        """
+        
+        return super()._get_field("code", explicit_presence=False,
+        )
+    @code.setter
+    def code(self, value: "builtins.str|None") -> None:
+        return super()._set_field("code",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def message(self) -> "builtins.str":
+        """
+        A human-readable message describing what has happened (and suggested actions for the user, if this is a `WARN`- or `ERROR`-level event)
+        """
+        
+        return super()._get_field("message", explicit_presence=False,
+        )
+    @message.setter
+    def message(self, value: "builtins.str|None") -> None:
+        return super()._set_field("message",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def error(self) -> "request_status.RequestStatus|None":
+        """
+        Describes a GRPC error status associated with an `ERROR`- or `WARN`-level event, if known. The `error` **must** have a standard GRPC `code` (which **must not** be `OK` (0)) and a human-readable `message`. A standard `common.v1.ServiceError` **should** also be included in `details`
+        """
+        
+        return super()._get_field("error", explicit_presence=True,
+        wrap=request_status.request_status_from_rpc_status
+        )
+    @error.setter
+    def error(self, value: "status_pb2.Status|request_status.RequestStatus|None") -> None:
+        return super()._set_field("error",value,explicit_presence=True,
+        unwrap=request_status.request_status_to_rpc_status
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "occurred_at":"occurred_at",
+        "level":"level",
+        "code":"code",
+        "message":"message",
+        "error":"error",
+        "Level":"Level",
+    }
+    
 __all__ = [
     #@ local import names here @#
     "ServiceError",
@@ -2131,4 +2284,5 @@ __all__ = [
     "ListOperationsRequest",
     "ListOperationsResponse",
     "OperationServiceClient",
+    "ResourceEvent",
 ]
