@@ -34,3 +34,13 @@ class ResourceEvent(_message.Message):
     message: str
     error: _status_pb2.Status
     def __init__(self, occurred_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., level: _Optional[_Union[ResourceEvent.Level, str]] = ..., code: _Optional[str] = ..., message: _Optional[str] = ..., error: _Optional[_Union[_status_pb2.Status, _Mapping]] = ...) -> None: ...
+
+class RecurrentResourceEvent(_message.Message):
+    __slots__ = ["first_occurred_at", "last_occurrence", "occurrence_count"]
+    FIRST_OCCURRED_AT_FIELD_NUMBER: _ClassVar[int]
+    LAST_OCCURRENCE_FIELD_NUMBER: _ClassVar[int]
+    OCCURRENCE_COUNT_FIELD_NUMBER: _ClassVar[int]
+    first_occurred_at: _timestamp_pb2.Timestamp
+    last_occurrence: ResourceEvent
+    occurrence_count: int
+    def __init__(self, first_occurred_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_occurrence: _Optional[_Union[ResourceEvent, _Mapping]] = ..., occurrence_count: _Optional[int] = ...) -> None: ...

@@ -2958,6 +2958,7 @@ class NodeGroupStatus(pb_classes.Message):
         outdated_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         ready_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         conditions: "abc.Iterable[Condition]|None|unset.UnsetType" = unset.Unset,
+        events: "abc.Iterable[v1_1.RecurrentResourceEvent]|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -2975,6 +2976,8 @@ class NodeGroupStatus(pb_classes.Message):
             self.ready_node_count = ready_node_count
         if not isinstance(conditions, unset.UnsetType):
             self.conditions = conditions
+        if not isinstance(events, unset.UnsetType):
+            self.events = events
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
@@ -2987,6 +2990,7 @@ class NodeGroupStatus(pb_classes.Message):
             "outdated_node_count",
             "ready_node_count",
             "conditions",
+            "events",
             "reconciling",
             "State",
         ]
@@ -3096,6 +3100,16 @@ class NodeGroupStatus(pb_classes.Message):
         )
     
     @builtins.property
+    def events(self) -> "abc.MutableSequence[v1_1.RecurrentResourceEvent]":
+        return super()._get_field("events", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(v1_1.RecurrentResourceEvent,None,None),
+        )
+    @events.setter
+    def events(self, value: "abc.Iterable[v1_1.RecurrentResourceEvent]|None") -> None:
+        return super()._set_field("events",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         """
         Show that there are changes are in flight.
@@ -3116,6 +3130,7 @@ class NodeGroupStatus(pb_classes.Message):
         "outdated_node_count":"outdated_node_count",
         "ready_node_count":"ready_node_count",
         "conditions":"conditions",
+        "events":"events",
         "reconciling":"reconciling",
         "State":"State",
     }

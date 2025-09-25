@@ -10,6 +10,17 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class SecretDeliveryMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
+    UNSPECIFIED: _ClassVar[SecretDeliveryMode]
+    INLINE: _ClassVar[SecretDeliveryMode]
+    MYSTERY_BOX: _ClassVar[SecretDeliveryMode]
+    EXPLICIT: _ClassVar[SecretDeliveryMode]
+UNSPECIFIED: SecretDeliveryMode
+INLINE: SecretDeliveryMode
+MYSTERY_BOX: SecretDeliveryMode
+EXPLICIT: SecretDeliveryMode
+
 class AccessKey(_message.Message):
     __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
@@ -21,14 +32,16 @@ class AccessKey(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[AccessKeySpec, _Mapping]] = ..., status: _Optional[_Union[AccessKeyStatus, _Mapping]] = ...) -> None: ...
 
 class AccessKeySpec(_message.Message):
-    __slots__ = ["account", "expires_at", "description"]
+    __slots__ = ["account", "expires_at", "description", "secret_delivery_mode"]
     ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     EXPIRES_AT_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
+    SECRET_DELIVERY_MODE_FIELD_NUMBER: _ClassVar[int]
     account: _access_pb2.Account
     expires_at: _timestamp_pb2.Timestamp
     description: str
-    def __init__(self, account: _Optional[_Union[_access_pb2.Account, _Mapping]] = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., description: _Optional[str] = ...) -> None: ...
+    secret_delivery_mode: SecretDeliveryMode
+    def __init__(self, account: _Optional[_Union[_access_pb2.Account, _Mapping]] = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., description: _Optional[str] = ..., secret_delivery_mode: _Optional[_Union[SecretDeliveryMode, str]] = ...) -> None: ...
 
 class AccessKeyStatus(_message.Message):
     __slots__ = ["state", "fingerprint", "algorithm", "key_size", "aws_access_key_id", "secret"]

@@ -26,6 +26,11 @@ class AccessKeyServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeyRequest.SerializeToString,
                 response_deserializer=nebius_dot_iam_dot_v2_dot_access__key__pb2.AccessKey.FromString,
                 )
+        self.GetSecret = channel.unary_unary(
+                '/nebius.iam.v2.AccessKeyService/GetSecret',
+                request_serializer=nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeySecretRequest.SerializeToString,
+                response_deserializer=nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeySecretResponse.FromString,
+                )
         self.List = channel.unary_unary(
                 '/nebius.iam.v2.AccessKeyService/List',
                 request_serializer=nebius_dot_iam_dot_v2_dot_access__key__service__pb2.ListAccessKeysRequest.SerializeToString,
@@ -88,6 +93,12 @@ class AccessKeyServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Get(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetSecret(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -165,6 +176,11 @@ def add_AccessKeyServiceServicer_to_server(servicer, server):
                     servicer.Get,
                     request_deserializer=nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeyRequest.FromString,
                     response_serializer=nebius_dot_iam_dot_v2_dot_access__key__pb2.AccessKey.SerializeToString,
+            ),
+            'GetSecret': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSecret,
+                    request_deserializer=nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeySecretRequest.FromString,
+                    response_serializer=nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeySecretResponse.SerializeToString,
             ),
             'List': grpc.unary_unary_rpc_method_handler(
                     servicer.List,
@@ -257,6 +273,23 @@ class AccessKeyService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v2.AccessKeyService/Get',
             nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeyRequest.SerializeToString,
             nebius_dot_iam_dot_v2_dot_access__key__pb2.AccessKey.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetSecret(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v2.AccessKeyService/GetSecret',
+            nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeySecretRequest.SerializeToString,
+            nebius_dot_iam_dot_v2_dot_access__key__service__pb2.GetAccessKeySecretResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

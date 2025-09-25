@@ -24,6 +24,12 @@ class GetAccessKeyRequest(_message.Message):
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
+class GetAccessKeySecretRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
 class GetAccessKeyByAwsIdRequest(_message.Message):
     __slots__ = ["aws_access_key_id"]
     AWS_ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
@@ -97,6 +103,14 @@ class DeleteAccessKeyByAwsIdRequest(_message.Message):
     AWS_ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
     aws_access_key_id: str
     def __init__(self, aws_access_key_id: _Optional[str] = ...) -> None: ...
+
+class GetAccessKeySecretResponse(_message.Message):
+    __slots__ = ["aws_access_key_id", "secret"]
+    AWS_ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
+    SECRET_FIELD_NUMBER: _ClassVar[int]
+    aws_access_key_id: str
+    secret: str
+    def __init__(self, aws_access_key_id: _Optional[str] = ..., secret: _Optional[str] = ...) -> None: ...
 
 class ListAccessKeysResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]

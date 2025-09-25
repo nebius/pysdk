@@ -30,6 +30,29 @@ import nebius.base.protos.well_known as well_known_1
 #@ local imports here @#
 
 # file: nebius/iam/v2/access_key.proto
+class SecretDeliveryMode(pb_enum.Enum):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v2.SecretDeliveryMode",access_key_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    UNSPECIFIED = 0
+    """
+    If not specified, the default behaviour will be applied. Currently it's INLINE, later will be EXPLICIT.
+    """
+    
+    INLINE = 1
+    """
+    The secret value will be returned directly in the API response
+    """
+    
+    MYSTERY_BOX = 2
+    """
+    The secret will be delivered via a MysteryBox secret, in case of terraform it is recommended to use that enum
+    """
+    
+    EXPLICIT = 3
+    """
+    The secret value will be accessible via a separate method GetSecret
+    """
+    
+
 class AccessKey(pb_classes.Message):
     __PB2_CLASS__ = access_key_pb2.AccessKey
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.AccessKey",access_key_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -109,6 +132,7 @@ class AccessKeySpec(pb_classes.Message):
         account: "v1_2.Account|access_pb2.Account|None|unset.UnsetType" = unset.Unset,
         expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        secret_delivery_mode: "SecretDeliveryMode|access_key_pb2.SecretDeliveryMode|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(account, unset.UnsetType):
@@ -117,12 +141,15 @@ class AccessKeySpec(pb_classes.Message):
             self.expires_at = expires_at
         if not isinstance(description, unset.UnsetType):
             self.description = description
+        if not isinstance(secret_delivery_mode, unset.UnsetType):
+            self.secret_delivery_mode = secret_delivery_mode
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "account",
             "expires_at",
             "description",
+            "secret_delivery_mode",
         ]
     
     @builtins.property
@@ -155,10 +182,25 @@ class AccessKeySpec(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def secret_delivery_mode(self) -> "SecretDeliveryMode":
+        """
+        Specifies how the secret will be delivered upon creation. This field is immutable — it cannot be changed after the resource is created.
+        """
+        
+        return super()._get_field("secret_delivery_mode", explicit_presence=False,
+        wrap=SecretDeliveryMode,
+        )
+    @secret_delivery_mode.setter
+    def secret_delivery_mode(self, value: "SecretDeliveryMode|access_key_pb2.SecretDeliveryMode|None") -> None:
+        return super()._set_field("secret_delivery_mode",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "account":"account",
         "expires_at":"expires_at",
         "description":"description",
+        "secret_delivery_mode":"secret_delivery_mode",
     }
     
 class AccessKeyStatus(pb_classes.Message):
@@ -331,6 +373,40 @@ class CreateAccessKeyRequest(pb_classes.Message):
 class GetAccessKeyRequest(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.GetAccessKeyRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.GetAccessKeyRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetAccessKeySecretRequest(pb_classes.Message):
+    __PB2_CLASS__ = access_key_service_pb2.GetAccessKeySecretRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.GetAccessKeySecretRequest",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -837,6 +913,54 @@ class DeleteAccessKeyByAwsIdRequest(pb_classes.Message):
         "aws_access_key_id":"aws_access_key_id",
     }
     
+class GetAccessKeySecretResponse(pb_classes.Message):
+    __PB2_CLASS__ = access_key_service_pb2.GetAccessKeySecretResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.GetAccessKeySecretResponse",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        aws_access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        secret: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(aws_access_key_id, unset.UnsetType):
+            self.aws_access_key_id = aws_access_key_id
+        if not isinstance(secret, unset.UnsetType):
+            self.secret = secret
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "aws_access_key_id",
+            "secret",
+        ]
+    
+    @builtins.property
+    def aws_access_key_id(self) -> "builtins.str":
+        return super()._get_field("aws_access_key_id", explicit_presence=False,
+        )
+    @aws_access_key_id.setter
+    def aws_access_key_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("aws_access_key_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def secret(self) -> "builtins.str":
+        return super()._get_field("secret", explicit_presence=False,
+        )
+    @secret.setter
+    def secret(self, value: "builtins.str|None") -> None:
+        return super()._set_field("secret",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "aws_access_key_id":"aws_access_key_id",
+        "secret":"secret",
+    }
+    
 class ListAccessKeysResponse(pb_classes.Message):
     __PB2_CLASS__ = access_key_service_pb2.ListAccessKeysResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.ListAccessKeysResponse",access_key_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -944,6 +1068,28 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
             retries=retries,
             per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(AccessKey),
+        )
+    
+    def get_secret(self,
+        request: "GetAccessKeySecretRequest",
+        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
+        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        credentials: grpc.CallCredentials | None = None,
+        compression: grpc.Compression | None = None,
+        retries: builtins.int | None = 3,
+        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+    ) -> request_1.Request["GetAccessKeySecretRequest","GetAccessKeySecretResponse"]:
+        return super().request(
+            method="GetSecret",
+            request=request,
+            result_pb2_class=access_key_service_pb2.GetAccessKeySecretResponse,
+            metadata=metadata,
+            timeout=timeout,
+            credentials=credentials,
+            compression=compression,
+            retries=retries,
+            per_retry_timeout=per_retry_timeout,
+            result_wrapper=pb_classes.simple_wrapper(GetAccessKeySecretResponse),
         )
     
     def list(self,
@@ -1680,11 +1826,13 @@ class TenantServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
 
 __all__ = [
     #@ local import names here @#
+    "SecretDeliveryMode",
     "AccessKey",
     "AccessKeySpec",
     "AccessKeyStatus",
     "CreateAccessKeyRequest",
     "GetAccessKeyRequest",
+    "GetAccessKeySecretRequest",
     "GetAccessKeyByAwsIdRequest",
     "ListAccessKeysRequest",
     "ListAccessKeysByAccountRequest",
@@ -1695,6 +1843,7 @@ __all__ = [
     "DeactivateAccessKeyByAwsIdRequest",
     "DeleteAccessKeyRequest",
     "DeleteAccessKeyByAwsIdRequest",
+    "GetAccessKeySecretResponse",
     "ListAccessKeysResponse",
     "AccessKeyServiceClient",
     "Tenant",

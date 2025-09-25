@@ -2262,6 +2262,88 @@ class ResourceEvent(pb_classes.Message):
         "Level":"Level",
     }
     
+class RecurrentResourceEvent(pb_classes.Message):
+    """
+    A resource event that has occurred (more or less in the same way) multiple times across a service-defined aggregation interval
+    """
+    
+    __PB2_CLASS__ = resource_event_pb2.RecurrentResourceEvent
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.RecurrentResourceEvent",resource_event_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "first_occurred_at": well_known_1.ts_mask,
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        first_occurred_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        last_occurrence: "ResourceEvent|resource_event_pb2.ResourceEvent|None|unset.UnsetType" = unset.Unset,
+        occurrence_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(first_occurred_at, unset.UnsetType):
+            self.first_occurred_at = first_occurred_at
+        if not isinstance(last_occurrence, unset.UnsetType):
+            self.last_occurrence = last_occurrence
+        if not isinstance(occurrence_count, unset.UnsetType):
+            self.occurrence_count = occurrence_count
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "first_occurred_at",
+            "last_occurrence",
+            "occurrence_count",
+        ]
+    
+    @builtins.property
+    def first_occurred_at(self) -> "datetime.datetime":
+        """
+        Time of the first occurrence of a recurrent event
+        """
+        
+        return super()._get_field("first_occurred_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @first_occurred_at.setter
+    def first_occurred_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("first_occurred_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def last_occurrence(self) -> "ResourceEvent":
+        """
+        Last occurrence of a recurrent event
+        """
+        
+        return super()._get_field("last_occurrence", explicit_presence=False,
+        wrap=ResourceEvent,
+        )
+    @last_occurrence.setter
+    def last_occurrence(self, value: "ResourceEvent|resource_event_pb2.ResourceEvent|None") -> None:
+        return super()._set_field("last_occurrence",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def occurrence_count(self) -> "builtins.int":
+        """
+        The number of times this event has occurred between `first_occurred_at` and `last_occurrence.occurred_at`. Must be > 0
+        """
+        
+        return super()._get_field("occurrence_count", explicit_presence=False,
+        )
+    @occurrence_count.setter
+    def occurrence_count(self, value: "builtins.int|None") -> None:
+        return super()._set_field("occurrence_count",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "first_occurred_at":"first_occurred_at",
+        "last_occurrence":"last_occurrence",
+        "occurrence_count":"occurrence_count",
+    }
+    
 __all__ = [
     #@ local import names here @#
     "ServiceError",
@@ -2285,4 +2367,5 @@ __all__ = [
     "ListOperationsResponse",
     "OperationServiceClient",
     "ResourceEvent",
+    "RecurrentResourceEvent",
 ]
