@@ -3607,6 +3607,7 @@ class NetworkInterfaceSpec(pb_classes.Message):
         name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ip_address: "IPAddress|network_interface_pb2.IPAddress|None|unset.UnsetType" = unset.Unset,
         public_ip_address: "PublicIPAddress|network_interface_pb2.PublicIPAddress|None|unset.UnsetType" = unset.Unset,
+        aliases: "abc.Iterable[IPAlias]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(subnet_id, unset.UnsetType):
@@ -3617,6 +3618,8 @@ class NetworkInterfaceSpec(pb_classes.Message):
             self.ip_address = ip_address
         if not isinstance(public_ip_address, unset.UnsetType):
             self.public_ip_address = public_ip_address
+        if not isinstance(aliases, unset.UnsetType):
+            self.aliases = aliases
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -3624,6 +3627,7 @@ class NetworkInterfaceSpec(pb_classes.Message):
             "name",
             "ip_address",
             "public_ip_address",
+            "aliases",
         ]
     
     @builtins.property
@@ -3682,11 +3686,26 @@ class NetworkInterfaceSpec(pb_classes.Message):
         return super()._set_field("public_ip_address",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def aliases(self) -> "abc.MutableSequence[IPAlias]":
+        """
+        Assign ranges of IP addresses as aliases
+        """
+        
+        return super()._get_field("aliases", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(IPAlias,None,None),
+        )
+    @aliases.setter
+    def aliases(self, value: "abc.Iterable[IPAlias]|None") -> None:
+        return super()._set_field("aliases",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "subnet_id":"subnet_id",
         "name":"name",
         "ip_address":"ip_address",
         "public_ip_address":"public_ip_address",
+        "aliases":"aliases",
     }
     
 class IPAddress(pb_classes.Message):
@@ -3826,6 +3845,44 @@ class PublicIPAddress(pb_classes.Message):
         "allocation":"allocation",
     }
     
+class IPAlias(pb_classes.Message):
+    __PB2_CLASS__ = network_interface_pb2.IPAlias
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.IPAlias",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        allocation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(allocation_id, unset.UnsetType):
+            self.allocation_id = allocation_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "allocation_id",
+        ]
+    
+    @builtins.property
+    def allocation_id(self) -> "builtins.str":
+        """
+        ID of allocation
+        """
+        
+        return super()._get_field("allocation_id", explicit_presence=False,
+        )
+    @allocation_id.setter
+    def allocation_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("allocation_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allocation_id":"allocation_id",
+    }
+    
 class NetworkInterfaceStatus(pb_classes.Message):
     """
     Describes the status of a network interface.
@@ -3844,6 +3901,7 @@ class NetworkInterfaceStatus(pb_classes.Message):
         name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ip_address: "IPAddressStatus|network_interface_pb2.IPAddressStatus|None|unset.UnsetType" = unset.Unset,
         public_ip_address: "PublicIPAddressStatus|network_interface_pb2.PublicIPAddressStatus|None|unset.UnsetType" = unset.Unset,
+        aliases: "IPAliasesStatus|network_interface_pb2.IPAliasesStatus|None|unset.UnsetType" = unset.Unset,
         mac_address: "builtins.str|None|unset.UnsetType" = unset.Unset,
         fqdn: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -3856,6 +3914,8 @@ class NetworkInterfaceStatus(pb_classes.Message):
             self.ip_address = ip_address
         if not isinstance(public_ip_address, unset.UnsetType):
             self.public_ip_address = public_ip_address
+        if not isinstance(aliases, unset.UnsetType):
+            self.aliases = aliases
         if not isinstance(mac_address, unset.UnsetType):
             self.mac_address = mac_address
         if not isinstance(fqdn, unset.UnsetType):
@@ -3867,6 +3927,7 @@ class NetworkInterfaceStatus(pb_classes.Message):
             "name",
             "ip_address",
             "public_ip_address",
+            "aliases",
             "mac_address",
             "fqdn",
         ]
@@ -3927,6 +3988,20 @@ class NetworkInterfaceStatus(pb_classes.Message):
         )
     
     @builtins.property
+    def aliases(self) -> "IPAliasesStatus":
+        """
+        Effective IP Aliases
+        """
+        
+        return super()._get_field("aliases", explicit_presence=False,
+        wrap=IPAliasesStatus,
+        )
+    @aliases.setter
+    def aliases(self, value: "IPAliasesStatus|network_interface_pb2.IPAliasesStatus|None") -> None:
+        return super()._set_field("aliases",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def mac_address(self) -> "builtins.str":
         """
         MAC address
@@ -3957,6 +4032,7 @@ class NetworkInterfaceStatus(pb_classes.Message):
         "name":"name",
         "ip_address":"ip_address",
         "public_ip_address":"public_ip_address",
+        "aliases":"aliases",
         "mac_address":"mac_address",
         "fqdn":"fqdn",
     }
@@ -4091,6 +4167,41 @@ class PublicIPAddressStatus(pb_classes.Message):
         "address":"address",
         "allocation_id":"allocation_id",
         "static":"static",
+    }
+    
+class IPAliasesStatus(pb_classes.Message):
+    __PB2_CLASS__ = network_interface_pb2.IPAliasesStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.IPAliasesStatus",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cidrs, unset.UnsetType):
+            self.cidrs = cidrs
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cidrs",
+        ]
+    
+    @builtins.property
+    def cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        return super()._get_field("cidrs", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @cidrs.setter
+    def cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("cidrs",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cidrs":"cidrs",
     }
     
 # file: nebius/compute/v1/instance.proto
@@ -6799,9 +6910,11 @@ __all__ = [
     "NetworkInterfaceSpec",
     "IPAddress",
     "PublicIPAddress",
+    "IPAlias",
     "NetworkInterfaceStatus",
     "IPAddressStatus",
     "PublicIPAddressStatus",
+    "IPAliasesStatus",
     "InstanceRecoveryPolicy",
     "Instance",
     "InstanceSpec",
