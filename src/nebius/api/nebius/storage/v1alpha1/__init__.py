@@ -344,6 +344,55 @@ class TransferSpec(pb_classes.Message):
             }
             
         
+        class AzureAccessKey(pb_classes.Message):
+            __PB2_CLASS__ = transfer_pb2.TransferSpec.BucketCredentials.AzureAccessKey
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1alpha1.TransferSpec.BucketCredentials.AzureAccessKey",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+            __mask_functions__ = {
+            }
+            
+            def __init__(
+                self,
+                initial_message: message_1.Message|None = None,
+                *,
+                account_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                access_key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            ) -> None:
+                super().__init__(initial_message)
+                if not isinstance(account_name, unset.UnsetType):
+                    self.account_name = account_name
+                if not isinstance(access_key, unset.UnsetType):
+                    self.access_key = access_key
+            
+            def __dir__(self) ->abc.Iterable[builtins.str]:
+                return [
+                    "account_name",
+                    "access_key",
+                ]
+            
+            @builtins.property
+            def account_name(self) -> "builtins.str":
+                return super()._get_field("account_name", explicit_presence=False,
+                )
+            @account_name.setter
+            def account_name(self, value: "builtins.str|None") -> None:
+                return super()._set_field("account_name",value,explicit_presence=False,
+                )
+            
+            @builtins.property
+            def access_key(self) -> "builtins.str":
+                return super()._get_field("access_key", explicit_presence=False,
+                )
+            @access_key.setter
+            def access_key(self, value: "builtins.str|None") -> None:
+                return super()._set_field("access_key",value,explicit_presence=False,
+                )
+            
+            __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+                "account_name":"account_name",
+                "access_key":"access_key",
+            }
+            
+        
         class __OneOfClass_credentials__(pb_classes.OneOf):
             name: builtins.str= "credentials"
             
@@ -369,14 +418,25 @@ class TransferSpec(pb_classes.Message):
             def value(self) -> "TransferSpec.BucketCredentials.CredentialsAccessKey":
                 return self._message.access_key
         
+        class __OneOfClass_credentials_azure_access_key__(__OneOfClass_credentials__):
+            field: typing.Literal["azure_access_key"] = "azure_access_key"
+            
+            def __init__(self, msg: "TransferSpec.BucketCredentials") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferSpec.BucketCredentials.AzureAccessKey":
+                return self._message.azure_access_key
+        
         @builtins.property
-        def credentials(self) -> __OneOfClass_credentials_anonymous__|__OneOfClass_credentials_access_key__|None:
+        def credentials(self) -> __OneOfClass_credentials_anonymous__|__OneOfClass_credentials_access_key__|__OneOfClass_credentials_azure_access_key__|None:
             field_name_1: str|None = super().which_field_in_oneof("credentials")
             match field_name_1:
                 case "anonymous":
                     return self.__OneOfClass_credentials_anonymous__(self)
                 case "access_key":
                     return self.__OneOfClass_credentials_access_key__(self)
+                case "azure_access_key":
+                    return self.__OneOfClass_credentials_azure_access_key__(self)
                 case None:
                     return None
                 case _:
@@ -388,19 +448,24 @@ class TransferSpec(pb_classes.Message):
             *,
             anonymous: "TransferSpec.BucketCredentials.CredentialsAnonymous|transfer_pb2.TransferSpec.BucketCredentials.CredentialsAnonymous|None|unset.UnsetType" = unset.Unset,
             access_key: "TransferSpec.BucketCredentials.CredentialsAccessKey|transfer_pb2.TransferSpec.BucketCredentials.CredentialsAccessKey|None|unset.UnsetType" = unset.Unset,
+            azure_access_key: "TransferSpec.BucketCredentials.AzureAccessKey|transfer_pb2.TransferSpec.BucketCredentials.AzureAccessKey|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(anonymous, unset.UnsetType):
                 self.anonymous = anonymous
             if not isinstance(access_key, unset.UnsetType):
                 self.access_key = access_key
+            if not isinstance(azure_access_key, unset.UnsetType):
+                self.azure_access_key = azure_access_key
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "anonymous",
                 "access_key",
+                "azure_access_key",
                 "CredentialsAnonymous",
                 "CredentialsAccessKey",
+                "AzureAccessKey",
                 "credentials",
             ]
         
@@ -424,11 +489,23 @@ class TransferSpec(pb_classes.Message):
             return super()._set_field("access_key",value,explicit_presence=True,
             )
         
+        @builtins.property
+        def azure_access_key(self) -> "TransferSpec.BucketCredentials.AzureAccessKey|None":
+            return super()._get_field("azure_access_key", explicit_presence=True,
+            wrap=TransferSpec.BucketCredentials.AzureAccessKey,
+            )
+        @azure_access_key.setter
+        def azure_access_key(self, value: "TransferSpec.BucketCredentials.AzureAccessKey|transfer_pb2.TransferSpec.BucketCredentials.AzureAccessKey|None") -> None:
+            return super()._set_field("azure_access_key",value,explicit_presence=True,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "anonymous":"anonymous",
             "access_key":"access_key",
+            "azure_access_key":"azure_access_key",
             "CredentialsAnonymous":"CredentialsAnonymous",
             "CredentialsAccessKey":"CredentialsAccessKey",
+            "AzureAccessKey":"AzureAccessKey",
             "credentials":"credentials",
         }
         

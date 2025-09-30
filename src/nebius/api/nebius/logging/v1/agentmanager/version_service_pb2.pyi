@@ -90,8 +90,8 @@ class ModulesHealth(_message.Message):
     gpu_pipeline: ModuleHealth
     cpu_pipeline: ModuleHealth
     cilium_pipeline: ModuleHealth
-    vmapps_pipeline: ModulesHealth
-    def __init__(self, process: _Optional[_Union[ModuleHealth, _Mapping]] = ..., gpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cilium_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vmapps_pipeline: _Optional[_Union[ModulesHealth, _Mapping]] = ...) -> None: ...
+    vmapps_pipeline: ModuleHealth
+    def __init__(self, process: _Optional[_Union[ModuleHealth, _Mapping]] = ..., gpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cilium_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vmapps_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ...) -> None: ...
 
 class ModuleHealth(_message.Message):
     __slots__ = ["state", "messages", "parameters"]

@@ -371,17 +371,17 @@ class GetVersionRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def modules_health(self) -> "ModulesHealth|None":
+    def modules_health(self) -> "ModulesHealth":
         """
         Health status of individual agent modules.
         """
         
-        return super()._get_field("modules_health", explicit_presence=True,
+        return super()._get_field("modules_health", explicit_presence=False,
         wrap=ModulesHealth,
         )
     @modules_health.setter
     def modules_health(self, value: "ModulesHealth|version_service_pb2.ModulesHealth|None") -> None:
-        return super()._set_field("modules_health",value,explicit_presence=True,
+        return super()._set_field("modules_health",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -503,7 +503,7 @@ class ModulesHealth(pb_classes.Message):
         gpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         cpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         cilium_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
-        vmapps_pipeline: "ModulesHealth|version_service_pb2.ModulesHealth|None|unset.UnsetType" = unset.Unset,
+        vmapps_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(process, unset.UnsetType):
@@ -583,17 +583,17 @@ class ModulesHealth(pb_classes.Message):
         )
     
     @builtins.property
-    def vmapps_pipeline(self) -> "ModulesHealth|None":
+    def vmapps_pipeline(self) -> "ModuleHealth":
         """
         Health status of the VM applications pipeline module.
         """
         
-        return super()._get_field("vmapps_pipeline", explicit_presence=True,
-        wrap=ModulesHealth,
+        return super()._get_field("vmapps_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
         )
     @vmapps_pipeline.setter
-    def vmapps_pipeline(self, value: "ModulesHealth|version_service_pb2.ModulesHealth|None") -> None:
-        return super()._set_field("vmapps_pipeline",value,explicit_presence=True,
+    def vmapps_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("vmapps_pipeline",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {

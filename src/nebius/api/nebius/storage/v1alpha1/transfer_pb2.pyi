@@ -53,7 +53,7 @@ class TransferSpec(_message.Message):
         credentials: TransferSpec.BucketCredentials
         def __init__(self, bucket_name: _Optional[str] = ..., credentials: _Optional[_Union[TransferSpec.BucketCredentials, _Mapping]] = ...) -> None: ...
     class BucketCredentials(_message.Message):
-        __slots__ = ["anonymous", "access_key"]
+        __slots__ = ["anonymous", "access_key", "azure_access_key"]
         class CredentialsAnonymous(_message.Message):
             __slots__ = []
             def __init__(self) -> None: ...
@@ -64,11 +64,20 @@ class TransferSpec(_message.Message):
             access_key_id: str
             secret_access_key: str
             def __init__(self, access_key_id: _Optional[str] = ..., secret_access_key: _Optional[str] = ...) -> None: ...
+        class AzureAccessKey(_message.Message):
+            __slots__ = ["account_name", "access_key"]
+            ACCOUNT_NAME_FIELD_NUMBER: _ClassVar[int]
+            ACCESS_KEY_FIELD_NUMBER: _ClassVar[int]
+            account_name: str
+            access_key: str
+            def __init__(self, account_name: _Optional[str] = ..., access_key: _Optional[str] = ...) -> None: ...
         ANONYMOUS_FIELD_NUMBER: _ClassVar[int]
         ACCESS_KEY_FIELD_NUMBER: _ClassVar[int]
+        AZURE_ACCESS_KEY_FIELD_NUMBER: _ClassVar[int]
         anonymous: TransferSpec.BucketCredentials.CredentialsAnonymous
         access_key: TransferSpec.BucketCredentials.CredentialsAccessKey
-        def __init__(self, anonymous: _Optional[_Union[TransferSpec.BucketCredentials.CredentialsAnonymous, _Mapping]] = ..., access_key: _Optional[_Union[TransferSpec.BucketCredentials.CredentialsAccessKey, _Mapping]] = ...) -> None: ...
+        azure_access_key: TransferSpec.BucketCredentials.AzureAccessKey
+        def __init__(self, anonymous: _Optional[_Union[TransferSpec.BucketCredentials.CredentialsAnonymous, _Mapping]] = ..., access_key: _Optional[_Union[TransferSpec.BucketCredentials.CredentialsAccessKey, _Mapping]] = ..., azure_access_key: _Optional[_Union[TransferSpec.BucketCredentials.AzureAccessKey, _Mapping]] = ...) -> None: ...
     class Limiters(_message.Message):
         __slots__ = ["bandwidth_bytes_per_second", "requests_per_second"]
         BANDWIDTH_BYTES_PER_SECOND_FIELD_NUMBER: _ClassVar[int]
