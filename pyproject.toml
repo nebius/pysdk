@@ -49,7 +49,7 @@ generators = [
     "grpcio-tools>=1.56.2",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
-    "pydoctor>=24.11.2",
+    "pydoctor>=24.11.2<25.0",  # For generating docs
     "beautifulsoup4>=4.12.3",
     "tomlkit>=0.13.2",
 ]
@@ -212,7 +212,7 @@ deps = [
     "certifi>=2024.8.30",
     "protobuf>=5.29.1",
     "grpcio-status>=1.56.2",
-    "pydoctor>=24.11.2",
+    "pydoctor>=24.11.2<25.0",  # For generating docs
     "beautifulsoup4>=4.12.3",
     "aiohttp>=3.8.5",
     "portalocker>=2.8.1",
