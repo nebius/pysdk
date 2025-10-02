@@ -82,14 +82,19 @@ class DeleteObjectResponse(_message.Message):
     def __init__(self, delete_marker: bool = ...) -> None: ...
 
 class DeleteObjectsRequestParameters(_message.Message):
-    __slots__ = ["bucket_name", "object_key", "version"]
+    __slots__ = ["bucket_name", "objects"]
+    class ObjectKey(_message.Message):
+        __slots__ = ["key", "version"]
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VERSION_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        version: str
+        def __init__(self, key: _Optional[str] = ..., version: _Optional[str] = ...) -> None: ...
     BUCKET_NAME_FIELD_NUMBER: _ClassVar[int]
-    OBJECT_KEY_FIELD_NUMBER: _ClassVar[int]
-    VERSION_FIELD_NUMBER: _ClassVar[int]
+    OBJECTS_FIELD_NUMBER: _ClassVar[int]
     bucket_name: str
-    object_key: str
-    version: str
-    def __init__(self, bucket_name: _Optional[str] = ..., object_key: _Optional[str] = ..., version: _Optional[str] = ...) -> None: ...
+    objects: _containers.RepeatedCompositeFieldContainer[DeleteObjectsRequestParameters.ObjectKey]
+    def __init__(self, bucket_name: _Optional[str] = ..., objects: _Optional[_Iterable[_Union[DeleteObjectsRequestParameters.ObjectKey, _Mapping]]] = ...) -> None: ...
 
 class DeleteObjectsResponse(_message.Message):
     __slots__ = ["deleted", "errors"]

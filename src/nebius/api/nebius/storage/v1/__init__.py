@@ -2694,27 +2694,73 @@ class DeleteObjectsRequestParameters(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class ObjectKey(pb_classes.Message):
+        __PB2_CLASS__ = s3_events_pb2.DeleteObjectsRequestParameters.ObjectKey
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.DeleteObjectsRequestParameters.ObjectKey",s3_events_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
+            if not isinstance(version, unset.UnsetType):
+                self.version = version
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "version",
+            ]
+        
+        @builtins.property
+        def key(self) -> "builtins.str":
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def version(self) -> "builtins.str":
+            return super()._get_field("version", explicit_presence=False,
+            )
+        @version.setter
+        def version(self, value: "builtins.str|None") -> None:
+            return super()._set_field("version",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "version":"version",
+        }
+        
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
         bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        object_key: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        objects: "abc.Iterable[DeleteObjectsRequestParameters.ObjectKey]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(bucket_name, unset.UnsetType):
             self.bucket_name = bucket_name
-        if not isinstance(object_key, unset.UnsetType):
-            self.object_key = object_key
-        if not isinstance(version, unset.UnsetType):
-            self.version = version
+        if not isinstance(objects, unset.UnsetType):
+            self.objects = objects
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "bucket_name",
-            "object_key",
-            "version",
+            "objects",
+            "ObjectKey",
         ]
     
     @builtins.property
@@ -2727,27 +2773,19 @@ class DeleteObjectsRequestParameters(pb_classes.Message):
         )
     
     @builtins.property
-    def object_key(self) -> "builtins.str":
-        return super()._get_field("object_key", explicit_presence=False,
+    def objects(self) -> "abc.MutableSequence[DeleteObjectsRequestParameters.ObjectKey]":
+        return super()._get_field("objects", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(DeleteObjectsRequestParameters.ObjectKey,None,None),
         )
-    @object_key.setter
-    def object_key(self, value: "builtins.str|None") -> None:
-        return super()._set_field("object_key",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def version(self) -> "builtins.str":
-        return super()._get_field("version", explicit_presence=False,
-        )
-    @version.setter
-    def version(self, value: "builtins.str|None") -> None:
-        return super()._set_field("version",value,explicit_presence=False,
+    @objects.setter
+    def objects(self, value: "abc.Iterable[DeleteObjectsRequestParameters.ObjectKey]|None") -> None:
+        return super()._set_field("objects",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "bucket_name":"bucket_name",
-        "object_key":"object_key",
-        "version":"version",
+        "objects":"objects",
+        "ObjectKey":"ObjectKey",
     }
     
 class DeleteObjectsResponse(pb_classes.Message):

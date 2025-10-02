@@ -37,20 +37,25 @@ import typing as typing
 
 # file: nebius/vpc/v1/pool.proto
 class AddressBlockState(pb_enum.Enum):
+    """
+    Controls provisioning of IP addresses from this pool to other pools
+    or allocations. Defaults to AVAILABLE.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.AddressBlockState",pool_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     STATE_UNSPECIFIED = 0
     """
-    Default, unspecified state.
+    Not used, mandated by the protocol.
     """
     
     AVAILABLE = 1
     """
-    Allocation from range is available.
+    Default state. Provision of the IP addresses from this CIDR block is allowed.
     """
     
     DISABLED = 2
     """
-    New allocation would not be created.
+    Provision of the IP addresses from this CIDR block is denied.
     """
     
 
@@ -204,8 +209,8 @@ class PoolSpec(pb_classes.Message):
     @builtins.property
     def source_pool_id(self) -> "builtins.str":
         """
-        ID of source pool. Current pool will be created with the same scope.
-        Pool is a root-pool if this field is empty
+        ID of the source pool.
+        CIDR blocks of a pool must be within the range defined by its source pool.
         """
         
         return super()._get_field("source_pool_id", explicit_presence=False,
@@ -218,7 +223,7 @@ class PoolSpec(pb_classes.Message):
     @builtins.property
     def version(self) -> "IpVersion":
         """
-        IP version for the Pool.
+        IP version of the pool.
         """
         
         return super()._get_field("version", explicit_presence=False,
@@ -231,6 +236,11 @@ class PoolSpec(pb_classes.Message):
     
     @builtins.property
     def visibility(self) -> "IpVisibility":
+        """
+        Configures whether the pool is private or public.
+        Only public pools IP addresses are routable in the Internet.
+        """
+        
         return super()._get_field("visibility", explicit_presence=False,
         wrap=IpVisibility,
         )
@@ -242,7 +252,7 @@ class PoolSpec(pb_classes.Message):
     @builtins.property
     def cidrs(self) -> "abc.MutableSequence[PoolCidr]":
         """
-        CIDR blocks.
+        CIDR blocks defined by the pool.
         """
         
         return super()._get_field("cidrs", explicit_presence=False,
@@ -292,9 +302,9 @@ class PoolCidr(pb_classes.Message):
     @builtins.property
     def cidr(self) -> "builtins.str":
         """
-        CIDR block.
-        May be a prefix length (such as /24) for non-top-level pools
-        or a CIDR-formatted string (such as 10.1.2.0/24).
+        A CIDR block (e.g., "10.1.2.0/24") or a prefix length (e.g., "/24").
+        If prefix length is specified, the CIDR block will be auto-allocated from
+        the available space in the parent pool.
         """
         
         return super()._get_field("cidr", explicit_presence=False,
@@ -307,8 +317,8 @@ class PoolCidr(pb_classes.Message):
     @builtins.property
     def state(self) -> "AddressBlockState":
         """
-        State of the Cidr.
-        Default state is AVAILABLE
+        Controls provisioning of IP addresses from the CIDR block to other pools
+        or allocations. Defaults to AVAILABLE.
         """
         
         return super()._get_field("state", explicit_presence=False,
@@ -322,8 +332,8 @@ class PoolCidr(pb_classes.Message):
     @builtins.property
     def max_mask_length(self) -> "builtins.int":
         """
-        Maximum mask length for allocation from this cidr including creation of sub-pools
-        Default max_mask_length is 32 for IPv4 and 128 for IPv6
+        Maximum mask length for this pool child pools and allocations.
+        Default max_mask_length is 32 for IPv4.
         """
         
         return super()._get_field("max_mask_length", explicit_presence=False,
@@ -583,7 +593,8 @@ class Allocation(pb_classes.Message):
     @builtins.property
     def status(self) -> "AllocationStatus":
         """
-        Contains the current status of the allocation, indicating its state and any additional details.
+        Contains the current status of the allocation, indicating its state and
+        any additional details.
         """
         
         return super()._get_field("status", explicit_presence=False,
@@ -634,7 +645,7 @@ class AllocationSpec(pb_classes.Message):
     @builtins.property
     def ip_spec(self) -> __OneOfClass_ip_spec_ipv4_private__|__OneOfClass_ip_spec_ipv4_public__|None:
         """
-        Holds the IP specifications for the allocation, including the type of IP (IPv4 or IPv6) and its corresponding configuration.
+        IP specifications for the allocation.
         """
         
         field_name_1: str|None = super().which_field_in_oneof("ip_spec")
@@ -695,6 +706,10 @@ class AllocationSpec(pb_classes.Message):
     }
     
 class IPv4PrivateAllocationSpec(pb_classes.Message):
+    """
+    Private IPv4 address configuration for the allocation.
+    """
+    
     __PB2_CLASS__ = allocation_pb2.IPv4PrivateAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PrivateAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -765,10 +780,11 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     @builtins.property
     def cidr(self) -> "builtins.str":
         """
-        CIDR block for IPv4 Allocation.
-        May be a single IP address (such as 10.2.3.4),
-        a prefix length (such as /24) or a CIDR-formatted string (such as 10.1.2.0/24).
-        Random address (/32) from pool would be allocated if field is omitted.
+        A single IP address (e.g 10.1.2.1), a CIDR block (e.g., "10.1.2.0/24") or
+        a prefix length (e.g., "/32").
+        If prefix length is specified, the CIDR block will be auto-allocated from
+        the available space in the pool or subnet.
+        If not specified, defaults to "/32".
         """
         
         return super()._get_field("cidr", explicit_presence=False,
@@ -781,8 +797,11 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     @builtins.property
     def subnet_id(self) -> "builtins.str|None":
         """
-        Subnet ID.
-        Required same subnet to use allocation in subnet-resources (e.g. Network Interface)
+        ID of the subnet that allocation will be associated with.
+        IP address of the allocation must be within a CIDR block associated
+        with this subnet.
+        In order to assign an allocation to a resource (i.e. network interface)
+        both must be associated with the same subnet.
         """
         
         return super()._get_field("subnet_id", explicit_presence=True,
@@ -795,7 +814,7 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     @builtins.property
     def pool_id(self) -> "builtins.str|None":
         """
-        Pool for the IPv4 private allocation.
+        ID of the pool that allocation will receive its IP address from.
         """
         
         return super()._get_field("pool_id", explicit_presence=True,
@@ -813,6 +832,10 @@ class IPv4PrivateAllocationSpec(pb_classes.Message):
     }
     
 class IPv4PublicAllocationSpec(pb_classes.Message):
+    """
+    Public IPv4 address configuration for the allocation.
+    """
+    
     __PB2_CLASS__ = allocation_pb2.IPv4PublicAllocationSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.IPv4PublicAllocationSpec",allocation_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -883,10 +906,11 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
     @builtins.property
     def cidr(self) -> "builtins.str":
         """
-        CIDR block for IPv4 Allocation.
-        May be a single IP address (such as 10.2.3.4),
-        a prefix length (such as /32) or a CIDR-formatted string (such as 10.1.2.0/32).
-        Random address (/32) from pool would be allocated if field is omitted.
+        A single IP address (e.g. 1.2.3.4), a CIDR block (e.g., "1.2.3.4/24")
+        or a prefix length (e.g., "/32").
+        If prefix length is specified, the CIDR block will be auto-allocated from
+        the available space in the pool or subnet.
+        If not specified, defaults to "/32".
         """
         
         return super()._get_field("cidr", explicit_presence=False,
@@ -899,8 +923,11 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
     @builtins.property
     def subnet_id(self) -> "builtins.str|None":
         """
-        Subnet ID.
-        Required same subnet to use allocation in subnet-resources (e.g. Network Interface)
+        ID of the subnet that allocation will be associated with.
+        IP address of the allocation must be within a CIDR block associated with
+        this subnet.
+        Assigning an allocation to a resource (i.e. network interface) requires
+        both to be associated with the same subnet.
         """
         
         return super()._get_field("subnet_id", explicit_presence=True,
@@ -913,7 +940,7 @@ class IPv4PublicAllocationSpec(pb_classes.Message):
     @builtins.property
     def pool_id(self) -> "builtins.str|None":
         """
-        Pool for the IPv4 public allocation.
+        ID of the pool that allocation will receive its IP address from.
         """
         
         return super()._get_field("pool_id", explicit_presence=True,
@@ -1387,6 +1414,10 @@ class GetAllocationByNameRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        ID of the project.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -1439,6 +1470,10 @@ class ListAllocationsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        ID of the project.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -1992,8 +2027,10 @@ class NetworkSpec(pb_classes.Message):
     @builtins.property
     def ipv4_private_pools(self) -> "IPv4PrivateNetworkPools":
         """
-        Pools for private ipv4 addresses.
+        Pools for private IPv4 addresses.
         Default private pools will be created if not specified.
+        Default private pools are referred here
+        https://docs.nebius.com/vpc/addressing/available-addresses
         """
         
         return super()._get_field("ipv4_private_pools", explicit_presence=False,
@@ -2007,7 +2044,7 @@ class NetworkSpec(pb_classes.Message):
     @builtins.property
     def ipv4_public_pools(self) -> "IPv4PublicNetworkPools":
         """
-        Pools for public ipv4 addresses.
+        Pools for public IPv4 addresses.
         Default public pool will be used if not specified.
         """
         
@@ -2118,7 +2155,7 @@ class NetworkPool(pb_classes.Message):
     @builtins.property
     def id(self) -> "builtins.str":
         """
-        ID of the IP address pool.
+        ID of the pool.
         """
         
         return super()._get_field("id", explicit_presence=False,
@@ -2280,6 +2317,10 @@ class GetNetworkByNameRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        ID of the project.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -2332,6 +2373,10 @@ class ListNetworksRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        ID of the project.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -2807,6 +2852,10 @@ class GetPoolByNameRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        ID of the project.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -2859,6 +2908,10 @@ class ListPoolsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        ID of the project.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -5299,7 +5352,7 @@ class SubnetSpec(pb_classes.Message):
     @builtins.property
     def network_id(self) -> "builtins.str":
         """
-        Network ID.
+        ID of the network this subnet belongs to.
         """
         
         return super()._get_field("network_id", explicit_presence=False,
@@ -5310,41 +5363,40 @@ class SubnetSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def ipv4_private_pools(self) -> "IPv4PrivateSubnetPools|None":
+    def ipv4_private_pools(self) -> "IPv4PrivateSubnetPools":
         """
-        Pools for private ipv4 addresses.
-        Default is 'use_network_pools = true'
+        Private IPv4 address pools for this subnet.
+        If unspecified, pools from the associated network are used.
         """
         
-        return super()._get_field("ipv4_private_pools", explicit_presence=True,
+        return super()._get_field("ipv4_private_pools", explicit_presence=False,
         wrap=IPv4PrivateSubnetPools,
         )
     @ipv4_private_pools.setter
     def ipv4_private_pools(self, value: "IPv4PrivateSubnetPools|subnet_pb2.IPv4PrivateSubnetPools|None") -> None:
-        return super()._set_field("ipv4_private_pools",value,explicit_presence=True,
+        return super()._set_field("ipv4_private_pools",value,explicit_presence=False,
         )
     
     @builtins.property
-    def ipv4_public_pools(self) -> "IPv4PublicSubnetPools|None":
+    def ipv4_public_pools(self) -> "IPv4PublicSubnetPools":
         """
-        Pools for public ipv4 addresses.
-        Default is 'use_network_pools = true'
+        Public IPv4 address pools for this subnet.
+        If unspecified, pools from the associated network are used.
         """
         
-        return super()._get_field("ipv4_public_pools", explicit_presence=True,
+        return super()._get_field("ipv4_public_pools", explicit_presence=False,
         wrap=IPv4PublicSubnetPools,
         )
     @ipv4_public_pools.setter
     def ipv4_public_pools(self, value: "IPv4PublicSubnetPools|subnet_pb2.IPv4PublicSubnetPools|None") -> None:
-        return super()._set_field("ipv4_public_pools",value,explicit_presence=True,
+        return super()._set_field("ipv4_public_pools",value,explicit_presence=False,
         )
     
     @builtins.property
     def route_table_id(self) -> "builtins.str":
         """
-        ID of the custom route table to associate with this subnet.
-        Must be one of the route tables associated with network.
-        If not specified, the subnet will use the network's default route table.
+        ID of the route table to associate with the subnet.
+        If unspecified, the network's default route table is used.
         """
         
         return super()._get_field("route_table_id", explicit_presence=False,
@@ -5389,8 +5441,9 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
     @builtins.property
     def pools(self) -> "abc.MutableSequence[SubnetPool]":
         """
-        Pools for private ipv4 allocations in subnet
-        Must be empty if 'use_network_pools = true'
+        List of private IPv4 CIDR blocks for this subnet.
+        Must not overlap with other resources in the network
+        Must be empty if `use_network_pools` is true.
         """
         
         return super()._get_field("pools", explicit_presence=False,
@@ -5404,8 +5457,8 @@ class IPv4PrivateSubnetPools(pb_classes.Message):
     @builtins.property
     def use_network_pools(self) -> "builtins.bool":
         """
-        Allow using of private ipv4 pools which are specified in network
-        Must be false if 'pools' is not empty
+        If true, inherit private IPv4 pools from the network. Defaults to true.
+        Must be false if `pools` is specified.
         """
         
         return super()._get_field("use_network_pools", explicit_presence=False,
@@ -5448,8 +5501,9 @@ class IPv4PublicSubnetPools(pb_classes.Message):
     @builtins.property
     def pools(self) -> "abc.MutableSequence[SubnetPool]":
         """
-        Pools for public ipv4 allocations in subnet
-        Must be empty if 'use_network_pools = true'
+        List of public IPv4 CIDR blocks for this subnet.
+        Must not overlap with other resources in the network.
+        Must be empty if `use_network_pools` is true.
         """
         
         return super()._get_field("pools", explicit_presence=False,
@@ -5463,8 +5517,8 @@ class IPv4PublicSubnetPools(pb_classes.Message):
     @builtins.property
     def use_network_pools(self) -> "builtins.bool":
         """
-        Allow using of public ipv4 pools which are specified in network
-        Must be false if 'pools' is not empty
+        If true, inherit public IPv4 pools from the network.
+        Must be false if `pools` is specified.
         """
         
         return super()._get_field("use_network_pools", explicit_presence=False,
@@ -5546,8 +5600,9 @@ class SubnetCidr(pb_classes.Message):
     @builtins.property
     def cidr(self) -> "builtins.str":
         """
-        CIDR block.
-        May be a prefix length (such as /24) or a CIDR-formatted string (such as 10.1.2.0/24).
+        A CIDR block (e.g., "10.1.2.0/24") or a prefix length (e.g., "/24").
+        If prefix length is specified, the CIDR block will be auto-allocated
+        from the network's available space.
         """
         
         return super()._get_field("cidr", explicit_presence=False,
@@ -5560,8 +5615,7 @@ class SubnetCidr(pb_classes.Message):
     @builtins.property
     def state(self) -> "AddressBlockState":
         """
-        State of the Cidr.
-        Default state is AVAILABLE
+        Controls provisioning of IP addresses from the CIDR block . Defaults to AVAILABLE.
         """
         
         return super()._get_field("state", explicit_presence=False,
@@ -5575,8 +5629,7 @@ class SubnetCidr(pb_classes.Message):
     @builtins.property
     def max_mask_length(self) -> "builtins.int":
         """
-        Maximum mask length for allocation from this cidr
-        Default max_mask_length is 32 for IPv4 and 128 for IPv6
+        Maximum mask length for an allocation from this block. Defaults to /32 for IPv4.
         """
         
         return super()._get_field("max_mask_length", explicit_presence=False,
@@ -5838,6 +5891,10 @@ class GetSubnetByNameRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        ID of the project.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -5890,6 +5947,10 @@ class ListSubnetsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        ID of the parent project.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
