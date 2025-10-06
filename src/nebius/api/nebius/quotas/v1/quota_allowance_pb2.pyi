@@ -36,10 +36,12 @@ class QuotaAllowanceStatus(_message.Message):
         USAGE_STATE_USED: _ClassVar[QuotaAllowanceStatus.UsageState]
         USAGE_STATE_NOT_USED: _ClassVar[QuotaAllowanceStatus.UsageState]
         USAGE_STATE_UNKNOWN: _ClassVar[QuotaAllowanceStatus.UsageState]
+        USAGE_STATE_NOT_APPLICABLE: _ClassVar[QuotaAllowanceStatus.UsageState]
     USAGE_STATE_UNSPECIFIED: QuotaAllowanceStatus.UsageState
     USAGE_STATE_USED: QuotaAllowanceStatus.UsageState
     USAGE_STATE_NOT_USED: QuotaAllowanceStatus.UsageState
     USAGE_STATE_UNKNOWN: QuotaAllowanceStatus.UsageState
+    USAGE_STATE_NOT_APPLICABLE: QuotaAllowanceStatus.UsageState
     STATE_FIELD_NUMBER: _ClassVar[int]
     USAGE_FIELD_NUMBER: _ClassVar[int]
     SERVICE_FIELD_NUMBER: _ClassVar[int]

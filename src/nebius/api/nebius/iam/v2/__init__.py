@@ -228,6 +228,7 @@ class AccessKeyStatus(pb_classes.Message):
         key_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
         aws_access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         secret: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        secret_reference_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -242,6 +243,8 @@ class AccessKeyStatus(pb_classes.Message):
             self.aws_access_key_id = aws_access_key_id
         if not isinstance(secret, unset.UnsetType):
             self.secret = secret
+        if not isinstance(secret_reference_id, unset.UnsetType):
+            self.secret_reference_id = secret_reference_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -251,6 +254,7 @@ class AccessKeyStatus(pb_classes.Message):
             "key_size",
             "aws_access_key_id",
             "secret",
+            "secret_reference_id",
             "State",
         ]
     
@@ -309,6 +313,15 @@ class AccessKeyStatus(pb_classes.Message):
         return super()._set_field("secret",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def secret_reference_id(self) -> "builtins.str":
+        return super()._get_field("secret_reference_id", explicit_presence=False,
+        )
+    @secret_reference_id.setter
+    def secret_reference_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("secret_reference_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "fingerprint":"fingerprint",
@@ -316,6 +329,7 @@ class AccessKeyStatus(pb_classes.Message):
         "key_size":"key_size",
         "aws_access_key_id":"aws_access_key_id",
         "secret":"secret",
+        "secret_reference_id":"secret_reference_id",
         "State":"State",
     }
     
