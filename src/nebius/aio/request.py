@@ -476,8 +476,6 @@ class Request(Generic[Req, Res]):
             # Perform authentication: use a gRPC Metadata, then copy back auth header
             # to the internal Metadata used when sending the request
             auth_md = Metadata(self._input_metadata)
-            # Do not constrain authenticator with a per-call timeout; the overall
-            # auth deadline is enforced by this wrapper loop.
             try:
                 await wait_for(
                     auth.authenticate(auth_md, timeout, self._auth_options), timeout

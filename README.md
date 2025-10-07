@@ -348,7 +348,7 @@ response = await service.get(req, auth_timeout=300.0)  # 5 minutes
 - Disable the authentication deadline by passing `auth_timeout=None` (be careful: this can cause calls to wait indefinitely if authentication never succeeds).
 
 Notes:
-- `auth_timeout` is separate from the overall request `timeout` and the per-retry timeout. In practice, once authentication begins, the effective wall-clock upper bound is roughly `min(auth_timeout, timeout)`.
+- `auth_timeout` starts at the beginning of the request, caps the `timeout` of the authorized request, which itself caps each `per_retry_timeout`.
 - If you use token renewal options (see below), individual token-exchange attempts may have their own short deadlines; `auth_timeout` caps the aggregate time across multiple attempts.
 
 
