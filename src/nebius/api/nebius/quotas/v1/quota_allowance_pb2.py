@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&nebius/quotas/v1/quota_allowance.proto\x12\x10nebius.quotas.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"W\n\x12QuotaAllowanceSpec\x12\x19\n\x05limit\x18\x01 \x01(\x04H\x00R\x05limit\x88\x01\x01\x12\x1c\n\x06region\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\x06regionB\x08\n\x06_limit\"\xd3\x04\n\x14QuotaAllowanceStatus\x12\x42\n\x05state\x18\x01 \x01(\x0e\x32,.nebius.quotas.v1.QuotaAllowanceStatus.StateR\x05state\x12\x14\n\x05usage\x18\x02 \x01(\x04R\x05usage\x12\x18\n\x07service\x18\x03 \x01(\tR\x07service\x12 \n\x0b\x64\x65scription\x18\x06 \x01(\tR\x0b\x64\x65scription\x12/\n\x13service_description\x18\x07 \x01(\tR\x12serviceDescription\x12\x12\n\x04unit\x18\x08 \x01(\tR\x04unit\x12)\n\x10usage_percentage\x18\t \x01(\tR\x0fusagePercentage\x12R\n\x0busage_state\x18\n \x01(\x0e\x32\x31.nebius.quotas.v1.QuotaAllowanceStatus.UsageStateR\nusageState\"m\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x16\n\x12STATE_PROVISIONING\x10\x01\x12\x10\n\x0cSTATE_ACTIVE\x10\x02\x12\x10\n\x0cSTATE_FROZEN\x10\x03\x12\x11\n\rSTATE_DELETED\x10\n\"r\n\nUsageState\x12\x1b\n\x17USAGE_STATE_UNSPECIFIED\x10\x00\x12\x14\n\x10USAGE_STATE_USED\x10\x01\x12\x18\n\x14USAGE_STATE_NOT_USED\x10\x02\x12\x17\n\x13USAGE_STATE_UNKNOWN\x10\x03\"\xe6\x01\n\x0eQuotaAllowance\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12@\n\x04spec\x18\x02 \x01(\x0b\x32$.nebius.quotas.v1.QuotaAllowanceSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x44\n\x06status\x18\x03 \x01(\x0b\x32&.nebius.quotas.v1.QuotaAllowanceStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x02\x42`\n\x17\x61i.nebius.pub.quotas.v1B\x13QuotaAllowanceProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/quotas/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&nebius/quotas/v1/quota_allowance.proto\x12\x10nebius.quotas.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"W\n\x12QuotaAllowanceSpec\x12\x19\n\x05limit\x18\x01 \x01(\x04H\x00R\x05limit\x88\x01\x01\x12\x1c\n\x06region\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\x06regionB\x08\n\x06_limit\"\xf4\x04\n\x14QuotaAllowanceStatus\x12\x42\n\x05state\x18\x01 \x01(\x0e\x32,.nebius.quotas.v1.QuotaAllowanceStatus.StateR\x05state\x12\x14\n\x05usage\x18\x02 \x01(\x04R\x05usage\x12\x18\n\x07service\x18\x03 \x01(\tR\x07service\x12 \n\x0b\x64\x65scription\x18\x06 \x01(\tR\x0b\x64\x65scription\x12/\n\x13service_description\x18\x07 \x01(\tR\x12serviceDescription\x12\x12\n\x04unit\x18\x08 \x01(\tR\x04unit\x12)\n\x10usage_percentage\x18\t \x01(\tR\x0fusagePercentage\x12R\n\x0busage_state\x18\n \x01(\x0e\x32\x31.nebius.quotas.v1.QuotaAllowanceStatus.UsageStateR\nusageState\"m\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x16\n\x12STATE_PROVISIONING\x10\x01\x12\x10\n\x0cSTATE_ACTIVE\x10\x02\x12\x10\n\x0cSTATE_FROZEN\x10\x03\x12\x11\n\rSTATE_DELETED\x10\n\"\x92\x01\n\nUsageState\x12\x1b\n\x17USAGE_STATE_UNSPECIFIED\x10\x00\x12\x14\n\x10USAGE_STATE_USED\x10\x01\x12\x18\n\x14USAGE_STATE_NOT_USED\x10\x02\x12\x17\n\x13USAGE_STATE_UNKNOWN\x10\x03\x12\x1e\n\x1aUSAGE_STATE_NOT_APPLICABLE\x10\x04\"\xe6\x01\n\x0eQuotaAllowance\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12@\n\x04spec\x18\x02 \x01(\x0b\x32$.nebius.quotas.v1.QuotaAllowanceSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x44\n\x06status\x18\x03 \x01(\x0b\x32&.nebius.quotas.v1.QuotaAllowanceStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x02\x42`\n\x17\x61i.nebius.pub.quotas.v1B\x13QuotaAllowanceProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/quotas/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -38,11 +38,11 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_QUOTAALLOWANCESPEC']._serialized_start=148
   _globals['_QUOTAALLOWANCESPEC']._serialized_end=235
   _globals['_QUOTAALLOWANCESTATUS']._serialized_start=238
-  _globals['_QUOTAALLOWANCESTATUS']._serialized_end=833
+  _globals['_QUOTAALLOWANCESTATUS']._serialized_end=866
   _globals['_QUOTAALLOWANCESTATUS_STATE']._serialized_start=608
   _globals['_QUOTAALLOWANCESTATUS_STATE']._serialized_end=717
-  _globals['_QUOTAALLOWANCESTATUS_USAGESTATE']._serialized_start=719
-  _globals['_QUOTAALLOWANCESTATUS_USAGESTATE']._serialized_end=833
-  _globals['_QUOTAALLOWANCE']._serialized_start=836
-  _globals['_QUOTAALLOWANCE']._serialized_end=1066
+  _globals['_QUOTAALLOWANCESTATUS_USAGESTATE']._serialized_start=720
+  _globals['_QUOTAALLOWANCESTATUS_USAGESTATE']._serialized_end=866
+  _globals['_QUOTAALLOWANCE']._serialized_start=869
+  _globals['_QUOTAALLOWANCE']._serialized_end=1099
 # @@protoc_insertion_point(module_scope)

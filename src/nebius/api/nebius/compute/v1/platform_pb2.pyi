@@ -18,16 +18,18 @@ class Platform(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[PlatformSpec, _Mapping]] = ..., status: _Optional[_Union[PlatformStatus, _Mapping]] = ...) -> None: ...
 
 class PlatformSpec(_message.Message):
-    __slots__ = ["presets", "gpu_count_quota_type", "human_readable_name", "allow_preset_change"]
+    __slots__ = ["presets", "gpu_count_quota_type", "human_readable_name", "allow_preset_change", "short_human_readable_name"]
     PRESETS_FIELD_NUMBER: _ClassVar[int]
     GPU_COUNT_QUOTA_TYPE_FIELD_NUMBER: _ClassVar[int]
     HUMAN_READABLE_NAME_FIELD_NUMBER: _ClassVar[int]
     ALLOW_PRESET_CHANGE_FIELD_NUMBER: _ClassVar[int]
+    SHORT_HUMAN_READABLE_NAME_FIELD_NUMBER: _ClassVar[int]
     presets: _containers.RepeatedCompositeFieldContainer[Preset]
     gpu_count_quota_type: str
     human_readable_name: str
     allow_preset_change: bool
-    def __init__(self, presets: _Optional[_Iterable[_Union[Preset, _Mapping]]] = ..., gpu_count_quota_type: _Optional[str] = ..., human_readable_name: _Optional[str] = ..., allow_preset_change: bool = ...) -> None: ...
+    short_human_readable_name: str
+    def __init__(self, presets: _Optional[_Iterable[_Union[Preset, _Mapping]]] = ..., gpu_count_quota_type: _Optional[str] = ..., human_readable_name: _Optional[str] = ..., allow_preset_change: bool = ..., short_human_readable_name: _Optional[str] = ...) -> None: ...
 
 class Preset(_message.Message):
     __slots__ = ["name", "resources", "allow_gpu_clustering"]
@@ -40,14 +42,16 @@ class Preset(_message.Message):
     def __init__(self, name: _Optional[str] = ..., resources: _Optional[_Union[PresetResources, _Mapping]] = ..., allow_gpu_clustering: bool = ...) -> None: ...
 
 class PresetResources(_message.Message):
-    __slots__ = ["vcpu_count", "memory_gibibytes", "gpu_count"]
+    __slots__ = ["vcpu_count", "memory_gibibytes", "gpu_count", "gpu_memory_gibibytes"]
     VCPU_COUNT_FIELD_NUMBER: _ClassVar[int]
     MEMORY_GIBIBYTES_FIELD_NUMBER: _ClassVar[int]
     GPU_COUNT_FIELD_NUMBER: _ClassVar[int]
+    GPU_MEMORY_GIBIBYTES_FIELD_NUMBER: _ClassVar[int]
     vcpu_count: int
     memory_gibibytes: int
     gpu_count: int
-    def __init__(self, vcpu_count: _Optional[int] = ..., memory_gibibytes: _Optional[int] = ..., gpu_count: _Optional[int] = ...) -> None: ...
+    gpu_memory_gibibytes: int
+    def __init__(self, vcpu_count: _Optional[int] = ..., memory_gibibytes: _Optional[int] = ..., gpu_count: _Optional[int] = ..., gpu_memory_gibibytes: _Optional[int] = ...) -> None: ...
 
 class PlatformStatus(_message.Message):
     __slots__ = ["allowed_for_preemptibles"]

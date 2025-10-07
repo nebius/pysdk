@@ -44,7 +44,7 @@ class AccessKeySpec(_message.Message):
     def __init__(self, account: _Optional[_Union[_access_pb2.Account, _Mapping]] = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., description: _Optional[str] = ..., secret_delivery_mode: _Optional[_Union[SecretDeliveryMode, str]] = ...) -> None: ...
 
 class AccessKeyStatus(_message.Message):
-    __slots__ = ["state", "fingerprint", "algorithm", "key_size", "aws_access_key_id", "secret"]
+    __slots__ = ["state", "fingerprint", "algorithm", "key_size", "aws_access_key_id", "secret", "secret_reference_id"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[AccessKeyStatus.State]
@@ -65,10 +65,12 @@ class AccessKeyStatus(_message.Message):
     KEY_SIZE_FIELD_NUMBER: _ClassVar[int]
     AWS_ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
     SECRET_FIELD_NUMBER: _ClassVar[int]
+    SECRET_REFERENCE_ID_FIELD_NUMBER: _ClassVar[int]
     state: AccessKeyStatus.State
     fingerprint: str
     algorithm: str
     key_size: int
     aws_access_key_id: str
     secret: str
-    def __init__(self, state: _Optional[_Union[AccessKeyStatus.State, str]] = ..., fingerprint: _Optional[str] = ..., algorithm: _Optional[str] = ..., key_size: _Optional[int] = ..., aws_access_key_id: _Optional[str] = ..., secret: _Optional[str] = ...) -> None: ...
+    secret_reference_id: str
+    def __init__(self, state: _Optional[_Union[AccessKeyStatus.State, str]] = ..., fingerprint: _Optional[str] = ..., algorithm: _Optional[str] = ..., key_size: _Optional[int] = ..., aws_access_key_id: _Optional[str] = ..., secret: _Optional[str] = ..., secret_reference_id: _Optional[str] = ...) -> None: ...

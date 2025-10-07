@@ -858,7 +858,7 @@ class ConnectionPoolerConfig(pb_classes.Message):
     @builtins.property
     def max_pool_size(self) -> "builtins.int|None":
         """
-        Maximum number of connections in the pool for a single database.
+        Maximum number of connections in the pool for a single user/database pair.
         """
         
         return super()._get_field("max_pool_size", explicit_presence=True,

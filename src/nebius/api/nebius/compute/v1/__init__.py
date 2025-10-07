@@ -6622,6 +6622,7 @@ class PlatformSpec(pb_classes.Message):
         gpu_count_quota_type: "builtins.str|None|unset.UnsetType" = unset.Unset,
         human_readable_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         allow_preset_change: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        short_human_readable_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(presets, unset.UnsetType):
@@ -6632,6 +6633,8 @@ class PlatformSpec(pb_classes.Message):
             self.human_readable_name = human_readable_name
         if not isinstance(allow_preset_change, unset.UnsetType):
             self.allow_preset_change = allow_preset_change
+        if not isinstance(short_human_readable_name, unset.UnsetType):
+            self.short_human_readable_name = short_human_readable_name
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -6639,6 +6642,7 @@ class PlatformSpec(pb_classes.Message):
             "gpu_count_quota_type",
             "human_readable_name",
             "allow_preset_change",
+            "short_human_readable_name",
         ]
     
     @builtins.property
@@ -6678,11 +6682,21 @@ class PlatformSpec(pb_classes.Message):
         return super()._set_field("allow_preset_change",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def short_human_readable_name(self) -> "builtins.str":
+        return super()._get_field("short_human_readable_name", explicit_presence=False,
+        )
+    @short_human_readable_name.setter
+    def short_human_readable_name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("short_human_readable_name",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "presets":"presets",
         "gpu_count_quota_type":"gpu_count_quota_type",
         "human_readable_name":"human_readable_name",
         "allow_preset_change":"allow_preset_change",
+        "short_human_readable_name":"short_human_readable_name",
     }
     
 class Preset(pb_classes.Message):
@@ -6761,6 +6775,7 @@ class PresetResources(pb_classes.Message):
         vcpu_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         memory_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         gpu_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        gpu_memory_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(vcpu_count, unset.UnsetType):
@@ -6769,12 +6784,15 @@ class PresetResources(pb_classes.Message):
             self.memory_gibibytes = memory_gibibytes
         if not isinstance(gpu_count, unset.UnsetType):
             self.gpu_count = gpu_count
+        if not isinstance(gpu_memory_gibibytes, unset.UnsetType):
+            self.gpu_memory_gibibytes = gpu_memory_gibibytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "vcpu_count",
             "memory_gibibytes",
             "gpu_count",
+            "gpu_memory_gibibytes",
         ]
     
     @builtins.property
@@ -6804,10 +6822,20 @@ class PresetResources(pb_classes.Message):
         return super()._set_field("gpu_count",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def gpu_memory_gibibytes(self) -> "builtins.int":
+        return super()._get_field("gpu_memory_gibibytes", explicit_presence=False,
+        )
+    @gpu_memory_gibibytes.setter
+    def gpu_memory_gibibytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("gpu_memory_gibibytes",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "vcpu_count":"vcpu_count",
         "memory_gibibytes":"memory_gibibytes",
         "gpu_count":"gpu_count",
+        "gpu_memory_gibibytes":"gpu_memory_gibibytes",
     }
     
 class PlatformStatus(pb_classes.Message):

@@ -156,6 +156,11 @@ class QuotaAllowanceStatus(pb_classes.Message):
         Please, retry the request later.
         """
         
+        USAGE_STATE_NOT_APPLICABLE = 4
+        """
+        Quota usage is not applicable
+        """
+        
     
     def __init__(
         self,
