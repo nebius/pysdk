@@ -3,6 +3,10 @@ import logging
 
 import pytest
 
+from nebius.aio import request
+
+request.DEFAULT_AUTH_TIMEOUT = 5.0
+
 
 @pytest.mark.asyncio
 async def test_get_instance() -> None:

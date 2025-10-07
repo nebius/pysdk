@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from nebius.aio.base import ChannelBase
+from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.token.deferred_channel import DeferredChannel
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
 from nebius.aio.token.renewable import Bearer as RenewableBearer
@@ -22,7 +22,7 @@ class FederatedCredentialsBearer(ParentBearer):
             FederatedCredentialsTokenRequester | FederatedCredentialsReader | str
         ),
         service_account_id: str | None = None,
-        channel: ChannelBase | DeferredChannel | None = None,
+        channel: ClientChannelInterface | DeferredChannel | None = None,
         max_retries: int = 2,
         lifetime_safe_fraction: float = 0.9,
         initial_retry_timeout: timedelta = timedelta(seconds=1),
@@ -72,7 +72,7 @@ class FederatedCredentialsBearer(ParentBearer):
                 f"/{federated_credentials.credentials.file_path}",
             )
 
-    def set_channel(self, channel: ChannelBase) -> None:
+    def set_channel(self, channel: ClientChannelInterface) -> None:
         self._exchangeable.set_channel(channel)
 
     @property
