@@ -3,10 +3,6 @@ import logging
 
 import pytest
 
-from nebius.aio import request
-
-request.DEFAULT_AUTH_TIMEOUT = 5.0
-
 
 @pytest.mark.asyncio
 async def test_credentials_updater() -> None:
@@ -126,7 +122,7 @@ async def test_credentials_updater() -> None:
         client = DiskServiceClient(channel)
         upd = UpdateDiskRequest()
         upd.metadata.id = "foo-bar"
-        req = client.update(upd)
+        req = client.update(upd, auth_timeout=10.0)
 
         # Await response and metadata
         ret = await req
@@ -263,6 +259,7 @@ async def test_credentials_updater_sync() -> None:
         upd.metadata.id = "foo-bar"
         req = client.update(
             upd,
+            auth_timeout=10.0,
             auth_options={
                 OPTION_RENEW_REQUIRED: "1",
                 OPTION_RENEW_SYNCHRONOUS: "1",
@@ -422,6 +419,7 @@ async def test_credentials_updater_sync_error() -> None:
         upd.metadata.id = "foo-bar"
         req = client.update(
             upd,
+            auth_timeout=10.0,
             auth_options={
                 OPTION_RENEW_REQUIRED: "1",
                 OPTION_RENEW_SYNCHRONOUS: "1",

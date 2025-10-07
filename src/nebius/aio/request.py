@@ -1,4 +1,4 @@
-from asyncio import CancelledError, Future, ensure_future
+from asyncio import CancelledError, Future, ensure_future, wait_for
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
 from sys import exc_info
@@ -367,11 +367,20 @@ class Request(Generic[Req, Res]):
         except RequestError:
             pass
 
-    async def _retry_loop(self) -> Res:
+    async def _retry_loop(self, outer_deadline: float | None = None) -> Res:
         from .service_error import RequestError, is_retriable_error
 
         self._start_time = time()
-        deadline = None if self._timeout is None else self._start_time + self._timeout
+        # Compute this loop's absolute deadline, capped by an outer deadline if provided
+        own_deadline = (
+            None if self._timeout is None else self._start_time + self._timeout
+        )
+        if outer_deadline is None:
+            deadline = own_deadline
+        elif own_deadline is None:
+            deadline = outer_deadline
+        else:
+            deadline = min(own_deadline, outer_deadline)
         attempt = 0
         while not self._cancelled:
             attempt += 1
@@ -380,7 +389,15 @@ class Request(Generic[Req, Res]):
             if self._per_retry_timeout is not None and (
                 timeout is None or timeout > self._per_retry_timeout
             ):
-                timeout = self._per_retry_timeout
+                # Clip per-retry timeout by remaining overall deadline if present
+                per_attempt = self._per_retry_timeout
+                if deadline is not None:
+                    remaining = deadline - time()
+                    if remaining <= 0:
+                        per_attempt = 0
+                    else:
+                        per_attempt = min(per_attempt, remaining)
+                timeout = per_attempt
 
             # somehow, this time python doesn't want to catch the raised error again
             # thus, it will be two nested try/except blocks
@@ -462,7 +479,9 @@ class Request(Generic[Req, Res]):
             # Do not constrain authenticator with a per-call timeout; the overall
             # auth deadline is enforced by this wrapper loop.
             try:
-                await auth.authenticate(auth_md, None, self._auth_options)
+                await wait_for(
+                    auth.authenticate(auth_md, timeout, self._auth_options), timeout
+                )
             except Exception as e:  # noqa: BLE001
                 # If authentication itself failed (e.g., token refresh timeout),
                 # retry if authenticator allows and we are within deadline.
@@ -475,7 +494,7 @@ class Request(Generic[Req, Res]):
 
             # Run the request retry loop; map UNAUTHENTICATED to re-auth attempts
             try:
-                return await self._retry_loop()
+                return await self._retry_loop(outer_deadline=deadline)
             except Exception as e:  # noqa: BLE001
                 # Only retry auth on UNAUTHENTICATED codes
                 from .service_error import RequestError as ServiceRequestError
