@@ -3,6 +3,10 @@
 import pytest
 from pytest_subtests import SubTests
 
+from nebius.aio import request
+
+request.DEFAULT_AUTH_TIMEOUT = 5.0
+
 
 def test_fieldkey() -> None:
     from nebius.base.fieldmask import FieldKey

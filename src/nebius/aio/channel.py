@@ -47,10 +47,8 @@ from grpc.aio._typing import (
     SerializingFunction,
 )
 
-from nebius.aio._cleaner import CleaningInterceptor
 from nebius.aio.abc import GracefulInterface
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
-from nebius.aio.authorization.interceptor import AuthorizationInterceptor
 from nebius.aio.authorization.token import TokenProvider
 from nebius.aio.cli_config import Config as ConfigReader
 from nebius.aio.idempotency import IdempotencyKeyInterceptor
@@ -311,6 +309,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             raise SDKError("Parent id is empty")
 
         self._token_bearer: TokenBearer | None = None
+        self._authorization_provider: AuthorizationProvider | None = None
         if credentials is None:
             if credentials_file_name is not None:
                 from nebius.base.service_account.credentials_file import (
@@ -356,16 +355,15 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             self._token_bearer = credentials
             credentials = TokenProvider(credentials)
         if isinstance(credentials, AuthorizationProvider):
-            self._global_interceptors_inner.append(
-                AuthorizationInterceptor(credentials)
-            )
+            self._authorization_provider = credentials
         elif not isinstance(credentials, NoCredentials):  # type: ignore[unused-ignore]
             raise SDKError(f"credentials type is not supported: {type(credentials)}")
 
         self._event_loop = event_loop
         self._closed = False
 
-        self._global_interceptors_inner.append(CleaningInterceptor())
+    def get_authorization_provider(self) -> AuthorizationProvider | None:
+        return self._authorization_provider
 
     async def get_token(
         self,

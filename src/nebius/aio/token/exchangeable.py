@@ -4,17 +4,12 @@ from logging import getLogger
 from typing import Any
 
 from grpc.aio import AioRpcError
-from grpc.aio import Channel as GRPCChannel
-from grpc.aio._metadata import Metadata
 from grpc_status import rpc_status
 
-from nebius.aio.token.deferred_channel import DeferredChannel
-from nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc import (
-    TokenExchangeServiceStub,
-)
-from nebius.api.nebius.iam.v1.token_service_pb2 import CreateTokenResponse
+from nebius.aio.abc import ClientChannelInterface
+from nebius.aio.authorization.options import OPTION_TYPE, Types
+from nebius.api.nebius.iam.v1 import CreateTokenResponse, TokenExchangeServiceClient
 from nebius.base.error import SDKError
-from nebius.base.metadata import Authorization, Internal
 from nebius.base.metadata import Metadata as NebiusMetadata
 from nebius.base.service_account.service_account import TokenRequester
 from nebius.base.token_sanitizer import TokenSanitizer
@@ -48,7 +43,7 @@ class Receiver(ParentReceiver):
     def __init__(
         self,
         requester: TokenRequester,
-        service: TokenExchangeServiceStub | Awaitable[TokenExchangeServiceStub],
+        service: TokenExchangeServiceClient | Awaitable[TokenExchangeServiceClient],
         max_retries: int = 2,
     ) -> None:
         super().__init__()
@@ -91,16 +86,17 @@ class Receiver(ParentReceiver):
 
         now = datetime.now(timezone.utc)
 
-        md = Metadata()
-        md.add(Internal.AUTHORIZATION.lower(), Authorization.DISABLE)
-
         log.debug(f"fetching new token, attempt: {self._trial}, timeout: {timeout}")
 
         ret = None
         try:
             if isinstance(self._svc, Awaitable):
                 self._svc = await self._svc
-            ret = await self._svc.Exchange(req, metadata=md, timeout=timeout)  # type: ignore[unused-ignore]
+            ret = await self._svc.exchange(
+                req,
+                timeout=timeout,
+                auth_options={OPTION_TYPE: Types.DISABLE},
+            )
         except AioRpcError as e:
             self._raise_request_error(e)
         if not isinstance(ret, CreateTokenResponse):
@@ -139,7 +135,9 @@ class Bearer(ParentBearer):
     def __init__(
         self,
         requester: TokenRequester,
-        channel: GRPCChannel | DeferredChannel | None = None,
+        channel: (
+            ClientChannelInterface | Awaitable[ClientChannelInterface] | None
+        ) = None,
         max_retries: int = 2,
     ) -> None:
         super().__init__()
@@ -147,28 +145,33 @@ class Bearer(ParentBearer):
         self._max_retries = max_retries
 
         self._svc: (
-            TokenExchangeServiceStub
-            | Coroutine[Any, Any, TokenExchangeServiceStub]
+            TokenExchangeServiceClient
+            | Coroutine[Any, Any, TokenExchangeServiceClient]
             | None
         ) = None
         self.set_channel(channel)
 
-    def set_channel(self, channel: GRPCChannel | DeferredChannel | None) -> None:
+    def set_channel(
+        self,
+        channel: ClientChannelInterface | Awaitable[ClientChannelInterface] | None,
+    ) -> None:
         """
         Set the gRPC channel for the bearer.
         """
         if isinstance(channel, Awaitable):  # type: ignore[unused-ignore]
 
-            async def token_exchange_service_stub() -> TokenExchangeServiceStub:
+            async def token_exchange_service_stub() -> TokenExchangeServiceClient:
                 chan = await channel
-                if not isinstance(chan, GRPCChannel):  # type: ignore[unused-ignore]
-                    raise TypeError(f"Expected GRPCChannel, got {type(chan)} instead.")
-                return TokenExchangeServiceStub(chan)  # type: ignore
+                if not isinstance(chan, ClientChannelInterface):  # type: ignore[unused-ignore]
+                    raise TypeError(
+                        f"Expected ClientChannelInterface, got {type(chan)} instead."
+                    )
+                return TokenExchangeServiceClient(chan)
 
             self._svc = token_exchange_service_stub()
 
         elif channel is not None:
-            self._svc = TokenExchangeServiceStub(channel)  # type:ignore
+            self._svc = TokenExchangeServiceClient(channel)
         else:
             self._svc = None
 

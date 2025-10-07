@@ -1,6 +1,10 @@
 # type: ignore
 import logging
 
+from nebius.aio import request
+
+request.DEFAULT_AUTH_TIMEOUT = 5.0
+
 
 def test_get_instance_sync() -> None:
     from asyncio import (

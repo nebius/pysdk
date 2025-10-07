@@ -768,6 +768,24 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     ",",
                 )
                 g.p(
+                    "auth_timeout: ",
+                    ImportedSymbol("float", "builtins"),
+                    "|",
+                    ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
+                    "|None = ",
+                    ImportedSymbol("Unset", "nebius.base.protos.unset"),
+                    ",",
+                )
+                g.p(
+                    "auth_options: ",
+                    ImportedSymbol("dict", "builtins"),
+                    "[",
+                    ImportedSymbol("str", "builtins"),
+                    ",",
+                    ImportedSymbol("str", "builtins"),
+                    "] | None = None,",
+                )
+                g.p(
                     "credentials: ",
                     ImportedSymbol("CallCredentials", "grpc"),
                     " | None = None,",
@@ -844,6 +862,8 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     g.p("result_pb2_class=", method.output.pb2, ",")
                     g.p("metadata=metadata,")
                     g.p("timeout=timeout,")
+                    g.p("auth_timeout=auth_timeout,")
+                    g.p("auth_options=auth_options,")
                     g.p("credentials=credentials,")
                     g.p("compression=compression,")
                     g.p("retries=retries,")
