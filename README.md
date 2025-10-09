@@ -22,6 +22,41 @@ If you've received this module in a zip archive or checked out from git, install
 pip install ./path/to/your/pysdk
 ```
 
+### Recent breaking changes:
+
+#### Version 0.2.74 -> 0.3.0
+
+Moved authorization options to direct request argument.
+Removed `nebius.aio.authorization.options.options_to_metadata`.
+Removed metadata cleanup, as it is not used.
+
+Old:
+```python
+from nebius.aio.authorization.options import options_to_metadata
+service.request(
+    req,
+    metadata=({'your':'metadata'}).update(options_to_metadata(
+        {
+            OPTION_RENEW_REQUIRED: "true",
+            OPTION_RENEW_SYNCHRONOUS: "true",
+            OPTION_RENEW_REQUEST_TIMEOUT: ".9",
+        }
+    ))
+)
+```
+New:
+```python
+service.request(
+    req,
+    metadata={'your':'metadata'},
+    auth_options={
+        OPTION_RENEW_REQUIRED: "true",
+        OPTION_RENEW_SYNCHRONOUS: "true",
+        OPTION_RENEW_REQUEST_TIMEOUT: ".9",
+    }
+)
+```
+
 ### Example
 
 Working examples in `src/examples`.
