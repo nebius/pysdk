@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from nebius.base.metadata import Metadata
+from grpc.aio._metadata import Metadata
 
 
 class Authenticator(ABC):

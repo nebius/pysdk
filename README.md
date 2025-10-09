@@ -192,6 +192,7 @@ If you use service account, credentials file or something like that, SDK will re
 ```python
 import asyncio
 
+from nebius.aio.authorization.options import options_to_metadata
 from nebius.aio.token.renewable import (
     OPTION_RENEW_REQUEST_TIMEOUT,
     OPTION_RENEW_REQUIRED,
@@ -201,11 +202,13 @@ from nebius.aio.token.renewable import (
 async def my_call():
     try:
         await sdk.whoami(
-            auth_options={
-                OPTION_RENEW_REQUIRED: "true",
-                OPTION_RENEW_SYNCHRONOUS: "true",
-                OPTION_RENEW_REQUEST_TIMEOUT: ".9",
-            }
+            metadata=options_to_metadata(
+                {
+                    OPTION_RENEW_REQUIRED: "true",
+                    OPTION_RENEW_SYNCHRONOUS: "true",
+                    OPTION_RENEW_REQUEST_TIMEOUT: ".9",
+                }
+            )
         )
     except Exception as err:
         print(f"something is wrong with your token: {err=}")
@@ -215,9 +218,7 @@ async def my_call():
 asyncio.run(my_call)
 ```
 
-You can pass these options to any request.
-
-The overall time spent trying to authenticate/renew before making the call is bounded by `auth_timeout` (default 15 minutes). You can adjust it per-call, for example: `await sdk.whoami(auth_timeout=600.0)`. Setting `auth_timeout=None` removes this bound but may cause the call to wait indefinitely if renewal cannot complete.
+You can pass these options to any request, or add them to your metadata with `add_options_to_metadata`.
 
 #### Call some method
 
@@ -329,27 +330,6 @@ By default the SDK sets an overall request timeout of 60 seconds and a per-retry
 Retries may fail for many reasons (not only timeouts) — network errors, resource exhaustion, quota errors, or service-side failures can all stop a retry loop. If you expect retries to sometimes hang (for example, waiting on a slow resource), consider setting a smaller per-retry timeout so stuck attempts fail faster and allow the retry logic to continue or surface an error sooner.
 
 Operations add one more timeout level: an operation-level timeout that bounds the entire operation lifecycle (waiting for completion). Because of that, the timeouts for each operation update request are prefixed with `poll_`.
-
-###### Authentication timeout (auth_timeout)
-
-There is a third, independent timeout that bounds the overall authentication flow for a call. Authentication (e.g., token acquisition/renewal) happens within the request and can retry on certain failures before and during the RPC. The `auth_timeout` limits the total time spent authenticating (including any internal retries) plus the request run wrapped inside the authentication loop.
-
-- Default: 15 minutes (900 seconds)
-- Scope: Authentication loop + the request execution enclosed by it
-- Behavior:
-    - Authentication may retry when allowed by the credentials provider (for example, transient network errors or UNAUTHENTICATED responses). All such retries are bounded by `auth_timeout`.
-    - For synchronous usage (e.g., `.wait()`), the same `auth_timeout` bounds the overall waiting time.
-- Per-call override: pass `auth_timeout` to any service method, for example:
-
-```python
-response = await service.get(req, auth_timeout=300.0)  # 5 minutes
-```
-
-- Disable the authentication deadline by passing `auth_timeout=None` (be careful: this can cause calls to wait indefinitely if authentication never succeeds).
-
-Notes:
-- `auth_timeout` starts at the beginning of the request, caps the `timeout` of the authorized request, which itself caps each `per_retry_timeout`.
-- If you use token renewal options (see below), individual token-exchange attempts may have their own short deadlines; `auth_timeout` caps the aggregate time across multiple attempts.
 
 
 ##### Retrieve additional metadata

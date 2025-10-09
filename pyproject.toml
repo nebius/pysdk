@@ -134,10 +134,6 @@ load-plugins = ["pylint.extensions.mccabe"]
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
-# log_cli = true
-# log_cli_level = "DEBUG"
-log_cli_format = "%(asctime)s %(levelname)s %(name)s: %(message)s"
-log_cli_date_format = "%H:%M:%S"
 
 [tool.tox]
 requires = ["tox>=4.23"]

@@ -2,6 +2,21 @@ from collections.abc import Iterable, MutableSequence, Sequence
 from typing import overload
 
 
+class Internal:
+    """
+    Metadata tags for internal usage, that will be filtered out.
+
+    All the tags must be prefixed with `PREFIX`, by which they will be filtered.
+    The PREFIX is constructed such that if it leaks into the actual GRPC, it will cause
+    an error.
+    """
+
+    PREFIX = ":NebiusInternal:\r\n"
+
+    AUTHORIZATION = PREFIX + "authorization"
+    AUTHORIZATION_OPTION = PREFIX + "authorization_option"
+
+
 class Authorization:
     DISABLE = "disable"
 
@@ -16,6 +31,9 @@ class Metadata(MutableSequence[tuple[str, str]]):
 
     def insert(self, index: int, value: tuple[str, str]) -> None:
         self._contents.insert(index, (value[0].lower(), value[1]))
+
+    def clean(self) -> "Metadata":
+        return Metadata([v for v in self if v[0].startswith(Internal.PREFIX.lower())])
 
     @overload
     def get_one(

@@ -3,10 +3,6 @@ import logging
 
 import pytest
 
-from nebius.aio import request
-
-request.DEFAULT_AUTH_TIMEOUT = 5.0
-
 
 @pytest.mark.asyncio
 async def test_get_instance_sync_in_async_no_loop() -> None:
@@ -232,9 +228,6 @@ async def test_get_instance_v2() -> None:
     address = f"localhost:{port}"
 
     channel = None
-    from nebius.aio import request
-
-    request.DEFAULT_AUTH_TIMEOUT = 5.0
     try:
         # Set up the client channel
         channel = Channel(
