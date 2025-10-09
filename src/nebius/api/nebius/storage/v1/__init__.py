@@ -519,7 +519,7 @@ class LifecycleRule(pb_classes.Message):
     @builtins.property
     def noncurrent_version_transition(self) -> "LifecycleNoncurrentVersionTransition":
         """
-        Spicifies the transition for the lifecycle of a noncurrent object.
+        Specifies the transition for the lifecycle of a noncurrent object.
         It works only on a bucket that has versioning enabled (or suspended).
         """
         
