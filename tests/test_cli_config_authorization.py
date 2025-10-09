@@ -1,10 +1,6 @@
 # type: ignore
 import pytest
 
-from nebius.aio import request
-
-request.DEFAULT_AUTH_TIMEOUT = 5.0
-
 
 @pytest.mark.asyncio
 async def test_env_and_token_file_auth(monkeypatch, tmp_path) -> None:

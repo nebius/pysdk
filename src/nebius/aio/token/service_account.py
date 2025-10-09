@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
-from nebius.aio.abc import ClientChannelInterface
+from nebius.aio.base import ChannelBase
 from nebius.aio.token.deferred_channel import DeferredChannel
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
 from nebius.aio.token.renewable import Bearer as RenewableBearer
@@ -21,7 +21,7 @@ class ServiceAccountBearer(ParentBearer):
     def __init__(
         self,
         service_account: ServiceAccountReader | ServiceAccount | str,
-        channel: ClientChannelInterface | DeferredChannel | None = None,
+        channel: ChannelBase | DeferredChannel | None = None,
         private_key: RSAPrivateKey | None = None,
         public_key_id: str | None = None,
         max_retries: int = 2,
@@ -88,7 +88,7 @@ class ServiceAccountBearer(ParentBearer):
             f"service-account/{sa_id}/{public_key_id}",
         )
 
-    def set_channel(self, channel: ClientChannelInterface) -> None:
+    def set_channel(self, channel: ChannelBase) -> None:
         self._exchangeable.set_channel(channel)
 
     @property
