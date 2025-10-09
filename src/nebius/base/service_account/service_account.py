@@ -6,7 +6,7 @@ from typing import Any
 import jwt
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
-from nebius.api.nebius.iam.v1.token_service_pb2 import ExchangeTokenRequest
+from nebius.api.nebius.iam.v1 import ExchangeTokenRequest
 
 log = getLogger(__name__)
 

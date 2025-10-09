@@ -1,4 +1,4 @@
-from grpc.aio._metadata import Metadata
+from nebius.base.metadata import Metadata
 
 from ..token import token
 from .authorization import Authenticator, Provider
@@ -18,6 +18,7 @@ class TokenAuthenticator(Authenticator):
         options: dict[str, str] | None = None,
     ) -> None:
         tok = await self._receiver.fetch(timeout=timeout, options=options)
+        del metadata[HEADER]
         metadata.add(HEADER, f"Bearer {tok.token}")
 
     def can_retry(

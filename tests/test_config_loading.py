@@ -2,6 +2,10 @@
 
 import pytest
 
+from nebius.aio import request
+
+request.DEFAULT_AUTH_TIMEOUT = 5.0
+
 
 def test_load_config_from_home(tmp_path, monkeypatch) -> None:
     from nebius.aio.cli_config import Config
@@ -30,7 +34,7 @@ profiles:
 async def test_load_config_env_token(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
-    from nebius.aio.base import ChannelBase
+    from nebius.aio.abc import ClientChannelInterface
     from nebius.aio.cli_config import Config
     from nebius.aio.token.static import EnvBearer
 
@@ -52,7 +56,7 @@ profiles:
         )
     # Load the configuration
     config = Config("foo")
-    fut = Future[ChannelBase]()
+    fut = Future[ClientChannelInterface]()
     tok = config.get_credentials(fut)
     assert isinstance(tok, EnvBearer)
     receiver = tok.receiver()
@@ -64,7 +68,7 @@ profiles:
 async def test_load_config_token_file(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
-    from nebius.aio.base import ChannelBase
+    from nebius.aio.abc import ClientChannelInterface
     from nebius.aio.cli_config import Config
     from nebius.aio.token.file import Bearer as FileBearer
 
@@ -89,7 +93,7 @@ profiles:
         f.write("my-token")
     # Load the configuration
     config = Config("foo")
-    fut = Future[ChannelBase]()
+    fut = Future[ClientChannelInterface]()
     tok = config.get_credentials(fut)
     assert isinstance(tok, FileBearer)
     receiver = tok.receiver()
@@ -101,7 +105,7 @@ profiles:
 async def test_load_config_no_env(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
-    from nebius.aio.base import ChannelBase
+    from nebius.aio.abc import ClientChannelInterface
     from nebius.aio.cli_config import Config
     from nebius.aio.token.file import Bearer as FileBearer
 
@@ -126,7 +130,7 @@ profiles:
         f.write("my-token")
     # Load the configuration
     config = Config("foo", no_env=True)
-    fut = Future[ChannelBase]()
+    fut = Future[ClientChannelInterface]()
     tok = config.get_credentials(fut)
     assert isinstance(tok, FileBearer)
     receiver = tok.receiver()
@@ -252,10 +256,10 @@ profiles:
 
     from asyncio import Future
 
-    from nebius.aio.base import ChannelBase
+    from nebius.aio.abc import ClientChannelInterface
 
     config = Config("foo")
-    fut = Future[ChannelBase]()
+    fut = Future[ClientChannelInterface]()
     cred = config.get_credentials(fut)
     assert isinstance(cred, FederatedCredentialsBearer)
 
@@ -314,10 +318,10 @@ profiles:
 
     from asyncio import Future
 
-    from nebius.aio.base import ChannelBase
+    from nebius.aio.abc import ClientChannelInterface
 
     config = Config("foo")
-    fut = Future[ChannelBase]()
+    fut = Future[ClientChannelInterface]()
     cred = config.get_credentials(fut)
     assert isinstance(cred, ServiceAccountBearer)
 
@@ -364,9 +368,9 @@ profiles:
     config = Config("foo")
     from asyncio import Future
 
-    from nebius.aio.base import ChannelBase
+    from nebius.aio.abc import ClientChannelInterface
 
-    fut = Future[ChannelBase]()
+    fut = Future[ClientChannelInterface]()
     cred = config.get_credentials(fut)
     assert isinstance(cred, ServiceAccountBearer)
 
@@ -415,8 +419,8 @@ profiles:
     config = Config("foo")
     from asyncio import Future
 
-    from nebius.aio.base import ChannelBase
+    from nebius.aio.abc import ClientChannelInterface
 
-    fut = Future[ChannelBase]()
+    fut = Future[ClientChannelInterface]()
     cred = config.get_credentials(fut)
     assert isinstance(cred, ServiceAccountBearer)

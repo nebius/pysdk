@@ -2,6 +2,7 @@ from collections.abc import Awaitable
 from typing import TypeVar
 
 from nebius.aio.abc import ClientChannelInterface
+from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
 
 from .base import AddressChannel
 
@@ -27,6 +28,9 @@ class Constant(ClientChannelInterface):
 
     def parent_id(self) -> str | None:
         return self._parent_id
+
+    def get_authorization_provider(self) -> AuthorizationProvider | None:
+        return self._source.get_authorization_provider()
 
     def get_channel_by_method(self, method_name: str) -> AddressChannel:
         return self._source.get_channel_by_method(self._method)
