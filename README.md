@@ -22,9 +22,7 @@ If you've received this module in a zip archive or checked out from git, install
 pip install ./path/to/your/pysdk
 ```
 
-### Recent breaking changes:
-
-#### Migration from 0.2.x to 0.3.x
+### Migration from 0.2.x to 0.3.x
 
 In version 0.3.0, we introduced a small breaking change aimed at improving the authorization process:
 - Moved authorization options to direct request argument
