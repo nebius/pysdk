@@ -29,7 +29,7 @@ In version 0.3.0, we introduced a small breaking change aimed at improving the a
 - Removed `nebius.aio.authorization.options.options_to_metadata`
 - Removed metadata cleanup, as it is not used
 
-<= 0.2.74
+<= 0.2.74:
 ```python
 from nebius.aio.authorization.options import options_to_metadata
 service.request(
