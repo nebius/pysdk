@@ -1,5 +1,5 @@
 from collections.abc import Awaitable
 
-from nebius.aio.base import ChannelBase
+from nebius.aio.abc import ClientChannelInterface
 
-DeferredChannel = Awaitable[ChannelBase]
+DeferredChannel = Awaitable[ClientChannelInterface]

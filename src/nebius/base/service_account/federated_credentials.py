@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from nebius.api.nebius.iam.v1.token_service_pb2 import ExchangeTokenRequest
+from nebius.api.nebius.iam.v1 import ExchangeTokenRequest
 from nebius.base.service_account.service_account import TokenRequester
 
 

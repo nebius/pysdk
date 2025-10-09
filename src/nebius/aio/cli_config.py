@@ -5,8 +5,8 @@ from pathlib import Path
 from ssl import SSLContext
 from typing import Any, TextIO
 
+from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
-from nebius.aio.base import ChannelBase
 from nebius.aio.token.service_account import ServiceAccountBearer
 from nebius.aio.token.static import EnvBearer, NoTokenInEnvError
 from nebius.aio.token.token import Bearer as TokenBearer
@@ -142,7 +142,7 @@ class Config:
 
     def get_credentials(
         self,
-        channel: ChannelBase,
+        channel: ClientChannelInterface,
         writer: TextIO | None = None,
         no_browser_open: bool = False,
         ssl_ctx: SSLContext | None = None,

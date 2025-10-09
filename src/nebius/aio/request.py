@@ -1,4 +1,4 @@
-from asyncio import CancelledError, Future, ensure_future
+from asyncio import CancelledError, Future, ensure_future, wait_for
 from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
 from sys import exc_info
@@ -13,6 +13,7 @@ from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
 from grpc_status import rpc_status
 
 from nebius.aio.abc import ClientChannelInterface as Channel
+from nebius.aio.authorization.options import OPTION_TYPE, Types
 from nebius.aio.base import AddressChannel
 from nebius.aio.idempotency import ensure_key_in_metadata
 from nebius.base.error import SDKError
@@ -50,6 +51,7 @@ class RequestSentNoCallError(RequestError):
 
 DEFAULT_TIMEOUT = 60.0  # second
 DEFAULT_PER_RETRY_TIMEOUT = DEFAULT_TIMEOUT / 3
+DEFAULT_AUTH_TIMEOUT = 15 * 60.0  # 15 minutes
 
 
 class Request(Generic[Req, Res]):
@@ -62,6 +64,8 @@ class Request(Generic[Req, Res]):
         result_pb2_class: type[PMessage],
         metadata: Metadata | Iterable[tuple[str, str]] | None = None,
         timeout: float | None | UnsetType = Unset,
+        auth_timeout: float | None | UnsetType = Unset,
+        auth_options: dict[str, str] | None = None,
         credentials: CallCredentials | None = None,
         compression: Compression | None = None,
         result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
@@ -74,6 +78,7 @@ class Request(Generic[Req, Res]):
         self._input = request
         self._service = service
         self._method = method
+        self._auth_options = auth_options if auth_options is not None else {}
         self._result_pb2_class = result_pb2_class
         self._input_metadata = Metadata(metadata)
         self._result_wrapper = result_wrapper
@@ -85,6 +90,11 @@ class Request(Generic[Req, Res]):
             per_retry_timeout
             if not isinstance(per_retry_timeout, UnsetType)
             else DEFAULT_PER_RETRY_TIMEOUT
+        )
+        self._auth_timeout: float | None = (
+            auth_timeout
+            if not isinstance(auth_timeout, UnsetType)
+            else DEFAULT_AUTH_TIMEOUT
         )
         self._credentials = credentials
         self._compression = compression
@@ -219,7 +229,8 @@ class Request(Generic[Req, Res]):
 
     def run_sync_with_timeout(self, func: Awaitable[T]) -> T:
         try:
-            timeout = self._timeout
+            # Overall timeout should include authorization + request execution
+            timeout = self._auth_timeout
             if timeout is not None:
                 timeout += 0.2  # 200 ms for an internal graceful shutdown
             return self._channel.run_sync(func, timeout=timeout)
@@ -356,11 +367,20 @@ class Request(Generic[Req, Res]):
         except RequestError:
             pass
 
-    async def _retry_loop(self) -> Res:
+    async def _retry_loop(self, outer_deadline: float | None = None) -> Res:
         from .service_error import RequestError, is_retriable_error
 
         self._start_time = time()
-        deadline = None if self._timeout is None else self._start_time + self._timeout
+        # Compute this loop's absolute deadline, capped by an outer deadline if provided
+        own_deadline = (
+            None if self._timeout is None else self._start_time + self._timeout
+        )
+        if outer_deadline is None:
+            deadline = own_deadline
+        elif own_deadline is None:
+            deadline = outer_deadline
+        else:
+            deadline = min(own_deadline, outer_deadline)
         attempt = 0
         while not self._cancelled:
             attempt += 1
@@ -369,7 +389,15 @@ class Request(Generic[Req, Res]):
             if self._per_retry_timeout is not None and (
                 timeout is None or timeout > self._per_retry_timeout
             ):
-                timeout = self._per_retry_timeout
+                # Clip per-retry timeout by remaining overall deadline if present
+                per_attempt = self._per_retry_timeout
+                if deadline is not None:
+                    remaining = deadline - time()
+                    if remaining <= 0:
+                        per_attempt = 0
+                    else:
+                        per_attempt = min(per_attempt, remaining)
+                timeout = per_attempt
 
             # somehow, this time python doesn't want to catch the raised error again
             # thus, it will be two nested try/except blocks
@@ -420,9 +448,76 @@ class Request(Generic[Req, Res]):
                 raise e
         raise RequestIsCancelledError()
 
+    async def _request_with_authorization_loop(self) -> Res:
+        """Wrap request retry loop with an authorization loop.
+
+        The authorization loop will attempt to authenticate and then execute the
+        request retry loop. If the result is UNAUTHENTICATED and the authenticator
+        allows retry, it will re-authenticate and try again while respecting the
+        overall auth timeout.
+        """
+        # If no provider or authorization explicitly disabled, just run the request
+        provider = self._channel.get_authorization_provider()
+
+        auth_type = self._auth_options.get(OPTION_TYPE, None)
+        if provider is None or auth_type == Types.DISABLE:
+            return await self._retry_loop()
+
+        start = time()
+        deadline = None if self._auth_timeout is None else start + self._auth_timeout
+        attempt = 0
+        auth = provider.authenticator()
+
+        while True:
+            attempt += 1
+            timeout = None if deadline is None else (deadline - time())
+            if timeout is not None and timeout <= 0:
+                raise TimeoutError("authorization timed out")
+            # Perform authentication: use a gRPC Metadata, then copy back auth header
+            # to the internal Metadata used when sending the request
+            auth_md = Metadata(self._input_metadata)
+            try:
+                await wait_for(
+                    auth.authenticate(auth_md, timeout, self._auth_options), timeout
+                )
+            except Exception as e:  # noqa: BLE001
+                # If authentication itself failed (e.g., token refresh timeout),
+                # retry if authenticator allows and we are within deadline.
+                if deadline is not None and deadline <= time():
+                    raise
+                if auth.can_retry(e, self._auth_options):
+                    continue
+                raise
+            self._input_metadata = auth_md
+
+            # Run the request retry loop; map UNAUTHENTICATED to re-auth attempts
+            try:
+                return await self._retry_loop(outer_deadline=deadline)
+            except Exception as e:  # noqa: BLE001
+                # Only retry auth on UNAUTHENTICATED codes
+                from .service_error import RequestError as ServiceRequestError
+
+                if not isinstance(e, ServiceRequestError):
+                    raise
+                try:
+                    code = e.status.code
+                except Exception:
+                    # If code is not available, don't treat it as auth failure
+                    raise
+                if not (
+                    code == StatusCode.UNAUTHENTICATED
+                    or getattr(code, "name", None) == "UNAUTHENTICATED"
+                ):
+                    raise
+                if deadline is not None and deadline <= time():
+                    raise
+                if not auth.can_retry(e, self._auth_options):
+                    raise
+                # loop continues to re-authenticate and retry
+
     async def _await_result(self) -> Res:
         if self._future is None:
-            self._future = ensure_future(self._retry_loop())
+            self._future = ensure_future(self._request_with_authorization_loop())
         return await self._future
 
     def __await__(self) -> Generator[Any, None, Res]:
