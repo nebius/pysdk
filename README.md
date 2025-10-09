@@ -24,13 +24,14 @@ pip install ./path/to/your/pysdk
 
 ### Recent breaking changes:
 
-#### Version 0.2.74 -> 0.3.0
+#### Migration from 0.2.x to 0.3.x
 
-Moved authorization options to direct request argument.
-Removed `nebius.aio.authorization.options.options_to_metadata`.
-Removed metadata cleanup, as it is not used.
+In version 0.3.0, we introduced a small breaking change aimed at improving the authorization process:
+- Moved authorization options to direct request argument
+- Removed `nebius.aio.authorization.options.options_to_metadata`
+- Removed metadata cleanup, as it is not used
 
-Old:
+<= 0.2.74
 ```python
 from nebius.aio.authorization.options import options_to_metadata
 service.request(
@@ -44,7 +45,8 @@ service.request(
     ))
 )
 ```
-New:
+
+>= 0.3.0:
 ```python
 service.request(
     req,
