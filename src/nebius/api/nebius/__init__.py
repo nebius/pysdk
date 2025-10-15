@@ -390,6 +390,7 @@ class DeprecationDetails(pb_classes.Message):
         "description":"description",
     }
     
+file_deprecation_details = annotations_pb2.file_deprecation_details
 api_service_name = annotations_pb2.api_service_name
 service_deprecation_details = annotations_pb2.service_deprecation_details
 service_py_sdk = annotations_pb2.service_py_sdk
@@ -406,12 +407,14 @@ field_py_sdk = annotations_pb2.field_py_sdk
 oneof_behavior = annotations_pb2.oneof_behavior
 oneof_py_sdk = annotations_pb2.oneof_py_sdk
 enum_py_sdk = annotations_pb2.enum_py_sdk
+enum_deprecation_details = annotations_pb2.enum_deprecation_details
 enum_value_deprecation_details = annotations_pb2.enum_value_deprecation_details
 enum_value_py_sdk = annotations_pb2.enum_value_py_sdk
 __all__ = [
     #@ local import names here @#
     "ResourceBehavior",
     "FieldBehavior",
+    "file_deprecation_details",
     "api_service_name",
     "service_deprecation_details",
     "service_py_sdk",
@@ -428,6 +431,7 @@ __all__ = [
     "oneof_behavior",
     "oneof_py_sdk",
     "enum_py_sdk",
+    "enum_deprecation_details",
     "enum_value_deprecation_details",
     "enum_value_py_sdk",
     "ServicePySDKSettings",

@@ -33,6 +33,8 @@ INPUT_ONLY: FieldBehavior
 OUTPUT_ONLY: FieldBehavior
 MEANINGFUL_EMPTY_VALUE: FieldBehavior
 NON_EMPTY_DEFAULT: FieldBehavior
+FILE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
+file_deprecation_details: _descriptor.FieldDescriptor
 API_SERVICE_NAME_FIELD_NUMBER: _ClassVar[int]
 api_service_name: _descriptor.FieldDescriptor
 SERVICE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
@@ -65,6 +67,8 @@ ONEOF_PY_SDK_FIELD_NUMBER: _ClassVar[int]
 oneof_py_sdk: _descriptor.FieldDescriptor
 ENUM_PY_SDK_FIELD_NUMBER: _ClassVar[int]
 enum_py_sdk: _descriptor.FieldDescriptor
+ENUM_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
+enum_deprecation_details: _descriptor.FieldDescriptor
 ENUM_VALUE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 enum_value_deprecation_details: _descriptor.FieldDescriptor
 ENUM_VALUE_PY_SDK_FIELD_NUMBER: _ClassVar[int]

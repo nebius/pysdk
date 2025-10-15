@@ -2105,6 +2105,11 @@ class NodeTemplate(pb_classes.Message):
               k8s: 1.30, 1.31 → "ubuntu24.04"
             drivers_preset: "cuda12.8"
               k8s: 1.31 → "ubuntu24.04"
+          gpu-b200-sxm-a:
+            drivers_preset: ""
+              k8s: 1.31 → "ubuntu24.04"
+            drivers_preset: "cuda12.8"
+              k8s: 1.31 → "ubuntu24.04"
         """
         
         return super()._get_field("os", explicit_presence=False,
@@ -2331,6 +2336,8 @@ class GpuSettings(pb_classes.Message):
             k8s: 1.31 → "cuda12" (CUDA 12.4), "cuda12.4", "cuda12.8"
           gpu-b200-sxm:
             k8s: 1.31 → "cuda12" (CUDA 12.8), "cuda12.8"
+          gpu-b200-sxm-a:
+            k8s: 1.31 → "cuda12.8"
         """
         
         return super()._get_field("drivers_preset", explicit_presence=False,
