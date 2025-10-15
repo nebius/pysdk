@@ -187,7 +187,7 @@ async def my_call():
     async with sdk:
         print(await sdk.whoami())
 
-asyncio.run(my_call)
+asyncio.run(my_call())
 ```
 
 It is important to close the SDK, so all the coroutines and tasks will be gracefully stopped and gathered. It can either be achieved by using `async with`, or by explicitly calling `sdk.close()`:
@@ -202,7 +202,7 @@ async def my_call():
     finally:
         await sdk.close()
 
-asyncio.run(my_call)
+asyncio.run(my_call())
 ```
 
 SDK is created with asyncio in mind, so the best way to call methods of it is to use an async context. But if you haven't started async loop, you can run it synchronously:
@@ -247,7 +247,7 @@ async def my_call():
     finally:
         await sdk.close()
 
-asyncio.run(my_call)
+asyncio.run(my_call())
 ```
 
 You can pass these options to any request.
