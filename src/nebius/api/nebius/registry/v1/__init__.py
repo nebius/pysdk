@@ -398,11 +398,27 @@ class DeleteArtifactRequest(pb_classes.Message):
     
 
 class ArtifactServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    This class provides the client methods for the ``.nebius.registry.v1.ArtifactService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.registry.v1.ArtifactService",artifact_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.registry.v1.ArtifactService"
     __operation_type__ = v1_1.Operation
     __operation_service_class__ = v1_1.OperationServiceClient
     __operation_source_method__ = "Delete"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def get(self,
         request: "GetArtifactRequest",
@@ -415,6 +431,40 @@ class ArtifactServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetArtifactRequest","Artifact"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.registry.v1.GetArtifactRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.registry.v1.Artifact`.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -441,6 +491,40 @@ class ArtifactServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListArtifactsRequest","ListArtifactsResponse"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.registry.v1.ListArtifactsRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.registry.v1.ListArtifactsResponse`.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -467,6 +551,40 @@ class ArtifactServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteArtifactRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.registry.v1.DeleteArtifactRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
         return super().request(
             method="Delete",
             request=request,
@@ -987,11 +1105,27 @@ class DeleteRegistryRequest(pb_classes.Message):
     
 
 class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    This class provides the client methods for the ``.nebius.registry.v1.RegistryService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.registry.v1.RegistryService",registry_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.registry.v1.RegistryService"
     __operation_type__ = v1_1.Operation
     __operation_service_class__ = v1_1.OperationServiceClient
     __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def get(self,
         request: "GetRegistryRequest",
@@ -1004,6 +1138,40 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetRegistryRequest","Registry"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.registry.v1.GetRegistryRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.registry.v1.Registry`.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -1030,6 +1198,40 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListRegistriesRequest","ListRegistriesResponse"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.registry.v1.ListRegistriesRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.registry.v1.ListRegistriesResponse`.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -1056,6 +1258,40 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateRegistryRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.registry.v1.CreateRegistryRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -1082,6 +1318,40 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateRegistryRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.registry.v1.UpdateRegistryRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -1109,6 +1379,40 @@ class RegistryServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteRegistryRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.registry.v1.DeleteRegistryRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
         return super().request(
             method="Delete",
             request=request,

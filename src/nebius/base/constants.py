@@ -1,6 +1,12 @@
 DOMAIN: str = "api.nebius.cloud:443"
+"""Default Nebius API endpoint."""
 DEFAULT_CONFIG_DIR: str = "~/.nebius"
+"""Default Nebius configuration directory."""
 DEFAULT_CONFIG_FILE: str = "config.yaml"
+"""Default Nebius configuration file name in the configuration directory."""
 DEFAULT_CREDENTIALS_FILE: str = "credentials.yaml"
+"""Default Nebius credentials file name in the configuration directory."""
 TOKEN_ENV = "NEBIUS_IAM_TOKEN"  # noqa: S105
+"""Environment variable name for an IAM token string."""
 PROFILE_ENV = "NEBIUS_PROFILE"
+"""Environment variable name for a Nebius profile string."""

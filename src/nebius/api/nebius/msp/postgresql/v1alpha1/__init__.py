@@ -477,13 +477,27 @@ class DeleteBackupRequest(pb_classes.Message):
 class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     """
     A set of methods for managing PostgreSQL Cluster backups.
+    
+    This class provides the client methods for the ``.nebius.msp.postgresql.v1alpha1.BackupService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
     """
     
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.BackupService",backup_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.msp.postgresql.v1alpha1.BackupService"
     __operation_type__ = v1alpha1_1.Operation
     __operation_service_class__ = v1alpha1_1.OperationServiceClient
     __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def get(self,
         request: "GetBackupRequest",
@@ -499,6 +513,38 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
         """
         Returns the specified PostgreSQL Cluster backup.
         To get the list of available PostgreSQL Cluster backups, make a [List] or [ListByCluster] request.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.GetBackupRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.msp.postgresql.v1alpha1.Backup`.
         """
         
         return super().request(
@@ -529,6 +575,38 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     ) -> request_1.Request["ListBackupsRequest","ListBackupsResponse"]:
         """
         Retrieves the list of PostgreSQL Cluster backups by project.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.ListBackupsRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.msp.postgresql.v1alpha1.ListBackupsResponse`.
         """
         
         return super().request(
@@ -559,6 +637,38 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     ) -> request_1.Request["ListBackupsByClusterRequest","ListBackupsResponse"]:
         """
         Retrieves the list of PostgreSQL Cluster backups by cluster.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.ListBackupsByClusterRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.msp.postgresql.v1alpha1.ListBackupsResponse`.
         """
         
         return super().request(
@@ -589,6 +699,38 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     ) -> request_1.Request["CreateBackupRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Creates a new on-demand backup.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.CreateBackupRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         return super().request(
@@ -619,6 +761,38 @@ class BackupServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alp
     ) -> request_1.Request["DeleteBackupRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Deletes an on-demand backup.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.DeleteBackupRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         return super().request(
@@ -1237,7 +1411,7 @@ class ConfigSpec(pb_classes.Message):
     def version(self) -> "builtins.str":
         """
         Version of PostgreSQL used in the cluster.
-        Possible values: `16`
+        Possible values: ``16``
         """
         
         return super()._get_field("version", explicit_presence=False,
@@ -2023,13 +2197,27 @@ class StartClusterRequest(pb_classes.Message):
 class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1alpha1_1.OperationServiceClient]):
     """
     A set of methods for managing PostgreSQL Cluster resources.
+    
+    This class provides the client methods for the ``.nebius.msp.postgresql.v1alpha1.ClusterService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
     """
     
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.msp.postgresql.v1alpha1.ClusterService",cluster_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.msp.postgresql.v1alpha1.ClusterService"
     __operation_type__ = v1alpha1_1.Operation
     __operation_service_class__ = v1alpha1_1.OperationServiceClient
     __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def get(self,
         request: "GetClusterRequest",
@@ -2045,6 +2233,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
         """
         Returns the specified PostgreSQL Cluster resource.
         To get the list of available PostgreSQL Cluster resources, make a [List] request.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.GetClusterRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.msp.postgresql.v1alpha1.Cluster`.
         """
         
         return super().request(
@@ -2075,6 +2295,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     ) -> request_1.Request["v1_1.GetByNameRequest","Cluster"]:
         """
         Returns the specified PostgreSQL Cluster resource by name.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.common.v1.GetByNameRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.msp.postgresql.v1alpha1.Cluster`.
         """
         
         return super().request(
@@ -2106,6 +2358,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
         """
         Returns the specified PostgreSQL Cluster resource for backup.
         It should be used as a hint of cluster configuration in case of backup restoration.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.GetClusterForBackupRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.msp.postgresql.v1alpha1.Cluster`.
         """
         
         return super().request(
@@ -2137,6 +2421,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
         """
         Retrieves the list of PostgreSQL Cluster resources that belong
         to the specified folder.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.ListClustersRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.msp.postgresql.v1alpha1.ListClustersResponse`.
         """
         
         return super().request(
@@ -2167,6 +2483,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     ) -> request_1.Request["CreateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Creates a PostgreSQL cluster in the specified folder.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.CreateClusterRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         return super().request(
@@ -2197,6 +2545,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     ) -> request_1.Request["DeleteClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Deletes the specified PostgreSQL cluster.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.DeleteClusterRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         return super().request(
@@ -2227,6 +2607,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     ) -> request_1.Request["UpdateClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Updates the PostgreSQL cluster.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.UpdateClusterRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
@@ -2258,6 +2670,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     ) -> request_1.Request["RestoreClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Creates a new PostgreSQL cluster from a previously created backup.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.RestoreClusterRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         return super().request(
@@ -2288,6 +2732,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     ) -> request_1.Request["StopClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Suspends the PostgreSQL cluster to save resources.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.StopClusterRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         return super().request(
@@ -2318,6 +2794,38 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
     ) -> request_1.Request["StartClusterRequest","operation.Operation[v1alpha1_1.Operation]"]:
         """
         Wakes up suspended PostgreSQL cluster.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.msp.postgresql.v1alpha1.StartClusterRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         return super().request(

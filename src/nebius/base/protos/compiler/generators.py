@@ -67,6 +67,32 @@ def print_triple_quoted_string(s: str, g: PyGenFile) -> None:
         g.p(line)
 
 
+def md2rst(s: str) -> str:
+    """
+    Convert a markdown string to reStructuredText using m2r2.
+    """
+    import m2r2  # type: ignore
+
+    return m2r2.convert(s)  # type: ignore
+
+
+def remove_indentation(s: str) -> str:
+    """
+    Remove the common leading whitespace from all non-empty lines.
+    Preserves blank lines.
+    """
+    ss = s.split("\n")
+    non_empty = [line for line in ss if line.strip() != ""]
+    if not non_empty:
+        return s
+    # count leading whitespace (spaces/tabs) for each non-empty line
+    indents = [len(line) - len(line.lstrip()) for line in non_empty]
+    common = min(indents)
+    if common == 0:
+        return s
+    return "\n".join(line[common:] if line != "" else "" for line in ss)
+
+
 def remove_first_spaces(s: str) -> str:
     ss = s.split("\n")
     all_have_space = all(line.startswith(" ") or line == "" for line in ss)
@@ -79,23 +105,106 @@ def generate_docstring(
     info: SourceInfo,
     g: PyGenFile,
     deprecation_details: DeprecationDetails | None = None,
+    additional_rst_comment: str = "",
 ) -> None:
     comment = "\n\n".join(
         filter(
             lambda x: x != "",
             [
-                remove_first_spaces(info.leading_comments),
-                remove_first_spaces(info.trailing_comments),
+                md2rst(remove_first_spaces(info.leading_comments)).strip(),
+                md2rst(remove_first_spaces(info.trailing_comments)).strip(),
             ],
         )
     )
     if deprecation_details:
         if comment != "":
             comment += "\n\n"
-        comment += str(deprecation_details) + "\n"
+        comment += md2rst(str(deprecation_details)).strip()
+    if additional_rst_comment != "":
+        if comment != "":
+            comment += "\n\n"
+        comment += additional_rst_comment.strip()
     if comment != "":
-        print_triple_quoted_string("\n" + comment, g)
+        print_triple_quoted_string("\n" + comment + "\n", g)
         g.p()
+
+
+def generate_method_docstring(
+    method: Method,
+    info: SourceInfo,
+    g: PyGenFile,
+    deprecation_details: DeprecationDetails | None = None,
+) -> None:
+    comment = remove_indentation(
+        """
+        :param request: The request object to send.
+        :type request: :class:`"""
+        + method.input.export_path.import_path.import_path
+        + "."
+        + method.input.pythonic_name
+        + """`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`"""
+        + method.output.export_path.import_path.import_path
+        + "."
+        + method.output.pythonic_name
+        + """`.
+        """
+    ).strip()
+    return generate_docstring(info, g, deprecation_details, comment)
+
+
+def generate_service_docstring(
+    service: Service,
+    info: SourceInfo,
+    g: PyGenFile,
+    deprecation_details: DeprecationDetails | None = None,
+) -> None:
+    comment = remove_indentation(
+        """
+        This class provides the client methods for the ``"""
+        + service.full_type_name
+        + """`` service.
+
+        Each method constructs a :class:`nebius.aio.request.Request` object
+        that represents the in-flight RPC. The request can be awaited (async)
+        or waited synchronously using its ``.wait()`` helpers.
+
+        The request methods accept various parameters to configure metadata,
+        timeouts, authorization, and retries. See individual method docstrings
+        for details.
+
+        :cvar __service_name__: The full protobuf service name.
+        """
+    ).strip()
+    return generate_docstring(info, g, deprecation_details, comment)
 
 
 def getter_type(
@@ -712,7 +821,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
     g.p("):", noindent=True)
     with g:
         deprecation_details = get_deprecation_details(srv, service_deprecation_details)
-        generate_docstring(srv.source_info, g, deprecation_details)
+        generate_service_docstring(srv, srv.source_info, g, deprecation_details)
         g.p(
             "__PB2_DESCRIPTOR__ = ",
             ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
@@ -726,11 +835,16 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
             ImportedSymbol("ServiceDescriptor", "google.protobuf.descriptor"),
             ")",
         )
+        g.p('"""The protobuf service descriptor extraction function."""')
         g.p('__service_name__ = "', srv.full_type_name, '"')
         if operation_type is not None:
             g.p("__operation_type__ = ", operation_type)
             g.p("__operation_service_class__ = ", operation_service)
             g.p('__operation_source_method__ = "', operation_source_method, '"')
+            g.p(
+                '"""The method name that can be used to fetch the address channel'
+                + ' for the operation."""'
+            )
         if deprecation_details is not None:
             g.p("__service_deprecation_details__ = (")
             print_triple_quoted_string(
@@ -830,8 +944,8 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                 g.p(method.output.export_path, noindent=True, add_eol=False)
             g.p('"]:', noindent=True)
             with g:
-                generate_docstring(
-                    method.source_info, g, method_deprecation_details_obj
+                generate_method_docstring(
+                    method, method.source_info, g, method_deprecation_details_obj
                 )
                 if method_deprecation_details_obj is not None:
                     g.p(

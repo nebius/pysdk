@@ -316,10 +316,12 @@ class LifecycleConfiguration(pb_classes.Message):
     The lifecycle configuration consists of one or more rules.
     An Lifecycle configuration can have up to 1,000 rules.
     Each rule consists of the following:
-    - A filter identifying a subset of objects to which the rule applies.
+    
+    
+    * A filter identifying a subset of objects to which the rule applies.
       The filter can be based on a key name prefix, object size, or any combination of these.
-    - A status indicating whether the rule is currently active.
-    - One or more lifecycle expiration actions that you want to be performed on the objects
+    * A status indicating whether the rule is currently active.
+    * One or more lifecycle expiration actions that you want to be performed on the objects
       identified by the filter. If the state of your bucket is versioning-enabled or versioning-suspended
       (bucket.spec.versioning_policy equals to ENABLED or SUSPENDED) you can have many versions of the same
       object (one current version and zero or more noncurrent versions). The system provides predefined actions
@@ -1197,9 +1199,11 @@ class BucketSpec(pb_classes.Message):
     def versioning_policy(self) -> "VersioningPolicy":
         """
         Supports transitions:
-         * disabled -> enabled
-         * disabled -> suspended
-         * enabled <-> suspended
+        
+        
+        * disabled -> enabled
+        * disabled -> suspended
+        * enabled <-> suspended
         """
         
         return super()._get_field("versioning_policy", explicit_presence=False,
@@ -1239,7 +1243,7 @@ class BucketSpec(pb_classes.Message):
     @builtins.property
     def default_storage_class(self) -> "StorageClass":
         """
-        Storage class to use by default for uploads to the bucket. It may be overridden by `x-amz-storage-class` header.
+        Storage class to use by default for uploads to the bucket. It may be overridden by ``x-amz-storage-class`` header.
         If not set - STANDARD is used as a default storage class.
         """
         
@@ -1256,10 +1260,9 @@ class BucketSpec(pb_classes.Message):
         """
         Storage class to override any other storage class of uploading objects. It overrides the storage class regardless
         of how the original storage class was specified - either the default storage class
-        or the one provided via the `x-amz-storage-class` header.
+        or the one provided via the ``x-amz-storage-class`` header.
         
-        
-        Supported until 12/01/25. Use `default_storage_class` with `force_storage_class` instead.
+        Supported until 12/01/25. Use ``default_storage_class`` with ``force_storage_class`` instead.
         """
         
         logging.getLogger("deprecation").warning(
@@ -1281,7 +1284,7 @@ class BucketSpec(pb_classes.Message):
     @builtins.property
     def force_storage_class(self) -> "builtins.bool":
         """
-        Flag to force usage of default_storage_class, ignoring `x-amz-storage-class` header.
+        Flag to force usage of default_storage_class, ignoring ``x-amz-storage-class`` header.
         """
         
         return super()._get_field("force_storage_class", explicit_presence=False,
@@ -1973,7 +1976,7 @@ class ListBucketsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[Bucket]":
         """
-        List of buckets returned in the response. The field should be named as `items` for consistency.
+        List of buckets returned in the response. The field should be named as ``items`` for consistency.
         """
         
         return super()._get_field("items", explicit_presence=False,
@@ -2004,11 +2007,27 @@ class ListBucketsResponse(pb_classes.Message):
     
 
 class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    This class provides the client methods for the ``.nebius.storage.v1.BucketService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.storage.v1.BucketService",bucket_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.storage.v1.BucketService"
     __operation_type__ = v1_1.Operation
     __operation_service_class__ = v1_1.OperationServiceClient
     __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def get(self,
         request: "GetBucketRequest",
@@ -2021,6 +2040,40 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetBucketRequest","Bucket"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.GetBucketRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.storage.v1.Bucket`.
+        """
+        
         return super().request(
             method="Get",
             request=request,
@@ -2047,6 +2100,40 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["GetBucketByNameRequest","Bucket"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.GetBucketByNameRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.storage.v1.Bucket`.
+        """
+        
         return super().request(
             method="GetByName",
             request=request,
@@ -2073,6 +2160,40 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["ListBucketsRequest","ListBucketsResponse"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.ListBucketsRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.storage.v1.ListBucketsResponse`.
+        """
+        
         return super().request(
             method="List",
             request=request,
@@ -2099,6 +2220,40 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["CreateBucketRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.CreateBucketRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
         return super().request(
             method="Create",
             request=request,
@@ -2125,6 +2280,40 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["UpdateBucketRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.UpdateBucketRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
         metadata = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, metadata)
         return super().request(
             method="Update",
@@ -2152,6 +2341,40 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         retries: builtins.int | None = 3,
         per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
     ) -> request_1.Request["DeleteBucketRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.DeleteBucketRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
         return super().request(
             method="Delete",
             request=request,
@@ -2182,6 +2405,38 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         Purge instantly deletes the bucket in ScheduledForDeletion state.
         It can be used only for buckets in ScheduledForDeletion state.
         If you want to delete Active bucket instantly, use Delete with zero ttl.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.PurgeBucketRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
         """
         
         return super().request(
@@ -2212,6 +2467,38 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
     ) -> request_1.Request["UndeleteBucketRequest","operation.Operation[v1_1.Operation]"]:
         """
         Undelete recovers the bucket from ScheduledForDeletion state to Active.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.UndeleteBucketRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
         """
         
         return super().request(

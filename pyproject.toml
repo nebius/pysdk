@@ -14,7 +14,7 @@ authors = [
 ]
 license.file = "LICENSE"
 dependencies = [
-    # added a dep, add the notice!
+    # added a dep, add to the NOTICE.md!
     "cryptography>=40.0.0",
     "pyyaml>=5",
     "grpcio>=1.56.2",
@@ -31,7 +31,7 @@ requires-python = ">=3.10"
 [project.optional-dependencies]
 windows = ["certifi-win32"]  # to use windows certificates
 dev = [
-    # added a dep, add the notice!
+    # added a dep, add to the NOTICE.md!
     # don't forget to mirror some of these to tox config in this file
     "pytest>=8.0",  # For running tests
     "pytest-asyncio>=0.24.0",  # For running async tests
@@ -45,7 +45,8 @@ dev = [
     "types-PyYAML>=5.0",  # for mypy
 ]
 generators = [
-    # added a dep, add the notice!
+    # added a dep, add to the NOTICE.md!
+    "m2r2>=0.3",
     "grpcio-tools>=1.56.2",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
@@ -234,12 +235,16 @@ commands = [["mypy","src/"]]
 add-package = ["src/nebius"]
 project-name="nebius"
 html-output="docs/generated"
+docformat="restructuredtext"
 template-dir="docs/templates"
 project-url="https://github.com/nebius/pysdk"
 html-base-url="https://nebius.github.io/pysdk"
 html-writer="nebius.base.gendoc.writer.TemplateWriter"
 html-viewsource-base="https://github.com/nebius/pysdk/tree/main"
-intersphinx = ["https://docs.python.org/3/objects.inv"]
+intersphinx = [
+    "https://docs.python.org/3/objects.inv",
+    "https://grpc.github.io/grpc/python/objects.inv",
+]
 privacy = [
     "PRIVATE:nebius.api.nebius.common.*.OperationServiceClient",
     "PRIVATE:nebius.api.buf",

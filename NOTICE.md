@@ -90,6 +90,10 @@ This project uses third-party libraries under the following licenses:
   Licensed under the MIT License.
   https://www.crummy.com/software/BeautifulSoup/
 
+- **m2r2** (>=0.3)
+  Licensed under the MIT License.
+  https://github.com/crossnox/m2r2
+
 ---
 
 Some libraries included in this project have specific requirements or acknowledgments in their licenses, as listed above. Please ensure compliance with these licenses when redistributing this software.

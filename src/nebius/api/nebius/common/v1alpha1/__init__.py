@@ -271,7 +271,7 @@ class Operation(pb_classes.Message):
     def request_headers(self) -> "abc.MutableMapping[builtins.str,Operation.request_header]":
         """
         The request headers that are essential for the request that generated the operation.
-        For instance, `x-resetmask`. Without these headers the request might have been processed
+        For instance, ``x-resetmask``. Without these headers the request might have been processed
         differently if repeated.
         All the header names *must* be converted to lower case.
         Validator is based on:
@@ -305,14 +305,20 @@ class Operation(pb_classes.Message):
     @builtins.property
     def resource(self) -> "any_pb2.Any":
         """
+        .. role:: raw-html-m2r(raw)
+           :format: html
+        
+        
         Snapshot of the resource at the moment this operation started.
-        - [resource.spec] and [resource.metadata] reflect the desired resource state at the moment
+        
+        
+        * [resource.spec] and [resource.metadata] reflect the desired resource state at the moment
           this operation started.
           E.g., in an Update operation it will be the *updated* resource spec and metadata,
-          in a Create operation it will be the spec and metadata *of the resource being created*,
+          in a Create operation it will be the spec and metadata *of the resource being created*\\ ,
           and so on.
-        - [resource.status] reflects the status of the resource at the moment this operation started.
-          This is a snapshot, call the <Resource>Service/Get to get current status of the resource.
+        * [resource.status] reflects the status of the resource at the moment this operation started.
+          This is a snapshot, call the :raw-html-m2r:`<Resource>`\\ Service/Get to get current status of the resource.
         
         The [resource] field MUST never be updated *after* this operation has started.
         
@@ -352,12 +358,16 @@ class Operation(pb_classes.Message):
         See https://github.com/grpc/grpc/blob/master/src/proto/grpc/status/status.proto.
         
         [status.code] is https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto:
-        - If [status.code] == OK, the operation has completed successfully.
-        - If [status.code] != OK, the operation has failed or has been cancelled.
-          - [status.message] will contain a user-readable and actionable error message.
-          - [status.details] will contain additional diagnostic information in the form of
+        
+        
+        * If [status.code] == OK, the operation has completed successfully.
+        * If [status.code] != OK, the operation has failed or has been cancelled.
+        
+          * [status.message] will contain a user-readable and actionable error message.
+          * [status.details] will contain additional diagnostic information in the form of
             [ServiceError] from ../error/v1alpha1/error.proto
-        - [status.code] must belong to an Operation-compatible subset of GRPC codes:
+        
+        * [status.code] must belong to an Operation-compatible subset of GRPC codes:
           OK, CANCELLED, PERMISSION_DENIED, RESOURCE_EXHAUSTED, FAILED_PRECONDITION, ABORTED, INTERNAL
         """
         
@@ -670,7 +680,22 @@ class ListOperationsByParentRequest(pb_classes.Message):
     
 
 class OperationServiceClient(client.Client):
+    """
+    This class provides the client methods for the ``.nebius.common.v1alpha1.OperationService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.common.v1alpha1.OperationService",operation_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.common.v1alpha1.OperationService"
     
     def get(self,
@@ -686,6 +711,38 @@ class OperationServiceClient(client.Client):
     ) -> request_1.Request["GetOperationRequest","operation.Operation[Operation]"]:
         """
         Returns the latest state of the specified operation.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.common.v1alpha1.GetOperationRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.Operation`.
         """
         
         return super().request(
@@ -716,6 +773,38 @@ class OperationServiceClient(client.Client):
     ) -> request_1.Request["ListOperationsRequest","ListOperationsResponse"]:
         """
         Lists operations for the specified resource.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.common.v1alpha1.ListOperationsRequest`
+        :param metadata: attach these values as gRPC metadata to the outgoing request.
+        :type metadata: optional sequence of (str, str) pairs
+        :param timeout: Request timeout in seconds, not accounting for authorization.
+            If ``None``, disables the request deadline.
+        :type timeout: optional float
+        :param auth_timeout: Bound on the total time spent authenticating (token
+            acquisition and renewal) plus the enclosed request execution. See README for
+            details. Unset parameter sets the default.
+        :type auth_timeout: optional float
+        :param auth_options: Authorization-specific options that are forwarded to the
+            authorization subsystem (for example, to make token renewal synchronous or
+            to surface renewal errors as request errors).
+        :type auth_options: optional dict[str, str]
+        :param credentials: Overrides any SDK-level credentials.
+        :type credentials: optional :class:`grpc.CallCredentials`
+        :param compression: Compression setting to apply to the call, overrides
+            SDK-level settings.
+        :type compression: optional :class:`grpc.Compression`
+        :param retries: Number of retry attempts for the request.
+        :type retries: optional int
+        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
+            provided, will be set to default.
+        :type per_retry_timeout: optional float
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1alpha1.ListOperationsResponse`.
         """
         
         return super().request(

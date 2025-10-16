@@ -1,3 +1,15 @@
+"""CLI-style configuration reader used by the SDK.
+
+This module provides a small :class:`Config` helper to read Nebius CLI-style
+configuration files and translate profile entries into credential bearers
+that the SDK can use. It supports multiple auth types such as federation and
+service-account credentials and will prefer an environment-supplied token if
+present.
+
+The primary entrypoint is :class:`Config.get_credentials` which returns a
+credentials object ready to be consumed by :class:`nebius.aio.channel.Channel`.
+"""
+
 from logging import getLogger
 from os import environ
 from os.path import isfile
@@ -29,14 +41,22 @@ log = getLogger(__name__)
 
 
 class ConfigError(SDKError):
-    pass
+    """Base exception for configuration-related errors."""
 
 
 class NoParentIdError(ConfigError):
-    pass
+    """Raised when a requested parent id is missing or explicitly disabled."""
 
 
 class Config:
+    """Reader for Nebius CLI-style configuration files.
+
+    The :class:`Config` class locates and parses a YAML-based configuration
+    file (by default under ``~/.nebius/config.yaml``) and exposes convenience
+    methods to obtain the default parent id, endpoint, and credentials
+    configured for the active profile.
+    """
+
     def __init__(
         self,
         client_id: str | None = None,
@@ -48,6 +68,30 @@ class Config:
         no_parent_id: bool = False,
         max_retries: int = 2,
     ) -> None:
+        """Initialize the config reader, and read the config file, selecting
+        the active profile.
+
+        :param client_id: Optional client id used for federation flows.
+        :type client_id: optional `str`
+        :param config_file: Path to the configuration YAML file.
+        :type config_file: `str` | `Path`
+        :param profile: Optional profile name to select; when omitted the
+            default profile from the config or the environment variable
+            indicated by ``profile_env`` is used.
+        :type profile: optional `str`
+        :param profile_env: Environment variable name used to select a profile.
+        :type profile_env: `str`
+        :param token_env: Environment variable name that may contain an IAM token
+            and will take priority over file-based credentials.
+        :type token_env: `str`
+        :param no_env: If True skip environment token lookup.
+        :type no_env: `bool`
+        :param no_parent_id: If True disable automatic parent id resolution.
+        :type no_parent_id: `bool`
+        :param max_retries: Maximum number of auth retries when interacting with
+            external services (passed to underlying bearers).
+        :type max_retries: `int`
+        """
         self._client_id = client_id
         self._priority_bearer: EnvBearer | None = None
         self._profile_name = profile
@@ -66,6 +110,17 @@ class Config:
 
     @property
     def parent_id(self) -> str:
+        """Return the parent id from the active profile.
+
+        The value is read from the active profile's ``parent-id`` field and
+        validated to be a non-empty string.
+
+        :returns: the parent id configured for the active profile
+        :rtype: `str`
+        :raises NoParentIdError: if parent id usage is disabled or the value is
+            missing or empty in the profile
+        :raises ConfigError: if the profile contains a non-string parent-id
+        """
         if self._no_parent_id:
             raise NoParentIdError(
                 "Config is set to not use parent id from the profile."
@@ -83,6 +138,14 @@ class Config:
         return self._profile["parent-id"]
 
     def endpoint(self) -> str:
+        """Return the configured endpoint for the active profile.
+
+        If the profile does not define an endpoint this method returns an
+        empty string.
+
+        :returns: endpoint string or empty string when not configured
+        :rtype: `str`
+        """
         return self._endpoint or ""
 
     def _get_profile(self) -> None:
@@ -147,6 +210,37 @@ class Config:
         no_browser_open: bool = False,
         ssl_ctx: SSLContext | None = None,
     ) -> Credentials:
+        """Resolve and return credentials for the active profile.
+
+        This method consults, in order of priority:
+
+        1. An environment-provided token bearer (if present and enabled).
+        2. A token file specified by ``token-file`` in the profile.
+        3. The profile's ``auth-type`` which may be ``federation`` or
+           ``service account`` and will create the corresponding bearer
+           implementation.
+
+        The returned object is suitable to be consumed by
+        :class:`nebius.aio.channel.Channel` and may be one of
+        :class:`nebius.aio.authorization.authorization.Provider`, a
+        :class:`nebius.aio.token.token.Bearer`, a :class:`TokenRequester`
+        reader, a low-level :class:`nebius.aio.token.token.Token`, or a raw
+        string token depending on the profile and environment.
+
+        :param channel: channel instance used for network-bound credential flows
+        :type channel: :class:`ClientChannelInterface`
+        :param writer: optional text stream used by interactive flows (federation)
+        :type writer: optional `TextIO`
+        :param no_browser_open: when True, federation flows will not open browsers
+        :type no_browser_open: `bool`
+        :param ssl_ctx: optional SSLContext forwarded to federation flows
+        :type ssl_ctx: optional `SSLContext`
+
+        :returns: a credentials object appropriate for the active profile
+        :rtype: :class:`Provider`, :class:`nebius.aio.token.token.Bearer`,
+            :class:`TokenRequester`, :class:`Token` or `str`
+        :raises ConfigError: for malformed or missing profile entries
+        """
         if self._priority_bearer is not None:
             return self._priority_bearer
         if "token-file" in self._profile:

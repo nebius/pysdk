@@ -26,7 +26,7 @@ class ResourceBehavior(pb_enum.Enum):
     """
     Indicates that the resource can be moved to another parent, typically an
     IAM container, though not necessarily limited to this.
-    This behavior suggests that the `metadata.parent_id` attribute could be modified.
+    This behavior suggests that the ``metadata.parent_id`` attribute could be modified.
     """
     
     UNNAMED = 2
@@ -49,7 +49,7 @@ class FieldBehavior(pb_enum.Enum):
     IMMUTABLE = 2
     """
     This indicates that the field can't be changed during a resource update.
-    Changing the field value will cause an `INVALID_ARGUMENT` error.
+    Changing the field value will cause an ``INVALID_ARGUMENT`` error.
     Resource recreate requires a change of the field value.
     """
     
@@ -57,7 +57,7 @@ class FieldBehavior(pb_enum.Enum):
     """
     Indicates field is a resource ID, so it MUST be present on a resource
     update, but MUST NOT be set on create.
-    Otherwise, RPC will fail with the `INVALID_ARGUMENT` error
+    Otherwise, RPC will fail with the ``INVALID_ARGUMENT`` error
     """
     
     INPUT_ONLY = 4
@@ -68,14 +68,14 @@ class FieldBehavior(pb_enum.Enum):
     OUTPUT_ONLY = 5
     """
     Indicates field can't be set on create or changed on update.
-    Otherwise, RPC will fail with the `INVALID_ARGUMENT` error
+    Otherwise, RPC will fail with the ``INVALID_ARGUMENT`` error
     """
     
     MEANINGFUL_EMPTY_VALUE = 6
     """
     Indicates that an empty message and a null have different semantics.
     Usually, that field is a feature spec message: its empty message enables
-    that feature, and null disables it. Such a message is different from `bool`
+    that feature, and null disables it. Such a message is different from ``bool``
     because it already has some feature parameters, or they can be added later
     in a backward-compatible way.
     IMPORTANT: if the message itself is recursive, this behavior is forced.

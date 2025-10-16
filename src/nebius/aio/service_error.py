@@ -1,3 +1,10 @@
+"""Helpers for converting service-level protobuf errors into SDK types.
+
+This module builds on :mod:`request_status` to represent detailed service
+errors (``ServiceError`` PBs) and to decide retriability based on service
+semantics and gRPC status codes.
+"""
+
 from dataclasses import dataclass
 from io import StringIO
 
@@ -12,12 +19,23 @@ from nebius.base._service_error import pb2_from_status  # type: ignore[unused-ig
 
 
 def to_anypb(err: ServiceError) -> AnyPb:
+    """Pack a :class:`ServiceError` protobuf into a ``google.protobuf.Any`` message.
+
+    This helper is used when converting SDK-level error representations back
+    into gRPC status details.
+    """
     ret = AnyPb()
     ret.Pack(err.__pb2_message__)  # type: ignore[unused-ignore]
     return ret
 
 
 class RequestError(BaseError):
+    """Exception raised for requests that failed with service-level errors.
+
+    The exception carries a :class:`RequestStatusExtended` instance in its
+    ``status`` attribute providing structured details about the failure.
+    """
+
     status: "RequestStatusExtended"
 
     def __init__(self, status: "RequestStatusExtended") -> None:
@@ -27,6 +45,11 @@ class RequestError(BaseError):
 
 
 def to_str(err: ServiceError) -> str:
+    """Render a :class:`ServiceError` into a concise human readable string.
+
+    The function inspects typed details attached to the service error and
+    produces a one-line summary intended for logs and exception messages.
+    """
     ret = StringIO("Error ")
     ret.write(err.code)
     ret.write(" in service ")
@@ -111,6 +134,10 @@ code_map = {i.value[0]: i for i in StatusCode}  # type: ignore[index,unused-igno
 
 
 def int_to_status_code(i: int | StatusCode) -> StatusCode:
+    """Convert an integer or StatusCode into a :class:`StatusCode` instance.
+
+    Useful when reading numeric status codes from protobuf messages.
+    """
     if isinstance(i, StatusCode):
         return i
     if i in code_map:
@@ -126,6 +153,19 @@ DefaultRetriableCodes = [
 
 @dataclass
 class RequestStatusExtended(RequestStatus):
+    """Extended request status that includes parsed service errors.
+
+    This supplements :class:`RequestStatus` with a list of domain-specific
+    :class:`ServiceError` messages extracted from the status details.
+
+    :ivar code: gRPC status code
+    :ivar message: human readable message (may be ``None``)
+    :ivar details: list of ``google.protobuf.Any`` detail messages
+    :ivar service_errors: list of parsed :class:`ServiceError` messages
+    :ivar request_id: request identifier extracted from metadata
+    :ivar trace_id: trace identifier extracted from metadata
+    """
+
     code: StatusCode
     message: str | None
     details: list[AnyPb]
@@ -134,6 +174,10 @@ class RequestStatusExtended(RequestStatus):
     trace_id: str
 
     def __str__(self) -> str:
+        """Render a compact human-readable representation of the status.
+
+        This is used when building exception messages for :class:`RequestError`.
+        """
         ret = StringIO()
         ret.write(f"{StatusCode(self.code).name}")
         if self.message is not None:
@@ -160,6 +204,11 @@ class RequestStatusExtended(RequestStatus):
         return ret.getvalue()
 
     def to_rpc_status(self) -> StatusPb:  # type: ignore[unused-ignore]
+        """Convert this extended status back into a protobuf Status.
+
+        Service errors are packed into Any messages and included in the
+        returned Status details.
+        """
         ret = StatusPb()  # type: ignore[unused-ignore]
         ret.code = self.code
         ret.message = self.message
@@ -174,6 +223,12 @@ class RequestStatusExtended(RequestStatus):
         request_id: str,
         trace_id: str,
     ) -> "RequestStatusExtended":
+        """Construct an extended status by extracting ServiceError protos.
+
+        This function uses internal helper :func:`pb2_from_status` to remove
+        service error protos from the details and returns them as
+        :class:`ServiceError` wrappers.
+        """
         errors = pb2_from_status(status, remove_from_details=True)  # type: ignore[unused-ignore]
         return cls(
             code=int_to_status_code(status.code),  # type: ignore[unused-ignore]
@@ -185,6 +240,12 @@ class RequestStatusExtended(RequestStatus):
         )
 
     def is_retriable(self, deadline_retriable: bool = False) -> bool:
+        """Return True when the status is considered retriable.
+
+        Retriability is determined by inspecting service-level retry hints and
+        a set of default gRPC status codes. When ``deadline_retriable`` is
+        True the DEADLINE_EXCEEDED code is considered retriable.
+        """
         # Check service errors
         for service_error in self.service_errors:
             if hasattr(service_error, "retry_type"):
@@ -208,6 +269,11 @@ class RequestStatusExtended(RequestStatus):
 
 
 def is_retriable_error(err: Exception, deadline_retriable: bool = False) -> bool:
+    """Decide whether an exception should be retried.
+
+    The function recognizes :class:`RequestError` (service-level errors) and
+    also checks for common network/transport error conditions.
+    """
     if isinstance(err, RequestError):
         return err.status.is_retriable(deadline_retriable)
 
@@ -219,12 +285,17 @@ def is_retriable_error(err: Exception, deadline_retriable: bool = False) -> bool
 
 
 def is_network_error(err: Exception) -> bool:
+    """Return True for network errors that look like timeouts."""
     if isinstance(err, OSError) and "timed out" in str(err):
         return True
     return False
 
 
 def is_transport_error(err: Exception) -> bool:
+    """Return True for transport-level errors such as connection reset.
+
+    This is a heuristic based on the textual content of the exception.
+    """
     if isinstance(err, OSError) and (
         "connection refused" in str(err) or "connection reset" in str(err)
     ):
@@ -233,4 +304,5 @@ def is_transport_error(err: Exception) -> bool:
 
 
 def is_dns_error(err: Exception) -> bool:
+    """Return True when an exception indicates a DNS resolution problem."""
     return "name resolution" in str(err)
