@@ -1,3 +1,73 @@
+"""Renewable token bearer and receiver.
+
+This module implements a wrapper around an existing asynchronous
+``Bearer`` that provides automatic background token refresh and a
+light-weight per-request ``Receiver`` implementation which delegates the
+actual token fetch to the wrapped bearer while supporting retry accounting.
+
+The primary public types provided here are:
+
+- :class:`Receiver` -- per-request receiver that calls the parent
+    bearer to obtain a token and tracks retry attempts.
+- :class:`Bearer` -- a bearer that wraps another bearer and keeps a
+    cached token refreshed in the background. It provides synchronous and
+    asynchronous renewal request modes and convenient shutdown semantics.
+
+Notes
+-----
+The renewal bearer starts a background task on the first token fetch
+and keeps the cached token refreshed up to a configurable safe fraction
+of the token lifetime. When a fetch request requires a renewed token
+it may either wait for the renewal to complete (synchronous mode) or
+trigger a background renewal and wait for the cached token to become
+fresh (asynchronous mode).
+
+Examples
+--------
+Basic usage (asynchronous renewal):
+
+::
+
+    from nebius.aio.token.static import Bearer as StaticBearer
+    from nebius.aio.token.renewable import Bearer as RenewableBearer
+    import asyncio
+
+    async def demo():
+        src = StaticBearer("my-static-token")
+        bearer = RenewableBearer(src)
+        receiver = bearer.receiver()
+        tok = await receiver.fetch(timeout=5)
+        print(tok)
+
+    asyncio.run(demo())
+
+Synchronous renewal request (waits for a fresh token, raising on
+timeout):
+
+::
+
+    from nebius.aio.token.static import Bearer as StaticBearer
+    from nebius.aio.token.renewable import Bearer as RenewableBearer
+    from nebius.aio.token.renewable import (
+        OPTION_RENEW_SYNCHRONOUS,
+        OPTION_RENEW_REQUEST_TIMEOUT,
+    )
+    import asyncio
+
+    async def sync_demo():
+        src = StaticBearer("my-static-token")
+        bearer = RenewableBearer(src)
+        receiver = bearer.receiver()
+        options = {
+            OPTION_RENEW_SYNCHRONOUS: "1",
+            OPTION_RENEW_REQUEST_TIMEOUT: "2.0",
+        }
+        tok = await receiver.fetch(timeout=5, options=options)
+        print(tok)
+
+    asyncio.run(sync_demo())
+"""
+
 import sys
 from asyncio import (
     FIRST_COMPLETED,
@@ -33,20 +103,57 @@ log = getLogger(__name__)
 
 
 class RenewalError(SDKError):
-    pass
+    """Base exception raised for renewal-related failures.
+
+    This exception is used to signal errors that occur during token
+    renewal operations managed by :class:`Bearer`.
+    """
 
 
 class IsStoppedError(RenewalError):
+    """Raised when a renewal operation is requested but the bearer is already stopped.
+
+    The exception has no additional attributes; it simply indicates that
+    the background renewal machinery has been shut down and cannot perform
+    further renewals.
+    """
+
     def __init__(self) -> None:
+        """Create the error with a suitable message."""
         super().__init__("Renewal is stopped.")
 
 
 class Receiver(ParentReceiver):
+    """Per-request receiver that delegates fetching to the parent
+    renewable bearer while accounting for retry attempts.
+
+    The receiver tracks the number of fetch attempts for a single
+    request. On transient failures it can instruct the parent bearer to
+    schedule a background renewal (unless a synchronous renewal was
+    requested via options).
+
+    Example
+    -------
+
+    ::
+
+        receiver = bearer.receiver()
+        token = await receiver.fetch(timeout=5)
+
+    """
+
     def __init__(
         self,
         parent: "Bearer",
         max_retries: int = 2,
     ) -> None:
+        """Create a receiver bound to the given renewable bearer.
+
+        :param parent: The :class:`Bearer` instance that performs background token
+            fetch and renewal.
+        :param max_retries: Maximum number of automatic retry attempts
+            this receiver will allow before giving up.
+        """
         super().__init__()
         self._parent = parent
         self._max_retries = max_retries
@@ -55,6 +162,17 @@ class Receiver(ParentReceiver):
     async def _fetch(
         self, timeout: float | None = None, options: dict[str, str] | None = None
     ) -> Token:
+        """Fetch a token by delegating to the parent bearer.
+
+        This method increments the internal trial counter which is used by
+        :meth:`can_retry` to decide whether further retries are permitted.
+
+        :param timeout: Optional timeout in seconds forwarded to the
+            parent's fetch implementation.
+        :param options: Optional request-specific options forwarded to
+            the parent bearer.
+        :returns: The fetched :class:`Token`.
+        """
         self._trial += 1
         log.debug(
             f"token fetch requested, attempt: {self._trial}," f"timeout: {timeout}"
@@ -66,6 +184,20 @@ class Receiver(ParentReceiver):
         err: Exception,
         options: dict[str, str] | None = None,
     ) -> bool:
+        """Decide whether a failed fetch should be retried.
+
+        The decision is based on the configured maximum retry count and an
+        optional :data:`OPTION_RENEW_SYNCHRONOUS` option which disables
+        background renewal triggering.
+
+        :param err: The exception raised by the failed fetch (unused but
+            provided for API compatibility).
+        :param options: Optional mapping of request options that may
+            contain an override for :data:`OPTION_MAX_RETRIES` or the
+            synchronous renewal flag.
+        :returns: `True` when another retry should be attempted,
+            `False` otherwise.
+        """
         max_retries = self._max_retries
         synchronous = False
         if options is not None:
@@ -82,6 +214,7 @@ class Receiver(ParentReceiver):
             log.debug("max retries reached, cannot retry")
             return False
         if not synchronous:
+            # instruct parent to schedule a background renewal
             self._parent.request_renewal()
         return True
 
@@ -90,9 +223,34 @@ T = TypeVar("T")
 
 
 VERY_LONG_TIMEOUT = timedelta(days=365 * 10)  # 10 years, should be enough for anyone
+"""If the timeout is not specified, this value will be used as the default."""
 
 
 class Bearer(ParentBearer):
+    """Bearer that keeps a shared cached token refreshed in the background.
+
+    The :class:`Bearer` wraps another :class:`ParentBearer` and starts a
+    background task on the first fetch. The cached token is refreshed
+    proactively based on the token's expiration and the configured
+    ``lifetime_safe_fraction``.
+
+    The bearer supports two renewal modes for fetch requests:
+        - asynchronous: trigger a background renewal and wait for the
+            cached token to become fresh;
+        - synchronous: block until a new token has been fetched (or until
+            a specified request timeout elapses).
+
+    Example
+    -------
+
+    ::
+
+        src = SomeOtherBearer(...)
+        bearer = Bearer(src)
+        token = await bearer.receiver().fetch(timeout=5)
+
+    """
+
     def __init__(
         self,
         source: ParentBearer,
@@ -103,6 +261,22 @@ class Bearer(ParentBearer):
         retry_timeout_exponent: float = 1.5,
         refresh_request_timeout: timedelta = timedelta(seconds=5),
     ) -> None:
+        """Initialize the renewable bearer.
+
+        :param source: The inner bearer used to actually fetch tokens.
+        :param max_retries: Maximum number of retry attempts performed by
+            receivers created by :meth:`receiver`.
+        :param lifetime_safe_fraction: Fraction of remaining token
+            lifetime after which a refresh will be scheduled (e.g.
+            ``0.9`` refreshes when 90% of lifetime has passed).
+        :param initial_retry_timeout: Initial retry delay used in a backoff when a
+            refresh fails.
+        :param max_retry_timeout: Maximum retry delay cap.
+        :param retry_timeout_exponent: Exponential backoff base used to
+            grow retry delays between attempts.
+        :param refresh_request_timeout: Timeout used for individual
+            refresh requests when contacting the inner bearer.
+        """
         super().__init__()
         self._source = source
         self._cache: Token | None = None
@@ -137,7 +311,15 @@ class Bearer(ParentBearer):
         return self._source
 
     def bg_task(self, coro: Awaitable[T]) -> Task[None]:
-        """Run a coroutine without awaiting or tracking, and log any exceptions."""
+        """Run a coroutine without awaiting or tracking, and log exceptions.
+
+        The coroutine is scheduled as a background task and any
+        unhandled exception is logged. The returned task is tracked so it
+        can be cancelled during shutdown.
+
+        :param coro: Awaitable to run in a fire-and-forget task.
+        :returns: The created :class:`asyncio.Task` instance.
+        """
 
         async def wrapper() -> None:
             try:
@@ -155,6 +337,27 @@ class Bearer(ParentBearer):
     async def fetch(
         self, timeout: float | None = None, options: dict[str, str] | None = None
     ) -> Token:
+        """Fetch a token, renewing it if necessary.
+
+        The fetch operation may trigger a background renewal or perform a
+        synchronous renewal based on the provided ``options``. When a
+        synchronous renewal is requested the caller waits for a new token
+        to be fetched (or for the request timeout to expire).
+
+        :param timeout: Optional timeout in seconds for waiting for a token.
+        :param options: Optional mapping of request flags. Recognized
+            keys include:
+
+              - :data:`OPTION_RENEW_REQUIRED`: force a renewal
+              - :data:`OPTION_RENEW_SYNCHRONOUS`: request synchronous renewal
+              - :data:`OPTION_RENEW_REQUEST_TIMEOUT`: override synchronous
+                  renewal request timeout (as a string float)
+              - :data:`OPTION_REPORT_ERROR`: return errors from renewal to the
+                  caller via an exception
+
+        :returns: A fresh :class:`Token` instance.
+        :raises RenewalError: when the cache remains empty after renewal.
+        """
         required = False
         synchronous = False
         report_error = False
@@ -195,6 +398,13 @@ class Bearer(ParentBearer):
         return self._cache
 
     async def _fetch_once(self) -> Token:
+        """Fetch a single token from the inner bearer.
+
+        This helper performs a single attempt to obtain a token from
+        ``self._source`` while cooperating with the synchronous-renewal
+        signalling primitives. It returns the received token and updates
+        the cached token on success.
+        """
         tok = None
         log.debug(f"refreshing token, attempt {self._renewal_attempt}")
         self._break_previous_attempt.clear()
@@ -224,6 +434,12 @@ class Bearer(ParentBearer):
         return tok
 
     async def _run(self) -> None:
+        """Background loop that refreshes the token periodically.
+
+        The loop waits either until a scheduled retry timeout elapses or
+        until an explicit renewal request is signalled. On errors a backoff
+        strategy is applied before the next attempt.
+        """
         log.debug("refresh task started")
         while not self._is_stopped.is_set():
             try:
@@ -273,6 +489,11 @@ class Bearer(ParentBearer):
             await gather(*pending, return_exceptions=True)
 
     async def close(self, grace: float | None = None) -> None:
+        """Close the bearer, cancelling background tasks and closing source.
+
+        :param grace: Optional graceful shutdown timeout forwarded to the
+            inner bearer's :meth:`close` method.
+        """
         source_close = create_task(self._source.close(grace=grace))
         self.stop()
         for task in self._tasks:
@@ -287,15 +508,32 @@ class Bearer(ParentBearer):
                 log.error(f"Error while graceful shutdown: {ret}", exc_info=ret)
 
     def is_renewal_required(self) -> bool:
+        """Return ``True`` when a renewal should be performed.
+
+        Renewal is required when there is no cached token or when an
+        explicit renewal request has been signalled.
+        """
         return self._cache is None or self._renew_requested.is_set()
 
     def request_renewal(self) -> None:
+        """Request a token renewal.
+
+        If the bearer is not stopped this clears the freshness flag and
+        signals the background loop to perform a renewal as soon as
+        possible.
+        """
         if not self._is_stopped.is_set():
             log.debug("token renewal requested")
             self._is_fresh.clear()
             self._renew_requested.set()
 
     def stop(self) -> None:
+        """Stop the renewal background task and unblock any waiters.
+
+        This method marks the bearer as stopped, clears the freshness
+        event and signals any waiting synchronous renewal attempts to
+        unblock. It is safe to call multiple times.
+        """
         log.debug("stopping renewal task")
         self._is_stopped.set()
         self._is_fresh.clear()
@@ -303,4 +541,9 @@ class Bearer(ParentBearer):
         self._renew_requested.set()
 
     def receiver(self) -> Receiver:
+        """Return a per-request :class:`Receiver` bound to this bearer.
+
+        The returned receiver will use the bearer's configuration for retry behaviour.
+        :returns: A :class:`Receiver` instance.
+        """
         return Receiver(self, max_retries=self._max_retries)

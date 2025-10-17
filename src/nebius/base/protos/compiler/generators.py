@@ -131,7 +131,6 @@ def generate_docstring(
 
 def generate_method_docstring(
     method: Method,
-    info: SourceInfo,
     g: PyGenFile,
     deprecation_details: DeprecationDetails | None = None,
 ) -> None:
@@ -178,12 +177,11 @@ def generate_method_docstring(
         + """`.
         """
     ).strip()
-    return generate_docstring(info, g, deprecation_details, comment)
+    return generate_docstring(method.source_info, g, deprecation_details, comment)
 
 
 def generate_service_docstring(
     service: Service,
-    info: SourceInfo,
     g: PyGenFile,
     deprecation_details: DeprecationDetails | None = None,
 ) -> None:
@@ -204,7 +202,7 @@ def generate_service_docstring(
         :cvar __service_name__: The full protobuf service name.
         """
     ).strip()
-    return generate_docstring(info, g, deprecation_details, comment)
+    return generate_docstring(service.source_info, g, deprecation_details, comment)
 
 
 def getter_type(
@@ -821,7 +819,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
     g.p("):", noindent=True)
     with g:
         deprecation_details = get_deprecation_details(srv, service_deprecation_details)
-        generate_service_docstring(srv, srv.source_info, g, deprecation_details)
+        generate_service_docstring(srv, g, deprecation_details)
         g.p(
             "__PB2_DESCRIPTOR__ = ",
             ImportedSymbol("DescriptorWrap", "nebius.base.protos.descriptor"),
@@ -944,9 +942,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                 g.p(method.output.export_path, noindent=True, add_eol=False)
             g.p('"]:', noindent=True)
             with g:
-                generate_method_docstring(
-                    method, method.source_info, g, method_deprecation_details_obj
-                )
+                generate_method_docstring(method, g, method_deprecation_details_obj)
                 if method_deprecation_details_obj is not None:
                     g.p(
                         ImportedSymbol("getLogger", "logging"),

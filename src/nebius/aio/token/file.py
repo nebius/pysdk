@@ -15,17 +15,20 @@ class NoTokenInEnvError(SDKError):
 
 
 class Receiver(ParentReceiver):
-    def __init__(self, token: Token) -> None:
+    def __init__(self, file: Path) -> None:
         super().__init__()
-        self._latest = token
+        self._file = file
 
     async def _fetch(
         self, timeout: float | None = None, options: dict[str, str] | None = None
     ) -> Token:
-        if self._latest is None:
-            raise Exception("Token has to be set")
-        log.debug("static token fetched")
-        return self._latest
+        with open(self._file, "r") as f:
+            token_value = f.read().strip()
+        if token_value == "":
+            raise SDKError("empty token file provided")
+        tok = Token(token_value)
+        log.debug(f"fetched token {tok} from file {self._file}")
+        return tok
 
     def can_retry(
         self,
@@ -38,12 +41,7 @@ class Receiver(ParentReceiver):
 class Bearer(ParentBearer):
     def __init__(self, file: str | Path) -> None:
         super().__init__()
-        file = Path(file).expanduser()
-        with open(file, "r") as f:
-            token_value = f.read().strip()
-        if token_value == "":
-            raise SDKError("empty token file provided")
-        self._tok = Token(token_value)
+        self._file = Path(file).expanduser()
 
     def receiver(self) -> Receiver:
-        return Receiver(self._tok)
+        return Receiver(self._file)

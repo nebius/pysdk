@@ -16,6 +16,7 @@ update-submodule:
 compile-proto:
 	rm -rf $(OUT_NEW_DIR)
 	mkdir $(OUT_NEW_DIR)
+	cp -f $(OUT_DIR)/__init__.py $(OUT_NEW_DIR)/__init__.py
 	buf generate $(PROTO_DIR) --include-imports --timeout 0
 	rm -rf $(OUT_NEW_DIR)/google
 	find $(OUT_NEW_DIR) -type d -exec touch {}/__init__.py \;

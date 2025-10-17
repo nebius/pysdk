@@ -64,6 +64,7 @@ class PyGenFile:
         shebang_command: str | None = None,
         generated_note: str | None = None,
         used_names: Sequence[str] | None = None,
+        docstring: str | None = None,
     ) -> None:
         self._shebang_command = shebang_command
         self._generated_note = (
@@ -81,6 +82,7 @@ class PyGenFile:
         )
         self._indent = 0
         self._finalized = False
+        self._docstring = docstring
 
     def is_local(self, import_path: ImportPath | str) -> bool:
         import_path_str = (
@@ -149,6 +151,9 @@ class PyGenFile:
         self._imports[import_path.import_path] = import_path
         self._imports_reversed[suggest_name] = import_path.import_path
         return import_path
+
+    def set_docstring(self, docstring: str) -> None:
+        self._docstring = docstring
 
     def indent(self) -> None:
         if self._finalized:
@@ -227,6 +232,10 @@ class PyGenFile:
             writer.write(line)
             writer.write("\n")
         writer.write("\n")
+        if self._docstring is not None:
+            writer.write('"""')
+            writer.write(self._docstring)
+            writer.write('"""\n\n')
         sorted_imports = sorted(
             self._imports.values(),
             key=lambda x: x.import_path,
