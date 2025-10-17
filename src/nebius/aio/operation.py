@@ -1,3 +1,14 @@
+"""Helpers for working with long-running operations.
+
+This module provides an :class:`Operation` wrapper that normalizes different
+versions of the service operation protobuf and exposes convenient helpers for
+polling, synchronous waiting, and inspecting operation metadata.
+
+The wrapper accepts operation protobufs from either the current v1 API or an
+older v1alpha1 variant and routes calls to the corresponding operation
+service client.
+"""
+
 from asyncio import sleep
 from collections.abc import Iterable
 from datetime import datetime, timedelta
@@ -16,16 +27,49 @@ from .constant_channel import Constant
 from .request_status import RequestStatus
 
 OperationPb = TypeVar("OperationPb")
+"""
+A convenience wrapper around operation protobufs.
+Either :class:`nebius.api.nebius.common.v1.Operation` or
+:class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf classes.
+"""
 T = TypeVar("T")
 
 
 class Operation(Generic[OperationPb]):
+    """A convenience wrapper around operation protobufs.
+
+    The :class:`Operation` wrapper normalizes
+    :class:`nebius.api.nebius.common.v1.Operation`
+    and :class:`nebius.api.nebius.common.v1alpha1.Operation` representations and
+    provides helpers to:
+
+    - inspect operation metadata (id, resource_id, timestamps),
+    - poll/update the operation state via the corresponding operation
+      service, and
+    - wait for completion either asynchronously or synchronously.
+
+    The wrapper stores an operation service client bound to a
+    :class:`nebius.aio.constant_channel.Constant` that points at the provided
+    ``source_method`` and reuses the provided ``channel`` for network/auth
+    behaviors.
+
+    :param source_method: the originating ``service.method`` name used to build a
+        constant channel for operation management calls
+    :param channel: channel used for network and auth operations
+    :type channel: :class:`ClientChannelInterface`
+    :param operation: an operation protobuf instance (v1 or v1alpha1)
+    :type operation: either :class:`nebius.api.nebius.common.v1.Operation` or
+        :class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf
+        classes.
+    """
+
     def __init__(
         self,
         source_method: str,
         channel: ClientChannelInterface,
         operation: OperationPb,
     ) -> None:
+        """Create an operation wrapper from the operation protobuf."""
         from nebius.api.nebius.common.v1 import (
             GetOperationRequest,
             Operation,
@@ -64,15 +108,21 @@ class Operation(Generic[OperationPb]):
         self._operation: Operation | Old = _operation
 
     def __repr__(self) -> str:
+        """Return a compact string representation useful for debugging."""
         return (
             f"Operation({self.id}, resource_id: {self.resource_id}, "
             f"status: {self.status()})"
         )
 
     def status(self) -> RequestStatus | None:
+        """Return the operation's current status object or ``None``.
+
+        :rtype: :class:`RequestStatus` or nothing
+        """
         return self._operation.status
 
     def done(self) -> bool:
+        """Return True when the operation has reached a terminal state."""
         return self.status() is not None
 
     async def update(
@@ -84,6 +134,22 @@ class Operation(Generic[OperationPb]):
         per_retry_timeout: float | None | UnsetType = Unset,
         retries: int | None = None,
     ) -> None:
+        """Fetch the latest operation data from the operation service.
+
+        This coroutine performs a single get operation using the internal
+        operation service client and replaces the wrapped operation object
+        with the returned value.
+
+        :param metadata: optional gRPC metadata for the get call
+        :param timeout: optional overall timeout for the get call
+        :type timeout: optional `float` or `None`
+        :param credentials: optional call credentials for the RPC
+        :param compression: optional compression policy for the call
+        :param per_retry_timeout: optional per-retry timeout forwarded to the
+            request helper
+        :type per_retry_timeout: optional `float` or `None`
+        :param retries: optional retry count for the get call
+        """
         if self.done():
             return
 
@@ -110,6 +176,26 @@ class Operation(Generic[OperationPb]):
         poll_per_retry_timeout: float | None | UnsetType = Unset,
         poll_retries: int | None = None,
     ) -> None:
+        """Synchronously wait for the operation to complete.
+
+        This helper wraps :meth:`wait` and executes it in the channel's
+        synchronous runner so callers that are not coroutine-based can wait
+        for operation completion.
+
+        :param interval: polling interval between updates (seconds or timedelta)
+        :type interval: `float` or `timedelta`
+        :param metadata: optional metadata forwarded to each update call
+        :param timeout: overall timeout for the synchronous wait
+        :type timeout: optional `float` or `None`
+        :param credentials: optional call credentials forwarded to updates
+        :param compression: optional compression forwarded to updates
+        :param poll_iteration_timeout: timeout used for each polling iteration
+        :type poll_iteration_timeout: optional `float` or `None`
+        :param poll_per_retry_timeout: per-retry timeout for polling requests
+        :type poll_per_retry_timeout: optional `float` or `None`
+        :param poll_retries: retry count used for polling requests
+        :type poll_retries: optional `int` or `None`
+        """
         run_timeout = None if timeout is None else timeout + 0.2
         return self._channel.run_sync(
             self.wait(
@@ -134,6 +220,22 @@ class Operation(Generic[OperationPb]):
         per_retry_timeout: float | None | UnsetType = Unset,
         retries: int | None = None,
     ) -> None:
+        """Synchronously perform a single update of the operation state.
+
+        This wraps the coroutine :meth:`update` and runs it via the channel's
+        synchronous runner. A small safety margin is added to the provided
+        timeout to allow for scheduling overhead.
+
+        :param metadata: optional gRPC metadata for the get call
+        :param timeout: optional overall timeout for the get call
+        :type timeout: optional `float` or `None`
+        :param credentials: optional call credentials for the RPC
+        :param compression: optional compression policy for the call
+        :param per_retry_timeout: optional per-retry timeout forwarded to the
+            request helper
+        :type per_retry_timeout: optional `float` or `None`
+        :param retries: optional retry count for the get call
+        """
         run_timeout: float | None = None
         if isinstance(timeout, (int, float)):
             run_timeout = timeout + 0.2
@@ -162,6 +264,27 @@ class Operation(Generic[OperationPb]):
         poll_per_retry_timeout: float | UnsetType | None = Unset,
         poll_retries: int | None = None,
     ) -> None:
+        """Asynchronously wait until the operation reaches a terminal state.
+
+        The method repeatedly invokes :meth:`update` at the specified
+        ``interval`` until the operation is done or the overall ``timeout`` is
+        reached. Certain transient errors (deadline exceeded) are treated as
+        ignorable and will be retried.
+
+        :param interval: polling interval (seconds or timedelta)
+        :type interval: `float` or `timedelta`
+        :param metadata: optional metadata forwarded to each update call
+        :param timeout: overall timeout for waiting
+        :type timeout: optional `float` or `None`
+        :param credentials: optional call credentials forwarded to updates
+        :param compression: optional compression forwarded to updates
+        :param poll_iteration_timeout: timeout used for each polling iteration
+        :type poll_iteration_timeout: optional `float` or `None`
+        :param poll_per_retry_timeout: per-retry timeout for polling requests
+        :type poll_per_retry_timeout: optional `float` or `None`
+        :param poll_retries: retry count used for polling requests
+        :raises TimeoutError: when the overall timeout is exceeded
+        """
         start = time()
         if poll_iteration_timeout is None:
             if timeout is not None:
@@ -205,6 +328,12 @@ class Operation(Generic[OperationPb]):
             await _safe_update()
 
     def _set_new_operation(self, operation: OperationPb) -> None:
+        """Replace the wrapped operation object with a new instance.
+
+        The replacement is only allowed when the new operation has the same
+        protobuf class as the currently wrapped object; otherwise an
+        :class:`SDKError` is raised.
+        """
         if isinstance(operation, self._operation.__class__):
             self._operation = operation  # type: ignore
         else:
@@ -212,14 +341,22 @@ class Operation(Generic[OperationPb]):
 
     @property
     def id(self) -> str:
+        """Return the operation identifier (string)."""
         return self._operation.id
 
     @property
     def description(self) -> str:
+        """Return the operation description as provided by the service."""
         return self._operation.description
 
     @property
     def created_at(self) -> datetime:
+        """Return the operation creation timestamp.
+
+        If the underlying protobuf does not expose a creation time this helper
+        returns the current time in the local timezone.
+        :rtype: datetime
+        """
         ca = self._operation.created_at
         if ca is None:  # type: ignore[unused-ignore]
             return datetime.now(local_timezone)
@@ -227,19 +364,30 @@ class Operation(Generic[OperationPb]):
 
     @property
     def created_by(self) -> str:
+        """Return the identity that created the operation (string)."""
         return self._operation.created_by
 
     @property
     def finished_at(self) -> datetime | None:
+        """Return the completion timestamp for the operation or ``None`` if
+        the operation hasn't finished yet.
+        """
         return self._operation.finished_at
 
     @property
     def resource_id(self) -> str:
+        """Return the resource id associated with the operation."""
         return self._operation.resource_id
 
     def successful(self) -> bool:
+        """Return True when the operation completed successfully."""
         s = self.status()
         return s is not None and s.code == StatusCode.OK
 
     def raw(self) -> OperationPb:
+        """Return the underlying operation protobuf object.
+
+        Use this to access version-specific fields that are not exposed by the
+        normalized wrapper.
+        """
         return self._operation  # type: ignore

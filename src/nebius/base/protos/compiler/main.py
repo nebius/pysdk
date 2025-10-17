@@ -137,6 +137,7 @@ def main() -> None:
         if file.package not in results:
             results[file.package] = PyGenFile(
                 import_path=file.export_path.import_path,
+                docstring=f"Auto-generated Nebius SDK package for ``{file.package}``",
             )
         results[file.package].append_used_names(list(file.collect_all_names()))
 
