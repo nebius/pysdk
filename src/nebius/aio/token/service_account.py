@@ -70,6 +70,33 @@ class ServiceAccountBearer(ParentBearer):
       * :class:`ExchangeableBearer` ->
       * :class:`ServiceAccountReader` ->
       * :class:`ServiceAccount`
+
+    :param service_account: Service account credentials used to obtain tokens.
+        May be a :class:`ServiceAccountReader`, a :class:`ServiceAccount` or a
+        string service account id.
+    :param channel: A channel used to perform the token exchange. This channel must
+        be provided before any token fetch operation, or a :class:`DeferredChannel`
+        may be used to set the channel asynchronously. If neither is provided,
+        token fetch operations will fail until :meth:`set_channel` is called.
+    :param private_key: When ``service_account`` is a string id, this private key
+        is used to sign token exchange requests. Must not be provided if the service
+        account is provided as a :class:`ServiceAccount` or
+        :class:`ServiceAccountReader`.
+    :param public_key_id: When ``service_account`` is a string id, this is the
+        public key ID corresponding to the private key. Must not be provided if the
+        service account is provided as a :class:`ServiceAccount` or
+        :class:`ServiceAccountReader`.
+    :param max_retries: Maximum number of retries for token fetch operations.
+    :param lifetime_safe_fraction: Fraction of token lifetime considered safe
+        to use before triggering a refresh.
+    :param initial_retry_timeout: Initial delay between retry attempts for
+        refresh operations.
+    :param max_retry_timeout: Maximum delay between retry attempts for
+        refresh operations.
+    :param retry_timeout_exponent: Exponential backoff exponent for retry
+        delays.
+    :param refresh_request_timeout: Timeout for individual token refresh
+        requests.
     """
 
     def __init__(
@@ -97,33 +124,6 @@ class ServiceAccountBearer(ParentBearer):
         the name of the bearer will reflect the service account as read during
         construction time. If the reader returns different service accounts
         on subsequent reads, the name will not reflect those changes.
-
-        :param service_account: Service account credentials used to obtain tokens.
-            May be a :class:`ServiceAccountReader`, a :class:`ServiceAccount` or a
-            string service account id.
-        :param channel: A channel used to perform the token exchange. This channel must
-            be provided before any token fetch operation, or a :class:`DeferredChannel`
-            may be used to set the channel asynchronously. If neither is provided,
-            token fetch operations will fail until :meth:`set_channel` is called.
-        :param private_key: When ``service_account`` is a string id, this private key
-            is used to sign token exchange requests. Must not be provided if the service
-            account is provided as a :class:`ServiceAccount` or
-            :class:`ServiceAccountReader`.
-        :param public_key_id: When ``service_account`` is a string id, this is the
-            public key ID corresponding to the private key. Must not be provided if the
-            service account is provided as a :class:`ServiceAccount` or
-            :class:`ServiceAccountReader`.
-        :param max_retries: Maximum number of retries for token fetch operations.
-        :param lifetime_safe_fraction: Fraction of token lifetime considered safe
-            to use before triggering a refresh.
-        :param initial_retry_timeout: Initial delay between retry attempts for
-            refresh operations.
-        :param max_retry_timeout: Maximum delay between retry attempts for
-            refresh operations.
-        :param retry_timeout_exponent: Exponential backoff exponent for retry
-            delays.
-        :param refresh_request_timeout: Timeout for individual token refresh
-            requests.
         """
         reader: ServiceAccountReader | None = None
         if isinstance(service_account, ServiceAccountReader):

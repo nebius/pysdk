@@ -21,18 +21,17 @@ class AddressChannel:
     :type address: str
     :ivar channel: The underlying gRPC channel instance.
     :type channel: :class:`grpc.aio.Channel`
+
+    :param channel: The underlying :class:`grpc.aio.Channel` instance.
+    :param address: The resolved address string (for example ``'host:port'``)
+      that was used to create the channel.
     """
 
     address: str
     channel: GRPCChannel
 
     def __init__(self, channel: GRPCChannel, address: str) -> None:
-        """Initialize an :class:`AddressChannel` instance.
-
-        :param channel: The underlying :class:`grpc.aio.Channel` instance.
-        :param address: The resolved address string (for example ``'host:port'``)
-          that was used to create the channel.
-        """
+        """Initialize an :class:`AddressChannel` instance."""
         self.address = address
         self.channel = channel
 

@@ -55,6 +55,27 @@ class Config:
     file (by default under ``~/.nebius/config.yaml``) and exposes convenience
     methods to obtain the default parent id, endpoint, and credentials
     configured for the active profile.
+
+    :param client_id: Optional client id used for federation flows.
+    :type client_id: optional `str`
+    :param config_file: Path to the configuration YAML file.
+    :type config_file: `str` | `Path`
+    :param profile: Optional profile name to select; when omitted the
+        default profile from the config or the environment variable
+        indicated by ``profile_env`` is used.
+    :type profile: optional `str`
+    :param profile_env: Environment variable name used to select a profile.
+    :type profile_env: `str`
+    :param token_env: Environment variable name that may contain an IAM token
+        and will take priority over file-based credentials.
+    :type token_env: `str`
+    :param no_env: If True skip environment token lookup.
+    :type no_env: `bool`
+    :param no_parent_id: If True disable automatic parent id resolution.
+    :type no_parent_id: `bool`
+    :param max_retries: Maximum number of auth retries when interacting with
+        external services (passed to underlying bearers).
+    :type max_retries: `int`
     """
 
     def __init__(
@@ -70,27 +91,6 @@ class Config:
     ) -> None:
         """Initialize the config reader, and read the config file, selecting
         the active profile.
-
-        :param client_id: Optional client id used for federation flows.
-        :type client_id: optional `str`
-        :param config_file: Path to the configuration YAML file.
-        :type config_file: `str` | `Path`
-        :param profile: Optional profile name to select; when omitted the
-            default profile from the config or the environment variable
-            indicated by ``profile_env`` is used.
-        :type profile: optional `str`
-        :param profile_env: Environment variable name used to select a profile.
-        :type profile_env: `str`
-        :param token_env: Environment variable name that may contain an IAM token
-            and will take priority over file-based credentials.
-        :type token_env: `str`
-        :param no_env: If True skip environment token lookup.
-        :type no_env: `bool`
-        :param no_parent_id: If True disable automatic parent id resolution.
-        :type no_parent_id: `bool`
-        :param max_retries: Maximum number of auth retries when interacting with
-            external services (passed to underlying bearers).
-        :type max_retries: `int`
         """
         self._client_id = client_id
         self._priority_bearer: EnvBearer | None = None

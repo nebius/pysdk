@@ -58,17 +58,16 @@ class Token:
     - ``to_dict`` serializes the token into a mapping with ``token`` and
       ``expires_at`` keys, where ``expires_at`` is an integer POSIX timestamp
       (or ``None`` when no expiration was set).
+
+    :param token: The raw token string. May be empty for an "empty" token.
+    :type token: `str`
+    :param expiration: Optional UTC-aware expiration datetime. If provided,
+        :meth:`is_expired` checks against this value.
+    :type expiration: :class:`datetime.datetime` or `None`
     """
 
     def __init__(self, token: str, expiration: datetime | None = None) -> None:
-        """Initialize a token with these token string and expiration
-
-        :param token: The raw token string. May be empty for an "empty" token.
-        :type token: `str`
-        :param expiration: Optional UTC-aware expiration datetime. If provided,
-            :meth:`is_expired` checks against this value.
-        :type expiration: :class:`datetime.datetime` or `None`
-        """
+        """Initialize a token with these token string and expiration"""
         self._tok = token
         self._exp = expiration
 
@@ -361,17 +360,17 @@ class NamedBearer(Bearer):
     the shared receiver, or to report diagnostics.
 
     This name should reflect the unique configuration of the underlying bearer.
+
+    :param wrapped: The inner bearer to delegate to.
+    :type wrapped: :class:`Bearer`
+    :param name: The :meth:`name` that reflects the configuration of the underlying
+        bearer.
     """
 
     def __init__(self, wrapped: Bearer, name: str) -> None:
         """Wrap the passed-in bearer, attaching a name to it.
 
         This name should reflect the unique configuration of the underlying bearer.
-
-        :param wrapped: The inner bearer to delegate to.
-        :type wrapped: :class:`Bearer`
-        :param name: The :meth:`name` that reflects the configuration of the underlying
-            bearer.
         """
         self._wrapped = wrapped
         self._name = name

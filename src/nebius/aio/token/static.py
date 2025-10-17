@@ -60,13 +60,12 @@ class Receiver(ParentReceiver):
     example embedded in configuration or provided via an environment
     variable). The receiver simply returns the supplied :class:`Token` and
     never indicates that a retry would be useful.
+
+    :param token: Token instance to be returned by :meth:`_fetch`.
     """
 
     def __init__(self, token: Token) -> None:
-        """Create a static receiver using the token.
-
-        :param token: Token instance to be returned by :meth:`_fetch`.
-        """
+        """Create a static receiver using the token."""
         super().__init__()
         self._latest = token
 
@@ -119,6 +118,7 @@ class Bearer(ParentBearer):
     """
 
     def __init__(self, token: Token | str) -> None:
+        """Initialize the static token bearer."""
         if isinstance(token, str):
             token = Token(token)
         if token.token == "":
@@ -145,6 +145,7 @@ class EnvBearer(Bearer):
     """
 
     def __init__(self, env_var_name: str = TOKEN_ENV) -> None:
+        """Initialize the environment-variable based bearer."""
         val = os.environ.get(env_var_name, "")
         if val == "":
             raise NoTokenInEnvError(env_var_name)

@@ -40,6 +40,9 @@ class Client:
         routing (string).
     :cvar __service_deprecation_details__: optional deprecation message
         emitted as a runtime warning when the client is constructed.
+
+    :param channel: a channel implementing :class:`ClientChannelInterface`
+    :type channel: :class:`ClientChannelInterface`
     """
 
     # __operation_type__: Message = Operation
@@ -47,11 +50,7 @@ class Client:
     __service_deprecation_details__: str | None = None
 
     def __init__(self, channel: Channel) -> None:
-        """Create a client bound to a channel.
-
-        :param channel: a channel implementing :class:`ClientChannelInterface`
-        :type channel: :class:`ClientChannelInterface`
-        """
+        """Create a client bound to a channel."""
         self._channel = channel
 
         if self.__service_deprecation_details__ is not None:
@@ -149,6 +148,9 @@ class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
         the source of operations for this service (for example, "CreateFoo"
         if the service's "CreateFoo" method returns operations).
     :ivar __operation_service__: cached instance of the operation-service client.
+
+    :param channel: channel used for normal RPCs; a special constant
+        channel will be created for the operation service when needed.
     """
 
     __operation_type__: type[OperationPb]
@@ -156,11 +158,7 @@ class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
     __operation_source_method__: str
 
     def __init__(self, channel: Channel) -> None:
-        """Initialize the client-with-operations.
-
-        :param channel: channel used for normal RPCs; a special constant
-            channel will be created for the operation service when needed.
-        """
+        """Initialize the client-with-operations."""
         super().__init__(channel)
         self.__operation_service__: OperationService | None = None
 

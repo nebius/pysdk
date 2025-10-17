@@ -52,6 +52,15 @@ class Operation(Generic[OperationPb]):
     :class:`nebius.aio.constant_channel.Constant` that points at the provided
     ``source_method`` and reuses the provided ``channel`` for network/auth
     behaviors.
+
+    :param source_method: the originating ``service.method`` name used to build a
+        constant channel for operation management calls
+    :param channel: channel used for network and auth operations
+    :type channel: :class:`ClientChannelInterface`
+    :param operation: an operation protobuf instance (v1 or v1alpha1)
+    :type operation: either :class:`nebius.api.nebius.common.v1.Operation` or
+        :class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf
+        classes.
     """
 
     def __init__(
@@ -60,17 +69,7 @@ class Operation(Generic[OperationPb]):
         channel: ClientChannelInterface,
         operation: OperationPb,
     ) -> None:
-        """Create an operation wrapper from the operation protobuf.
-
-        :param source_method: the originating ``service.method`` name used to build a
-            constant channel for operation management calls
-        :param channel: channel used for network and auth operations
-        :type channel: :class:`ClientChannelInterface`
-        :param operation: an operation protobuf instance (v1 or v1alpha1)
-        :type operation: either :class:`nebius.api.nebius.common.v1.Operation` or
-            :class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf
-            classes.
-        """
+        """Create an operation wrapper from the operation protobuf."""
         from nebius.api.nebius.common.v1 import (
             GetOperationRequest,
             Operation,

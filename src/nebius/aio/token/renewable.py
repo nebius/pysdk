@@ -140,6 +140,10 @@ class Receiver(ParentReceiver):
         receiver = bearer.receiver()
         token = await receiver.fetch(timeout=5)
 
+    :param parent: The :class:`Bearer` instance that performs background token
+        fetch and renewal.
+    :param max_retries: Maximum number of automatic retry attempts
+        this receiver will allow before giving up.
     """
 
     def __init__(
@@ -147,13 +151,7 @@ class Receiver(ParentReceiver):
         parent: "Bearer",
         max_retries: int = 2,
     ) -> None:
-        """Create a receiver bound to the given renewable bearer.
-
-        :param parent: The :class:`Bearer` instance that performs background token
-            fetch and renewal.
-        :param max_retries: Maximum number of automatic retry attempts
-            this receiver will allow before giving up.
-        """
+        """Create a receiver bound to the given renewable bearer."""
         super().__init__()
         self._parent = parent
         self._max_retries = max_retries
@@ -249,6 +247,19 @@ class Bearer(ParentBearer):
         bearer = Bearer(src)
         token = await bearer.receiver().fetch(timeout=5)
 
+    :param source: The inner bearer used to actually fetch tokens.
+    :param max_retries: Maximum number of retry attempts performed by
+        receivers created by :meth:`receiver`.
+    :param lifetime_safe_fraction: Fraction of remaining token
+        lifetime after which a refresh will be scheduled (e.g.
+        ``0.9`` refreshes when 90% of lifetime has passed).
+    :param initial_retry_timeout: Initial retry delay used in a backoff when a
+        refresh fails.
+    :param max_retry_timeout: Maximum retry delay cap.
+    :param retry_timeout_exponent: Exponential backoff base used to
+        grow retry delays between attempts.
+    :param refresh_request_timeout: Timeout used for individual
+        refresh requests when contacting the inner bearer.
     """
 
     def __init__(
@@ -261,22 +272,7 @@ class Bearer(ParentBearer):
         retry_timeout_exponent: float = 1.5,
         refresh_request_timeout: timedelta = timedelta(seconds=5),
     ) -> None:
-        """Initialize the renewable bearer.
-
-        :param source: The inner bearer used to actually fetch tokens.
-        :param max_retries: Maximum number of retry attempts performed by
-            receivers created by :meth:`receiver`.
-        :param lifetime_safe_fraction: Fraction of remaining token
-            lifetime after which a refresh will be scheduled (e.g.
-            ``0.9`` refreshes when 90% of lifetime has passed).
-        :param initial_retry_timeout: Initial retry delay used in a backoff when a
-            refresh fails.
-        :param max_retry_timeout: Maximum retry delay cap.
-        :param retry_timeout_exponent: Exponential backoff base used to
-            grow retry delays between attempts.
-        :param refresh_request_timeout: Timeout used for individual
-            refresh requests when contacting the inner bearer.
-        """
+        """Initialize the renewable bearer."""
         super().__init__()
         self._source = source
         self._cache: Token | None = None

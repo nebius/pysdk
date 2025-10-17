@@ -379,6 +379,156 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
     :ivar user_agent: The user-agent string used by channels created by
         this Channel instance.
+
+    :param resolver:
+        Optional custom :class:`Resolver` used to resolve service names to concrete
+        addresses. If omitted a :class:`Conventional` resolver is used. If
+        provided, it will be chained with the built-in resolver so both
+        can be consulted.
+    :type resolver: optional :class:`Resolver`
+
+    :param substitutions:
+        Optional mapping of template substitutions applied to resolved
+        addresses. The construct inserts ``{"{domain}": domain}`` and
+        then updates it with this mapping. Typical use is to override
+        domain placeholders in generated service addresses.
+    :type substitutions: optional dict[from, to]
+
+    :param user_agent_prefix:
+        Optional string prepended to the default SDK user-agent. The
+        final user-agent string follows the pattern
+        ``"<user_agent_prefix> nebius-python-sdk/<version> (python/X.Y.Z)"``.
+        Recommended format:
+        ``"my-app/1.0 (dependency-to-track/version; other-dependency)"``.
+    :type user_agent_prefix: optional str
+
+    :param domain:
+        Optional domain to substitute into service addresses. When not
+        provided the constructor will try to obtain it from the provided
+        ``config_reader`` via ``config_reader.endpoint()``, and fall back
+        to the package-level ``DOMAIN`` constant if still unset.
+    :type domain: optional str
+
+    :param options:
+        Global channel options passed to gRPC when creating address
+        channels. This should follow the ``ChannelArgumentType``
+        shape (sequence of key/value tuples).
+    :type options: optional list of tuple[str, Any]
+
+    :param interceptors:
+        Global list of gRPC :class:`ClientInterceptor`
+        instances that will be applied to all address channels. An
+        idempotency-key interceptor is added by default; pass a list to
+        extend or override additional behavior.
+    :type interceptors: optional list of :class:`ClientInterceptor`
+
+    :param address_options:
+        Optional mapping from a resolved address to per-address channel
+        options. Each value must follow the ``ChannelArgumentType``
+        shape (sequence of key/value tuples). If omitted
+        an empty mapping is used.
+    :type address_options: optional mapping address -> list of ``tuple[str, Any]``
+
+    :param address_interceptors:
+        Optional mapping from a resolved address to a sequence of
+        per-address interceptors. Per-address interceptors are invoked
+        in addition to the global interceptors.
+    :type address_interceptors: optional mapping address ->
+        Sequence[ClientInterceptor]
+
+    :param credentials:
+        Credentials can be provided in several forms:
+
+        - ``None`` (default): attempts to read credentials from
+            ``credentials_file_name``, then from provided service account
+            fields, then from ``config_reader.get_credentials(...)``, and
+            finally falls back to an environment-backed bearer
+            (:class:`nebius.aio.token.static.EnvBearer`).
+        - ``str`` or :class:`Token`: treated as a
+            static token and wrapped with a static bearer.
+        - :class:`TokenBearer` to use an existing token bearer as-is.
+        - :class:`TokenRequester` to exchange tokens on demand.
+        - :class:`AuthorizationProvider`: an explicit authorization provider
+            (used rarely by advanced users).
+        - :class:`NoCredentials`: disables authorization entirely.
+
+        Unsupported types raise :class:`SDKError`.
+    :type credentials: token in form of string or :class:`Token`, or classes
+        :class:`TokenBearer`, :class:`TokenRequester`,
+        :class:`AuthorizationProvider`, :class:`NoCredentials`
+
+    :param service_account_id:
+        Service account ID used when a private key file is supplied
+        directly (alternate to using ``credentials_file_name``). See the
+        README for examples. If ``credentials`` is provided explicitly
+        this parameter is ignored.
+    :type service_account_id: optional str
+
+    :param service_account_public_key_id:
+        Public key ID corresponding to the private key file used for
+        service-account authentication, as described in the README. If
+        ``credentials`` is provided explicitly this parameter is ignored.
+    :type service_account_public_key_id: optional str
+
+    :param service_account_private_key_file_name:
+        Path to a PEM private key file. When provided with the key ID and service
+        account ID fields above, the constructor wraps it in a service-account
+        reader.
+    :type service_account_private_key_file_name: optional str or :class:`Path`
+
+    :param credentials_file_name:
+        Path to a credentials JSON file containing service-account
+        information. If supplied this takes precedence over other implicit
+        credential discovery (unless ``credentials`` is explicitly
+        provided).
+    :type credentials_file_name: optional str or :class:`Path`
+
+    :param config_reader:
+        Optional :class:`nebius.aio.cli_config.Config` instance used to
+        populate defaults like domain, default parent ID, and to obtain
+        credentials via the CLI-style configuration.
+    :type config_reader: optional :class:`ConfigReader`
+
+    :param tls_credentials:
+        Optional gRPC channel TLS credentials (:class:`ChannelCredentials`).
+        If omitted the constructor will load system root certificates via
+        :func:`nebius.base.tls_certificates.get_system_certificates` and
+        create an SSL channel credentials object.
+    :type tls_credentials: optional :class:`ChannelCredentials`
+
+    :param event_loop:
+        Optional asyncio event loop to be owned by this Channel. When a
+        loop is provided, synchronous helpers such as :meth:`run_sync`
+        may be called from other threads without raising
+        :class:`LoopError`. If not provided the Channel will lazily
+        create its own loop when a synchronous call is made.
+    :type event_loop: optional :class:`AbstractEventLoop`
+
+    :param max_free_channels_per_address:
+        Number of free underlying gRPC channels to keep in the pool per
+        resolved address. Defaults to 2. Lower values reduce resource
+        usage but increase connection churn; larger values raise resource
+        consumption.
+    :type max_free_channels_per_address: optional int
+
+    :param parent_id:
+        Optional parent ID which will be automatically applied to many
+        requests when left empty by the caller. If not provided and a
+        ``config_reader`` is supplied the constructor will attempt to use
+        ``config_reader.parent_id``. An explicit empty string is treated
+        as an error.
+    :type parent_id: optional str
+
+    :param federation_invitation_writer:
+        Optional file-like writer passed to the config reader to display
+        the URL for federation authentication during interactive credential
+        acquisition.
+    :type federation_invitation_writer: optional :class:`TextIO`
+
+    :param federation_invitation_no_browser_open:
+        When using the config reader, set to ``True`` to avoid opening a web
+        browser during interactive federation flows. Defaults to ``False``.
+    :type federation_invitation_no_browser_open: optional bool
     """
 
     def __init__(
@@ -414,156 +564,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         The Channel is responsible for resolving logical service names to
         transport addresses, creating and pooling underlying gRPC channels,
         and exposing helpers for synchronous and asynchronous usage.
-
-        :param resolver:
-            Optional custom :class:`Resolver` used to resolve service names to concrete
-            addresses. If omitted a :class:`Conventional` resolver is used. If
-            provided, it will be chained with the built-in resolver so both
-            can be consulted.
-        :type resolver: optional :class:`Resolver`
-
-        :param substitutions:
-            Optional mapping of template substitutions applied to resolved
-            addresses. The construct inserts ``{"{domain}": domain}`` and
-            then updates it with this mapping. Typical use is to override
-            domain placeholders in generated service addresses.
-        :type substitutions: optional dict[from, to]
-
-        :param user_agent_prefix:
-            Optional string prepended to the default SDK user-agent. The
-            final user-agent string follows the pattern
-            ``"<user_agent_prefix> nebius-python-sdk/<version> (python/X.Y.Z)"``.
-            Recommended format:
-            ``"my-app/1.0 (dependency-to-track/version; other-dependency)"``.
-        :type user_agent_prefix: optional str
-
-        :param domain:
-            Optional domain to substitute into service addresses. When not
-            provided the constructor will try to obtain it from the provided
-            ``config_reader`` via ``config_reader.endpoint()``, and fall back
-            to the package-level ``DOMAIN`` constant if still unset.
-        :type domain: optional str
-
-        :param options:
-            Global channel options passed to gRPC when creating address
-            channels. This should follow the ``ChannelArgumentType``
-            shape (sequence of key/value tuples).
-        :type options: optional list of tuple[str, Any]
-
-        :param interceptors:
-            Global list of gRPC :class:`ClientInterceptor`
-            instances that will be applied to all address channels. An
-            idempotency-key interceptor is added by default; pass a list to
-            extend or override additional behavior.
-        :type interceptors: optional list of :class:`ClientInterceptor`
-
-        :param address_options:
-            Optional mapping from a resolved address to per-address channel
-            options. Each value must follow the ``ChannelArgumentType``
-            shape (sequence of key/value tuples). If omitted
-            an empty mapping is used.
-        :type address_options: optional mapping address -> list of ``tuple[str, Any]``
-
-        :param address_interceptors:
-            Optional mapping from a resolved address to a sequence of
-            per-address interceptors. Per-address interceptors are invoked
-            in addition to the global interceptors.
-        :type address_interceptors: optional mapping address ->
-            Sequence[ClientInterceptor]
-
-        :param credentials:
-            Credentials can be provided in several forms:
-
-            - ``None`` (default): attempts to read credentials from
-              ``credentials_file_name``, then from provided service account
-              fields, then from ``config_reader.get_credentials(...)``, and
-              finally falls back to an environment-backed bearer
-              (:class:`nebius.aio.token.static.EnvBearer`).
-            - ``str`` or :class:`Token`: treated as a
-              static token and wrapped with a static bearer.
-            - :class:`TokenBearer` to use an existing token bearer as-is.
-            - :class:`TokenRequester` to exchange tokens on demand.
-            - :class:`AuthorizationProvider`: an explicit authorization provider
-              (used rarely by advanced users).
-            - :class:`NoCredentials`: disables authorization entirely.
-
-            Unsupported types raise :class:`SDKError`.
-        :type credentials: token in form of string or :class:`Token`, or classes
-            :class:`TokenBearer`, :class:`TokenRequester`,
-            :class:`AuthorizationProvider`, :class:`NoCredentials`
-
-        :param service_account_id:
-            Service account ID used when a private key file is supplied
-            directly (alternate to using ``credentials_file_name``). See the
-            README for examples. If ``credentials`` is provided explicitly
-            this parameter is ignored.
-        :type service_account_id: optional str
-
-        :param service_account_public_key_id:
-            Public key ID corresponding to the private key file used for
-            service-account authentication, as described in the README. If
-            ``credentials`` is provided explicitly this parameter is ignored.
-        :type service_account_public_key_id: optional str
-
-        :param service_account_private_key_file_name:
-            Path to a PEM private key file. When provided with the key ID and service
-            account ID fields above, the constructor wraps it in a service-account
-            reader.
-        :type service_account_private_key_file_name: optional str or :class:`Path`
-
-        :param credentials_file_name:
-            Path to a credentials JSON file containing service-account
-            information. If supplied this takes precedence over other implicit
-            credential discovery (unless ``credentials`` is explicitly
-            provided).
-        :type credentials_file_name: optional str or :class:`Path`
-
-        :param config_reader:
-            Optional :class:`nebius.aio.cli_config.Config` instance used to
-            populate defaults like domain, default parent ID, and to obtain
-            credentials via the CLI-style configuration.
-        :type config_reader: optional :class:`ConfigReader`
-
-        :param tls_credentials:
-            Optional gRPC channel TLS credentials (:class:`ChannelCredentials`).
-            If omitted the constructor will load system root certificates via
-            :func:`nebius.base.tls_certificates.get_system_certificates` and
-            create an SSL channel credentials object.
-        :type tls_credentials: optional :class:`ChannelCredentials`
-
-        :param event_loop:
-            Optional asyncio event loop to be owned by this Channel. When a
-            loop is provided, synchronous helpers such as :meth:`run_sync`
-            may be called from other threads without raising
-            :class:`LoopError`. If not provided the Channel will lazily
-            create its own loop when a synchronous call is made.
-        :type event_loop: optional :class:`AbstractEventLoop`
-
-        :param max_free_channels_per_address:
-            Number of free underlying gRPC channels to keep in the pool per
-            resolved address. Defaults to 2. Lower values reduce resource
-            usage but increase connection churn; larger values raise resource
-            consumption.
-        :type max_free_channels_per_address: optional int
-
-        :param parent_id:
-            Optional parent ID which will be automatically applied to many
-            requests when left empty by the caller. If not provided and a
-            ``config_reader`` is supplied the constructor will attempt to use
-            ``config_reader.parent_id``. An explicit empty string is treated
-            as an error.
-        :type parent_id: optional str
-
-        :param federation_invitation_writer:
-            Optional file-like writer passed to the config reader to display
-            the URL for federation authentication during interactive credential
-            acquisition.
-        :type federation_invitation_writer: optional :class:`TextIO`
-
-        :param federation_invitation_no_browser_open:
-            When using the config reader, set to ``True`` to avoid opening a web
-            browser during interactive federation flows. Defaults to ``False``.
-        :type federation_invitation_no_browser_open: optional bool
 
         :raises SDKError:
             Raised for unsupported credential types or if ``parent_id`` is an

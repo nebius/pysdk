@@ -101,6 +101,76 @@ class Request(Generic[Req, Res]):
 
     Callers typically either ``await`` the request or call :meth:`wait` to run
     it synchronously.
+
+    :param channel: Channel used to resolve address channels and perform
+        synchronous execution when callers use the synchronous helpers.
+    :type channel: :class:`nebius.aio.abc.ClientChannelInterface`
+
+    :param service: Fully-qualified service name used to construct the RPC
+        path (e.g. ``"nebius.service.v1.MyService"``).
+    :type service: `str`
+
+    :param method: RPC method name (bare, without the service prefix),
+        for example ``"Get"`` or ``"List"``.
+    :type method: `str`
+
+    :param request: The request payload. Typically a protobuf wrapper or a
+        domain object that can be serialised by the generated client.
+
+    :param result_pb2_class: Protobuf class used to deserialize the RPC
+        response bytes into a message instance.
+    :type result_pb2_class: type of specific message subclass of
+        ``google.protobuf.Message``
+
+    :param metadata: Optional initial gRPC metadata to attach to the call.
+    :type metadata: either :class:`nebius.base.metadata.Metadata`
+        or list of ``(str, str)`` tuples.
+
+    :param timeout: Overall timeout (seconds) applied to the request execution
+        portion. Or `None` for infinite timeout.
+        Default is :data:`DEFAULT_TIMEOUT`.
+    :type timeout: optional `float` or `None`
+
+    :param auth_timeout: Timeout budget (seconds) reserved for authorization
+        flows plus the request execution. When provided the total authorization
+        + request time will not exceed this value.
+        Default is :data:`DEFAULT_AUTH_TIMEOUT`.
+        Provide `None` for infinite timeout.
+    :type auth_timeout: optional `float` or `None`
+
+    :param auth_options: Optional dictionary forwarded to the authenticator
+        when performing authorization. See the authenticator documentation for
+        provider-specific keys.
+    :type auth_options: optional ``dict[str, str]``
+
+    :param credentials: Optional gRPC :class:`CallCredentials` to use for the
+        RPC invocation.
+    :type credentials: optional :class:`grpc.CallCredentials`
+
+    :param compression: Optional gRPC compression setting for the RPC.
+    :type compression: optional :class:`grpc.Compression`
+
+    :param result_wrapper: Optional callable used to post-process the raw
+        protobuf response into a higher-level domain object. It is called as
+        ``result_wrapper(service_method: str, channel: Channel, pb_obj)``.
+
+    :param grpc_channel_override: Optionally provide an :class:`AddressChannel`
+        instance to use instead of resolving one from the main channel. This
+        is useful for tests or when the caller already has a concrete
+        address-bound channel.
+    :type grpc_channel_override: nebius.aio.base.AddressChannel | None
+
+    :param error_wrapper: Optional callable that maps a :class:`RequestStatus`
+        into a :class:`RequestError` subclass used by the SDK. When omitted a
+        default service-specific wrapper is used.
+
+    :param retries: Number of retry attempts for transient failures. Default is 3.
+    :type retries: optional `int` or `None`
+
+    :param per_retry_timeout: Timeout (seconds) applied to each retry attempt
+        individually. You can pass `None` for infinite timeout. Default is
+        :data:`DEFAULT_PER_RETRY_TIMEOUT`.
+    :type per_retry_timeout: optional `float` or `None`
     """
 
     def __init__(
@@ -124,76 +194,6 @@ class Request(Generic[Req, Res]):
     ) -> None:
         """
         Initialize the request with the provided parameters.
-
-        :param channel: Channel used to resolve address channels and perform
-            synchronous execution when callers use the synchronous helpers.
-        :type channel: :class:`nebius.aio.abc.ClientChannelInterface`
-
-        :param service: Fully-qualified service name used to construct the RPC
-            path (e.g. ``"nebius.service.v1.MyService"``).
-        :type service: `str`
-
-        :param method: RPC method name (bare, without the service prefix),
-            for example ``"Get"`` or ``"List"``.
-        :type method: `str`
-
-        :param request: The request payload. Typically a protobuf wrapper or a
-            domain object that can be serialised by the generated client.
-
-        :param result_pb2_class: Protobuf class used to deserialize the RPC
-            response bytes into a message instance.
-        :type result_pb2_class: type of specific message subclass of
-            ``google.protobuf.Message``
-
-        :param metadata: Optional initial gRPC metadata to attach to the call.
-        :type metadata: either :class:`nebius.base.metadata.Metadata`
-            or list of ``(str, str)`` tuples.
-
-        :param timeout: Overall timeout (seconds) applied to the request execution
-            portion. Or `None` for infinite timeout.
-            Default is :data:`DEFAULT_TIMEOUT`.
-        :type timeout: optional `float` or `None`
-
-        :param auth_timeout: Timeout budget (seconds) reserved for authorization
-            flows plus the request execution. When provided the total authorization
-            + request time will not exceed this value.
-            Default is :data:`DEFAULT_AUTH_TIMEOUT`.
-            Provide `None` for infinite timeout.
-        :type auth_timeout: optional `float` or `None`
-
-        :param auth_options: Optional dictionary forwarded to the authenticator
-            when performing authorization. See the authenticator documentation for
-            provider-specific keys.
-        :type auth_options: optional ``dict[str, str]``
-
-        :param credentials: Optional gRPC :class:`CallCredentials` to use for the
-            RPC invocation.
-        :type credentials: optional :class:`grpc.CallCredentials`
-
-        :param compression: Optional gRPC compression setting for the RPC.
-        :type compression: optional :class:`grpc.Compression`
-
-        :param result_wrapper: Optional callable used to post-process the raw
-            protobuf response into a higher-level domain object. It is called as
-            ``result_wrapper(service_method: str, channel: Channel, pb_obj)``.
-
-        :param grpc_channel_override: Optionally provide an :class:`AddressChannel`
-            instance to use instead of resolving one from the main channel. This
-            is useful for tests or when the caller already has a concrete
-            address-bound channel.
-        :type grpc_channel_override: nebius.aio.base.AddressChannel | None
-
-        :param error_wrapper: Optional callable that maps a :class:`RequestStatus`
-            into a :class:`RequestError` subclass used by the SDK. When omitted a
-            default service-specific wrapper is used.
-
-        :param retries: Number of retry attempts for transient failures. Default is 3.
-        :type retries: optional `int` or `None`
-
-        :param per_retry_timeout: Timeout (seconds) applied to each retry attempt
-            individually. You can pass `None` for infinite timeout. Default is
-            :data:`DEFAULT_PER_RETRY_TIMEOUT`.
-        :type per_retry_timeout: optional `float` or `None`
         """
         self._channel = channel
         self._input = request

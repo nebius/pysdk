@@ -35,6 +35,7 @@ class Constant(ClientChannelInterface):
         source: ClientChannelInterface,
         parent_id: str | None = None,
     ) -> None:
+        """Initialize the constant channel."""
         self._method = method
         self._parent_id = parent_id or source.parent_id()
         self._source = source

@@ -23,14 +23,13 @@ class TokenAuthenticator(Authenticator):
     :data:`HEADER` as ``Bearer <token>``. The instance holds a reference to
     the receiver and delegates retry decisions to the receiver via
     :meth:`token.Receiver.can_retry`.
+
+    :param receiver: Token receiver used to fetch tokens for each request.
+    :type receiver: :class:`token.Receiver`
     """
 
     def __init__(self, receiver: token.Receiver) -> None:
-        """Create a token authenticator.
-
-        :param receiver: Token receiver used to fetch tokens for each request.
-        :type receiver: :class:`token.Receiver`
-        """
+        """Create a token authenticator."""
         super().__init__()
         self._receiver = receiver
 
@@ -82,15 +81,14 @@ class TokenProvider(Provider):
 
     The provider owns a :class:`token.Bearer` and returns a fresh
     :class:`TokenAuthenticator` for each call to :meth:`authenticator`.
+
+    :param token_provider: The bearer token provider used to obtain
+        receivers for per-request authenticators.
+    :type token_provider: :class:`token.Bearer`
     """
 
     def __init__(self, token_provider: token.Bearer) -> None:
-        """Create a token provider.
-
-        :param token_provider: The bearer token provider used to obtain
-            receivers for per-request authenticators.
-        :type token_provider: :class:`token.Bearer`
-        """
+        """Create a token provider."""
         super().__init__()
         self._provider = token_provider
 
