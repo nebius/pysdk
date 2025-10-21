@@ -108,7 +108,10 @@ async def test_e2e_storage_bucket_lifecycle() -> None:
 
         # Create SDK from config
         config = Config(config_file=config_file)
-        sdk = SDK(config_reader=config)
+        sdk = SDK(
+            config_reader=config,
+            user_agent_prefix="pysdk-e2e-test/1.0 (bucket-storage)",
+        )
 
         # Get parent ID for assertions
         parent_id = config.parent_id
