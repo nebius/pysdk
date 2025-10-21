@@ -10,3 +10,5 @@ TOKEN_ENV = "NEBIUS_IAM_TOKEN"  # noqa: S105
 """Environment variable name for an IAM token string."""
 PROFILE_ENV = "NEBIUS_PROFILE"
 """Environment variable name for a Nebius profile string."""
+ENDPOINT_ENV = "NEBIUS_ENDPOINT"
+"""Environment variable name for a Nebius API endpoint string."""
