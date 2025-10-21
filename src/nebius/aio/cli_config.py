@@ -26,6 +26,7 @@ from nebius.aio.token.token import Token
 from nebius.base.constants import (
     DEFAULT_CONFIG_DIR,
     DEFAULT_CONFIG_FILE,
+    ENDPOINT_ENV,
     PROFILE_ENV,
     TOKEN_ENV,
 )
@@ -69,12 +70,19 @@ class Config:
     :param token_env: Environment variable name that may contain an IAM token
         and will take priority over file-based credentials.
     :type token_env: `str`
-    :param no_env: If True skip environment token lookup.
+    :param no_env: If True skip environment token lookup, profile selection, and
+        endpoint override. If you want to disable only one of these features, you can
+        set the env variable name to some invalid value.
     :type no_env: `bool`
     :param no_parent_id: If True disable automatic parent id resolution.
     :type no_parent_id: `bool`
     :param max_retries: Maximum number of auth retries when interacting with
         external services (passed to underlying bearers).
+    :param endpoint: Optional endpoint URL to override profile setting.
+    :type endpoint: optional `str`
+    :param endpoint_env: Environment variable name used to override the
+        endpoint URL from the profile.
+    :type endpoint_env: `str`
     :type max_retries: `int`
     """
 
@@ -88,6 +96,8 @@ class Config:
         no_env: bool = False,
         no_parent_id: bool = False,
         max_retries: int = 2,
+        endpoint: str | None = None,
+        endpoint_env: str = ENDPOINT_ENV,
     ) -> None:
         """Initialize the config reader, and read the config file, selecting
         the active profile.
@@ -95,6 +105,7 @@ class Config:
         self._client_id = client_id
         self._priority_bearer: EnvBearer | None = None
         self._profile_name = profile
+        self._endpoint: str | None = endpoint
         if not no_env:
             try:
                 self._priority_bearer = EnvBearer(env_var_name=token_env)
@@ -102,9 +113,10 @@ class Config:
                 pass
             if self._profile_name is None:
                 self._profile_name = environ.get(profile_env, None)
+            if self._endpoint is None:
+                self._endpoint = environ.get(endpoint_env, None)
         self._no_parent_id = no_parent_id
         self._config_file = Path(config_file).expanduser()
-        self._endpoint: str | None = None
         self._max_retries = max_retries
         self._get_profile()
 
@@ -195,7 +207,11 @@ class Config:
             )
         self._profile: dict[str, Any] = config["profiles"][profile]
 
-        if "endpoint" in self._profile:
+        if (
+            self._endpoint is None
+            or self._endpoint == ""
+            and "endpoint" in self._profile
+        ):
             if not isinstance(self._profile["endpoint"], str):
                 raise ConfigError(
                     "Endpoint should be a string, got "
