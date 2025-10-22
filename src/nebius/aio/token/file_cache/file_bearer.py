@@ -22,9 +22,10 @@ Create a bearer that reads credentials from the default credentials file
 and caches them for five minutes::
 
     from nebius.aio.token.file_cache.file_bearer import PureFileCacheBearer
+    from nebius.sdk import SDK
 
     bearer = PureFileCacheBearer('my-service')
-    token = await bearer.receiver().fetch()
+    sdk = SDK(credentials=bearer)
 
 """
 
@@ -95,12 +96,25 @@ class PureFileCacheBearer(ParentBearer):
 
     Notes
     -----
+
     Construction is inexpensive; the cache performs I/O lazily when
     tokens are accessed via the receiver.
 
     :param name: Logical name for the credential.
     :param cache_file: Destination YAML file used to persist tokens.
     :param throttle: Throttle interval for in-memory caching.
+
+    Example
+    -------
+
+    Create a bearer that reads credentials from the default credentials file
+    and caches them for five minutes::
+
+        from nebius.aio.token.file_cache.file_bearer import PureFileCacheBearer
+        from nebius.sdk import SDK
+
+        bearer = PureFileCacheBearer('my-service')
+        sdk = SDK(credentials=bearer)
     """
 
     def __init__(

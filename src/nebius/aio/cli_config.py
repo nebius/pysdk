@@ -84,6 +84,25 @@ class Config:
         endpoint URL from the profile.
     :type endpoint_env: `str`
     :type max_retries: `int`
+
+    Example
+    -------
+
+    Initialize the SDK with CLI config::
+
+        from nebius.sdk import SDK
+        from nebius.aio.cli_config import Config
+
+        # Initialize SDK with CLI config reader
+        sdk = SDK(config_reader=Config())
+
+        # The config reader will automatically handle authentication
+        # based on the active CLI profile
+
+        # You can also access config properties directly
+        config = Config()
+        print(f"Default parent ID: {config.parent_id}")
+        print(f"Endpoint: {config.endpoint()}")
     """
 
     def __init__(

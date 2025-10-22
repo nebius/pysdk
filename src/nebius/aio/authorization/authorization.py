@@ -92,6 +92,29 @@ class Provider(ABC):
     for that request only (for example an Authorization bearer token). If
     an authentication-related failure occurs, the request layer will consult
     ``Authenticator.can_retry`` and will retry with the same authenticator.
+
+    Example
+    -------
+
+    A minimal example showing how a provider might be passed into an SDK or
+    request layer. The actual SDK in this repo accepts a provider via the
+    ``credentials`` parameter; the example below demonstrates the intent and
+    typical usage::
+
+        from nebius.sdk import SDK
+        from nebius.aio.authorization import Authenticator, Provider
+
+        class MyAuthenticator(Authenticator):
+            async def authenticate(self, metadata, timeout=None, options=None):
+                metadata.add("Authorization", "Bearer my-static-token")
+
+        class MyProvider(Provider):
+            def authenticator(self):
+                return MyAuthenticator()
+
+        provider = MyProvider()
+        sdk = SDK(credentials=provider)  # SDK initialisation (illustrative)
+
     """
 
     @abstractmethod

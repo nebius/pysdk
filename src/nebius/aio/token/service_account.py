@@ -97,6 +97,32 @@ class ServiceAccountBearer(ParentBearer):
         delays.
     :param refresh_request_timeout: Timeout for individual token refresh
         requests.
+
+    Example
+    -------
+
+    Construct a bearer and use it to initialize the SDK::
+
+        from asyncio import Future
+        from nebius.sdk import SDK
+        from nebius.aio.token.service_account import ServiceAccountBearer
+        from cryptography.hazmat.primitives.serialization import load_pem_private_key
+
+        with open("/path/to/private_key.pem", "rb") as fh:
+            private_key = load_pem_private_key(fh.read(), password=None)
+
+        # Create a future for the channel that will be resolved with the SDK
+        channel_future = Future()
+
+        sdk = SDK(credentials=ServiceAccountBearer(
+            "service-account-id",
+            private_key=private_key,
+            public_key_id="public-key-id",
+            channel=channel_future,
+        ))
+
+        # Resolve the future with the newly created SDK
+        channel_future.set_result(sdk)
     """
 
     def __init__(

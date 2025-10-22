@@ -95,6 +95,16 @@ class Bearer(ParentBearer):
 
     :param file: Filesystem path (string or :class:`pathlib.Path`) to
         the token file. Tilde expansion is performed.
+
+    Example
+    -------
+
+    Construct a bearer and use it to initialize the SDK::
+
+        from nebius.sdk import SDK
+        from nebius.aio.token.file import Bearer
+
+        sdk = SDK(credentials=Bearer("~/nebius.token"))
     """
 
     def __init__(self, file: str | Path) -> None:

@@ -91,6 +91,27 @@ class FederatedCredentialsBearer(ParentBearer):
     :param retry_timeout_exponent: Exponential backoff base.
     :param refresh_request_timeout: Timeout for a single refresh
         request.
+
+    Example
+    -------
+
+    Construct a bearer and use it to initialize the SDK::
+
+        from asyncio import Future
+        from nebius.sdk import SDK
+        from nebius.aio.token.federated_credentials import FederatedCredentialsBearer
+
+        # Create a future for the channel that will be resolved with the SDK
+        channel_future = Future()
+
+        sdk = SDK(credentials=FederatedCredentialsBearer(
+            federated_credentials="/path/to/fed-credentials.json",
+            service_account_id="your-service-account-id",
+            channel=channel_future,
+        ))
+
+        # Resolve the future with the newly created SDK
+        channel_future.set_result(sdk)
     """
 
     def __init__(

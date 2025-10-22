@@ -228,6 +228,31 @@ class Bearer(ParentBearer):
         obtaining a receiver.
     :param max_retries: Default retry attempts for receivers created
         by this bearer.
+
+    Example
+    -------
+
+    Construct a bearer and use it to initialize the SDK::
+
+        from asyncio import Future
+        from nebius.sdk import SDK
+        from nebius.aio.token.exchangeable import Bearer
+        from nebius.base.service_account.pk_file import Reader as PKReader
+
+        # Create requester from private key
+        requester = PKReader(
+            service_account_private_key_file_name="path/to/private_key.pem",
+            service_account_id="your-service-account-id",
+            service_account_public_key_id="your-public-key-id",
+        )
+
+        # Create a future for the channel that will be resolved with the SDK
+        channel_future = Future()
+
+        sdk = SDK(credentials=Bearer(requester=requester, channel=channel_future))
+
+        # Resolve the future with the newly created SDK
+        channel_future.set_result(sdk)
     """
 
     def __init__(

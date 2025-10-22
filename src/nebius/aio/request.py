@@ -171,6 +171,54 @@ class Request(Generic[Req, Res]):
         individually. You can pass `None` for infinite timeout. Default is
         :data:`DEFAULT_PER_RETRY_TIMEOUT`.
     :type per_retry_timeout: optional `float` or `None`
+
+    Example::
+
+        from nebius.sdk import SDK
+        from nebius.api.nebius.storage.v1 import (
+            BucketServiceClient,
+            CreateBucketRequest,
+        )
+
+        sdk = SDK()
+        service = BucketServiceClient(sdk)
+
+        # Create a request (typically done by generated client methods)
+        request = service.create(CreateBucketRequest(name="my-bucket"))
+
+        # Await the request asynchronously
+        response = await request
+        print(f"Created bucket: {response}")
+
+        # Or wait synchronously
+        response = request.wait()
+        print(f"Created bucket: {response}")
+
+        # Get request status
+        status = await request.status()
+        print(f"Request status: {status.code}")
+
+        # Get request ID
+        req_id = await request.request_id()
+        print(f"Request ID: {req_id}")
+
+        # Get trace ID
+        trace_id = await request.trace_id()
+        print(f"Trace ID: {trace_id}")
+
+        # Get initial metadata
+        initial_md = await request.initial_metadata()
+        print(f"Initial metadata: {dict(initial_md)}")
+
+        # Get trailing metadata
+        trailing_md = await request.trailing_metadata()
+        print(f"Trailing metadata: {dict(trailing_md)}")
+
+        # Synchronous helpers
+        req_id_sync = request.request_id_sync()
+        trace_id_sync = request.trace_id_sync()
+        initial_md_sync = request.initial_metadata_sync()
+        trailing_md_sync = request.trailing_metadata_sync()
     """
 
     def __init__(

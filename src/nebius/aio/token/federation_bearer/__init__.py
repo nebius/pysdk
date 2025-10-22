@@ -242,6 +242,24 @@ class Bearer(ParentBearer):
     :param no_browser_open: When true the receiver will not attempt to open
         a browser automatically.
     :param ssl_ctx: Optional SSL context for HTTPS requests.
+
+    Example
+    -------
+
+    Construct a bearer and use it to initialize the SDK::
+
+        from nebius.sdk import SDK
+        from nebius.aio.token.federation_bearer import Bearer
+        import sys
+
+        sdk = SDK(credentials=Bearer(
+            profile_name="not-a-cli-profile",
+            client_id="my-client-id",
+            federation_endpoint="auth.eu.nebius.com",
+            federation_id="federation-e00my-federation",
+            writer=sys.stdout,
+            no_browser_open=True,
+        ))
     """
 
     def __init__(

@@ -195,6 +195,35 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         wrapped receiver during refresh operations.
     :param file_cache_throttle: Throttle interval passed to
         :class:`ThrottledTokenCache` to reduce disk reads.
+
+    Example
+    -------
+
+    Wrap a custom bearer with a name and file cache::
+
+        from nebius.sdk import SDK
+        from nebius.aio.token.token import NamedBearer, Bearer, Receiver, Token
+        from nebius.aio.token.file_cache.async_renewable_bearer import (
+            AsynchronousRenewableFileCacheBearer
+        )
+
+        class SomeCustomHeavyLoadBearer(Bearer):
+            def receiver(self) -> Receiver:
+                return SomeReceiver()
+
+        class SomeReceiver(Receiver):
+            async def _fetch(self, timeout=None, options=None) -> Token:
+                # Simulate heavy load token fetch
+                return Token("heavy-token")
+
+            def can_retry(self, err, options=None) -> bool:
+                return False
+
+        custom_bearer = SomeCustomHeavyLoadBearer()
+        named_bearer = NamedBearer(custom_bearer, "heavy-load-bearer")
+        cached_bearer = AsynchronousRenewableFileCacheBearer(named_bearer)
+
+        sdk = SDK(credentials=cached_bearer)
     """
 
     def __init__(

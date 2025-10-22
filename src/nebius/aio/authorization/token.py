@@ -85,6 +85,21 @@ class TokenProvider(Provider):
     :param token_provider: The bearer token provider used to obtain
         receivers for per-request authenticators.
     :type token_provider: :class:`token.Bearer`
+
+    Example
+    -------
+
+    Construct a bearer-backed provider and (illustratively) pass it to the
+    SDK via the credentials parameter::
+
+        from nebius.aio.token.static import EnvBearer
+        from nebius.aio.authorization.token import TokenProvider
+        from nebius.sdk import SDK
+
+        bearer = EnvBearer("NEBIUS_IAM_TOKEN")
+        provider = TokenProvider(bearer)
+        sdk = SDK(credentials=provider)  # illustrative only
+
     """
 
     def __init__(self, token_provider: token.Bearer) -> None:

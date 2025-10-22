@@ -298,6 +298,27 @@ class Bearer(ABC):
     A Bearer supplies receivers for per-request authenticators. Bearers may
     be composed (wrapping other Bearers) to add behaviour such as caching,
     refreshing, or naming.
+
+    Example
+    -------
+
+    Implement a custom bearer::
+
+        from nebius.sdk import SDK
+        from nebius.aio.token.token import Bearer, Receiver, Token
+
+        class MyBearer(Bearer):
+            def receiver(self) -> Receiver:
+                return MyReceiver()
+
+        class MyReceiver(Receiver):
+            async def _fetch(self, timeout=None, options=None) -> Token:
+                return Token("my-token")
+
+            def can_retry(self, err, options=None) -> bool:
+                return False
+
+        sdk = SDK(credentials=MyBearer())
     """
 
     @abstractmethod
@@ -365,6 +386,35 @@ class NamedBearer(Bearer):
     :type wrapped: :class:`Bearer`
     :param name: The :meth:`name` that reflects the configuration of the underlying
         bearer.
+
+    Example
+    -------
+
+    Wrap a custom bearer with a name and file cache::
+
+        from nebius.sdk import SDK
+        from nebius.aio.token.token import NamedBearer, Bearer, Receiver, Token
+        from nebius.aio.token.file_cache.async_renewable_bearer import (
+            AsynchronousRenewableFileCacheBearer
+        )
+
+        class SomeCustomHeavyLoadBearer(Bearer):
+            def receiver(self) -> Receiver:
+                return SomeReceiver()
+
+        class SomeReceiver(Receiver):
+            async def _fetch(self, timeout=None, options=None) -> Token:
+                # Simulate heavy load token fetch
+                return Token("heavy-token")
+
+            def can_retry(self, err, options=None) -> bool:
+                return False
+
+        custom_bearer = SomeCustomHeavyLoadBearer()
+        named_bearer = NamedBearer(custom_bearer, "heavy-load-bearer")
+        cached_bearer = AsynchronousRenewableFileCacheBearer(named_bearer)
+
+        sdk = SDK(credentials=cached_bearer)
     """
 
     def __init__(self, wrapped: Bearer, name: str) -> None:
