@@ -397,6 +397,62 @@ class ListRequest(pb_classes.Message):
         "page_token":"page_token",
     }
     
+class UpdateVersionRequest(pb_classes.Message):
+    __PB2_CLASS__ = common_pb2.UpdateVersionRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.msp.v1alpha1.UpdateVersionRequest",common_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(version, unset.UnsetType):
+            self.version = version
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "version",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of the entity to stop.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def version(self) -> "builtins.str":
+        """
+        New version string.
+        """
+        
+        return super()._get_field("version", explicit_presence=False,
+        )
+    @version.setter
+    def version(self, value: "builtins.str|None") -> None:
+        return super()._set_field("version",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "version":"version",
+    }
+    
 __all__ = [
     #@ local import names here @#
     "ClusterStatus",
@@ -406,4 +462,5 @@ __all__ = [
     "StartRequest",
     "StopRequest",
     "ListRequest",
+    "UpdateVersionRequest",
 ]

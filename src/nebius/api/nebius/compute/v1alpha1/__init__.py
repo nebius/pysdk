@@ -1320,6 +1320,8 @@ class FilesystemSpec(pb_classes.Message):
         """
         
         NETWORK_HDD = 2
+        WEKA = 3
+        VAST = 4
     
     class __OneOfClass_size__(pb_classes.OneOf):
         name: builtins.str= "size"

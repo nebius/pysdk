@@ -46,3 +46,11 @@ class ListRequest(_message.Message):
     page_size: int
     page_token: str
     def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
+
+class UpdateVersionRequest(_message.Message):
+    __slots__ = ["id", "version"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    VERSION_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    version: str
+    def __init__(self, id: _Optional[str] = ..., version: _Optional[str] = ...) -> None: ...

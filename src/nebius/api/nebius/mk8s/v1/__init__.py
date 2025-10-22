@@ -2353,30 +2353,53 @@ class NodeTemplate(pb_classes.Message):
     def os(self) -> "builtins.str":
         """
         OS version that will be used to create the boot disk of Compute Instances in the NodeGroup.
-        Supported platform / k8s version /  OS / driver presets combinations
-          gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm, cpu-e1, cpu-e2, cpu-d3:
-            drivers_preset: ""
-              k8s: 1.30 → "ubuntu22.04"
-              k8s: 1.31 → "ubuntu22.04" (default), "ubuntu24.04"
-          gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm:
-            drivers_preset: "cuda12" (CUDA 12.4)
-              k8s: 1.30, 1.31 → "ubuntu22.04"
-            drivers_preset: "cuda12.4"
-              k8s: 1.31 → "ubuntu22.04"
-            drivers_preset: "cuda12.8"
-              k8s: 1.31 → "ubuntu24.04"
-          gpu-b200-sxm:
-            drivers_preset: ""
-              k8s: 1.30, 1.31 → "ubuntu24.04"
-            drivers_preset: "cuda12" (CUDA 12.8)
-              k8s: 1.30, 1.31 → "ubuntu24.04"
-            drivers_preset: "cuda12.8"
-              k8s: 1.31 → "ubuntu24.04"
-          gpu-b200-sxm-a:
-            drivers_preset: ""
-              k8s: 1.31 → "ubuntu24.04"
-            drivers_preset: "cuda12.8"
-              k8s: 1.31 → "ubuntu24.04"
+        Supported platform / Kubernetes version / OS / driver presets combinations
+        
+        
+        * ``gpu-l40s-a``\\ , ``gpu-l40s-d``\\ , ``gpu-h100-sxm``\\ , ``gpu-h200-sxm``\\ , ``cpu-e1``\\ , ``cpu-e2``\\ , ``cpu-d3``\\ :
+        
+          * ``drivers_preset``\\ : ``""``
+        
+            * ``version``\\ : 1.30 → ``"ubuntu22.04"``
+            * ``version``\\ : 1.31 → ``"ubuntu22.04"`` (default), ``"ubuntu24.04"``
+        
+        * ``gpu-l40s-a``\\ , ``gpu-l40s-d``\\ , ``gpu-h100-sxm``\\ , ``gpu-h200-sxm``\\ :
+        
+          * ``drivers_preset``\\ : ``"cuda12"`` (CUDA 12.4)
+        
+            * ``version``\\ : 1.30, 1.31 → ``"ubuntu22.04"``
+        
+          * ``drivers_preset``\\ : ``"cuda12.4"``
+        
+            * ``version``\\ : 1.31 → ``"ubuntu22.04"``
+        
+          * ``drivers_preset``\\ : ``"cuda12.8"``
+        
+            * ``version``\\ : 1.31 → ``"ubuntu24.04"``
+        
+        * ``gpu-b200-sxm``\\ :
+        
+          * ``drivers_preset``\\ : ``""``
+        
+            * ``version``\\ : 1.30, 1.31 → ``"ubuntu24.04"``
+        
+          * ``drivers_preset``\\ : ``"cuda12"`` (CUDA 12.8)
+        
+            * ``version``\\ : 1.30, 1.31 → ``"ubuntu24.04"``
+        
+          * ``drivers_preset``\\ : ``"cuda12.8"``
+        
+            * ``version``\\ : 1.31 → ``"ubuntu24.04"``
+        
+        * ``gpu-b200-sxm-a``\\ :
+        
+          * ``drivers_preset``\\ : ``""``
+        
+            * ``version``\\ : 1.31 → ``"ubuntu24.04"``
+        
+          * ``drivers_preset``\\ : ``"cuda12.8"``
+        
+            * ``version``\\ : 1.31 → ``"ubuntu24.04"``
         """
         
         return super()._get_field("os", explicit_presence=False,
@@ -2611,14 +2634,21 @@ class GpuSettings(pb_classes.Message):
     def drivers_preset(self) -> "builtins.str":
         """
         Identifier of the predefined set of drivers included in the ComputeImage deployed on ComputeInstances that are part of the NodeGroup.
-        Supported presets for different platform / k8s version combinations:
-          gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm:
-            k8s: 1.30 → "cuda12" (CUDA 12.4)
-            k8s: 1.31 → "cuda12" (CUDA 12.4), "cuda12.4", "cuda12.8"
-          gpu-b200-sxm:
-            k8s: 1.31 → "cuda12" (CUDA 12.8), "cuda12.8"
-          gpu-b200-sxm-a:
-            k8s: 1.31 → "cuda12.8"
+        Supported presets for different platform / Kubernetes version combinations:
+        
+        
+        * ``gpu-l40s-a``\\ , ``gpu-l40s-d``\\ , ``gpu-h100-sxm``\\ , ``gpu-h200-sxm``\\ :
+        
+          * ``version``\\ : 1.30 → ``"cuda12"`` (CUDA 12.4)
+          * ``version``\\ : 1.31 → ``"cuda12"`` (CUDA 12.4), ``"cuda12.4"``\\ , ``"cuda12.8"``
+        
+        * ``gpu-b200-sxm``\\ :
+        
+          * ``version``\\ : 1.31 → ``"cuda12"`` (CUDA 12.8), ``"cuda12.8"``
+        
+        * ``gpu-b200-sxm-a``\\ :
+        
+          * ``version``\\ : 1.31 → ``"cuda12.8"``
         """
         
         return super()._get_field("drivers_preset", explicit_presence=False,
