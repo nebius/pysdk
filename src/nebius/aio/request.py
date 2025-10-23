@@ -175,12 +175,13 @@ class Request(Generic[Req, Res]):
     Example::
 
         from nebius.sdk import SDK
+        from nebius.aio.cli_config import Config
         from nebius.api.nebius.storage.v1 import (
             BucketServiceClient,
             CreateBucketRequest,
         )
 
-        sdk = SDK()
+        sdk = SDK(config_reader=Config())
         service = BucketServiceClient(sdk)
 
         # Create a request (typically done by generated client methods)

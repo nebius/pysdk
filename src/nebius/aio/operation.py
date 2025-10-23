@@ -68,12 +68,13 @@ class Operation(Generic[OperationPb]):
     Operation from a service action (e.g., creating a bucket)::
 
         from nebius.sdk import SDK
+        from nebius.aio.cli_config import Config
         from nebius.api.nebius.storage.v1 import (
             BucketServiceClient,
             CreateBucketRequest
         )
 
-        sdk = SDK()
+        sdk = SDK(config_reader=Config())
         service = BucketServiceClient(sdk)
 
         # Create operation from service action
@@ -88,10 +89,11 @@ class Operation(Generic[OperationPb]):
     Operation from list of operations::
 
         from nebius.sdk import SDK
+        from nebius.aio.cli_config import Config
         from nebius.api.nebius.storage.v1 import BucketServiceClient
         from nebius.api.nebius.common.v1 import ListOperationsRequest
 
-        sdk = SDK()
+        sdk = SDK(config_reader=Config())
         service = BucketServiceClient(sdk)
 
         # Get operation service client from the bucket service
