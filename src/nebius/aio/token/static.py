@@ -115,6 +115,16 @@ class Bearer(ParentBearer):
     :param token: :class:`Token` instance or raw token string.
     :type token: :class:`Token` or `str`
     :raises SDKError: When an empty token string is provided.
+
+    Example
+    -------
+
+    Construct a bearer and use it to initialize the SDK::
+
+        from nebius.sdk import SDK
+        from nebius.aio.token.static import Bearer
+
+        sdk = SDK(credentials=Bearer("my-static-token"))
     """
 
     def __init__(self, token: Token | str) -> None:
@@ -142,6 +152,18 @@ class EnvBearer(Bearer):
     :type env_var_name: `str`
     :raises NoTokenInEnvError: When the environment variable is not set or
         empty.
+
+    Example
+    -------
+
+    Construct a bearer and use it to initialize the SDK::
+
+        import os
+        from nebius.sdk import SDK
+        from nebius.aio.token.static import EnvBearer
+
+        os.environ["NEBIUS_IAM_TOKEN"] = "token-from-env"
+        sdk = SDK(credentials=EnvBearer())
     """
 
     def __init__(self, env_var_name: str = TOKEN_ENV) -> None:

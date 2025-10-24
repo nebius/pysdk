@@ -61,6 +61,54 @@ class Operation(Generic[OperationPb]):
     :type operation: either :class:`nebius.api.nebius.common.v1.Operation` or
         :class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf
         classes.
+
+    Example
+    -------
+
+    Operation from a service action (e.g., creating a bucket)::
+
+        from nebius.sdk import SDK
+        from nebius.aio.cli_config import Config
+        from nebius.api.nebius.storage.v1 import (
+            BucketServiceClient,
+            CreateBucketRequest
+        )
+
+        sdk = SDK(config_reader=Config())
+        service = BucketServiceClient(sdk)
+
+        # Create operation from service action
+        operation = await service.create(CreateBucketRequest(
+            # fill-in necessary fields
+        ))
+
+        # Wait for completion
+        await operation.wait()
+        print(f"New bucket ID: {operation.resource_id}")
+
+    Operation from list of operations::
+
+        from nebius.sdk import SDK
+        from nebius.aio.cli_config import Config
+        from nebius.api.nebius.storage.v1 import BucketServiceClient
+        from nebius.api.nebius.common.v1 import ListOperationsRequest
+
+        sdk = SDK(config_reader=Config())
+        service = BucketServiceClient(sdk)
+
+        # Get operation service client from the bucket service
+        operation_service = service.operation_service()
+        operations_response = await operation_service.list(ListOperationsRequest(
+            # fill-in necessary fields
+        ))
+
+        # Get first operation from list
+        if operations_response.operations:
+            operation = operations_response.operations[0]
+
+            # Manual update
+            await operation.update()
+            print(f"Operation status: {operation.status()}")
     """
 
     def __init__(

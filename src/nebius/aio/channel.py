@@ -1,3 +1,5 @@
+"""High-level gRPC channel manager for the Nebius Python SDK."""
+
 import sys
 from asyncio import (
     FIRST_COMPLETED,

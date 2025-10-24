@@ -241,11 +241,18 @@ class Bearer(ParentBearer):
     Example
     -------
 
-    ::
+    Construct a bearer and use it to initialize the SDK::
 
-        src = SomeOtherBearer(...)
-        bearer = Bearer(src)
-        token = await bearer.receiver().fetch(timeout=5)
+        from nebius.sdk import SDK
+        from nebius.aio.token.renewable import Bearer
+        from nebius.aio.token.static import Bearer as StaticBearer
+
+        some_bearer = StaticBearer("my-static-token") # for illustrative purposes
+
+        # Wrap some bearer with renewal
+        renewable_bearer = Bearer(some_bearer)
+
+        sdk = SDK(credentials=renewable_bearer)
 
     :param source: The inner bearer used to actually fetch tokens.
     :param max_retries: Maximum number of retry attempts performed by

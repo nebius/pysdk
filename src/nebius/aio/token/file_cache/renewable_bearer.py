@@ -157,6 +157,34 @@ class RenewableFileCacheBearer(ParentBearer):
     :param safety_margin: Safety margin before token expiration.
     :param cache_file: Path to the file used for persistent cache.
     :param throttle: In-memory throttle interval for cache reads.
+
+    Example
+    -------
+
+    Wrap a custom bearer with a name and file cache::
+
+        from nebius.sdk import SDK
+        from nebius.aio.token.token import Bearer, Receiver, Token
+        from nebius.aio.token.file_cache.renewable_bearer import (
+            RenewableFileCacheBearer
+        )
+
+        class SomeCustomHeavyLoadBearer(Bearer):
+            def receiver(self) -> Receiver:
+                return SomeReceiver()
+
+        class SomeReceiver(Receiver):
+            async def _fetch(self, timeout=None, options=None) -> Token:
+                # Simulate heavy load token fetch
+                return Token("heavy-token")
+
+            def can_retry(self, err, options=None) -> bool:
+                return False
+
+        custom_bearer = SomeCustomHeavyLoadBearer()
+        cached_bearer = RenewableFileCacheBearer(custom_bearer)
+
+        sdk = SDK(credentials=cached_bearer)
     """
 
     def __init__(

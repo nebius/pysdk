@@ -123,6 +123,24 @@ class FederationBearer(ParentBearer):
     :param file_cache_throttle: Throttle interval passed to the file cache
         layer to reduce disk reads.
     :param ssl_ctx: Optional SSL context used for HTTPS requests.
+
+    Example
+    -------
+
+    Construct a bearer and use it to initialize the SDK::
+
+        from nebius.sdk import SDK
+        from nebius.aio.token.federation_account import FederationBearer
+        import sys
+
+        sdk = SDK(credentials=FederationBearer(
+            profile_name="not-a-cli-profile",
+            client_id="my-client-id",
+            federation_endpoint="auth.eu.nebius.com",
+            federation_id="federation-e00my-federation",
+            writer=sys.stdout,
+            no_browser_open=True,
+        ))
     """
 
     def __init__(
