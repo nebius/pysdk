@@ -10,15 +10,16 @@ service client.
 """
 
 from asyncio import sleep
-from collections.abc import Iterable
 from datetime import datetime, timedelta
 from time import time
 from typing import Generic, TypeVar
 
-from grpc import CallCredentials, Compression, StatusCode
+from grpc import StatusCode
+from typing_extensions import Unpack
 
 from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.request import DEFAULT_TIMEOUT
+from nebius.aio.request_kwargs import RequestKwargs, RequestKwargsForOperation
 from nebius.base.error import SDKError
 from nebius.base.protos.unset import Unset, UnsetType
 from nebius.base.protos.well_known import local_timezone
@@ -175,12 +176,7 @@ class Operation(Generic[OperationPb]):
 
     async def update(
         self,
-        metadata: Iterable[tuple[str, str]] | None = None,
-        timeout: float | None | UnsetType = Unset,
-        credentials: CallCredentials | None = None,
-        compression: Compression | None = None,
-        per_retry_timeout: float | None | UnsetType = Unset,
-        retries: int | None = None,
+        **kwargs: Unpack[RequestKwargs],
     ) -> None:
         """Fetch the latest operation data from the operation service.
 
@@ -188,27 +184,15 @@ class Operation(Generic[OperationPb]):
         operation service client and replaces the wrapped operation object
         with the returned value.
 
-        :param metadata: optional gRPC metadata for the get call
-        :param timeout: optional overall timeout for the get call
-        :type timeout: optional `float` or `None`
-        :param credentials: optional call credentials for the RPC
-        :param compression: optional compression policy for the call
-        :param per_retry_timeout: optional per-retry timeout forwarded to the
-            request helper
-        :type per_retry_timeout: optional `float` or `None`
-        :param retries: optional retry count for the get call
+        :param kwargs: additional request keyword arguments
+            see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         """
         if self.done():
             return
 
         req = self._service.get(
             self._get_request_obj(id=self.id),  # type: ignore
-            metadata=metadata,
-            timeout=timeout,
-            credentials=credentials,
-            compression=compression,
-            per_retry_timeout=per_retry_timeout,
-            retries=retries,
+            **kwargs,
         )
         new_op = await req
         self._set_new_operation(new_op._operation)  # type: ignore
@@ -216,13 +200,11 @@ class Operation(Generic[OperationPb]):
     def sync_wait(
         self,
         interval: float | timedelta = 1,
-        metadata: Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
-        credentials: CallCredentials | None = None,
-        compression: Compression | None = None,
         poll_iteration_timeout: float | None | UnsetType = Unset,
         poll_per_retry_timeout: float | None | UnsetType = Unset,
         poll_retries: int | None = None,
+        **kwargs: Unpack[RequestKwargsForOperation],
     ) -> None:
         """Synchronously wait for the operation to complete.
 
@@ -230,43 +212,24 @@ class Operation(Generic[OperationPb]):
         synchronous runner so callers that are not coroutine-based can wait
         for operation completion.
 
-        :param interval: polling interval between updates (seconds or timedelta)
-        :type interval: `float` or `timedelta`
-        :param metadata: optional metadata forwarded to each update call
-        :param timeout: overall timeout for the synchronous wait
-        :type timeout: optional `float` or `None`
-        :param credentials: optional call credentials forwarded to updates
-        :param compression: optional compression forwarded to updates
-        :param poll_iteration_timeout: timeout used for each polling iteration
-        :type poll_iteration_timeout: optional `float` or `None`
-        :param poll_per_retry_timeout: per-retry timeout for polling requests
-        :type poll_per_retry_timeout: optional `float` or `None`
-        :param poll_retries: retry count used for polling requests
-        :type poll_retries: optional `int` or `None`
+        See :meth:`wait` for parameter details.
         """
         run_timeout = None if timeout is None else timeout + 0.2
         return self._channel.run_sync(
             self.wait(
                 interval=interval,
-                metadata=metadata,
                 timeout=timeout,
-                credentials=credentials,
-                compression=compression,
                 poll_iteration_timeout=poll_iteration_timeout,
                 poll_per_retry_timeout=poll_per_retry_timeout,
                 poll_retries=poll_retries,
+                **kwargs,
             ),
             run_timeout,
         )
 
     def sync_update(
         self,
-        metadata: Iterable[tuple[str, str]] | None = None,
-        timeout: float | None | UnsetType = Unset,
-        credentials: CallCredentials | None = None,
-        compression: Compression | None = None,
-        per_retry_timeout: float | None | UnsetType = Unset,
-        retries: int | None = None,
+        **kwargs: Unpack[RequestKwargs],
     ) -> None:
         """Synchronously perform a single update of the operation state.
 
@@ -274,16 +237,10 @@ class Operation(Generic[OperationPb]):
         synchronous runner. A small safety margin is added to the provided
         timeout to allow for scheduling overhead.
 
-        :param metadata: optional gRPC metadata for the get call
-        :param timeout: optional overall timeout for the get call
-        :type timeout: optional `float` or `None`
-        :param credentials: optional call credentials for the RPC
-        :param compression: optional compression policy for the call
-        :param per_retry_timeout: optional per-retry timeout forwarded to the
-            request helper
-        :type per_retry_timeout: optional `float` or `None`
-        :param retries: optional retry count for the get call
+        :param kwargs: additional request keyword arguments
+            see :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         """
+        timeout = kwargs.get("timeout", Unset)
         run_timeout: float | None = None
         if isinstance(timeout, (int, float)):
             run_timeout = timeout + 0.2
@@ -291,12 +248,7 @@ class Operation(Generic[OperationPb]):
             run_timeout = DEFAULT_TIMEOUT + 0.2
         return self._channel.run_sync(
             self.update(
-                metadata=metadata,
-                timeout=timeout,
-                credentials=credentials,
-                compression=compression,
-                per_retry_timeout=per_retry_timeout,
-                retries=retries,
+                **kwargs,
             ),
             run_timeout,
         )
@@ -304,13 +256,11 @@ class Operation(Generic[OperationPb]):
     async def wait(
         self,
         interval: float | timedelta = 1,
-        metadata: Iterable[tuple[str, str]] | None = None,
         timeout: float | None = None,
-        credentials: CallCredentials | None = None,
-        compression: Compression | None = None,
         poll_iteration_timeout: float | UnsetType | None = Unset,
         poll_per_retry_timeout: float | UnsetType | None = Unset,
         poll_retries: int | None = None,
+        **kwargs: Unpack[RequestKwargsForOperation],
     ) -> None:
         """Asynchronously wait until the operation reaches a terminal state.
 
@@ -321,18 +271,25 @@ class Operation(Generic[OperationPb]):
 
         :param interval: polling interval (seconds or timedelta)
         :type interval: `float` or `timedelta`
-        :param metadata: optional metadata forwarded to each update call
-        :param timeout: overall timeout for waiting
-        :type timeout: optional `float` or `None`
-        :param credentials: optional call credentials forwarded to updates
-        :param compression: optional compression forwarded to updates
-        :param poll_iteration_timeout: timeout used for each polling iteration
+        :param timeout: overall timeout (seconds) for waiting, or `None` for
+            infinite timeout, default infinite.
+        :type timeout: optional `float`
+        :param poll_iteration_timeout: timeout used for each polling iteration, will be
+            passed as the ``timeout`` to each :meth:`update` call.
         :type poll_iteration_timeout: optional `float` or `None`
-        :param poll_per_retry_timeout: per-retry timeout for polling requests
-        :type poll_per_retry_timeout: optional `float` or `None`
-        :param poll_retries: retry count used for polling requests
+        :param poll_per_retry_timeout: per-retry timeout for polling requests, will
+            be passed as the ``per_retry_timeout`` to each :meth:`update` call.
+        :type poll_per_retry_timeout: optional `float` or `None`, will be passed as the
+            ``per_retry_timeout`` to each :meth:`update` call.
+        :param poll_retries: retry count used for polling requests, will be passed as
+            the ``retries`` to each :meth:`update` call.
+        :param kwargs: additional request keyword arguments
+            see :class:`nebius.aio.request_kwargs.RequestKwargsForOperation` for
+            details.
+
         :raises TimeoutError: when the overall timeout is exceeded
         """
+
         start = time()
         if poll_iteration_timeout is None:
             if timeout is not None:
@@ -355,12 +312,10 @@ class Operation(Generic[OperationPb]):
         async def _safe_update() -> None:
             try:
                 await self.update(
-                    metadata=metadata,
                     timeout=poll_iteration_timeout,
-                    credentials=credentials,
-                    compression=compression,
                     per_retry_timeout=poll_per_retry_timeout,
                     retries=poll_retries,
+                    **kwargs,
                 )
             except Exception as e:  # noqa: S110
                 if not _is_ignorable(e):

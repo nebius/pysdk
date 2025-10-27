@@ -1,15 +1,13 @@
-from collections.abc import Iterable
-
-from grpc import CallCredentials, Compression
+from typing_extensions import Unpack
 
 from nebius.aio.channel import Channel
 from nebius.aio.request import Request
+from nebius.aio.request_kwargs import RequestKwargs
 from nebius.api.nebius.iam.v1 import (
     GetProfileRequest,
     GetProfileResponse,
     ProfileServiceClient,
 )
-from nebius.base.protos.unset import Unset, UnsetType
 
 
 class SDK(Channel):
@@ -158,43 +156,15 @@ class SDK(Channel):
 
     def whoami(
         self,
-        metadata: Iterable[tuple[str, str]] | None = None,
-        timeout: float | None = None,
-        auth_timeout: float | None | UnsetType = Unset,
-        auth_options: dict[str, str] | None = None,
-        credentials: CallCredentials | None = None,
-        compression: Compression | None = None,
-        retries: int | None = 3,
-        per_retry_timeout: float | None = None,
+        **kwargs: Unpack[RequestKwargs],
     ) -> Request[GetProfileRequest, GetProfileResponse]:
         """Return a request that fetches the profile for the current credentials.
 
         This is a convenience wrapper around the generated
         :class:`ProfileServiceClient.get` method.
 
-        :param metadata: attach these values as gRPC metadata to the outgoing request.
-        :type metadata: optional sequence of (str, str) pairs
-        :param timeout: Request timeout in seconds, not accounting for authorization.
-            If ``None``, disables the request deadline.
-        :type timeout: optional float
-        :param auth_timeout: Bound on the total time spent authenticating (token
-            acquisition and renewal) plus the enclosed request execution. See README for
-            details. Unset parameter sets the default.
-        :type auth_timeout: optional float
-        :param auth_options: Authorization-specific options that are forwarded to the
-            authorization subsystem (for example, to make token renewal
-            synchronous or to surface renewal errors as request errors).
-        :type auth_options: optional dict[str, str]
-        :param credentials: Overrides any SDK-level credentials.
-        :type credentials: optional :class:`CallCredentials`
-        :param compression: Compression setting to apply to the call, overrides
-            SDK-level settings.
-        :type compression: optional :class:`Compression`
-        :param retries: Number of retry attempts for the request.
-        :type retries: optional int
-        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
-            provided, will be set to default.
-        :type per_retry_timeout: optional float
+        Request arguments may be provided as keyword arguments.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
 
         :return: A :class:`Request` object representing the
             in-flight RPC. It can be awaited (async) or waited
@@ -206,12 +176,5 @@ class SDK(Channel):
         client = ProfileServiceClient(self)
         return client.get(
             GetProfileRequest(),
-            metadata=metadata,
-            auth_timeout=auth_timeout,
-            auth_options=auth_options,
-            timeout=timeout,
-            credentials=credentials,
-            compression=compression,
-            retries=retries,
-            per_retry_timeout=per_retry_timeout,
+            **kwargs,
         )
