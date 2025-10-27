@@ -10,20 +10,19 @@ be instantiated directly by application code; instead they provide a common
 shaping layer for code generated from service definitions.
 """
 
-from collections.abc import Callable, Iterable
+from collections.abc import Callable
 from logging import getLogger
 from typing import Any, Generic, TypeVar
 
 from google.protobuf.message import Message as PMessage
-from grpc import CallCredentials, Compression
+from typing_extensions import Unpack
 
 from nebius.aio.abc import ClientChannelInterface as Channel
 from nebius.aio.constant_channel import Constant
 from nebius.aio.request import Request
 
 # from nebius.api.nebius.common.v1 import Operation
-from nebius.base.metadata import Metadata
-from nebius.base.protos.unset import Unset, UnsetType
+from nebius.aio.request_kwargs import RequestKwargs
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
@@ -66,15 +65,8 @@ class Client:
         method: str,
         request: Req,
         result_pb2_class: type[PMessage],
-        metadata: Metadata | Iterable[tuple[str, str]] | None = None,
-        timeout: float | None | UnsetType = Unset,
-        credentials: CallCredentials | None = None,
-        compression: Compression | None = None,
-        auth_timeout: float | None | UnsetType = Unset,
-        auth_options: dict[str, str] | None = None,
         result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
-        retries: int | None = 3,
-        per_retry_timeout: float | None | UnsetType = Unset,
+        **kwargs: Unpack[RequestKwargs],
     ) -> Request[Req, Res]:
         """Construct a :class:`nebius.aio.request.Request` for an RPC.
 
@@ -86,25 +78,11 @@ class Client:
         :param request: protobuf message or request payload accepted by the RPC
         :param result_pb2_class: protobuf class of the RPC response message
         :type result_pb2_class: type of the protobuf result message
-        :param metadata: optional metadata to send with the request
-        :type metadata: optional sequence of ``(str, str)`` pairs or :class:`Metadata`
-        :param timeout: overall timeout or None to use infinite timeout for all the
-            retries, not including authorization.
-        :type timeout: `float` or `None`
-        :param credentials: optional gRPC CallCredentials to attach to the call
-        :type credentials: optional :class:`grpc.CallCredentials`
-        :param compression: optional compression setting for the RPC
-        :type compression: optional :class:`grpc.Compression`
-        :param auth_timeout: timeout for the request including authorization,
-            or None to disable the deadline.
-        :type auth_timeout: `float` or `None`
-        :param auth_options: optional dict of auth options forwarded to bearer
-        :type auth_options: ``dict[str, str]``
         :param result_wrapper: optional callable to post-process the RPC result
-        :param retries: number of retries to attempt on transient failures
-        :type retries: optional `int`
-        :param per_retry_timeout: timeout applied to each retry attempt
-        :type per_retry_timeout: `float` or `None`
+
+        Other keyword arguments are passed through to the
+        :class:`nebius.aio.request.Request` constructor.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
 
         :returns: a configured :class:`nebius.aio.request.Request` instance
         :rtype: :class:`Request` of the return type of the RPC or the result of
@@ -115,16 +93,9 @@ class Client:
             service=self.__service_name__,
             method=method,
             request=request,
-            metadata=metadata,
-            auth_timeout=auth_timeout,
-            auth_options=auth_options,
             result_pb2_class=result_pb2_class,
-            timeout=timeout,
-            credentials=credentials,
-            compression=compression,
             result_wrapper=result_wrapper,
-            retries=retries,
-            per_retry_timeout=per_retry_timeout,
+            **kwargs,
         )
 
 

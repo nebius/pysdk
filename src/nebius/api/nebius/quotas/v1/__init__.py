@@ -8,9 +8,9 @@ import builtins as builtins
 import collections.abc as abc
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
-import grpc as grpc
 import nebius.aio.client as client
 import nebius.aio.request as request
+import nebius.aio.request_kwargs as request_kwargs
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.quotas.v1.quota_allowance_pb2 as quota_allowance_pb2
@@ -20,6 +20,7 @@ import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.base.protos.unset as unset
 import typing as typing
+import typing_extensions as typing_extensions
 #@ local imports here @#
 
 # file: nebius/quotas/v1/quota_allowance.proto
@@ -669,43 +670,17 @@ class QuotaAllowanceServiceClient(client.Client):
     
     def list(self,
         request: "ListQuotaAllowancesRequest",
-        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
-        auth_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
-        auth_options: builtins.dict[builtins.str,builtins.str] | None = None,
-        credentials: grpc.CallCredentials | None = None,
-        compression: grpc.Compression | None = None,
-        retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request.Request["ListQuotaAllowancesRequest","ListQuotaAllowancesResponse"]:
         """
         Lists quotas by an ID of a Tenant or a Project.
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.quotas.v1.ListQuotaAllowancesRequest`
-        :param metadata: attach these values as gRPC metadata to the outgoing request.
-        :type metadata: optional sequence of (str, str) pairs
-        :param timeout: Request timeout in seconds, not accounting for authorization.
-            If ``None``, disables the request deadline.
-        :type timeout: optional float
-        :param auth_timeout: Bound on the total time spent authenticating (token
-            acquisition and renewal) plus the enclosed request execution. See README for
-            details. Unset parameter sets the default.
-        :type auth_timeout: optional float
-        :param auth_options: Authorization-specific options that are forwarded to the
-            authorization subsystem (for example, to make token renewal synchronous or
-            to surface renewal errors as request errors).
-        :type auth_options: optional dict[str, str]
-        :param credentials: Overrides any SDK-level credentials.
-        :type credentials: optional :class:`grpc.CallCredentials`
-        :param compression: Compression setting to apply to the call, overrides
-            SDK-level settings.
-        :type compression: optional :class:`grpc.Compression`
-        :param retries: Number of retry attempts for the request.
-        :type retries: optional int
-        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
-            provided, will be set to default.
-        :type per_retry_timeout: optional float
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         
         :return: A :class:`nebius.aio.request.Request` object representing the
             in-flight RPC. It can be awaited (async) or waited
@@ -718,56 +693,23 @@ class QuotaAllowanceServiceClient(client.Client):
             method="List",
             request=request,
             result_pb2_class=quota_allowance_service_pb2.ListQuotaAllowancesResponse,
-            metadata=metadata,
-            timeout=timeout,
-            auth_timeout=auth_timeout,
-            auth_options=auth_options,
-            credentials=credentials,
-            compression=compression,
-            retries=retries,
-            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(ListQuotaAllowancesResponse),
+            **kwargs,
         )
     
     def get(self,
         request: "GetQuotaAllowanceRequest",
-        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
-        auth_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
-        auth_options: builtins.dict[builtins.str,builtins.str] | None = None,
-        credentials: grpc.CallCredentials | None = None,
-        compression: grpc.Compression | None = None,
-        retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request.Request["GetQuotaAllowanceRequest","QuotaAllowance"]:
         """
         Gets a quota by its ID.
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.quotas.v1.GetQuotaAllowanceRequest`
-        :param metadata: attach these values as gRPC metadata to the outgoing request.
-        :type metadata: optional sequence of (str, str) pairs
-        :param timeout: Request timeout in seconds, not accounting for authorization.
-            If ``None``, disables the request deadline.
-        :type timeout: optional float
-        :param auth_timeout: Bound on the total time spent authenticating (token
-            acquisition and renewal) plus the enclosed request execution. See README for
-            details. Unset parameter sets the default.
-        :type auth_timeout: optional float
-        :param auth_options: Authorization-specific options that are forwarded to the
-            authorization subsystem (for example, to make token renewal synchronous or
-            to surface renewal errors as request errors).
-        :type auth_options: optional dict[str, str]
-        :param credentials: Overrides any SDK-level credentials.
-        :type credentials: optional :class:`grpc.CallCredentials`
-        :param compression: Compression setting to apply to the call, overrides
-            SDK-level settings.
-        :type compression: optional :class:`grpc.Compression`
-        :param retries: Number of retry attempts for the request.
-        :type retries: optional int
-        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
-            provided, will be set to default.
-        :type per_retry_timeout: optional float
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         
         :return: A :class:`nebius.aio.request.Request` object representing the
             in-flight RPC. It can be awaited (async) or waited
@@ -780,56 +722,23 @@ class QuotaAllowanceServiceClient(client.Client):
             method="Get",
             request=request,
             result_pb2_class=quota_allowance_pb2.QuotaAllowance,
-            metadata=metadata,
-            timeout=timeout,
-            auth_timeout=auth_timeout,
-            auth_options=auth_options,
-            credentials=credentials,
-            compression=compression,
-            retries=retries,
-            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(QuotaAllowance),
+            **kwargs,
         )
     
     def get_by_name(self,
         request: "GetByNameRequest",
-        metadata: abc.Iterable[builtins.tuple[builtins.str,builtins.str]]|None = None,
-        timeout: builtins.float|unset.UnsetType|None = unset.Unset,
-        auth_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
-        auth_options: builtins.dict[builtins.str,builtins.str] | None = None,
-        credentials: grpc.CallCredentials | None = None,
-        compression: grpc.Compression | None = None,
-        retries: builtins.int | None = 3,
-        per_retry_timeout: builtins.float|unset.UnsetType|None = unset.Unset,
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request.Request["GetByNameRequest","QuotaAllowance"]:
         """
         Gets a quota by an ID of a Tenant or a Project, its region, and name.
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.quotas.v1.GetByNameRequest`
-        :param metadata: attach these values as gRPC metadata to the outgoing request.
-        :type metadata: optional sequence of (str, str) pairs
-        :param timeout: Request timeout in seconds, not accounting for authorization.
-            If ``None``, disables the request deadline.
-        :type timeout: optional float
-        :param auth_timeout: Bound on the total time spent authenticating (token
-            acquisition and renewal) plus the enclosed request execution. See README for
-            details. Unset parameter sets the default.
-        :type auth_timeout: optional float
-        :param auth_options: Authorization-specific options that are forwarded to the
-            authorization subsystem (for example, to make token renewal synchronous or
-            to surface renewal errors as request errors).
-        :type auth_options: optional dict[str, str]
-        :param credentials: Overrides any SDK-level credentials.
-        :type credentials: optional :class:`grpc.CallCredentials`
-        :param compression: Compression setting to apply to the call, overrides
-            SDK-level settings.
-        :type compression: optional :class:`grpc.Compression`
-        :param retries: Number of retry attempts for the request.
-        :type retries: optional int
-        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
-            provided, will be set to default.
-        :type per_retry_timeout: optional float
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
         
         :return: A :class:`nebius.aio.request.Request` object representing the
             in-flight RPC. It can be awaited (async) or waited
@@ -842,15 +751,8 @@ class QuotaAllowanceServiceClient(client.Client):
             method="GetByName",
             request=request,
             result_pb2_class=quota_allowance_pb2.QuotaAllowance,
-            metadata=metadata,
-            timeout=timeout,
-            auth_timeout=auth_timeout,
-            auth_options=auth_options,
-            credentials=credentials,
-            compression=compression,
-            retries=retries,
-            per_retry_timeout=per_retry_timeout,
             result_wrapper=pb_classes.simple_wrapper(QuotaAllowance),
+            **kwargs,
         )
     
 

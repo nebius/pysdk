@@ -142,29 +142,10 @@ def generate_method_docstring(
         + "."
         + method.input.pythonic_name
         + """`
-        :param metadata: attach these values as gRPC metadata to the outgoing request.
-        :type metadata: optional sequence of (str, str) pairs
-        :param timeout: Request timeout in seconds, not accounting for authorization.
-            If ``None``, disables the request deadline.
-        :type timeout: optional float
-        :param auth_timeout: Bound on the total time spent authenticating (token
-            acquisition and renewal) plus the enclosed request execution. See README for
-            details. Unset parameter sets the default.
-        :type auth_timeout: optional float
-        :param auth_options: Authorization-specific options that are forwarded to the
-            authorization subsystem (for example, to make token renewal synchronous or
-            to surface renewal errors as request errors).
-        :type auth_options: optional dict[str, str]
-        :param credentials: Overrides any SDK-level credentials.
-        :type credentials: optional :class:`grpc.CallCredentials`
-        :param compression: Compression setting to apply to the call, overrides
-            SDK-level settings.
-        :type compression: optional :class:`grpc.Compression`
-        :param retries: Number of retry attempts for the request.
-        :type retries: optional int
-        :param per_retry_timeout: Optional per-attempt timeout in seconds. If not
-            provided, will be set to default.
-        :type per_retry_timeout: optional float
+
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
 
         :return: A :class:`nebius.aio.request.Request` object representing the
             in-flight RPC. It can be awaited (async) or waited
@@ -860,66 +841,11 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
             with g:
                 g.p('request: "', method.input.export_path, '",')
                 g.p(
-                    "metadata: ",
-                    ImportedSymbol("Iterable", "collections.abc"),
+                    "**kwargs: ",
+                    ImportedSymbol("Unpack", "typing_extensions"),
                     "[",
-                    ImportedSymbol("tuple", "builtins"),
-                    "[",
-                    ImportedSymbol("str", "builtins"),
-                    ",",
-                    ImportedSymbol("str", "builtins"),
-                    "]]|None = None,",
-                )
-                g.p(
-                    "timeout: ",
-                    ImportedSymbol("float", "builtins"),
-                    "|",
-                    ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
-                    "|None = ",
-                    ImportedSymbol("Unset", "nebius.base.protos.unset"),
-                    ",",
-                )
-                g.p(
-                    "auth_timeout: ",
-                    ImportedSymbol("float", "builtins"),
-                    "|",
-                    ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
-                    "|None = ",
-                    ImportedSymbol("Unset", "nebius.base.protos.unset"),
-                    ",",
-                )
-                g.p(
-                    "auth_options: ",
-                    ImportedSymbol("dict", "builtins"),
-                    "[",
-                    ImportedSymbol("str", "builtins"),
-                    ",",
-                    ImportedSymbol("str", "builtins"),
-                    "] | None = None,",
-                )
-                g.p(
-                    "credentials: ",
-                    ImportedSymbol("CallCredentials", "grpc"),
-                    " | None = None,",
-                )
-                g.p(
-                    "compression: ",
-                    ImportedSymbol("Compression", "grpc"),
-                    " | None = None,",
-                )
-                g.p(
-                    "retries: ",
-                    ImportedSymbol("int", "builtins"),
-                    " | None = 3,",
-                )
-                g.p(
-                    "per_retry_timeout: ",
-                    ImportedSymbol("float", "builtins"),
-                    "|",
-                    ImportedSymbol("UnsetType", "nebius.base.protos.unset"),
-                    "|None = ",
-                    ImportedSymbol("Unset", "nebius.base.protos.unset"),
-                    ",",
+                    ImportedSymbol("RequestKwargs", "nebius.aio.request_kwargs"),
+                    "]",
                 )
             g.p(
                 ") -> ",
@@ -958,26 +884,18 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
 
                 if method.name == "Update" and is_operation_output(method):
                     g.p(
-                        "metadata = ",
+                        "kwargs['metadata'] = ",
                         ImportedSymbol(
                             "ensure_reset_mask_in_metadata",
                             "nebius.base.fieldmask_protobuf",
                         ),
-                        "(request, metadata)",
+                        "(request, kwargs.get('metadata', None))",
                     )
                 g.p("return super().request(")
                 with g:
                     g.p('method="', method.name, '",')
                     g.p("request=request,")
                     g.p("result_pb2_class=", method.output.pb2, ",")
-                    g.p("metadata=metadata,")
-                    g.p("timeout=timeout,")
-                    g.p("auth_timeout=auth_timeout,")
-                    g.p("auth_options=auth_options,")
-                    g.p("credentials=credentials,")
-                    g.p("compression=compression,")
-                    g.p("retries=retries,")
-                    g.p("per_retry_timeout=per_retry_timeout,")
                     if is_operation_output(method):
                         g.p(
                             "result_wrapper=",
@@ -1005,6 +923,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                             method.output.export_path,
                             "),",
                         )
+                    g.p("**kwargs,")
                 g.p(")")
             g.p()
     g.p()
