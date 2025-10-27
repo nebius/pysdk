@@ -1,3 +1,26 @@
+"""Request arguments that are passed in all the SDK requests.
+
+Usage::
+
+    from nebius.aio.request_kwargs import RequestKwargs
+    from typing_extensions import Unpack  # or from typing import Unpack in Python 3.11+
+    from nebius.api.nebius... import SomeService, SomeRequest # illustrative only
+
+    def my_request_wrapper(some_arg, **kwargs: Unpack[RequestKwargs]):
+        request = SomeRequest(arg=some_arg) # build your request here
+
+        return SomeService(sdk).some_method( # initialize your service client
+            request,
+            **kwargs, # pass the request kwargs along with the service call
+        )
+
+    result = await my_request_wrapper(
+        some_arg="value",
+        timeout=5.0,
+        retries=2,
+    )
+"""
+
 from collections.abc import Iterable
 from typing import TypedDict
 
@@ -7,8 +30,9 @@ from nebius.base.protos.unset import UnsetType
 
 
 class RequestKwargsForOperation(TypedDict, total=False):
-    """Encapsulates the general keyword arguments for operation wait requests, without
-    overridden parameters.
+    """Encapsulates the general keyword arguments for all requests, including operation
+    wait requests, where some parameters are overridden or renamed. The full set of
+    parameters is available in :class:`RequestKwargs`.
 
     :ivar metadata: Optional initial gRPC metadata to attach to the call.
     :type metadata: either :class:`nebius.base.metadata.Metadata`
@@ -61,3 +85,5 @@ class RequestKwargs(RequestKwargsForOperation, total=False):
     timeout: float | None | UnsetType
     retries: int | None
     per_retry_timeout: float | None | UnsetType
+
+    # When adding new fields, consider adding them to RequestKwargsForOperation instead.

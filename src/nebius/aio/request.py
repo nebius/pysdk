@@ -102,6 +102,11 @@ class Request(Generic[Req, Res]):
     Callers typically either ``await`` the request or call :meth:`wait` to run
     it synchronously.
 
+    Parameters, that are general for all types of requests and are passed through
+    generated methods and various wrappers, are also encapsulated in the
+    :class:`nebius.aio.request_kwargs.RequestKwargs` class. Use this class to
+    automatically infer and validate request parameters.
+
     :param channel: Channel used to resolve address channels and perform
         synchronous execution when callers use the synchronous helpers.
     :type channel: :class:`nebius.aio.abc.ClientChannelInterface`
@@ -240,6 +245,8 @@ class Request(Generic[Req, Res]):
         error_wrapper: Callable[[RequestStatus], RequestError] | None = None,
         retries: int | None = 3,
         per_retry_timeout: float | None | UnsetType = Unset,
+        # When adding new parameters, don't forget to add them to RequestKwargs as well,
+        # if applicable.
     ) -> None:
         """
         Initialize the request with the provided parameters.
