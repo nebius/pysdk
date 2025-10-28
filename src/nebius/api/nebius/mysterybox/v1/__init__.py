@@ -805,33 +805,6 @@ class SecretSpec(pb_classes.Message):
             case _:
                 raise pb_classes.OneOfMatchError(field_name_1)
     
-    class __OneOfClass__secret_version__(pb_classes.OneOf):
-        name: builtins.str= "_secret_version"
-        
-        def __init__(self, msg: "SecretSpec") -> None:
-            super().__init__()
-            self._message: "SecretSpec" = msg
-    
-    class __OneOfClass__secret_version_secret_version__(__OneOfClass__secret_version__):
-        field: typing.Literal["secret_version"] = "secret_version"
-        
-        def __init__(self, msg: "SecretSpec") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "SecretVersionSpec":
-            return self._message.secret_version
-    
-    @builtins.property
-    def _secret_version(self) -> __OneOfClass__secret_version_secret_version__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_secret_version")
-        match field_name_1:
-            case "secret_version":
-                return self.__OneOfClass__secret_version_secret_version__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -854,7 +827,6 @@ class SecretSpec(pb_classes.Message):
             "primary_version_id",
             "secret_version",
             "_primary_version_id",
-            "_secret_version",
         ]
     
     @builtins.property
@@ -884,17 +856,17 @@ class SecretSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def secret_version(self) -> "SecretVersionSpec|None":
+    def secret_version(self) -> "SecretVersionSpec":
         """
         Secret's version specification, defines the secret version, including its payload. This parameter must be specified only during create operations.
         """
         
-        return super()._get_field("secret_version", explicit_presence=True,
+        return super()._get_field("secret_version", explicit_presence=False,
         wrap=SecretVersionSpec,
         )
     @secret_version.setter
     def secret_version(self, value: "SecretVersionSpec|secret_version_pb2.SecretVersionSpec|None") -> None:
-        return super()._set_field("secret_version",value,explicit_presence=True,
+        return super()._set_field("secret_version",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -902,7 +874,6 @@ class SecretSpec(pb_classes.Message):
         "primary_version_id":"primary_version_id",
         "secret_version":"secret_version",
         "_primary_version_id":"_primary_version_id",
-        "_secret_version":"_secret_version",
     }
     
 class SecretStatus(pb_classes.Message):

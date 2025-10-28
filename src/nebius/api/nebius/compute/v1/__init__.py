@@ -551,6 +551,15 @@ class DiskStatus(pb_classes.Message):
     
     @builtins.property
     def read_write_attachment(self) -> "builtins.str":
+        """
+        Current read-write owner (instance ID).
+        May refer to an instance in any state, including stopped
+        (this semantics is preserved for backward compatibility).
+        Reassigned on disk detach, instance deletion, or ownership transfer.
+        Ownership transfer occurs when this disk is explicitly attached to another instance
+        or when a VM with this disk attached starts while the current owner is stopped.
+        """
+        
         return super()._get_field("read_write_attachment", explicit_presence=False,
         )
     @read_write_attachment.setter
