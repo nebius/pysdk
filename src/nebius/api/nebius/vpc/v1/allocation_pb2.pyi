@@ -72,14 +72,16 @@ class AllocationStatus(_message.Message):
     def __init__(self, state: _Optional[_Union[AllocationStatus.State, str]] = ..., details: _Optional[_Union[AllocationDetails, _Mapping]] = ..., assignment: _Optional[_Union[Assignment, _Mapping]] = ..., static: bool = ...) -> None: ...
 
 class AllocationDetails(_message.Message):
-    __slots__ = ["allocated_cidr", "pool_id", "version"]
+    __slots__ = ["allocated_cidr", "pool_id", "version", "subnet_id"]
     ALLOCATED_CIDR_FIELD_NUMBER: _ClassVar[int]
     POOL_ID_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
+    SUBNET_ID_FIELD_NUMBER: _ClassVar[int]
     allocated_cidr: str
     pool_id: str
     version: _pool_pb2.IpVersion
-    def __init__(self, allocated_cidr: _Optional[str] = ..., pool_id: _Optional[str] = ..., version: _Optional[_Union[_pool_pb2.IpVersion, str]] = ...) -> None: ...
+    subnet_id: str
+    def __init__(self, allocated_cidr: _Optional[str] = ..., pool_id: _Optional[str] = ..., version: _Optional[_Union[_pool_pb2.IpVersion, str]] = ..., subnet_id: _Optional[str] = ...) -> None: ...
 
 class Assignment(_message.Message):
     __slots__ = ["network_interface", "load_balancer"]

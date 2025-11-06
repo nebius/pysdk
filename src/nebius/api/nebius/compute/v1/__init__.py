@@ -3218,6 +3218,10 @@ class ImageSpec(pb_classes.Message):
     
     @builtins.property
     def version(self) -> "builtins.str":
+        """
+        part of identifier into the image family
+        """
+        
         return super()._get_field("version", explicit_presence=False,
         )
     @version.setter
@@ -6908,10 +6912,22 @@ class PresetResources(pb_classes.Message):
     
     @builtins.property
     def gpu_memory_gibibytes(self) -> "builtins.int":
+        """
+        Supported until 01/10/26. Use field 'platform.spec.gpu_memory_gibibytes' instead.
+        """
+        
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.compute.v1.PresetResources.gpu_memory_gibibytes is deprecated. Supported until 01/10/26. Use field 'platform.spec.gpu_memory_gibibytes' instead."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._get_field("gpu_memory_gibibytes", explicit_presence=False,
         )
     @gpu_memory_gibibytes.setter
     def gpu_memory_gibibytes(self, value: "builtins.int|None") -> None:
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.compute.v1.PresetResources.gpu_memory_gibibytes is deprecated. Supported until 01/10/26. Use field 'platform.spec.gpu_memory_gibibytes' instead."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._set_field("gpu_memory_gibibytes",value,explicit_presence=False,
         )
     

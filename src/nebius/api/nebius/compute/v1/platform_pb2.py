@@ -15,7 +15,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/compute/v1/platform.proto\x12\x11nebius.compute.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xc0\x01\n\x08Platform\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.PlatformSpecR\x04spec\x12?\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.compute.v1.PlatformStatusB\x04\xbaJ\x01\x05R\x06status\"\x8f\x02\n\x0cPlatformSpec\x12\x33\n\x07presets\x18\x01 \x03(\x0b\x32\x19.nebius.compute.v1.PresetR\x07presets\x12/\n\x14gpu_count_quota_type\x18\x03 \x01(\tR\x11gpuCountQuotaType\x12.\n\x13human_readable_name\x18\x04 \x01(\tR\x11humanReadableName\x12.\n\x13\x61llow_preset_change\x18\x05 \x01(\x08R\x11\x61llowPresetChange\x12\x39\n\x19short_human_readable_name\x18\n \x01(\tR\x16shortHumanReadableName\"\x90\x01\n\x06Preset\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12@\n\tresources\x18\x02 \x01(\x0b\x32\".nebius.compute.v1.PresetResourcesR\tresources\x12\x30\n\x14\x61llow_gpu_clustering\x18\x03 \x01(\x08R\x12\x61llowGpuClustering\"\xb0\x01\n\x0fPresetResources\x12#\n\nvcpu_count\x18\x01 \x01(\x05\x42\x04\xbaJ\x01\x05R\tvcpuCount\x12)\n\x10memory_gibibytes\x18\x03 \x01(\x05R\x0fmemoryGibibytes\x12\x1b\n\tgpu_count\x18\x04 \x01(\x05R\x08gpuCount\x12\x30\n\x14gpu_memory_gibibytes\x18\x06 \x01(\x05R\x12gpuMemoryGibibytes\"J\n\x0ePlatformStatus\x12\x38\n\x18\x61llowed_for_preemptibles\x18\x03 \x01(\x08R\x16\x61llowedForPreemptiblesB\\\n\x18\x61i.nebius.pub.compute.v1B\rPlatformProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/compute/v1/platform.proto\x12\x11nebius.compute.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xc0\x01\n\x08Platform\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.PlatformSpecR\x04spec\x12?\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.compute.v1.PlatformStatusB\x04\xbaJ\x01\x05R\x06status\"\x8f\x02\n\x0cPlatformSpec\x12\x33\n\x07presets\x18\x01 \x03(\x0b\x32\x19.nebius.compute.v1.PresetR\x07presets\x12/\n\x14gpu_count_quota_type\x18\x03 \x01(\tR\x11gpuCountQuotaType\x12.\n\x13human_readable_name\x18\x04 \x01(\tR\x11humanReadableName\x12.\n\x13\x61llow_preset_change\x18\x05 \x01(\x08R\x11\x61llowPresetChange\x12\x39\n\x19short_human_readable_name\x18\n \x01(\tR\x16shortHumanReadableName\"\x90\x01\n\x06Preset\x12\x12\n\x04name\x18\x01 \x01(\tR\x04name\x12@\n\tresources\x18\x02 \x01(\x0b\x32\".nebius.compute.v1.PresetResourcesR\tresources\x12\x30\n\x14\x61llow_gpu_clustering\x18\x03 \x01(\x08R\x12\x61llowGpuClustering\"\xfb\x01\n\x0fPresetResources\x12#\n\nvcpu_count\x18\x01 \x01(\x05\x42\x04\xbaJ\x01\x05R\tvcpuCount\x12)\n\x10memory_gibibytes\x18\x03 \x01(\x05R\x0fmemoryGibibytes\x12\x1b\n\tgpu_count\x18\x04 \x01(\x05R\x08gpuCount\x12{\n\x14gpu_memory_gibibytes\x18\x06 \x01(\x05\x42I\x18\x01\xd2JD\n\n2026-01-10\x12\x36Use field \'platform.spec.gpu_memory_gibibytes\' insteadR\x12gpuMemoryGibibytes\"J\n\x0ePlatformStatus\x12\x38\n\x18\x61llowed_for_preemptibles\x18\x03 \x01(\x08R\x16\x61llowedForPreemptiblesB\\\n\x18\x61i.nebius.pub.compute.v1B\rPlatformProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,6 +28,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _PLATFORM.fields_by_name['status']._serialized_options = b'\272J\001\005'
   _PRESETRESOURCES.fields_by_name['vcpu_count']._options = None
   _PRESETRESOURCES.fields_by_name['vcpu_count']._serialized_options = b'\272J\001\005'
+  _PRESETRESOURCES.fields_by_name['gpu_memory_gibibytes']._options = None
+  _PRESETRESOURCES.fields_by_name['gpu_memory_gibibytes']._serialized_options = b'\030\001\322JD\n\n2026-01-10\0226Use field \'platform.spec.gpu_memory_gibibytes\' instead'
   _globals['_PLATFORM']._serialized_start=115
   _globals['_PLATFORM']._serialized_end=307
   _globals['_PLATFORMSPEC']._serialized_start=310
@@ -35,7 +37,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_PRESET']._serialized_start=584
   _globals['_PRESET']._serialized_end=728
   _globals['_PRESETRESOURCES']._serialized_start=731
-  _globals['_PRESETRESOURCES']._serialized_end=907
-  _globals['_PLATFORMSTATUS']._serialized_start=909
-  _globals['_PLATFORMSTATUS']._serialized_end=983
+  _globals['_PRESETRESOURCES']._serialized_end=982
+  _globals['_PLATFORMSTATUS']._serialized_start=984
+  _globals['_PLATFORMSTATUS']._serialized_end=1058
 # @@protoc_insertion_point(module_scope)
