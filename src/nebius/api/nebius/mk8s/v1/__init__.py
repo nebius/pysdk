@@ -1747,6 +1747,13 @@ class ResourcesSpec(pb_classes.Message):
     }
     
 # file: nebius/mk8s/v1/node_group.proto
+class ConditionStatus(pb_enum.Enum):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1.ConditionStatus",node_group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    CONDITION_STATUS_UNSPECIFIED = 0
+    TRUE = 1
+    FALSE = 2
+    UNKNOWN = 3
+
 class NodeGroup(pb_classes.Message):
     """
     NodeGroup represents Kubernetes node pool - set of worker machines having the same configuration.
@@ -1875,6 +1882,7 @@ class NodeGroupSpec(pb_classes.Message):
         autoscaling: "NodeGroupAutoscalingSpec|node_group_pb2.NodeGroupAutoscalingSpec|None|unset.UnsetType" = unset.Unset,
         template: "NodeTemplate|node_group_pb2.NodeTemplate|None|unset.UnsetType" = unset.Unset,
         strategy: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy|None|unset.UnsetType" = unset.Unset,
+        auto_repair: "NodeGroupAutoRepairSpec|node_group_pb2.NodeGroupAutoRepairSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -1887,6 +1895,8 @@ class NodeGroupSpec(pb_classes.Message):
             self.template = template
         if not isinstance(strategy, unset.UnsetType):
             self.strategy = strategy
+        if not isinstance(auto_repair, unset.UnsetType):
+            self.auto_repair = auto_repair
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1895,6 +1905,7 @@ class NodeGroupSpec(pb_classes.Message):
             "autoscaling",
             "template",
             "strategy",
+            "auto_repair",
             "size",
         ]
     
@@ -1975,12 +1986,27 @@ class NodeGroupSpec(pb_classes.Message):
         return super()._set_field("strategy",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def auto_repair(self) -> "NodeGroupAutoRepairSpec":
+        """
+        Parameters for nodes auto repair.
+        """
+        
+        return super()._get_field("auto_repair", explicit_presence=False,
+        wrap=NodeGroupAutoRepairSpec,
+        )
+    @auto_repair.setter
+    def auto_repair(self, value: "NodeGroupAutoRepairSpec|node_group_pb2.NodeGroupAutoRepairSpec|None") -> None:
+        return super()._set_field("auto_repair",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "version":"version",
         "fixed_node_count":"fixed_node_count",
         "autoscaling":"autoscaling",
         "template":"template",
         "strategy":"strategy",
+        "auto_repair":"auto_repair",
         "size":"size",
     }
     
@@ -3000,6 +3026,181 @@ class PercentOrCount(pb_classes.Message):
         "value":"value",
     }
     
+class NodeGroupAutoRepairSpec(pb_classes.Message):
+    __PB2_CLASS__ = node_group_pb2.NodeGroupAutoRepairSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeGroupAutoRepairSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        conditions: "abc.Iterable[NodeAutoRepairCondition]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(conditions, unset.UnsetType):
+            self.conditions = conditions
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "conditions",
+        ]
+    
+    @builtins.property
+    def conditions(self) -> "abc.MutableSequence[NodeAutoRepairCondition]":
+        """
+        Conditions that determine whether a node should be auto repaired.
+        """
+        
+        return super()._get_field("conditions", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(NodeAutoRepairCondition,None,None),
+        )
+    @conditions.setter
+    def conditions(self, value: "abc.Iterable[NodeAutoRepairCondition]|None") -> None:
+        return super()._set_field("conditions",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "conditions":"conditions",
+    }
+    
+class NodeAutoRepairCondition(pb_classes.Message):
+    __PB2_CLASS__ = node_group_pb2.NodeAutoRepairCondition
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeAutoRepairCondition",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "timeout": well_known_1.duration_mask,
+    }
+    
+    class __OneOfClass_trigger__(pb_classes.OneOf):
+        name: builtins.str= "trigger"
+        
+        def __init__(self, msg: "NodeAutoRepairCondition") -> None:
+            super().__init__()
+            self._message: "NodeAutoRepairCondition" = msg
+    
+    class __OneOfClass_trigger_timeout__(__OneOfClass_trigger__):
+        field: typing.Literal["timeout"] = "timeout"
+        
+        def __init__(self, msg: "NodeAutoRepairCondition") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "datetime.timedelta":
+            return self._message.timeout
+    
+    class __OneOfClass_trigger_disabled__(__OneOfClass_trigger__):
+        field: typing.Literal["disabled"] = "disabled"
+        
+        def __init__(self, msg: "NodeAutoRepairCondition") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.disabled
+    
+    @builtins.property
+    def trigger(self) -> __OneOfClass_trigger_timeout__|__OneOfClass_trigger_disabled__|None:
+        field_name_1: str|None = super().which_field_in_oneof("trigger")
+        match field_name_1:
+            case "timeout":
+                return self.__OneOfClass_trigger_timeout__(self)
+            case "disabled":
+                return self.__OneOfClass_trigger_disabled__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        type: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        status: "ConditionStatus|node_group_pb2.ConditionStatus|None|unset.UnsetType" = unset.Unset,
+        timeout: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
+        disabled: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(type, unset.UnsetType):
+            self.type = type
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+        if not isinstance(timeout, unset.UnsetType):
+            self.timeout = timeout
+        if not isinstance(disabled, unset.UnsetType):
+            self.disabled = disabled
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "type",
+            "status",
+            "timeout",
+            "disabled",
+            "trigger",
+        ]
+    
+    @builtins.property
+    def type(self) -> "builtins.str":
+        """
+        Node condition type.
+        """
+        
+        return super()._get_field("type", explicit_presence=False,
+        )
+    @type.setter
+    def type(self, value: "builtins.str|None") -> None:
+        return super()._set_field("type",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "ConditionStatus":
+        """
+        Node condition status.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=ConditionStatus,
+        )
+    @status.setter
+    def status(self, value: "ConditionStatus|node_group_pb2.ConditionStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def timeout(self) -> "datetime.timedelta|None":
+        """
+        The duration after which the node is automatically repaired if the condition remains in the specified status.
+        """
+        
+        return super()._get_field("timeout", explicit_presence=True,
+        wrap=well_known_1.from_duration
+        )
+    @timeout.setter
+    def timeout(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("timeout",value,explicit_presence=True,
+        unwrap=well_known_1.to_duration
+        )
+    
+    @builtins.property
+    def disabled(self) -> "builtins.bool|None":
+        """
+        When true, disables the default auto-repair condition rules.
+        """
+        
+        return super()._get_field("disabled", explicit_presence=True,
+        )
+    @disabled.setter
+    def disabled(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("disabled",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "type":"type",
+        "status":"status",
+        "timeout":"timeout",
+        "disabled":"disabled",
+        "trigger":"trigger",
+    }
+    
 class PreemptibleSpec(pb_classes.Message):
     __PB2_CLASS__ = node_group_pb2.PreemptibleSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.PreemptibleSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3225,6 +3426,233 @@ class NodeGroupStatus(pb_classes.Message):
     }
     
 # file: nebius/mk8s/v1/node_group_service.proto
+class GetNodeGroupCompatibilityMatrixRequest(pb_classes.Message):
+    __PB2_CLASS__ = node_group_service_pb2.GetNodeGroupCompatibilityMatrixRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.GetNodeGroupCompatibilityMatrixRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        cluster_kubernetes_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        platform: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(cluster_kubernetes_version, unset.UnsetType):
+            self.cluster_kubernetes_version = cluster_kubernetes_version
+        if not isinstance(platform, unset.UnsetType):
+            self.platform = platform
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "cluster_kubernetes_version",
+            "platform",
+        ]
+    
+    @builtins.property
+    def cluster_kubernetes_version(self) -> "builtins.str":
+        """
+        Cluster kubernetes version.
+        """
+        
+        return super()._get_field("cluster_kubernetes_version", explicit_presence=False,
+        )
+    @cluster_kubernetes_version.setter
+    def cluster_kubernetes_version(self, value: "builtins.str|None") -> None:
+        return super()._set_field("cluster_kubernetes_version",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def platform(self) -> "builtins.str":
+        """
+        Hardware platform for which the capabilities are requested.
+        """
+        
+        return super()._get_field("platform", explicit_presence=False,
+        )
+    @platform.setter
+    def platform(self, value: "builtins.str|None") -> None:
+        return super()._set_field("platform",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "cluster_kubernetes_version":"cluster_kubernetes_version",
+        "platform":"platform",
+    }
+    
+class NodeGroupCompatibilityMatrix(pb_classes.Message):
+    __PB2_CLASS__ = node_group_service_pb2.NodeGroupCompatibilityMatrix
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeGroupCompatibilityMatrix",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        versions: "abc.Iterable[NodeGroupCompatibilityVersion]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(versions, unset.UnsetType):
+            self.versions = versions
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "versions",
+        ]
+    
+    @builtins.property
+    def versions(self) -> "abc.MutableSequence[NodeGroupCompatibilityVersion]":
+        """
+        List of available versions.
+        """
+        
+        return super()._get_field("versions", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(NodeGroupCompatibilityVersion,None,None),
+        )
+    @versions.setter
+    def versions(self, value: "abc.Iterable[NodeGroupCompatibilityVersion]|None") -> None:
+        return super()._set_field("versions",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "versions":"versions",
+    }
+    
+class NodeGroupCompatibilityVersion(pb_classes.Message):
+    __PB2_CLASS__ = node_group_service_pb2.NodeGroupCompatibilityVersion
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeGroupCompatibilityVersion",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        kubernetes_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        items: "abc.Iterable[NodeGroupCompatibilityVersionItem]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(kubernetes_version, unset.UnsetType):
+            self.kubernetes_version = kubernetes_version
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "kubernetes_version",
+            "items",
+        ]
+    
+    @builtins.property
+    def kubernetes_version(self) -> "builtins.str":
+        """
+        Kubernetes version.
+        """
+        
+        return super()._get_field("kubernetes_version", explicit_presence=False,
+        )
+    @kubernetes_version.setter
+    def kubernetes_version(self, value: "builtins.str|None") -> None:
+        return super()._set_field("kubernetes_version",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[NodeGroupCompatibilityVersionItem]":
+        """
+        List of available images.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(NodeGroupCompatibilityVersionItem,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[NodeGroupCompatibilityVersionItem]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "kubernetes_version":"kubernetes_version",
+        "items":"items",
+    }
+    
+class NodeGroupCompatibilityVersionItem(pb_classes.Message):
+    __PB2_CLASS__ = node_group_service_pb2.NodeGroupCompatibilityVersionItem
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NodeGroupCompatibilityVersionItem",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        os: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        drivers_preset: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        compatible_platforms: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(os, unset.UnsetType):
+            self.os = os
+        if not isinstance(drivers_preset, unset.UnsetType):
+            self.drivers_preset = drivers_preset
+        if not isinstance(compatible_platforms, unset.UnsetType):
+            self.compatible_platforms = compatible_platforms
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "os",
+            "drivers_preset",
+            "compatible_platforms",
+        ]
+    
+    @builtins.property
+    def os(self) -> "builtins.str":
+        """
+        Operating system.
+        """
+        
+        return super()._get_field("os", explicit_presence=False,
+        )
+    @os.setter
+    def os(self, value: "builtins.str|None") -> None:
+        return super()._set_field("os",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def drivers_preset(self) -> "builtins.str":
+        """
+        Drivers preset name.
+        """
+        
+        return super()._get_field("drivers_preset", explicit_presence=False,
+        )
+    @drivers_preset.setter
+    def drivers_preset(self, value: "builtins.str|None") -> None:
+        return super()._set_field("drivers_preset",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def compatible_platforms(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        Hardware platforms.
+        """
+        
+        return super()._get_field("compatible_platforms", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @compatible_platforms.setter
+    def compatible_platforms(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("compatible_platforms",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "os":"os",
+        "drivers_preset":"drivers_preset",
+        "compatible_platforms":"compatible_platforms",
+    }
+    
 class CreateNodeGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = node_group_service_pb2.CreateNodeGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.CreateNodeGroupRequest",node_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3825,6 +4253,33 @@ class NodeGroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
             **kwargs,
         )
     
+    def get_compatibility_matrix(self,
+        request: "GetNodeGroupCompatibilityMatrixRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetNodeGroupCompatibilityMatrixRequest","NodeGroupCompatibilityMatrix"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.mk8s.v1.GetNodeGroupCompatibilityMatrixRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.mk8s.v1.NodeGroupCompatibilityMatrix`.
+        """
+        
+        return super().request(
+            method="GetCompatibilityMatrix",
+            request=request,
+            result_pb2_class=node_group_service_pb2.NodeGroupCompatibilityMatrix,
+            result_wrapper=pb_classes.simple_wrapper(NodeGroupCompatibilityMatrix),
+            **kwargs,
+        )
+    
 
 # file: nebius/mk8s/v1/progress_data.proto
 class ProgressData(pb_classes.Message):
@@ -3947,6 +4402,7 @@ __all__ = [
     "Condition",
     "DiskSpec",
     "ResourcesSpec",
+    "ConditionStatus",
     "NodeGroup",
     "NodeGroupSpec",
     "NodeTemplate",
@@ -3961,8 +4417,14 @@ __all__ = [
     "NodeTaint",
     "NodeGroupDeploymentStrategy",
     "PercentOrCount",
+    "NodeGroupAutoRepairSpec",
+    "NodeAutoRepairCondition",
     "PreemptibleSpec",
     "NodeGroupStatus",
+    "GetNodeGroupCompatibilityMatrixRequest",
+    "NodeGroupCompatibilityMatrix",
+    "NodeGroupCompatibilityVersion",
+    "NodeGroupCompatibilityVersionItem",
     "CreateNodeGroupRequest",
     "GetNodeGroupRequest",
     "ListNodeGroupsRequest",

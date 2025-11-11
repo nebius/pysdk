@@ -52,6 +52,11 @@ class NodeGroupServiceStub(object):
                 request_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.UpgradeNodeGroupRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
+        self.GetCompatibilityMatrix = channel.unary_unary(
+                '/nebius.mk8s.v1.NodeGroupService/GetCompatibilityMatrix',
+                request_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.GetNodeGroupCompatibilityMatrixRequest.SerializeToString,
+                response_deserializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.NodeGroupCompatibilityMatrix.FromString,
+                )
 
 
 class NodeGroupServiceServicer(object):
@@ -99,6 +104,12 @@ class NodeGroupServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetCompatibilityMatrix(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_NodeGroupServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -136,6 +147,11 @@ def add_NodeGroupServiceServicer_to_server(servicer, server):
                     servicer.Upgrade,
                     request_deserializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.UpgradeNodeGroupRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'GetCompatibilityMatrix': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetCompatibilityMatrix,
+                    request_deserializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.GetNodeGroupCompatibilityMatrixRequest.FromString,
+                    response_serializer=nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.NodeGroupCompatibilityMatrix.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -263,5 +279,22 @@ class NodeGroupService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/Upgrade',
             nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.UpgradeNodeGroupRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetCompatibilityMatrix(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.mk8s.v1.NodeGroupService/GetCompatibilityMatrix',
+            nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.GetNodeGroupCompatibilityMatrixRequest.SerializeToString,
+            nebius_dot_mk8s_dot_v1_dot_node__group__service__pb2.NodeGroupCompatibilityMatrix.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
