@@ -16,7 +16,7 @@ from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1fnebius/common/v1/metadata.proto\x12\x10nebius.common.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\"\x9a\x03\n\x10ResourceMetadata\x12\x14\n\x02id\x18\x01 \x01(\tB\x04\xbaJ\x01\x03R\x02id\x12#\n\tparent_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name\x12\x32\n\x10resource_version\x18\x04 \x01(\x03\x42\x07\xbaH\x04\"\x02(\x00R\x0fresourceVersion\x12?\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x04\xbaJ\x01\x05R\tcreatedAt\x12?\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x04\xbaJ\x01\x05R\tupdatedAt\x12\x46\n\x06labels\x18\x07 \x03(\x0b\x32..nebius.common.v1.ResourceMetadata.LabelsEntryR\x06labels\x1a\x39\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\"C\n\x10GetByNameRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x12\n\x04name\x18\x02 \x01(\tR\x04nameBZ\n\x17\x61i.nebius.pub.common.v1B\rMetadataProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1fnebius/common/v1/metadata.proto\x12\x10nebius.common.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\"\x9a\x03\n\x10ResourceMetadata\x12\x14\n\x02id\x18\x01 \x01(\tB\x04\xbaJ\x01\x03R\x02id\x12#\n\tparent_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name\x12\x32\n\x10resource_version\x18\x04 \x01(\x03\x42\x07\xbaH\x04\"\x02(\x00R\x0fresourceVersion\x12?\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x04\xbaJ\x01\x05R\tcreatedAt\x12?\n\nupdated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x04\xbaJ\x01\x05R\tupdatedAt\x12\x46\n\x06labels\x18\x07 \x03(\x0b\x32..nebius.common.v1.ResourceMetadata.LabelsEntryR\x06labels\x1a\x39\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\"S\n\x10GetByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04nameBZ\n\x17\x61i.nebius.pub.common.v1B\rMetadataProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/common/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,10 +37,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _RESOURCEMETADATA.fields_by_name['created_at']._serialized_options = b'\272J\001\005'
   _RESOURCEMETADATA.fields_by_name['updated_at']._options = None
   _RESOURCEMETADATA.fields_by_name['updated_at']._serialized_options = b'\272J\001\005'
+  _GETBYNAMEREQUEST.fields_by_name['parent_id']._options = None
+  _GETBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETBYNAMEREQUEST.fields_by_name['name']._options = None
+  _GETBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _globals['_RESOURCEMETADATA']._serialized_start=142
   _globals['_RESOURCEMETADATA']._serialized_end=552
   _globals['_RESOURCEMETADATA_LABELSENTRY']._serialized_start=495
   _globals['_RESOURCEMETADATA_LABELSENTRY']._serialized_end=552
   _globals['_GETBYNAMEREQUEST']._serialized_start=554
-  _globals['_GETBYNAMEREQUEST']._serialized_end=621
+  _globals['_GETBYNAMEREQUEST']._serialized_end=637
 # @@protoc_insertion_point(module_scope)

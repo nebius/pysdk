@@ -6711,6 +6711,7 @@ class PlatformSpec(pb_classes.Message):
         human_readable_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         allow_preset_change: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         short_human_readable_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        gpu_memory_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(presets, unset.UnsetType):
@@ -6723,6 +6724,8 @@ class PlatformSpec(pb_classes.Message):
             self.allow_preset_change = allow_preset_change
         if not isinstance(short_human_readable_name, unset.UnsetType):
             self.short_human_readable_name = short_human_readable_name
+        if not isinstance(gpu_memory_gibibytes, unset.UnsetType):
+            self.gpu_memory_gibibytes = gpu_memory_gibibytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -6731,6 +6734,7 @@ class PlatformSpec(pb_classes.Message):
             "human_readable_name",
             "allow_preset_change",
             "short_human_readable_name",
+            "gpu_memory_gibibytes",
         ]
     
     @builtins.property
@@ -6779,12 +6783,22 @@ class PlatformSpec(pb_classes.Message):
         return super()._set_field("short_human_readable_name",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def gpu_memory_gibibytes(self) -> "builtins.int":
+        return super()._get_field("gpu_memory_gibibytes", explicit_presence=False,
+        )
+    @gpu_memory_gibibytes.setter
+    def gpu_memory_gibibytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("gpu_memory_gibibytes",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "presets":"presets",
         "gpu_count_quota_type":"gpu_count_quota_type",
         "human_readable_name":"human_readable_name",
         "allow_preset_change":"allow_preset_change",
         "short_human_readable_name":"short_human_readable_name",
+        "gpu_memory_gibibytes":"gpu_memory_gibibytes",
     }
     
 class Preset(pb_classes.Message):
