@@ -409,6 +409,7 @@ class Bearer(ParentBearer):
         the cached token on success.
         """
         tok = None
+        self._renewal_attempt += 1
         log.debug(f"refreshing token, attempt {self._renewal_attempt}")
         self._break_previous_attempt.clear()
         self._synchronous_can_proceed.clear()
