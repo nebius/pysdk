@@ -36,6 +36,11 @@ class AllocationServiceStub(object):
                 request_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsByPoolRequest.SerializeToString,
                 response_deserializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
                 )
+        self.ListBySubnet = channel.unary_unary(
+                '/nebius.vpc.v1.AllocationService/ListBySubnet',
+                request_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsBySubnetRequest.SerializeToString,
+                response_deserializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
+                )
         self.Create = channel.unary_unary(
                 '/nebius.vpc.v1.AllocationService/Create',
                 request_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.CreateAllocationRequest.SerializeToString,
@@ -80,6 +85,12 @@ class AllocationServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListBySubnet(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Create(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -119,6 +130,11 @@ def add_AllocationServiceServicer_to_server(servicer, server):
             'ListByPool': grpc.unary_unary_rpc_method_handler(
                     servicer.ListByPool,
                     request_deserializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsByPoolRequest.FromString,
+                    response_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.SerializeToString,
+            ),
+            'ListBySubnet': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListBySubnet,
+                    request_deserializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsBySubnetRequest.FromString,
                     response_serializer=nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.SerializeToString,
             ),
             'Create': grpc.unary_unary_rpc_method_handler(
@@ -210,6 +226,23 @@ class AllocationService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.AllocationService/ListByPool',
             nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsByPoolRequest.SerializeToString,
+            nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListBySubnet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.vpc.v1.AllocationService/ListBySubnet',
+            nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsBySubnetRequest.SerializeToString,
             nebius_dot_vpc_dot_v1_dot_allocation__service__pb2.ListAllocationsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

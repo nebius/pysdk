@@ -11,6 +11,38 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class GetNodeGroupCompatibilityMatrixRequest(_message.Message):
+    __slots__ = ["cluster_kubernetes_version", "platform"]
+    CLUSTER_KUBERNETES_VERSION_FIELD_NUMBER: _ClassVar[int]
+    PLATFORM_FIELD_NUMBER: _ClassVar[int]
+    cluster_kubernetes_version: str
+    platform: str
+    def __init__(self, cluster_kubernetes_version: _Optional[str] = ..., platform: _Optional[str] = ...) -> None: ...
+
+class NodeGroupCompatibilityMatrix(_message.Message):
+    __slots__ = ["versions"]
+    VERSIONS_FIELD_NUMBER: _ClassVar[int]
+    versions: _containers.RepeatedCompositeFieldContainer[NodeGroupCompatibilityVersion]
+    def __init__(self, versions: _Optional[_Iterable[_Union[NodeGroupCompatibilityVersion, _Mapping]]] = ...) -> None: ...
+
+class NodeGroupCompatibilityVersion(_message.Message):
+    __slots__ = ["kubernetes_version", "items"]
+    KUBERNETES_VERSION_FIELD_NUMBER: _ClassVar[int]
+    ITEMS_FIELD_NUMBER: _ClassVar[int]
+    kubernetes_version: str
+    items: _containers.RepeatedCompositeFieldContainer[NodeGroupCompatibilityVersionItem]
+    def __init__(self, kubernetes_version: _Optional[str] = ..., items: _Optional[_Iterable[_Union[NodeGroupCompatibilityVersionItem, _Mapping]]] = ...) -> None: ...
+
+class NodeGroupCompatibilityVersionItem(_message.Message):
+    __slots__ = ["os", "drivers_preset", "compatible_platforms"]
+    OS_FIELD_NUMBER: _ClassVar[int]
+    DRIVERS_PRESET_FIELD_NUMBER: _ClassVar[int]
+    COMPATIBLE_PLATFORMS_FIELD_NUMBER: _ClassVar[int]
+    os: str
+    drivers_preset: str
+    compatible_platforms: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, os: _Optional[str] = ..., drivers_preset: _Optional[str] = ..., compatible_platforms: _Optional[_Iterable[str]] = ...) -> None: ...
+
 class CreateNodeGroupRequest(_message.Message):
     __slots__ = ["metadata", "spec"]
     METADATA_FIELD_NUMBER: _ClassVar[int]

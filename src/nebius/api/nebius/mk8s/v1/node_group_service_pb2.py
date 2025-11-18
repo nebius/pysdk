@@ -19,7 +19,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.mk8s.v1 import node_group_pb2 as nebius_dot_mk8s_dot_v1_dot_node__group__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'nebius/mk8s/v1/node_group_service.proto\x12\x0enebius.mk8s.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1fnebius/mk8s/v1/node_group.proto\"\x9b\x01\n\x16\x43reateNodeGroupRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.mk8s.v1.NodeGroupSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"X\n\x13GetNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12)\n\x10resource_version\x18\x02 \x01(\tR\x0fresourceVersion\"x\n\x15ListNodeGroupsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"q\n\x16ListNodeGroupsResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.mk8s.v1.NodeGroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x93\x01\n\x16UpdateNodeGroupRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.mk8s.v1.NodeGroupSpecR\x04spec\"0\n\x16\x44\x65leteNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x9a\x01\n\x17UpgradeNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12P\n\x14latest_infra_version\x18\x02 \x01(\x0b\x32\x16.google.protobuf.EmptyB\x04\xbaJ\x01\x06H\x00R\x12latestInfraVersionB\x15\n\x0cupgrade_type\x12\x05\xbaH\x02\x08\x01\x32\xc3\x04\n\x10NodeGroupService\x12\x45\n\x03Get\x12#.nebius.mk8s.v1.GetNodeGroupRequest\x1a\x19.nebius.mk8s.v1.NodeGroup\x12J\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x19.nebius.mk8s.v1.NodeGroup\x12U\n\x04List\x12%.nebius.mk8s.v1.ListNodeGroupsRequest\x1a&.nebius.mk8s.v1.ListNodeGroupsResponse\x12M\n\x06\x43reate\x12&.nebius.mk8s.v1.CreateNodeGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.mk8s.v1.UpdateNodeGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.mk8s.v1.DeleteNodeGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x07Upgrade\x12\'.nebius.mk8s.v1.UpgradeNodeGroupRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x07\xbaJ\x04mk8sB^\n\x15\x61i.nebius.pub.mk8s.v1B\x15NodeGroupServiceProtoP\x01Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'nebius/mk8s/v1/node_group_service.proto\x12\x0enebius.mk8s.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1fnebius/mk8s/v1/node_group.proto\"\x8a\x01\n&GetNodeGroupCompatibilityMatrixRequest\x12\x44\n\x1a\x63luster_kubernetes_version\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x18\x63lusterKubernetesVersion\x12\x1a\n\x08platform\x18\x02 \x01(\tR\x08platform\"i\n\x1cNodeGroupCompatibilityMatrix\x12I\n\x08versions\x18\x01 \x03(\x0b\x32-.nebius.mk8s.v1.NodeGroupCompatibilityVersionR\x08versions\"\x97\x01\n\x1dNodeGroupCompatibilityVersion\x12-\n\x12kubernetes_version\x18\x01 \x01(\tR\x11kubernetesVersion\x12G\n\x05items\x18\x02 \x03(\x0b\x32\x31.nebius.mk8s.v1.NodeGroupCompatibilityVersionItemR\x05items\"\x8d\x01\n!NodeGroupCompatibilityVersionItem\x12\x0e\n\x02os\x18\x01 \x01(\tR\x02os\x12%\n\x0e\x64rivers_preset\x18\x03 \x01(\tR\rdriversPreset\x12\x31\n\x14\x63ompatible_platforms\x18\x05 \x03(\tR\x13\x63ompatiblePlatforms\"\x9b\x01\n\x16\x43reateNodeGroupRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.mk8s.v1.NodeGroupSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"X\n\x13GetNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12)\n\x10resource_version\x18\x02 \x01(\tR\x0fresourceVersion\"x\n\x15ListNodeGroupsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"q\n\x16ListNodeGroupsResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.mk8s.v1.NodeGroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x93\x01\n\x16UpdateNodeGroupRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.mk8s.v1.NodeGroupSpecR\x04spec\"0\n\x16\x44\x65leteNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x9a\x01\n\x17UpgradeNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12P\n\x14latest_infra_version\x18\x02 \x01(\x0b\x32\x16.google.protobuf.EmptyB\x04\xbaJ\x01\x06H\x00R\x12latestInfraVersionB\x15\n\x0cupgrade_type\x12\x05\xbaH\x02\x08\x01\x32\xc3\x05\n\x10NodeGroupService\x12\x45\n\x03Get\x12#.nebius.mk8s.v1.GetNodeGroupRequest\x1a\x19.nebius.mk8s.v1.NodeGroup\x12J\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x19.nebius.mk8s.v1.NodeGroup\x12U\n\x04List\x12%.nebius.mk8s.v1.ListNodeGroupsRequest\x1a&.nebius.mk8s.v1.ListNodeGroupsResponse\x12M\n\x06\x43reate\x12&.nebius.mk8s.v1.CreateNodeGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.mk8s.v1.UpdateNodeGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.mk8s.v1.DeleteNodeGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x07Upgrade\x12\'.nebius.mk8s.v1.UpgradeNodeGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12~\n\x16GetCompatibilityMatrix\x12\x36.nebius.mk8s.v1.GetNodeGroupCompatibilityMatrixRequest\x1a,.nebius.mk8s.v1.NodeGroupCompatibilityMatrix\x1a\x07\xbaJ\x04mk8sB^\n\x15\x61i.nebius.pub.mk8s.v1B\x15NodeGroupServiceProtoP\x01Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,6 +28,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\025ai.nebius.pub.mk8s.v1B\025NodeGroupServiceProtoP\001Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1'
+  _GETNODEGROUPCOMPATIBILITYMATRIXREQUEST.fields_by_name['cluster_kubernetes_version']._options = None
+  _GETNODEGROUPCOMPATIBILITYMATRIXREQUEST.fields_by_name['cluster_kubernetes_version']._serialized_options = b'\272H\003\310\001\001'
   _CREATENODEGROUPREQUEST.fields_by_name['metadata']._options = None
   _CREATENODEGROUPREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
   _CREATENODEGROUPREQUEST.fields_by_name['spec']._options = None
@@ -48,20 +50,28 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _UPGRADENODEGROUPREQUEST.fields_by_name['latest_infra_version']._serialized_options = b'\272J\001\006'
   _NODEGROUPSERVICE._options = None
   _NODEGROUPSERVICE._serialized_options = b'\272J\004mk8s'
-  _globals['_CREATENODEGROUPREQUEST']._serialized_start=244
-  _globals['_CREATENODEGROUPREQUEST']._serialized_end=399
-  _globals['_GETNODEGROUPREQUEST']._serialized_start=401
-  _globals['_GETNODEGROUPREQUEST']._serialized_end=489
-  _globals['_LISTNODEGROUPSREQUEST']._serialized_start=491
-  _globals['_LISTNODEGROUPSREQUEST']._serialized_end=611
-  _globals['_LISTNODEGROUPSRESPONSE']._serialized_start=613
-  _globals['_LISTNODEGROUPSRESPONSE']._serialized_end=726
-  _globals['_UPDATENODEGROUPREQUEST']._serialized_start=729
-  _globals['_UPDATENODEGROUPREQUEST']._serialized_end=876
-  _globals['_DELETENODEGROUPREQUEST']._serialized_start=878
-  _globals['_DELETENODEGROUPREQUEST']._serialized_end=926
-  _globals['_UPGRADENODEGROUPREQUEST']._serialized_start=929
-  _globals['_UPGRADENODEGROUPREQUEST']._serialized_end=1083
-  _globals['_NODEGROUPSERVICE']._serialized_start=1086
-  _globals['_NODEGROUPSERVICE']._serialized_end=1665
+  _globals['_GETNODEGROUPCOMPATIBILITYMATRIXREQUEST']._serialized_start=244
+  _globals['_GETNODEGROUPCOMPATIBILITYMATRIXREQUEST']._serialized_end=382
+  _globals['_NODEGROUPCOMPATIBILITYMATRIX']._serialized_start=384
+  _globals['_NODEGROUPCOMPATIBILITYMATRIX']._serialized_end=489
+  _globals['_NODEGROUPCOMPATIBILITYVERSION']._serialized_start=492
+  _globals['_NODEGROUPCOMPATIBILITYVERSION']._serialized_end=643
+  _globals['_NODEGROUPCOMPATIBILITYVERSIONITEM']._serialized_start=646
+  _globals['_NODEGROUPCOMPATIBILITYVERSIONITEM']._serialized_end=787
+  _globals['_CREATENODEGROUPREQUEST']._serialized_start=790
+  _globals['_CREATENODEGROUPREQUEST']._serialized_end=945
+  _globals['_GETNODEGROUPREQUEST']._serialized_start=947
+  _globals['_GETNODEGROUPREQUEST']._serialized_end=1035
+  _globals['_LISTNODEGROUPSREQUEST']._serialized_start=1037
+  _globals['_LISTNODEGROUPSREQUEST']._serialized_end=1157
+  _globals['_LISTNODEGROUPSRESPONSE']._serialized_start=1159
+  _globals['_LISTNODEGROUPSRESPONSE']._serialized_end=1272
+  _globals['_UPDATENODEGROUPREQUEST']._serialized_start=1275
+  _globals['_UPDATENODEGROUPREQUEST']._serialized_end=1422
+  _globals['_DELETENODEGROUPREQUEST']._serialized_start=1424
+  _globals['_DELETENODEGROUPREQUEST']._serialized_end=1472
+  _globals['_UPGRADENODEGROUPREQUEST']._serialized_start=1475
+  _globals['_UPGRADENODEGROUPREQUEST']._serialized_end=1629
+  _globals['_NODEGROUPSERVICE']._serialized_start=1632
+  _globals['_NODEGROUPSERVICE']._serialized_end=2339
 # @@protoc_insertion_point(module_scope)

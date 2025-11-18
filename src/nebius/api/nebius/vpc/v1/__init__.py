@@ -1104,6 +1104,7 @@ class AllocationDetails(pb_classes.Message):
         allocated_cidr: "builtins.str|None|unset.UnsetType" = unset.Unset,
         pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         version: "IpVersion|pool_pb2.IpVersion|None|unset.UnsetType" = unset.Unset,
+        subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(allocated_cidr, unset.UnsetType):
@@ -1112,12 +1113,15 @@ class AllocationDetails(pb_classes.Message):
             self.pool_id = pool_id
         if not isinstance(version, unset.UnsetType):
             self.version = version
+        if not isinstance(subnet_id, unset.UnsetType):
+            self.subnet_id = subnet_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "allocated_cidr",
             "pool_id",
             "version",
+            "subnet_id",
         ]
     
     @builtins.property
@@ -1160,10 +1164,26 @@ class AllocationDetails(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def subnet_id(self) -> "builtins.str":
+        """
+        ID of the subnet associated with this allocation.
+        Populated when created with explicit subnet_id, from a subnet-specific pool,
+        or when assigned to a resource.
+        """
+        
+        return super()._get_field("subnet_id", explicit_presence=False,
+        )
+    @subnet_id.setter
+    def subnet_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("subnet_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "allocated_cidr":"allocated_cidr",
         "pool_id":"pool_id",
         "version":"version",
+        "subnet_id":"subnet_id",
     }
     
 class Assignment(pb_classes.Message):
@@ -1570,6 +1590,68 @@ class ListAllocationsByPoolRequest(pb_classes.Message):
         "page_token":"page_token",
     }
     
+class ListAllocationsBySubnetRequest(pb_classes.Message):
+    __PB2_CLASS__ = allocation_service_pb2.ListAllocationsBySubnetRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsBySubnetRequest",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(subnet_id, unset.UnsetType):
+            self.subnet_id = subnet_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "subnet_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def subnet_id(self) -> "builtins.str":
+        return super()._get_field("subnet_id", explicit_presence=False,
+        )
+    @subnet_id.setter
+    def subnet_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("subnet_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "subnet_id":"subnet_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class ListAllocationsResponse(pb_classes.Message):
     __PB2_CLASS__ = allocation_service_pb2.ListAllocationsResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListAllocationsResponse",allocation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1879,6 +1961,33 @@ class AllocationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         
         return super().request(
             method="ListByPool",
+            request=request,
+            result_pb2_class=allocation_service_pb2.ListAllocationsResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListAllocationsResponse),
+            **kwargs,
+        )
+    
+    def list_by_subnet(self,
+        request: "ListAllocationsBySubnetRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListAllocationsBySubnetRequest","ListAllocationsResponse"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.ListAllocationsBySubnetRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.vpc.v1.ListAllocationsResponse`.
+        """
+        
+        return super().request(
+            method="ListBySubnet",
             request=request,
             result_pb2_class=allocation_service_pb2.ListAllocationsResponse,
             result_wrapper=pb_classes.simple_wrapper(ListAllocationsResponse),
@@ -7265,6 +7374,7 @@ __all__ = [
     "GetAllocationByNameRequest",
     "ListAllocationsRequest",
     "ListAllocationsByPoolRequest",
+    "ListAllocationsBySubnetRequest",
     "ListAllocationsResponse",
     "CreateAllocationRequest",
     "UpdateAllocationRequest",

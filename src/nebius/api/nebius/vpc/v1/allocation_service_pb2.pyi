@@ -44,6 +44,16 @@ class ListAllocationsByPoolRequest(_message.Message):
     page_token: str
     def __init__(self, pool_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
 
+class ListAllocationsBySubnetRequest(_message.Message):
+    __slots__ = ["subnet_id", "page_size", "page_token"]
+    SUBNET_ID_FIELD_NUMBER: _ClassVar[int]
+    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    subnet_id: str
+    page_size: int
+    page_token: str
+    def __init__(self, subnet_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
+
 class ListAllocationsResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]
     ITEMS_FIELD_NUMBER: _ClassVar[int]

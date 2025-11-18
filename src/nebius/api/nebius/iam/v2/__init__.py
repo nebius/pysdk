@@ -21,6 +21,8 @@ import nebius.api.nebius.iam.v1 as v1_2
 import nebius.api.nebius.iam.v1.access_pb2 as access_pb2
 import nebius.api.nebius.iam.v2.access_key_pb2 as access_key_pb2
 import nebius.api.nebius.iam.v2.access_key_service_pb2 as access_key_service_pb2
+import nebius.api.nebius.iam.v2.project_pb2 as project_pb2
+import nebius.api.nebius.iam.v2.project_service_pb2 as project_service_pb2
 import nebius.api.nebius.iam.v2.tenant_pb2 as tenant_pb2
 import nebius.api.nebius.iam.v2.tenant_service_pb2 as tenant_service_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
@@ -1412,6 +1414,738 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
         )
     
 
+# file: nebius/iam/v2/project.proto
+class Project(pb_classes.Message):
+    __PB2_CLASS__ = project_pb2.Project
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.Project",project_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ProjectSpec|project_pb2.ProjectSpec|None|unset.UnsetType" = unset.Unset,
+        status: "ProjectStatus|project_pb2.ProjectStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ProjectSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ProjectSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ProjectSpec|project_pb2.ProjectSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "ProjectStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=ProjectStatus,
+        )
+    @status.setter
+    def status(self, value: "ProjectStatus|project_pb2.ProjectStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class ProjectSpec(pb_classes.Message):
+    __PB2_CLASS__ = project_pb2.ProjectSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.ProjectSpec",project_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "region",
+        ]
+    
+    @builtins.property
+    def region(self) -> "builtins.str":
+        """
+        Name of the region where project resources will be created.
+        Example: "eu-north1".
+        """
+        
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "region":"region",
+    }
+    
+class ProjectStatus(pb_classes.Message):
+    __PB2_CLASS__ = project_pb2.ProjectStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.ProjectStatus",project_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class ProjectState(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v2.ProjectStatus.ProjectState",project_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        CREATING = 1
+        ACTIVE = 2
+        PURGING = 3
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        project_state: "ProjectStatus.ProjectState|project_pb2.ProjectStatus.ProjectState|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(project_state, unset.UnsetType):
+            self.project_state = project_state
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "project_state",
+            "ProjectState",
+        ]
+    
+    @builtins.property
+    def project_state(self) -> "ProjectStatus.ProjectState":
+        """
+        Current state of the project.
+        """
+        
+        return super()._get_field("project_state", explicit_presence=False,
+        wrap=ProjectStatus.ProjectState,
+        )
+    @project_state.setter
+    def project_state(self, value: "ProjectStatus.ProjectState|project_pb2.ProjectStatus.ProjectState|None") -> None:
+        return super()._set_field("project_state",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "project_state":"project_state",
+        "ProjectState":"ProjectState",
+    }
+    
+# file: nebius/iam/v2/project_service.proto
+class CreateProjectRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.CreateProjectRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.CreateProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ProjectSpec|project_pb2.ProjectSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ProjectSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ProjectSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ProjectSpec|project_pb2.ProjectSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class GetProjectRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.GetProjectRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.GetProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        Identifier of project to retrieve.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetProjectByNameRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.GetProjectByNameRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.GetProjectByNameRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        Identifier of the project parent container.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        """
+        Name of the project to retrieve.
+        """
+        
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
+    
+class ListProjectsRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.ListProjectsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.ListProjectsRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+        if not isinstance(filter, unset.UnsetType):
+            self.filter = filter
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+            "filter",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        Identifier of container to list projects from.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Specifies the maximum number of items to return in the response.
+        Default value: 10
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def filter(self) -> "builtins.str":
+        """
+        A filter to narrow down the results based on specific criteria.
+        """
+        
+        return super()._get_field("filter", explicit_presence=False,
+        )
+    @filter.setter
+    def filter(self, value: "builtins.str|None") -> None:
+        return super()._set_field("filter",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+        "filter":"filter",
+    }
+    
+class UpdateProjectRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.UpdateProjectRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.UpdateProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ProjectSpec|project_pb2.ProjectSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ProjectSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ProjectSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ProjectSpec|project_pb2.ProjectSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteProjectRequest(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.DeleteProjectRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.DeleteProjectRequest",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        Identifier of project to delete.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListProjectsResponse(pb_classes.Message):
+    __PB2_CLASS__ = project_service_pb2.ListProjectsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v2.ListProjectsResponse",project_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[Project]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[Project]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Project,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[Project]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+        Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+
+class ProjectServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    This class provides the client methods for the ``.nebius.iam.v2.ProjectService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.iam.v2.ProjectService",project_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.iam.v2.ProjectService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def create(self,
+        request: "CreateProjectRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateProjectRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Creates a new project.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v2.CreateProjectRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def get(self,
+        request: "GetProjectRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetProjectRequest","Project"]:
+        """
+        Retrieves a project by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v2.GetProjectRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.iam.v2.Project`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=project_pb2.Project,
+            result_wrapper=pb_classes.simple_wrapper(Project),
+            **kwargs,
+        )
+    
+    def get_by_name(self,
+        request: "GetProjectByNameRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetProjectByNameRequest","Project"]:
+        """
+        Retrieves a project by its name within a specified parent.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v2.GetProjectByNameRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.iam.v2.Project`.
+        """
+        
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=project_pb2.Project,
+            result_wrapper=pb_classes.simple_wrapper(Project),
+            **kwargs,
+        )
+    
+    def list(self,
+        request: "ListProjectsRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListProjectsRequest","ListProjectsResponse"]:
+        """
+        Lists projects under a specified parent.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v2.ListProjectsRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.iam.v2.ListProjectsResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=project_service_pb2.ListProjectsResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListProjectsResponse),
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateProjectRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateProjectRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Updates an existing project.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v2.UpdateProjectRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteProjectRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteProjectRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Deletes a project by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v2.DeleteProjectRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+
 # file: nebius/iam/v2/tenant.proto
 class Tenant(pb_classes.Message):
     __PB2_CLASS__ = tenant_pb2.Tenant
@@ -1980,6 +2714,17 @@ __all__ = [
     "GetAccessKeySecretResponse",
     "ListAccessKeysResponse",
     "AccessKeyServiceClient",
+    "Project",
+    "ProjectSpec",
+    "ProjectStatus",
+    "CreateProjectRequest",
+    "GetProjectRequest",
+    "GetProjectByNameRequest",
+    "ListProjectsRequest",
+    "UpdateProjectRequest",
+    "DeleteProjectRequest",
+    "ListProjectsResponse",
+    "ProjectServiceClient",
     "Tenant",
     "TenantSpec",
     "TenantStatus",

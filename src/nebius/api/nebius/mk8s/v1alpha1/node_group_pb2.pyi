@@ -12,6 +12,17 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class ConditionStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
+    CONDITION_STATUS_UNSPECIFIED: _ClassVar[ConditionStatus]
+    TRUE: _ClassVar[ConditionStatus]
+    FALSE: _ClassVar[ConditionStatus]
+    UNKNOWN: _ClassVar[ConditionStatus]
+CONDITION_STATUS_UNSPECIFIED: ConditionStatus
+TRUE: ConditionStatus
+FALSE: ConditionStatus
+UNKNOWN: ConditionStatus
+
 class NodeGroup(_message.Message):
     __slots__ = ["metadata", "spec", "status"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
@@ -23,18 +34,20 @@ class NodeGroup(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[NodeGroupSpec, _Mapping]] = ..., status: _Optional[_Union[NodeGroupStatus, _Mapping]] = ...) -> None: ...
 
 class NodeGroupSpec(_message.Message):
-    __slots__ = ["version", "fixed_node_count", "autoscaling", "template", "strategy"]
+    __slots__ = ["version", "fixed_node_count", "autoscaling", "template", "strategy", "auto_repair"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     FIXED_NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
     AUTOSCALING_FIELD_NUMBER: _ClassVar[int]
     TEMPLATE_FIELD_NUMBER: _ClassVar[int]
     STRATEGY_FIELD_NUMBER: _ClassVar[int]
+    AUTO_REPAIR_FIELD_NUMBER: _ClassVar[int]
     version: str
     fixed_node_count: int
     autoscaling: NodeGroupAutoscalingSpec
     template: NodeTemplate
     strategy: NodeGroupDeploymentStrategy
-    def __init__(self, version: _Optional[str] = ..., fixed_node_count: _Optional[int] = ..., autoscaling: _Optional[_Union[NodeGroupAutoscalingSpec, _Mapping]] = ..., template: _Optional[_Union[NodeTemplate, _Mapping]] = ..., strategy: _Optional[_Union[NodeGroupDeploymentStrategy, _Mapping]] = ...) -> None: ...
+    auto_repair: NodeGroupAutoRepairSpec
+    def __init__(self, version: _Optional[str] = ..., fixed_node_count: _Optional[int] = ..., autoscaling: _Optional[_Union[NodeGroupAutoscalingSpec, _Mapping]] = ..., template: _Optional[_Union[NodeTemplate, _Mapping]] = ..., strategy: _Optional[_Union[NodeGroupDeploymentStrategy, _Mapping]] = ..., auto_repair: _Optional[_Union[NodeGroupAutoRepairSpec, _Mapping]] = ...) -> None: ...
 
 class NodeTemplate(_message.Message):
     __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_settings", "os", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id", "preemptible"]
@@ -174,6 +187,24 @@ class PercentOrCount(_message.Message):
     percent: int
     count: int
     def __init__(self, percent: _Optional[int] = ..., count: _Optional[int] = ...) -> None: ...
+
+class NodeGroupAutoRepairSpec(_message.Message):
+    __slots__ = ["conditions"]
+    CONDITIONS_FIELD_NUMBER: _ClassVar[int]
+    conditions: _containers.RepeatedCompositeFieldContainer[NodeAutoRepairCondition]
+    def __init__(self, conditions: _Optional[_Iterable[_Union[NodeAutoRepairCondition, _Mapping]]] = ...) -> None: ...
+
+class NodeAutoRepairCondition(_message.Message):
+    __slots__ = ["type", "status", "timeout", "disabled"]
+    TYPE_FIELD_NUMBER: _ClassVar[int]
+    STATUS_FIELD_NUMBER: _ClassVar[int]
+    TIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    DISABLED_FIELD_NUMBER: _ClassVar[int]
+    type: str
+    status: ConditionStatus
+    timeout: _duration_pb2.Duration
+    disabled: bool
+    def __init__(self, type: _Optional[str] = ..., status: _Optional[_Union[ConditionStatus, str]] = ..., timeout: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., disabled: bool = ...) -> None: ...
 
 class NodeGroupStatus(_message.Message):
     __slots__ = ["state", "version", "target_node_count", "node_count", "outdated_node_count", "ready_node_count", "conditions", "reconciling"]
