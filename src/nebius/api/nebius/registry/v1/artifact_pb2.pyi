@@ -1,13 +1,14 @@
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Artifact(_message.Message):
-    __slots__ = ["id", "name", "media_type", "digest", "size", "status", "type", "created_at", "updated_at"]
+    __slots__ = ["id", "name", "media_type", "digest", "size", "status", "type", "created_at", "updated_at", "tags"]
     class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATUS_UNSPECIFIED: _ClassVar[Artifact.Status]
@@ -41,6 +42,7 @@ class Artifact(_message.Message):
     TYPE_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
     UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
+    TAGS_FIELD_NUMBER: _ClassVar[int]
     id: str
     name: str
     media_type: str
@@ -50,4 +52,5 @@ class Artifact(_message.Message):
     type: Artifact.Type
     created_at: _timestamp_pb2.Timestamp
     updated_at: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., media_type: _Optional[str] = ..., digest: _Optional[str] = ..., size: _Optional[int] = ..., status: _Optional[_Union[Artifact.Status, str]] = ..., type: _Optional[_Union[Artifact.Type, str]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    tags: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., media_type: _Optional[str] = ..., digest: _Optional[str] = ..., size: _Optional[int] = ..., status: _Optional[_Union[Artifact.Status, str]] = ..., type: _Optional[_Union[Artifact.Type, str]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., tags: _Optional[_Iterable[str]] = ...) -> None: ...

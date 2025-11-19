@@ -68,6 +68,7 @@ class Artifact(pb_classes.Message):
         type: "Artifact.Type|artifact_pb2.Artifact.Type|None|unset.UnsetType" = unset.Unset,
         created_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         updated_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        tags: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -88,6 +89,8 @@ class Artifact(pb_classes.Message):
             self.created_at = created_at
         if not isinstance(updated_at, unset.UnsetType):
             self.updated_at = updated_at
+        if not isinstance(tags, unset.UnsetType):
+            self.tags = tags
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -100,6 +103,7 @@ class Artifact(pb_classes.Message):
             "type",
             "created_at",
             "updated_at",
+            "tags",
             "Status",
             "Type",
         ]
@@ -191,6 +195,20 @@ class Artifact(pb_classes.Message):
         unwrap=well_known_1.to_timestamp
         )
     
+    @builtins.property
+    def tags(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        List of tags associated with the artifact. Example: ["v1.0", "latest", "stable"].
+        """
+        
+        return super()._get_field("tags", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @tags.setter
+    def tags(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("tags",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
         "name":"name",
@@ -201,6 +219,7 @@ class Artifact(pb_classes.Message):
         "type":"type",
         "created_at":"created_at",
         "updated_at":"updated_at",
+        "tags":"tags",
         "Status":"Status",
         "Type":"Type",
     }
