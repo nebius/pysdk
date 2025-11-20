@@ -684,6 +684,8 @@ class ListOperationsByParentRequest(pb_classes.Message):
 
 class OperationServiceClient(client.Client):
     """
+    Service for reading operations.
+    
     This class provides the client methods for the ``.nebius.common.v1alpha1.OperationService`` service.
     
     Each method constructs a :class:`nebius.aio.request.Request` object

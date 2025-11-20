@@ -7,7 +7,8 @@ from nebius.api.nebius.common.v1alpha1 import operation_service_pb2 as nebius_do
 
 
 class OperationServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Service for reading operations.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -28,7 +29,8 @@ class OperationServiceStub(object):
 
 
 class OperationServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Service for reading operations.
+    """
 
     def Get(self, request, context):
         """Returns the latest state of the specified operation.
@@ -65,7 +67,8 @@ def add_OperationServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class OperationService(object):
-    """Missing associated documentation comment in .proto file."""
+    """Service for reading operations.
+    """
 
     @staticmethod
     def Get(request,

@@ -2070,6 +2070,8 @@ class ListOperationsResponse(pb_classes.Message):
 
 class OperationServiceClient(client.Client):
     """
+    Service for reading operations.
+    
     This class provides the client methods for the ``.nebius.common.v1.OperationService`` service.
     
     Each method constructs a :class:`nebius.aio.request.Request` object
@@ -2092,6 +2094,8 @@ class OperationServiceClient(client.Client):
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["GetOperationRequest","operation.Operation[Operation]"]:
         """
+        Returns the current state of the specified operation.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.common.v1.GetOperationRequest`
         
@@ -2119,6 +2123,8 @@ class OperationServiceClient(client.Client):
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["ListOperationsRequest","ListOperationsResponse"]:
         """
+        Lists operations for the specified resource.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.common.v1.ListOperationsRequest`
         

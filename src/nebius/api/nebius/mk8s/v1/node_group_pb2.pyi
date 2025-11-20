@@ -4,7 +4,6 @@ from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.common.v1 import resource_event_pb2 as _resource_event_pb2
 from nebius.api.nebius.mk8s.v1 import instance_template_pb2 as _instance_template_pb2
-from nebius.api.nebius.mk8s.v1 import condition_pb2 as _condition_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -208,7 +207,7 @@ class PreemptibleSpec(_message.Message):
     def __init__(self) -> None: ...
 
 class NodeGroupStatus(_message.Message):
-    __slots__ = ["state", "version", "target_node_count", "node_count", "outdated_node_count", "ready_node_count", "conditions", "events", "reconciling"]
+    __slots__ = ["state", "version", "target_node_count", "node_count", "outdated_node_count", "ready_node_count", "events", "reconciling"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[NodeGroupStatus.State]
@@ -225,7 +224,6 @@ class NodeGroupStatus(_message.Message):
     NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
     OUTDATED_NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
     READY_NODE_COUNT_FIELD_NUMBER: _ClassVar[int]
-    CONDITIONS_FIELD_NUMBER: _ClassVar[int]
     EVENTS_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
     state: NodeGroupStatus.State
@@ -234,7 +232,6 @@ class NodeGroupStatus(_message.Message):
     node_count: int
     outdated_node_count: int
     ready_node_count: int
-    conditions: _containers.RepeatedCompositeFieldContainer[_condition_pb2.Condition]
     events: _containers.RepeatedCompositeFieldContainer[_resource_event_pb2.RecurrentResourceEvent]
     reconciling: bool
-    def __init__(self, state: _Optional[_Union[NodeGroupStatus.State, str]] = ..., version: _Optional[str] = ..., target_node_count: _Optional[int] = ..., node_count: _Optional[int] = ..., outdated_node_count: _Optional[int] = ..., ready_node_count: _Optional[int] = ..., conditions: _Optional[_Iterable[_Union[_condition_pb2.Condition, _Mapping]]] = ..., events: _Optional[_Iterable[_Union[_resource_event_pb2.RecurrentResourceEvent, _Mapping]]] = ..., reconciling: bool = ...) -> None: ...
+    def __init__(self, state: _Optional[_Union[NodeGroupStatus.State, str]] = ..., version: _Optional[str] = ..., target_node_count: _Optional[int] = ..., node_count: _Optional[int] = ..., outdated_node_count: _Optional[int] = ..., ready_node_count: _Optional[int] = ..., events: _Optional[_Iterable[_Union[_resource_event_pb2.RecurrentResourceEvent, _Mapping]]] = ..., reconciling: bool = ...) -> None: ...

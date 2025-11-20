@@ -11,8 +11,6 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.duration_pb2 as duration_pb2
 import google.protobuf.empty_pb2 as empty_pb2
 import google.protobuf.message as message_1
-import google.protobuf.timestamp_pb2 as timestamp_pb2
-import logging as logging
 import nebius.aio.client as client
 import nebius.aio.operation as operation
 import nebius.aio.request as request_1
@@ -23,7 +21,6 @@ import nebius.api.nebius.common.v1alpha1 as v1alpha1_1
 import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
 import nebius.api.nebius.mk8s.v1alpha1.cluster_pb2 as cluster_pb2
 import nebius.api.nebius.mk8s.v1alpha1.cluster_service_pb2 as cluster_service_pb2
-import nebius.api.nebius.mk8s.v1alpha1.condition_pb2 as condition_pb2
 import nebius.api.nebius.mk8s.v1alpha1.instance_template_pb2 as instance_template_pb2
 import nebius.api.nebius.mk8s.v1alpha1.node_group_pb2 as node_group_pb2
 import nebius.api.nebius.mk8s.v1alpha1.node_group_service_pb2 as node_group_service_pb2
@@ -1283,238 +1280,6 @@ class ClusterServiceClient(client.ClientWithOperations[v1alpha1_1.Operation,v1al
         )
     
 
-# file: nebius/mk8s/v1alpha1/condition.proto
-class Condition(pb_classes.Message):
-    __PB2_CLASS__ = condition_pb2.Condition
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.Condition",condition_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-        "last_transition_at": well_known_1.ts_mask,
-    }
-    
-    class TransitionError(pb_classes.Message):
-        __PB2_CLASS__ = condition_pb2.Condition.TransitionError
-        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1alpha1.Condition.TransitionError",condition_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-        __mask_functions__ = {
-        }
-        
-        def __init__(
-            self,
-            initial_message: message_1.Message|None = None,
-            *,
-            reason: "builtins.str|None|unset.UnsetType" = unset.Unset,
-            description: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        ) -> None:
-            super().__init__(initial_message)
-            if not isinstance(reason, unset.UnsetType):
-                self.reason = reason
-            if not isinstance(description, unset.UnsetType):
-                self.description = description
-        
-        def __dir__(self) ->abc.Iterable[builtins.str]:
-            return [
-                "reason",
-                "description",
-            ]
-        
-        @builtins.property
-        def reason(self) -> "builtins.str":
-            return super()._get_field("reason", explicit_presence=False,
-            )
-        @reason.setter
-        def reason(self, value: "builtins.str|None") -> None:
-            return super()._set_field("reason",value,explicit_presence=False,
-            )
-        
-        @builtins.property
-        def description(self) -> "builtins.str":
-            return super()._get_field("description", explicit_presence=False,
-            )
-        @description.setter
-        def description(self, value: "builtins.str|None") -> None:
-            return super()._set_field("description",value,explicit_presence=False,
-            )
-        
-        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-            "reason":"reason",
-            "description":"description",
-        }
-        
-    
-    class Severity(pb_enum.Enum):
-        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1alpha1.Condition.Severity",condition_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
-        NONE = 0
-        """
-        Should apply only if the condition is in state "True".
-        """
-        
-        INFO = 1
-        """
-        Specifies that a failure of a condition type
-        should be viewed as purely informational
-        """
-        
-        ERROR = 2
-        """
-        Specifies that a failure of a condition type
-        should be viewed as an error.
-        """
-        
-    
-    class Status(pb_enum.Enum):
-        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1alpha1.Condition.Status",condition_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
-        UNKNOWN = 0
-        TRUE = 1
-        FALSE = 2
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        type: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        status: "Condition.Status|condition_pb2.Condition.Status|None|unset.UnsetType" = unset.Unset,
-        last_transition_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
-        reason: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        severity: "Condition.Severity|condition_pb2.Condition.Severity|None|unset.UnsetType" = unset.Unset,
-        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
-        last_transition_error: "Condition.TransitionError|condition_pb2.Condition.TransitionError|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(type, unset.UnsetType):
-            self.type = type
-        if not isinstance(status, unset.UnsetType):
-            self.status = status
-        if not isinstance(last_transition_at, unset.UnsetType):
-            self.last_transition_at = last_transition_at
-        if not isinstance(reason, unset.UnsetType):
-            self.reason = reason
-        if not isinstance(severity, unset.UnsetType):
-            self.severity = severity
-        if not isinstance(description, unset.UnsetType):
-            self.description = description
-        if not isinstance(last_transition_error, unset.UnsetType):
-            self.last_transition_error = last_transition_error
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "type",
-            "status",
-            "last_transition_at",
-            "reason",
-            "severity",
-            "description",
-            "last_transition_error",
-            "TransitionError",
-            "Severity",
-            "Status",
-        ]
-    
-    @builtins.property
-    def type(self) -> "builtins.str":
-        """
-        Type of condition. Should be CamelCase
-        """
-        
-        return super()._get_field("type", explicit_presence=False,
-        )
-    @type.setter
-    def type(self, value: "builtins.str|None") -> None:
-        return super()._set_field("type",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def status(self) -> "Condition.Status":
-        """
-        Status of the condition, one of TRUE, FALSE or UNKNOWN.
-        """
-        
-        return super()._get_field("status", explicit_presence=False,
-        wrap=Condition.Status,
-        )
-    @status.setter
-    def status(self, value: "Condition.Status|condition_pb2.Condition.Status|None") -> None:
-        return super()._set_field("status",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def last_transition_at(self) -> "datetime.datetime":
-        """
-        The last time the condition transitioned from one status to another.
-        """
-        
-        return super()._get_field("last_transition_at", explicit_presence=False,
-        wrap=well_known_1.from_timestamp
-        )
-    @last_transition_at.setter
-    def last_transition_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
-        return super()._set_field("last_transition_at",value,explicit_presence=False,
-        unwrap=well_known_1.to_timestamp
-        )
-    
-    @builtins.property
-    def reason(self) -> "builtins.str":
-        """
-        The reason for the condition's last transition in CamelCase.
-        The values are considered a guaranteed API.
-        """
-        
-        return super()._get_field("reason", explicit_presence=False,
-        )
-    @reason.setter
-    def reason(self, value: "builtins.str|None") -> None:
-        return super()._set_field("reason",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def severity(self) -> "Condition.Severity":
-        """
-        Explicit classification of Reason code, so the users or machines can immediately
-        understand the current situation and act accordingly.
-        """
-        
-        return super()._get_field("severity", explicit_presence=False,
-        wrap=Condition.Severity,
-        )
-    @severity.setter
-    def severity(self, value: "Condition.Severity|condition_pb2.Condition.Severity|None") -> None:
-        return super()._set_field("severity",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def description(self) -> "builtins.str":
-        """
-        A human readable description message of this detail.
-        """
-        
-        return super()._get_field("description", explicit_presence=False,
-        )
-    @description.setter
-    def description(self, value: "builtins.str|None") -> None:
-        return super()._set_field("description",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def last_transition_error(self) -> "Condition.TransitionError":
-        return super()._get_field("last_transition_error", explicit_presence=False,
-        wrap=Condition.TransitionError,
-        )
-    @last_transition_error.setter
-    def last_transition_error(self, value: "Condition.TransitionError|condition_pb2.Condition.TransitionError|None") -> None:
-        return super()._set_field("last_transition_error",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "type":"type",
-        "status":"status",
-        "last_transition_at":"last_transition_at",
-        "reason":"reason",
-        "severity":"severity",
-        "description":"description",
-        "last_transition_error":"last_transition_error",
-        "TransitionError":"TransitionError",
-        "Severity":"Severity",
-        "Status":"Status",
-    }
-    
 # file: nebius/mk8s/v1alpha1/instance_template.proto
 class DiskSpec(pb_classes.Message):
     __PB2_CLASS__ = instance_template_pb2.DiskSpec
@@ -3185,7 +2950,6 @@ class NodeGroupStatus(pb_classes.Message):
         node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         outdated_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         ready_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
-        conditions: "abc.Iterable[Condition]|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -3201,8 +2965,6 @@ class NodeGroupStatus(pb_classes.Message):
             self.outdated_node_count = outdated_node_count
         if not isinstance(ready_node_count, unset.UnsetType):
             self.ready_node_count = ready_node_count
-        if not isinstance(conditions, unset.UnsetType):
-            self.conditions = conditions
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
@@ -3214,7 +2976,6 @@ class NodeGroupStatus(pb_classes.Message):
             "node_count",
             "outdated_node_count",
             "ready_node_count",
-            "conditions",
             "reconciling",
             "State",
         ]
@@ -3299,28 +3060,6 @@ class NodeGroupStatus(pb_classes.Message):
         )
     
     @builtins.property
-    def conditions(self) -> "abc.MutableSequence[Condition]":
-        """
-        Supported until 08/01/25. It is not implemented well, messages should be used instead.
-        """
-        
-        logging.getLogger("deprecation").warning(
-        """Field .nebius.mk8s.v1alpha1.NodeGroupStatus.conditions is deprecated. Supported until 08/01/25. It is not implemented well, messages should be used instead."""
-        , stack_info=True, stacklevel=2)
-        
-        return super()._get_field("conditions", explicit_presence=False,
-        wrap=pb_classes.Repeated.with_wrap(Condition,None,None),
-        )
-    @conditions.setter
-    def conditions(self, value: "abc.Iterable[Condition]|None") -> None:
-        logging.getLogger("deprecation").warning(
-        """Field .nebius.mk8s.v1alpha1.NodeGroupStatus.conditions is deprecated. Supported until 08/01/25. It is not implemented well, messages should be used instead."""
-        , stack_info=True, stacklevel=2)
-        
-        return super()._set_field("conditions",value,explicit_presence=False,
-        )
-    
-    @builtins.property
     def reconciling(self) -> "builtins.bool":
         """
         Show that changes are in flight
@@ -3340,7 +3079,6 @@ class NodeGroupStatus(pb_classes.Message):
         "node_count":"node_count",
         "outdated_node_count":"outdated_node_count",
         "ready_node_count":"ready_node_count",
-        "conditions":"conditions",
         "reconciling":"reconciling",
         "State":"State",
     }
@@ -4114,7 +3852,6 @@ __all__ = [
     "ListClusterControlPlaneVersionsResponse",
     "ClusterControlPlaneVersion",
     "ClusterServiceClient",
-    "Condition",
     "DiskSpec",
     "ResourcesSpec",
     "ConditionStatus",

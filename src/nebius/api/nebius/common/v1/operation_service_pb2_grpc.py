@@ -7,7 +7,8 @@ from nebius.api.nebius.common.v1 import operation_service_pb2 as nebius_dot_comm
 
 
 class OperationServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Service for reading operations.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -28,16 +29,19 @@ class OperationServiceStub(object):
 
 
 class OperationServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Service for reading operations.
+    """
 
     def Get(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Returns the current state of the specified operation.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def List(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Lists operations for the specified resource.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -63,7 +67,8 @@ def add_OperationServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class OperationService(object):
-    """Missing associated documentation comment in .proto file."""
+    """Service for reading operations.
+    """
 
     @staticmethod
     def Get(request,
