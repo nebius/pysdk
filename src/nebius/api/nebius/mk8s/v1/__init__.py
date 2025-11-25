@@ -217,6 +217,10 @@ class ControlPlaneSpec(pb_classes.Message):
     
     @builtins.property
     def endpoints(self) -> "ControlPlaneEndpointsSpec":
+        """
+        Specification of endpoints of cluster control plane.
+        """
+        
         return super()._get_field("endpoints", explicit_presence=False,
         wrap=ControlPlaneEndpointsSpec,
         )
@@ -272,8 +276,7 @@ class ControlPlaneEndpointsSpec(pb_classes.Message):
     @builtins.property
     def public_endpoint(self) -> "PublicEndpointSpec|None":
         """
-        Specification of public endpoint for control plane.
-        Set value to empty, to enable it.
+        Public endpoint specification. When set, a public endpoint is created.
         """
         
         return super()._get_field("public_endpoint", explicit_presence=True,
