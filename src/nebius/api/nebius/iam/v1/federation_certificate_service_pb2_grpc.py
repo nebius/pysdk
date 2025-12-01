@@ -36,6 +36,11 @@ class FederationCertificateServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.UpdateFederationCertificateRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
+        self.UpdateBulk = channel.unary_unary(
+                '/nebius.iam.v1.FederationCertificateService/UpdateBulk',
+                request_serializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.UpdateBulkFederationCertificateRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.FederationCertificateService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.DeleteFederationCertificateRequest.SerializeToString,
@@ -70,6 +75,13 @@ class FederationCertificateServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UpdateBulk(self, request, context):
+        """Replaces all federation's certificates with provided in the request. Certificates which are not presented will be removed.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Delete(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -97,6 +109,11 @@ def add_FederationCertificateServiceServicer_to_server(servicer, server):
             'Update': grpc.unary_unary_rpc_method_handler(
                     servicer.Update,
                     request_deserializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.UpdateFederationCertificateRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'UpdateBulk': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateBulk,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.UpdateBulkFederationCertificateRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
@@ -178,6 +195,23 @@ class FederationCertificateService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationCertificateService/Update',
             nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.UpdateFederationCertificateRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateBulk(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationCertificateService/UpdateBulk',
+            nebius_dot_iam_dot_v1_dot_federation__certificate__service__pb2.UpdateBulkFederationCertificateRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

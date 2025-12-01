@@ -41,6 +41,14 @@ class UpdateFederationCertificateRequest(_message.Message):
     spec: _federation_certificate_pb2.FederationCertificateSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_federation_certificate_pb2.FederationCertificateSpec, _Mapping]] = ...) -> None: ...
 
+class UpdateBulkFederationCertificateRequest(_message.Message):
+    __slots__ = ["federation_id", "updates"]
+    FEDERATION_ID_FIELD_NUMBER: _ClassVar[int]
+    UPDATES_FIELD_NUMBER: _ClassVar[int]
+    federation_id: str
+    updates: _containers.RepeatedCompositeFieldContainer[UpdateFederationCertificateRequest]
+    def __init__(self, federation_id: _Optional[str] = ..., updates: _Optional[_Iterable[_Union[UpdateFederationCertificateRequest, _Mapping]]] = ...) -> None: ...
+
 class DeleteFederationCertificateRequest(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]

@@ -4315,14 +4315,29 @@ class FederationStatus(pb_classes.Message):
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
+        *,
+        users_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(users_count, unset.UnsetType):
+            self.users_count = users_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "users_count",
         ]
     
+    @builtins.property
+    def users_count(self) -> "builtins.int":
+        return super()._get_field("users_count", explicit_presence=False,
+        )
+    @users_count.setter
+    def users_count(self, value: "builtins.int|None") -> None:
+        return super()._set_field("users_count",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "users_count":"users_count",
     }
     
 # file: nebius/iam/v1/federation_certificate.proto
@@ -4754,6 +4769,63 @@ class UpdateFederationCertificateRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class UpdateBulkFederationCertificateRequest(pb_classes.Message):
+    __PB2_CLASS__ = federation_certificate_service_pb2.UpdateBulkFederationCertificateRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.UpdateBulkFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        updates: "abc.Iterable[UpdateFederationCertificateRequest]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(federation_id, unset.UnsetType):
+            self.federation_id = federation_id
+        if not isinstance(updates, unset.UnsetType):
+            self.updates = updates
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "federation_id",
+            "updates",
+        ]
+    
+    @builtins.property
+    def federation_id(self) -> "builtins.str":
+        """
+        Represents the parent federation ID. All certificates in update should have identical parent id.
+        """
+        
+        return super()._get_field("federation_id", explicit_presence=False,
+        )
+    @federation_id.setter
+    def federation_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("federation_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def updates(self) -> "abc.MutableSequence[UpdateFederationCertificateRequest]":
+        """
+        If target certificate contains id - the existing one will be updates, otherwise the new one will be created.
+        """
+        
+        return super()._get_field("updates", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(UpdateFederationCertificateRequest,None,None),
+        )
+    @updates.setter
+    def updates(self, value: "abc.Iterable[UpdateFederationCertificateRequest]|None") -> None:
+        return super()._set_field("updates",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "federation_id":"federation_id",
+        "updates":"updates",
+    }
+    
 class DeleteFederationCertificateRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_certificate_service_pb2.DeleteFederationCertificateRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederationCertificateRequest",federation_certificate_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4972,6 +5044,35 @@ class FederationCertificateServiceClient(client.ClientWithOperations[v1_1.Operat
         kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
         return super().request(
             method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation_1.Operation,
+            **kwargs,
+        )
+    
+    def update_bulk(self,
+        request: "UpdateBulkFederationCertificateRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateBulkFederationCertificateRequest","operation_1.Operation[v1_1.Operation]"]:
+        """
+        Replaces all federation's certificates with provided in the request. Certificates which are not presented will be removed.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v1.UpdateBulkFederationCertificateRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="UpdateBulk",
             request=request,
             result_pb2_class=operation_pb2.Operation,
             result_wrapper=operation_1.Operation,
@@ -13388,6 +13489,7 @@ __all__ = [
     "GetFederationCertificateRequest",
     "ListFederationCertificateByFederationRequest",
     "UpdateFederationCertificateRequest",
+    "UpdateBulkFederationCertificateRequest",
     "DeleteFederationCertificateRequest",
     "ListFederationCertificateResponse",
     "FederationCertificateServiceClient",
