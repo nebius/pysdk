@@ -11,10 +11,12 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class LifecycleConfiguration(_message.Message):
-    __slots__ = ["rules"]
+    __slots__ = ["rules", "last_access_filter"]
     RULES_FIELD_NUMBER: _ClassVar[int]
+    LAST_ACCESS_FILTER_FIELD_NUMBER: _ClassVar[int]
     rules: _containers.RepeatedCompositeFieldContainer[LifecycleRule]
-    def __init__(self, rules: _Optional[_Iterable[_Union[LifecycleRule, _Mapping]]] = ...) -> None: ...
+    last_access_filter: LifecycleAccessFilter
+    def __init__(self, rules: _Optional[_Iterable[_Union[LifecycleRule, _Mapping]]] = ..., last_access_filter: _Optional[_Union[LifecycleAccessFilter, _Mapping]] = ...) -> None: ...
 
 class LifecycleRule(_message.Message):
     __slots__ = ["id", "status", "filter", "expiration", "noncurrent_version_expiration", "abort_incomplete_multipart_upload", "transition", "noncurrent_version_transition"]
@@ -54,6 +56,43 @@ class LifecycleFilter(_message.Message):
     object_size_less_than_bytes: int
     def __init__(self, prefix: _Optional[str] = ..., object_size_greater_than_bytes: _Optional[int] = ..., object_size_less_than_bytes: _Optional[int] = ...) -> None: ...
 
+class LifecycleAccessFilter(_message.Message):
+    __slots__ = ["conditions"]
+    class Condition(_message.Message):
+        __slots__ = ["type", "methods", "user_agents"]
+        class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+            __slots__ = []
+            TYPE_UNSPECIFIED: _ClassVar[LifecycleAccessFilter.Condition.Type]
+            INCLUDE: _ClassVar[LifecycleAccessFilter.Condition.Type]
+            EXCLUDE: _ClassVar[LifecycleAccessFilter.Condition.Type]
+        TYPE_UNSPECIFIED: LifecycleAccessFilter.Condition.Type
+        INCLUDE: LifecycleAccessFilter.Condition.Type
+        EXCLUDE: LifecycleAccessFilter.Condition.Type
+        class Method(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+            __slots__ = []
+            METHOD_UNSPECIFIED: _ClassVar[LifecycleAccessFilter.Condition.Method]
+            GET_OBJECT: _ClassVar[LifecycleAccessFilter.Condition.Method]
+            HEAD_OBJECT: _ClassVar[LifecycleAccessFilter.Condition.Method]
+            GET_OBJECT_TAGGING: _ClassVar[LifecycleAccessFilter.Condition.Method]
+            COPY_OBJECT: _ClassVar[LifecycleAccessFilter.Condition.Method]
+            UPLOAD_PART_COPY: _ClassVar[LifecycleAccessFilter.Condition.Method]
+        METHOD_UNSPECIFIED: LifecycleAccessFilter.Condition.Method
+        GET_OBJECT: LifecycleAccessFilter.Condition.Method
+        HEAD_OBJECT: LifecycleAccessFilter.Condition.Method
+        GET_OBJECT_TAGGING: LifecycleAccessFilter.Condition.Method
+        COPY_OBJECT: LifecycleAccessFilter.Condition.Method
+        UPLOAD_PART_COPY: LifecycleAccessFilter.Condition.Method
+        TYPE_FIELD_NUMBER: _ClassVar[int]
+        METHODS_FIELD_NUMBER: _ClassVar[int]
+        USER_AGENTS_FIELD_NUMBER: _ClassVar[int]
+        type: LifecycleAccessFilter.Condition.Type
+        methods: _containers.RepeatedScalarFieldContainer[LifecycleAccessFilter.Condition.Method]
+        user_agents: _containers.RepeatedScalarFieldContainer[str]
+        def __init__(self, type: _Optional[_Union[LifecycleAccessFilter.Condition.Type, str]] = ..., methods: _Optional[_Iterable[_Union[LifecycleAccessFilter.Condition.Method, str]]] = ..., user_agents: _Optional[_Iterable[str]] = ...) -> None: ...
+    CONDITIONS_FIELD_NUMBER: _ClassVar[int]
+    conditions: _containers.RepeatedCompositeFieldContainer[LifecycleAccessFilter.Condition]
+    def __init__(self, conditions: _Optional[_Iterable[_Union[LifecycleAccessFilter.Condition, _Mapping]]] = ...) -> None: ...
+
 class LifecycleExpiration(_message.Message):
     __slots__ = ["date", "days", "expired_object_delete_marker"]
     DATE_FIELD_NUMBER: _ClassVar[int]
@@ -79,14 +118,16 @@ class LifecycleAbortIncompleteMultipartUpload(_message.Message):
     def __init__(self, days_after_initiation: _Optional[int] = ...) -> None: ...
 
 class LifecycleTransition(_message.Message):
-    __slots__ = ["date", "days", "storage_class"]
+    __slots__ = ["date", "days", "days_since_last_access", "storage_class"]
     DATE_FIELD_NUMBER: _ClassVar[int]
     DAYS_FIELD_NUMBER: _ClassVar[int]
+    DAYS_SINCE_LAST_ACCESS_FIELD_NUMBER: _ClassVar[int]
     STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
     date: _timestamp_pb2.Timestamp
     days: int
+    days_since_last_access: int
     storage_class: _base_pb2.StorageClass
-    def __init__(self, date: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., days: _Optional[int] = ..., storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ...) -> None: ...
+    def __init__(self, date: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., days: _Optional[int] = ..., days_since_last_access: _Optional[int] = ..., storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ...) -> None: ...
 
 class LifecycleNoncurrentVersionTransition(_message.Message):
     __slots__ = ["newer_noncurrent_versions", "noncurrent_days", "storage_class"]

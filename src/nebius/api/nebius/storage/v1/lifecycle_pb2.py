@@ -17,7 +17,7 @@ from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validat
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/storage/v1/lifecycle.proto\x12\x11nebius.storage.v1\x1a\x1cnebius/storage/v1/base.proto\x1a\x18nebius/annotations.proto\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"[\n\x16LifecycleConfiguration\x12\x41\n\x05rules\x18\x01 \x03(\x0b\x32 .nebius.storage.v1.LifecycleRuleB\t\xbaH\x06\x92\x01\x03\x10\xe8\x07R\x05rules\"\x81\x06\n\rLifecycleRule\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12G\n\x06status\x18\x02 \x01(\x0e\x32\'.nebius.storage.v1.LifecycleRule.StatusB\x06\xbaH\x03\xc8\x01\x01R\x06status\x12@\n\x06\x66ilter\x18\x03 \x01(\x0b\x32\".nebius.storage.v1.LifecycleFilterB\x04\xbaJ\x01\x07R\x06\x66ilter\x12\x46\n\nexpiration\x18\x04 \x01(\x0b\x32&.nebius.storage.v1.LifecycleExpirationR\nexpiration\x12{\n\x1dnoncurrent_version_expiration\x18\x05 \x01(\x0b\x32\x37.nebius.storage.v1.LifecycleNoncurrentVersionExpirationR\x1bnoncurrentVersionExpiration\x12\x85\x01\n!abort_incomplete_multipart_upload\x18\x06 \x01(\x0b\x32:.nebius.storage.v1.LifecycleAbortIncompleteMultipartUploadR\x1e\x61\x62ortIncompleteMultipartUpload\x12\x46\n\ntransition\x18\x07 \x01(\x0b\x32&.nebius.storage.v1.LifecycleTransitionR\ntransition\x12{\n\x1dnoncurrent_version_transition\x18\x08 \x01(\x0b\x32\x37.nebius.storage.v1.LifecycleNoncurrentVersionTransitionR\x1bnoncurrentVersionTransition\";\n\x06Status\x12\x16\n\x12STATUS_UNSPECIFIED\x10\x00\x12\x0b\n\x07\x45NABLED\x10\x01\x12\x0c\n\x08\x44ISABLED\x10\x02\"\xab\x01\n\x0fLifecycleFilter\x12\x16\n\x06prefix\x18\x01 \x01(\tR\x06prefix\x12\x42\n\x1eobject_size_greater_than_bytes\x18\x02 \x01(\x03R\x1aobjectSizeGreaterThanBytes\x12<\n\x1bobject_size_less_than_bytes\x18\x03 \x01(\x03R\x17objectSizeLessThanBytes\"\xbb\x01\n\x13LifecycleExpiration\x12\x30\n\x04\x64\x61te\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00R\x04\x64\x61te\x12!\n\x04\x64\x61ys\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01H\x00R\x04\x64\x61ys\x12?\n\x1c\x65xpired_object_delete_marker\x18\x03 \x01(\x08R\x19\x65xpiredObjectDeleteMarkerB\x0e\n\x0c\x65xpired_with\"\xbb\x01\n$LifecycleNoncurrentVersionExpiration\x12?\n\x19newer_noncurrent_versions\x18\x01 \x01(\x05H\x00R\x17newerNoncurrentVersions\x88\x01\x01\x12\x34\n\x0fnoncurrent_days\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01R\x0enoncurrentDaysB\x1c\n\x1a_newer_noncurrent_versions\"j\n\'LifecycleAbortIncompleteMultipartUpload\x12?\n\x15\x64\x61ys_after_initiation\x18\x01 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01R\x13\x64\x61ysAfterInitiation\"\xc2\x01\n\x13LifecycleTransition\x12\x30\n\x04\x64\x61te\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00R\x04\x64\x61te\x12!\n\x04\x64\x61ys\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01H\x00R\x04\x64\x61ys\x12\x44\n\rstorage_class\x18\x03 \x01(\x0e\x32\x1f.nebius.storage.v1.StorageClassR\x0cstorageClassB\x10\n\x0etransited_with\"\x81\x02\n$LifecycleNoncurrentVersionTransition\x12?\n\x19newer_noncurrent_versions\x18\x01 \x01(\x05H\x00R\x17newerNoncurrentVersions\x88\x01\x01\x12\x34\n\x0fnoncurrent_days\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01R\x0enoncurrentDays\x12\x44\n\rstorage_class\x18\x03 \x01(\x0e\x32\x1f.nebius.storage.v1.StorageClassR\x0cstorageClassB\x1c\n\x1a_newer_noncurrent_versionsB]\n\x18\x61i.nebius.pub.storage.v1B\x0eLifecycleProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/storage/v1/lifecycle.proto\x12\x11nebius.storage.v1\x1a\x1cnebius/storage/v1/base.proto\x1a\x18nebius/annotations.proto\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb3\x01\n\x16LifecycleConfiguration\x12\x41\n\x05rules\x18\x01 \x03(\x0b\x32 .nebius.storage.v1.LifecycleRuleB\t\xbaH\x06\x92\x01\x03\x10\xe8\x07R\x05rules\x12V\n\x12last_access_filter\x18\x02 \x01(\x0b\x32(.nebius.storage.v1.LifecycleAccessFilterR\x10lastAccessFilter\"\x81\x06\n\rLifecycleRule\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12G\n\x06status\x18\x02 \x01(\x0e\x32\'.nebius.storage.v1.LifecycleRule.StatusB\x06\xbaH\x03\xc8\x01\x01R\x06status\x12@\n\x06\x66ilter\x18\x03 \x01(\x0b\x32\".nebius.storage.v1.LifecycleFilterB\x04\xbaJ\x01\x07R\x06\x66ilter\x12\x46\n\nexpiration\x18\x04 \x01(\x0b\x32&.nebius.storage.v1.LifecycleExpirationR\nexpiration\x12{\n\x1dnoncurrent_version_expiration\x18\x05 \x01(\x0b\x32\x37.nebius.storage.v1.LifecycleNoncurrentVersionExpirationR\x1bnoncurrentVersionExpiration\x12\x85\x01\n!abort_incomplete_multipart_upload\x18\x06 \x01(\x0b\x32:.nebius.storage.v1.LifecycleAbortIncompleteMultipartUploadR\x1e\x61\x62ortIncompleteMultipartUpload\x12\x46\n\ntransition\x18\x07 \x01(\x0b\x32&.nebius.storage.v1.LifecycleTransitionR\ntransition\x12{\n\x1dnoncurrent_version_transition\x18\x08 \x01(\x0b\x32\x37.nebius.storage.v1.LifecycleNoncurrentVersionTransitionR\x1bnoncurrentVersionTransition\";\n\x06Status\x12\x16\n\x12STATUS_UNSPECIFIED\x10\x00\x12\x0b\n\x07\x45NABLED\x10\x01\x12\x0c\n\x08\x44ISABLED\x10\x02\"\xab\x01\n\x0fLifecycleFilter\x12\x16\n\x06prefix\x18\x01 \x01(\tR\x06prefix\x12\x42\n\x1eobject_size_greater_than_bytes\x18\x02 \x01(\x03R\x1aobjectSizeGreaterThanBytes\x12<\n\x1bobject_size_less_than_bytes\x18\x03 \x01(\x03R\x17objectSizeLessThanBytes\"\x9d\x04\n\x15LifecycleAccessFilter\x12\\\n\nconditions\x18\x01 \x03(\x0b\x32\x32.nebius.storage.v1.LifecycleAccessFilter.ConditionB\x08\xbaH\x05\x92\x01\x02\x10\x64R\nconditions\x1a\xa5\x03\n\tCondition\x12S\n\x04type\x18\x01 \x01(\x0e\x32\x37.nebius.storage.v1.LifecycleAccessFilter.Condition.TypeB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12]\n\x07methods\x18\x02 \x03(\x0e\x32\x39.nebius.storage.v1.LifecycleAccessFilter.Condition.MethodB\x08\xbaH\x05\x92\x01\x02\x10\nR\x07methods\x12)\n\x0buser_agents\x18\x03 \x03(\tB\x08\xbaH\x05\x92\x01\x02\x10\x64R\nuserAgents\"6\n\x04Type\x12\x14\n\x10TYPE_UNSPECIFIED\x10\x00\x12\x0b\n\x07INCLUDE\x10\x01\x12\x0b\n\x07\x45XCLUDE\x10\x02\"\x80\x01\n\x06Method\x12\x16\n\x12METHOD_UNSPECIFIED\x10\x00\x12\x0e\n\nGET_OBJECT\x10\x01\x12\x0f\n\x0bHEAD_OBJECT\x10\x02\x12\x16\n\x12GET_OBJECT_TAGGING\x10\x03\x12\x0f\n\x0b\x43OPY_OBJECT\x10\x04\x12\x14\n\x10UPLOAD_PART_COPY\x10\x05\"\xbb\x01\n\x13LifecycleExpiration\x12\x30\n\x04\x64\x61te\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00R\x04\x64\x61te\x12!\n\x04\x64\x61ys\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01H\x00R\x04\x64\x61ys\x12?\n\x1c\x65xpired_object_delete_marker\x18\x03 \x01(\x08R\x19\x65xpiredObjectDeleteMarkerB\x0e\n\x0c\x65xpired_with\"\xbb\x01\n$LifecycleNoncurrentVersionExpiration\x12?\n\x19newer_noncurrent_versions\x18\x01 \x01(\x05H\x00R\x17newerNoncurrentVersions\x88\x01\x01\x12\x34\n\x0fnoncurrent_days\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01R\x0enoncurrentDaysB\x1c\n\x1a_newer_noncurrent_versions\"j\n\'LifecycleAbortIncompleteMultipartUpload\x12?\n\x15\x64\x61ys_after_initiation\x18\x01 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01R\x13\x64\x61ysAfterInitiation\"\x86\x02\n\x13LifecycleTransition\x12\x30\n\x04\x64\x61te\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00R\x04\x64\x61te\x12!\n\x04\x64\x61ys\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01H\x00R\x04\x64\x61ys\x12\x42\n\x16\x64\x61ys_since_last_access\x18\x04 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01H\x00R\x13\x64\x61ysSinceLastAccess\x12\x44\n\rstorage_class\x18\x03 \x01(\x0e\x32\x1f.nebius.storage.v1.StorageClassR\x0cstorageClassB\x10\n\x0etransited_with\"\x81\x02\n$LifecycleNoncurrentVersionTransition\x12?\n\x19newer_noncurrent_versions\x18\x01 \x01(\x05H\x00R\x17newerNoncurrentVersions\x88\x01\x01\x12\x34\n\x0fnoncurrent_days\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xca\x8e\x01(\x01R\x0enoncurrentDays\x12\x44\n\rstorage_class\x18\x03 \x01(\x0e\x32\x1f.nebius.storage.v1.StorageClassR\x0cstorageClassB\x1c\n\x1a_newer_noncurrent_versionsB]\n\x18\x61i.nebius.pub.storage.v1B\x0eLifecycleProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,6 +34,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _LIFECYCLERULE.fields_by_name['status']._serialized_options = b'\272H\003\310\001\001'
   _LIFECYCLERULE.fields_by_name['filter']._options = None
   _LIFECYCLERULE.fields_by_name['filter']._serialized_options = b'\272J\001\007'
+  _LIFECYCLEACCESSFILTER_CONDITION.fields_by_name['type']._options = None
+  _LIFECYCLEACCESSFILTER_CONDITION.fields_by_name['type']._serialized_options = b'\272H\003\310\001\001'
+  _LIFECYCLEACCESSFILTER_CONDITION.fields_by_name['methods']._options = None
+  _LIFECYCLEACCESSFILTER_CONDITION.fields_by_name['methods']._serialized_options = b'\272H\005\222\001\002\020\n'
+  _LIFECYCLEACCESSFILTER_CONDITION.fields_by_name['user_agents']._options = None
+  _LIFECYCLEACCESSFILTER_CONDITION.fields_by_name['user_agents']._serialized_options = b'\272H\005\222\001\002\020d'
+  _LIFECYCLEACCESSFILTER.fields_by_name['conditions']._options = None
+  _LIFECYCLEACCESSFILTER.fields_by_name['conditions']._serialized_options = b'\272H\005\222\001\002\020d'
   _LIFECYCLEEXPIRATION.fields_by_name['days']._options = None
   _LIFECYCLEEXPIRATION.fields_by_name['days']._serialized_options = b'\272H\010\032\006\030\312\216\001(\001'
   _LIFECYCLENONCURRENTVERSIONEXPIRATION.fields_by_name['noncurrent_days']._options = None
@@ -42,24 +50,34 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _LIFECYCLEABORTINCOMPLETEMULTIPARTUPLOAD.fields_by_name['days_after_initiation']._serialized_options = b'\272H\010\032\006\030\312\216\001(\001'
   _LIFECYCLETRANSITION.fields_by_name['days']._options = None
   _LIFECYCLETRANSITION.fields_by_name['days']._serialized_options = b'\272H\010\032\006\030\312\216\001(\001'
+  _LIFECYCLETRANSITION.fields_by_name['days_since_last_access']._options = None
+  _LIFECYCLETRANSITION.fields_by_name['days_since_last_access']._serialized_options = b'\272H\010\032\006\030\312\216\001(\001'
   _LIFECYCLENONCURRENTVERSIONTRANSITION.fields_by_name['noncurrent_days']._options = None
   _LIFECYCLENONCURRENTVERSIONTRANSITION.fields_by_name['noncurrent_days']._serialized_options = b'\272H\010\032\006\030\312\216\001(\001'
-  _globals['_LIFECYCLECONFIGURATION']._serialized_start=174
-  _globals['_LIFECYCLECONFIGURATION']._serialized_end=265
-  _globals['_LIFECYCLERULE']._serialized_start=268
-  _globals['_LIFECYCLERULE']._serialized_end=1037
-  _globals['_LIFECYCLERULE_STATUS']._serialized_start=978
-  _globals['_LIFECYCLERULE_STATUS']._serialized_end=1037
-  _globals['_LIFECYCLEFILTER']._serialized_start=1040
-  _globals['_LIFECYCLEFILTER']._serialized_end=1211
-  _globals['_LIFECYCLEEXPIRATION']._serialized_start=1214
-  _globals['_LIFECYCLEEXPIRATION']._serialized_end=1401
-  _globals['_LIFECYCLENONCURRENTVERSIONEXPIRATION']._serialized_start=1404
-  _globals['_LIFECYCLENONCURRENTVERSIONEXPIRATION']._serialized_end=1591
-  _globals['_LIFECYCLEABORTINCOMPLETEMULTIPARTUPLOAD']._serialized_start=1593
-  _globals['_LIFECYCLEABORTINCOMPLETEMULTIPARTUPLOAD']._serialized_end=1699
-  _globals['_LIFECYCLETRANSITION']._serialized_start=1702
-  _globals['_LIFECYCLETRANSITION']._serialized_end=1896
-  _globals['_LIFECYCLENONCURRENTVERSIONTRANSITION']._serialized_start=1899
-  _globals['_LIFECYCLENONCURRENTVERSIONTRANSITION']._serialized_end=2156
+  _globals['_LIFECYCLECONFIGURATION']._serialized_start=175
+  _globals['_LIFECYCLECONFIGURATION']._serialized_end=354
+  _globals['_LIFECYCLERULE']._serialized_start=357
+  _globals['_LIFECYCLERULE']._serialized_end=1126
+  _globals['_LIFECYCLERULE_STATUS']._serialized_start=1067
+  _globals['_LIFECYCLERULE_STATUS']._serialized_end=1126
+  _globals['_LIFECYCLEFILTER']._serialized_start=1129
+  _globals['_LIFECYCLEFILTER']._serialized_end=1300
+  _globals['_LIFECYCLEACCESSFILTER']._serialized_start=1303
+  _globals['_LIFECYCLEACCESSFILTER']._serialized_end=1844
+  _globals['_LIFECYCLEACCESSFILTER_CONDITION']._serialized_start=1423
+  _globals['_LIFECYCLEACCESSFILTER_CONDITION']._serialized_end=1844
+  _globals['_LIFECYCLEACCESSFILTER_CONDITION_TYPE']._serialized_start=1659
+  _globals['_LIFECYCLEACCESSFILTER_CONDITION_TYPE']._serialized_end=1713
+  _globals['_LIFECYCLEACCESSFILTER_CONDITION_METHOD']._serialized_start=1716
+  _globals['_LIFECYCLEACCESSFILTER_CONDITION_METHOD']._serialized_end=1844
+  _globals['_LIFECYCLEEXPIRATION']._serialized_start=1847
+  _globals['_LIFECYCLEEXPIRATION']._serialized_end=2034
+  _globals['_LIFECYCLENONCURRENTVERSIONEXPIRATION']._serialized_start=2037
+  _globals['_LIFECYCLENONCURRENTVERSIONEXPIRATION']._serialized_end=2224
+  _globals['_LIFECYCLEABORTINCOMPLETEMULTIPARTUPLOAD']._serialized_start=2226
+  _globals['_LIFECYCLEABORTINCOMPLETEMULTIPARTUPLOAD']._serialized_end=2332
+  _globals['_LIFECYCLETRANSITION']._serialized_start=2335
+  _globals['_LIFECYCLETRANSITION']._serialized_end=2597
+  _globals['_LIFECYCLENONCURRENTVERSIONTRANSITION']._serialized_start=2600
+  _globals['_LIFECYCLENONCURRENTVERSIONTRANSITION']._serialized_end=2857
 # @@protoc_insertion_point(module_scope)

@@ -341,14 +341,18 @@ class LifecycleConfiguration(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         rules: "abc.Iterable[LifecycleRule]|None|unset.UnsetType" = unset.Unset,
+        last_access_filter: "LifecycleAccessFilter|lifecycle_pb2.LifecycleAccessFilter|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(rules, unset.UnsetType):
             self.rules = rules
+        if not isinstance(last_access_filter, unset.UnsetType):
+            self.last_access_filter = last_access_filter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "rules",
+            "last_access_filter",
         ]
     
     @builtins.property
@@ -361,8 +365,23 @@ class LifecycleConfiguration(pb_classes.Message):
         return super()._set_field("rules",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def last_access_filter(self) -> "LifecycleAccessFilter":
+        """
+        Specifies which requests are included in ``days_since_last_access`` calculations for all transition rules.
+        """
+        
+        return super()._get_field("last_access_filter", explicit_presence=False,
+        wrap=LifecycleAccessFilter,
+        )
+    @last_access_filter.setter
+    def last_access_filter(self, value: "LifecycleAccessFilter|lifecycle_pb2.LifecycleAccessFilter|None") -> None:
+        return super()._set_field("last_access_filter",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "rules":"rules",
+        "last_access_filter":"last_access_filter",
     }
     
 class LifecycleRule(pb_classes.Message):
@@ -621,6 +640,169 @@ class LifecycleFilter(pb_classes.Message):
         "prefix":"prefix",
         "object_size_greater_than_bytes":"object_size_greater_than_bytes",
         "object_size_less_than_bytes":"object_size_less_than_bytes",
+    }
+    
+class LifecycleAccessFilter(pb_classes.Message):
+    """
+    Specifies which requests are included in ``days_since_last_access`` calculations.
+    """
+    
+    __PB2_CLASS__ = lifecycle_pb2.LifecycleAccessFilter
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleAccessFilter",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class Condition(pb_classes.Message):
+        __PB2_CLASS__ = lifecycle_pb2.LifecycleAccessFilter.Condition
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleAccessFilter.Condition",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        class Type(pb_enum.Enum):
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.LifecycleAccessFilter.Condition.Type",lifecycle_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+            TYPE_UNSPECIFIED = 0
+            INCLUDE = 1
+            """
+            If an include type condition is the first condition that the request match, the request will be included in ``days_since_last_access`` calculation.
+            """
+            
+            EXCLUDE = 2
+            """
+            If an exclude type condition is the first condition that the request match, the request will be ignored in ``days_since_last_access`` calculation.
+            """
+            
+        
+        class Method(pb_enum.Enum):
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.LifecycleAccessFilter.Condition.Method",lifecycle_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+            METHOD_UNSPECIFIED = 0
+            GET_OBJECT = 1
+            HEAD_OBJECT = 2
+            GET_OBJECT_TAGGING = 3
+            COPY_OBJECT = 4
+            """
+            Copy object method reads the source object.
+            We account for those operations as source object accesses when calculating ``days_since_last_access`` for source object.
+            """
+            
+            UPLOAD_PART_COPY = 5
+            """
+            Upload part copy method reads the source object.
+            We account for those operations as source object accesses when calculating ``days_since_last_access`` for source object.
+            """
+            
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            type: "LifecycleAccessFilter.Condition.Type|lifecycle_pb2.LifecycleAccessFilter.Condition.Type|None|unset.UnsetType" = unset.Unset,
+            methods: "abc.Iterable[LifecycleAccessFilter.Condition.Method]|None|unset.UnsetType" = unset.Unset,
+            user_agents: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(type, unset.UnsetType):
+                self.type = type
+            if not isinstance(methods, unset.UnsetType):
+                self.methods = methods
+            if not isinstance(user_agents, unset.UnsetType):
+                self.user_agents = user_agents
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "type",
+                "methods",
+                "user_agents",
+                "Type",
+                "Method",
+            ]
+        
+        @builtins.property
+        def type(self) -> "LifecycleAccessFilter.Condition.Type":
+            return super()._get_field("type", explicit_presence=False,
+            wrap=LifecycleAccessFilter.Condition.Type,
+            )
+        @type.setter
+        def type(self, value: "LifecycleAccessFilter.Condition.Type|lifecycle_pb2.LifecycleAccessFilter.Condition.Type|None") -> None:
+            return super()._set_field("type",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def methods(self) -> "abc.MutableSequence[LifecycleAccessFilter.Condition.Method]":
+            """
+            The s3 methods to match.
+            An empty list matches all methods
+            """
+            
+            return super()._get_field("methods", explicit_presence=False,
+            wrap=pb_classes.Repeated,
+            )
+        @methods.setter
+        def methods(self, value: "abc.Iterable[LifecycleAccessFilter.Condition.Method]|None") -> None:
+            return super()._set_field("methods",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def user_agents(self) -> "abc.MutableSequence[builtins.str]":
+            """
+            User agents to match. Condition is satisfied if the request's user agent contains any of these substrings.
+            An empty list matches all user agents.
+            """
+            
+            return super()._get_field("user_agents", explicit_presence=False,
+            wrap=pb_classes.Repeated,
+            )
+        @user_agents.setter
+        def user_agents(self, value: "abc.Iterable[builtins.str]|None") -> None:
+            return super()._set_field("user_agents",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "type":"type",
+            "methods":"methods",
+            "user_agents":"user_agents",
+            "Type":"Type",
+            "Method":"Method",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        conditions: "abc.Iterable[LifecycleAccessFilter.Condition]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(conditions, unset.UnsetType):
+            self.conditions = conditions
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "conditions",
+            "Condition",
+        ]
+    
+    @builtins.property
+    def conditions(self) -> "abc.MutableSequence[LifecycleAccessFilter.Condition]":
+        """
+        A request is included in ``days_since_last_access`` calculations if:
+        
+        
+        * The first condition matching the request has ``INCLUDE`` type.
+          OR
+        * The request doesn't match any conditions
+        """
+        
+        return super()._get_field("conditions", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(LifecycleAccessFilter.Condition,None,None),
+        )
+    @conditions.setter
+    def conditions(self, value: "abc.Iterable[LifecycleAccessFilter.Condition]|None") -> None:
+        return super()._set_field("conditions",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "conditions":"conditions",
+        "Condition":"Condition",
     }
     
 class LifecycleExpiration(pb_classes.Message):
@@ -900,14 +1082,25 @@ class LifecycleTransition(pb_classes.Message):
         def value(self) -> "builtins.int":
             return self._message.days
     
+    class __OneOfClass_transited_with_days_since_last_access__(__OneOfClass_transited_with__):
+        field: typing.Literal["days_since_last_access"] = "days_since_last_access"
+        
+        def __init__(self, msg: "LifecycleTransition") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.days_since_last_access
+    
     @builtins.property
-    def transited_with(self) -> __OneOfClass_transited_with_date__|__OneOfClass_transited_with_days__|None:
+    def transited_with(self) -> __OneOfClass_transited_with_date__|__OneOfClass_transited_with_days__|__OneOfClass_transited_with_days_since_last_access__|None:
         field_name_1: str|None = super().which_field_in_oneof("transited_with")
         match field_name_1:
             case "date":
                 return self.__OneOfClass_transited_with_date__(self)
             case "days":
                 return self.__OneOfClass_transited_with_days__(self)
+            case "days_since_last_access":
+                return self.__OneOfClass_transited_with_days_since_last_access__(self)
             case None:
                 return None
             case _:
@@ -919,6 +1112,7 @@ class LifecycleTransition(pb_classes.Message):
         *,
         date: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         days: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        days_since_last_access: "builtins.int|None|unset.UnsetType" = unset.Unset,
         storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -926,6 +1120,8 @@ class LifecycleTransition(pb_classes.Message):
             self.date = date
         if not isinstance(days, unset.UnsetType):
             self.days = days
+        if not isinstance(days_since_last_access, unset.UnsetType):
+            self.days_since_last_access = days_since_last_access
         if not isinstance(storage_class, unset.UnsetType):
             self.storage_class = storage_class
     
@@ -933,6 +1129,7 @@ class LifecycleTransition(pb_classes.Message):
         return [
             "date",
             "days",
+            "days_since_last_access",
             "storage_class",
             "transited_with",
         ]
@@ -967,6 +1164,19 @@ class LifecycleTransition(pb_classes.Message):
         )
     
     @builtins.property
+    def days_since_last_access(self) -> "builtins.int|None":
+        """
+        The number of days since the object was last accessed before it is transitioned.
+        """
+        
+        return super()._get_field("days_since_last_access", explicit_presence=True,
+        )
+    @days_since_last_access.setter
+    def days_since_last_access(self, value: "builtins.int|None") -> None:
+        return super()._set_field("days_since_last_access",value,explicit_presence=True,
+        )
+    
+    @builtins.property
     def storage_class(self) -> "StorageClass":
         """
         Target storage class to transit to.
@@ -983,6 +1193,7 @@ class LifecycleTransition(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "date":"date",
         "days":"days",
+        "days_since_last_access":"days_since_last_access",
         "storage_class":"storage_class",
         "transited_with":"transited_with",
     }
@@ -4092,6 +4303,7 @@ __all__ = [
     "LifecycleConfiguration",
     "LifecycleRule",
     "LifecycleFilter",
+    "LifecycleAccessFilter",
     "LifecycleExpiration",
     "LifecycleNoncurrentVersionExpiration",
     "LifecycleAbortIncompleteMultipartUpload",
