@@ -1,8 +1,9 @@
 from google.protobuf import descriptor_pb2 as _descriptor_pb2
+from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Optional as _Optional
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Optional
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -61,6 +62,8 @@ FIELD_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 field_deprecation_details: _descriptor.FieldDescriptor
 FIELD_PY_SDK_FIELD_NUMBER: _ClassVar[int]
 field_py_sdk: _descriptor.FieldDescriptor
+NID_FIELD_NUMBER: _ClassVar[int]
+nid: _descriptor.FieldDescriptor
 ONEOF_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 oneof_behavior: _descriptor.FieldDescriptor
 ONEOF_PY_SDK_FIELD_NUMBER: _ClassVar[int]
@@ -123,3 +126,11 @@ class DeprecationDetails(_message.Message):
     effective_at: str
     description: str
     def __init__(self, effective_at: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
+
+class NIDFieldSettings(_message.Message):
+    __slots__ = ["resource", "parent_resource"]
+    RESOURCE_FIELD_NUMBER: _ClassVar[int]
+    PARENT_RESOURCE_FIELD_NUMBER: _ClassVar[int]
+    resource: _containers.RepeatedScalarFieldContainer[str]
+    parent_resource: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, resource: _Optional[_Iterable[str]] = ..., parent_resource: _Optional[_Iterable[str]] = ...) -> None: ...

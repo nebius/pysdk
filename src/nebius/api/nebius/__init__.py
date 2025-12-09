@@ -392,6 +392,68 @@ class DeprecationDetails(pb_classes.Message):
         "description":"description",
     }
     
+class NIDFieldSettings(pb_classes.Message):
+    __PB2_CLASS__ = annotations_pb2.NIDFieldSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.NIDFieldSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        resource: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        parent_resource: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(resource, unset.UnsetType):
+            self.resource = resource
+        if not isinstance(parent_resource, unset.UnsetType):
+            self.parent_resource = parent_resource
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource",
+            "parent_resource",
+        ]
+    
+    @builtins.property
+    def resource(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        Fields annotated with this option are treated as NIDs.
+        ``resource`` lists allowed NID resource types (prefixes). Leave empty to accept any type.
+        Validation only produces warnings.
+        """
+        
+        return super()._get_field("resource", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @resource.setter
+    def resource(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("resource",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def parent_resource(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        For metadata fields, ``parent_resource`` lists allowed parent resource types for ``metadata.parent_id``.
+        Leave empty to allow any type. Validation only produces warnings.
+        Typically set on the resource message; request-level overrides are supported.
+        """
+        
+        return super()._get_field("parent_resource", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @parent_resource.setter
+    def parent_resource(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("parent_resource",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource":"resource",
+        "parent_resource":"parent_resource",
+    }
+    
 file_deprecation_details = annotations_pb2.file_deprecation_details
 api_service_name = annotations_pb2.api_service_name
 service_deprecation_details = annotations_pb2.service_deprecation_details
@@ -406,6 +468,7 @@ sensitive = annotations_pb2.sensitive
 credentials = annotations_pb2.credentials
 field_deprecation_details = annotations_pb2.field_deprecation_details
 field_py_sdk = annotations_pb2.field_py_sdk
+nid = annotations_pb2.nid
 oneof_behavior = annotations_pb2.oneof_behavior
 oneof_py_sdk = annotations_pb2.oneof_py_sdk
 enum_py_sdk = annotations_pb2.enum_py_sdk
@@ -430,6 +493,7 @@ __all__ = [
     "credentials",
     "field_deprecation_details",
     "field_py_sdk",
+    "nid",
     "oneof_behavior",
     "oneof_py_sdk",
     "enum_py_sdk",
@@ -444,4 +508,5 @@ __all__ = [
     "EnumPySDKSettings",
     "EnumValuePySDKSettings",
     "DeprecationDetails",
+    "NIDFieldSettings",
 ]
