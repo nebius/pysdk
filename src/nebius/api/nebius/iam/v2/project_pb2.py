@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1bnebius/iam/v2/project.proto\x12\rnebius.iam.v2\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xc5\x01\n\x07Project\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x36\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.iam.v2.ProjectSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b\x32\x1c.nebius.iam.v2.ProjectStatusB\x04\xbaJ\x01\x05R\x06status\"%\n\x0bProjectSpec\x12\x16\n\x06region\x18\x01 \x01(\tR\x06region\"\xad\x01\n\rProjectStatus\x12N\n\rproject_state\x18\x01 \x01(\x0e\x32).nebius.iam.v2.ProjectStatus.ProjectStateR\x0cprojectState\"L\n\x0cProjectState\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\n\n\x06\x41\x43TIVE\x10\x02\x12\x0b\n\x07PURGING\x10\x03\x42S\n\x14\x61i.nebius.pub.iam.v2B\x0cProjectProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v2b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1bnebius/iam/v2/project.proto\x12\rnebius.iam.v2\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xc5\x01\n\x07Project\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x36\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.iam.v2.ProjectSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b\x32\x1c.nebius.iam.v2.ProjectStatusB\x04\xbaJ\x01\x05R\x06status\"%\n\x0bProjectSpec\x12\x16\n\x06region\x18\x01 \x01(\tR\x06region\"\xe4\x01\n\rProjectStatus\x12N\n\rproject_state\x18\x01 \x01(\x0e\x32).nebius.iam.v2.ProjectStatus.ProjectStateR\x0cprojectState\"\x82\x01\n\x0cProjectState\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\n\n\x06\x41\x43TIVE\x10\x02\x12\x0b\n\x07PURGING\x10\x03\x12\x0b\n\x07\x43REATED\x10\x04\x12\x0e\n\nACTIVATING\x10\x05\x12\x0b\n\x07PARKING\x10\x06\x12\n\n\x06PARKED\x10\x07\x42S\n\x14\x61i.nebius.pub.iam.v2B\x0cProjectProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v2b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -36,7 +36,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_PROJECTSPEC']._serialized_start=334
   _globals['_PROJECTSPEC']._serialized_end=371
   _globals['_PROJECTSTATUS']._serialized_start=374
-  _globals['_PROJECTSTATUS']._serialized_end=547
-  _globals['_PROJECTSTATUS_PROJECTSTATE']._serialized_start=471
-  _globals['_PROJECTSTATUS_PROJECTSTATE']._serialized_end=547
+  _globals['_PROJECTSTATUS']._serialized_end=602
+  _globals['_PROJECTSTATUS_PROJECTSTATE']._serialized_start=472
+  _globals['_PROJECTSTATUS_PROJECTSTATE']._serialized_end=602
 # @@protoc_insertion_point(module_scope)

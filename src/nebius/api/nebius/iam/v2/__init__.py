@@ -1531,6 +1531,10 @@ class ProjectStatus(pb_classes.Message):
         CREATING = 1
         ACTIVE = 2
         PURGING = 3
+        CREATED = 4
+        ACTIVATING = 5
+        PARKING = 6
+        PARKED = 7
     
     def __init__(
         self,
@@ -2242,6 +2246,10 @@ class TenantStatus(pb_classes.Message):
         STATE_UNSPECIFIED = 0
         CREATING = 1
         ACTIVE = 2
+        CREATED = 3
+        ACTIVATING = 4
+        PARKING = 5
+        PARKED = 6
     
     def __init__(
         self,

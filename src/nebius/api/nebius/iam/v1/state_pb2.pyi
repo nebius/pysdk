@@ -15,6 +15,10 @@ class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     UNDELETING: _ClassVar[State]
     PURGING: _ClassVar[State]
     PURGED: _ClassVar[State]
+    CREATED: _ClassVar[State]
+    ACTIVATING: _ClassVar[State]
+    PARKING: _ClassVar[State]
+    PARKED: _ClassVar[State]
     CREATING: _ClassVar[State]
 STATE_UNSPECIFIED: State
 ACTIVE: State
@@ -25,4 +29,8 @@ SCHEDULED_FOR_DELETION_BY_PARENT: State
 UNDELETING: State
 PURGING: State
 PURGED: State
+CREATED: State
+ACTIVATING: State
+PARKING: State
+PARKED: State
 CREATING: State

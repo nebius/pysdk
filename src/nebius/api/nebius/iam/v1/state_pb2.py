@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19nebius/iam/v1/state.proto\x12\rnebius.iam.v1*\xe8\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\n\n\x06\x41\x43TIVE\x10\x01\x12\x1b\n\x17SCHEDULING_FOR_DELETION\x10\x02\x12\x1a\n\x16SCHEDULED_FOR_DELETION\x10\x03\x12%\n!SCHEDULING_FOR_DELETION_BY_PARENT\x10\x04\x12$\n SCHEDULED_FOR_DELETION_BY_PARENT\x10\x05\x12\x0e\n\nUNDELETING\x10\x06\x12\x0b\n\x07PURGING\x10\x07\x12\n\n\x06PURGED\x10\x08\x12\r\n\x08\x43REATING\x10\xe9\x07\x42Q\n\x14\x61i.nebius.pub.iam.v1B\nStateProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19nebius/iam/v1/state.proto\x12\rnebius.iam.v1*\x9e\x02\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\n\n\x06\x41\x43TIVE\x10\x01\x12\x1b\n\x17SCHEDULING_FOR_DELETION\x10\x02\x12\x1a\n\x16SCHEDULED_FOR_DELETION\x10\x03\x12%\n!SCHEDULING_FOR_DELETION_BY_PARENT\x10\x04\x12$\n SCHEDULED_FOR_DELETION_BY_PARENT\x10\x05\x12\x0e\n\nUNDELETING\x10\x06\x12\x0b\n\x07PURGING\x10\x07\x12\n\n\x06PURGED\x10\x08\x12\x0b\n\x07\x43REATED\x10\t\x12\x0e\n\nACTIVATING\x10\n\x12\x0b\n\x07PARKING\x10\x0b\x12\n\n\x06PARKED\x10\x0c\x12\r\n\x08\x43REATING\x10\xe9\x07\x42Q\n\x14\x61i.nebius.pub.iam.v1B\nStateProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -23,5 +23,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.iam.v1B\nStateProtoP\001Z+github.com/nebius/gosdk/proto/nebius/iam/v1'
   _globals['_STATE']._serialized_start=45
-  _globals['_STATE']._serialized_end=277
+  _globals['_STATE']._serialized_end=331
 # @@protoc_insertion_point(module_scope)

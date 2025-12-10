@@ -32,10 +32,18 @@ class ProjectStatus(_message.Message):
         CREATING: _ClassVar[ProjectStatus.ProjectState]
         ACTIVE: _ClassVar[ProjectStatus.ProjectState]
         PURGING: _ClassVar[ProjectStatus.ProjectState]
+        CREATED: _ClassVar[ProjectStatus.ProjectState]
+        ACTIVATING: _ClassVar[ProjectStatus.ProjectState]
+        PARKING: _ClassVar[ProjectStatus.ProjectState]
+        PARKED: _ClassVar[ProjectStatus.ProjectState]
     STATE_UNSPECIFIED: ProjectStatus.ProjectState
     CREATING: ProjectStatus.ProjectState
     ACTIVE: ProjectStatus.ProjectState
     PURGING: ProjectStatus.ProjectState
+    CREATED: ProjectStatus.ProjectState
+    ACTIVATING: ProjectStatus.ProjectState
+    PARKING: ProjectStatus.ProjectState
+    PARKED: ProjectStatus.ProjectState
     PROJECT_STATE_FIELD_NUMBER: _ClassVar[int]
     project_state: ProjectStatus.ProjectState
     def __init__(self, project_state: _Optional[_Union[ProjectStatus.ProjectState, str]] = ...) -> None: ...

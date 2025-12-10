@@ -29,9 +29,17 @@ class TenantStatus(_message.Message):
         STATE_UNSPECIFIED: _ClassVar[TenantStatus.TenantState]
         CREATING: _ClassVar[TenantStatus.TenantState]
         ACTIVE: _ClassVar[TenantStatus.TenantState]
+        CREATED: _ClassVar[TenantStatus.TenantState]
+        ACTIVATING: _ClassVar[TenantStatus.TenantState]
+        PARKING: _ClassVar[TenantStatus.TenantState]
+        PARKED: _ClassVar[TenantStatus.TenantState]
     STATE_UNSPECIFIED: TenantStatus.TenantState
     CREATING: TenantStatus.TenantState
     ACTIVE: TenantStatus.TenantState
+    CREATED: TenantStatus.TenantState
+    ACTIVATING: TenantStatus.TenantState
+    PARKING: TenantStatus.TenantState
+    PARKED: TenantStatus.TenantState
     TENANT_STATE_FIELD_NUMBER: _ClassVar[int]
     tenant_state: TenantStatus.TenantState
     def __init__(self, tenant_state: _Optional[_Union[TenantStatus.TenantState, str]] = ...) -> None: ...

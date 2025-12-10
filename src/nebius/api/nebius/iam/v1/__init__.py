@@ -3082,6 +3082,10 @@ class State(pb_enum.Enum):
     UNDELETING = 6
     PURGING = 7
     PURGED = 8
+    CREATED = 9
+    ACTIVATING = 10
+    PARKING = 11
+    PARKED = 12
     CREATING = 1001
     """
     DRAFT = 1000;
