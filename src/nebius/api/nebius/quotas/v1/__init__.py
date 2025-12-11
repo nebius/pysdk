@@ -9,12 +9,15 @@ import collections.abc as abc
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.aio.client as client
-import nebius.aio.request as request
+import nebius.aio.operation as operation
+import nebius.aio.request as request_1
 import nebius.aio.request_kwargs as request_kwargs
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.quotas.v1.quota_allowance_pb2 as quota_allowance_pb2
 import nebius.api.nebius.quotas.v1.quota_allowance_service_pb2 as quota_allowance_service_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -402,7 +405,161 @@ class QuotaAllowance(pb_classes.Message):
     }
     
 # file: nebius/quotas/v1/quota_allowance_service.proto
+class CreateQuotaAllowanceRequest(pb_classes.Message):
+    """
+    Request to create a quota allowance with the specified spec and metadata.
+    """
+    
+    __PB2_CLASS__ = quota_allowance_service_pb2.CreateQuotaAllowanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.quotas.v1.CreateQuotaAllowanceRequest",quota_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "QuotaAllowanceSpec|quota_allowance_pb2.QuotaAllowanceSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "QuotaAllowanceSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=QuotaAllowanceSpec,
+        )
+    @spec.setter
+    def spec(self, value: "QuotaAllowanceSpec|quota_allowance_pb2.QuotaAllowanceSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateQuotaAllowanceRequest(pb_classes.Message):
+    """
+    Request to update an existing quota allowance using its metadata and the new spec.
+    """
+    
+    __PB2_CLASS__ = quota_allowance_service_pb2.UpdateQuotaAllowanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.quotas.v1.UpdateQuotaAllowanceRequest",quota_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "QuotaAllowanceSpec|quota_allowance_pb2.QuotaAllowanceSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "QuotaAllowanceSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=QuotaAllowanceSpec,
+        )
+    @spec.setter
+    def spec(self, value: "QuotaAllowanceSpec|quota_allowance_pb2.QuotaAllowanceSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteQuotaAllowanceRequest(pb_classes.Message):
+    """
+    Request to delete a quota allowance by its identifier.
+    """
+    
+    __PB2_CLASS__ = quota_allowance_service_pb2.DeleteQuotaAllowanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.quotas.v1.DeleteQuotaAllowanceRequest",quota_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of the quota.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
 class ListQuotaAllowancesRequest(pb_classes.Message):
+    """
+    Request to list quota allowances under a container with pagination support.
+    """
+    
     __PB2_CLASS__ = quota_allowance_service_pb2.ListQuotaAllowancesRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.quotas.v1.ListQuotaAllowancesRequest",quota_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -478,6 +635,10 @@ class ListQuotaAllowancesRequest(pb_classes.Message):
     }
     
 class GetQuotaAllowanceRequest(pb_classes.Message):
+    """
+    Request to get a quota allowance by its identifier.
+    """
+    
     __PB2_CLASS__ = quota_allowance_service_pb2.GetQuotaAllowanceRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.quotas.v1.GetQuotaAllowanceRequest",quota_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -516,6 +677,10 @@ class GetQuotaAllowanceRequest(pb_classes.Message):
     }
     
 class ListQuotaAllowancesResponse(pb_classes.Message):
+    """
+    Response containing quota allowances and pagination token.
+    """
+    
     __PB2_CLASS__ = quota_allowance_service_pb2.ListQuotaAllowancesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.quotas.v1.ListQuotaAllowancesResponse",quota_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -543,7 +708,7 @@ class ListQuotaAllowancesResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[QuotaAllowance]":
         """
-        List of quotas on this result page.
+        List of quota allowances on this result page.
         """
         
         return super()._get_field("items", explicit_presence=False,
@@ -573,6 +738,10 @@ class ListQuotaAllowancesResponse(pb_classes.Message):
     }
     
 class GetByNameRequest(pb_classes.Message):
+    """
+    Request to get a quota allowance by container, name, and region.
+    """
+    
     __PB2_CLASS__ = quota_allowance_service_pb2.GetByNameRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.quotas.v1.GetByNameRequest",quota_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -649,8 +818,10 @@ class GetByNameRequest(pb_classes.Message):
     }
     
 
-class QuotaAllowanceServiceClient(client.Client):
+class QuotaAllowanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     """
+    Manages quota allowances for tenants and projects, including listing, retrieval, and lifecycle operations.
+    
     This class provides the client methods for the ``.nebius.quotas.v1.QuotaAllowanceService`` service.
     
     Each method constructs a :class:`nebius.aio.request.Request` object
@@ -667,13 +838,17 @@ class QuotaAllowanceServiceClient(client.Client):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.quotas.v1.QuotaAllowanceService",quota_allowance_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.quotas.v1.QuotaAllowanceService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def list(self,
         request: "ListQuotaAllowancesRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["ListQuotaAllowancesRequest","ListQuotaAllowancesResponse"]:
+    ) -> request_1.Request["ListQuotaAllowancesRequest","ListQuotaAllowancesResponse"]:
         """
-        Lists quotas by an ID of a Tenant or a Project.
+        Lists quota allowances for the specified Tenant or Project.
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.quotas.v1.ListQuotaAllowancesRequest`
@@ -700,9 +875,9 @@ class QuotaAllowanceServiceClient(client.Client):
     def get(self,
         request: "GetQuotaAllowanceRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["GetQuotaAllowanceRequest","QuotaAllowance"]:
+    ) -> request_1.Request["GetQuotaAllowanceRequest","QuotaAllowance"]:
         """
-        Gets a quota by its ID.
+        Gets a quota allowance by its ID.
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.quotas.v1.GetQuotaAllowanceRequest`
@@ -729,9 +904,9 @@ class QuotaAllowanceServiceClient(client.Client):
     def get_by_name(self,
         request: "GetByNameRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["GetByNameRequest","QuotaAllowance"]:
+    ) -> request_1.Request["GetByNameRequest","QuotaAllowance"]:
         """
-        Gets a quota by an ID of a Tenant or a Project, its region, and name.
+        Gets a quota allowance for a Tenant or Project by container ID, region, and name.
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.quotas.v1.GetByNameRequest`
@@ -755,12 +930,105 @@ class QuotaAllowanceServiceClient(client.Client):
             **kwargs,
         )
     
+    def create(self,
+        request: "CreateQuotaAllowanceRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateQuotaAllowanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Creates a quota allowance for a Project.
+        If the quota already exists, its value is replaced with the provided one.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.quotas.v1.CreateQuotaAllowanceRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateQuotaAllowanceRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateQuotaAllowanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Updates a quota allowance by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.quotas.v1.UpdateQuotaAllowanceRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteQuotaAllowanceRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteQuotaAllowanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Deletes a quota by its ID.
+        This is used to reset the quota value. It does not remove the quota entry.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.quotas.v1.DeleteQuotaAllowanceRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
 
 __all__ = [
     #@ local import names here @#
     "QuotaAllowanceSpec",
     "QuotaAllowanceStatus",
     "QuotaAllowance",
+    "CreateQuotaAllowanceRequest",
+    "UpdateQuotaAllowanceRequest",
+    "DeleteQuotaAllowanceRequest",
     "ListQuotaAllowancesRequest",
     "GetQuotaAllowanceRequest",
     "ListQuotaAllowancesResponse",

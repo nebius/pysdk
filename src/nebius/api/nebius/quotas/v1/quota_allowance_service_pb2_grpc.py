@@ -2,12 +2,14 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.quotas.v1 import quota_allowance_pb2 as nebius_dot_quotas_dot_v1_dot_quota__allowance__pb2
 from nebius.api.nebius.quotas.v1 import quota_allowance_service_pb2 as nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2
 
 
 class QuotaAllowanceServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Manages quota allowances for tenants and projects, including listing, retrieval, and lifecycle operations.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -30,27 +32,66 @@ class QuotaAllowanceServiceStub(object):
                 request_serializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__pb2.QuotaAllowance.FromString,
                 )
+        self.Create = channel.unary_unary(
+                '/nebius.quotas.v1.QuotaAllowanceService/Create',
+                request_serializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.CreateQuotaAllowanceRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Update = channel.unary_unary(
+                '/nebius.quotas.v1.QuotaAllowanceService/Update',
+                request_serializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.UpdateQuotaAllowanceRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Delete = channel.unary_unary(
+                '/nebius.quotas.v1.QuotaAllowanceService/Delete',
+                request_serializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.DeleteQuotaAllowanceRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class QuotaAllowanceServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Manages quota allowances for tenants and projects, including listing, retrieval, and lifecycle operations.
+    """
 
     def List(self, request, context):
-        """Lists quotas by an ID of a Tenant or a Project.
+        """Lists quota allowances for the specified Tenant or Project.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Get(self, request, context):
-        """Gets a quota by its ID.
+        """Gets a quota allowance by its ID.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetByName(self, request, context):
-        """Gets a quota by an ID of a Tenant or a Project, its region, and name.
+        """Gets a quota allowance for a Tenant or Project by container ID, region, and name.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Create(self, request, context):
+        """Creates a quota allowance for a Project.
+        If the quota already exists, its value is replaced with the provided one.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Update(self, request, context):
+        """Updates a quota allowance by its ID.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Delete(self, request, context):
+        """Deletes a quota by its ID.
+        This is used to reset the quota value. It does not remove the quota entry.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -74,6 +115,21 @@ def add_QuotaAllowanceServiceServicer_to_server(servicer, server):
                     request_deserializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.GetByNameRequest.FromString,
                     response_serializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__pb2.QuotaAllowance.SerializeToString,
             ),
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.CreateQuotaAllowanceRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.UpdateQuotaAllowanceRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.DeleteQuotaAllowanceRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'nebius.quotas.v1.QuotaAllowanceService', rpc_method_handlers)
@@ -82,7 +138,8 @@ def add_QuotaAllowanceServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class QuotaAllowanceService(object):
-    """Missing associated documentation comment in .proto file."""
+    """Manages quota allowances for tenants and projects, including listing, retrieval, and lifecycle operations.
+    """
 
     @staticmethod
     def List(request,
@@ -132,5 +189,56 @@ class QuotaAllowanceService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.quotas.v1.QuotaAllowanceService/GetByName',
             nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_quotas_dot_v1_dot_quota__allowance__pb2.QuotaAllowance.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.quotas.v1.QuotaAllowanceService/Create',
+            nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.CreateQuotaAllowanceRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.quotas.v1.QuotaAllowanceService/Update',
+            nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.UpdateQuotaAllowanceRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.quotas.v1.QuotaAllowanceService/Delete',
+            nebius_dot_quotas_dot_v1_dot_quota__allowance__service__pb2.DeleteQuotaAllowanceRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

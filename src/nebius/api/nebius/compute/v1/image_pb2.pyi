@@ -1,5 +1,6 @@
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -38,7 +39,7 @@ class ImageSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., image_family: _Optional[str] = ..., version: _Optional[str] = ..., cpu_architecture: _Optional[_Union[ImageSpec.CPUArchitecture, str]] = ...) -> None: ...
 
 class ImageStatus(_message.Message):
-    __slots__ = ["state", "state_description", "storage_size_bytes", "min_disk_size_bytes", "reconciling"]
+    __slots__ = ["state", "state_description", "storage_size_bytes", "min_disk_size_bytes", "reconciling", "image_family_deprecation"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[ImageStatus.State]
@@ -53,14 +54,23 @@ class ImageStatus(_message.Message):
     UPDATING: ImageStatus.State
     DELETING: ImageStatus.State
     ERROR: ImageStatus.State
+    class ImageFamilyDeprecationStatus(_message.Message):
+        __slots__ = ["deprecated_at", "message"]
+        DEPRECATED_AT_FIELD_NUMBER: _ClassVar[int]
+        MESSAGE_FIELD_NUMBER: _ClassVar[int]
+        deprecated_at: _timestamp_pb2.Timestamp
+        message: str
+        def __init__(self, deprecated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., message: _Optional[str] = ...) -> None: ...
     STATE_FIELD_NUMBER: _ClassVar[int]
     STATE_DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     STORAGE_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     MIN_DISK_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
+    IMAGE_FAMILY_DEPRECATION_FIELD_NUMBER: _ClassVar[int]
     state: ImageStatus.State
     state_description: str
     storage_size_bytes: int
     min_disk_size_bytes: int
     reconciling: bool
-    def __init__(self, state: _Optional[_Union[ImageStatus.State, str]] = ..., state_description: _Optional[str] = ..., storage_size_bytes: _Optional[int] = ..., min_disk_size_bytes: _Optional[int] = ..., reconciling: bool = ...) -> None: ...
+    image_family_deprecation: ImageStatus.ImageFamilyDeprecationStatus
+    def __init__(self, state: _Optional[_Union[ImageStatus.State, str]] = ..., state_description: _Optional[str] = ..., storage_size_bytes: _Optional[int] = ..., min_disk_size_bytes: _Optional[int] = ..., reconciling: bool = ..., image_family_deprecation: _Optional[_Union[ImageStatus.ImageFamilyDeprecationStatus, _Mapping]] = ...) -> None: ...

@@ -3254,6 +3254,62 @@ class ImageStatus(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class ImageFamilyDeprecationStatus(pb_classes.Message):
+        """
+        Impossible create a disk using image family after the deprecation time, but still possible to create disk using image id.
+        """
+        
+        __PB2_CLASS__ = image_pb2.ImageStatus.ImageFamilyDeprecationStatus
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ImageStatus.ImageFamilyDeprecationStatus",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+            "deprecated_at": well_known_1.ts_mask,
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            deprecated_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+            message: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(deprecated_at, unset.UnsetType):
+                self.deprecated_at = deprecated_at
+            if not isinstance(message, unset.UnsetType):
+                self.message = message
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "deprecated_at",
+                "message",
+            ]
+        
+        @builtins.property
+        def deprecated_at(self) -> "datetime.datetime":
+            return super()._get_field("deprecated_at", explicit_presence=False,
+            wrap=well_known_1.from_timestamp
+            )
+        @deprecated_at.setter
+        def deprecated_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+            return super()._set_field("deprecated_at",value,explicit_presence=False,
+            unwrap=well_known_1.to_timestamp
+            )
+        
+        @builtins.property
+        def message(self) -> "builtins.str":
+            return super()._get_field("message", explicit_presence=False,
+            )
+        @message.setter
+        def message(self, value: "builtins.str|None") -> None:
+            return super()._set_field("message",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "deprecated_at":"deprecated_at",
+            "message":"message",
+        }
+        
+    
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.ImageStatus.State",image_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
@@ -3272,6 +3328,7 @@ class ImageStatus(pb_classes.Message):
         storage_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         min_disk_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        image_family_deprecation: "ImageStatus.ImageFamilyDeprecationStatus|image_pb2.ImageStatus.ImageFamilyDeprecationStatus|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -3284,6 +3341,8 @@ class ImageStatus(pb_classes.Message):
             self.min_disk_size_bytes = min_disk_size_bytes
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
+        if not isinstance(image_family_deprecation, unset.UnsetType):
+            self.image_family_deprecation = image_family_deprecation
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -3292,6 +3351,8 @@ class ImageStatus(pb_classes.Message):
             "storage_size_bytes",
             "min_disk_size_bytes",
             "reconciling",
+            "image_family_deprecation",
+            "ImageFamilyDeprecationStatus",
             "State",
         ]
     
@@ -3345,12 +3406,24 @@ class ImageStatus(pb_classes.Message):
         return super()._set_field("reconciling",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def image_family_deprecation(self) -> "ImageStatus.ImageFamilyDeprecationStatus":
+        return super()._get_field("image_family_deprecation", explicit_presence=False,
+        wrap=ImageStatus.ImageFamilyDeprecationStatus,
+        )
+    @image_family_deprecation.setter
+    def image_family_deprecation(self, value: "ImageStatus.ImageFamilyDeprecationStatus|image_pb2.ImageStatus.ImageFamilyDeprecationStatus|None") -> None:
+        return super()._set_field("image_family_deprecation",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "state_description":"state_description",
         "storage_size_bytes":"storage_size_bytes",
         "min_disk_size_bytes":"min_disk_size_bytes",
         "reconciling":"reconciling",
+        "image_family_deprecation":"image_family_deprecation",
+        "ImageFamilyDeprecationStatus":"ImageFamilyDeprecationStatus",
         "State":"State",
     }
     
@@ -6712,6 +6785,7 @@ class PlatformSpec(pb_classes.Message):
         allow_preset_change: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         short_human_readable_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         gpu_memory_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        gpu_memory_gigabytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(presets, unset.UnsetType):
@@ -6726,6 +6800,8 @@ class PlatformSpec(pb_classes.Message):
             self.short_human_readable_name = short_human_readable_name
         if not isinstance(gpu_memory_gibibytes, unset.UnsetType):
             self.gpu_memory_gibibytes = gpu_memory_gibibytes
+        if not isinstance(gpu_memory_gigabytes, unset.UnsetType):
+            self.gpu_memory_gigabytes = gpu_memory_gigabytes
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -6735,6 +6811,7 @@ class PlatformSpec(pb_classes.Message):
             "allow_preset_change",
             "short_human_readable_name",
             "gpu_memory_gibibytes",
+            "gpu_memory_gigabytes",
         ]
     
     @builtins.property
@@ -6785,11 +6862,32 @@ class PlatformSpec(pb_classes.Message):
     
     @builtins.property
     def gpu_memory_gibibytes(self) -> "builtins.int":
+        """
+        Supported until 02/10/26. Use field 'gpu_memory_gigabytes' instead.
+        """
+        
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.compute.v1.PlatformSpec.gpu_memory_gibibytes is deprecated. Supported until 02/10/26. Use field 'gpu_memory_gigabytes' instead."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._get_field("gpu_memory_gibibytes", explicit_presence=False,
         )
     @gpu_memory_gibibytes.setter
     def gpu_memory_gibibytes(self, value: "builtins.int|None") -> None:
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.compute.v1.PlatformSpec.gpu_memory_gibibytes is deprecated. Supported until 02/10/26. Use field 'gpu_memory_gigabytes' instead."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._set_field("gpu_memory_gibibytes",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def gpu_memory_gigabytes(self) -> "builtins.int":
+        return super()._get_field("gpu_memory_gigabytes", explicit_presence=False,
+        )
+    @gpu_memory_gigabytes.setter
+    def gpu_memory_gigabytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("gpu_memory_gigabytes",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -6799,6 +6897,7 @@ class PlatformSpec(pb_classes.Message):
         "allow_preset_change":"allow_preset_change",
         "short_human_readable_name":"short_human_readable_name",
         "gpu_memory_gibibytes":"gpu_memory_gibibytes",
+        "gpu_memory_gigabytes":"gpu_memory_gigabytes",
     }
     
 class Preset(pb_classes.Message):

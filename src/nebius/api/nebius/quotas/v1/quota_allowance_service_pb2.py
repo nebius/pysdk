@@ -13,10 +13,12 @@ _sym_db = _symbol_database.Default()
 
 from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
+from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.quotas.v1 import quota_allowance_pb2 as nebius_dot_quotas_dot_v1_dot_quota__allowance__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n.nebius/quotas/v1/quota_allowance_service.proto\x12\x10nebius.quotas.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a&nebius/quotas/v1/quota_allowance.proto\"}\n\x1aListQuotaAllowancesRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"6\n\x18GetQuotaAllowanceRequest\x12\x1a\n\x02id\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x03R\x02id\"}\n\x1bListQuotaAllowancesResponse\x12\x36\n\x05items\x18\x01 \x03(\x0b\x32 .nebius.quotas.v1.QuotaAllowanceR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"s\n\x10GetByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12\x1e\n\x06region\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06region2\xc5\x02\n\x15QuotaAllowanceService\x12\x63\n\x04List\x12,.nebius.quotas.v1.ListQuotaAllowancesRequest\x1a-.nebius.quotas.v1.ListQuotaAllowancesResponse\x12S\n\x03Get\x12*.nebius.quotas.v1.GetQuotaAllowanceRequest\x1a .nebius.quotas.v1.QuotaAllowance\x12Q\n\tGetByName\x12\".nebius.quotas.v1.GetByNameRequest\x1a .nebius.quotas.v1.QuotaAllowance\x1a\x1f\xbaJ\x1cquota-dispatcher.billing-cplBg\n\x17\x61i.nebius.pub.quotas.v1B\x1aQuotaAllowanceServiceProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/quotas/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n.nebius/quotas/v1/quota_allowance_service.proto\x12\x10nebius.quotas.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a&nebius/quotas/v1/quota_allowance.proto\"\x9f\x01\n\x1b\x43reateQuotaAllowanceRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12@\n\x04spec\x18\x02 \x01(\x0b\x32$.nebius.quotas.v1.QuotaAllowanceSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\x9f\x01\n\x1bUpdateQuotaAllowanceRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12@\n\x04spec\x18\x02 \x01(\x0b\x32$.nebius.quotas.v1.QuotaAllowanceSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"9\n\x1b\x44\x65leteQuotaAllowanceRequest\x12\x1a\n\x02id\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x03R\x02id\"}\n\x1aListQuotaAllowancesRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"6\n\x18GetQuotaAllowanceRequest\x12\x1a\n\x02id\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x03R\x02id\"}\n\x1bListQuotaAllowancesResponse\x12\x36\n\x05items\x18\x01 \x03(\x0b\x32 .nebius.quotas.v1.QuotaAllowanceR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"s\n\x10GetByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12\x1e\n\x06region\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06region2\xc7\x04\n\x15QuotaAllowanceService\x12\x63\n\x04List\x12,.nebius.quotas.v1.ListQuotaAllowancesRequest\x1a-.nebius.quotas.v1.ListQuotaAllowancesResponse\x12S\n\x03Get\x12*.nebius.quotas.v1.GetQuotaAllowanceRequest\x1a .nebius.quotas.v1.QuotaAllowance\x12Q\n\tGetByName\x12\".nebius.quotas.v1.GetByNameRequest\x1a .nebius.quotas.v1.QuotaAllowance\x12T\n\x06\x43reate\x12-.nebius.quotas.v1.CreateQuotaAllowanceRequest\x1a\x1b.nebius.common.v1.Operation\x12T\n\x06Update\x12-.nebius.quotas.v1.UpdateQuotaAllowanceRequest\x1a\x1b.nebius.common.v1.Operation\x12T\n\x06\x44\x65lete\x12-.nebius.quotas.v1.DeleteQuotaAllowanceRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x1f\xbaJ\x1cquota-dispatcher.billing-cplBg\n\x17\x61i.nebius.pub.quotas.v1B\x1aQuotaAllowanceServiceProtoP\x01Z.github.com/nebius/gosdk/proto/nebius/quotas/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,6 +27,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\027ai.nebius.pub.quotas.v1B\032QuotaAllowanceServiceProtoP\001Z.github.com/nebius/gosdk/proto/nebius/quotas/v1'
+  _CREATEQUOTAALLOWANCEREQUEST.fields_by_name['spec']._options = None
+  _CREATEQUOTAALLOWANCEREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
+  _UPDATEQUOTAALLOWANCEREQUEST.fields_by_name['spec']._options = None
+  _UPDATEQUOTAALLOWANCEREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
+  _DELETEQUOTAALLOWANCEREQUEST.fields_by_name['id']._options = None
+  _DELETEQUOTAALLOWANCEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\272J\001\003'
   _LISTQUOTAALLOWANCESREQUEST.fields_by_name['parent_id']._options = None
   _LISTQUOTAALLOWANCESREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
   _GETQUOTAALLOWANCEREQUEST.fields_by_name['id']._options = None
@@ -37,14 +45,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _GETBYNAMEREQUEST.fields_by_name['region']._serialized_options = b'\272H\003\310\001\001'
   _QUOTAALLOWANCESERVICE._options = None
   _QUOTAALLOWANCESERVICE._serialized_options = b'\272J\034quota-dispatcher.billing-cpl'
-  _globals['_LISTQUOTAALLOWANCESREQUEST']._serialized_start=163
-  _globals['_LISTQUOTAALLOWANCESREQUEST']._serialized_end=288
-  _globals['_GETQUOTAALLOWANCEREQUEST']._serialized_start=290
-  _globals['_GETQUOTAALLOWANCEREQUEST']._serialized_end=344
-  _globals['_LISTQUOTAALLOWANCESRESPONSE']._serialized_start=346
-  _globals['_LISTQUOTAALLOWANCESRESPONSE']._serialized_end=471
-  _globals['_GETBYNAMEREQUEST']._serialized_start=473
-  _globals['_GETBYNAMEREQUEST']._serialized_end=588
-  _globals['_QUOTAALLOWANCESERVICE']._serialized_start=591
-  _globals['_QUOTAALLOWANCESERVICE']._serialized_end=916
+  _globals['_CREATEQUOTAALLOWANCEREQUEST']._serialized_start=231
+  _globals['_CREATEQUOTAALLOWANCEREQUEST']._serialized_end=390
+  _globals['_UPDATEQUOTAALLOWANCEREQUEST']._serialized_start=393
+  _globals['_UPDATEQUOTAALLOWANCEREQUEST']._serialized_end=552
+  _globals['_DELETEQUOTAALLOWANCEREQUEST']._serialized_start=554
+  _globals['_DELETEQUOTAALLOWANCEREQUEST']._serialized_end=611
+  _globals['_LISTQUOTAALLOWANCESREQUEST']._serialized_start=613
+  _globals['_LISTQUOTAALLOWANCESREQUEST']._serialized_end=738
+  _globals['_GETQUOTAALLOWANCEREQUEST']._serialized_start=740
+  _globals['_GETQUOTAALLOWANCEREQUEST']._serialized_end=794
+  _globals['_LISTQUOTAALLOWANCESRESPONSE']._serialized_start=796
+  _globals['_LISTQUOTAALLOWANCESRESPONSE']._serialized_end=921
+  _globals['_GETBYNAMEREQUEST']._serialized_start=923
+  _globals['_GETBYNAMEREQUEST']._serialized_end=1038
+  _globals['_QUOTAALLOWANCESERVICE']._serialized_start=1041
+  _globals['_QUOTAALLOWANCESERVICE']._serialized_end=1624
 # @@protoc_insertion_point(module_scope)
