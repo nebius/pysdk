@@ -38,7 +38,9 @@ class SamlSettings(_message.Message):
     def __init__(self, idp_issuer: _Optional[str] = ..., sso_url: _Optional[str] = ..., force_authn: bool = ...) -> None: ...
 
 class FederationStatus(_message.Message):
-    __slots__ = ["users_count"]
+    __slots__ = ["users_count", "certificates_count"]
     USERS_COUNT_FIELD_NUMBER: _ClassVar[int]
+    CERTIFICATES_COUNT_FIELD_NUMBER: _ClassVar[int]
     users_count: int
-    def __init__(self, users_count: _Optional[int] = ...) -> None: ...
+    certificates_count: int
+    def __init__(self, users_count: _Optional[int] = ..., certificates_count: _Optional[int] = ...) -> None: ...

@@ -1230,10 +1230,9 @@ class ListAccessKeysResponse(pb_classes.Message):
 
 class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     """
-    Access keys API v1 is depricated. It's known to malfunction under certain conditions.
-    Use Access keys API v2 instead. Access keys create by API v1 are available using Access keys API v2.
+    Access keys management [deprecated]
     
-    Supported until 09/01/26. Access keys API v1 is deprecated, use the v2 version instead. Keys produced by API v1 are available using v2.
+    Supported until 09/01/26. Access keys v1 API is deprecated. Please use the v2 API instead. All existing keys remain accessible through the v2 API.
     
     This class provides the client methods for the ``.nebius.iam.v1.AccessKeyService`` service.
     
@@ -1256,7 +1255,7 @@ class AccessKeyServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Ope
     __operation_source_method__ = "Create"
     """The method name that can be used to fetch the address channel for the operation."""
     __service_deprecation_details__ = (
-    """Service .nebius.iam.v1.AccessKeyService is deprecated. Supported until 09/01/26. Access keys API v1 is deprecated, use the v2 version instead. Keys produced by API v1 are available using v2."""
+    """Service .nebius.iam.v1.AccessKeyService is deprecated. Supported until 09/01/26. Access keys v1 API is deprecated. Please use the v2 API instead. All existing keys remain accessible through the v2 API."""
     )
     
     def create(self,
@@ -4321,14 +4320,18 @@ class FederationStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         users_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        certificates_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(users_count, unset.UnsetType):
             self.users_count = users_count
+        if not isinstance(certificates_count, unset.UnsetType):
+            self.certificates_count = certificates_count
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "users_count",
+            "certificates_count",
         ]
     
     @builtins.property
@@ -4340,8 +4343,18 @@ class FederationStatus(pb_classes.Message):
         return super()._set_field("users_count",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def certificates_count(self) -> "builtins.int":
+        return super()._get_field("certificates_count", explicit_presence=False,
+        )
+    @certificates_count.setter
+    def certificates_count(self, value: "builtins.int|None") -> None:
+        return super()._set_field("certificates_count",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "users_count":"users_count",
+        "certificates_count":"certificates_count",
     }
     
 # file: nebius/iam/v1/federation_certificate.proto

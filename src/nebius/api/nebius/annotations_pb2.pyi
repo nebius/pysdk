@@ -120,12 +120,14 @@ class EnumValuePySDKSettings(_message.Message):
     def __init__(self, name: _Optional[str] = ...) -> None: ...
 
 class DeprecationDetails(_message.Message):
-    __slots__ = ["effective_at", "description"]
+    __slots__ = ["effective_at", "description", "description_cli"]
     EFFECTIVE_AT_FIELD_NUMBER: _ClassVar[int]
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
+    DESCRIPTION_CLI_FIELD_NUMBER: _ClassVar[int]
     effective_at: str
     description: str
-    def __init__(self, effective_at: _Optional[str] = ..., description: _Optional[str] = ...) -> None: ...
+    description_cli: str
+    def __init__(self, effective_at: _Optional[str] = ..., description: _Optional[str] = ..., description_cli: _Optional[str] = ...) -> None: ...
 
 class NIDFieldSettings(_message.Message):
     __slots__ = ["resource", "parent_resource"]

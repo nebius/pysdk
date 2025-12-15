@@ -348,17 +348,21 @@ class DeprecationDetails(pb_classes.Message):
         *,
         effective_at: "builtins.str|None|unset.UnsetType" = unset.Unset,
         description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        description_cli: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(effective_at, unset.UnsetType):
             self.effective_at = effective_at
         if not isinstance(description, unset.UnsetType):
             self.description = description
+        if not isinstance(description_cli, unset.UnsetType):
+            self.description_cli = description_cli
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "effective_at",
             "description",
+            "description_cli",
         ]
     
     @builtins.property
@@ -377,7 +381,8 @@ class DeprecationDetails(pb_classes.Message):
     @builtins.property
     def description(self) -> "builtins.str":
         """
-        A description to help users understand the reason for deprecation and suggest alternatives
+        A description to help users understand the reason for deprecation and suggest alternatives.
+        By default, this message will be shown in the CLI, Terraform, and SDKs as is.
         """
         
         return super()._get_field("description", explicit_presence=False,
@@ -387,9 +392,24 @@ class DeprecationDetails(pb_classes.Message):
         return super()._set_field("description",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def description_cli(self) -> "builtins.str":
+        """
+        Override base description for CLI, specify possible alternative method
+        Example: "Please use the 'iam v2 access-key' command instead. All existing keys remain accessible through the new command."
+        """
+        
+        return super()._get_field("description_cli", explicit_presence=False,
+        )
+    @description_cli.setter
+    def description_cli(self, value: "builtins.str|None") -> None:
+        return super()._set_field("description_cli",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "effective_at":"effective_at",
         "description":"description",
+        "description_cli":"description_cli",
     }
     
 class NIDFieldSettings(pb_classes.Message):
