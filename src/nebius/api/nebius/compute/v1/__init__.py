@@ -657,7 +657,6 @@ class DiskEncryption(pb_classes.Message):
         DISK_ENCRYPTION_MANAGED = 1
         """
         Enables encryption using the platform's default root key from KMS.
-        Available for blank disks only.
         Available for disks with NETWORK_SSD_NON_REPLICATED and NETWORK_SSD_IO_M3 types only.
         """
         
@@ -4527,6 +4526,7 @@ class InstanceSpec(pb_classes.Message):
         recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None|unset.UnsetType" = unset.Unset,
         preemptible: "PreemptibleSpec|instance_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
         hostname: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        reservation_policy: "ReservationPolicy|instance_pb2.ReservationPolicy|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service_account_id, unset.UnsetType):
@@ -4553,6 +4553,8 @@ class InstanceSpec(pb_classes.Message):
             self.preemptible = preemptible
         if not isinstance(hostname, unset.UnsetType):
             self.hostname = hostname
+        if not isinstance(reservation_policy, unset.UnsetType):
+            self.reservation_policy = reservation_policy
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -4568,6 +4570,7 @@ class InstanceSpec(pb_classes.Message):
             "recovery_policy",
             "preemptible",
             "hostname",
+            "reservation_policy",
         ]
     
     @builtins.property
@@ -4745,6 +4748,16 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("hostname",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def reservation_policy(self) -> "ReservationPolicy":
+        return super()._get_field("reservation_policy", explicit_presence=False,
+        wrap=ReservationPolicy,
+        )
+    @reservation_policy.setter
+    def reservation_policy(self, value: "ReservationPolicy|instance_pb2.ReservationPolicy|None") -> None:
+        return super()._set_field("reservation_policy",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "service_account_id":"service_account_id",
         "resources":"resources",
@@ -4758,6 +4771,7 @@ class InstanceSpec(pb_classes.Message):
         "recovery_policy":"recovery_policy",
         "preemptible":"preemptible",
         "hostname":"hostname",
+        "reservation_policy":"reservation_policy",
     }
     
 class PreemptibleSpec(pb_classes.Message):
@@ -5276,6 +5290,7 @@ class InstanceStatus(pb_classes.Message):
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         maintenance_event_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         infiniband_topology_path: "InstanceStatusInfinibandTopologyPath|instance_pb2.InstanceStatusInfinibandTopologyPath|None|unset.UnsetType" = unset.Unset,
+        reservation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -5288,6 +5303,8 @@ class InstanceStatus(pb_classes.Message):
             self.maintenance_event_id = maintenance_event_id
         if not isinstance(infiniband_topology_path, unset.UnsetType):
             self.infiniband_topology_path = infiniband_topology_path
+        if not isinstance(reservation_id, unset.UnsetType):
+            self.reservation_id = reservation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -5296,6 +5313,7 @@ class InstanceStatus(pb_classes.Message):
             "reconciling",
             "maintenance_event_id",
             "infiniband_topology_path",
+            "reservation_id",
             "gpu_cluster_topology",
             "InstanceState",
         ]
@@ -5352,12 +5370,22 @@ class InstanceStatus(pb_classes.Message):
         return super()._set_field("infiniband_topology_path",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def reservation_id(self) -> "builtins.str":
+        return super()._get_field("reservation_id", explicit_presence=False,
+        )
+    @reservation_id.setter
+    def reservation_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("reservation_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "network_interfaces":"network_interfaces",
         "reconciling":"reconciling",
         "maintenance_event_id":"maintenance_event_id",
         "infiniband_topology_path":"infiniband_topology_path",
+        "reservation_id":"reservation_id",
         "gpu_cluster_topology":"gpu_cluster_topology",
         "InstanceState":"InstanceState",
     }
@@ -5395,6 +5423,86 @@ class InstanceStatusInfinibandTopologyPath(pb_classes.Message):
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "path":"path",
+    }
+    
+class ReservationPolicy(pb_classes.Message):
+    __PB2_CLASS__ = instance_pb2.ReservationPolicy
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ReservationPolicy",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class Policy(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.ReservationPolicy.Policy",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        AUTO = 0
+        """
+        1) Will try to launch instance in any reservation_ids if provided.
+        2) Will try to launch instance in any of the available capacity block.
+        3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
+        """
+        
+        FORBID = 1
+        """
+        The instance is launched only using on-demand (PAYG) capacity.
+        No attempt is made to find or use a Capacity Block.
+        It's an error to provide reservation_ids with policy = FORBID
+        """
+        
+        STRICT = 2
+        """
+        1) Will try to launch the instance in Capacity Blocks from reservation_ids if provided.
+        2) If reservation_ids are not provided will try to launch instance in suitable & available Capacity Block.
+        3) Fail otherwise.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        policy: "ReservationPolicy.Policy|instance_pb2.ReservationPolicy.Policy|None|unset.UnsetType" = unset.Unset,
+        reservation_ids: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(policy, unset.UnsetType):
+            self.policy = policy
+        if not isinstance(reservation_ids, unset.UnsetType):
+            self.reservation_ids = reservation_ids
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "policy",
+            "reservation_ids",
+            "Policy",
+        ]
+    
+    @builtins.property
+    def policy(self) -> "ReservationPolicy.Policy":
+        return super()._get_field("policy", explicit_presence=False,
+        wrap=ReservationPolicy.Policy,
+        )
+    @policy.setter
+    def policy(self, value: "ReservationPolicy.Policy|instance_pb2.ReservationPolicy.Policy|None") -> None:
+        return super()._set_field("policy",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def reservation_ids(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        Capacity block groups, order matters
+        """
+        
+        return super()._get_field("reservation_ids", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @reservation_ids.setter
+    def reservation_ids(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("reservation_ids",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "policy":"policy",
+        "reservation_ids":"reservation_ids",
+        "Policy":"Policy",
     }
     
 # file: nebius/compute/v1/instance_service.proto
@@ -7341,6 +7449,7 @@ __all__ = [
     "AttachedFilesystemSpec",
     "InstanceStatus",
     "InstanceStatusInfinibandTopologyPath",
+    "ReservationPolicy",
     "GetInstanceRequest",
     "ListInstancesRequest",
     "CreateInstanceRequest",
