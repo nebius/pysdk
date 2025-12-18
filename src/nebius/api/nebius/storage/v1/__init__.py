@@ -1373,6 +1373,25 @@ class BucketSpec(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class ObjectAuditLogging(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.BucketSpec.ObjectAuditLogging",bucket_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        OBJECT_AUDIT_LOGGING_UNSPECIFIED = 0
+        NONE = 1
+        """
+        Logging is disabled.
+        """
+        
+        MUTATE_ONLY = 2
+        """
+        Logging enabled only for mutating requests.
+        """
+        
+        ALL = 3
+        """
+        Logging enabled for all requests.
+        """
+        
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -1383,6 +1402,7 @@ class BucketSpec(pb_classes.Message):
         default_storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
         override_storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
         force_storage_class: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        object_audit_logging: "BucketSpec.ObjectAuditLogging|bucket_pb2.BucketSpec.ObjectAuditLogging|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(versioning_policy, unset.UnsetType):
@@ -1397,6 +1417,8 @@ class BucketSpec(pb_classes.Message):
             self.override_storage_class = override_storage_class
         if not isinstance(force_storage_class, unset.UnsetType):
             self.force_storage_class = force_storage_class
+        if not isinstance(object_audit_logging, unset.UnsetType):
+            self.object_audit_logging = object_audit_logging
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1406,6 +1428,8 @@ class BucketSpec(pb_classes.Message):
             "default_storage_class",
             "override_storage_class",
             "force_storage_class",
+            "object_audit_logging",
+            "ObjectAuditLogging",
         ]
     
     @builtins.property
@@ -1507,6 +1531,20 @@ class BucketSpec(pb_classes.Message):
         return super()._set_field("force_storage_class",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def object_audit_logging(self) -> "BucketSpec.ObjectAuditLogging":
+        """
+        Object audit logging specifies which requests must be logged - none, all or mutational only.
+        """
+        
+        return super()._get_field("object_audit_logging", explicit_presence=False,
+        wrap=BucketSpec.ObjectAuditLogging,
+        )
+    @object_audit_logging.setter
+    def object_audit_logging(self, value: "BucketSpec.ObjectAuditLogging|bucket_pb2.BucketSpec.ObjectAuditLogging|None") -> None:
+        return super()._set_field("object_audit_logging",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "versioning_policy":"versioning_policy",
         "max_size_bytes":"max_size_bytes",
@@ -1514,6 +1552,8 @@ class BucketSpec(pb_classes.Message):
         "default_storage_class":"default_storage_class",
         "override_storage_class":"override_storage_class",
         "force_storage_class":"force_storage_class",
+        "object_audit_logging":"object_audit_logging",
+        "ObjectAuditLogging":"ObjectAuditLogging",
     }
     
 class BucketStatus(pb_classes.Message):

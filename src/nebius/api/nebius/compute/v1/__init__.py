@@ -3135,6 +3135,55 @@ class ImageSpec(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class UnsupportedPlatformsEntry(pb_classes.Message):
+        __PB2_CLASS__ = image_pb2.ImageSpec.UnsupportedPlatformsEntry
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ImageSpec.UnsupportedPlatformsEntry",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
+            if not isinstance(value, unset.UnsetType):
+                self.value = value
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
+        @builtins.property
+        def key(self) -> "builtins.str":
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return super()._get_field("value", explicit_presence=False,
+            )
+        @value.setter
+        def value(self, value: "builtins.str|None") -> None:
+            return super()._set_field("value",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
+        
+    
     class CPUArchitecture(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.ImageSpec.CPUArchitecture",image_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
@@ -3176,6 +3225,9 @@ class ImageSpec(pb_classes.Message):
         image_family: "builtins.str|None|unset.UnsetType" = unset.Unset,
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
         cpu_architecture: "ImageSpec.CPUArchitecture|image_pb2.ImageSpec.CPUArchitecture|None|unset.UnsetType" = unset.Unset,
+        image_family_human_readable: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        recommended_platforms: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        unsupported_platforms: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(description, unset.UnsetType):
@@ -3186,6 +3238,12 @@ class ImageSpec(pb_classes.Message):
             self.version = version
         if not isinstance(cpu_architecture, unset.UnsetType):
             self.cpu_architecture = cpu_architecture
+        if not isinstance(image_family_human_readable, unset.UnsetType):
+            self.image_family_human_readable = image_family_human_readable
+        if not isinstance(recommended_platforms, unset.UnsetType):
+            self.recommended_platforms = recommended_platforms
+        if not isinstance(unsupported_platforms, unset.UnsetType):
+            self.unsupported_platforms = unsupported_platforms
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -3193,6 +3251,10 @@ class ImageSpec(pb_classes.Message):
             "image_family",
             "version",
             "cpu_architecture",
+            "image_family_human_readable",
+            "recommended_platforms",
+            "unsupported_platforms",
+            "UnsupportedPlatformsEntry",
             "_description",
             "CPUArchitecture",
         ]
@@ -3238,11 +3300,56 @@ class ImageSpec(pb_classes.Message):
         return super()._set_field("cpu_architecture",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def image_family_human_readable(self) -> "builtins.str":
+        """
+        human readable name for image family
+        """
+        
+        return super()._get_field("image_family_human_readable", explicit_presence=False,
+        )
+    @image_family_human_readable.setter
+    def image_family_human_readable(self, value: "builtins.str|None") -> None:
+        return super()._set_field("image_family_human_readable",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def recommended_platforms(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        list of platforms where this image is recommended to use
+        """
+        
+        return super()._get_field("recommended_platforms", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @recommended_platforms.setter
+    def recommended_platforms(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("recommended_platforms",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def unsupported_platforms(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        """
+        list of platforms where this image is not supported with explanation
+        """
+        
+        return super()._get_field("unsupported_platforms", explicit_presence=False,
+        wrap=pb_classes.Map,
+        )
+    @unsupported_platforms.setter
+    def unsupported_platforms(self, value: "abc.Mapping[builtins.str,builtins.str]|None") -> None:
+        return super()._set_field("unsupported_platforms",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "description":"description",
         "image_family":"image_family",
         "version":"version",
         "cpu_architecture":"cpu_architecture",
+        "image_family_human_readable":"image_family_human_readable",
+        "recommended_platforms":"recommended_platforms",
+        "unsupported_platforms":"unsupported_platforms",
+        "UnsupportedPlatformsEntry":"UnsupportedPlatformsEntry",
         "_description":"_description",
         "CPUArchitecture":"CPUArchitecture",
     }

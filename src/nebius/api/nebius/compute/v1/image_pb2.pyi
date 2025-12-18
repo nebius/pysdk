@@ -1,10 +1,11 @@
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -19,7 +20,7 @@ class Image(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ImageSpec, _Mapping]] = ..., status: _Optional[_Union[ImageStatus, _Mapping]] = ...) -> None: ...
 
 class ImageSpec(_message.Message):
-    __slots__ = ["description", "image_family", "version", "cpu_architecture"]
+    __slots__ = ["description", "image_family", "version", "cpu_architecture", "image_family_human_readable", "recommended_platforms", "unsupported_platforms"]
     class CPUArchitecture(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[ImageSpec.CPUArchitecture]
@@ -28,15 +29,28 @@ class ImageSpec(_message.Message):
     UNSPECIFIED: ImageSpec.CPUArchitecture
     AMD64: ImageSpec.CPUArchitecture
     ARM64: ImageSpec.CPUArchitecture
+    class UnsupportedPlatformsEntry(_message.Message):
+        __slots__ = ["key", "value"]
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: str
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
     DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     IMAGE_FAMILY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     CPU_ARCHITECTURE_FIELD_NUMBER: _ClassVar[int]
+    IMAGE_FAMILY_HUMAN_READABLE_FIELD_NUMBER: _ClassVar[int]
+    RECOMMENDED_PLATFORMS_FIELD_NUMBER: _ClassVar[int]
+    UNSUPPORTED_PLATFORMS_FIELD_NUMBER: _ClassVar[int]
     description: str
     image_family: str
     version: str
     cpu_architecture: ImageSpec.CPUArchitecture
-    def __init__(self, description: _Optional[str] = ..., image_family: _Optional[str] = ..., version: _Optional[str] = ..., cpu_architecture: _Optional[_Union[ImageSpec.CPUArchitecture, str]] = ...) -> None: ...
+    image_family_human_readable: str
+    recommended_platforms: _containers.RepeatedScalarFieldContainer[str]
+    unsupported_platforms: _containers.ScalarMap[str, str]
+    def __init__(self, description: _Optional[str] = ..., image_family: _Optional[str] = ..., version: _Optional[str] = ..., cpu_architecture: _Optional[_Union[ImageSpec.CPUArchitecture, str]] = ..., image_family_human_readable: _Optional[str] = ..., recommended_platforms: _Optional[_Iterable[str]] = ..., unsupported_platforms: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class ImageStatus(_message.Message):
     __slots__ = ["state", "state_description", "storage_size_bytes", "min_disk_size_bytes", "reconciling", "image_family_deprecation"]

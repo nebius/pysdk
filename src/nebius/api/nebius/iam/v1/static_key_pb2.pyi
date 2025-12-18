@@ -28,10 +28,12 @@ class StaticKeySpec(_message.Message):
         OBSERVABILITY: _ClassVar[StaticKeySpec.ClientService]
         CONTAINER_REGISTRY: _ClassVar[StaticKeySpec.ClientService]
         AI_STUDIO: _ClassVar[StaticKeySpec.ClientService]
+        TRACTO: _ClassVar[StaticKeySpec.ClientService]
     CLIENT_SERVICE_UNSPECIFIED: StaticKeySpec.ClientService
     OBSERVABILITY: StaticKeySpec.ClientService
     CONTAINER_REGISTRY: StaticKeySpec.ClientService
     AI_STUDIO: StaticKeySpec.ClientService
+    TRACTO: StaticKeySpec.ClientService
     ACCOUNT_FIELD_NUMBER: _ClassVar[int]
     SERVICE_FIELD_NUMBER: _ClassVar[int]
     EXPIRESAT_FIELD_NUMBER: _ClassVar[int]

@@ -28,7 +28,7 @@ class FederationCertificateSpec(_message.Message):
     def __init__(self, description: _Optional[str] = ..., data: _Optional[str] = ...) -> None: ...
 
 class FederationCertificateStatus(_message.Message):
-    __slots__ = ["state", "algorithm", "key_size", "not_before", "not_after"]
+    __slots__ = ["state", "fingerprint", "algorithm", "key_size", "not_before", "not_after"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[FederationCertificateStatus.State]
@@ -38,13 +38,15 @@ class FederationCertificateStatus(_message.Message):
     ACTIVE: FederationCertificateStatus.State
     EXPIRED: FederationCertificateStatus.State
     STATE_FIELD_NUMBER: _ClassVar[int]
+    FINGERPRINT_FIELD_NUMBER: _ClassVar[int]
     ALGORITHM_FIELD_NUMBER: _ClassVar[int]
     KEY_SIZE_FIELD_NUMBER: _ClassVar[int]
     NOT_BEFORE_FIELD_NUMBER: _ClassVar[int]
     NOT_AFTER_FIELD_NUMBER: _ClassVar[int]
     state: FederationCertificateStatus.State
+    fingerprint: str
     algorithm: str
     key_size: int
     not_before: _timestamp_pb2.Timestamp
     not_after: _timestamp_pb2.Timestamp
-    def __init__(self, state: _Optional[_Union[FederationCertificateStatus.State, str]] = ..., algorithm: _Optional[str] = ..., key_size: _Optional[int] = ..., not_before: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., not_after: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, state: _Optional[_Union[FederationCertificateStatus.State, str]] = ..., fingerprint: _Optional[str] = ..., algorithm: _Optional[str] = ..., key_size: _Optional[int] = ..., not_before: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., not_after: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...

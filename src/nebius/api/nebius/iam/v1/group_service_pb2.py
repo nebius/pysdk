@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.iam.v1 import group_pb2 as nebius_dot_iam_dot_v1_dot_group__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/iam/v1/group_service.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x19nebius/iam/v1/group.proto\"\x82\x01\n\x12\x43reateGroupRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12,\n\x04spec\x18\x02 \x01(\x0b\x32\x18.nebius.iam.v1.GroupSpecR\x04spec\")\n\x0fGetGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"X\n\x15GetGroupByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x9f\x01\n\x11ListGroupsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12 \n\tpage_size\x18\x02 \x01(\x03H\x00R\x08pageSize\x88\x01\x01\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilterB\x0c\n\n_page_size\"h\n\x12ListGroupsResponse\x12*\n\x05items\x18\x01 \x03(\x0b\x32\x14.nebius.iam.v1.GroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\",\n\x12\x44\x65leteGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x82\x01\n\x12UpdateGroupRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12,\n\x04spec\x18\x02 \x01(\x0b\x32\x18.nebius.iam.v1.GroupSpecR\x04spec2\xcb\x03\n\x0cGroupService\x12H\n\x06\x43reate\x12!.nebius.iam.v1.CreateGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12;\n\x03Get\x12\x1e.nebius.iam.v1.GetGroupRequest\x1a\x14.nebius.iam.v1.Group\x12G\n\tGetByName\x12$.nebius.iam.v1.GetGroupByNameRequest\x1a\x14.nebius.iam.v1.Group\x12K\n\x04List\x12 .nebius.iam.v1.ListGroupsRequest\x1a!.nebius.iam.v1.ListGroupsResponse\x12H\n\x06\x44\x65lete\x12!.nebius.iam.v1.DeleteGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12H\n\x06Update\x12!.nebius.iam.v1.UpdateGroupRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07\x63pl.iamBX\n\x14\x61i.nebius.pub.iam.v1B\x11GroupServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/iam/v1/group_service.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x19nebius/iam/v1/group.proto\"\x82\x01\n\x12\x43reateGroupRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12,\n\x04spec\x18\x02 \x01(\x0b\x32\x18.nebius.iam.v1.GroupSpecR\x04spec\")\n\x0fGetGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"X\n\x15GetGroupByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x8c\x01\n\x11ListGroupsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"h\n\x12ListGroupsResponse\x12*\n\x05items\x18\x01 \x03(\x0b\x32\x14.nebius.iam.v1.GroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\",\n\x12\x44\x65leteGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x82\x01\n\x12UpdateGroupRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12,\n\x04spec\x18\x02 \x01(\x0b\x32\x18.nebius.iam.v1.GroupSpecR\x04spec2\xcb\x03\n\x0cGroupService\x12H\n\x06\x43reate\x12!.nebius.iam.v1.CreateGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12;\n\x03Get\x12\x1e.nebius.iam.v1.GetGroupRequest\x1a\x14.nebius.iam.v1.Group\x12G\n\tGetByName\x12$.nebius.iam.v1.GetGroupByNameRequest\x1a\x14.nebius.iam.v1.Group\x12K\n\x04List\x12 .nebius.iam.v1.ListGroupsRequest\x1a!.nebius.iam.v1.ListGroupsResponse\x12H\n\x06\x44\x65lete\x12!.nebius.iam.v1.DeleteGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12H\n\x06Update\x12!.nebius.iam.v1.UpdateGroupRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07\x63pl.iamBX\n\x14\x61i.nebius.pub.iam.v1B\x11GroupServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -46,13 +46,13 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_GETGROUPBYNAMEREQUEST']._serialized_start=377
   _globals['_GETGROUPBYNAMEREQUEST']._serialized_end=465
   _globals['_LISTGROUPSREQUEST']._serialized_start=468
-  _globals['_LISTGROUPSREQUEST']._serialized_end=627
-  _globals['_LISTGROUPSRESPONSE']._serialized_start=629
-  _globals['_LISTGROUPSRESPONSE']._serialized_end=733
-  _globals['_DELETEGROUPREQUEST']._serialized_start=735
-  _globals['_DELETEGROUPREQUEST']._serialized_end=779
-  _globals['_UPDATEGROUPREQUEST']._serialized_start=782
-  _globals['_UPDATEGROUPREQUEST']._serialized_end=912
-  _globals['_GROUPSERVICE']._serialized_start=915
-  _globals['_GROUPSERVICE']._serialized_end=1374
+  _globals['_LISTGROUPSREQUEST']._serialized_end=608
+  _globals['_LISTGROUPSRESPONSE']._serialized_start=610
+  _globals['_LISTGROUPSRESPONSE']._serialized_end=714
+  _globals['_DELETEGROUPREQUEST']._serialized_start=716
+  _globals['_DELETEGROUPREQUEST']._serialized_end=760
+  _globals['_UPDATEGROUPREQUEST']._serialized_start=763
+  _globals['_UPDATEGROUPREQUEST']._serialized_end=893
+  _globals['_GROUPSERVICE']._serialized_start=896
+  _globals['_GROUPSERVICE']._serialized_end=1355
 # @@protoc_insertion_point(module_scope)

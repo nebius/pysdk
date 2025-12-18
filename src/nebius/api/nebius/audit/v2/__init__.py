@@ -1344,6 +1344,24 @@ class AuditEvent(pb_classes.Message):
     }
     
 # file: nebius/audit/v2/audit_event_service.proto
+class EventType(pb_enum.Enum):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.audit.v2.EventType",audit_event_service_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    EVENT_TYPE_UNSPECIFIED = 0
+    """
+    Unspecified event type.
+    """
+    
+    CONTROL_PLANE = 1
+    """
+    Control plane events.
+    """
+    
+    DATA_PLANE = 2
+    """
+    Data plane events (S3).
+    """
+    
+
 class ListAuditEventRequest(pb_classes.Message):
     __PB2_CLASS__ = audit_event_service_pb2.ListAuditEventRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.ListAuditEventRequest",audit_event_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1362,6 +1380,7 @@ class ListAuditEventRequest(pb_classes.Message):
         end: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
         filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        event_type: "EventType|audit_event_service_pb2.EventType|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1376,6 +1395,8 @@ class ListAuditEventRequest(pb_classes.Message):
             self.page_token = page_token
         if not isinstance(filter, unset.UnsetType):
             self.filter = filter
+        if not isinstance(event_type, unset.UnsetType):
+            self.event_type = event_type
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1385,6 +1406,7 @@ class ListAuditEventRequest(pb_classes.Message):
             "end",
             "page_token",
             "filter",
+            "event_type",
         ]
     
     @builtins.property
@@ -1477,6 +1499,20 @@ class ListAuditEventRequest(pb_classes.Message):
         return super()._set_field("filter",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def event_type(self) -> "EventType":
+        """
+        Type of audit event to filter by.
+        """
+        
+        return super()._get_field("event_type", explicit_presence=False,
+        wrap=EventType,
+        )
+    @event_type.setter
+    def event_type(self, value: "EventType|audit_event_service_pb2.EventType|None") -> None:
+        return super()._set_field("event_type",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "parent_id":"parent_id",
         "page_size":"page_size",
@@ -1484,6 +1520,7 @@ class ListAuditEventRequest(pb_classes.Message):
         "end":"end",
         "page_token":"page_token",
         "filter":"filter",
+        "event_type":"event_type",
     }
     
 class ListAuditEventResponse(pb_classes.Message):
@@ -1601,6 +1638,7 @@ __all__ = [
     "Service",
     "Status",
     "AuditEvent",
+    "EventType",
     "ListAuditEventRequest",
     "ListAuditEventResponse",
     "AuditEventServiceClient",

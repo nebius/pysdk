@@ -15,7 +15,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.iam.v1 import tenant_user_account_pb2 as nebius_dot_iam_dot_v1_dot_tenant__user__account__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n?nebius/iam/v1/tenant_user_account_with_attributes_service.proto\x12\rnebius.iam.v1\x1a\x18nebius/annotations.proto\x1a\'nebius/iam/v1/tenant_user_account.proto\";\n)GetTenantUserAccountWithAttributesRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\xb6\x01\n+ListTenantUserAccountsWithAttributesRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12 \n\tpage_size\x18\x02 \x01(\x03H\x00R\x08pageSize\x88\x01\x01\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x1b\n\x06\x66ilter\x18\x04 \x01(\tB\x03\xc0J\x01R\x06\x66ilterB\x0c\n\n_page_size\"\x9c\x01\n,ListTenantUserAccountsWithAttributesResponse\x12\x44\n\x05items\x18\x01 \x03(\x0b\x32..nebius.iam.v1.TenantUserAccountWithAttributesR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xa6\x02\n&TenantUserAccountWithAttributesService\x12o\n\x03Get\x12\x38.nebius.iam.v1.GetTenantUserAccountWithAttributesRequest\x1a..nebius.iam.v1.TenantUserAccountWithAttributes\x12\x7f\n\x04List\x12:.nebius.iam.v1.ListTenantUserAccountsWithAttributesRequest\x1a;.nebius.iam.v1.ListTenantUserAccountsWithAttributesResponse\x1a\n\xbaJ\x07\x63pl.iamBr\n\x14\x61i.nebius.pub.iam.v1B+TenantUserAccountWithAttributesServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n?nebius/iam/v1/tenant_user_account_with_attributes_service.proto\x12\rnebius.iam.v1\x1a\x18nebius/annotations.proto\x1a\'nebius/iam/v1/tenant_user_account.proto\";\n)GetTenantUserAccountWithAttributesRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\xa3\x01\n+ListTenantUserAccountsWithAttributesRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x1b\n\x06\x66ilter\x18\x04 \x01(\tB\x03\xc0J\x01R\x06\x66ilter\"\x9c\x01\n,ListTenantUserAccountsWithAttributesResponse\x12\x44\n\x05items\x18\x01 \x03(\x0b\x32..nebius.iam.v1.TenantUserAccountWithAttributesR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xa6\x02\n&TenantUserAccountWithAttributesService\x12o\n\x03Get\x12\x38.nebius.iam.v1.GetTenantUserAccountWithAttributesRequest\x1a..nebius.iam.v1.TenantUserAccountWithAttributes\x12\x7f\n\x04List\x12:.nebius.iam.v1.ListTenantUserAccountsWithAttributesRequest\x1a;.nebius.iam.v1.ListTenantUserAccountsWithAttributesResponse\x1a\n\xbaJ\x07\x63pl.iamBr\n\x14\x61i.nebius.pub.iam.v1B+TenantUserAccountWithAttributesServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -31,9 +31,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_GETTENANTUSERACCOUNTWITHATTRIBUTESREQUEST']._serialized_start=149
   _globals['_GETTENANTUSERACCOUNTWITHATTRIBUTESREQUEST']._serialized_end=208
   _globals['_LISTTENANTUSERACCOUNTSWITHATTRIBUTESREQUEST']._serialized_start=211
-  _globals['_LISTTENANTUSERACCOUNTSWITHATTRIBUTESREQUEST']._serialized_end=393
-  _globals['_LISTTENANTUSERACCOUNTSWITHATTRIBUTESRESPONSE']._serialized_start=396
-  _globals['_LISTTENANTUSERACCOUNTSWITHATTRIBUTESRESPONSE']._serialized_end=552
-  _globals['_TENANTUSERACCOUNTWITHATTRIBUTESSERVICE']._serialized_start=555
-  _globals['_TENANTUSERACCOUNTWITHATTRIBUTESSERVICE']._serialized_end=849
+  _globals['_LISTTENANTUSERACCOUNTSWITHATTRIBUTESREQUEST']._serialized_end=374
+  _globals['_LISTTENANTUSERACCOUNTSWITHATTRIBUTESRESPONSE']._serialized_start=377
+  _globals['_LISTTENANTUSERACCOUNTSWITHATTRIBUTESRESPONSE']._serialized_end=533
+  _globals['_TENANTUSERACCOUNTWITHATTRIBUTESSERVICE']._serialized_start=536
+  _globals['_TENANTUSERACCOUNTWITHATTRIBUTESSERVICE']._serialized_end=830
 # @@protoc_insertion_point(module_scope)

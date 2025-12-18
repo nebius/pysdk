@@ -24,20 +24,32 @@ class Bucket(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[BucketSpec, _Mapping]] = ..., status: _Optional[_Union[BucketStatus, _Mapping]] = ...) -> None: ...
 
 class BucketSpec(_message.Message):
-    __slots__ = ["versioning_policy", "max_size_bytes", "lifecycle_configuration", "default_storage_class", "override_storage_class", "force_storage_class"]
+    __slots__ = ["versioning_policy", "max_size_bytes", "lifecycle_configuration", "default_storage_class", "override_storage_class", "force_storage_class", "object_audit_logging"]
+    class ObjectAuditLogging(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        OBJECT_AUDIT_LOGGING_UNSPECIFIED: _ClassVar[BucketSpec.ObjectAuditLogging]
+        NONE: _ClassVar[BucketSpec.ObjectAuditLogging]
+        MUTATE_ONLY: _ClassVar[BucketSpec.ObjectAuditLogging]
+        ALL: _ClassVar[BucketSpec.ObjectAuditLogging]
+    OBJECT_AUDIT_LOGGING_UNSPECIFIED: BucketSpec.ObjectAuditLogging
+    NONE: BucketSpec.ObjectAuditLogging
+    MUTATE_ONLY: BucketSpec.ObjectAuditLogging
+    ALL: BucketSpec.ObjectAuditLogging
     VERSIONING_POLICY_FIELD_NUMBER: _ClassVar[int]
     MAX_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     LIFECYCLE_CONFIGURATION_FIELD_NUMBER: _ClassVar[int]
     DEFAULT_STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
     OVERRIDE_STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
     FORCE_STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
+    OBJECT_AUDIT_LOGGING_FIELD_NUMBER: _ClassVar[int]
     versioning_policy: _base_pb2.VersioningPolicy
     max_size_bytes: int
     lifecycle_configuration: _lifecycle_pb2.LifecycleConfiguration
     default_storage_class: _base_pb2.StorageClass
     override_storage_class: _base_pb2.StorageClass
     force_storage_class: bool
-    def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ..., default_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., override_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., force_storage_class: bool = ...) -> None: ...
+    object_audit_logging: BucketSpec.ObjectAuditLogging
+    def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ..., default_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., override_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., force_storage_class: bool = ..., object_audit_logging: _Optional[_Union[BucketSpec.ObjectAuditLogging, str]] = ...) -> None: ...
 
 class BucketStatus(_message.Message):
     __slots__ = ["counters", "state", "suspension_state", "deleted_at", "purge_at", "domain_name", "region"]

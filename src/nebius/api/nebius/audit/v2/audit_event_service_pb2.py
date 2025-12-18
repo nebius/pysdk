@@ -17,7 +17,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.audit.v2 import audit_event_pb2 as nebius_dot_audit_dot_v2_dot_audit__event__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/audit/v2/audit_event_service.proto\x12\x0fnebius.audit.v2\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a!nebius/audit/v2/audit_event.proto\"\x91\x02\n\x15ListAuditEventRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\'\n\tpage_size\x18\x02 \x01(\x03\x42\n\xbaH\x07\"\x05\x18\xf4\x03(\x00R\x08pageSize\x12\x38\n\x05start\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x05start\x12\x34\n\x03\x65nd\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x03\x65nd\x12\x1d\n\npage_token\x18\x05 \x01(\tR\tpageToken\x12\x1b\n\x06\x66ilter\x18\x06 \x01(\tB\x03\xc0J\x01R\x06\x66ilter\"s\n\x16ListAuditEventResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.audit.v2.AuditEventR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2v\n\x11\x41uditEventService\x12W\n\x04List\x12&.nebius.audit.v2.ListAuditEventRequest\x1a\'.nebius.audit.v2.ListAuditEventResponse\x1a\x08\xbaJ\x05\x61uditBa\n\x16\x61i.nebius.pub.audit.v2B\x16\x41uditEventServiceProtoP\x01Z-github.com/nebius/gosdk/proto/nebius/audit/v2b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/audit/v2/audit_event_service.proto\x12\x0fnebius.audit.v2\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a!nebius/audit/v2/audit_event.proto\"\xcc\x02\n\x15ListAuditEventRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\'\n\tpage_size\x18\x02 \x01(\x03\x42\n\xbaH\x07\"\x05\x18\xf4\x03(\x00R\x08pageSize\x12\x38\n\x05start\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x05start\x12\x34\n\x03\x65nd\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\x03\x65nd\x12\x1d\n\npage_token\x18\x05 \x01(\tR\tpageToken\x12\x1b\n\x06\x66ilter\x18\x06 \x01(\tB\x03\xc0J\x01R\x06\x66ilter\x12\x39\n\nevent_type\x18\x07 \x01(\x0e\x32\x1a.nebius.audit.v2.EventTypeR\teventType\"s\n\x16ListAuditEventResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.audit.v2.AuditEventR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken*J\n\tEventType\x12\x1a\n\x16\x45VENT_TYPE_UNSPECIFIED\x10\x00\x12\x11\n\rCONTROL_PLANE\x10\x01\x12\x0e\n\nDATA_PLANE\x10\x02\x32v\n\x11\x41uditEventService\x12W\n\x04List\x12&.nebius.audit.v2.ListAuditEventRequest\x1a\'.nebius.audit.v2.ListAuditEventResponse\x1a\x08\xbaJ\x05\x61uditBa\n\x16\x61i.nebius.pub.audit.v2B\x16\x41uditEventServiceProtoP\x01Z-github.com/nebius/gosdk/proto/nebius/audit/v2b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -38,10 +38,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _LISTAUDITEVENTREQUEST.fields_by_name['filter']._serialized_options = b'\300J\001'
   _AUDITEVENTSERVICE._options = None
   _AUDITEVENTSERVICE._serialized_options = b'\272J\005audit'
+  _globals['_EVENTTYPE']._serialized_start=637
+  _globals['_EVENTTYPE']._serialized_end=711
   _globals['_LISTAUDITEVENTREQUEST']._serialized_start=186
-  _globals['_LISTAUDITEVENTREQUEST']._serialized_end=459
-  _globals['_LISTAUDITEVENTRESPONSE']._serialized_start=461
-  _globals['_LISTAUDITEVENTRESPONSE']._serialized_end=576
-  _globals['_AUDITEVENTSERVICE']._serialized_start=578
-  _globals['_AUDITEVENTSERVICE']._serialized_end=696
+  _globals['_LISTAUDITEVENTREQUEST']._serialized_end=518
+  _globals['_LISTAUDITEVENTRESPONSE']._serialized_start=520
+  _globals['_LISTAUDITEVENTRESPONSE']._serialized_end=635
+  _globals['_AUDITEVENTSERVICE']._serialized_start=713
+  _globals['_AUDITEVENTSERVICE']._serialized_end=831
 # @@protoc_insertion_point(module_scope)

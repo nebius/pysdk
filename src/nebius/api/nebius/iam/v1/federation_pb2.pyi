@@ -1,6 +1,7 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
@@ -38,9 +39,19 @@ class SamlSettings(_message.Message):
     def __init__(self, idp_issuer: _Optional[str] = ..., sso_url: _Optional[str] = ..., force_authn: bool = ...) -> None: ...
 
 class FederationStatus(_message.Message):
-    __slots__ = ["users_count", "certificates_count"]
+    __slots__ = ["state", "users_count", "certificates_count"]
+    class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        UNSPECIFIED: _ClassVar[FederationStatus.State]
+        ACTIVE: _ClassVar[FederationStatus.State]
+        INACTIVE: _ClassVar[FederationStatus.State]
+    UNSPECIFIED: FederationStatus.State
+    ACTIVE: FederationStatus.State
+    INACTIVE: FederationStatus.State
+    STATE_FIELD_NUMBER: _ClassVar[int]
     USERS_COUNT_FIELD_NUMBER: _ClassVar[int]
     CERTIFICATES_COUNT_FIELD_NUMBER: _ClassVar[int]
+    state: FederationStatus.State
     users_count: int
     certificates_count: int
-    def __init__(self, users_count: _Optional[int] = ..., certificates_count: _Optional[int] = ...) -> None: ...
+    def __init__(self, state: _Optional[_Union[FederationStatus.State, str]] = ..., users_count: _Optional[int] = ..., certificates_count: _Optional[int] = ...) -> None: ...

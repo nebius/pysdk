@@ -42,6 +42,16 @@ class FederationServiceStub(object):
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.UpdateFederationRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
+        self.Activate = channel.unary_unary(
+                '/nebius.iam.v1.FederationService/Activate',
+                request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.ActivateFederationRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Deactivate = channel.unary_unary(
+                '/nebius.iam.v1.FederationService/Deactivate',
+                request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.DeactivateFederationRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.iam.v1.FederationService/Delete',
                 request_serializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.DeleteFederationRequest.SerializeToString,
@@ -82,6 +92,24 @@ class FederationServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Activate(self, request, context):
+        """*
+        Activates an existing federation.
+        By default, a newly created federation is in the active state.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Deactivate(self, request, context):
+        """*
+        Deactivates an existing federation.
+        When a federation is inactive, all users under it will be unable to authenticate.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Delete(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -114,6 +142,16 @@ def add_FederationServiceServicer_to_server(servicer, server):
             'Update': grpc.unary_unary_rpc_method_handler(
                     servicer.Update,
                     request_deserializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.UpdateFederationRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Activate': grpc.unary_unary_rpc_method_handler(
+                    servicer.Activate,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.ActivateFederationRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Deactivate': grpc.unary_unary_rpc_method_handler(
+                    servicer.Deactivate,
+                    request_deserializer=nebius_dot_iam_dot_v1_dot_federation__service__pb2.DeactivateFederationRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
@@ -212,6 +250,40 @@ class FederationService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/Update',
             nebius_dot_iam_dot_v1_dot_federation__service__pb2.UpdateFederationRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Activate(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/Activate',
+            nebius_dot_iam_dot_v1_dot_federation__service__pb2.ActivateFederationRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Deactivate(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.iam.v1.FederationService/Deactivate',
+            nebius_dot_iam_dot_v1_dot_federation__service__pb2.DeactivateFederationRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

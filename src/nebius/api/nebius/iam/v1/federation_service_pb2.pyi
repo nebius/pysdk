@@ -54,6 +54,18 @@ class UpdateFederationRequest(_message.Message):
     status: _federation_pb2.FederationStatus
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_federation_pb2.FederationSpec, _Mapping]] = ..., status: _Optional[_Union[_federation_pb2.FederationStatus, _Mapping]] = ...) -> None: ...
 
+class ActivateFederationRequest(_message.Message):
+    __slots__ = ["federation_id"]
+    FEDERATION_ID_FIELD_NUMBER: _ClassVar[int]
+    federation_id: str
+    def __init__(self, federation_id: _Optional[str] = ...) -> None: ...
+
+class DeactivateFederationRequest(_message.Message):
+    __slots__ = ["federation_id"]
+    FEDERATION_ID_FIELD_NUMBER: _ClassVar[int]
+    federation_id: str
+    def __init__(self, federation_id: _Optional[str] = ...) -> None: ...
+
 class DeleteFederationRequest(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]

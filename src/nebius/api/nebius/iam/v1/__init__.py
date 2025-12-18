@@ -771,33 +771,6 @@ class ListAccessKeysRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListAccessKeysRequest") -> None:
-            super().__init__()
-            self._message: "ListAccessKeysRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListAccessKeysRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -823,7 +796,6 @@ class ListAccessKeysRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -840,17 +812,17 @@ class ListAccessKeysRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Specifies the maximum number of items to return in the response.
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -884,7 +856,6 @@ class ListAccessKeysRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListAccessKeysByAccountRequest(pb_classes.Message):
@@ -2408,33 +2379,6 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListAuthPublicKeyRequest") -> None:
-            super().__init__()
-            self._message: "ListAuthPublicKeyRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListAuthPublicKeyRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -2460,7 +2404,6 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -2477,17 +2420,17 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Specifies the maximum number of items to return in the response.
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -2521,7 +2464,6 @@ class ListAuthPublicKeyRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListAuthPublicKeyByAccountRequest(pb_classes.Message):
@@ -4315,14 +4257,23 @@ class FederationStatus(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class State(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.iam.v1.FederationStatus.State",federation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        ACTIVE = 1
+        INACTIVE = 2
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
+        state: "FederationStatus.State|federation_pb2.FederationStatus.State|None|unset.UnsetType" = unset.Unset,
         users_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         certificates_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
         if not isinstance(users_count, unset.UnsetType):
             self.users_count = users_count
         if not isinstance(certificates_count, unset.UnsetType):
@@ -4330,9 +4281,21 @@ class FederationStatus(pb_classes.Message):
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "state",
             "users_count",
             "certificates_count",
+            "State",
         ]
+    
+    @builtins.property
+    def state(self) -> "FederationStatus.State":
+        return super()._get_field("state", explicit_presence=False,
+        wrap=FederationStatus.State,
+        )
+    @state.setter
+    def state(self, value: "FederationStatus.State|federation_pb2.FederationStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
     
     @builtins.property
     def users_count(self) -> "builtins.int":
@@ -4353,8 +4316,10 @@ class FederationStatus(pb_classes.Message):
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
         "users_count":"users_count",
         "certificates_count":"certificates_count",
+        "State":"State",
     }
     
 # file: nebius/iam/v1/federation_certificate.proto
@@ -4490,6 +4455,7 @@ class FederationCertificateStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         state: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|None|unset.UnsetType" = unset.Unset,
+        fingerprint: "builtins.str|None|unset.UnsetType" = unset.Unset,
         algorithm: "builtins.str|None|unset.UnsetType" = unset.Unset,
         key_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
         not_before: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
@@ -4498,6 +4464,8 @@ class FederationCertificateStatus(pb_classes.Message):
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
+        if not isinstance(fingerprint, unset.UnsetType):
+            self.fingerprint = fingerprint
         if not isinstance(algorithm, unset.UnsetType):
             self.algorithm = algorithm
         if not isinstance(key_size, unset.UnsetType):
@@ -4510,6 +4478,7 @@ class FederationCertificateStatus(pb_classes.Message):
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
+            "fingerprint",
             "algorithm",
             "key_size",
             "not_before",
@@ -4525,6 +4494,15 @@ class FederationCertificateStatus(pb_classes.Message):
     @state.setter
     def state(self, value: "FederationCertificateStatus.State|federation_certificate_pb2.FederationCertificateStatus.State|None") -> None:
         return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def fingerprint(self) -> "builtins.str":
+        return super()._get_field("fingerprint", explicit_presence=False,
+        )
+    @fingerprint.setter
+    def fingerprint(self, value: "builtins.str|None") -> None:
+        return super()._set_field("fingerprint",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -4569,6 +4547,7 @@ class FederationCertificateStatus(pb_classes.Message):
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
+        "fingerprint":"fingerprint",
         "algorithm":"algorithm",
         "key_size":"key_size",
         "not_before":"not_before",
@@ -5403,6 +5382,74 @@ class UpdateFederationRequest(pb_classes.Message):
         "status":"status",
     }
     
+class ActivateFederationRequest(pb_classes.Message):
+    __PB2_CLASS__ = federation_service_pb2.ActivateFederationRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ActivateFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(federation_id, unset.UnsetType):
+            self.federation_id = federation_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "federation_id",
+        ]
+    
+    @builtins.property
+    def federation_id(self) -> "builtins.str":
+        return super()._get_field("federation_id", explicit_presence=False,
+        )
+    @federation_id.setter
+    def federation_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("federation_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "federation_id":"federation_id",
+    }
+    
+class DeactivateFederationRequest(pb_classes.Message):
+    __PB2_CLASS__ = federation_service_pb2.DeactivateFederationRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeactivateFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        federation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(federation_id, unset.UnsetType):
+            self.federation_id = federation_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "federation_id",
+        ]
+    
+    @builtins.property
+    def federation_id(self) -> "builtins.str":
+        return super()._get_field("federation_id", explicit_presence=False,
+        )
+    @federation_id.setter
+    def federation_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("federation_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "federation_id":"federation_id",
+    }
+    
 class DeleteFederationRequest(pb_classes.Message):
     __PB2_CLASS__ = federation_service_pb2.DeleteFederationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.DeleteFederationRequest",federation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -5591,6 +5638,68 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
         return super().request(
             method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation_1.Operation,
+            **kwargs,
+        )
+    
+    def activate(self,
+        request: "ActivateFederationRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ActivateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
+        """
+        *
+        Activates an existing federation.
+        By default, a newly created federation is in the active state.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v1.ActivateFederationRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Activate",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation_1.Operation,
+            **kwargs,
+        )
+    
+    def deactivate(self,
+        request: "DeactivateFederationRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeactivateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
+        """
+        *
+        Deactivates an existing federation.
+        When a federation is inactive, all users under it will be unable to authenticate.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.iam.v1.DeactivateFederationRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Deactivate",
             request=request,
             result_pb2_class=operation_pb2.Operation,
             result_wrapper=operation_1.Operation,
@@ -6992,7 +7101,7 @@ class TenantUserAccountStatus(pb_classes.Message):
     @builtins.property
     def federation_id(self) -> "builtins.str":
         """
-        currently can only accept the values: custom, unknown, google, github.
+        the federation id of the linked user account. Could be empty in a case of a tenant user account belongs to an invitation which wasn't accepted.
         """
         
         return super()._get_field("federation_id", explicit_presence=False,
@@ -7582,33 +7691,6 @@ class ListGroupMembershipsRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListGroupMembershipsRequest") -> None:
-            super().__init__()
-            self._message: "ListGroupMembershipsRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListGroupMembershipsRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -7634,7 +7716,6 @@ class ListGroupMembershipsRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -7647,16 +7728,16 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -7682,7 +7763,6 @@ class ListGroupMembershipsRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListMemberOfRequest(pb_classes.Message):
@@ -7690,33 +7770,6 @@ class ListMemberOfRequest(pb_classes.Message):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.ListMemberOfRequest",group_membership_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
-    
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListMemberOfRequest") -> None:
-            super().__init__()
-            self._message: "ListMemberOfRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListMemberOfRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
     
     def __init__(
         self,
@@ -7743,7 +7796,6 @@ class ListMemberOfRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -7760,16 +7812,16 @@ class ListMemberOfRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -7795,7 +7847,6 @@ class ListMemberOfRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListGroupMembershipsResponse(pb_classes.Message):
@@ -8313,33 +8364,6 @@ class ListGroupsRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListGroupsRequest") -> None:
-            super().__init__()
-            self._message: "ListGroupsRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListGroupsRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -8365,7 +8389,6 @@ class ListGroupsRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -8378,16 +8401,16 @@ class ListGroupsRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -8413,7 +8436,6 @@ class ListGroupsRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListGroupsResponse(pb_classes.Message):
@@ -10072,33 +10094,6 @@ class ListProjectsRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListProjectsRequest") -> None:
-            super().__init__()
-            self._message: "ListProjectsRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListProjectsRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -10124,7 +10119,6 @@ class ListProjectsRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -10141,17 +10135,17 @@ class ListProjectsRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Specifies the maximum number of items to return in the response.
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -10185,7 +10179,6 @@ class ListProjectsRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class UpdateProjectRequest(pb_classes.Message):
@@ -10591,33 +10584,6 @@ class ListServiceAccountRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListServiceAccountRequest") -> None:
-            super().__init__()
-            self._message: "ListServiceAccountRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListServiceAccountRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -10643,7 +10609,6 @@ class ListServiceAccountRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -10660,17 +10625,17 @@ class ListServiceAccountRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Specifies the maximum number of items to return in the response.
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -10704,7 +10669,6 @@ class ListServiceAccountRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class UpdateServiceAccountRequest(pb_classes.Message):
@@ -11308,6 +11272,7 @@ class StaticKeySpec(pb_classes.Message):
         OBSERVABILITY = 1
         CONTAINER_REGISTRY = 2
         AI_STUDIO = 3
+        TRACTO = 4
     
     def __init__(
         self,
@@ -12165,33 +12130,6 @@ class ListTenantsRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListTenantsRequest") -> None:
-            super().__init__()
-            self._message: "ListTenantsRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListTenantsRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -12213,21 +12151,20 @@ class ListTenantsRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Specifies the maximum number of items to return in the response.
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -12260,7 +12197,6 @@ class ListTenantsRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListTenantsResponse(pb_classes.Message):
@@ -12436,33 +12372,6 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListTenantUserAccountsRequest") -> None:
-            super().__init__()
-            self._message: "ListTenantUserAccountsRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListTenantUserAccountsRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -12488,7 +12397,6 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -12505,17 +12413,17 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Specifies the maximum number of items to return in the response.
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -12545,7 +12453,6 @@ class ListTenantUserAccountsRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListTenantUserAccountsResponse(pb_classes.Message):
@@ -12851,33 +12758,6 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
     __mask_functions__ = {
     }
     
-    class __OneOfClass__page_size__(pb_classes.OneOf):
-        name: builtins.str= "_page_size"
-        
-        def __init__(self, msg: "ListTenantUserAccountsWithAttributesRequest") -> None:
-            super().__init__()
-            self._message: "ListTenantUserAccountsWithAttributesRequest" = msg
-    
-    class __OneOfClass__page_size_page_size__(__OneOfClass__page_size__):
-        field: typing.Literal["page_size"] = "page_size"
-        
-        def __init__(self, msg: "ListTenantUserAccountsWithAttributesRequest") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.int":
-            return self._message.page_size
-    
-    @builtins.property
-    def _page_size(self) -> __OneOfClass__page_size_page_size__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_page_size")
-        match field_name_1:
-            case "page_size":
-                return self.__OneOfClass__page_size_page_size__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -12903,7 +12783,6 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
             "page_size",
             "page_token",
             "filter",
-            "_page_size",
         ]
     
     @builtins.property
@@ -12920,17 +12799,17 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         )
     
     @builtins.property
-    def page_size(self) -> "builtins.int|None":
+    def page_size(self) -> "builtins.int":
         """
         Specifies the maximum number of items to return in the response.
         Default value: 10
         """
         
-        return super()._get_field("page_size", explicit_presence=True,
+        return super()._get_field("page_size", explicit_presence=False,
         )
     @page_size.setter
     def page_size(self, value: "builtins.int|None") -> None:
-        return super()._set_field("page_size",value,explicit_presence=True,
+        return super()._set_field("page_size",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -12960,7 +12839,6 @@ class ListTenantUserAccountsWithAttributesRequest(pb_classes.Message):
         "page_size":"page_size",
         "page_token":"page_token",
         "filter":"filter",
-        "_page_size":"_page_size",
     }
     
 class ListTenantUserAccountsWithAttributesResponse(pb_classes.Message):
@@ -13515,6 +13393,8 @@ __all__ = [
     "ListFederationsRequest",
     "ListFederationsResponse",
     "UpdateFederationRequest",
+    "ActivateFederationRequest",
+    "DeactivateFederationRequest",
     "DeleteFederationRequest",
     "FederationServiceClient",
     "Group",

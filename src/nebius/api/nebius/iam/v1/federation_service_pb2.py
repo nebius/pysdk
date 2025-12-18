@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.iam.v1 import federation_pb2 as nebius_dot_iam_dot_v1_dot_federation__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&nebius/iam/v1/federation_service.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/iam/v1/federation.proto\"\x8c\x01\n\x17\x43reateFederationRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.iam.v1.FederationSpecR\x04spec\".\n\x14GetFederationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x91\x01\n\x16ListFederationsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"r\n\x17ListFederationsResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.iam.v1.FederationR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xc5\x01\n\x17UpdateFederationRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.iam.v1.FederationSpecR\x04spec\x12\x37\n\x06status\x18\x03 \x01(\x0b\x32\x1f.nebius.iam.v1.FederationStatusR\x06status\"1\n\x17\x44\x65leteFederationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xf6\x03\n\x11\x46\x65\x64\x65rationService\x12M\n\x06\x43reate\x12&.nebius.iam.v1.CreateFederationRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x03Get\x12#.nebius.iam.v1.GetFederationRequest\x1a\x19.nebius.iam.v1.Federation\x12J\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x19.nebius.iam.v1.Federation\x12U\n\x04List\x12%.nebius.iam.v1.ListFederationsRequest\x1a&.nebius.iam.v1.ListFederationsResponse\x12M\n\x06Update\x12&.nebius.iam.v1.UpdateFederationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.iam.v1.DeleteFederationRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07\x63pl.iamB]\n\x14\x61i.nebius.pub.iam.v1B\x16\x46\x65\x64\x65rationServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n&nebius/iam/v1/federation_service.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1enebius/iam/v1/federation.proto\"\x8c\x01\n\x17\x43reateFederationRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.iam.v1.FederationSpecR\x04spec\".\n\x14GetFederationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x91\x01\n\x16ListFederationsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06\x66ilter\x18\x04 \x01(\tR\x06\x66ilter\"r\n\x17ListFederationsResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.iam.v1.FederationR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xf6\x01\n\x17UpdateFederationRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.iam.v1.FederationSpecR\x04spec\x12h\n\x06status\x18\x03 \x01(\x0b\x32\x1f.nebius.iam.v1.FederationStatusB/\x18\x01\xd2J*\x12(\'status\' is ignored for update requests.R\x06status\"H\n\x19\x41\x63tivateFederationRequest\x12+\n\rfederation_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0c\x66\x65\x64\x65rationId\"J\n\x1b\x44\x65\x61\x63tivateFederationRequest\x12+\n\rfederation_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0c\x66\x65\x64\x65rationId\"1\n\x17\x44\x65leteFederationRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xa0\x05\n\x11\x46\x65\x64\x65rationService\x12M\n\x06\x43reate\x12&.nebius.iam.v1.CreateFederationRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x03Get\x12#.nebius.iam.v1.GetFederationRequest\x1a\x19.nebius.iam.v1.Federation\x12J\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x19.nebius.iam.v1.Federation\x12U\n\x04List\x12%.nebius.iam.v1.ListFederationsRequest\x1a&.nebius.iam.v1.ListFederationsResponse\x12M\n\x06Update\x12&.nebius.iam.v1.UpdateFederationRequest\x1a\x1b.nebius.common.v1.Operation\x12Q\n\x08\x41\x63tivate\x12(.nebius.iam.v1.ActivateFederationRequest\x1a\x1b.nebius.common.v1.Operation\x12U\n\nDeactivate\x12*.nebius.iam.v1.DeactivateFederationRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.iam.v1.DeleteFederationRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07\x63pl.iamB]\n\x14\x61i.nebius.pub.iam.v1B\x16\x46\x65\x64\x65rationServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -31,6 +31,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _GETFEDERATIONREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
   _LISTFEDERATIONSREQUEST.fields_by_name['parent_id']._options = None
   _LISTFEDERATIONSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _UPDATEFEDERATIONREQUEST.fields_by_name['status']._options = None
+  _UPDATEFEDERATIONREQUEST.fields_by_name['status']._serialized_options = b'\030\001\322J*\022(\'status\' is ignored for update requests.'
+  _ACTIVATEFEDERATIONREQUEST.fields_by_name['federation_id']._options = None
+  _ACTIVATEFEDERATIONREQUEST.fields_by_name['federation_id']._serialized_options = b'\272H\003\310\001\001'
+  _DEACTIVATEFEDERATIONREQUEST.fields_by_name['federation_id']._options = None
+  _DEACTIVATEFEDERATIONREQUEST.fields_by_name['federation_id']._serialized_options = b'\272H\003\310\001\001'
   _DELETEFEDERATIONREQUEST.fields_by_name['id']._options = None
   _DELETEFEDERATIONREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
   _FEDERATIONSERVICE._options = None
@@ -44,9 +50,13 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_LISTFEDERATIONSRESPONSE']._serialized_start=550
   _globals['_LISTFEDERATIONSRESPONSE']._serialized_end=664
   _globals['_UPDATEFEDERATIONREQUEST']._serialized_start=667
-  _globals['_UPDATEFEDERATIONREQUEST']._serialized_end=864
-  _globals['_DELETEFEDERATIONREQUEST']._serialized_start=866
-  _globals['_DELETEFEDERATIONREQUEST']._serialized_end=915
-  _globals['_FEDERATIONSERVICE']._serialized_start=918
-  _globals['_FEDERATIONSERVICE']._serialized_end=1420
+  _globals['_UPDATEFEDERATIONREQUEST']._serialized_end=913
+  _globals['_ACTIVATEFEDERATIONREQUEST']._serialized_start=915
+  _globals['_ACTIVATEFEDERATIONREQUEST']._serialized_end=987
+  _globals['_DEACTIVATEFEDERATIONREQUEST']._serialized_start=989
+  _globals['_DEACTIVATEFEDERATIONREQUEST']._serialized_end=1063
+  _globals['_DELETEFEDERATIONREQUEST']._serialized_start=1065
+  _globals['_DELETEFEDERATIONREQUEST']._serialized_end=1114
+  _globals['_FEDERATIONSERVICE']._serialized_start=1117
+  _globals['_FEDERATIONSERVICE']._serialized_end=1789
 # @@protoc_insertion_point(module_scope)
