@@ -228,7 +228,8 @@ profiles:
     assert config.parent_id == "project-e00some-id"
 
 
-def test_load_config_federated_subject_file(tmp_path, monkeypatch) -> None:
+@pytest.mark.asyncio
+async def test_load_config_federated_subject_file(tmp_path, monkeypatch) -> None:
     from nebius.aio.cli_config import Config
     from nebius.aio.token.federated_credentials import FederatedCredentialsBearer
 
@@ -264,7 +265,10 @@ profiles:
     assert isinstance(cred, FederatedCredentialsBearer)
 
 
-def test_load_config_service_account_credentials_file(tmp_path, monkeypatch) -> None:
+@pytest.mark.asyncio
+async def test_load_config_service_account_credentials_file(
+    tmp_path, monkeypatch
+) -> None:
     # create a service account credentials JSON with a PEM private key
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
@@ -326,7 +330,8 @@ profiles:
     assert isinstance(cred, ServiceAccountBearer)
 
 
-def test_load_config_private_key_file(tmp_path, monkeypatch) -> None:
+@pytest.mark.asyncio
+async def test_load_config_private_key_file(tmp_path, monkeypatch) -> None:
     # Test private-key-file-path
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
@@ -375,7 +380,8 @@ profiles:
     assert isinstance(cred, ServiceAccountBearer)
 
 
-def test_load_config_private_key_inline(tmp_path, monkeypatch) -> None:
+@pytest.mark.asyncio
+async def test_load_config_private_key_inline(tmp_path, monkeypatch) -> None:
     # Test inline private-key branch
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
