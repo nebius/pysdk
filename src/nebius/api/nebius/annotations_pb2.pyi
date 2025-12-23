@@ -46,6 +46,8 @@ METHOD_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 method_deprecation_details: _descriptor.FieldDescriptor
 METHOD_PY_SDK_FIELD_NUMBER: _ClassVar[int]
 method_py_sdk: _descriptor.FieldDescriptor
+SEND_RESET_MASK_FIELD_NUMBER: _ClassVar[int]
+send_reset_mask: _descriptor.FieldDescriptor
 RESOURCE_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 resource_behavior: _descriptor.FieldDescriptor
 MESSAGE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]

@@ -3757,6 +3757,73 @@ class ListImagesResponse(pb_classes.Message):
         "next_page_token":"next_page_token",
     }
     
+class ListPublicRequest(pb_classes.Message):
+    __PB2_CLASS__ = image_service_pb2.ListPublicRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListPublicRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "region",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def region(self) -> "builtins.str":
+        """
+        Region name (eu-north2, us-central1, eu-west1, etc.)
+        For details, see https://docs.nebius.com/overview/regions
+        """
+        
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "region":"region",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 
 class ImageServiceClient(client.Client):
     """
@@ -3920,6 +3987,38 @@ class ImageServiceClient(client.Client):
             request=request,
             result_pb2_class=operation_service_pb2_1.ListOperationsResponse,
             result_wrapper=pb_classes.simple_wrapper(v1_1.ListOperationsResponse),
+            **kwargs,
+        )
+    
+    def list_public(self,
+        request: "ListPublicRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListPublicRequest","ListImagesResponse"]:
+        """
+        Lists all public images available in a specific region. Regions doc https://docs.nebius.com/overview/regions
+        Public images can contain specific labels in metadata like:
+        "os_name: Ubuntu", "os_version: 22.04 LTS", "linux_kernel: 5.15", "cuda_toolkit: 13.0"
+        "nvidia_gpu_drivers: 550", "networking_package: OFED 23.10"
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.ListPublicRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.ListImagesResponse`.
+        """
+        
+        return super().request(
+            method="ListPublic",
+            request=request,
+            result_pb2_class=image_service_pb2.ListImagesResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListImagesResponse),
             **kwargs,
         )
     
@@ -7535,6 +7634,7 @@ __all__ = [
     "GetImageLatestByFamilyRequest",
     "ListImagesRequest",
     "ListImagesResponse",
+    "ListPublicRequest",
     "ImageServiceClient",
     "NetworkInterfaceSpec",
     "IPAddress",

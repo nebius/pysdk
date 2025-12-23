@@ -43,6 +43,11 @@ class ImageServiceStub(object):
                 request_serializer=nebius_dot_compute_dot_v1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__service__pb2.ListOperationsResponse.FromString,
                 )
+        self.ListPublic = channel.unary_unary(
+                '/nebius.compute.v1.ImageService/ListPublic',
+                request_serializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.ListPublicRequest.SerializeToString,
+                response_deserializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.ListImagesResponse.FromString,
+                )
 
 
 class ImageServiceServicer(object):
@@ -84,6 +89,16 @@ class ImageServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListPublic(self, request, context):
+        """Lists all public images available in a specific region. Regions doc https://docs.nebius.com/overview/regions
+        Public images can contain specific labels in metadata like:
+        "os_name: Ubuntu", "os_version: 22.04 LTS", "linux_kernel: 5.15", "cuda_toolkit: 13.0"
+        "nvidia_gpu_drivers: 550", "networking_package: OFED 23.10"
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ImageServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -111,6 +126,11 @@ def add_ImageServiceServicer_to_server(servicer, server):
                     servicer.ListOperationsByParent,
                     request_deserializer=nebius_dot_compute_dot_v1_dot_operation__service__pb2.ListOperationsByParentRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__service__pb2.ListOperationsResponse.SerializeToString,
+            ),
+            'ListPublic': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListPublic,
+                    request_deserializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.ListPublicRequest.FromString,
+                    response_serializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.ListImagesResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -204,5 +224,22 @@ class ImageService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/ListOperationsByParent',
             nebius_dot_compute_dot_v1_dot_operation__service__pb2.ListOperationsByParentRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__service__pb2.ListOperationsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListPublic(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/ListPublic',
+            nebius_dot_compute_dot_v1_dot_image__service__pb2.ListPublicRequest.SerializeToString,
+            nebius_dot_compute_dot_v1_dot_image__service__pb2.ListImagesResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
