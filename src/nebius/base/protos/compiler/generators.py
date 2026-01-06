@@ -757,6 +757,24 @@ def is_operation_output(method: Method) -> bool:
     )
 
 
+def _send_reset_mask_setting(method: Method) -> bool | None:
+    """
+    Returns True/False when annotation is set, otherwise None.
+    """
+    ext = cast(Any, send_reset_mask)
+    options = method.descriptor.options
+    if not options.HasExtension(ext):
+        return None
+    return bool(options.Extensions[ext])
+
+
+def _should_add_reset_mask(method: Method) -> bool:
+    setting = _send_reset_mask_setting(method)
+    if setting is None:
+        return method.name == "Update"
+    return setting
+
+
 def generate_service(srv: Service, g: PyGenFile) -> None:
     operation_type = None
     operation_source_method = None
@@ -884,10 +902,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     g.p(", stack_info=True, stacklevel=2)")
                     g.p()
 
-                if (
-                    method.name == "Update"
-                    or method.descriptor.options.Extensions[cast(Any, send_reset_mask)]
-                ):
+                if _should_add_reset_mask(method):
                     g.p(
                         "kwargs['metadata'] = ",
                         ImportedSymbol(
