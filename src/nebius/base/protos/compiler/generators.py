@@ -1,4 +1,5 @@
 from logging import getLogger
+from typing import Any, cast
 
 from nebius.api.nebius import (
     FieldBehavior,
@@ -6,6 +7,7 @@ from nebius.api.nebius import (
     field_deprecation_details,
     message_deprecation_details,
     method_deprecation_details,
+    send_reset_mask,
     service_deprecation_details,
 )
 
@@ -882,7 +884,10 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
                     g.p(", stack_info=True, stacklevel=2)")
                     g.p()
 
-                if method.name == "Update" and is_operation_output(method):
+                if (
+                    method.name == "Update"
+                    or method.descriptor.options.Extensions[cast(Any, send_reset_mask)]
+                ):
                     g.p(
                         "kwargs['metadata'] = ",
                         ImportedSymbol(
