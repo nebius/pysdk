@@ -17,6 +17,7 @@ import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.maintenance.v1alpha1.maintenance_pb2 as maintenance_pb2
 import nebius.api.nebius.maintenance.v1alpha1.maintenance_service_pb2 as maintenance_service_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -673,6 +674,7 @@ class MaintenanceServiceClient(client.Client):
             :class:`nebius.api.nebius.maintenance.v1alpha1.UpdateMaintenanceResponse`.
         """
         
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
         return super().request(
             method="Update",
             request=request,
