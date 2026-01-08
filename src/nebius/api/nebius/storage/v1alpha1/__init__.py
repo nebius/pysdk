@@ -116,6 +116,7 @@ class TransferSpec(pb_classes.Message):
             endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
             bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
             region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
             credentials: "TransferSpec.BucketCredentials|transfer_pb2.TransferSpec.BucketCredentials|None|unset.UnsetType" = unset.Unset,
             limiters: "TransferSpec.Limiters|transfer_pb2.TransferSpec.Limiters|None|unset.UnsetType" = unset.Unset,
         ) -> None:
@@ -126,6 +127,8 @@ class TransferSpec(pb_classes.Message):
                 self.bucket_name = bucket_name
             if not isinstance(region, unset.UnsetType):
                 self.region = region
+            if not isinstance(prefix, unset.UnsetType):
+                self.prefix = prefix
             if not isinstance(credentials, unset.UnsetType):
                 self.credentials = credentials
             if not isinstance(limiters, unset.UnsetType):
@@ -136,6 +139,7 @@ class TransferSpec(pb_classes.Message):
                 "endpoint",
                 "bucket_name",
                 "region",
+                "prefix",
                 "credentials",
                 "limiters",
             ]
@@ -171,6 +175,23 @@ class TransferSpec(pb_classes.Message):
         @region.setter
         def region(self, value: "builtins.str|None") -> None:
             return super()._set_field("region",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def prefix(self) -> "builtins.str":
+            """
+            Prefix to filter objects in the source bucket. Only objects whose keys start with this prefix will be transferred.
+            During transfer, the resulting object key in the destination bucket is computed
+            by removing source.prefix from the original key and then prepending destination.prefix (if provided).
+            Important: This transformation may result in an empty object key or one that exceeds allowed length limits.
+            Use prefixes that guarantee valid resulting object keys for your objects after transformation.
+            """
+            
+            return super()._get_field("prefix", explicit_presence=False,
+            )
+        @prefix.setter
+        def prefix(self, value: "builtins.str|None") -> None:
+            return super()._set_field("prefix",value,explicit_presence=False,
             )
         
         @builtins.property
@@ -212,6 +233,7 @@ class TransferSpec(pb_classes.Message):
             "endpoint":"endpoint",
             "bucket_name":"bucket_name",
             "region":"region",
+            "prefix":"prefix",
             "credentials":"credentials",
             "limiters":"limiters",
         }
@@ -228,17 +250,21 @@ class TransferSpec(pb_classes.Message):
             initial_message: message_1.Message|None = None,
             *,
             bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
             credentials: "TransferSpec.BucketCredentials|transfer_pb2.TransferSpec.BucketCredentials|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(bucket_name, unset.UnsetType):
                 self.bucket_name = bucket_name
+            if not isinstance(prefix, unset.UnsetType):
+                self.prefix = prefix
             if not isinstance(credentials, unset.UnsetType):
                 self.credentials = credentials
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "bucket_name",
+                "prefix",
                 "credentials",
             ]
         
@@ -249,6 +275,23 @@ class TransferSpec(pb_classes.Message):
         @bucket_name.setter
         def bucket_name(self, value: "builtins.str|None") -> None:
             return super()._set_field("bucket_name",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def prefix(self) -> "builtins.str":
+            """
+            Prefix to add to the beginning of each transferred object key in the destination bucket.
+            During transfer, the resulting object key in the destination bucket is computed
+            by removing source.prefix (if provided) from the original key and then prepending destination.prefix.
+            Important: This transformation may result in an empty object key or one that exceeds allowed length limits.
+            Use prefixes that guarantee valid resulting object keys for your objects after transformation.
+            """
+            
+            return super()._get_field("prefix", explicit_presence=False,
+            )
+        @prefix.setter
+        def prefix(self, value: "builtins.str|None") -> None:
+            return super()._set_field("prefix",value,explicit_presence=False,
             )
         
         @builtins.property
@@ -268,6 +311,7 @@ class TransferSpec(pb_classes.Message):
         
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "bucket_name":"bucket_name",
+            "prefix":"prefix",
             "credentials":"credentials",
         }
         
