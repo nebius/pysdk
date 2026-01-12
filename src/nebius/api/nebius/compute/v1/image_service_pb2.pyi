@@ -1,6 +1,7 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
+from nebius.api.nebius.common.v1 import operation_pb2 as _operation_pb2
 from nebius.api.nebius.common.v1 import operation_service_pb2 as _operation_service_pb2
 from nebius.api.nebius.compute.v1 import image_pb2 as _image_pb2
 from nebius.api.nebius.compute.v1 import operation_service_pb2 as _operation_service_pb2_1
@@ -36,6 +37,14 @@ class ListImagesRequest(_message.Message):
     page_token: str
     filter: str
     def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ...) -> None: ...
+
+class CreateImageRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: _image_pb2.ImageSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_image_pb2.ImageSpec, _Mapping]] = ...) -> None: ...
 
 class ListImagesResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]

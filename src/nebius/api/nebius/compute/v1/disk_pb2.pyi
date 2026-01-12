@@ -62,7 +62,7 @@ class SourceImageFamily(_message.Message):
     def __init__(self, image_family: _Optional[str] = ..., parent_id: _Optional[str] = ...) -> None: ...
 
 class DiskStatus(_message.Message):
-    __slots__ = ["state", "state_description", "read_write_attachment", "read_only_attachments", "source_image_id", "size_bytes", "reconciling", "block_size_bytes", "source_image_cpu_architecture"]
+    __slots__ = ["state", "state_description", "read_write_attachment", "read_only_attachments", "source_image_id", "size_bytes", "reconciling", "block_size_bytes", "source_image_cpu_architecture", "lock_state"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[DiskStatus.State]
@@ -87,6 +87,11 @@ class DiskStatus(_message.Message):
     SOURCE_IMAGE_CPU_UNSPECIFIED: DiskStatus.SourceImageCPUArchitecture
     AMD64: DiskStatus.SourceImageCPUArchitecture
     ARM64: DiskStatus.SourceImageCPUArchitecture
+    class LockState(_message.Message):
+        __slots__ = ["images"]
+        IMAGES_FIELD_NUMBER: _ClassVar[int]
+        images: _containers.RepeatedScalarFieldContainer[str]
+        def __init__(self, images: _Optional[_Iterable[str]] = ...) -> None: ...
     STATE_FIELD_NUMBER: _ClassVar[int]
     STATE_DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     READ_WRITE_ATTACHMENT_FIELD_NUMBER: _ClassVar[int]
@@ -96,6 +101,7 @@ class DiskStatus(_message.Message):
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
     BLOCK_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     SOURCE_IMAGE_CPU_ARCHITECTURE_FIELD_NUMBER: _ClassVar[int]
+    LOCK_STATE_FIELD_NUMBER: _ClassVar[int]
     state: DiskStatus.State
     state_description: str
     read_write_attachment: str
@@ -105,7 +111,8 @@ class DiskStatus(_message.Message):
     reconciling: bool
     block_size_bytes: int
     source_image_cpu_architecture: DiskStatus.SourceImageCPUArchitecture
-    def __init__(self, state: _Optional[_Union[DiskStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachment: _Optional[str] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., source_image_id: _Optional[str] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ..., block_size_bytes: _Optional[int] = ..., source_image_cpu_architecture: _Optional[_Union[DiskStatus.SourceImageCPUArchitecture, str]] = ...) -> None: ...
+    lock_state: DiskStatus.LockState
+    def __init__(self, state: _Optional[_Union[DiskStatus.State, str]] = ..., state_description: _Optional[str] = ..., read_write_attachment: _Optional[str] = ..., read_only_attachments: _Optional[_Iterable[str]] = ..., source_image_id: _Optional[str] = ..., size_bytes: _Optional[int] = ..., reconciling: bool = ..., block_size_bytes: _Optional[int] = ..., source_image_cpu_architecture: _Optional[_Union[DiskStatus.SourceImageCPUArchitecture, str]] = ..., lock_state: _Optional[_Union[DiskStatus.LockState, _Mapping]] = ...) -> None: ...
 
 class DiskEncryption(_message.Message):
     __slots__ = ["type"]

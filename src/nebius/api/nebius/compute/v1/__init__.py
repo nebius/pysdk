@@ -457,6 +457,42 @@ class DiskStatus(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class LockState(pb_classes.Message):
+        __PB2_CLASS__ = disk_pb2.DiskStatus.LockState
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskStatus.LockState",disk_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            images: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(images, unset.UnsetType):
+                self.images = images
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "images",
+            ]
+        
+        @builtins.property
+        def images(self) -> "abc.MutableSequence[builtins.str]":
+            return super()._get_field("images", explicit_presence=False,
+            wrap=pb_classes.Repeated,
+            )
+        @images.setter
+        def images(self, value: "abc.Iterable[builtins.str]|None") -> None:
+            return super()._set_field("images",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "images":"images",
+        }
+        
+    
     class State(pb_enum.Enum):
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskStatus.State",disk_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
         UNSPECIFIED = 0
@@ -494,6 +530,7 @@ class DiskStatus(pb_classes.Message):
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         source_image_cpu_architecture: "DiskStatus.SourceImageCPUArchitecture|disk_pb2.DiskStatus.SourceImageCPUArchitecture|None|unset.UnsetType" = unset.Unset,
+        lock_state: "DiskStatus.LockState|disk_pb2.DiskStatus.LockState|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -514,6 +551,8 @@ class DiskStatus(pb_classes.Message):
             self.block_size_bytes = block_size_bytes
         if not isinstance(source_image_cpu_architecture, unset.UnsetType):
             self.source_image_cpu_architecture = source_image_cpu_architecture
+        if not isinstance(lock_state, unset.UnsetType):
+            self.lock_state = lock_state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -526,6 +565,8 @@ class DiskStatus(pb_classes.Message):
             "reconciling",
             "block_size_bytes",
             "source_image_cpu_architecture",
+            "lock_state",
+            "LockState",
             "State",
             "SourceImageCPUArchitecture",
         ]
@@ -627,6 +668,20 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("source_image_cpu_architecture",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def lock_state(self) -> "DiskStatus.LockState":
+        """
+        Indicates resources that prevent the disk from being attached as read-write.
+        """
+        
+        return super()._get_field("lock_state", explicit_presence=False,
+        wrap=DiskStatus.LockState,
+        )
+    @lock_state.setter
+    def lock_state(self, value: "DiskStatus.LockState|disk_pb2.DiskStatus.LockState|None") -> None:
+        return super()._set_field("lock_state",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "state_description":"state_description",
@@ -637,6 +692,8 @@ class DiskStatus(pb_classes.Message):
         "reconciling":"reconciling",
         "block_size_bytes":"block_size_bytes",
         "source_image_cpu_architecture":"source_image_cpu_architecture",
+        "lock_state":"lock_state",
+        "LockState":"LockState",
         "State":"State",
         "SourceImageCPUArchitecture":"SourceImageCPUArchitecture",
     }
@@ -3190,6 +3247,33 @@ class ImageSpec(pb_classes.Message):
         AMD64 = 1
         ARM64 = 2
     
+    class __OneOfClass_source__(pb_classes.OneOf):
+        name: builtins.str= "source"
+        
+        def __init__(self, msg: "ImageSpec") -> None:
+            super().__init__()
+            self._message: "ImageSpec" = msg
+    
+    class __OneOfClass_source_source_disk_id__(__OneOfClass_source__):
+        field: typing.Literal["source_disk_id"] = "source_disk_id"
+        
+        def __init__(self, msg: "ImageSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.source_disk_id
+    
+    @builtins.property
+    def source(self) -> __OneOfClass_source_source_disk_id__|None:
+        field_name_1: str|None = super().which_field_in_oneof("source")
+        match field_name_1:
+            case "source_disk_id":
+                return self.__OneOfClass_source_source_disk_id__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
     class __OneOfClass__description__(pb_classes.OneOf):
         name: builtins.str= "_description"
         
@@ -3224,6 +3308,7 @@ class ImageSpec(pb_classes.Message):
         description: "builtins.str|None|unset.UnsetType" = unset.Unset,
         image_family: "builtins.str|None|unset.UnsetType" = unset.Unset,
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_disk_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         cpu_architecture: "ImageSpec.CPUArchitecture|image_pb2.ImageSpec.CPUArchitecture|None|unset.UnsetType" = unset.Unset,
         image_family_human_readable: "builtins.str|None|unset.UnsetType" = unset.Unset,
         recommended_platforms: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
@@ -3236,6 +3321,8 @@ class ImageSpec(pb_classes.Message):
             self.image_family = image_family
         if not isinstance(version, unset.UnsetType):
             self.version = version
+        if not isinstance(source_disk_id, unset.UnsetType):
+            self.source_disk_id = source_disk_id
         if not isinstance(cpu_architecture, unset.UnsetType):
             self.cpu_architecture = cpu_architecture
         if not isinstance(image_family_human_readable, unset.UnsetType):
@@ -3250,21 +3337,35 @@ class ImageSpec(pb_classes.Message):
             "description",
             "image_family",
             "version",
+            "source_disk_id",
             "cpu_architecture",
             "image_family_human_readable",
             "recommended_platforms",
             "unsupported_platforms",
             "UnsupportedPlatformsEntry",
+            "source",
             "_description",
             "CPUArchitecture",
         ]
     
     @builtins.property
     def description(self) -> "builtins.str|None":
+        """
+        Supported until 01/01/26. The field is empty.
+        """
+        
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.compute.v1.ImageSpec.description is deprecated. Supported until 01/01/26. The field is empty."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._get_field("description", explicit_presence=True,
         )
     @description.setter
     def description(self, value: "builtins.str|None") -> None:
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.compute.v1.ImageSpec.description is deprecated. Supported until 01/01/26. The field is empty."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._set_field("description",value,explicit_presence=True,
         )
     
@@ -3291,7 +3392,24 @@ class ImageSpec(pb_classes.Message):
         )
     
     @builtins.property
+    def source_disk_id(self) -> "builtins.str|None":
+        """
+        ID of the disk to create the image from
+        """
+        
+        return super()._get_field("source_disk_id", explicit_presence=True,
+        )
+    @source_disk_id.setter
+    def source_disk_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_disk_id",value,explicit_presence=True,
+        )
+    
+    @builtins.property
     def cpu_architecture(self) -> "ImageSpec.CPUArchitecture":
+        """
+        CPU architecture supported by the image
+        """
+        
         return super()._get_field("cpu_architecture", explicit_presence=False,
         wrap=ImageSpec.CPUArchitecture,
         )
@@ -3345,11 +3463,13 @@ class ImageSpec(pb_classes.Message):
         "description":"description",
         "image_family":"image_family",
         "version":"version",
+        "source_disk_id":"source_disk_id",
         "cpu_architecture":"cpu_architecture",
         "image_family_human_readable":"image_family_human_readable",
         "recommended_platforms":"recommended_platforms",
         "unsupported_platforms":"unsupported_platforms",
         "UnsupportedPlatformsEntry":"UnsupportedPlatformsEntry",
+        "source":"source",
         "_description":"_description",
         "CPUArchitecture":"CPUArchitecture",
     }
@@ -3708,6 +3828,56 @@ class ListImagesRequest(pb_classes.Message):
         "filter":"filter",
     }
     
+class CreateImageRequest(pb_classes.Message):
+    __PB2_CLASS__ = image_service_pb2.CreateImageRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateImageRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ImageSpec|image_pb2.ImageSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ImageSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ImageSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ImageSpec|image_pb2.ImageSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class ListImagesResponse(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.ListImagesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListImagesResponse",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3825,7 +3995,7 @@ class ListPublicRequest(pb_classes.Message):
     }
     
 
-class ImageServiceClient(client.Client):
+class ImageServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     """
     This class provides the client methods for the ``.nebius.compute.v1.ImageService`` service.
     
@@ -3843,6 +4013,10 @@ class ImageServiceClient(client.Client):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1.ImageService",image_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.compute.v1.ImageService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def get(self,
         request: "GetImageRequest",
@@ -3958,6 +4132,35 @@ class ImageServiceClient(client.Client):
             request=request,
             result_pb2_class=image_service_pb2.ListImagesResponse,
             result_wrapper=pb_classes.simple_wrapper(ListImagesResponse),
+            **kwargs,
+        )
+    
+    def create(self,
+        request: "CreateImageRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateImageRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Creates a new image resource.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.CreateImageRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
             **kwargs,
         )
     
@@ -7633,6 +7836,7 @@ __all__ = [
     "GetImageRequest",
     "GetImageLatestByFamilyRequest",
     "ListImagesRequest",
+    "CreateImageRequest",
     "ListImagesResponse",
     "ListPublicRequest",
     "ImageServiceClient",
