@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1alpha1 import operation_pb2 as nebius_dot_common
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n0nebius/msp/mlflow/v1alpha1/cluster_service.proto\x12\x1anebius.msp.mlflow.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a(nebius/msp/mlflow/v1alpha1/cluster.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a\x18nebius/annotations.proto\"+\n\x11GetClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Z\n\x17GetClusterByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"v\n\x13ListClustersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x81\x01\n\x14ListClustersResponse\x12\x41\n\x05items\x18\x01 \x03(\x0b\x32#.nebius.msp.mlflow.v1alpha1.ClusterB\x06\xbaH\x03\xc8\x01\x01R\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xd3\x02\n\x14\x43reateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x43\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.msp.mlflow.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec:\xad\x01\xbaH\xa9\x01\x1aZ\n\x12metadata.parent_id\x12&metadata.parent_id should not be empty\x1a\x1chas(this.metadata.parent_id)\x1aK\n\rmetadata.name\x12!metadata.name should not be empty\x1a\x17has(this.metadata.name)\".\n\x14\x44\x65leteClusterRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\x8a\x04\n\x0e\x43lusterService\x12Y\n\x03Get\x12-.nebius.msp.mlflow.v1alpha1.GetClusterRequest\x1a#.nebius.msp.mlflow.v1alpha1.Cluster\x12\x65\n\tGetByName\x12\x33.nebius.msp.mlflow.v1alpha1.GetClusterByNameRequest\x1a#.nebius.msp.mlflow.v1alpha1.Cluster\x12i\n\x04List\x12/.nebius.msp.mlflow.v1alpha1.ListClustersRequest\x1a\x30.nebius.msp.mlflow.v1alpha1.ListClustersResponse\x12]\n\x06\x43reate\x12\x30.nebius.msp.mlflow.v1alpha1.CreateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06\x44\x65lete\x12\x30.nebius.msp.mlflow.v1alpha1.DeleteClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\r\xbaJ\nmlflow.mspBt\n!ai.nebius.pub.msp.mlflow.v1alpha1B\x13\x43lusterServiceProtoP\x01Z8github.com/nebius/gosdk/proto/nebius/msp/mlflow/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n0nebius/msp/mlflow/v1alpha1/cluster_service.proto\x12\x1anebius.msp.mlflow.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a(nebius/msp/mlflow/v1alpha1/cluster.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a\x18nebius/annotations.proto\"6\n\x11GetClusterRequest\x12!\n\x02id\x18\x01 \x01(\tB\x11\xbaH\x03\xc8\x01\x01\xe2J\x08\n\x06mlflowR\x02id\"Z\n\x17GetClusterByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"v\n\x13ListClustersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x81\x01\n\x14ListClustersResponse\x12\x41\n\x05items\x18\x01 \x03(\x0b\x32#.nebius.msp.mlflow.v1alpha1.ClusterB\x06\xbaH\x03\xc8\x01\x01R\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xd3\x02\n\x14\x43reateClusterRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x43\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.msp.mlflow.v1alpha1.ClusterSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec:\xad\x01\xbaH\xa9\x01\x1aZ\n\x12metadata.parent_id\x12&metadata.parent_id should not be empty\x1a\x1chas(this.metadata.parent_id)\x1aK\n\rmetadata.name\x12!metadata.name should not be empty\x1a\x17has(this.metadata.name)\"9\n\x14\x44\x65leteClusterRequest\x12!\n\x02id\x18\x01 \x01(\tB\x11\xbaH\x03\xc8\x01\x01\xe2J\x08\n\x06mlflowR\x02id2\x8a\x04\n\x0e\x43lusterService\x12Y\n\x03Get\x12-.nebius.msp.mlflow.v1alpha1.GetClusterRequest\x1a#.nebius.msp.mlflow.v1alpha1.Cluster\x12\x65\n\tGetByName\x12\x33.nebius.msp.mlflow.v1alpha1.GetClusterByNameRequest\x1a#.nebius.msp.mlflow.v1alpha1.Cluster\x12i\n\x04List\x12/.nebius.msp.mlflow.v1alpha1.ListClustersRequest\x1a\x30.nebius.msp.mlflow.v1alpha1.ListClustersResponse\x12]\n\x06\x43reate\x12\x30.nebius.msp.mlflow.v1alpha1.CreateClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x12]\n\x06\x44\x65lete\x12\x30.nebius.msp.mlflow.v1alpha1.DeleteClusterRequest\x1a!.nebius.common.v1alpha1.Operation\x1a\r\xbaJ\nmlflow.mspBt\n!ai.nebius.pub.msp.mlflow.v1alpha1B\x13\x43lusterServiceProtoP\x01Z8github.com/nebius/gosdk/proto/nebius/msp/mlflow/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,7 +28,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n!ai.nebius.pub.msp.mlflow.v1alpha1B\023ClusterServiceProtoP\001Z8github.com/nebius/gosdk/proto/nebius/msp/mlflow/v1alpha1'
   _GETCLUSTERREQUEST.fields_by_name['id']._options = None
-  _GETCLUSTERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETCLUSTERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\010\n\006mlflow'
   _GETCLUSTERBYNAMEREQUEST.fields_by_name['parent_id']._options = None
   _GETCLUSTERBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
   _GETCLUSTERBYNAMEREQUEST.fields_by_name['name']._options = None
@@ -44,21 +44,21 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CREATECLUSTERREQUEST._options = None
   _CREATECLUSTERREQUEST._serialized_options = b'\272H\251\001\032Z\n\022metadata.parent_id\022&metadata.parent_id should not be empty\032\034has(this.metadata.parent_id)\032K\n\rmetadata.name\022!metadata.name should not be empty\032\027has(this.metadata.name)'
   _DELETECLUSTERREQUEST.fields_by_name['id']._options = None
-  _DELETECLUSTERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETECLUSTERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\010\n\006mlflow'
   _CLUSTERSERVICE._options = None
   _CLUSTERSERVICE._serialized_options = b'\272J\nmlflow.msp'
   _globals['_GETCLUSTERREQUEST']._serialized_start=250
-  _globals['_GETCLUSTERREQUEST']._serialized_end=293
-  _globals['_GETCLUSTERBYNAMEREQUEST']._serialized_start=295
-  _globals['_GETCLUSTERBYNAMEREQUEST']._serialized_end=385
-  _globals['_LISTCLUSTERSREQUEST']._serialized_start=387
-  _globals['_LISTCLUSTERSREQUEST']._serialized_end=505
-  _globals['_LISTCLUSTERSRESPONSE']._serialized_start=508
-  _globals['_LISTCLUSTERSRESPONSE']._serialized_end=637
-  _globals['_CREATECLUSTERREQUEST']._serialized_start=640
-  _globals['_CREATECLUSTERREQUEST']._serialized_end=979
-  _globals['_DELETECLUSTERREQUEST']._serialized_start=981
-  _globals['_DELETECLUSTERREQUEST']._serialized_end=1027
-  _globals['_CLUSTERSERVICE']._serialized_start=1030
-  _globals['_CLUSTERSERVICE']._serialized_end=1552
+  _globals['_GETCLUSTERREQUEST']._serialized_end=304
+  _globals['_GETCLUSTERBYNAMEREQUEST']._serialized_start=306
+  _globals['_GETCLUSTERBYNAMEREQUEST']._serialized_end=396
+  _globals['_LISTCLUSTERSREQUEST']._serialized_start=398
+  _globals['_LISTCLUSTERSREQUEST']._serialized_end=516
+  _globals['_LISTCLUSTERSRESPONSE']._serialized_start=519
+  _globals['_LISTCLUSTERSRESPONSE']._serialized_end=648
+  _globals['_CREATECLUSTERREQUEST']._serialized_start=651
+  _globals['_CREATECLUSTERREQUEST']._serialized_end=990
+  _globals['_DELETECLUSTERREQUEST']._serialized_start=992
+  _globals['_DELETECLUSTERREQUEST']._serialized_end=1049
+  _globals['_CLUSTERSERVICE']._serialized_start=1052
+  _globals['_CLUSTERSERVICE']._serialized_end=1574
 # @@protoc_insertion_point(module_scope)
