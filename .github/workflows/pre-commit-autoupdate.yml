@@ -1,0 +1,44 @@
+name: Pre-commit autoupdate
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  autoupdate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.10"
+
+    - name: Install pre-commit
+      run: |
+        python -m pip install --upgrade pip
+        pip install pre-commit
+
+    - name: Run pre-commit autoupdate
+      run: |
+        pre-commit autoupdate
+
+    - name: Set date for PR metadata
+      run: |
+        echo "PR_DATE=$(date +%Y-%m-%d)" >> "$GITHUB_ENV"
+
+    - name: Create pull request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        commit-message: "chore: pre-commit autoupdate (${PR_DATE})"
+        title: "chore: pre-commit autoupdate (${PR_DATE})"
+        body: "Automated pre-commit autoupdate (${PR_DATE})."
+        branch: "chore/pre-commit-autoupdate-${PR_DATE}"
+        delete-branch: true
