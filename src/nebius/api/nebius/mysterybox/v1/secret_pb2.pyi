@@ -1,6 +1,6 @@
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
-from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
+from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.mysterybox.v1 import secret_version_pb2 as _secret_version_pb2
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor

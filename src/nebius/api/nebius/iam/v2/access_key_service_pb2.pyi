@@ -1,8 +1,8 @@
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.common.v1 import operation_pb2 as _operation_pb2
-from nebius.api.nebius.iam.v2 import access_key_pb2 as _access_key_pb2
 from nebius.api.nebius.iam.v1 import access_pb2 as _access_pb2
+from nebius.api.nebius.iam.v2 import access_key_pb2 as _access_key_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message

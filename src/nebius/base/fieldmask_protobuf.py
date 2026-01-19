@@ -12,6 +12,6 @@ def ensure_reset_mask_in_metadata(
 ) -> Metadata:
     metadata = Metadata(metadata)
 
-    if RESET_MASK_HEADER not in metadata:  # type:ignore[comparison-overlap]
+    if RESET_MASK_HEADER not in metadata:  # type: ignore[comparison-overlap]
         metadata[RESET_MASK_HEADER] = Message.get_full_update_reset_mask(msg).marshal()
     return metadata

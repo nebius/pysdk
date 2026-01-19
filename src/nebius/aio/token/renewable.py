@@ -172,9 +172,7 @@ class Receiver(ParentReceiver):
         :returns: The fetched :class:`Token`.
         """
         self._trial += 1
-        log.debug(
-            f"token fetch requested, attempt: {self._trial}," f"timeout: {timeout}"
-        )
+        log.debug(f"token fetch requested, attempt: {self._trial},timeout: {timeout}")
         return await self._parent.fetch(timeout=timeout, options=options)
 
     def can_retry(

@@ -1,6 +1,6 @@
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
-from nebius.api.nebius.iam.v1 import tenant_user_account_pb2 as _tenant_user_account_pb2
 from nebius.api.nebius.iam.v1 import service_account_pb2 as _service_account_pb2
+from nebius.api.nebius.iam.v1 import tenant_user_account_pb2 as _tenant_user_account_pb2
 from nebius.api.nebius.iam.v1 import user_account_pb2 as _user_account_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor

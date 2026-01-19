@@ -160,8 +160,7 @@ class Config:
             raise NoParentIdError("Missing parent-id in the profile.")
         if not isinstance(self._profile["parent-id"], str):
             raise ConfigError(
-                "Parent id should be a string, got "
-                f"{type(self._profile['parent-id'])}."
+                f"Parent id should be a string, got {type(self._profile['parent-id'])}."
             )
         if self._profile["parent-id"] == "":
             raise NoParentIdError("Parent id is empty.")

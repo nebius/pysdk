@@ -204,9 +204,9 @@ def test_fieldpath_to_mask(subtests):
             str_representation = m.marshal()
 
             # Assert no error and correct string representation
-            assert str_representation == case["Res"], (
-                f"Failed on case {i}: " f"{str_representation} !=" f" {case['Res']}"
-            )
+            assert (
+                str_representation == case["Res"]
+            ), f"Failed on case {i}: {str_representation} != {case['Res']}"
 
 
 def test_fieldpath_is_prefix_of(subtests):

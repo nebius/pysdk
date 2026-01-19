@@ -11,12 +11,12 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n$nebius/compute/v1/node_service.proto\x12\x11nebius.compute.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\xf1\x02\n\x17NodeSetUnhealthyRequest\x12\'\n\x0binstance_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\ninstanceId\x12n\n\x11health_check_info\x18\x02 \x01(\x0b\x32:.nebius.compute.v1.NodeSetUnhealthyRequest.HealthCheckInfoB\x06\xbaH\x03\xc8\x01\x01R\x0fhealthCheckInfo\x12\x17\n\x07\x64ry_run\x18\x03 \x01(\x08R\x06\x64ryRun\x1a\xa3\x01\n\x0fHealthCheckInfo\x12\x43\n\x0bobserved_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\nobservedAt\x12!\n\x08\x63heck_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x07\x63heckId\x12(\n\x0b\x64\x65scription\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0b\x64\x65scription\"\x1a\n\x18NodeSetUnhealthyResponse2\x82\x01\n\x0bNodeService\x12g\n\x0cSetUnhealthy\x12*.nebius.compute.v1.NodeSetUnhealthyRequest\x1a+.nebius.compute.v1.NodeSetUnhealthyResponse\x1a\n\xbaJ\x07\x63omputeB_\n\x18\x61i.nebius.pub.compute.v1B\x10NodeServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n$nebius/compute/v1/node_service.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\"\xf1\x02\n\x17NodeSetUnhealthyRequest\x12\'\n\x0binstance_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\ninstanceId\x12n\n\x11health_check_info\x18\x02 \x01(\x0b\x32:.nebius.compute.v1.NodeSetUnhealthyRequest.HealthCheckInfoB\x06\xbaH\x03\xc8\x01\x01R\x0fhealthCheckInfo\x12\x17\n\x07\x64ry_run\x18\x03 \x01(\x08R\x06\x64ryRun\x1a\xa3\x01\n\x0fHealthCheckInfo\x12\x43\n\x0bobserved_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\nobservedAt\x12!\n\x08\x63heck_id\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x07\x63heckId\x12(\n\x0b\x64\x65scription\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0b\x64\x65scription\"\x1a\n\x18NodeSetUnhealthyResponse2\x82\x01\n\x0bNodeService\x12g\n\x0cSetUnhealthy\x12*.nebius.compute.v1.NodeSetUnhealthyRequest\x1a+.nebius.compute.v1.NodeSetUnhealthyResponse\x1a\n\xbaJ\x07\x63omputeB_\n\x18\x61i.nebius.pub.compute.v1B\x10NodeServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)

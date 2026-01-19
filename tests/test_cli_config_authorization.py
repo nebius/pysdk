@@ -73,15 +73,13 @@ async def test_env_and_token_file_auth(monkeypatch, tmp_path) -> None:
     monkeypatch.setenv("NEBIUS_IAM_TOKEN", "envtok")
     cfg_env_dir = env_home / ".nebius"
     cfg_env_dir.mkdir(parents=True, exist_ok=True)
-    (cfg_env_dir / "config.yaml").write_text(
-        """
+    (cfg_env_dir / "config.yaml").write_text("""
 default: test
 profiles:
   test:
     auth-type: service account
     endpoint: some.endpoint
-""".strip()
-    )
+""".strip())
     sdk1 = SDK(
         domain="localhost:0",
         options=[(INSECURE, True)],
@@ -347,8 +345,7 @@ async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
             cfg_dir = home / ".nebius"
             cfg_dir.mkdir(parents=True, exist_ok=True)
             cfg_file = cfg_dir / "config.yaml"
-            cfg_file.write_text(
-                f"""
+            cfg_file.write_text(f"""
 default: test
 profiles:
   test:
@@ -356,8 +353,7 @@ profiles:
     federation-endpoint: {fed_url}
     federation-id: fid-123
     endpoint: localhost:{port}
-""".strip()
-            )
+""".strip())
 
             out = io.StringIO()
             sdk = SDK(

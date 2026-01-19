@@ -11,11 +11,11 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
+from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/mysterybox/v1/payload.proto\x12\x14nebius.mysterybox.v1\x1a\x18nebius/annotations.proto\x1a\x1b\x62uf/validate/validate.proto\"\xa2\x01\n\x07Payload\x12\x1b\n\x03key\x18\x01 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x03key\x12\x33\n\x0cstring_value\x18\x0c \x01(\tB\x0e\xbaH\x08r\x06\x10\x01\x18\x80\x80\x04\xc0J\x01H\x00R\x0bstringValue\x12\x33\n\x0c\x62inary_value\x18\r \x01(\x0c\x42\x0e\xbaH\x08z\x06\x10\x01\x18\x80\x80\x04\xc0J\x01H\x00R\x0b\x62inaryValueB\x10\n\x07payload\x12\x05\xbaH\x02\x08\x01\x42\x61\n\x1b\x61i.nebius.pub.mysterybox.v1B\x0cPayloadProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mysterybox/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/mysterybox/v1/payload.proto\x12\x14nebius.mysterybox.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\xa2\x01\n\x07Payload\x12\x1b\n\x03key\x18\x01 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x03key\x12\x33\n\x0cstring_value\x18\x0c \x01(\tB\x0e\xbaH\x08r\x06\x10\x01\x18\x80\x80\x04\xc0J\x01H\x00R\x0bstringValue\x12\x33\n\x0c\x62inary_value\x18\r \x01(\x0c\x42\x0e\xbaH\x08z\x06\x10\x01\x18\x80\x80\x04\xc0J\x01H\x00R\x0b\x62inaryValueB\x10\n\x07payload\x12\x05\xbaH\x02\x08\x01\x42\x61\n\x1b\x61i.nebius.pub.mysterybox.v1B\x0cPayloadProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mysterybox/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)

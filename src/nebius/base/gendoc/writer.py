@@ -30,7 +30,7 @@ def bs4_to_tag(element: PageElement) -> Tag | CDATA | Comment | str:
     raise ValueError(f"Unsupported element type: {type(element)}")
 
 
-class APIReferencePage(Page):  # type:ignore[misc]
+class APIReferencePage(Page):  # type: ignore[misc]
     filename = "apiReference.html"
 
     def __init__(
@@ -55,7 +55,7 @@ class APIReferencePage(Page):  # type:ignore[misc]
 CLIENT_SELECTOR = 'li a[name="nebius.aio.client.Client"] ~ ul'
 
 
-class TemplateWriter(Base):  # type:ignore[misc]
+class TemplateWriter(Base):  # type: ignore[misc]
     def writeSummaryPages(  # noqa: N802 # comply with the protocol
         self, system: System
     ) -> None:
