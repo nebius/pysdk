@@ -35,7 +35,7 @@ jobs:
         echo "PR_DATE=$(date +%Y-%m-%d)" >> "$GITHUB_ENV"
 
     - name: Create pull request
-      uses: peter-evans/create-pull-request@v6
+      uses: peter-evans/create-pull-request@v8
       with:
         commit-message: "chore: pre-commit autoupdate (${PR_DATE})"
         title: "chore: pre-commit autoupdate (${PR_DATE})"
