@@ -847,8 +847,7 @@ def generate_service(srv: Service, g: PyGenFile) -> None:
         if deprecation_details is not None:
             g.p("__service_deprecation_details__ = (")
             print_triple_quoted_string(
-                f"Service {srv.full_type_name} is deprecated. "
-                f"{deprecation_details}",
+                f"Service {srv.full_type_name} is deprecated. {deprecation_details}",
                 g,
             )
             g.p(")")

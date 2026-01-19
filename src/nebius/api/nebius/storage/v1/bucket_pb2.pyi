@@ -1,5 +1,5 @@
-from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.storage.v1 import base_pb2 as _base_pb2

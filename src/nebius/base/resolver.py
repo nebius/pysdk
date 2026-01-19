@@ -136,8 +136,7 @@ class Cached(Resolver):
     def resolve(self, service_id: str) -> str:
         if service_id in self._cache:
             log.debug(
-                f"cached resolver {service_id} resolved to "
-                f"{self._cache[service_id]}"
+                f"cached resolver {service_id} resolved to {self._cache[service_id]}"
             )
             return self._cache[service_id]
 

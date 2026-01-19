@@ -27,7 +27,7 @@ if __name__ == "__main__":
             description="basic example that creates and then deletes a bucket",
         )
         parser.add_argument(
-            "project_id", help="project in which to create and delete " "a test bucket."
+            "project_id", help="project in which to create and delete a test bucket."
         )
         args = parser.parse_args()
 

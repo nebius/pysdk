@@ -178,7 +178,7 @@ class EnumValue(Descriptor):
 
     @property
     def number(self) -> int:
-        return self.descriptor.number  # type:ignore[no-any-return,unused-ignore]
+        return self.descriptor.number  # type: ignore[no-any-return,unused-ignore]
 
     @property
     def pb2(self) -> ImportedSymbol:
@@ -408,7 +408,7 @@ class Field(Descriptor):
             raise FieldNotEnumError(self)
 
     def tracks_presence(self) -> bool:
-        return (  # type:ignore[no-any-return,unused-ignore]
+        return (  # type: ignore[no-any-return,unused-ignore]
             self.descriptor.proto3_optional
             or (
                 self.descriptor.type == self.descriptor.TYPE_MESSAGE
@@ -763,7 +763,7 @@ class Message(Descriptor):
         except KeyError:
             if strict:
                 raise KeyError(
-                    f"Message {name} not found in scope of " f"{self.full_type_name}"
+                    f"Message {name} not found in scope of {self.full_type_name}"
                 )
             if self.containing_message is not None:
                 return self.containing_message.get_message_by_type_name(name)
@@ -782,7 +782,7 @@ class Message(Descriptor):
         except KeyError:
             if strict:
                 raise KeyError(
-                    f"Enum {name} not found in scope of " f"{self.full_type_name}"
+                    f"Enum {name} not found in scope of {self.full_type_name}"
                 )
             if self.containing_message is not None:
                 return self.containing_message.get_enum_by_type_name(name)

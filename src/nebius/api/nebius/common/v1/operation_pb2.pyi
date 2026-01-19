@@ -1,7 +1,7 @@
+from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from google.protobuf import any_pb2 as _any_pb2
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.rpc import status_pb2 as _status_pb2
-from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor

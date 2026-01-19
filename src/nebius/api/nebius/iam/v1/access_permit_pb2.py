@@ -11,11 +11,11 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
+from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/iam/v1/access_permit.proto\x12\rnebius.iam.v1\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/annotations.proto\"\xca\x01\n\x0c\x41\x63\x63\x65ssPermit\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.iam.v1.AccessPermitSpecR\x04spec\x12?\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.iam.v1.AccessPermitStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x02\"S\n\x10\x41\x63\x63\x65ssPermitSpec\x12%\n\x0bresource_id\x18\x01 \x01(\tB\x04\xbaJ\x01\x02R\nresourceId\x12\x18\n\x04role\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\x04role\"\x14\n\x12\x41\x63\x63\x65ssPermitStatusBX\n\x14\x61i.nebius.pub.iam.v1B\x11\x41\x63\x63\x65ssPermitProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/iam/v1/access_permit.proto\x12\rnebius.iam.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xca\x01\n\x0c\x41\x63\x63\x65ssPermit\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.iam.v1.AccessPermitSpecR\x04spec\x12?\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.iam.v1.AccessPermitStatusB\x04\xbaJ\x01\x05R\x06status:\x04\xbaJ\x01\x02\"S\n\x10\x41\x63\x63\x65ssPermitSpec\x12%\n\x0bresource_id\x18\x01 \x01(\tB\x04\xbaJ\x01\x02R\nresourceId\x12\x18\n\x04role\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\x04role\"\x14\n\x12\x41\x63\x63\x65ssPermitStatusBX\n\x14\x61i.nebius.pub.iam.v1B\x11\x41\x63\x63\x65ssPermitProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)

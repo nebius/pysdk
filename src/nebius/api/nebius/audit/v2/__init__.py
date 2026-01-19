@@ -16,6 +16,7 @@ import nebius.aio.client as client
 import nebius.aio.request as request_1
 import nebius.aio.request_kwargs as request_kwargs
 import nebius.api.nebius.audit.v2.access_token_pb2 as access_token_pb2
+import nebius.api.nebius.audit.v2.audit_event_export_pb2 as audit_event_export_pb2
 import nebius.api.nebius.audit.v2.audit_event_pb2 as audit_event_pb2
 import nebius.api.nebius.audit.v2.audit_event_service_pb2 as audit_event_service_pb2
 import nebius.api.nebius.audit.v2.authentication_pb2 as authentication_pb2
@@ -32,6 +33,8 @@ import nebius.api.nebius.audit.v2.service_pb2 as service_pb2
 import nebius.api.nebius.audit.v2.static_key_pb2 as static_key_pb2
 import nebius.api.nebius.audit.v2.status_pb2 as status_pb2
 import nebius.api.nebius.audit.v2.subject_pb2 as subject_pb2
+import nebius.api.nebius.common.v1 as v1_1
+import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -1620,6 +1623,475 @@ class AuditEventServiceClient(client.Client):
         )
     
 
+# file: nebius/audit/v2/audit_event_export.proto
+class AuditEventExportState(pb_enum.Enum):
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.audit.v2.AuditEventExportState",audit_event_export_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    AUDIT_EVENT_EXPORT_STATE_UNSPECIFIED = 0
+    AUDIT_EVENT_EXPORT_STATE_RUNNING = 1
+    """
+    Export created and running.
+    """
+    
+    AUDIT_EVENT_EXPORT_STATE_CANCELED = 2
+    """
+    Export has been cancelled.
+    """
+    
+    AUDIT_EVENT_EXPORT_STATE_DONE = 3
+    """
+    Export successfully completed.
+    """
+    
+    AUDIT_EVENT_EXPORT_STATE_FAILED = 4
+    """
+    Export failed.
+    """
+    
+
+class AuditEventExport(pb_classes.Message):
+    """
+    A resource representing information about previously created exports of audit events.
+    Each record stores data about which filter was used and where the audit events were exported.
+    """
+    
+    __PB2_CLASS__ = audit_event_export_pb2.AuditEventExport
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.AuditEventExport",audit_event_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AuditEventExportSpec|audit_event_export_pb2.AuditEventExportSpec|None|unset.UnsetType" = unset.Unset,
+        status: "AuditEventExportStatus|audit_event_export_pb2.AuditEventExportStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "AuditEventExportSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=AuditEventExportSpec,
+        )
+    @spec.setter
+    def spec(self, value: "AuditEventExportSpec|audit_event_export_pb2.AuditEventExportSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "AuditEventExportStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=AuditEventExportStatus,
+        )
+    @status.setter
+    def status(self, value: "AuditEventExportStatus|audit_event_export_pb2.AuditEventExportStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class AuditEventExportSpec(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_pb2.AuditEventExportSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.AuditEventExportSpec",audit_event_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_export_destination__(pb_classes.OneOf):
+        name: builtins.str= "export_destination"
+        
+        def __init__(self, msg: "AuditEventExportSpec") -> None:
+            super().__init__()
+            self._message: "AuditEventExportSpec" = msg
+    
+    class __OneOfClass_export_destination_nebius_object_storage__(__OneOfClass_export_destination__):
+        field: typing.Literal["nebius_object_storage"] = "nebius_object_storage"
+        
+        def __init__(self, msg: "AuditEventExportSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "NebiusObjectStorageDestination":
+            return self._message.nebius_object_storage
+    
+    @builtins.property
+    def export_destination(self) -> __OneOfClass_export_destination_nebius_object_storage__|None:
+        field_name_1: str|None = super().which_field_in_oneof("export_destination")
+        match field_name_1:
+            case "nebius_object_storage":
+                return self.__OneOfClass_export_destination_nebius_object_storage__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        params: "AuditEventExportParams|audit_event_export_pb2.AuditEventExportParams|None|unset.UnsetType" = unset.Unset,
+        nebius_object_storage: "NebiusObjectStorageDestination|audit_event_export_pb2.NebiusObjectStorageDestination|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(params, unset.UnsetType):
+            self.params = params
+        if not isinstance(nebius_object_storage, unset.UnsetType):
+            self.nebius_object_storage = nebius_object_storage
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "params",
+            "nebius_object_storage",
+            "export_destination",
+        ]
+    
+    @builtins.property
+    def params(self) -> "AuditEventExportParams":
+        """
+        Filter based on which audit logs must be exported.
+        """
+        
+        return super()._get_field("params", explicit_presence=False,
+        wrap=AuditEventExportParams,
+        )
+    @params.setter
+    def params(self, value: "AuditEventExportParams|audit_event_export_pb2.AuditEventExportParams|None") -> None:
+        return super()._set_field("params",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def nebius_object_storage(self) -> "NebiusObjectStorageDestination|None":
+        """
+        An object storage bucket that will be used as the destination for audit logs.
+        You must have ``storage.upload`` permission for successful execution.
+        """
+        
+        return super()._get_field("nebius_object_storage", explicit_presence=True,
+        wrap=NebiusObjectStorageDestination,
+        )
+    @nebius_object_storage.setter
+    def nebius_object_storage(self, value: "NebiusObjectStorageDestination|audit_event_export_pb2.NebiusObjectStorageDestination|None") -> None:
+        return super()._set_field("nebius_object_storage",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "params":"params",
+        "nebius_object_storage":"nebius_object_storage",
+        "export_destination":"export_destination",
+    }
+    
+class NebiusObjectStorageDestination(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_pb2.NebiusObjectStorageDestination
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.NebiusObjectStorageDestination",audit_event_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_bucket__(pb_classes.OneOf):
+        name: builtins.str= "bucket"
+        
+        def __init__(self, msg: "NebiusObjectStorageDestination") -> None:
+            super().__init__()
+            self._message: "NebiusObjectStorageDestination" = msg
+    
+    class __OneOfClass_bucket_bucket_by_id__(__OneOfClass_bucket__):
+        field: typing.Literal["bucket_by_id"] = "bucket_by_id"
+        
+        def __init__(self, msg: "NebiusObjectStorageDestination") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "BucketById":
+            return self._message.bucket_by_id
+    
+    @builtins.property
+    def bucket(self) -> __OneOfClass_bucket_bucket_by_id__|None:
+        """
+        The bucket into which events will be exported.
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("bucket")
+        match field_name_1:
+            case "bucket_by_id":
+                return self.__OneOfClass_bucket_bucket_by_id__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        object_prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        bucket_by_id: "BucketById|audit_event_export_pb2.BucketById|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(object_prefix, unset.UnsetType):
+            self.object_prefix = object_prefix
+        if not isinstance(bucket_by_id, unset.UnsetType):
+            self.bucket_by_id = bucket_by_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "object_prefix",
+            "bucket_by_id",
+            "bucket",
+        ]
+    
+    @builtins.property
+    def object_prefix(self) -> "builtins.str":
+        """
+        Prefix for export objects.
+        Default value is ``auditlogs``.
+        """
+        
+        return super()._get_field("object_prefix", explicit_presence=False,
+        )
+    @object_prefix.setter
+    def object_prefix(self, value: "builtins.str|None") -> None:
+        return super()._set_field("object_prefix",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def bucket_by_id(self) -> "BucketById|None":
+        return super()._get_field("bucket_by_id", explicit_presence=True,
+        wrap=BucketById,
+        )
+    @bucket_by_id.setter
+    def bucket_by_id(self, value: "BucketById|audit_event_export_pb2.BucketById|None") -> None:
+        return super()._set_field("bucket_by_id",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "object_prefix":"object_prefix",
+        "bucket_by_id":"bucket_by_id",
+        "bucket":"bucket",
+    }
+    
+class BucketById(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_pb2.BucketById
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.BucketById",audit_event_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        The id of the bucket in the tenant where the logs will be exported.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class AuditEventExportParams(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_pb2.AuditEventExportParams
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.AuditEventExportParams",audit_event_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "a_from": well_known_1.ts_mask,
+        "to": well_known_1.ts_mask,
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        a_from: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        to: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        event_type: "EventType|audit_event_service_pb2.EventType|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(a_from, unset.UnsetType):
+            self.a_from = a_from
+        if not isinstance(to, unset.UnsetType):
+            self.to = to
+        if not isinstance(filter, unset.UnsetType):
+            self.filter = filter
+        if not isinstance(event_type, unset.UnsetType):
+            self.event_type = event_type
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "a_from",
+            "to",
+            "filter",
+            "event_type",
+        ]
+    
+    @builtins.property
+    def a_from(self) -> "datetime.datetime":
+        """
+        Returns results with a timestamp greater than or equal to this value.
+        """
+        
+        return super()._get_field("a_from", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @a_from.setter
+    def a_from(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("a_from",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def to(self) -> "datetime.datetime":
+        """
+        Returns results with a timestamp lower than this value.
+        """
+        
+        return super()._get_field("to", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @to.setter
+    def to(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("to",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def filter(self) -> "builtins.str":
+        """
+        Example:
+        service.name = 'iam' AND resource.hierarchy.id:'container-e0t' AND regex(resource.metadata.name, '^.\\ *test.*\\ $')
+        
+        Supported filters:
+        "=" - equals
+        "!=" - not equals
+        ":" - contains
+        regex - regular expression
+        
+        Fields that can be used for filtering:
+        action
+        authentication.static_key_credential.id
+        authentication.subject.service_account_id
+        authentication.subject.tenant_user_id
+        authentication.token_credential.masked_token
+        project_region.name
+        resource.hierarchy.id
+        resource.hierarchy.name
+        resource.metadata.id
+        resource.metadata.name
+        resource.metadata.type
+        service.name
+        type
+        status
+        """
+        
+        return super()._get_field("filter", explicit_presence=False,
+        )
+    @filter.setter
+    def filter(self, value: "builtins.str|None") -> None:
+        return super()._set_field("filter",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def event_type(self) -> "EventType":
+        """
+        Type of audit event to filter by.
+        """
+        
+        return super()._get_field("event_type", explicit_presence=False,
+        wrap=EventType,
+        )
+    @event_type.setter
+    def event_type(self, value: "EventType|audit_event_service_pb2.EventType|None") -> None:
+        return super()._set_field("event_type",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "a_from":"from",
+        "to":"to",
+        "filter":"filter",
+        "event_type":"event_type",
+    }
+    
+class AuditEventExportStatus(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_pb2.AuditEventExportStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.AuditEventExportStatus",audit_event_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "AuditEventExportState|audit_event_export_pb2.AuditEventExportState|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+        ]
+    
+    @builtins.property
+    def state(self) -> "AuditEventExportState":
+        """
+        Current state of audit logs export.
+        """
+        
+        return super()._get_field("state", explicit_presence=False,
+        wrap=AuditEventExportState,
+        )
+    @state.setter
+    def state(self, value: "AuditEventExportState|audit_event_export_pb2.AuditEventExportState|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+    }
+    
 __all__ = [
     #@ local import names here @#
     "AccessToken",
@@ -1642,4 +2114,11 @@ __all__ = [
     "ListAuditEventRequest",
     "ListAuditEventResponse",
     "AuditEventServiceClient",
+    "AuditEventExportState",
+    "AuditEventExport",
+    "AuditEventExportSpec",
+    "NebiusObjectStorageDestination",
+    "BucketById",
+    "AuditEventExportParams",
+    "AuditEventExportStatus",
 ]

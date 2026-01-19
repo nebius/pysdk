@@ -60,8 +60,7 @@ class UnsupportedResponseError(SDKError):
     def __init__(self, expected: str, resp: Any) -> None:
         """Initialize the error."""
         super().__init__(
-            f"Unsupported response received: expected {expected},"
-            f" received {type(resp)}"
+            f"Unsupported response received: expected {expected}, received {type(resp)}"
         )
 
 

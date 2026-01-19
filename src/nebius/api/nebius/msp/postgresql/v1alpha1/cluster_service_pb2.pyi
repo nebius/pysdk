@@ -1,9 +1,9 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
-from nebius.api.nebius.msp.postgresql.v1alpha1 import cluster_pb2 as _cluster_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.common.v1alpha1 import operation_pb2 as _operation_pb2
-from nebius.api.nebius import annotations_pb2 as _annotations_pb2
-from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from nebius.api.nebius.msp.postgresql.v1alpha1 import cluster_pb2 as _cluster_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message

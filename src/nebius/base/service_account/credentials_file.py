@@ -39,7 +39,7 @@ class SubjectCredentials:
 
         if self.iss != self.sub:
             raise ValueError(
-                "Issuer must be the same as subject: " f"'{self.iss}' != '{self.sub}'."
+                f"Issuer must be the same as subject: '{self.iss}' != '{self.sub}'."
             )
 
     def parse_private_key(self) -> RSAPrivateKey:

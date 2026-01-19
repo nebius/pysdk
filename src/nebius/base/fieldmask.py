@@ -47,7 +47,7 @@ class FieldPath(list[FieldKey]):
                     v = FieldKey(v)
                 if not isinstance(v, FieldKey):  # type: ignore[unused-ignore]
                     raise ValueError(
-                        "base contents should be FieldKey or str, got " f"{type(v)}"
+                        f"base contents should be FieldKey or str, got {type(v)}"
                     )
                 self.append(v)
 
@@ -146,7 +146,7 @@ class FieldPath(list[FieldKey]):
                 v = FieldKey(v)
             if not isinstance(v, FieldKey):  # type: ignore[unused-ignore]
                 raise ValueError(
-                    "value contents should be FieldKey or str, got " f"{type(v)}"
+                    f"value contents should be FieldKey or str, got {type(v)}"
                 )
             self.append(v)
         return self
@@ -204,11 +204,11 @@ class Mask:
                     k = FieldKey(k)
                 if not isinstance(k, FieldKey):  # type: ignore[unused-ignore]
                     raise ValueError(
-                        "field_parts keys should be FieldKey or str, got" f" {type(k)}"
+                        f"field_parts keys should be FieldKey or str, got {type(k)}"
                     )
                 if not isinstance(v, Mask):  # type: ignore[unused-ignore]
                     raise ValueError(
-                        "field_parts values should be of type Mask, " f"got {type(v)}"
+                        f"field_parts values should be of type Mask, got {type(v)}"
                     )
                 self.field_parts[k] = v
 
