@@ -127,6 +127,7 @@ class GetVersionRequest(pb_classes.Message):
         gpu_model: "builtins.str|None|unset.UnsetType" = unset.Unset,
         gpu_number: "builtins.int|None|unset.UnsetType" = unset.Unset,
         dcgm_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        healthcheck_logs: "HealthCheckLogs|version_service_pb2.HealthCheckLogs|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -169,6 +170,8 @@ class GetVersionRequest(pb_classes.Message):
             self.gpu_number = gpu_number
         if not isinstance(dcgm_version, unset.UnsetType):
             self.dcgm_version = dcgm_version
+        if not isinstance(healthcheck_logs, unset.UnsetType):
+            self.healthcheck_logs = healthcheck_logs
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -192,6 +195,7 @@ class GetVersionRequest(pb_classes.Message):
             "gpu_model",
             "gpu_number",
             "dcgm_version",
+            "healthcheck_logs",
         ]
     
     @builtins.property
@@ -465,6 +469,20 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("dcgm_version",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def healthcheck_logs(self) -> "HealthCheckLogs":
+        """
+        Health check logs information for monitoring disk usage.
+        """
+        
+        return super()._get_field("healthcheck_logs", explicit_presence=False,
+        wrap=HealthCheckLogs,
+        )
+    @healthcheck_logs.setter
+    def healthcheck_logs(self, value: "HealthCheckLogs|version_service_pb2.HealthCheckLogs|None") -> None:
+        return super()._set_field("healthcheck_logs",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "type":"type",
         "agent_version":"agent_version",
@@ -486,6 +504,7 @@ class GetVersionRequest(pb_classes.Message):
         "gpu_model":"gpu_model",
         "gpu_number":"gpu_number",
         "dcgm_version":"dcgm_version",
+        "healthcheck_logs":"healthcheck_logs",
     }
     
 class ModulesHealth(pb_classes.Message):
@@ -507,6 +526,8 @@ class ModulesHealth(pb_classes.Message):
         cpu_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         cilium_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         vmapps_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        common_service_logs_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        vm_service_logs_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(process, unset.UnsetType):
@@ -519,6 +540,10 @@ class ModulesHealth(pb_classes.Message):
             self.cilium_pipeline = cilium_pipeline
         if not isinstance(vmapps_pipeline, unset.UnsetType):
             self.vmapps_pipeline = vmapps_pipeline
+        if not isinstance(common_service_logs_pipeline, unset.UnsetType):
+            self.common_service_logs_pipeline = common_service_logs_pipeline
+        if not isinstance(vm_service_logs_pipeline, unset.UnsetType):
+            self.vm_service_logs_pipeline = vm_service_logs_pipeline
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -527,6 +552,8 @@ class ModulesHealth(pb_classes.Message):
             "cpu_pipeline",
             "cilium_pipeline",
             "vmapps_pipeline",
+            "common_service_logs_pipeline",
+            "vm_service_logs_pipeline",
         ]
     
     @builtins.property
@@ -599,12 +626,102 @@ class ModulesHealth(pb_classes.Message):
         return super()._set_field("vmapps_pipeline",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def common_service_logs_pipeline(self) -> "ModuleHealth":
+        """
+        Health status of the common service logs pipeline module.
+        """
+        
+        return super()._get_field("common_service_logs_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @common_service_logs_pipeline.setter
+    def common_service_logs_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("common_service_logs_pipeline",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def vm_service_logs_pipeline(self) -> "ModuleHealth":
+        """
+        Health status of the vm service logs pipeline module.
+        """
+        
+        return super()._get_field("vm_service_logs_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @vm_service_logs_pipeline.setter
+    def vm_service_logs_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("vm_service_logs_pipeline",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "process":"process",
         "gpu_pipeline":"gpu_pipeline",
         "cpu_pipeline":"cpu_pipeline",
         "cilium_pipeline":"cilium_pipeline",
         "vmapps_pipeline":"vmapps_pipeline",
+        "common_service_logs_pipeline":"common_service_logs_pipeline",
+        "vm_service_logs_pipeline":"vm_service_logs_pipeline",
+    }
+    
+class HealthCheckLogs(pb_classes.Message):
+    """
+    Health check logs information for monitoring disk usage.
+    """
+    
+    __PB2_CLASS__ = version_service_pb2.HealthCheckLogs
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.HealthCheckLogs",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        directory_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        mountpoint_total_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(directory_size_bytes, unset.UnsetType):
+            self.directory_size_bytes = directory_size_bytes
+        if not isinstance(mountpoint_total_bytes, unset.UnsetType):
+            self.mountpoint_total_bytes = mountpoint_total_bytes
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "directory_size_bytes",
+            "mountpoint_total_bytes",
+        ]
+    
+    @builtins.property
+    def directory_size_bytes(self) -> "builtins.int":
+        """
+        Size of the healthcheck directory in bytes.
+        """
+        
+        return super()._get_field("directory_size_bytes", explicit_presence=False,
+        )
+    @directory_size_bytes.setter
+    def directory_size_bytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("directory_size_bytes",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def mountpoint_total_bytes(self) -> "builtins.int":
+        """
+        Total size of the healthcheck mountpoint in bytes.
+        """
+        
+        return super()._get_field("mountpoint_total_bytes", explicit_presence=False,
+        )
+    @mountpoint_total_bytes.setter
+    def mountpoint_total_bytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("mountpoint_total_bytes",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "directory_size_bytes":"directory_size_bytes",
+        "mountpoint_total_bytes":"mountpoint_total_bytes",
     }
     
 class ModuleHealth(pb_classes.Message):
@@ -1150,6 +1267,7 @@ __all__ = [
     "Action",
     "GetVersionRequest",
     "ModulesHealth",
+    "HealthCheckLogs",
     "ModuleHealth",
     "Parameter",
     "OSInfo",

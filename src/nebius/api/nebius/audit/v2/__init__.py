@@ -13,10 +13,12 @@ import google.protobuf.struct_pb2 as struct_pb2
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import google.rpc.code_pb2 as code_pb2
 import nebius.aio.client as client
+import nebius.aio.operation as operation
 import nebius.aio.request as request_1
 import nebius.aio.request_kwargs as request_kwargs
 import nebius.api.nebius.audit.v2.access_token_pb2 as access_token_pb2
 import nebius.api.nebius.audit.v2.audit_event_export_pb2 as audit_event_export_pb2
+import nebius.api.nebius.audit.v2.audit_event_export_service_pb2 as audit_event_export_service_pb2
 import nebius.api.nebius.audit.v2.audit_event_pb2 as audit_event_pb2
 import nebius.api.nebius.audit.v2.audit_event_service_pb2 as audit_event_service_pb2
 import nebius.api.nebius.audit.v2.authentication_pb2 as authentication_pb2
@@ -35,6 +37,7 @@ import nebius.api.nebius.audit.v2.status_pb2 as status_pb2
 import nebius.api.nebius.audit.v2.subject_pb2 as subject_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -2092,6 +2095,415 @@ class AuditEventExportStatus(pb_classes.Message):
         "state":"state",
     }
     
+# file: nebius/audit/v2/audit_event_export_service.proto
+class StartRequest(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_service_pb2.StartRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.StartRequest",audit_event_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "AuditEventExportSpec|audit_event_export_pb2.AuditEventExportSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Metadata associated with the new export.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "AuditEventExportSpec":
+        """
+        Specification for the new export.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=AuditEventExportSpec,
+        )
+    @spec.setter
+    def spec(self, value: "AuditEventExportSpec|audit_event_export_pb2.AuditEventExportSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class CancelRequest(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_service_pb2.CancelRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.CancelRequest",audit_event_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        Id of the audit event export that needs to be cancelled.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetRequest(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_service_pb2.GetRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.GetRequest",audit_event_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        Id of the audit event export.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListRequest(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_service_pb2.ListRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.ListRequest",audit_event_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        Parent id used when creating the audit export.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Specifies the maximum number of items to return in the response.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListAuditEventExportResponse(pb_classes.Message):
+    __PB2_CLASS__ = audit_event_export_service_pb2.ListAuditEventExportResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.audit.v2.ListAuditEventExportResponse",audit_event_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[AuditEventExport]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[AuditEventExport]":
+        """
+        List of audit event exports.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(AuditEventExport,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[AuditEventExport]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+        Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+
+class AuditEventExportServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    Service for managing audit event exports.
+    
+    This class provides the client methods for the ``.nebius.audit.v2.AuditEventExportService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.audit.v2.AuditEventExportService",audit_event_export_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.audit.v2.AuditEventExportService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Start"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def start(self,
+        request: "StartRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["StartRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Start audit events export to s3 bucket for specific period.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.audit.v2.StartRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Start",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def cancel(self,
+        request: "CancelRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CancelRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Stop active audit events export to s3 bucket, all data written before calling this API remains in the bucket.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.audit.v2.CancelRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Cancel",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def get(self,
+        request: "GetRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetRequest","AuditEventExport"]:
+        """
+        Returns the audit event export with the current progress status and the parameters with which it was created.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.audit.v2.GetRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.audit.v2.AuditEventExport`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=audit_event_export_pb2.AuditEventExport,
+            result_wrapper=pb_classes.simple_wrapper(AuditEventExport),
+            **kwargs,
+        )
+    
+    def list(self,
+        request: "ListRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListRequest","ListAuditEventExportResponse"]:
+        """
+        Returns a list of exports created for a specific parent_id.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.audit.v2.ListRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.audit.v2.ListAuditEventExportResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=audit_event_export_service_pb2.ListAuditEventExportResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListAuditEventExportResponse),
+            **kwargs,
+        )
+    
+
 __all__ = [
     #@ local import names here @#
     "AccessToken",
@@ -2121,4 +2533,10 @@ __all__ = [
     "BucketById",
     "AuditEventExportParams",
     "AuditEventExportStatus",
+    "StartRequest",
+    "CancelRequest",
+    "GetRequest",
+    "ListRequest",
+    "ListAuditEventExportResponse",
+    "AuditEventExportServiceClient",
 ]

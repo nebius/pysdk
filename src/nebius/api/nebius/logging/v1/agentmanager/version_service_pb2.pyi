@@ -36,7 +36,7 @@ UPDATE: Action
 RESTART: Action
 
 class GetVersionRequest(_message.Message):
-    __slots__ = ["type", "agent_version", "updater_version", "parent_id", "instance_id", "os_info", "agent_state", "agent_uptime", "system_uptime", "updater_uptime", "agent_state_messages", "last_update_error", "mk8s_cluster_id", "modules_health", "cloud_init_status", "instance_id_used_fallback", "last_agent_logs", "gpu_model", "gpu_number", "dcgm_version"]
+    __slots__ = ["type", "agent_version", "updater_version", "parent_id", "instance_id", "os_info", "agent_state", "agent_uptime", "system_uptime", "updater_uptime", "agent_state_messages", "last_update_error", "mk8s_cluster_id", "modules_health", "cloud_init_status", "instance_id_used_fallback", "last_agent_logs", "gpu_model", "gpu_number", "dcgm_version", "healthcheck_logs"]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     AGENT_VERSION_FIELD_NUMBER: _ClassVar[int]
     UPDATER_VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -57,6 +57,7 @@ class GetVersionRequest(_message.Message):
     GPU_MODEL_FIELD_NUMBER: _ClassVar[int]
     GPU_NUMBER_FIELD_NUMBER: _ClassVar[int]
     DCGM_VERSION_FIELD_NUMBER: _ClassVar[int]
+    HEALTHCHECK_LOGS_FIELD_NUMBER: _ClassVar[int]
     type: AgentType
     agent_version: str
     updater_version: str
@@ -77,21 +78,34 @@ class GetVersionRequest(_message.Message):
     gpu_model: str
     gpu_number: int
     dcgm_version: str
-    def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ..., mk8s_cluster_id: _Optional[str] = ..., modules_health: _Optional[_Union[ModulesHealth, _Mapping]] = ..., cloud_init_status: _Optional[str] = ..., instance_id_used_fallback: bool = ..., last_agent_logs: _Optional[str] = ..., gpu_model: _Optional[str] = ..., gpu_number: _Optional[int] = ..., dcgm_version: _Optional[str] = ...) -> None: ...
+    healthcheck_logs: HealthCheckLogs
+    def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ..., mk8s_cluster_id: _Optional[str] = ..., modules_health: _Optional[_Union[ModulesHealth, _Mapping]] = ..., cloud_init_status: _Optional[str] = ..., instance_id_used_fallback: bool = ..., last_agent_logs: _Optional[str] = ..., gpu_model: _Optional[str] = ..., gpu_number: _Optional[int] = ..., dcgm_version: _Optional[str] = ..., healthcheck_logs: _Optional[_Union[HealthCheckLogs, _Mapping]] = ...) -> None: ...
 
 class ModulesHealth(_message.Message):
-    __slots__ = ["process", "gpu_pipeline", "cpu_pipeline", "cilium_pipeline", "vmapps_pipeline"]
+    __slots__ = ["process", "gpu_pipeline", "cpu_pipeline", "cilium_pipeline", "vmapps_pipeline", "common_service_logs_pipeline", "vm_service_logs_pipeline"]
     PROCESS_FIELD_NUMBER: _ClassVar[int]
     GPU_PIPELINE_FIELD_NUMBER: _ClassVar[int]
     CPU_PIPELINE_FIELD_NUMBER: _ClassVar[int]
     CILIUM_PIPELINE_FIELD_NUMBER: _ClassVar[int]
     VMAPPS_PIPELINE_FIELD_NUMBER: _ClassVar[int]
+    COMMON_SERVICE_LOGS_PIPELINE_FIELD_NUMBER: _ClassVar[int]
+    VM_SERVICE_LOGS_PIPELINE_FIELD_NUMBER: _ClassVar[int]
     process: ModuleHealth
     gpu_pipeline: ModuleHealth
     cpu_pipeline: ModuleHealth
     cilium_pipeline: ModuleHealth
     vmapps_pipeline: ModuleHealth
-    def __init__(self, process: _Optional[_Union[ModuleHealth, _Mapping]] = ..., gpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cilium_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vmapps_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ...) -> None: ...
+    common_service_logs_pipeline: ModuleHealth
+    vm_service_logs_pipeline: ModuleHealth
+    def __init__(self, process: _Optional[_Union[ModuleHealth, _Mapping]] = ..., gpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cilium_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vmapps_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., common_service_logs_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vm_service_logs_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ...) -> None: ...
+
+class HealthCheckLogs(_message.Message):
+    __slots__ = ["directory_size_bytes", "mountpoint_total_bytes"]
+    DIRECTORY_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
+    MOUNTPOINT_TOTAL_BYTES_FIELD_NUMBER: _ClassVar[int]
+    directory_size_bytes: int
+    mountpoint_total_bytes: int
+    def __init__(self, directory_size_bytes: _Optional[int] = ..., mountpoint_total_bytes: _Optional[int] = ...) -> None: ...
 
 class ModuleHealth(_message.Message):
     __slots__ = ["state", "messages", "parameters"]
