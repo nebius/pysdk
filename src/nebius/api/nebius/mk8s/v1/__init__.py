@@ -168,6 +168,7 @@ class ControlPlaneSpec(pb_classes.Message):
         subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         endpoints: "ControlPlaneEndpointsSpec|cluster_pb2.ControlPlaneEndpointsSpec|None|unset.UnsetType" = unset.Unset,
         etcd_cluster_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        audit_logs: "AuditLogsSpec|cluster_pb2.AuditLogsSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -178,6 +179,8 @@ class ControlPlaneSpec(pb_classes.Message):
             self.endpoints = endpoints
         if not isinstance(etcd_cluster_size, unset.UnsetType):
             self.etcd_cluster_size = etcd_cluster_size
+        if not isinstance(audit_logs, unset.UnsetType):
+            self.audit_logs = audit_logs
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -185,6 +188,7 @@ class ControlPlaneSpec(pb_classes.Message):
             "subnet_id",
             "endpoints",
             "etcd_cluster_size",
+            "audit_logs",
         ]
     
     @builtins.property
@@ -245,11 +249,27 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._set_field("etcd_cluster_size",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def audit_logs(self) -> "AuditLogsSpec|None":
+        """
+        Specify configuration of the pushing k8s audit logs into service logs and show it in the UI.
+        By default cluster will be created without it.
+        """
+        
+        return super()._get_field("audit_logs", explicit_presence=True,
+        wrap=AuditLogsSpec,
+        )
+    @audit_logs.setter
+    def audit_logs(self, value: "AuditLogsSpec|cluster_pb2.AuditLogsSpec|None") -> None:
+        return super()._set_field("audit_logs",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "version":"version",
         "subnet_id":"subnet_id",
         "endpoints":"endpoints",
         "etcd_cluster_size":"etcd_cluster_size",
+        "audit_logs":"audit_logs",
     }
     
 class ControlPlaneEndpointsSpec(pb_classes.Message):
@@ -353,6 +373,25 @@ class KubeNetworkSpec(pb_classes.Message):
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "service_cidrs":"service_cidrs",
+    }
+    
+class AuditLogsSpec(pb_classes.Message):
+    __PB2_CLASS__ = cluster_pb2.AuditLogsSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.AuditLogsSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
     }
     
 class ClusterStatus(pb_classes.Message):
@@ -1800,6 +1839,7 @@ class NodeTemplate(pb_classes.Message):
         cloud_init_user_data: "builtins.str|None|unset.UnsetType" = unset.Unset,
         service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         preemptible: "PreemptibleSpec|node_group_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
+        reservation_policy: "ReservationPolicy|node_group_pb2.ReservationPolicy|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1826,6 +1866,8 @@ class NodeTemplate(pb_classes.Message):
             self.service_account_id = service_account_id
         if not isinstance(preemptible, unset.UnsetType):
             self.preemptible = preemptible
+        if not isinstance(reservation_policy, unset.UnsetType):
+            self.reservation_policy = reservation_policy
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1841,6 +1883,7 @@ class NodeTemplate(pb_classes.Message):
             "cloud_init_user_data",
             "service_account_id",
             "preemptible",
+            "reservation_policy",
         ]
     
     @builtins.property
@@ -2058,6 +2101,20 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("preemptible",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def reservation_policy(self) -> "ReservationPolicy":
+        """
+        reservation_policy is an interface of the "capacity block" (or "capacity block group") mechanism of Nebius Compute.
+        """
+        
+        return super()._get_field("reservation_policy", explicit_presence=False,
+        wrap=ReservationPolicy,
+        )
+    @reservation_policy.setter
+    def reservation_policy(self, value: "ReservationPolicy|node_group_pb2.ReservationPolicy|None") -> None:
+        return super()._set_field("reservation_policy",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "metadata":"metadata",
         "taints":"taints",
@@ -2071,6 +2128,7 @@ class NodeTemplate(pb_classes.Message):
         "cloud_init_user_data":"cloud_init_user_data",
         "service_account_id":"service_account_id",
         "preemptible":"preemptible",
+        "reservation_policy":"reservation_policy",
     }
     
 class NodeMetadataTemplate(pb_classes.Message):
@@ -2986,6 +3044,90 @@ class PreemptibleSpec(pb_classes.Message):
         ]
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+class ReservationPolicy(pb_classes.Message):
+    """
+    ReservationPolicy is copied as-is from NebiusAPI ``compute/v1/instance.proto``.
+    """
+    
+    __PB2_CLASS__ = node_group_pb2.ReservationPolicy
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ReservationPolicy",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class Policy(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.mk8s.v1.ReservationPolicy.Policy",node_group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        AUTO = 0
+        """
+        1) Will try to launch instance in any reservation_ids if provided.
+        2) Will try to launch instance in any of the available capacity block.
+        3) Will try to launch instance in PAYG if 1 & 2 are not satisfied.
+        """
+        
+        FORBID = 1
+        """
+        The instance is launched only using on-demand (PAYG) capacity.
+        No attempt is made to find or use a Capacity Block.
+        It's an error to provide reservation_ids with policy = FORBID
+        """
+        
+        STRICT = 2
+        """
+        1) Will try to launch the instance in Capacity Blocks from reservation_ids if provided.
+        2) If reservation_ids are not provided will try to launch instance in suitable & available Capacity Block.
+        3) Fail otherwise.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        policy: "ReservationPolicy.Policy|node_group_pb2.ReservationPolicy.Policy|None|unset.UnsetType" = unset.Unset,
+        reservation_ids: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(policy, unset.UnsetType):
+            self.policy = policy
+        if not isinstance(reservation_ids, unset.UnsetType):
+            self.reservation_ids = reservation_ids
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "policy",
+            "reservation_ids",
+            "Policy",
+        ]
+    
+    @builtins.property
+    def policy(self) -> "ReservationPolicy.Policy":
+        return super()._get_field("policy", explicit_presence=False,
+        wrap=ReservationPolicy.Policy,
+        )
+    @policy.setter
+    def policy(self, value: "ReservationPolicy.Policy|node_group_pb2.ReservationPolicy.Policy|None") -> None:
+        return super()._set_field("policy",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def reservation_ids(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        Capacity block groups, order matters
+        """
+        
+        return super()._get_field("reservation_ids", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @reservation_ids.setter
+    def reservation_ids(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("reservation_ids",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "policy":"policy",
+        "reservation_ids":"reservation_ids",
+        "Policy":"Policy",
     }
     
 class NodeGroupStatus(pb_classes.Message):
@@ -4126,6 +4268,7 @@ __all__ = [
     "ControlPlaneEndpointsSpec",
     "PublicEndpointSpec",
     "KubeNetworkSpec",
+    "AuditLogsSpec",
     "ClusterStatus",
     "ControlPlaneStatus",
     "ControlPlaneStatusEndpoints",
@@ -4160,6 +4303,7 @@ __all__ = [
     "NodeGroupAutoRepairSpec",
     "NodeAutoRepairCondition",
     "PreemptibleSpec",
+    "ReservationPolicy",
     "NodeGroupStatus",
     "GetNodeGroupCompatibilityMatrixRequest",
     "NodeGroupCompatibilityMatrix",

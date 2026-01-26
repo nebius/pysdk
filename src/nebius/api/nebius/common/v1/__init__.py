@@ -21,6 +21,7 @@ import nebius.api.nebius.common.v1.error_pb2 as error_pb2
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.common.v1.operation_service_pb2 as operation_service_pb2
+import nebius.api.nebius.common.v1.progress_tracker_pb2 as progress_tracker_pb2
 import nebius.api.nebius.common.v1.resource_event_pb2 as resource_event_pb2
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
@@ -1577,6 +1578,350 @@ class GetByNameRequest(pb_classes.Message):
         "name":"name",
     }
     
+# file: nebius/common/v1/progress_tracker.proto
+class ProgressTracker(pb_classes.Message):
+    """
+    Information for tracking the progress of a task (e.g., an API operation or background maintenance action).
+    This serves as a UI contract and may be directly reflected in CLI, Console, and other tools.
+    """
+    
+    __PB2_CLASS__ = progress_tracker_pb2.ProgressTracker
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ProgressTracker",progress_tracker_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "started_at": well_known_1.ts_mask,
+        "estimated_finished_at": well_known_1.ts_mask,
+        "finished_at": well_known_1.ts_mask,
+    }
+    
+    class WorkDone(pb_classes.Message):
+        """
+        Information about the work done by the task or its step, expressed in ticks (abstract work units).
+        Each tick may represent a real measurement (e.g., VMs created, KiB uploaded), number of substeps or a percentage of work completed.
+        """
+        
+        __PB2_CLASS__ = progress_tracker_pb2.ProgressTracker.WorkDone
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ProgressTracker.WorkDone",progress_tracker_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            total_tick_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+            done_tick_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(total_tick_count, unset.UnsetType):
+                self.total_tick_count = total_tick_count
+            if not isinstance(done_tick_count, unset.UnsetType):
+                self.done_tick_count = done_tick_count
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "total_tick_count",
+                "done_tick_count",
+            ]
+        
+        @builtins.property
+        def total_tick_count(self) -> "builtins.int":
+            """
+            Total number of ticks (work units) to be completed. MUST be greater than 0.
+            """
+            
+            return super()._get_field("total_tick_count", explicit_presence=False,
+            )
+        @total_tick_count.setter
+        def total_tick_count(self, value: "builtins.int|None") -> None:
+            return super()._set_field("total_tick_count",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def done_tick_count(self) -> "builtins.int":
+            """
+            Number of ticks completed so far. MUST be between 0 and total_tick_count, inclusive.
+            MUST equal total_tick_count if the task or step is finished.
+            """
+            
+            return super()._get_field("done_tick_count", explicit_presence=False,
+            )
+        @done_tick_count.setter
+        def done_tick_count(self, value: "builtins.int|None") -> None:
+            return super()._set_field("done_tick_count",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "total_tick_count":"total_tick_count",
+            "done_tick_count":"done_tick_count",
+        }
+        
+    
+    class Step(pb_classes.Message):
+        """
+        Represents a basic step in the task.
+        Fields are binary-compatible with ProgressTracker for easier processing.
+        """
+        
+        __PB2_CLASS__ = progress_tracker_pb2.ProgressTracker.Step
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.ProgressTracker.Step",progress_tracker_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+            "started_at": well_known_1.ts_mask,
+            "finished_at": well_known_1.ts_mask,
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            started_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+            finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+            work_done: "ProgressTracker.WorkDone|progress_tracker_pb2.ProgressTracker.WorkDone|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(description, unset.UnsetType):
+                self.description = description
+            if not isinstance(started_at, unset.UnsetType):
+                self.started_at = started_at
+            if not isinstance(finished_at, unset.UnsetType):
+                self.finished_at = finished_at
+            if not isinstance(work_done, unset.UnsetType):
+                self.work_done = work_done
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "description",
+                "started_at",
+                "finished_at",
+                "work_done",
+            ]
+        
+        @builtins.property
+        def description(self) -> "builtins.str":
+            """
+            Human-readable description of the step, e.g., "Connecting to localhost:8080".
+            MUST be suitable for display to public users.
+            Private descriptions must be filtered server-side based on the use case.
+            """
+            
+            return super()._get_field("description", explicit_presence=False,
+            )
+        @description.setter
+        def description(self, value: "builtins.str|None") -> None:
+            return super()._set_field("description",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def started_at(self) -> "datetime.datetime":
+            """
+            Timestamp when the step started.
+            """
+            
+            return super()._get_field("started_at", explicit_presence=False,
+            wrap=well_known_1.from_timestamp
+            )
+        @started_at.setter
+        def started_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+            return super()._set_field("started_at",value,explicit_presence=False,
+            unwrap=well_known_1.to_timestamp
+            )
+        
+        @builtins.property
+        def finished_at(self) -> "datetime.datetime":
+            """
+            Timestamp when the step finished.
+            MUST be absent for running steps; MUST be present for completed steps.
+            """
+            
+            return super()._get_field("finished_at", explicit_presence=False,
+            wrap=well_known_1.from_timestamp
+            )
+        @finished_at.setter
+        def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+            return super()._set_field("finished_at",value,explicit_presence=False,
+            unwrap=well_known_1.to_timestamp
+            )
+        
+        @builtins.property
+        def work_done(self) -> "ProgressTracker.WorkDone":
+            """
+            Details on the work to be done for this step and progress made.
+            MAY be absent if unknown.
+            """
+            
+            return super()._get_field("work_done", explicit_presence=False,
+            wrap=ProgressTracker.WorkDone,
+            )
+        @work_done.setter
+        def work_done(self, value: "ProgressTracker.WorkDone|progress_tracker_pb2.ProgressTracker.WorkDone|None") -> None:
+            return super()._set_field("work_done",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "description":"description",
+            "started_at":"started_at",
+            "finished_at":"finished_at",
+            "work_done":"work_done",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        started_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        estimated_finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        work_done: "ProgressTracker.WorkDone|progress_tracker_pb2.ProgressTracker.WorkDone|None|unset.UnsetType" = unset.Unset,
+        steps: "abc.Iterable[ProgressTracker.Step]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(description, unset.UnsetType):
+            self.description = description
+        if not isinstance(started_at, unset.UnsetType):
+            self.started_at = started_at
+        if not isinstance(estimated_finished_at, unset.UnsetType):
+            self.estimated_finished_at = estimated_finished_at
+        if not isinstance(finished_at, unset.UnsetType):
+            self.finished_at = finished_at
+        if not isinstance(work_done, unset.UnsetType):
+            self.work_done = work_done
+        if not isinstance(steps, unset.UnsetType):
+            self.steps = steps
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "description",
+            "started_at",
+            "estimated_finished_at",
+            "finished_at",
+            "work_done",
+            "steps",
+            "WorkDone",
+            "Step",
+        ]
+    
+    @builtins.property
+    def description(self) -> "builtins.str":
+        """
+        Human-readable description of the currently executing task, e.g., "Downloading dat-groot-llm.tar.xz".
+        Relates to the overall task, not individual steps.
+        SHOULD match the Operation's ``description`` field when this ProgressTracker tracks an API Operation's progress.
+        MAY provide more detailed overall information.
+        
+        MUST be suitable for display to public users.
+        Even if the task is internal, this description may be shown to end users in overall task step descriptions.
+        
+        For individual step descriptions, use ``Step.description``.
+        """
+        
+        return super()._get_field("description", explicit_presence=False,
+        )
+    @description.setter
+    def description(self, value: "builtins.str|None") -> None:
+        return super()._set_field("description",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def started_at(self) -> "datetime.datetime":
+        """
+        Timestamp when the overall task started.
+        MUST match the operation's created_at timestamp when tracking an API Operation's progress.
+        """
+        
+        return super()._get_field("started_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @started_at.setter
+    def started_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("started_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def estimated_finished_at(self) -> "datetime.datetime":
+        """
+        Estimated completion timestamp for the task.
+        MUST be absent if the task is completed (i.e., finished_at is set).
+        MAY be absent if the estimate is unknown.
+        MAY be updated as the progress estimate changes.
+        """
+        
+        return super()._get_field("estimated_finished_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @estimated_finished_at.setter
+    def estimated_finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("estimated_finished_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def finished_at(self) -> "datetime.datetime":
+        """
+        Completion timestamp of the task.
+        MUST be absent for running tasks; MUST be present for completed tasks.
+        MUST match the operation's finished_at timestamp when tracking an API Operation's progress.
+        """
+        
+        return super()._get_field("finished_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @finished_at.setter
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("finished_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def work_done(self) -> "ProgressTracker.WorkDone":
+        """
+        Overall work progress details.
+        MAY be absent if unknown.
+        """
+        
+        return super()._get_field("work_done", explicit_presence=False,
+        wrap=ProgressTracker.WorkDone,
+        )
+    @work_done.setter
+    def work_done(self, value: "ProgressTracker.WorkDone|progress_tracker_pb2.ProgressTracker.WorkDone|None") -> None:
+        return super()._set_field("work_done",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def steps(self) -> "abc.MutableSequence[ProgressTracker.Step]":
+        """
+        Detailed information about the task steps that are currently running or have been finished.
+        
+        
+        * For a completed task, the step list MUST either be empty or contain finished steps only.
+        * For a running task, the step list MAY be empty if the task consists of a single step or no detailed information is available.
+          A non-empty step list MUST include all currently running steps and MAY include some or all finished steps.
+        * Service SHOULD provide both running and finished steps if the task has around 10-20 steps, and provide only running steps otherwise.
+          Service MUST consistently choose either the "running steps only" or the "running + finished steps" behavior.
+        * The UI, CLI etc. MAY choose not to display all steps provided by the service.
+        """
+        
+        return super()._get_field("steps", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(ProgressTracker.Step,None,None),
+        )
+    @steps.setter
+    def steps(self, value: "abc.Iterable[ProgressTracker.Step]|None") -> None:
+        return super()._set_field("steps",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "description":"description",
+        "started_at":"started_at",
+        "estimated_finished_at":"estimated_finished_at",
+        "finished_at":"finished_at",
+        "work_done":"work_done",
+        "steps":"steps",
+        "WorkDone":"WorkDone",
+        "Step":"Step",
+    }
+    
 # file: nebius/common/v1/operation.proto
 class Operation(pb_classes.Message):
     __PB2_CLASS__ = operation_pb2.Operation
@@ -1694,6 +2039,7 @@ class Operation(pb_classes.Message):
         request_headers: "abc.Mapping[builtins.str,Operation.RequestHeader]|None|unset.UnsetType" = unset.Unset,
         resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         status: "status_pb2.Status|request_status.RequestStatus|None|unset.UnsetType" = unset.Unset,
+        progress_tracker: "ProgressTracker|progress_tracker_pb2.ProgressTracker|None|unset.UnsetType" = unset.Unset,
         progress_data: "any_pb2.Any|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -1715,6 +2061,8 @@ class Operation(pb_classes.Message):
             self.resource_id = resource_id
         if not isinstance(status, unset.UnsetType):
             self.status = status
+        if not isinstance(progress_tracker, unset.UnsetType):
+            self.progress_tracker = progress_tracker
         if not isinstance(progress_data, unset.UnsetType):
             self.progress_data = progress_data
     
@@ -1729,6 +2077,7 @@ class Operation(pb_classes.Message):
             "request_headers",
             "resource_id",
             "status",
+            "progress_tracker",
             "progress_data",
             "RequestHeader",
             "RequestHeadersEntry",
@@ -1880,6 +2229,22 @@ class Operation(pb_classes.Message):
         )
     
     @builtins.property
+    def progress_tracker(self) -> "ProgressTracker":
+        """
+        Information about this operation's progress, if this operation tracks its progress.
+        If the operation tracks its progress, ``progress_tracker`` MUST be present both while
+        the operation is running and after it has been completed.
+        """
+        
+        return super()._get_field("progress_tracker", explicit_presence=False,
+        wrap=ProgressTracker,
+        )
+    @progress_tracker.setter
+    def progress_tracker(self, value: "ProgressTracker|progress_tracker_pb2.ProgressTracker|None") -> None:
+        return super()._set_field("progress_tracker",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def progress_data(self) -> "any_pb2.Any":
         """
         Extra information about this operation's progress. MAY be absent while the operation is running, MUST be absent after the operation has completed.
@@ -1904,6 +2269,7 @@ class Operation(pb_classes.Message):
         "request_headers":"request_headers",
         "resource_id":"resource_id",
         "status":"status",
+        "progress_tracker":"progress_tracker",
         "progress_data":"progress_data",
         "RequestHeader":"RequestHeader",
         "RequestHeadersEntry":"RequestHeadersEntry",
@@ -2399,6 +2765,7 @@ __all__ = [
     "NotEnoughResources",
     "ResourceMetadata",
     "GetByNameRequest",
+    "ProgressTracker",
     "Operation",
     "GetOperationRequest",
     "ListOperationsRequest",

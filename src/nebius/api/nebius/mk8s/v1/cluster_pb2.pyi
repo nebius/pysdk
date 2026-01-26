@@ -28,16 +28,18 @@ class ClusterSpec(_message.Message):
     def __init__(self, control_plane: _Optional[_Union[ControlPlaneSpec, _Mapping]] = ..., kube_network: _Optional[_Union[KubeNetworkSpec, _Mapping]] = ...) -> None: ...
 
 class ControlPlaneSpec(_message.Message):
-    __slots__ = ["version", "subnet_id", "endpoints", "etcd_cluster_size"]
+    __slots__ = ["version", "subnet_id", "endpoints", "etcd_cluster_size", "audit_logs"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     SUBNET_ID_FIELD_NUMBER: _ClassVar[int]
     ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     ETCD_CLUSTER_SIZE_FIELD_NUMBER: _ClassVar[int]
+    AUDIT_LOGS_FIELD_NUMBER: _ClassVar[int]
     version: str
     subnet_id: str
     endpoints: ControlPlaneEndpointsSpec
     etcd_cluster_size: int
-    def __init__(self, version: _Optional[str] = ..., subnet_id: _Optional[str] = ..., endpoints: _Optional[_Union[ControlPlaneEndpointsSpec, _Mapping]] = ..., etcd_cluster_size: _Optional[int] = ...) -> None: ...
+    audit_logs: AuditLogsSpec
+    def __init__(self, version: _Optional[str] = ..., subnet_id: _Optional[str] = ..., endpoints: _Optional[_Union[ControlPlaneEndpointsSpec, _Mapping]] = ..., etcd_cluster_size: _Optional[int] = ..., audit_logs: _Optional[_Union[AuditLogsSpec, _Mapping]] = ...) -> None: ...
 
 class ControlPlaneEndpointsSpec(_message.Message):
     __slots__ = ["public_endpoint"]
@@ -54,6 +56,10 @@ class KubeNetworkSpec(_message.Message):
     SERVICE_CIDRS_FIELD_NUMBER: _ClassVar[int]
     service_cidrs: _containers.RepeatedScalarFieldContainer[str]
     def __init__(self, service_cidrs: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class AuditLogsSpec(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
 
 class ClusterStatus(_message.Message):
     __slots__ = ["state", "control_plane", "reconciling"]

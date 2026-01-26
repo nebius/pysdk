@@ -3,6 +3,7 @@ from google.protobuf import any_pb2 as _any_pb2
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.rpc import status_pb2 as _status_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
+from nebius.api.nebius.common.v1 import progress_tracker_pb2 as _progress_tracker_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -11,7 +12,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Operation(_message.Message):
-    __slots__ = ["id", "description", "created_at", "created_by", "finished_at", "request", "request_headers", "resource_id", "status", "progress_data"]
+    __slots__ = ["id", "description", "created_at", "created_by", "finished_at", "request", "request_headers", "resource_id", "status", "progress_tracker", "progress_data"]
     class RequestHeader(_message.Message):
         __slots__ = ["values"]
         VALUES_FIELD_NUMBER: _ClassVar[int]
@@ -33,6 +34,7 @@ class Operation(_message.Message):
     REQUEST_HEADERS_FIELD_NUMBER: _ClassVar[int]
     RESOURCE_ID_FIELD_NUMBER: _ClassVar[int]
     STATUS_FIELD_NUMBER: _ClassVar[int]
+    PROGRESS_TRACKER_FIELD_NUMBER: _ClassVar[int]
     PROGRESS_DATA_FIELD_NUMBER: _ClassVar[int]
     id: str
     description: str
@@ -43,5 +45,6 @@ class Operation(_message.Message):
     request_headers: _containers.MessageMap[str, Operation.RequestHeader]
     resource_id: str
     status: _status_pb2.Status
+    progress_tracker: _progress_tracker_pb2.ProgressTracker
     progress_data: _any_pb2.Any
-    def __init__(self, id: _Optional[str] = ..., description: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., created_by: _Optional[str] = ..., finished_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., request: _Optional[_Union[_any_pb2.Any, _Mapping]] = ..., request_headers: _Optional[_Mapping[str, Operation.RequestHeader]] = ..., resource_id: _Optional[str] = ..., status: _Optional[_Union[_status_pb2.Status, _Mapping]] = ..., progress_data: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
+    def __init__(self, id: _Optional[str] = ..., description: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., created_by: _Optional[str] = ..., finished_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., request: _Optional[_Union[_any_pb2.Any, _Mapping]] = ..., request_headers: _Optional[_Mapping[str, Operation.RequestHeader]] = ..., resource_id: _Optional[str] = ..., status: _Optional[_Union[_status_pb2.Status, _Mapping]] = ..., progress_tracker: _Optional[_Union[_progress_tracker_pb2.ProgressTracker, _Mapping]] = ..., progress_data: _Optional[_Union[_any_pb2.Any, _Mapping]] = ...) -> None: ...
