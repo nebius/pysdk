@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1anebius/dns/v1/record.proto\x12\rnebius.dns.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xac\x01\n\x06Record\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12-\n\x04spec\x18\x02 \x01(\x0b\x32\x19.nebius.dns.v1.RecordSpecR\x04spec\x12\x33\n\x06status\x18\x03 \x01(\x0b\x32\x1b.nebius.dns.v1.RecordStatusR\x06status\"\x83\x05\n\nRecordSpec\x12\xb5\x02\n\rrelative_name\x18\x01 \x01(\tB\x8f\x02\xbaH\x87\x02\xba\x01\x80\x02\n\x14relative_name_format\x12[relative_name must be \'@\' for zone apex, or a valid relative domain name (e.g. \'a.x-y.zzz\')\x1a\x8a\x01size(this) < 253 && this.matches(\'^(?:@|(?:[*]|[a-z0-9_](?:[a-z0-9-_]{0,60}[a-z0-9_])*)(?:[.][a-z0-9_](?:[a-z0-9-_]{0,60}[a-z0-9_])*)*)$\')\xc8\x01\x01\xbaJ\x01\x02R\x0crelativeName\x12\x44\n\x04type\x18\x02 \x01(\x0e\x32$.nebius.dns.v1.RecordSpec.RecordTypeB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x04type\x12\x10\n\x03ttl\x18\x03 \x01(\x03R\x03ttl\x12\x1a\n\x04\x64\x61ta\x18\x04 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04\x64\x61ta\x12/\n\x13\x64\x65letion_protection\x18\x06 \x01(\x08R\x12\x64\x65letionProtection\"\x97\x01\n\nRecordType\x12\x1b\n\x17RECORD_TYPE_UNSPECIFIED\x10\x00\x12\x05\n\x01\x41\x10\x01\x12\x08\n\x04\x41\x41\x41\x41\x10\x02\x12\x07\n\x03PTR\x10\x03\x12\t\n\x05\x43NAME\x10\x04\x12\x06\n\x02MX\x10\x05\x12\x07\n\x03TXT\x10\x06\x12\x07\n\x03SRV\x10\x07\x12\x06\n\x02NS\x10\x08\x12\x07\n\x03SOA\x10\t\x12\x07\n\x03\x43\x41\x41\x10\n\x12\x08\n\x04SVCB\x10\x0b\x12\t\n\x05HTTPS\x10\x0c\"\x81\x01\n\x0cRecordStatus\x12(\n\x10zone_domain_name\x18\x01 \x01(\tR\x0ezoneDomainName\x12%\n\x0e\x65\x66\x66\x65\x63tive_fqdn\x18\x02 \x01(\tR\reffectiveFqdn\x12 \n\x0breconciling\x18\x64 \x01(\x08R\x0breconciling\"^\n\x10GetRecordRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12\x32\n\x10resource_version\x18\x02 \x01(\x03\x42\x07\xbaH\x04\"\x02(\x00R\x0fresourceVersion\"u\n\x12ListRecordsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"j\n\x13ListRecordsResponse\x12+\n\x05items\x18\x01 \x03(\x0b\x32\x15.nebius.dns.v1.RecordR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageTokenBR\n\x14\x61i.nebius.pub.dns.v1B\x0bRecordProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/dns/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1anebius/dns/v1/record.proto\x12\rnebius.dns.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xba\x01\n\x06Record\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07\x64nszoneR\x08metadata\x12-\n\x04spec\x18\x02 \x01(\x0b\x32\x19.nebius.dns.v1.RecordSpecR\x04spec\x12\x33\n\x06status\x18\x03 \x01(\x0b\x32\x1b.nebius.dns.v1.RecordStatusR\x06status\"\x83\x05\n\nRecordSpec\x12\xb5\x02\n\rrelative_name\x18\x01 \x01(\tB\x8f\x02\xbaH\x87\x02\xba\x01\x80\x02\n\x14relative_name_format\x12[relative_name must be \'@\' for zone apex, or a valid relative domain name (e.g. \'a.x-y.zzz\')\x1a\x8a\x01size(this) < 253 && this.matches(\'^(?:@|(?:[*]|[a-z0-9_](?:[a-z0-9-_]{0,60}[a-z0-9_])*)(?:[.][a-z0-9_](?:[a-z0-9-_]{0,60}[a-z0-9_])*)*)$\')\xc8\x01\x01\xbaJ\x01\x02R\x0crelativeName\x12\x44\n\x04type\x18\x02 \x01(\x0e\x32$.nebius.dns.v1.RecordSpec.RecordTypeB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x04type\x12\x10\n\x03ttl\x18\x03 \x01(\x03R\x03ttl\x12\x1a\n\x04\x64\x61ta\x18\x04 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04\x64\x61ta\x12/\n\x13\x64\x65letion_protection\x18\x06 \x01(\x08R\x12\x64\x65letionProtection\"\x97\x01\n\nRecordType\x12\x1b\n\x17RECORD_TYPE_UNSPECIFIED\x10\x00\x12\x05\n\x01\x41\x10\x01\x12\x08\n\x04\x41\x41\x41\x41\x10\x02\x12\x07\n\x03PTR\x10\x03\x12\t\n\x05\x43NAME\x10\x04\x12\x06\n\x02MX\x10\x05\x12\x07\n\x03TXT\x10\x06\x12\x07\n\x03SRV\x10\x07\x12\x06\n\x02NS\x10\x08\x12\x07\n\x03SOA\x10\t\x12\x07\n\x03\x43\x41\x41\x10\n\x12\x08\n\x04SVCB\x10\x0b\x12\t\n\x05HTTPS\x10\x0c\"\x81\x01\n\x0cRecordStatus\x12(\n\x10zone_domain_name\x18\x01 \x01(\tR\x0ezoneDomainName\x12%\n\x0e\x65\x66\x66\x65\x63tive_fqdn\x18\x02 \x01(\tR\reffectiveFqdn\x12 \n\x0breconciling\x18\x64 \x01(\x08R\x0breconciling\"l\n\x10GetRecordRequest\x12$\n\x02id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tdnsrecordR\x02id\x12\x32\n\x10resource_version\x18\x02 \x01(\x03\x42\x07\xbaH\x04\"\x02(\x00R\x0fresourceVersion\"\x81\x01\n\x12ListRecordsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07\x64nszoneR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"j\n\x13ListRecordsResponse\x12+\n\x05items\x18\x01 \x03(\x0b\x32\x15.nebius.dns.v1.RecordR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageTokenBR\n\x14\x61i.nebius.pub.dns.v1B\x0bRecordProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/dns/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,6 +25,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.dns.v1B\013RecordProtoP\001Z+github.com/nebius/gosdk/proto/nebius/dns/v1'
+  _RECORD.fields_by_name['metadata']._options = None
+  _RECORD.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007dnszone'
   _RECORDSPEC.fields_by_name['relative_name']._options = None
   _RECORDSPEC.fields_by_name['relative_name']._serialized_options = b'\272H\207\002\272\001\200\002\n\024relative_name_format\022[relative_name must be \'@\' for zone apex, or a valid relative domain name (e.g. \'a.x-y.zzz\')\032\212\001size(this) < 253 && this.matches(\'^(?:@|(?:[*]|[a-z0-9_](?:[a-z0-9-_]{0,60}[a-z0-9_])*)(?:[.][a-z0-9_](?:[a-z0-9-_]{0,60}[a-z0-9_])*)*)$\')\310\001\001\272J\001\002'
   _RECORDSPEC.fields_by_name['type']._options = None
@@ -32,23 +34,23 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _RECORDSPEC.fields_by_name['data']._options = None
   _RECORDSPEC.fields_by_name['data']._serialized_options = b'\272H\003\310\001\001'
   _GETRECORDREQUEST.fields_by_name['id']._options = None
-  _GETRECORDREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETRECORDREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\013\n\tdnsrecord'
   _GETRECORDREQUEST.fields_by_name['resource_version']._options = None
   _GETRECORDREQUEST.fields_by_name['resource_version']._serialized_options = b'\272H\004\"\002(\000'
   _LISTRECORDSREQUEST.fields_by_name['parent_id']._options = None
-  _LISTRECORDSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTRECORDSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007dnszone'
   _globals['_RECORD']._serialized_start=134
-  _globals['_RECORD']._serialized_end=306
-  _globals['_RECORDSPEC']._serialized_start=309
-  _globals['_RECORDSPEC']._serialized_end=952
-  _globals['_RECORDSPEC_RECORDTYPE']._serialized_start=801
-  _globals['_RECORDSPEC_RECORDTYPE']._serialized_end=952
-  _globals['_RECORDSTATUS']._serialized_start=955
-  _globals['_RECORDSTATUS']._serialized_end=1084
-  _globals['_GETRECORDREQUEST']._serialized_start=1086
-  _globals['_GETRECORDREQUEST']._serialized_end=1180
-  _globals['_LISTRECORDSREQUEST']._serialized_start=1182
-  _globals['_LISTRECORDSREQUEST']._serialized_end=1299
-  _globals['_LISTRECORDSRESPONSE']._serialized_start=1301
-  _globals['_LISTRECORDSRESPONSE']._serialized_end=1407
+  _globals['_RECORD']._serialized_end=320
+  _globals['_RECORDSPEC']._serialized_start=323
+  _globals['_RECORDSPEC']._serialized_end=966
+  _globals['_RECORDSPEC_RECORDTYPE']._serialized_start=815
+  _globals['_RECORDSPEC_RECORDTYPE']._serialized_end=966
+  _globals['_RECORDSTATUS']._serialized_start=969
+  _globals['_RECORDSTATUS']._serialized_end=1098
+  _globals['_GETRECORDREQUEST']._serialized_start=1100
+  _globals['_GETRECORDREQUEST']._serialized_end=1208
+  _globals['_LISTRECORDSREQUEST']._serialized_start=1211
+  _globals['_LISTRECORDSREQUEST']._serialized_end=1340
+  _globals['_LISTRECORDSRESPONSE']._serialized_start=1342
+  _globals['_LISTRECORDSRESPONSE']._serialized_end=1448
 # @@protoc_insertion_point(module_scope)
