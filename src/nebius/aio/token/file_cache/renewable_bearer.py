@@ -48,9 +48,6 @@ class RenewableFileCacheReceiver(ParentReceiver):
       safety margin, that token is returned immediately.
     - Otherwise a receiver from the wrapped bearer is used to fetch a
       fresh token. The new token is saved to the cache on success.
-
-    :param bearer: The owning renewable bearer.
-    :param cache: The throttled token cache used for storage.
     """
 
     def __init__(

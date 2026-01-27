@@ -1164,11 +1164,7 @@ class AuditEvent(pb_classes.Message):
     @builtins.property
     def type(self) -> "builtins.str":
         """
-        .. role:: raw-html-m2r(raw)
-           :format: html
-        
-        
-        The type of event related to the originating occurrence. Formed according to template: "ai.nebius.\\ :raw-html-m2r:`<serviceName>`.\\ :raw-html-m2r:`<resourceType>`.\\ :raw-html-m2r:`<action>`\\ "
+        The type of event related to the originating occurrence. Formed according to template: "ai.nebius.\\ :literal:`<serviceName>`.\\ :literal:`<resourceType>`.\\ :literal:`<action>`\\ "
         """
         
         return super()._get_field("type", explicit_presence=False,

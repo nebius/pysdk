@@ -228,7 +228,7 @@ class RecordSpec(pb_classes.Message):
     @builtins.property
     def relative_name(self) -> "builtins.str":
         """
-        Zone-relative name of this record (e.g., ``www`` for ``www.<parent zone's domain name>``\\ )
+        Zone-relative name of this record (e.g., ``www`` for ``www.<parent zone's domain name>``)
         Use ``@`` for records in zone apex (that is, records that have the same domain name as the zone itself)
         To see the resolved absolute domain name, see ``Record.status.effective_fqdn``
         """
@@ -257,7 +257,7 @@ class RecordSpec(pb_classes.Message):
     @builtins.property
     def ttl(self) -> "builtins.int":
         """
-        Record TTL. If absent or negative, will be assumed to be the default value (\\ ``600``\\ )
+        Record TTL. If absent or negative, will be assumed to be the default value (``600``)
         """
         
         return super()._get_field("ttl", explicit_presence=False,
@@ -428,11 +428,11 @@ class GetRecordRequest(pb_classes.Message):
     @builtins.property
     def resource_version(self) -> "builtins.int":
         """
-        Optional: expected record version (\\ ``metadata.resource_version``\\ )
+        Optional: expected record version (``metadata.resource_version``)
         
         
         * If specified, the requested version will be returned if possible (if the version has changed, you will get a ``FAILED_PRECONDITION`` error)
-        * If not specified or set to ``0``\\ , the latest version will be returned
+        * If not specified or set to ``0``, the latest version will be returned
         """
         
         return super()._get_field("resource_version", explicit_presence=False,
@@ -497,7 +497,7 @@ class ListRecordsRequest(pb_classes.Message):
     def page_size(self) -> "builtins.int":
         """
         Page size
-        If not specified or set to ``0``\\ , a default page size of ``100`` will be used
+        If not specified or set to ``0``, a default page size of ``100`` will be used
         """
         
         return super()._get_field("page_size", explicit_presence=False,
@@ -596,7 +596,7 @@ class ListRecordsResponse(pb_classes.Message):
 
 class RecordServiceClient(client.Client):
     """
-    Service for managing DNS records (\\ ``Record`` resources)
+    Service for managing DNS records (``Record`` resources)
     
     This class provides the client methods for the ``.nebius.dns.v1.RecordService`` service.
     
@@ -649,7 +649,7 @@ class RecordServiceClient(client.Client):
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request.Request["v1_1.GetByNameRequest","Record"]:
         """
-        Gets the DNS record by its parent DNS zone (\\ ``metadata.parent_id``\\ ) and ``metadata.name``
+        Gets the DNS record by its parent DNS zone (``metadata.parent_id``) and ``metadata.name``
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.common.v1.GetByNameRequest`
@@ -708,7 +708,7 @@ class Zone(pb_classes.Message):
     """
     API Resource: *DNS zone*\\ , a container for DNS data
     
-    Each DNS zone starts at a particular domain within the hierarchical DNS namespace tree, e.g., ``example.com.``\\ , and can also include its subdomains, e.g., ``sales.example.com.``
+    Each DNS zone starts at a particular domain within the hierarchical DNS namespace tree, e.g., ``example.com.``, and can also include its subdomains, e.g., ``sales.example.com.``
     DNS Zones contain *Resource Records* (RRs), which are individual information entries about the domain(s), e.g., a domain's IP address
     See the `graphical explanation of DNS zones and Resource Records on Wikipedia <https://en.wikipedia.org/wiki/Domain_Name_System#/media/File:Domain_name_space.svg>`_
     
@@ -1098,11 +1098,11 @@ class GetZoneRequest(pb_classes.Message):
     @builtins.property
     def resource_version(self) -> "builtins.int":
         """
-        Optional: expected zone version (\\ ``metadata.resource_version``\\ )
+        Optional: expected zone version (``metadata.resource_version``)
         
         
         * If specified, the requested version will be returned if possible (if the version has changed, you will get a ``FAILED_PRECONDITION`` error)
-        * If not specified or set to ``0``\\ , the latest zone version will be returned
+        * If not specified or set to ``0``, the latest zone version will be returned
         """
         
         return super()._get_field("resource_version", explicit_presence=False,
@@ -1167,7 +1167,7 @@ class ListZonesRequest(pb_classes.Message):
     def page_size(self) -> "builtins.int":
         """
         Page size
-        If not specified or set to ``0``\\ , a default page size of ``100`` will be used
+        If not specified or set to ``0``, a default page size of ``100`` will be used
         """
         
         return super()._get_field("page_size", explicit_presence=False,
@@ -1266,7 +1266,7 @@ class ListZonesResponse(pb_classes.Message):
 
 class ZoneServiceClient(client.Client):
     """
-    Service for managing DNS zones (\\ ``Zone`` resources)
+    Service for managing DNS zones (``Zone`` resources)
     
     This class provides the client methods for the ``.nebius.dns.v1.ZoneService`` service.
     
@@ -1319,7 +1319,7 @@ class ZoneServiceClient(client.Client):
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request.Request["v1_1.GetByNameRequest","Zone"]:
         """
-        Gets the DNS zone by its parent IAM container (\\ ``metadata.parent_id``\\ ) and ``metadata.name``
+        Gets the DNS zone by its parent IAM container (``metadata.parent_id``) and ``metadata.name``
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.common.v1.GetByNameRequest`

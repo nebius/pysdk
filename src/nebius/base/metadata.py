@@ -1,13 +1,32 @@
+"""Metadata helpers for gRPC-style key/value headers."""
+
 from collections.abc import Iterable, MutableSequence, Sequence
 from typing import overload
 
 
 class Authorization:
+    """Namespace for authorization-related metadata constants."""
+
     DISABLE = "disable"
 
 
 class Metadata(MutableSequence[tuple[str, str]]):
+    """Mutable metadata collection with case-insensitive keys.
+
+    This container normalizes keys to lowercase and supports convenient
+    indexing by integer, slice, or key string:
+
+    - ``metadata[i]`` returns the key/value tuple at index ``i``.
+    - ``metadata[i:j]`` returns a list of key/value tuples.
+    - ``metadata["key"]`` returns a list of values for that key.
+    """
+
     def __init__(self, initial: Iterable[tuple[str, str]] | None = None) -> None:
+        """Create a metadata collection.
+
+        :param initial: Optional iterable of ``(key, value)`` pairs. Only string
+            keys and values are stored and keys are lowercased.
+        """
         self._contents = list[tuple[str, str]]()
         if initial is not None:
             for k, v in initial:
@@ -15,6 +34,11 @@ class Metadata(MutableSequence[tuple[str, str]]):
                     self._contents.append((k.lower(), v))
 
     def insert(self, index: int, value: tuple[str, str]) -> None:
+        """Insert a key/value pair at the given index.
+
+        :param index: Position at which to insert the entry.
+        :param value: ``(key, value)`` tuple to insert; key is lowercased.
+        """
         self._contents.insert(index, (value[0].lower(), value[1]))
 
     @overload
@@ -39,6 +63,13 @@ class Metadata(MutableSequence[tuple[str, str]]):
         default: str | None = None,
         first: bool = False,
     ) -> str | None:
+        """Return the first or last value for a key.
+
+        :param index: Metadata key to search.
+        :param default: Value returned when the key is missing.
+        :param first: When true return the first value instead of the last.
+        :returns: The selected value or ``default`` when absent.
+        """
         try:
             return self[index][0 if first else -1]
         except IndexError:
@@ -49,6 +80,11 @@ class Metadata(MutableSequence[tuple[str, str]]):
         index: str,
         value: str,
     ) -> None:
+        """Append a key/value pair, lowercasing the key.
+
+        :param index: Metadata key to append.
+        :param value: Metadata value to append.
+        """
         self._contents.append((index.lower(), value))
 
     @overload
@@ -63,6 +99,7 @@ class Metadata(MutableSequence[tuple[str, str]]):
     def __getitem__(
         self, index: int | slice | str
     ) -> tuple[str, str] | MutableSequence[tuple[str, str]] | Sequence[str]:
+        """Return metadata entries by index, slice, or key."""
         if isinstance(index, int) or isinstance(index, slice):
             return self._contents[index]
         if isinstance(index, str):  # type: ignore[unused-ignore]
@@ -71,6 +108,7 @@ class Metadata(MutableSequence[tuple[str, str]]):
         raise TypeError("Index must be int, str or slice")
 
     def __has__(self, key: str) -> bool:
+        """Return True if a key exists in the collection."""
         key = key.lower()
         for k, _ in self._contents:
             if k == key:
@@ -82,6 +120,7 @@ class Metadata(MutableSequence[tuple[str, str]]):
         index: int | slice | str,
         value: tuple[str, str] | Iterable[tuple[str, str]] | Iterable[str] | str,
     ) -> None:
+        """Set metadata by numeric index, slice, or key."""
         if isinstance(index, int):
             if (
                 isinstance(value, tuple)
@@ -113,6 +152,7 @@ class Metadata(MutableSequence[tuple[str, str]]):
         raise TypeError("Index must be int, str or slice")
 
     def __delitem__(self, index: int | slice | str) -> None:
+        """Delete metadata by numeric index, slice, or key."""
         if isinstance(index, int) or isinstance(index, slice):
             del self._contents[index]
             return
@@ -123,7 +163,9 @@ class Metadata(MutableSequence[tuple[str, str]]):
         raise TypeError("Index must be int, str or slice")
 
     def __repr__(self) -> str:
+        """Return a debug representation of the metadata."""
         return f"{self.__class__.__name__}{list(self)}"
 
     def __len__(self) -> int:
+        """Return the number of stored entries."""
         return len(self._contents)

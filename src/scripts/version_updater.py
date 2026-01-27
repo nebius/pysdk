@@ -50,8 +50,17 @@ def main() -> None:
         updated_version = increment_version(version, part)  # type: ignore
         data["project"]["version"] = updated_version  # type: ignore
 
+        # Read the version file and update only the version line
+        with open(version_file_path, "r") as version_file:
+            lines = version_file.readlines()
+
+        for i, line in enumerate(lines):
+            if line.strip().startswith("version = "):
+                lines[i] = f'version = "{updated_version}"\n'
+                break
+
         with open(version_file_path, "w") as version_file:
-            version_file.write(f'version = "{updated_version}"' + "\n")
+            version_file.writelines(lines)
 
         # Write the updated pyproject.toml back
         with open(file_path, "w") as file:

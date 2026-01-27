@@ -1,3 +1,5 @@
+"""High-level SDK facade providing convenience helpers for Nebius services."""
+
 from typing_extensions import Unpack
 
 from nebius.aio.channel import Channel
