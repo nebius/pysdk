@@ -1,3 +1,5 @@
+"""Annotation helpers for compiler descriptor processing."""
+
 from datetime import date
 
 import google.protobuf.descriptor_pb2 as pb
@@ -12,6 +14,11 @@ _cache = dict[str, set[FieldBehavior]]()
 
 
 def field_behavior(field: Field) -> set[FieldBehavior]:
+    """Return the set of field behaviors for a field descriptor.
+
+    :param field: Compiler :class:`Field` wrapper.
+    :returns: Set of :class:`FieldBehavior` values.
+    """
     if field.full_type_name in _cache:
         return _cache[field.full_type_name]
     fb_array = field.descriptor.options.Extensions[fb_descriptor]  # type: ignore
@@ -23,13 +30,17 @@ def field_behavior(field: Field) -> set[FieldBehavior]:
 
 
 class DeprecationDetails(DeprecationDetailsMessage):
+    """Wrapper for deprecation details with convenience formatting."""
+
     @property
     def effective_at_date(self) -> date | None:
+        """Return the effective deprecation date or ``None``."""
         if super().effective_at == "":
             return None
         return date.fromisoformat(super().effective_at)
 
     def __str__(self) -> str:
+        """Return a human-readable summary of deprecation details."""
         res = list[str]()
         if self.effective_at_date is not None:
             res.append(f"Supported until {self.effective_at_date:%x}.")
@@ -56,6 +67,12 @@ def get_deprecation_details(
     descriptor: Descriptor | pb_descriptors,
     extension: descriptor.FieldDescriptor,
 ) -> DeprecationDetails | None:
+    """Extract deprecation details from a descriptor extension.
+
+    :param descriptor: Compiler descriptor or protobuf descriptor proto.
+    :param extension: Extension field descriptor containing deprecation details.
+    :returns: :class:`DeprecationDetails` or ``None`` when not set.
+    """
     if isinstance(descriptor, Descriptor):
         descriptor = descriptor.descriptor  # type: ignore
     details = DeprecationDetails(

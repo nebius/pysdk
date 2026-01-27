@@ -1,3 +1,5 @@
+"""Utility for rewriting import prefixes in Python source files."""
+
 import argparse
 import ast
 import logging
@@ -8,6 +10,15 @@ PrefixMap = dict[str, str]
 
 
 class Replacement:
+    """Represents a text replacement region in source code.
+
+    :param start_line: 1-based start line of the replacement.
+    :param start_col: 0-based start column.
+    :param end_line: 1-based end line of the replacement, or ``None``.
+    :param end_col: 0-based end column, or ``None``.
+    :param replace_to: Replacement text.
+    """
+
     def __init__(
         self,
         start_line: int,
@@ -33,10 +44,15 @@ class ImportTransformer(ast.NodeVisitor):
     """
 
     def __init__(self, prefix_map: PrefixMap) -> None:
+        """Create an AST visitor for import prefix rewriting.
+
+        :param prefix_map: Mapping of old prefix to new prefix.
+        """
         self.prefix_map = prefix_map
         self.replacements: ReplacementPositions = {}
 
     def visit_Import(self, node: ast.Import) -> None:  # noqa: N802
+        """Collect replacements for ``import`` statements."""
         for alias in node.names:
             new_name = self._replace_prefix(alias.name)
             if new_name != alias.name:
@@ -52,6 +68,7 @@ class ImportTransformer(ast.NodeVisitor):
                 self.replacements[(alias.lineno, alias.col_offset)] = replacement
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:  # noqa: N802
+        """Collect replacements for ``from ... import ...`` statements."""
         if node.module:
             new_name = self._replace_prefix(node.module)
             if new_name != node.module:
@@ -67,7 +84,11 @@ class ImportTransformer(ast.NodeVisitor):
                 self.replacements[(node.lineno, node.col_offset)] = replacement
 
     def _replace_prefix(self, name: str) -> str:
-        """Replace the prefix for imported names"""
+        """Replace the prefix for imported names.
+
+        :param name: Imported module name.
+        :returns: Updated name with prefix substituted.
+        """
         for old_prefix, new_prefix in self.prefix_map.items():
             if name.startswith(old_prefix + ".") or name == old_prefix:
                 return name.replace(old_prefix, new_prefix, 1)
@@ -75,6 +96,12 @@ class ImportTransformer(ast.NodeVisitor):
 
 
 def parse_prefix_map(prefix_str: list[str]) -> PrefixMap:
+    """Parse ``A=B`` prefix mappings into a dictionary.
+
+    :param prefix_str: List of ``old=new`` pairs.
+    :returns: Mapping of old prefix to new prefix.
+    :raises ValueError: If a pair is malformed.
+    """
     prefix_map: PrefixMap = {}
     for pair in prefix_str:
         if "=" not in pair:
@@ -122,6 +149,7 @@ def apply_replacements(code: str, replacements: ReplacementPositions) -> str:
 
 
 def main() -> None:
+    """CLI entry point for import prefix rewriting."""
     parser = argparse.ArgumentParser(
         description="Modify Python file imports while preserving formatting."
     )

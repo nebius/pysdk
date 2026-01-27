@@ -1,3 +1,5 @@
+"""Compiler-side descriptor wrappers for protobuf definitions."""
+
 from collections import defaultdict
 from collections.abc import Iterable, Sequence
 from logging import getLogger
@@ -27,10 +29,14 @@ log = getLogger(__name__)
 
 
 class DescriptorError(Exception):
+    """Base error for descriptor processing."""
+
     pass
 
 
 class FieldNotMessageError(DescriptorError):
+    """Raised when a field is expected to be a message but is not."""
+
     def __init__(self, field: "Field") -> None:
         super().__init__(
             f"Field {field.name} of {field.containing_message.full_type_name} is not "
@@ -39,6 +45,8 @@ class FieldNotMessageError(DescriptorError):
 
 
 class FieldNotEnumError(DescriptorError):
+    """Raised when a field is expected to be an enum but is not."""
+
     def __init__(self, field: "Field") -> None:
         super().__init__(
             f"Field {field.name} of {field.containing_message.full_type_name} is not "
@@ -47,6 +55,12 @@ class FieldNotEnumError(DescriptorError):
 
 
 class SourceInfo:
+    """Wrapper around protobuf source code location information.
+
+    :param info: Optional protobuf source location.
+    :ivar _info: Underlying protobuf location object.
+    """
+
     def __init__(self, info: pb.SourceCodeInfo.Location | None = None) -> None:
         if info is not None:
             self._info = info
@@ -60,51 +74,66 @@ class SourceInfo:
 
     @property
     def leading_detached_comments(self) -> Sequence[str]:
+        """Return leading detached comments."""
         return self._info.leading_detached_comments
 
     @property
     def leading_comments(self) -> str:
+        """Return leading comments."""
         return self._info.leading_comments
 
     @property
     def trailing_comments(self) -> str:
+        """Return trailing comments."""
         return self._info.trailing_comments
 
     @property
     def start_line(self) -> int:
+        """Return starting line number."""
         return self._info.span[0]
 
     @property
     def start_column(self) -> int:
+        """Return starting column number."""
         return self._info.span[1]
 
     @property
     def end_line(self) -> int:
+        """Return ending line number."""
         if len(self._info.span) > 3:
             return self._info.span[2]
         return self._info.span[0]
 
     @property
     def end_column(self) -> int:
+        """Return ending column number."""
         return self._info.span[-1]
 
 
 class Descriptor:
+    """Base class for compiler descriptor wrappers."""
+
     @property
     def name(self) -> str:
+        """Return the protobuf name of the descriptor."""
         return self.descriptor.name  # type: ignore
 
     @property
     def pythonic_name(self) -> str:
+        """Return the Pythonic name derived from annotations."""
         raise NotImplementedError("Subclasses must implement pythonic_name property")
 
 
 class DescriptorNameError(DescriptorError):
+    """Raised when Pythonic name resolution fails."""
+
     def __init__(self, descriptor: Descriptor, error: Exception) -> None:
         super().__init__(f"{descriptor!r} has error with name: {error}")
 
 
 class DuplicatesError(DescriptorError):
+    """Raised when duplicate Pythonic names are detected."""
+
     def __init__(
         self,
         descriptor: Descriptor,
@@ -125,12 +154,20 @@ class DuplicatesError(DescriptorError):
 
 
 class EnumValue(Descriptor):
+    """Wrapper for enum value descriptors."""
+
     def __init__(
         self,
         descriptor: pb.EnumValueDescriptorProto,
         containing_enum: "Enum",
         index: int = -1,
     ) -> None:
+        """Create an enum value wrapper.
+
+        :param descriptor: Protobuf enum value descriptor.
+        :param containing_enum: Parent enum wrapper.
+        :param index: Index of the value in the enum.
+        """
         self.descriptor = descriptor
         self.containing_enum = containing_enum
         self._pythonic_name = ""
@@ -142,6 +179,7 @@ class EnumValue(Descriptor):
 
     @property
     def source_info(self) -> SourceInfo:
+        """Return source location information for this enum value."""
         if self.path_in_file in self.containing_enum.containing_file.source_code_info:
             return SourceInfo(
                 self.containing_enum.containing_file.source_code_info[self.path_in_file]
@@ -150,6 +188,7 @@ class EnumValue(Descriptor):
 
     @property
     def path_in_file(self) -> Sequence[int]:
+        """Return the path within the file descriptor."""
         if self._path_in_file is None:
             self._path_in_file = tuple(
                 tuple(self.containing_enum.path_in_file)
@@ -164,6 +203,7 @@ class EnumValue(Descriptor):
 
     @property
     def pythonic_name(self) -> str:
+        """Return the Pythonic name for this enum value."""
         if self._pythonic_name == "":
             try:
                 self._pythonic_name = names.enum_value(
@@ -178,18 +218,23 @@ class EnumValue(Descriptor):
 
     @property
     def number(self) -> int:
+        """Return the numeric value."""
         return self.descriptor.number  # type: ignore[no-any-return,unused-ignore]
 
     @property
     def pb2(self) -> ImportedSymbol:
+        """Return import information for the pb2 enum value."""
         c_import = self.containing_enum.pb2
         return ImportedSymbol(c_import.name + "." + self.name, c_import.import_path)
 
     def __repr__(self) -> str:
+        """Return a debug representation."""
         return f"EnumValue({self.containing_enum.full_type_name}.{self.name})"
 
 
 class Enum(Descriptor):
+    """Wrapper for enum descriptors."""
+
     def __init__(
         self,
         descriptor: pb.EnumDescriptorProto,
@@ -197,6 +242,13 @@ class Enum(Descriptor):
         containing_message: "Message|None" = None,
         index: int = -1,
     ) -> None:
+        """Create an enum wrapper.
+
+        :param descriptor: Protobuf enum descriptor.
+        :param containing_file: Parent file wrapper.
+        :param containing_message: Parent message wrapper if nested.
+        :param index: Index in the containing scope.
+        """
         self.descriptor = descriptor
         self.containing_message = containing_message
         self.containing_file = containing_file
@@ -211,6 +263,7 @@ class Enum(Descriptor):
         self._checked = False
 
     def check_names(self) -> None:
+        """Validate that enum value names are unique."""
         if self._checked:
             return
         val_names = defaultdict[str, list[Descriptor]](list[Descriptor])
@@ -226,12 +279,14 @@ class Enum(Descriptor):
 
     @property
     def source_info(self) -> SourceInfo:
+        """Return source location information for this enum."""
         if self.path_in_file in self.containing_file.source_code_info:
             return SourceInfo(self.containing_file.source_code_info[self.path_in_file])
         return SourceInfo()
 
     @property
     def path_in_file(self) -> Sequence[int]:
+        """Return the path within the file descriptor."""
         if self._path_in_file is None:
             if self.containing_message is not None:
                 self._path_in_file = tuple(
@@ -253,10 +308,12 @@ class Enum(Descriptor):
         return self._path_in_file
 
     def __repr__(self) -> str:
+        """Return a debug representation."""
         return f"Enum({self.full_type_name})"
 
     @property
     def pythonic_name(self) -> str:
+        """Return the Pythonic enum name."""
         if self._pythonic_name == "":
             try:
                 self._pythonic_name = names.enum(
@@ -269,6 +326,7 @@ class Enum(Descriptor):
 
     @property
     def values(self) -> list[EnumValue]:
+        """Return enum value wrappers."""
         if self._values is None:
             self._values = [
                 EnumValue(val, self, index=i)
@@ -278,24 +336,28 @@ class Enum(Descriptor):
 
     @property
     def values_dict(self) -> dict[str, EnumValue]:
+        """Return a mapping of enum value names to enum values."""
         if self._values_dict is None:
             self._values_dict = {val.name: val for val in self.values}
         return self._values_dict
 
     @property
     def no_wrap(self) -> bool:
+        """Return True if this enum should not be wrapped."""
         if self.containing_file.skipped:
             return True
         return False
 
     @property
     def full_type_name(self) -> str:
+        """Return the fully qualified type name."""
         if self.containing_message is not None:
             return self.containing_message.full_type_name + "." + self.name
         return "." + self.containing_file.package + "." + self.name
 
     @property
     def export_path(self) -> ImportedSymbol:
+        """Return the import path used by generated code."""
         if self.containing_message is not None:
             c_import = self.containing_message.export_path
             return ImportedSymbol(
@@ -305,6 +367,7 @@ class Enum(Descriptor):
 
     @property
     def pb2(self) -> ImportedSymbol:
+        """Return the pb2 import for this enum."""
         if self.containing_message is not None:
             c_import = self.containing_message.pb2
             return ImportedSymbol(c_import.name + "." + self.name, c_import.import_path)
@@ -312,6 +375,8 @@ class Enum(Descriptor):
 
 
 class Field(Descriptor):
+    """Wrapper for field descriptors."""
+
     def __init__(
         self,
         descriptor: pb.FieldDescriptorProto,
@@ -319,6 +384,13 @@ class Field(Descriptor):
         containing_file: "File",
         index: int = -1,
     ) -> None:
+        """Create a field wrapper.
+
+        :param descriptor: Protobuf field descriptor.
+        :param containing_message: Parent message wrapper.
+        :param containing_file: Parent file wrapper.
+        :param index: Field index in the message descriptor.
+        """
         self.descriptor = descriptor
         self.containing_message = containing_message
         self._pythonic_name = ""
@@ -332,12 +404,14 @@ class Field(Descriptor):
 
     @property
     def source_info(self) -> SourceInfo:
+        """Return source location information for this field."""
         if self.path_in_file in self._containing_file.source_code_info:
             return SourceInfo(self._containing_file.source_code_info[self.path_in_file])
         return SourceInfo()
 
     @property
     def path_in_file(self) -> Sequence[int]:
+        """Return the path within the file descriptor."""
         if self._path_in_file is None:
             self._path_in_file = tuple(
                 tuple(self.containing_message.path_in_file)
@@ -351,10 +425,15 @@ class Field(Descriptor):
         return self._path_in_file
 
     def is_in_oneof(self) -> bool:
+        """Return True if the field belongs to a oneof."""
         return self.descriptor.HasField("oneof_index")
 
     @property
     def containing_oneof(self) -> "OneOf":
+        """Return the containing oneof wrapper.
+
+        :raises ValueError: If the field is not in a oneof.
+        """
         if self._oneof is None:
             if not self.is_in_oneof():
                 self._oneof = False
@@ -368,15 +447,18 @@ class Field(Descriptor):
 
     @property
     def full_type_name(self) -> str:
+        """Return the fully qualified type name."""
         if self.is_extension():
             return "." + self._containing_file.package + "." + self.name
         return self.containing_message.full_type_name + "." + self.name
 
     def __repr__(self) -> str:
+        """Return a debug representation."""
         return f"Field({self.full_type_name})"
 
     @property
     def pythonic_name(self) -> str:
+        """Return the Pythonic field name."""
         if self._pythonic_name == "":
             try:
                 self._pythonic_name = names.field(
@@ -391,6 +473,10 @@ class Field(Descriptor):
 
     @property
     def message(self) -> "Message":
+        """Return the field's message type wrapper.
+
+        :raises FieldNotMessageError: If the field is not a message.
+        """
         if self.descriptor.type == self.descriptor.TYPE_MESSAGE:
             return self.containing_message.get_message_by_type_name(
                 self.descriptor.type_name
@@ -400,6 +486,10 @@ class Field(Descriptor):
 
     @property
     def enum(self) -> "Enum":
+        """Return the field's enum type wrapper.
+
+        :raises FieldNotEnumError: If the field is not an enum.
+        """
         if self.descriptor.type == self.descriptor.TYPE_ENUM:
             return self.containing_message.get_enum_by_type_name(
                 self.descriptor.type_name
@@ -408,6 +498,7 @@ class Field(Descriptor):
             raise FieldNotEnumError(self)
 
     def tracks_presence(self) -> bool:
+        """Return True if the field tracks presence."""
         return (  # type: ignore[no-any-return,unused-ignore]
             self.descriptor.proto3_optional
             or (
@@ -418,10 +509,12 @@ class Field(Descriptor):
         )
 
     def is_extension(self) -> bool:
+        """Return True if this is an extension field."""
         return self.descriptor.extendee != ""
 
     @property
     def pb2(self) -> ImportedSymbol:
+        """Return the pb2 attribute path for this field."""
         if self.is_extension():
             return ImportedSymbol(
                 self.name,
@@ -433,6 +526,7 @@ class Field(Descriptor):
 
     @property
     def export_path(self) -> ImportedSymbol:
+        """Return the import path used by generated code."""
         if self.is_extension():
             return ImportedSymbol(
                 self.pythonic_name,
@@ -444,17 +538,21 @@ class Field(Descriptor):
 
     @property
     def number(self) -> int:
+        """Return the numeric tag."""
         return self.descriptor.number
 
     @property
     def map_key(self) -> "Field":
+        """Return the map key field wrapper."""
         return self.message.field_by_name("key")
 
     @property
     def map_value(self) -> "Field":
+        """Return the map value field wrapper."""
         return self.message.field_by_name("value")
 
     def python_type(self) -> ImportedSymbol:
+        """Return the Python type import for this field."""
         match self.descriptor.type:
             case self.descriptor.TYPE_DOUBLE | self.descriptor.TYPE_FLOAT:
                 return ImportedSymbol("float", "builtins")
@@ -485,11 +583,13 @@ class Field(Descriptor):
                 raise ValueError(f"Unsupported descriptor type: {self.descriptor.type}")
 
     def is_enum(self) -> bool:
+        """Return True if the field is an enum."""
         if self.descriptor.type == self.descriptor.TYPE_ENUM:
             return True
         return False
 
     def is_map(self) -> bool:
+        """Return True if the field is a map entry."""
         return (
             self.descriptor.label == self.descriptor.LABEL_REPEATED
             and self.descriptor.type == self.descriptor.TYPE_MESSAGE
@@ -497,18 +597,22 @@ class Field(Descriptor):
         )
 
     def is_repeated(self) -> bool:
+        """Return True if the field is repeated."""
         return (
             self.descriptor.label == self.descriptor.LABEL_REPEATED
             and not self.is_map()
         )
 
     def is_message(self) -> bool:
+        """Return True if the field is a message."""
         if self.descriptor.type == self.descriptor.TYPE_MESSAGE:
             return True
         return False
 
 
 class OneOf(Descriptor):
+    """Wrapper for oneof descriptors."""
+
     def __init__(
         self,
         descriptor: pb.OneofDescriptorProto,
@@ -516,6 +620,13 @@ class OneOf(Descriptor):
         containing_message: "Message",
         containing_file: "File",
     ) -> None:
+        """Create a oneof wrapper.
+
+        :param descriptor: Protobuf oneof descriptor.
+        :param index: Oneof index in the message descriptor.
+        :param containing_message: Parent message wrapper.
+        :param containing_file: Parent file wrapper.
+        """
         self.descriptor = descriptor
         self.containing_message = containing_message
         self._index = index
@@ -529,12 +640,14 @@ class OneOf(Descriptor):
 
     @property
     def source_info(self) -> SourceInfo:
+        """Return source location information for this oneof."""
         if self.path_in_file in self._containing_file.source_code_info:
             return SourceInfo(self._containing_file.source_code_info[self.path_in_file])
         return SourceInfo()
 
     @property
     def path_in_file(self) -> Sequence[int]:
+        """Return the path within the file descriptor."""
         if self._path_in_file is None:
             self._path_in_file = tuple(
                 tuple(self.containing_message.path_in_file)
@@ -549,6 +662,7 @@ class OneOf(Descriptor):
 
     @property
     def fields(self) -> list[Field]:
+        """Return field wrappers belonging to this oneof."""
         if self._fields is None:
             self._fields = [
                 f
@@ -562,13 +676,16 @@ class OneOf(Descriptor):
 
     @property
     def full_type_name(self) -> str:
+        """Return the fully qualified type name."""
         return self.containing_message.full_type_name + "." + self.name
 
     def __repr__(self) -> str:
+        """Return a debug representation."""
         return f"OneOf({self.full_type_name})"
 
     @property
     def pythonic_name(self) -> str:
+        """Return the Pythonic oneof name."""
         if self._pythonic_name == "":
             try:
                 self._pythonic_name = names.one_of(
@@ -583,11 +700,14 @@ class OneOf(Descriptor):
 
     @property
     def export_path(self) -> ImportedSymbol:
+        """Return the import path used by generated code."""
         msg = self.containing_message.export_path
         return ImportedSymbol(msg.name + "." + self.pythonic_name, msg.import_path)
 
 
 class Message(Descriptor):
+    """Wrapper for message descriptors."""
+
     def __init__(
         self,
         descriptor: pb.DescriptorProto,
@@ -595,6 +715,13 @@ class Message(Descriptor):
         containing_message: "Message|None" = None,
         index: int = -1,
     ) -> None:
+        """Create a message wrapper.
+
+        :param descriptor: Protobuf message descriptor.
+        :param containing_file: Parent file wrapper.
+        :param containing_message: Parent message wrapper if nested.
+        :param index: Index in the containing scope.
+        """
         self.descriptor = descriptor
         self.containing_file = containing_file
         self.containing_message = containing_message
@@ -615,6 +742,7 @@ class Message(Descriptor):
         self._checked = False
 
     def check_names(self) -> None:
+        """Validate that child Pythonic names are unique."""
         if self._checked:
             return
         val_names = defaultdict[str, list[Descriptor]](list[Descriptor])
@@ -644,12 +772,14 @@ class Message(Descriptor):
 
     @property
     def source_info(self) -> SourceInfo:
+        """Return source location information for this message."""
         if self.path_in_file in self.containing_file.source_code_info:
             return SourceInfo(self.containing_file.source_code_info[self.path_in_file])
         return SourceInfo()
 
     @property
     def path_in_file(self) -> Sequence[int]:
+        """Return the path within the file descriptor."""
         if self._path_in_file is None:
             if self.containing_message is not None:
                 self._path_in_file = tuple(
@@ -671,10 +801,12 @@ class Message(Descriptor):
         return self._path_in_file
 
     def __repr__(self) -> str:
+        """Return a debug representation."""
         return f"Message({self.full_type_name})"
 
     @property
     def pythonic_name(self) -> str:
+        """Return the Pythonic message name."""
         if self._pythonic_name == "":
             try:
                 self._pythonic_name = names.message(
@@ -687,6 +819,7 @@ class Message(Descriptor):
 
     @property
     def enums_dict(self) -> dict[str, Enum]:
+        """Return a mapping of enum names to enums."""
         if self._enums_dict is None:
             self._enums_dict = {
                 e.name: Enum(e, self.containing_file, self, index=i)
@@ -696,6 +829,7 @@ class Message(Descriptor):
 
     @property
     def oneofs(self) -> list[OneOf]:
+        """Return oneof wrappers."""
         if self._oneofs is None:
             self._oneofs = [
                 OneOf(o, i, self, self.containing_file)
@@ -705,28 +839,33 @@ class Message(Descriptor):
 
     @property
     def oneofs_dict(self) -> dict[str, OneOf]:
+        """Return a mapping of oneof names to oneofs."""
         if self._oneofs_dict is None:
             self._oneofs_dict = {o.name: o for o in self.oneofs}
         return self._oneofs_dict
 
     @property
     def enums(self) -> Iterable[Enum]:
+        """Return enum wrappers contained in this message."""
         return self.enums_dict.values()
 
     @property
     def fields_dict(self) -> dict[str, Field]:
+        """Return a mapping of field names to fields."""
         if self._fields_dict is None:
             self._fields_dict = {field.name: field for field in self.fields()}
         return self._fields_dict
 
     @property
     def no_wrap(self) -> bool:
+        """Return True if this message should not be wrapped."""
         if self.containing_file.skipped:
             return True
         return False
 
     @property
     def export_path(self) -> ImportedSymbol:
+        """Return the import path used by generated code."""
         if self.containing_message is not None:
             c_import = self.containing_message.export_path
             return ImportedSymbol(
@@ -735,9 +874,11 @@ class Message(Descriptor):
         return ImportedSymbol(self.pythonic_name, self.containing_file.export_path)
 
     def field_by_name(self, name: str) -> Field:
+        """Return a field wrapper by name."""
         return self.fields_dict[name]
 
     def fields(self) -> list[Field]:
+        """Return field wrappers."""
         if self._fields is None:
             self._fields = [
                 Field(f, self, self.containing_file, index=i)
@@ -747,11 +888,18 @@ class Message(Descriptor):
 
     @property
     def full_type_name(self) -> str:
+        """Return the fully qualified type name."""
         if self.containing_message is not None:
             return self.containing_message.full_type_name + "." + self.name
         return "." + self.containing_file.package + "." + self.name
 
     def get_message_by_type_name(self, name: str, strict: bool = False) -> "Message":
+        """Resolve a message by type name within this scope.
+
+        :param name: Type name, relative or fully qualified.
+        :param strict: When true, raise if not found.
+        :returns: Resolved :class:`Message`.
+        """
         if name[0] == ".":
             return self.containing_file.get_message_by_type_name(name)
         name_parts = name.split(".", 1)
@@ -771,6 +919,12 @@ class Message(Descriptor):
                 return self.containing_file.get_message_by_type_name(name)
 
     def get_enum_by_type_name(self, name: str, strict: bool = False) -> "Enum":
+        """Resolve an enum by type name within this scope.
+
+        :param name: Type name, relative or fully qualified.
+        :param strict: When true, raise if not found.
+        :returns: Resolved :class:`Enum`.
+        """
         if name[0] == ".":
             return self.containing_file.get_enum_by_type_name(name)
         name_parts = name.split(".", 1)
@@ -790,11 +944,13 @@ class Message(Descriptor):
                 return self.containing_file.get_enum_by_type_name(name)
 
     def message_by_name(self, name: str) -> "Message":
+        """Return a nested message by name."""
         if self._messages_dict is None:
             self._messages_dict = {msg.name: msg for msg in self.messages()}
         return self._messages_dict[name]
 
     def messages(self) -> Sequence["Message"]:
+        """Return nested message wrappers."""
         if self._messages is None:
             self._messages = [
                 Message(msg, self.containing_file, self, index=i)
@@ -803,18 +959,21 @@ class Message(Descriptor):
         return self._messages
 
     def is_map_entry(self) -> bool:
+        """Return True if this message is a map entry."""
         if self.descriptor.options.map_entry:
             return True
         return False
 
     @property
     def pb2(self) -> ImportedSymbol:
+        """Return the pb2 type import for this message."""
         if self.containing_message is not None:
             c_import = self.containing_message.pb2
             return ImportedSymbol(c_import.name + "." + self.name, c_import.import_path)
         return ImportedSymbol(self.name, self.containing_file.pb2)
 
     def collect_all_names(self) -> set[str]:
+        """Collect all Pythonic names used within this message."""
         ret = set[str]([field.pythonic_name for field in self.fields()])
         for msg in self.messages():
             ret.add(msg.pythonic_name)
@@ -828,12 +987,20 @@ class Message(Descriptor):
 
 
 class Method(Descriptor):
+    """Wrapper for RPC method descriptors."""
+
     def __init__(
         self,
         descriptor: pb.MethodDescriptorProto,
         containing_service: "Service",
         index: int = -1,
     ) -> None:
+        """Create a method wrapper.
+
+        :param descriptor: Protobuf method descriptor.
+        :param containing_service: Parent service wrapper.
+        :param index: Method index in the service descriptor.
+        """
         self.descriptor = descriptor
         self.containing_service = containing_service
         self._pythonic_name = ""
@@ -847,6 +1014,7 @@ class Method(Descriptor):
 
     @property
     def source_info(self) -> SourceInfo:
+        """Return source location information for this method."""
         if (
             self.path_in_file
             in self.containing_service.containing_file.source_code_info
@@ -860,6 +1028,7 @@ class Method(Descriptor):
 
     @property
     def path_in_file(self) -> Sequence[int]:
+        """Return the path within the file descriptor."""
         if self._path_in_file is None:
             self._path_in_file = tuple(
                 tuple(self.containing_service.path_in_file)
@@ -873,10 +1042,12 @@ class Method(Descriptor):
         return self._path_in_file
 
     def __repr__(self) -> str:
+        """Return a debug representation."""
         return f"Method({self.full_type_name})"
 
     @property
     def input(self) -> Message:
+        """Return the input message wrapper."""
         if self._input is None:
             self._input = (
                 self.containing_service.containing_file.get_message_by_type_name(
@@ -887,6 +1058,7 @@ class Method(Descriptor):
 
     @property
     def output(self) -> Message:
+        """Return the output message wrapper."""
         if self._output is None:
             self._output = (
                 self.containing_service.containing_file.get_message_by_type_name(
@@ -897,10 +1069,12 @@ class Method(Descriptor):
 
     @property
     def full_type_name(self) -> str:
+        """Return the fully qualified type name."""
         return self.containing_service.full_type_name + "." + self.name
 
     @property
     def pythonic_name(self) -> str:
+        """Return the Pythonic method name."""
         if self._pythonic_name == "":
             try:
                 self._pythonic_name = names.method(
@@ -915,12 +1089,20 @@ class Method(Descriptor):
 
 
 class Service(Descriptor):
+    """Wrapper for service descriptors."""
+
     def __init__(
         self,
         descriptor: pb.ServiceDescriptorProto,
         containing_file: "File",
         index: int = -1,
     ) -> None:
+        """Create a service wrapper.
+
+        :param descriptor: Protobuf service descriptor.
+        :param containing_file: Parent file wrapper.
+        :param index: Service index in the file descriptor.
+        """
         self.descriptor = descriptor
         self.containing_file = containing_file
         self._pythonic_name = ""
@@ -933,6 +1115,7 @@ class Service(Descriptor):
         self._checked = False
 
     def check_names(self) -> None:
+        """Validate that method Pythonic names are unique."""
         if self._checked:
             return
 
@@ -948,12 +1131,14 @@ class Service(Descriptor):
 
     @property
     def source_info(self) -> SourceInfo:
+        """Return source location information for this service."""
         if self.path_in_file in self.containing_file.source_code_info:
             return SourceInfo(self.containing_file.source_code_info[self.path_in_file])
         return SourceInfo()
 
     @property
     def path_in_file(self) -> Sequence[int]:
+        """Return the path within the file descriptor."""
         if self._path_in_file is None:
             self._path_in_file = tuple(
                 [
@@ -964,10 +1149,12 @@ class Service(Descriptor):
         return self._path_in_file
 
     def __repr__(self) -> str:
+        """Return a debug representation."""
         return f"Service({self.full_type_name})"
 
     @property
     def methods(self) -> dict[str, Method]:
+        """Return method wrappers keyed by method name."""
         if self._methods is None:
             self._methods = {
                 m.name: Method(m, self, index=i)
@@ -977,10 +1164,12 @@ class Service(Descriptor):
 
     @property
     def export_path(self) -> ImportedSymbol:
+        """Return the import path used by generated code."""
         return ImportedSymbol(self.pythonic_name, self.containing_file.export_path)
 
     @property
     def pythonic_name(self) -> str:
+        """Return the Pythonic service name."""
         if self._pythonic_name == "":
             try:
                 self._pythonic_name = names.service(
@@ -993,20 +1182,30 @@ class Service(Descriptor):
 
     @property
     def full_type_name(self) -> str:
+        """Return the fully qualified type name."""
         return "." + self.containing_file.package + "." + self.name
 
     def collect_all_names(self) -> set[str]:
+        """Collect all Pythonic names used within this service."""
         ret = set[str]([m.pythonic_name for m in self.methods.values()])
         return ret
 
 
 class File(Descriptor):
+    """Wrapper for file descriptors and generation settings."""
+
     def __init__(
         self,
         descriptor: pb.FileDescriptorProto,
         file_set: "FileSet",
         is_generated: bool,
     ) -> None:
+        """Create a file wrapper.
+
+        :param descriptor: Protobuf file descriptor.
+        :param file_set: Owning :class:`FileSet`.
+        :param is_generated: Whether this file should be generated.
+        """
         self.descriptor = descriptor
         self.global_set = file_set
         self.is_generated = is_generated
@@ -1047,6 +1246,7 @@ class File(Descriptor):
         self._checked: defaultdict[str, list[Descriptor]] | None = None
 
     def check_names(self) -> defaultdict[str, list[Descriptor]]:
+        """Validate that Pythonic names are unique within this file."""
         if self._checked is not None:
             return self._checked
         val_names = defaultdict[str, list[Descriptor]](list[Descriptor])
@@ -1082,6 +1282,7 @@ class File(Descriptor):
 
     @property
     def source_code_info(self) -> dict[Sequence[int], pb.SourceCodeInfo.Location]:
+        """Return source code info indexed by path."""
         if self._source_code_info is None:
             self._source_code_info = {
                 tuple(loc.path): loc
@@ -1090,10 +1291,12 @@ class File(Descriptor):
         return self._source_code_info
 
     def __repr__(self) -> str:
+        """Return a debug representation."""
         return f"File({self.name})"
 
     @property
     def extensions(self) -> dict[str, Field]:
+        """Return extension fields defined in this file."""
         if self._extensions is None:
             self._extensions = {
                 x.name: Field(
@@ -1106,6 +1309,11 @@ class File(Descriptor):
         return self._extensions
 
     def collect_all_names(self, with_locals: bool = True) -> set[str]:
+        """Collect all Pythonic names defined in this file.
+
+        :param with_locals: Include nested and dependency names.
+        :returns: Set of names.
+        """
         ret = set[str](self.package.split("."))
         for msg in self.messages():
             ret.add(msg.pythonic_name)
@@ -1125,6 +1333,13 @@ class File(Descriptor):
         return ret
 
     def get_message_by_type_name(self, name: str, strict: bool = False) -> "Message":
+        """Resolve a message by type name within this file.
+
+        :param name: Type name, relative or fully qualified.
+        :param strict: When true, restrict lookup to this file's scope.
+        :returns: :class:`Message` wrapper.
+        :raises KeyError: If not found.
+        """
         name_partial = name
         if name_partial[0] == ".":
             if name_partial.startswith("." + self.package + "."):
@@ -1151,6 +1366,13 @@ class File(Descriptor):
             raise KeyError(f"Message {name} not found in scope of {self.name}")
 
     def get_enum_by_type_name(self, name: str, strict: bool = False) -> "Enum":
+        """Resolve an enum by type name within this file.
+
+        :param name: Type name, relative or fully qualified.
+        :param strict: When true, restrict lookup to this file's scope.
+        :returns: :class:`Enum` wrapper.
+        :raises KeyError: If not found.
+        """
         name_partial = name
         if name_partial[0] == ".":
             if name_partial.startswith("." + self.package + "."):
@@ -1178,6 +1400,7 @@ class File(Descriptor):
 
     @property
     def dependencies(self) -> "dict[str, File]":
+        """Return dependent files by name."""
         if self._deps_dict is None:
             self._deps_dict = {
                 name: self.global_set.file_by_name(name)
@@ -1187,14 +1410,27 @@ class File(Descriptor):
 
     @property
     def package(self) -> str:
+        """Return the package name."""
         return str(self.descriptor.package)
 
     def get_field_by_type_name(self, full_field_name: str) -> Field:
+        """Resolve a field by its fully qualified name.
+
+        :param full_field_name: Full field name (message.field).
+        :returns: :class:`Field` wrapper.
+        """
         msg_name, field_name = full_field_name.rsplit(".", 2)
         msg = self.get_message_by_type_name(msg_name)
         return msg.field_by_name(field_name)
 
     def get_extension_by_type_name(self, name: str, strict: bool = False) -> Field:
+        """Resolve an extension by name.
+
+        :param name: Extension name, relative or fully qualified.
+        :param strict: When true, restrict lookup to this file's scope.
+        :returns: :class:`Field` wrapper.
+        :raises KeyError: If not found.
+        """
         name_partial = name
         if name_partial[0] == ".":
             if name_partial.startswith("." + self.package + "."):
@@ -1217,11 +1453,13 @@ class File(Descriptor):
             raise KeyError(f"Extension {name} not found in scope of {self.name}")
 
     def message_by_name(self, name: str) -> Message:
+        """Return a top-level message by name."""
         if self._messages_dict is None:
             self._messages_dict = {msg.name: msg for msg in self.messages()}
         return self._messages_dict[name]
 
     def messages(self) -> Sequence[Message]:
+        """Return top-level message wrappers."""
         if self._messages is None:
             self._messages = [
                 Message(msg, self, index=i)
@@ -1231,6 +1469,7 @@ class File(Descriptor):
 
     @property
     def services_dict(self) -> dict[str, Service]:
+        """Return services defined in this file."""
         if self._services_dict is None:
             self._services_dict = {
                 s.name: Service(s, self, index=i)
@@ -1240,6 +1479,7 @@ class File(Descriptor):
 
     @property
     def enums_dict(self) -> dict[str, Enum]:
+        """Return enums defined in this file."""
         if self._enums_dict is None:
             self._enums_dict = {
                 e.name: Enum(e, self, index=i)
@@ -1249,15 +1489,19 @@ class File(Descriptor):
 
     @property
     def enums(self) -> Iterable[Enum]:
+        """Return enum wrappers defined in this file."""
         return self.enums_dict.values()
 
     @property
     def grpc(self) -> ImportPath:
+        """Return the import path for the gRPC stub module."""
         p = self.pb2
         return ImportPath(p.import_path + "_grpc")
 
 
 class FileSet(Descriptor):
+    """Collection of file descriptors with generation settings."""
+
     def __init__(
         self,
         file_set: Sequence[pb.FileDescriptorProto],
@@ -1266,6 +1510,14 @@ class FileSet(Descriptor):
         export_substitutions: dict[str, str] | None = None,
         skip_packages: list[str] | None = None,
     ):
+        """Create a file set wrapper.
+
+        :param file_set: Protobuf file descriptor protos.
+        :param files_to_generate: Names of files to generate.
+        :param import_substitutions: Optional import path substitutions.
+        :param export_substitutions: Optional export path substitutions.
+        :param skip_packages: Packages to exclude from wrapping.
+        """
         if import_substitutions is None:
             import_substitutions = dict[str, str]()
         if export_substitutions is None:
@@ -1285,6 +1537,7 @@ class FileSet(Descriptor):
         self._checked = False
 
     def check_names(self) -> None:
+        """Validate that Pythonic names are unique across generated files."""
         if self._checked:
             return
 
@@ -1313,12 +1566,14 @@ class FileSet(Descriptor):
         self._checked = True
 
     def is_package_skipped(self, package: str) -> bool:
+        """Return True if the package should be skipped."""
         for pkg in self.skip_packages:
             if package == pkg or package.startswith(pkg + "."):
                 return True
         return False
 
     def collect_names(self, package: str) -> set[str]:
+        """Collect names from files in the given package."""
         ret = set[str](package.split("."))
         for file in self.files:
             if file.package == package:
@@ -1326,18 +1581,22 @@ class FileSet(Descriptor):
         return ret
 
     def file_by_name(self, name: str) -> "File":
+        """Return a file wrapper by file name."""
         return self.files_dict[name]
 
     @property
     def files_dict(self) -> dict[str, File]:
+        """Return files keyed by file name."""
         if self._files_dict is None:
             self._files_dict = {file.name: file for file in self._file_set}
         return self._files_dict
 
     @property
     def files(self) -> Sequence[File]:
+        """Return all file wrappers."""
         return self._file_set
 
     @property
     def files_generated(self) -> Sequence[File]:
+        """Return only files marked for generation."""
         return [f for f in self.files if f.is_generated]

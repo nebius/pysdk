@@ -1,21 +1,42 @@
+"""Descriptor lookup helpers for protobuf definitions."""
+
 from abc import ABC
 from typing import Generic, TypeVar
 
 import google.protobuf.descriptor as pb
 
-# Define the TypeVar for supported descriptor types
 T = TypeVar(
     "T", pb.EnumDescriptor, pb.Descriptor, pb.OneofDescriptor, pb.ServiceDescriptor
 )
+"""The TypeVar for supported descriptor types"""
 
 
 class DescriptorWrap(ABC, Generic[T]):
+    """Lazy resolver for protobuf descriptors by fully qualified name.
+
+    Instances are callable; the first call resolves and caches the descriptor.
+
+    :param name: Fully qualified descriptor name. Leading ``.`` is allowed.
+    :param file_descriptor: Protobuf file descriptor to search within.
+    :param expected_type: Descriptor type expected by the caller.
+    :ivar _name: Normalized fully qualified name.
+    :ivar _file_descriptor: Root file descriptor used for lookup.
+    :ivar _expected_type: Expected descriptor class.
+    :ivar _descriptor: Cached resolved descriptor.
+    """
+
     def __init__(
         self,
         name: str,
         file_descriptor: pb.FileDescriptor,
         expected_type: type[T],
     ) -> None:
+        """Create a descriptor wrapper.
+
+        :param name: Fully qualified descriptor name.
+        :param file_descriptor: Protobuf file descriptor to search within.
+        :param expected_type: Descriptor type expected by the caller.
+        """
         if name[0] == ".":
             name = name[1:]
         self._name = name
@@ -48,8 +69,12 @@ class DescriptorWrap(ABC, Generic[T]):
         | pb.ServiceDescriptor
         | None
     ):
-        """
-        Recursively searches for the descriptor in the given container (file or message)
+        """Recursively search for a descriptor by name.
+
+        :param container: File or message descriptor to search within.
+        :param name: Fully qualified name to resolve.
+        :returns: Matching descriptor or ``None`` if not found.
+        :raises ValueError: If the protobuf pool returns an unexpected type.
         """
         # Check for top-level messages
         if isinstance(container, pb.FileDescriptor):
