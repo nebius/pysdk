@@ -507,13 +507,9 @@ class ControlPlaneStatus(pb_classes.Message):
     @builtins.property
     def version(self) -> "builtins.str":
         """
-        .. role:: raw-html-m2r(raw)
-           :format: html
-        
-        
         Actual Kubernetes and configuration version.
         Version have format ``<major>.<minor>.<patch>-nebius-cp.<infra_version>`` like "1.30.0-nebius-cp.3".
-        Where :raw-html-m2r:`<major>`.\\ :raw-html-m2r:`<minor>`.\\ :raw-html-m2r:`<patch>` is Kubernetes version and :raw-html-m2r:`<infra_version>` is version of control plane infrastructure and configuration,
+        Where :literal:`<major>`.\\ :literal:`<minor>`.\\ :literal:`<patch>` is Kubernetes version and :literal:`<infra_version>` is version of control plane infrastructure and configuration,
         which update may include bug fixes, security updates and new features of components running on control plane, like CCM or Cluster Autoscaler.
         """
         
@@ -1719,13 +1715,9 @@ class NodeGroupSpec(pb_classes.Message):
     @builtins.property
     def version(self) -> "builtins.str":
         """
-        .. role:: raw-html-m2r(raw)
-           :format: html
-        
-        
         Version is desired Kubernetes version of the cluster. For now only acceptable format is
         ``<major>.<minor>`` like "1.31". Option for patch version update will be added later.
-        By default the cluster control plane :raw-html-m2r:`<major>`.\\ :raw-html-m2r:`<minor>` version will be used.
+        By default the cluster control plane :literal:`<major>`.\\ :literal:`<minor>` version will be used.
         """
         
         return super()._get_field("version", explicit_presence=False,
@@ -1963,50 +1955,50 @@ class NodeTemplate(pb_classes.Message):
         Supported platform / Kubernetes version / OS / driver presets combinations
         
         
-        * ``gpu-l40s-a``\\ , ``gpu-l40s-d``\\ , ``gpu-h100-sxm``\\ , ``gpu-h200-sxm``\\ , ``cpu-e1``\\ , ``cpu-e2``\\ , ``cpu-d3``\\ :
+        * ``gpu-l40s-a``, ``gpu-l40s-d``, ``gpu-h100-sxm``, ``gpu-h200-sxm``, ``cpu-e1``, ``cpu-e2``, ``cpu-d3``:
         
-          * ``drivers_preset``\\ : ``""``
+          * ``drivers_preset``: ``""``
         
-            * ``version``\\ : 1.30 → ``"ubuntu22.04"``
-            * ``version``\\ : 1.31 → ``"ubuntu22.04"`` (default), ``"ubuntu24.04"``
+            * ``version``: 1.30 → ``"ubuntu22.04"``
+            * ``version``: 1.31 → ``"ubuntu22.04"`` (default), ``"ubuntu24.04"``
         
-        * ``gpu-l40s-a``\\ , ``gpu-l40s-d``\\ , ``gpu-h100-sxm``\\ , ``gpu-h200-sxm``\\ :
+        * ``gpu-l40s-a``, ``gpu-l40s-d``, ``gpu-h100-sxm``, ``gpu-h200-sxm``:
         
-          * ``drivers_preset``\\ : ``"cuda12"`` (CUDA 12.4)
+          * ``drivers_preset``: ``"cuda12"`` (CUDA 12.4)
         
-            * ``version``\\ : 1.30, 1.31 → ``"ubuntu22.04"``
+            * ``version``: 1.30, 1.31 → ``"ubuntu22.04"``
         
-          * ``drivers_preset``\\ : ``"cuda12.4"``
+          * ``drivers_preset``: ``"cuda12.4"``
         
-            * ``version``\\ : 1.31 → ``"ubuntu22.04"``
+            * ``version``: 1.31 → ``"ubuntu22.04"``
         
-          * ``drivers_preset``\\ : ``"cuda12.8"``
+          * ``drivers_preset``: ``"cuda12.8"``
         
-            * ``version``\\ : 1.31 → ``"ubuntu24.04"``
+            * ``version``: 1.31 → ``"ubuntu24.04"``
         
-        * ``gpu-b200-sxm``\\ :
+        * ``gpu-b200-sxm``:
         
-          * ``drivers_preset``\\ : ``""``
+          * ``drivers_preset``: ``""``
         
-            * ``version``\\ : 1.30, 1.31 → ``"ubuntu24.04"``
+            * ``version``: 1.30, 1.31 → ``"ubuntu24.04"``
         
-          * ``drivers_preset``\\ : ``"cuda12"`` (CUDA 12.8)
+          * ``drivers_preset``: ``"cuda12"`` (CUDA 12.8)
         
-            * ``version``\\ : 1.30, 1.31 → ``"ubuntu24.04"``
+            * ``version``: 1.30, 1.31 → ``"ubuntu24.04"``
         
-          * ``drivers_preset``\\ : ``"cuda12.8"``
+          * ``drivers_preset``: ``"cuda12.8"``
         
-            * ``version``\\ : 1.31 → ``"ubuntu24.04"``
+            * ``version``: 1.31 → ``"ubuntu24.04"``
         
-        * ``gpu-b200-sxm-a``\\ :
+        * ``gpu-b200-sxm-a``:
         
-          * ``drivers_preset``\\ : ``""``
+          * ``drivers_preset``: ``""``
         
-            * ``version``\\ : 1.31 → ``"ubuntu24.04"``
+            * ``version``: 1.31 → ``"ubuntu24.04"``
         
-          * ``drivers_preset``\\ : ``"cuda12.8"``
+          * ``drivers_preset``: ``"cuda12.8"``
         
-            * ``version``\\ : 1.31 → ``"ubuntu24.04"``
+            * ``version``: 1.31 → ``"ubuntu24.04"``
         """
         
         return super()._get_field("os", explicit_presence=False,
@@ -2259,18 +2251,18 @@ class GpuSettings(pb_classes.Message):
         Supported presets for different platform / Kubernetes version combinations:
         
         
-        * ``gpu-l40s-a``\\ , ``gpu-l40s-d``\\ , ``gpu-h100-sxm``\\ , ``gpu-h200-sxm``\\ :
+        * ``gpu-l40s-a``, ``gpu-l40s-d``, ``gpu-h100-sxm``, ``gpu-h200-sxm``:
         
-          * ``version``\\ : 1.30 → ``"cuda12"`` (CUDA 12.4)
-          * ``version``\\ : 1.31 → ``"cuda12"`` (CUDA 12.4), ``"cuda12.4"``\\ , ``"cuda12.8"``
+          * ``version``: 1.30 → ``"cuda12"`` (CUDA 12.4)
+          * ``version``: 1.31 → ``"cuda12"`` (CUDA 12.4), ``"cuda12.4"``, ``"cuda12.8"``
         
-        * ``gpu-b200-sxm``\\ :
+        * ``gpu-b200-sxm``:
         
-          * ``version``\\ : 1.31 → ``"cuda12"`` (CUDA 12.8), ``"cuda12.8"``
+          * ``version``: 1.31 → ``"cuda12"`` (CUDA 12.8), ``"cuda12.8"``
         
-        * ``gpu-b200-sxm-a``\\ :
+        * ``gpu-b200-sxm-a``:
         
-          * ``version``\\ : 1.31 → ``"cuda12.8"``
+          * ``version``: 1.31 → ``"cuda12.8"``
         """
         
         return super()._get_field("drivers_preset", explicit_presence=False,
@@ -3200,12 +3192,8 @@ class NodeGroupStatus(pb_classes.Message):
     @builtins.property
     def version(self) -> "builtins.str":
         """
-        .. role:: raw-html-m2r(raw)
-           :format: html
-        
-        
         Actual version of NodeGroup. Have format ``<major>.<minor>.<patch>-nebius-node.<infra_version>`` like "1.30.0-nebius-node.10".
-        Where :raw-html-m2r:`<major>`.\\ :raw-html-m2r:`<minor>`.\\ :raw-html-m2r:`<patch>` is Kubernetes version and :raw-html-m2r:`<infra_version>` is version of Node infrastructure and configuration,
+        Where :literal:`<major>`.\\ :literal:`<minor>`.\\ :literal:`<patch>` is Kubernetes version and :literal:`<infra_version>` is version of Node infrastructure and configuration,
         which update may include bug fixes, security updates and new features depending on worker node configuration.
         """
         

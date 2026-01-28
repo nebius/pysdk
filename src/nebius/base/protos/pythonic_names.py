@@ -1,3 +1,5 @@
+"""Utilities for deriving Python-friendly names from protobuf identifiers."""
+
 import re
 from keyword import iskeyword, issoftkeyword
 from logging import getLogger
@@ -11,10 +13,17 @@ logger = getLogger(__name__)
 
 
 class NameError(Exception):
+    """Raised when a name cannot be converted into a valid Python identifier."""
+
     pass
 
 
 def first_non_underscore(s: str) -> str:
+    """Return the first non-underscore character or an empty string.
+
+    :param s: Input string.
+    :returns: First non-underscore character or ``""``.
+    """
     for char in s:
         if char != "_":
             return char
@@ -22,6 +31,11 @@ def first_non_underscore(s: str) -> str:
 
 
 def is_reserved_name(s: str) -> bool:
+    """Return True if ``s`` is a Python keyword or soft keyword.
+
+    :param s: Name to test.
+    :returns: ``True`` if reserved.
+    """
     return iskeyword(s) or issoftkeyword(s)
 
 
@@ -32,6 +46,14 @@ def _modify_name(
     lower: bool = True,
     full_proto_name: str = "",
 ) -> str:
+    """Adjust a proposed name to avoid reserved words and conflicts.
+
+    :param suggested_name: Initial candidate name.
+    :param container_name: Enclosing scope name used for conflict prefixes.
+    :param lower: Whether to lower the prefix letter.
+    :param full_proto_name: Fully qualified proto name for warnings.
+    :returns: Adjusted name.
+    """
     # get first container name letter
     first_container_letter = first_non_underscore(container_name)
     if first_container_letter == "":
@@ -94,6 +116,13 @@ def _modify_name(
 
 
 def _class_name(full_name: str, annotated_name: str = "") -> str:
+    """Resolve a Python class name from a protobuf full name.
+
+    :param full_name: Fully qualified proto name.
+    :param annotated_name: Optional explicit name from annotations.
+    :returns: Valid Python class name.
+    :raises NameError: If the annotated name is invalid.
+    """
     if annotated_name != "":
         if is_reserved_name(annotated_name):
             raise NameError(
@@ -123,11 +152,26 @@ def _class_name(full_name: str, annotated_name: str = "") -> str:
 def enum(
     full_enum_name: str, annotated_name: str = "", full_proto_name: str = ""
 ) -> str:
+    """Return a Python enum name from a protobuf enum name.
+
+    :param full_enum_name: Fully qualified proto enum name.
+    :param annotated_name: Optional explicit name from annotations.
+    :param full_proto_name: Fully qualified proto name for warnings.
+    :returns: Valid Python enum class name.
+    :raises NameError: If the annotated name is invalid.
+    """
     return _class_name(full_enum_name, annotated_name=annotated_name)
 
 
 # canonical message names are already pythonic, we have to only check for conflicts
 def message(full_enum_name: str, annotated_name: str = "") -> str:
+    """Return a Python message name from a protobuf message name.
+
+    :param full_enum_name: Fully qualified proto message name.
+    :param annotated_name: Optional explicit name from annotations.
+    :returns: Valid Python message class name.
+    :raises NameError: If the annotated name is invalid.
+    """
     return _class_name(full_enum_name, annotated_name=annotated_name)
 
 
@@ -138,6 +182,15 @@ def one_of(
     annotated_name: str = "",
     full_proto_name: str = "",
 ) -> str:
+    """Return a Python attribute name for a oneof declaration.
+
+    :param field_name: Oneof field name.
+    :param message_name: Containing message name.
+    :param annotated_name: Optional explicit name from annotations.
+    :param full_proto_name: Fully qualified proto name for warnings.
+    :returns: Valid Python attribute name.
+    :raises NameError: If the annotated name is invalid.
+    """
     if annotated_name != "":
         if is_reserved_name(annotated_name):
             raise NameError(
@@ -162,6 +215,13 @@ def one_of(
 
 
 def service(full_service_name: str, annotated_name: str = "") -> str:
+    """Return a Python service class name from a protobuf service name.
+
+    :param full_service_name: Fully qualified proto service name.
+    :param annotated_name: Optional explicit name from annotations.
+    :returns: Valid Python service class name.
+    :raises NameError: If the annotated name is invalid.
+    """
     return _class_name(full_service_name, annotated_name)
 
 
@@ -172,6 +232,15 @@ def field(
     annotated_name: str = "",
     full_proto_name: str = "",
 ) -> str:
+    """Return a Python attribute name for a message field.
+
+    :param field_name: Field name in proto.
+    :param message_name: Containing message name.
+    :param annotated_name: Optional explicit name from annotations.
+    :param full_proto_name: Fully qualified proto name for warnings.
+    :returns: Valid Python attribute name.
+    :raises NameError: If the annotated name is invalid.
+    """
     if annotated_name != "":
         if is_reserved_name(annotated_name):
             raise NameError(
@@ -199,6 +268,15 @@ def field(
 def enum_value(
     value_name: str, enum_name: str, annotated_name: str = "", full_proto_name: str = ""
 ) -> str:
+    """Return a Python constant name for an enum value.
+
+    :param value_name: Enum value name in proto.
+    :param enum_name: Containing enum name.
+    :param annotated_name: Optional explicit name from annotations.
+    :param full_proto_name: Fully qualified proto name for warnings.
+    :returns: Valid Python constant name.
+    :raises NameError: If the annotated name is invalid.
+    """
     if annotated_name != "":
         if is_reserved_name(annotated_name):
             raise NameError(
@@ -227,10 +305,12 @@ def enum_value(
 
 
 def pascal_to_snake_case(name: str) -> str:
-    """
-    Converts a PascalCase string to snake_case with double underscores as separators
-    and respects abbreviations. Also ensures no collisions by appending unique suffixes
-    if needed.
+    """Convert a PascalCase string to snake_case.
+
+    This conversion preserves leading underscores and splits abbreviations.
+
+    :param name: PascalCase name.
+    :returns: snake_case representation.
     """
     has_underscore = name[0] == "_"
     # Step 1: Separate PascalCase components
@@ -252,6 +332,15 @@ def method(
     annotated_name: str = "",
     full_proto_name: str = "",
 ) -> str:
+    """Return a Python method name for a service method.
+
+    :param method_name: Proto method name.
+    :param service_name: Containing service name.
+    :param annotated_name: Optional explicit name from annotations.
+    :param full_proto_name: Fully qualified proto name for warnings.
+    :returns: Valid Python method name.
+    :raises NameError: If the annotated name is invalid.
+    """
     if annotated_name != "":
         if is_reserved_name(annotated_name):
             raise NameError(

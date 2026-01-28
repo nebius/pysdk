@@ -1,3 +1,10 @@
+"""Federation bearer authentication utilities.
+
+This module provides functions to perform OAuth 2.0 authorization code flow
+with PKCE for federation bearer token authentication. It handles browser-based
+authentication, callback server management, and token exchange.
+"""
+
 import asyncio
 import ssl
 import sys
@@ -21,17 +28,39 @@ log = getLogger(__name__)
 
 @dataclass
 class GetTokenResult:
+    """Result of token retrieval.
+
+    :ivar access_token: The access token string.
+    :type access_token: str
+    :ivar expires_in: Token expiration time in seconds, or None if not provided.
+    :type expires_in: int or None
+    """
+
     access_token: str
     expires_in: int | None = None
 
 
 def https_url(raw_url: str) -> str:
+    """Ensure the URL uses HTTPS scheme.
+
+    :param raw_url: The input URL string.
+    :type raw_url: str
+    :return: The URL with HTTPS scheme.
+    :rtype: str
+    """
     if not raw_url.startswith(("http://", "https://")):
         return f"https://{raw_url}"
     return raw_url
 
 
 async def open_browser(url: str) -> None:
+    """Open the given URL in the default web browser.
+
+    Handles special case for WSL environments by using cmd.exe.
+
+    :param url: The URL to open.
+    :type url: str
+    """
     if sys.platform.startswith("linux") and is_wsl():
         import subprocess
 
@@ -53,6 +82,30 @@ async def get_code(
     no_browser_open: bool = False,
     timeout: float | None = 300,
 ) -> tuple[str, str]:
+    """Obtain authorization code via OAuth callback.
+
+    Starts a local callback server, constructs the authorization URL with PKCE,
+    opens the browser (or prints the URL), and waits for the callback.
+
+    :param client_id: The OAuth client ID.
+    :type client_id: str
+    :param auth_endpoint: The authorization endpoint URL.
+    :type auth_endpoint: str
+    :param federation_id: The federation identifier.
+    :type federation_id: str
+    :param pkce_code: The PKCE code challenge and method.
+    :type pkce_code: :class:`PKCE`
+    :param writer: Optional text stream to write messages to.
+    :type writer: :class:`TextIO` or None
+    :param no_browser_open: If True, do not open browser automatically.
+    :type no_browser_open: bool
+    :param timeout: Timeout in seconds for waiting for the code.
+    :type timeout: float or None
+    :return: A tuple of (authorization_code, redirect_uri).
+    :rtype: tuple[str, str]
+    :raises RuntimeError: If browser fails to open or no code received.
+    :raises TimeoutError: If timeout waiting for code.
+    """
     auth_url = urllib.parse.urlparse(auth_endpoint)
     callback = CallbackHandler()
     await callback.listen_and_serve()
@@ -121,6 +174,26 @@ async def get_token(
     verifier: str,
     ssl_ctx: ssl.SSLContext | None = None,
 ) -> GetTokenResult:
+    """Exchange authorization code for access token.
+
+    Sends a POST request to the token endpoint with the code and PKCE verifier.
+
+    :param client_id: The OAuth client ID.
+    :type client_id: str
+    :param token_url: The token endpoint URL.
+    :type token_url: str
+    :param code: The authorization code received from callback.
+    :type code: str
+    :param redirect_uri: The redirect URI used in the request.
+    :type redirect_uri: str
+    :param verifier: The PKCE code verifier.
+    :type verifier: str
+    :param ssl_ctx: Optional SSL context for the request.
+    :type ssl_ctx: :class:`ssl.SSLContext` or None
+    :return: The token result containing access token and expiration.
+    :rtype: :class:`GetTokenResult`
+    :raises RuntimeError: If token request fails or response is invalid.
+    """
     data = {
         "grant_type": "authorization_code",
         "code": code,
@@ -168,6 +241,27 @@ async def authorize(
     timeout: float | None = 300,
     ssl_ctx: ssl.SSLContext | None = None,
 ) -> GetTokenResult:
+    """Perform full OAuth authorization flow and return access token.
+
+    Combines getting the authorization code and exchanging it for a token.
+
+    :param client_id: The OAuth client ID.
+    :type client_id: str
+    :param federation_endpoint: The base federation endpoint URL.
+    :type federation_endpoint: str
+    :param federation_id: The federation identifier.
+    :type federation_id: str
+    :param writer: Optional text stream to write messages to.
+    :type writer: :class:`TextIO` or None
+    :param no_browser_open: If True, do not open browser automatically.
+    :type no_browser_open: bool
+    :param timeout: Timeout in seconds for the entire flow.
+    :type timeout: float or None
+    :param ssl_ctx: Optional SSL context for token request.
+    :type ssl_ctx: :class:`ssl.SSLContext` or None
+    :return: The token result containing access token and expiration.
+    :rtype: :class:`GetTokenResult`
+    """
     token_url = urllib.parse.urljoin(https_url(federation_endpoint), TOKEN_ENDPOINT)
     auth_url = urllib.parse.urljoin(https_url(federation_endpoint), AUTH_ENDPOINT)
 

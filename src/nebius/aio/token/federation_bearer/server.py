@@ -1,3 +1,10 @@
+"""Federation bearer token server for handling OAuth callbacks.
+
+This module provides a CallbackHandler class that sets up a local HTTP server
+to handle OAuth authorization code callbacks during federation bearer token
+authentication flows. It uses PKCE (Proof Key for Code Exchange) for security.
+"""
+
 import asyncio
 import socket
 from logging import getLogger
@@ -10,6 +17,13 @@ log = getLogger(__name__)
 
 
 class CallbackHandler:
+    """Handler for OAuth callback server during federation authentication.
+
+    This class manages a local HTTP server that listens for OAuth authorization
+    code callbacks. It validates the state using PKCE and extracts the authorization
+    code for token exchange.
+    """
+
     def __init__(self) -> None:
         self._code: str | None = None
         self._state: str = PKCE().verifier
@@ -25,21 +39,49 @@ class CallbackHandler:
 
     @property
     def state(self) -> str:
+        """The PKCE state verifier used for callback validation.
+
+        :return: The state string.
+        :rtype: str
+        """
         return self._state
 
     @property
     def code(self) -> str | None:
+        """The authorization code received from the OAuth callback.
+
+        :return: The authorization code or None if not received.
+        :rtype: str or None
+        """
         return self._code
 
     @property
     def port(self) -> int | None:
+        """The port number the server is listening on.
+
+        :return: The port number or None if not started.
+        :rtype: int or None
+        """
         return self._port
 
     @property
     def addr(self) -> str:
+        """The full address of the callback server.
+
+        :return: The address in the format http://addr:port.
+        :rtype: str
+        """
         return f"http://{self._addr}:{self._port}"
 
     async def _handle_callback(self, request: web.Request) -> web.Response:
+        """Handle the OAuth callback request.
+
+        Extracts the authorization code and state from the query parameters,
+        validates the state, and sets the code if valid.
+
+        :param request: The incoming HTTP request.
+        :return: The HTTP response to send back.
+        """
         code = request.query.get("code")
         state = request.query.get("state")
         await self._set_code(code, state)
@@ -55,6 +97,13 @@ class CallbackHandler:
         )
 
     async def _set_code(self, code: str | None, state: str | None) -> None:
+        """Set the authorization code if the state is valid.
+
+        :param code: The authorization code from the callback.
+        :type code: str or None
+        :param state: The state parameter from the callback.
+        :type state: str or None
+        """
         async with self._lock:
             if self._done.is_set():
                 return
@@ -63,6 +112,10 @@ class CallbackHandler:
             self._done.set()
 
     async def listen_and_serve(self) -> None:
+        """Start the HTTP server on a free port.
+
+        Binds to localhost on a free port and starts listening for callbacks.
+        """
         port, sock, addr = self._get_free_port()
         self._port = port
         self._addr = addr
@@ -73,6 +126,11 @@ class CallbackHandler:
         log.info(f"Server started on {self.addr}")
 
     def _get_free_port(self) -> tuple[int, socket.socket, str]:
+        """Find and bind to a free port on localhost.
+
+        :return: A tuple of (port, socket, address).
+        :rtype: tuple[int, socket.socket, str]
+        """
         for family in (socket.AF_INET, socket.AF_INET6):
             try:
                 sock = socket.socket(family, socket.SOCK_STREAM)
@@ -85,11 +143,22 @@ class CallbackHandler:
         raise RuntimeError("No available ports")
 
     async def shutdown(self) -> None:
+        """Shutdown the HTTP server.
+
+        Stops the site and cleans up the runner.
+        """
         if self._site:
             await self._site.stop()
         if self._runner:
             await self._runner.cleanup()
 
     async def wait_for_code(self, timeout: float | None = None) -> str | None:
+        """Wait for the authorization code to be received.
+
+        :param timeout: Optional timeout in seconds.
+        :type timeout: float or None
+        :return: The authorization code or None if timed out.
+        :rtype: str or None
+        """
         await asyncio.wait_for(self._done.wait(), timeout=timeout)
         return self._code

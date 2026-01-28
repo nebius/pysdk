@@ -1,3 +1,5 @@
+"""Constants used throughout the Nebius SDK."""
+
 DOMAIN: str = "api.nebius.cloud:443"
 """Default Nebius API endpoint."""
 DEFAULT_CONFIG_DIR: str = "~/.nebius"

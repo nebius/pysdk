@@ -7,11 +7,8 @@ def is_recursive(msg: Message) -> bool:
     """Returns true only if the message has a field of any level with itself. Messages
     containing recursive ones won't themselves be reported as recursive.
 
-    Args:
-        msg (Message): message to test
-
-    Returns:
-        bool: if the message is recursive
+    :param msg: Message to test
+    :returns: if the message is recursive
     """
     if msg.full_type_name in _cache:
         return _cache[msg.full_type_name]

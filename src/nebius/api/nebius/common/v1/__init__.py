@@ -2632,7 +2632,7 @@ class ResourceEvent(pb_classes.Message):
     @builtins.property
     def message(self) -> "builtins.str":
         """
-        A human-readable message describing what has happened (and suggested actions for the user, if this is a ``WARN``\\ - or ``ERROR``\\ -level event)
+        A human-readable message describing what has happened (and suggested actions for the user, if this is a ``WARN``- or ``ERROR``-level event)
         """
         
         return super()._get_field("message", explicit_presence=False,
@@ -2645,7 +2645,7 @@ class ResourceEvent(pb_classes.Message):
     @builtins.property
     def error(self) -> "request_status.RequestStatus|None":
         """
-        Describes a GRPC error status associated with an ``ERROR``\\ - or ``WARN``\\ -level event, if known. The ``error`` **must** have a standard GRPC ``code`` (which **must not** be ``OK`` (0)) and a human-readable ``message``. A standard ``common.v1.ServiceError`` **should** also be included in ``details``
+        Describes a GRPC error status associated with an ``ERROR``- or ``WARN``-level event, if known. The ``error`` **must** have a standard GRPC ``code`` (which **must not** be ``OK`` (0)) and a human-readable ``message``. A standard ``common.v1.ServiceError`` **should** also be included in ``details``
         """
         
         return super()._get_field("error", explicit_presence=True,

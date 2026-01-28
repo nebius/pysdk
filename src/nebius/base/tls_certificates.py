@@ -1,8 +1,18 @@
+"""System TLS Certificates search module."""
+
 import os
 import platform
 
 
 def get_system_certificates() -> str:
+    """Get the path to the system TLS certificates bundle.
+
+    This function attempts to locate the system's TLS certificate bundle based on
+    the operating system. It supports common paths for Linux, macOS, and Windows.
+
+    :return: Path to the system TLS certificates bundle.
+    :raises RuntimeError: If the system certificate bundle cannot be found.
+    """
     system_cert_path = None
 
     if platform.system() == "Linux":

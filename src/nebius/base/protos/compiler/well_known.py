@@ -1,3 +1,5 @@
+"""Mappings between well-known protobuf types and SDK converters."""
+
 from dataclasses import dataclass
 
 from .pygen import ImportedSymbol
@@ -5,6 +7,16 @@ from .pygen import ImportedSymbol
 
 @dataclass
 class WellKnown:
+    """Descriptor for a well-known protobuf type conversion.
+
+    :ivar proto_name: Fully qualified protobuf type name.
+    :ivar from_func: Function converting from protobuf to Python.
+    :ivar to_func: Function converting from Python to protobuf.
+    :ivar proto_class: Protobuf message class symbol.
+    :ivar python_class: Python runtime class symbol.
+    :ivar mask_func: Function returning a reset mask for the type.
+    """
+
     proto_name: str
     from_func: ImportedSymbol
     to_func: ImportedSymbol
@@ -43,5 +55,7 @@ converter_list = [
         mask_func=ImportedSymbol("status_mask", "nebius.base.protos.well_known"),
     ),
 ]
+"""List of well-known converters used by code generation."""
 
 converter_dict = {k.proto_name: k for k in converter_list}
+"""Lookup table of well-known converters keyed by proto name."""

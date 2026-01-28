@@ -1,3 +1,5 @@
+"""Protobuf compiler entry point for generating Nebius SDK code."""
+
 import argparse
 import logging
 import sys
@@ -15,10 +17,17 @@ log = logging.getLogger("NebiusGenerator")
 
 
 def package_to_path(package: str) -> str:
+    """Convert a package name to an ``__init__.py`` output path.
+
+    :param package: Package name (dot-separated).
+    :returns: File path suitable for the generator output.
+    """
     return "/".join(package.split(".")) + "/__init__.py"
 
 
 class KeyValueAction(argparse.Action):
+    """argparse action for parsing ``key=value`` options into a dict."""
+
     def __call__(
         self,
         parser: argparse.ArgumentParser,
@@ -26,6 +35,7 @@ class KeyValueAction(argparse.Action):
         values: str | Sequence[Any] | None,
         option_string: str | None = None,
     ) -> None:
+        """Store a key/value pair on the argparse namespace."""
         kv_dict: dict[str, str] = getattr(namespace, self.dest, {}) or {}
         try:
             if isinstance(values, str):
@@ -82,6 +92,7 @@ def parse_options(parameter: str) -> argparse.Namespace:
 
 
 def main() -> None:
+    """Generate Nebius SDK code from a protoc request."""
     # Read CodeGeneratorRequest from stdin
     input_data = sys.stdin.buffer.read()
     request = plugin.CodeGeneratorRequest()
@@ -130,7 +141,7 @@ def main() -> None:
         lock.acquire()
         debugpy.listen((parsed_url.hostname, parsed_url.port))  # type: ignore[unused-ignore]
         log.info("Waiting for debugger to attach...")
-        debugpy.wait_for_client()
+        debugpy.wait_for_client()  # type: ignore[unused-ignore]
         log.debug("Debugger attached. Continuing execution...")
 
     for file in file_set.files_generated:

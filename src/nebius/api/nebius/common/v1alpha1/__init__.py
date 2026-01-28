@@ -308,10 +308,6 @@ class Operation(pb_classes.Message):
     @builtins.property
     def resource(self) -> "any_pb2.Any":
         """
-        .. role:: raw-html-m2r(raw)
-           :format: html
-        
-        
         Snapshot of the resource at the moment this operation started.
         
         
@@ -321,7 +317,7 @@ class Operation(pb_classes.Message):
           in a Create operation it will be the spec and metadata *of the resource being created*\\ ,
           and so on.
         * [resource.status] reflects the status of the resource at the moment this operation started.
-          This is a snapshot, call the :raw-html-m2r:`<Resource>`\\ Service/Get to get current status of the resource.
+          This is a snapshot, call the :literal:`<Resource>`\\ Service/Get to get current status of the resource.
         
         The [resource] field MUST never be updated *after* this operation has started.
         
