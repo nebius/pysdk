@@ -1164,7 +1164,7 @@ class AuditEvent(pb_classes.Message):
     @builtins.property
     def type(self) -> "builtins.str":
         """
-        The type of event related to the originating occurrence. Formed according to template: "ai.nebius.\\ :literal:`<serviceName>`.\\ :literal:`<resourceType>`.\\ :literal:`<action>`\\ "
+        The type of event related to the originating occurrence. Formed according to template: ``ai.nebius.<serviceName>.<resourceType>.<action>``
         """
         
         return super()._get_field("type", explicit_presence=False,

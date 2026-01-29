@@ -9,6 +9,7 @@ class StorageClass(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     STORAGE_CLASS_UNSPECIFIED: _ClassVar[StorageClass]
     STANDARD: _ClassVar[StorageClass]
     ENHANCED_THROUGHPUT: _ClassVar[StorageClass]
+    INTELLIGENT_TIERING: _ClassVar[StorageClass]
 
 class VersioningPolicy(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
@@ -19,6 +20,7 @@ class VersioningPolicy(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
 STORAGE_CLASS_UNSPECIFIED: StorageClass
 STANDARD: StorageClass
 ENHANCED_THROUGHPUT: StorageClass
+INTELLIGENT_TIERING: StorageClass
 VERSIONING_POLICY_UNSPECIFIED: VersioningPolicy
 DISABLED: VersioningPolicy
 ENABLED: VersioningPolicy

@@ -509,7 +509,7 @@ class ControlPlaneStatus(pb_classes.Message):
         """
         Actual Kubernetes and configuration version.
         Version have format ``<major>.<minor>.<patch>-nebius-cp.<infra_version>`` like "1.30.0-nebius-cp.3".
-        Where :literal:`<major>`.\\ :literal:`<minor>`.\\ :literal:`<patch>` is Kubernetes version and :literal:`<infra_version>` is version of control plane infrastructure and configuration,
+        Where ``<major>.<minor>.<patch>`` is Kubernetes version and ``<infra_version>`` is version of control plane infrastructure and configuration,
         which update may include bug fixes, security updates and new features of components running on control plane, like CCM or Cluster Autoscaler.
         """
         
@@ -1717,7 +1717,7 @@ class NodeGroupSpec(pb_classes.Message):
         """
         Version is desired Kubernetes version of the cluster. For now only acceptable format is
         ``<major>.<minor>`` like "1.31". Option for patch version update will be added later.
-        By default the cluster control plane :literal:`<major>`.\\ :literal:`<minor>` version will be used.
+        By default the cluster control plane ``<major>.<minor>`` version will be used.
         """
         
         return super()._get_field("version", explicit_presence=False,
@@ -2716,7 +2716,10 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
         Defaults to 1.
         Example: If set to 25%, the node group can scale up by an additional 25% during the update,
         allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
-        NOTE: it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
+        
+        NOTE:
+        
+          it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
           Available quota effectively limits ``max_surge``.
           In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
           Such error will be visible in Operation.progress_data.
@@ -3193,7 +3196,7 @@ class NodeGroupStatus(pb_classes.Message):
     def version(self) -> "builtins.str":
         """
         Actual version of NodeGroup. Have format ``<major>.<minor>.<patch>-nebius-node.<infra_version>`` like "1.30.0-nebius-node.10".
-        Where :literal:`<major>`.\\ :literal:`<minor>`.\\ :literal:`<patch>` is Kubernetes version and :literal:`<infra_version>` is version of Node infrastructure and configuration,
+        Where ``<major>.<minor>.<patch>`` is Kubernetes version and ``<infra_version>`` is version of Node infrastructure and configuration,
         which update may include bug fixes, security updates and new features depending on worker node configuration.
         """
         

@@ -40,6 +40,7 @@ class StorageClass(pb_enum.Enum):
     STORAGE_CLASS_UNSPECIFIED = 0
     STANDARD = 1
     ENHANCED_THROUGHPUT = 2
+    INTELLIGENT_TIERING = 3
 
 class VersioningPolicy(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.VersioningPolicy",base_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
