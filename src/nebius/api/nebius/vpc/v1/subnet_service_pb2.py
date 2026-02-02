@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.vpc.v1 import subnet_pb2 as nebius_dot_vpc_dot_v1_dot_subnet__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/vpc/v1/subnet_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1anebius/vpc/v1/subnet.proto\"*\n\x10GetSubnetRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Y\n\x16GetSubnetByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"u\n\x12ListSubnetsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x80\x01\n\x1bListSubnetsByNetworkRequest\x12%\n\nnetwork_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"j\n\x13ListSubnetsResponse\x12+\n\x05items\x18\x01 \x03(\x0b\x32\x15.nebius.vpc.v1.SubnetR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xd9\x02\n\x13\x43reateSubnetRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\x12\x35\n\x04spec\x18\x02 \x01(\x0b\x32\x19.nebius.vpc.v1.SubnetSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xce\x02\n\x13UpdateSubnetRequest\x12\x87\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc6\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')R\x08metadata\x12-\n\x04spec\x18\x02 \x01(\x0b\x32\x19.nebius.vpc.v1.SubnetSpecR\x04spec\"%\n\x13\x44\x65leteSubnetRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id2\xb2\x04\n\rSubnetService\x12=\n\x03Get\x12\x1f.nebius.vpc.v1.GetSubnetRequest\x1a\x15.nebius.vpc.v1.Subnet\x12I\n\tGetByName\x12%.nebius.vpc.v1.GetSubnetByNameRequest\x1a\x15.nebius.vpc.v1.Subnet\x12M\n\x04List\x12!.nebius.vpc.v1.ListSubnetsRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12_\n\rListByNetwork\x12*.nebius.vpc.v1.ListSubnetsByNetworkRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12I\n\x06\x43reate\x12\".nebius.vpc.v1.CreateSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06Update\x12\".nebius.vpc.v1.UpdateSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06\x44\x65lete\x12\".nebius.vpc.v1.DeleteSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBY\n\x14\x61i.nebius.pub.vpc.v1B\x12SubnetServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/vpc/v1/subnet_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1anebius/vpc/v1/subnet.proto\"*\n\x10GetSubnetRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Y\n\x16GetSubnetByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"u\n\x12ListSubnetsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8f\x01\n\x1bListSubnetsByNetworkRequest\x12\x34\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"j\n\x13ListSubnetsResponse\x12+\n\x05items\x18\x01 \x03(\x0b\x32\x15.nebius.vpc.v1.SubnetR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xd9\x02\n\x13\x43reateSubnetRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\x12\x35\n\x04spec\x18\x02 \x01(\x0b\x32\x19.nebius.vpc.v1.SubnetSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xce\x02\n\x13UpdateSubnetRequest\x12\x87\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc6\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')R\x08metadata\x12-\n\x04spec\x18\x02 \x01(\x0b\x32\x19.nebius.vpc.v1.SubnetSpecR\x04spec\"%\n\x13\x44\x65leteSubnetRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id2\xb2\x04\n\rSubnetService\x12=\n\x03Get\x12\x1f.nebius.vpc.v1.GetSubnetRequest\x1a\x15.nebius.vpc.v1.Subnet\x12I\n\tGetByName\x12%.nebius.vpc.v1.GetSubnetByNameRequest\x1a\x15.nebius.vpc.v1.Subnet\x12M\n\x04List\x12!.nebius.vpc.v1.ListSubnetsRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12_\n\rListByNetwork\x12*.nebius.vpc.v1.ListSubnetsByNetworkRequest\x1a\".nebius.vpc.v1.ListSubnetsResponse\x12I\n\x06\x43reate\x12\".nebius.vpc.v1.CreateSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06Update\x12\".nebius.vpc.v1.UpdateSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06\x44\x65lete\x12\".nebius.vpc.v1.DeleteSubnetRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBY\n\x14\x61i.nebius.pub.vpc.v1B\x12SubnetServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -36,7 +36,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _LISTSUBNETSREQUEST.fields_by_name['parent_id']._options = None
   _LISTSUBNETSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
   _LISTSUBNETSBYNETWORKREQUEST.fields_by_name['network_id']._options = None
-  _LISTSUBNETSBYNETWORKREQUEST.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTSUBNETSBYNETWORKREQUEST.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001\342J\014\n\nvpcnetwork'
   _CREATESUBNETREQUEST.fields_by_name['metadata']._options = None
   _CREATESUBNETREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001'
   _CREATESUBNETREQUEST.fields_by_name['spec']._options = None
@@ -52,15 +52,15 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_LISTSUBNETSREQUEST']._serialized_start=338
   _globals['_LISTSUBNETSREQUEST']._serialized_end=455
   _globals['_LISTSUBNETSBYNETWORKREQUEST']._serialized_start=458
-  _globals['_LISTSUBNETSBYNETWORKREQUEST']._serialized_end=586
-  _globals['_LISTSUBNETSRESPONSE']._serialized_start=588
-  _globals['_LISTSUBNETSRESPONSE']._serialized_end=694
-  _globals['_CREATESUBNETREQUEST']._serialized_start=697
-  _globals['_CREATESUBNETREQUEST']._serialized_end=1042
-  _globals['_UPDATESUBNETREQUEST']._serialized_start=1045
-  _globals['_UPDATESUBNETREQUEST']._serialized_end=1379
-  _globals['_DELETESUBNETREQUEST']._serialized_start=1381
-  _globals['_DELETESUBNETREQUEST']._serialized_end=1418
-  _globals['_SUBNETSERVICE']._serialized_start=1421
-  _globals['_SUBNETSERVICE']._serialized_end=1983
+  _globals['_LISTSUBNETSBYNETWORKREQUEST']._serialized_end=601
+  _globals['_LISTSUBNETSRESPONSE']._serialized_start=603
+  _globals['_LISTSUBNETSRESPONSE']._serialized_end=709
+  _globals['_CREATESUBNETREQUEST']._serialized_start=712
+  _globals['_CREATESUBNETREQUEST']._serialized_end=1057
+  _globals['_UPDATESUBNETREQUEST']._serialized_start=1060
+  _globals['_UPDATESUBNETREQUEST']._serialized_end=1394
+  _globals['_DELETESUBNETREQUEST']._serialized_start=1396
+  _globals['_DELETESUBNETREQUEST']._serialized_end=1433
+  _globals['_SUBNETSERVICE']._serialized_start=1436
+  _globals['_SUBNETSERVICE']._serialized_end=1998
 # @@protoc_insertion_point(module_scope)

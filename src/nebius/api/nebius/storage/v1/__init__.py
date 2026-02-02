@@ -22,6 +22,7 @@ import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.storage.v1.base_pb2 as base_pb2
 import nebius.api.nebius.storage.v1.bucket_counters_pb2 as bucket_counters_pb2
 import nebius.api.nebius.storage.v1.bucket_pb2 as bucket_pb2
+import nebius.api.nebius.storage.v1.bucket_policy_pb2 as bucket_policy_pb2
 import nebius.api.nebius.storage.v1.bucket_service_pb2 as bucket_service_pb2
 import nebius.api.nebius.storage.v1.lifecycle_pb2 as lifecycle_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
@@ -311,6 +312,217 @@ class BucketCounters(pb_classes.Message):
         "storage_class":"storage_class",
         "counters":"counters",
         "non_current_counters":"non_current_counters",
+    }
+    
+# file: nebius/storage/v1/bucket_policy.proto
+class BucketPolicy(pb_classes.Message):
+    """
+    Bucket policy specifies granular permissions for a bucket.
+    """
+    
+    __PB2_CLASS__ = bucket_policy_pb2.BucketPolicy
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketPolicy",bucket_policy_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class Rule(pb_classes.Message):
+        __PB2_CLASS__ = bucket_policy_pb2.BucketPolicy.Rule
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketPolicy.Rule",bucket_policy_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        class AnonymousAccess(pb_classes.Message):
+            __PB2_CLASS__ = bucket_policy_pb2.BucketPolicy.Rule.AnonymousAccess
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.BucketPolicy.Rule.AnonymousAccess",bucket_policy_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+            __mask_functions__ = {
+            }
+            
+            def __init__(
+                self,
+                initial_message: message_1.Message|None = None,
+            ) -> None:
+                super().__init__(initial_message)
+            
+            def __dir__(self) ->abc.Iterable[builtins.str]:
+                return [
+                ]
+            
+            __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            }
+            
+        
+        class __OneOfClass_subject__(pb_classes.OneOf):
+            name: builtins.str= "subject"
+            
+            def __init__(self, msg: "BucketPolicy.Rule") -> None:
+                super().__init__()
+                self._message: "BucketPolicy.Rule" = msg
+        
+        class __OneOfClass_subject_group_id__(__OneOfClass_subject__):
+            field: typing.Literal["group_id"] = "group_id"
+            
+            def __init__(self, msg: "BucketPolicy.Rule") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "builtins.str":
+                return self._message.group_id
+        
+        class __OneOfClass_subject_anonymous__(__OneOfClass_subject__):
+            field: typing.Literal["anonymous"] = "anonymous"
+            
+            def __init__(self, msg: "BucketPolicy.Rule") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "BucketPolicy.Rule.AnonymousAccess":
+                return self._message.anonymous
+        
+        @builtins.property
+        def subject(self) -> __OneOfClass_subject_group_id__|__OneOfClass_subject_anonymous__|None:
+            """
+            A subject of a rule.
+            """
+            
+            field_name_1: str|None = super().which_field_in_oneof("subject")
+            match field_name_1:
+                case "group_id":
+                    return self.__OneOfClass_subject_group_id__(self)
+                case "anonymous":
+                    return self.__OneOfClass_subject_anonymous__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            paths: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+            roles: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+            group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            anonymous: "BucketPolicy.Rule.AnonymousAccess|bucket_policy_pb2.BucketPolicy.Rule.AnonymousAccess|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(paths, unset.UnsetType):
+                self.paths = paths
+            if not isinstance(roles, unset.UnsetType):
+                self.roles = roles
+            if not isinstance(group_id, unset.UnsetType):
+                self.group_id = group_id
+            if not isinstance(anonymous, unset.UnsetType):
+                self.anonymous = anonymous
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "paths",
+                "roles",
+                "group_id",
+                "anonymous",
+                "AnonymousAccess",
+                "subject",
+            ]
+        
+        @builtins.property
+        def paths(self) -> "abc.MutableSequence[builtins.str]":
+            """
+            A list of paths each of which is either a full object key or a prefix ending with a
+            single "\\ *" wildcard character. A rule is only applied to objects matching any of paths.
+            If there is a path equal to "*\\ ", a rule applies to a whole bucket.
+            """
+            
+            return super()._get_field("paths", explicit_presence=False,
+            wrap=pb_classes.Repeated,
+            )
+        @paths.setter
+        def paths(self, value: "abc.Iterable[builtins.str]|None") -> None:
+            return super()._set_field("paths",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def roles(self) -> "abc.MutableSequence[builtins.str]":
+            """
+            A set of roles which a subject will have. All ``storage.*`` roles are supported.
+            """
+            
+            return super()._get_field("roles", explicit_presence=False,
+            wrap=pb_classes.Repeated,
+            )
+        @roles.setter
+        def roles(self, value: "abc.Iterable[builtins.str]|None") -> None:
+            return super()._set_field("roles",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def group_id(self) -> "builtins.str|None":
+            """
+            Group ID to grant access to.
+            """
+            
+            return super()._get_field("group_id", explicit_presence=True,
+            )
+        @group_id.setter
+        def group_id(self, value: "builtins.str|None") -> None:
+            return super()._set_field("group_id",value,explicit_presence=True,
+            )
+        
+        @builtins.property
+        def anonymous(self) -> "BucketPolicy.Rule.AnonymousAccess|None":
+            """
+            Enable anonymous access. Only read-only roles are allowed in anonymous mode.
+            """
+            
+            return super()._get_field("anonymous", explicit_presence=True,
+            wrap=BucketPolicy.Rule.AnonymousAccess,
+            )
+        @anonymous.setter
+        def anonymous(self, value: "BucketPolicy.Rule.AnonymousAccess|bucket_policy_pb2.BucketPolicy.Rule.AnonymousAccess|None") -> None:
+            return super()._set_field("anonymous",value,explicit_presence=True,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "paths":"paths",
+            "roles":"roles",
+            "group_id":"group_id",
+            "anonymous":"anonymous",
+            "AnonymousAccess":"AnonymousAccess",
+            "subject":"subject",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        rules: "abc.Iterable[BucketPolicy.Rule]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(rules, unset.UnsetType):
+            self.rules = rules
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "rules",
+            "Rule",
+        ]
+    
+    @builtins.property
+    def rules(self) -> "abc.MutableSequence[BucketPolicy.Rule]":
+        """
+        Rule specifies which role must be given to a subject to access a set of objects with given
+        prefixes or a whole bucket.
+        """
+        
+        return super()._get_field("rules", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(BucketPolicy.Rule,None,None),
+        )
+    @rules.setter
+    def rules(self, value: "abc.Iterable[BucketPolicy.Rule]|None") -> None:
+        return super()._set_field("rules",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "rules":"rules",
+        "Rule":"Rule",
     }
     
 # file: nebius/storage/v1/lifecycle.proto
@@ -1404,6 +1616,7 @@ class BucketSpec(pb_classes.Message):
         override_storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
         force_storage_class: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         object_audit_logging: "BucketSpec.ObjectAuditLogging|bucket_pb2.BucketSpec.ObjectAuditLogging|None|unset.UnsetType" = unset.Unset,
+        bucket_policy: "BucketPolicy|bucket_policy_pb2.BucketPolicy|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(versioning_policy, unset.UnsetType):
@@ -1420,6 +1633,8 @@ class BucketSpec(pb_classes.Message):
             self.force_storage_class = force_storage_class
         if not isinstance(object_audit_logging, unset.UnsetType):
             self.object_audit_logging = object_audit_logging
+        if not isinstance(bucket_policy, unset.UnsetType):
+            self.bucket_policy = bucket_policy
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1430,6 +1645,7 @@ class BucketSpec(pb_classes.Message):
             "override_storage_class",
             "force_storage_class",
             "object_audit_logging",
+            "bucket_policy",
             "ObjectAuditLogging",
         ]
     
@@ -1546,6 +1762,20 @@ class BucketSpec(pb_classes.Message):
         return super()._set_field("object_audit_logging",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def bucket_policy(self) -> "BucketPolicy":
+        """
+        Bucket policy specifies granular permissions for a bucket.
+        """
+        
+        return super()._get_field("bucket_policy", explicit_presence=False,
+        wrap=BucketPolicy,
+        )
+    @bucket_policy.setter
+    def bucket_policy(self, value: "BucketPolicy|bucket_policy_pb2.BucketPolicy|None") -> None:
+        return super()._set_field("bucket_policy",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "versioning_policy":"versioning_policy",
         "max_size_bytes":"max_size_bytes",
@@ -1554,6 +1784,7 @@ class BucketSpec(pb_classes.Message):
         "override_storage_class":"override_storage_class",
         "force_storage_class":"force_storage_class",
         "object_audit_logging":"object_audit_logging",
+        "bucket_policy":"bucket_policy",
         "ObjectAuditLogging":"ObjectAuditLogging",
     }
     
@@ -2514,6 +2745,7 @@ __all__ = [
     "CurrentBucketCounters",
     "NonCurrentBucketCounters",
     "BucketCounters",
+    "BucketPolicy",
     "LifecycleConfiguration",
     "LifecycleRule",
     "LifecycleFilter",
