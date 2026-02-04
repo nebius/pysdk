@@ -5,6 +5,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.storage.v1 import base_pb2 as _base_pb2
 from nebius.api.nebius.storage.v1 import bucket_counters_pb2 as _bucket_counters_pb2
 from nebius.api.nebius.storage.v1 import bucket_policy_pb2 as _bucket_policy_pb2
+from nebius.api.nebius.storage.v1 import cors_pb2 as _cors_pb2
 from nebius.api.nebius.storage.v1 import lifecycle_pb2 as _lifecycle_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
@@ -25,7 +26,7 @@ class Bucket(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[BucketSpec, _Mapping]] = ..., status: _Optional[_Union[BucketStatus, _Mapping]] = ...) -> None: ...
 
 class BucketSpec(_message.Message):
-    __slots__ = ["versioning_policy", "max_size_bytes", "lifecycle_configuration", "default_storage_class", "override_storage_class", "force_storage_class", "object_audit_logging", "bucket_policy"]
+    __slots__ = ["versioning_policy", "max_size_bytes", "lifecycle_configuration", "cors", "default_storage_class", "override_storage_class", "force_storage_class", "object_audit_logging", "bucket_policy"]
     class ObjectAuditLogging(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         OBJECT_AUDIT_LOGGING_UNSPECIFIED: _ClassVar[BucketSpec.ObjectAuditLogging]
@@ -39,6 +40,7 @@ class BucketSpec(_message.Message):
     VERSIONING_POLICY_FIELD_NUMBER: _ClassVar[int]
     MAX_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     LIFECYCLE_CONFIGURATION_FIELD_NUMBER: _ClassVar[int]
+    CORS_FIELD_NUMBER: _ClassVar[int]
     DEFAULT_STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
     OVERRIDE_STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
     FORCE_STORAGE_CLASS_FIELD_NUMBER: _ClassVar[int]
@@ -47,12 +49,13 @@ class BucketSpec(_message.Message):
     versioning_policy: _base_pb2.VersioningPolicy
     max_size_bytes: int
     lifecycle_configuration: _lifecycle_pb2.LifecycleConfiguration
+    cors: _cors_pb2.CORSConfiguration
     default_storage_class: _base_pb2.StorageClass
     override_storage_class: _base_pb2.StorageClass
     force_storage_class: bool
     object_audit_logging: BucketSpec.ObjectAuditLogging
     bucket_policy: _bucket_policy_pb2.BucketPolicy
-    def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ..., default_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., override_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., force_storage_class: bool = ..., object_audit_logging: _Optional[_Union[BucketSpec.ObjectAuditLogging, str]] = ..., bucket_policy: _Optional[_Union[_bucket_policy_pb2.BucketPolicy, _Mapping]] = ...) -> None: ...
+    def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ..., cors: _Optional[_Union[_cors_pb2.CORSConfiguration, _Mapping]] = ..., default_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., override_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., force_storage_class: bool = ..., object_audit_logging: _Optional[_Union[BucketSpec.ObjectAuditLogging, str]] = ..., bucket_policy: _Optional[_Union[_bucket_policy_pb2.BucketPolicy, _Mapping]] = ...) -> None: ...
 
 class BucketStatus(_message.Message):
     __slots__ = ["counters", "state", "suspension_state", "deleted_at", "purge_at", "domain_name", "region"]

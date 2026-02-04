@@ -1001,6 +1001,91 @@ class ListCapacityBlockGroupsResponse(pb_classes.Message):
         "next_page_token":"next_page_token",
     }
     
+class ListCapacityBlockGroupResourcesRequest(pb_classes.Message):
+    """
+    List reservations instances in a Capacity Block Group by its ID.
+    """
+    
+    __PB2_CLASS__ = capacity_block_group_service_pb2.ListCapacityBlockGroupResourcesRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ListCapacityBlockGroupResourcesRequest",capacity_block_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of a Capacity Block Group.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListCapacityBlockGroupResourcesResponse(pb_classes.Message):
+    """
+    All VM instances' IDs that occupy the Capacity Block Group.
+    """
+    
+    __PB2_CLASS__ = capacity_block_group_service_pb2.ListCapacityBlockGroupResourcesResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ListCapacityBlockGroupResourcesResponse",capacity_block_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        resource_ids: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(resource_ids, unset.UnsetType):
+            self.resource_ids = resource_ids
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "resource_ids",
+        ]
+    
+    @builtins.property
+    def resource_ids(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        List of instances' IDs.
+        """
+        
+        return super()._get_field("resource_ids", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @resource_ids.setter
+    def resource_ids(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("resource_ids",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "resource_ids":"resource_ids",
+    }
+    
 
 class CapacityBlockGroupServiceClient(client.Client):
     """
@@ -1107,6 +1192,35 @@ class CapacityBlockGroupServiceClient(client.Client):
             request=request,
             result_pb2_class=capacity_block_group_service_pb2.ListCapacityBlockGroupsResponse,
             result_wrapper=pb_classes.simple_wrapper(ListCapacityBlockGroupsResponse),
+            **kwargs,
+        )
+    
+    def list_resources(self,
+        request: "ListCapacityBlockGroupResourcesRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request.Request["ListCapacityBlockGroupResourcesRequest","ListCapacityBlockGroupResourcesResponse"]:
+        """
+        List virtual machines instances' IDs that occupy a Capacity Block Group by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.ListCapacityBlockGroupResourcesRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.capacity.v1.ListCapacityBlockGroupResourcesResponse`.
+        """
+        
+        return super().request(
+            method="ListResources",
+            request=request,
+            result_pb2_class=capacity_block_group_service_pb2.ListCapacityBlockGroupResourcesResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListCapacityBlockGroupResourcesResponse),
             **kwargs,
         )
     
@@ -1696,6 +1810,8 @@ __all__ = [
     "GetCapacityBlockGroupByResourceAffinityRequest",
     "ListCapacityBlockGroupsRequest",
     "ListCapacityBlockGroupsResponse",
+    "ListCapacityBlockGroupResourcesRequest",
+    "ListCapacityBlockGroupResourcesResponse",
     "CapacityBlockGroupServiceClient",
     "CapacityIntervalSpec",
     "CapacityIntervalStatus",

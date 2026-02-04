@@ -42,3 +42,15 @@ class ListCapacityBlockGroupsResponse(_message.Message):
     items: _containers.RepeatedCompositeFieldContainer[_capacity_block_group_pb2.CapacityBlockGroup]
     next_page_token: str
     def __init__(self, items: _Optional[_Iterable[_Union[_capacity_block_group_pb2.CapacityBlockGroup, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
+
+class ListCapacityBlockGroupResourcesRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class ListCapacityBlockGroupResourcesResponse(_message.Message):
+    __slots__ = ["resource_ids"]
+    RESOURCE_IDS_FIELD_NUMBER: _ClassVar[int]
+    resource_ids: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, resource_ids: _Optional[_Iterable[str]] = ...) -> None: ...

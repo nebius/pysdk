@@ -24,6 +24,7 @@ import nebius.api.nebius.storage.v1.bucket_counters_pb2 as bucket_counters_pb2
 import nebius.api.nebius.storage.v1.bucket_pb2 as bucket_pb2
 import nebius.api.nebius.storage.v1.bucket_policy_pb2 as bucket_policy_pb2
 import nebius.api.nebius.storage.v1.bucket_service_pb2 as bucket_service_pb2
+import nebius.api.nebius.storage.v1.cors_pb2 as cors_pb2
 import nebius.api.nebius.storage.v1.lifecycle_pb2 as lifecycle_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.base.protos.descriptor as descriptor
@@ -523,6 +524,240 @@ class BucketPolicy(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "rules":"rules",
         "Rule":"Rule",
+    }
+    
+# file: nebius/storage/v1/cors.proto
+class CORSConfiguration(pb_classes.Message):
+    """
+    Cross-origin resource sharing (CORS) configuration.
+    """
+    
+    __PB2_CLASS__ = cors_pb2.CORSConfiguration
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CORSConfiguration",cors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        rules: "abc.Iterable[CORSRule]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(rules, unset.UnsetType):
+            self.rules = rules
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "rules",
+        ]
+    
+    @builtins.property
+    def rules(self) -> "abc.MutableSequence[CORSRule]":
+        """
+        CORS rules.
+        """
+        
+        return super()._get_field("rules", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(CORSRule,None,None),
+        )
+    @rules.setter
+    def rules(self, value: "abc.Iterable[CORSRule]|None") -> None:
+        return super()._set_field("rules",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "rules":"rules",
+    }
+    
+class CORSRule(pb_classes.Message):
+    __PB2_CLASS__ = cors_pb2.CORSRule
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CORSRule",cors_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass__id__(pb_classes.OneOf):
+        name: builtins.str= "_id"
+        
+        def __init__(self, msg: "CORSRule") -> None:
+            super().__init__()
+            self._message: "CORSRule" = msg
+    
+    class __OneOfClass__id_id__(__OneOfClass__id__):
+        field: typing.Literal["id"] = "id"
+        
+        def __init__(self, msg: "CORSRule") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.id
+    
+    @builtins.property
+    def _id(self) -> __OneOfClass__id_id__|None:
+        field_name_1: str|None = super().which_field_in_oneof("_id")
+        match field_name_1:
+            case "id":
+                return self.__OneOfClass__id_id__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    class __OneOfClass__max_age_seconds__(pb_classes.OneOf):
+        name: builtins.str= "_max_age_seconds"
+        
+        def __init__(self, msg: "CORSRule") -> None:
+            super().__init__()
+            self._message: "CORSRule" = msg
+    
+    class __OneOfClass__max_age_seconds_max_age_seconds__(__OneOfClass__max_age_seconds__):
+        field: typing.Literal["max_age_seconds"] = "max_age_seconds"
+        
+        def __init__(self, msg: "CORSRule") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.max_age_seconds
+    
+    @builtins.property
+    def _max_age_seconds(self) -> __OneOfClass__max_age_seconds_max_age_seconds__|None:
+        field_name_1: str|None = super().which_field_in_oneof("_max_age_seconds")
+        match field_name_1:
+            case "max_age_seconds":
+                return self.__OneOfClass__max_age_seconds_max_age_seconds__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        allowed_headers: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        allowed_origins: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        allowed_methods: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        expose_headers: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        max_age_seconds: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(allowed_headers, unset.UnsetType):
+            self.allowed_headers = allowed_headers
+        if not isinstance(allowed_origins, unset.UnsetType):
+            self.allowed_origins = allowed_origins
+        if not isinstance(allowed_methods, unset.UnsetType):
+            self.allowed_methods = allowed_methods
+        if not isinstance(expose_headers, unset.UnsetType):
+            self.expose_headers = expose_headers
+        if not isinstance(max_age_seconds, unset.UnsetType):
+            self.max_age_seconds = max_age_seconds
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "allowed_headers",
+            "allowed_origins",
+            "allowed_methods",
+            "expose_headers",
+            "max_age_seconds",
+            "_id",
+            "_max_age_seconds",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str|None":
+        """
+        Optional rule identifier.
+        """
+        
+        return super()._get_field("id", explicit_presence=True,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def allowed_headers(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        Headers that are allowed in a preflight request through the Access-Control-Request-Headers header
+        """
+        
+        return super()._get_field("allowed_headers", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @allowed_headers.setter
+    def allowed_headers(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("allowed_headers",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def allowed_origins(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        The origins that you want to allow cross-domain requests from. Single wildcard * is allowed.
+        """
+        
+        return super()._get_field("allowed_origins", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @allowed_origins.setter
+    def allowed_origins(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("allowed_origins",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def allowed_methods(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        HTTP methods CORS is allowed for: GET, PUT, POST, DELETE, HEAD.
+        """
+        
+        return super()._get_field("allowed_methods", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @allowed_methods.setter
+    def allowed_methods(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("allowed_methods",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def expose_headers(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        Headers in the response that you want customers to be able to access from their applications.
+        """
+        
+        return super()._get_field("expose_headers", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @expose_headers.setter
+    def expose_headers(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("expose_headers",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def max_age_seconds(self) -> "builtins.int|None":
+        """
+        Time in seconds that your browser can cache the response for a preflight request as identified by the resource.
+        """
+        
+        return super()._get_field("max_age_seconds", explicit_presence=True,
+        )
+    @max_age_seconds.setter
+    def max_age_seconds(self, value: "builtins.int|None") -> None:
+        return super()._set_field("max_age_seconds",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "allowed_headers":"allowed_headers",
+        "allowed_origins":"allowed_origins",
+        "allowed_methods":"allowed_methods",
+        "expose_headers":"expose_headers",
+        "max_age_seconds":"max_age_seconds",
+        "_id":"_id",
+        "_max_age_seconds":"_max_age_seconds",
     }
     
 # file: nebius/storage/v1/lifecycle.proto
@@ -1612,6 +1847,7 @@ class BucketSpec(pb_classes.Message):
         versioning_policy: "VersioningPolicy|base_pb2.VersioningPolicy|None|unset.UnsetType" = unset.Unset,
         max_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         lifecycle_configuration: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|None|unset.UnsetType" = unset.Unset,
+        cors: "CORSConfiguration|cors_pb2.CORSConfiguration|None|unset.UnsetType" = unset.Unset,
         default_storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
         override_storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
         force_storage_class: "builtins.bool|None|unset.UnsetType" = unset.Unset,
@@ -1625,6 +1861,8 @@ class BucketSpec(pb_classes.Message):
             self.max_size_bytes = max_size_bytes
         if not isinstance(lifecycle_configuration, unset.UnsetType):
             self.lifecycle_configuration = lifecycle_configuration
+        if not isinstance(cors, unset.UnsetType):
+            self.cors = cors
         if not isinstance(default_storage_class, unset.UnsetType):
             self.default_storage_class = default_storage_class
         if not isinstance(override_storage_class, unset.UnsetType):
@@ -1641,6 +1879,7 @@ class BucketSpec(pb_classes.Message):
             "versioning_policy",
             "max_size_bytes",
             "lifecycle_configuration",
+            "cors",
             "default_storage_class",
             "override_storage_class",
             "force_storage_class",
@@ -1692,6 +1931,20 @@ class BucketSpec(pb_classes.Message):
     @lifecycle_configuration.setter
     def lifecycle_configuration(self, value: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|None") -> None:
         return super()._set_field("lifecycle_configuration",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def cors(self) -> "CORSConfiguration":
+        """
+        Cross-origin resource sharing configuration.
+        """
+        
+        return super()._get_field("cors", explicit_presence=False,
+        wrap=CORSConfiguration,
+        )
+    @cors.setter
+    def cors(self, value: "CORSConfiguration|cors_pb2.CORSConfiguration|None") -> None:
+        return super()._set_field("cors",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -1780,6 +2033,7 @@ class BucketSpec(pb_classes.Message):
         "versioning_policy":"versioning_policy",
         "max_size_bytes":"max_size_bytes",
         "lifecycle_configuration":"lifecycle_configuration",
+        "cors":"cors",
         "default_storage_class":"default_storage_class",
         "override_storage_class":"override_storage_class",
         "force_storage_class":"force_storage_class",
@@ -2746,6 +3000,8 @@ __all__ = [
     "NonCurrentBucketCounters",
     "BucketCounters",
     "BucketPolicy",
+    "CORSConfiguration",
+    "CORSRule",
     "LifecycleConfiguration",
     "LifecycleRule",
     "LifecycleFilter",

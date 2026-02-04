@@ -31,6 +31,11 @@ class CapacityBlockGroupServiceStub(object):
                 request_serializer=nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupsRequest.SerializeToString,
                 response_deserializer=nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupsResponse.FromString,
                 )
+        self.ListResources = channel.unary_unary(
+                '/nebius.capacity.v1.CapacityBlockGroupService/ListResources',
+                request_serializer=nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupResourcesRequest.SerializeToString,
+                response_deserializer=nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupResourcesResponse.FromString,
+                )
 
 
 class CapacityBlockGroupServiceServicer(object):
@@ -58,6 +63,13 @@ class CapacityBlockGroupServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListResources(self, request, context):
+        """List virtual machines instances' IDs that occupy a Capacity Block Group by its ID.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_CapacityBlockGroupServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -75,6 +87,11 @@ def add_CapacityBlockGroupServiceServicer_to_server(servicer, server):
                     servicer.List,
                     request_deserializer=nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupsRequest.FromString,
                     response_serializer=nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupsResponse.SerializeToString,
+            ),
+            'ListResources': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListResources,
+                    request_deserializer=nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupResourcesRequest.FromString,
+                    response_serializer=nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupResourcesResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -135,5 +152,22 @@ class CapacityBlockGroupService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.capacity.v1.CapacityBlockGroupService/List',
             nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupsRequest.SerializeToString,
             nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListResources(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.capacity.v1.CapacityBlockGroupService/ListResources',
+            nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupResourcesRequest.SerializeToString,
+            nebius_dot_capacity_dot_v1_dot_capacity__block__group__service__pb2.ListCapacityBlockGroupResourcesResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

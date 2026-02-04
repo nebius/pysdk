@@ -93,8 +93,7 @@ class FederationServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Activate(self, request, context):
-        """*
-        Activates an existing federation.
+        """Activates an existing federation.
         By default, a newly created federation is in the active state.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -102,8 +101,7 @@ class FederationServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Deactivate(self, request, context):
-        """*
-        Deactivates an existing federation.
+        """Deactivates an existing federation.
         When a federation is inactive, all users under it will be unable to authenticate.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)

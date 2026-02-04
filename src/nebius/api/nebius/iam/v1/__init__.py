@@ -3404,7 +3404,6 @@ class OidcCredentialsProvider(pb_classes.Message):
     @builtins.property
     def issuer_url(self) -> "builtins.str":
         """
-        *
         It's not required provider OIDC issuer should be real OIDC provider, but should expose OIDC configuration
         with "/.well-known/openid-configuration" endpoint. Configuration should contains the "jwks_uri" endpoint
         where the JSON Web Key Set (JWKS) can be found; this set contains public keys used to verify
@@ -3428,7 +3427,6 @@ class OidcCredentialsProvider(pb_classes.Message):
     @builtins.property
     def jwk_set_json(self) -> "builtins.str":
         """
-        *
         Literally json, which represents JWKS with public keys for JWT verification.
         It worth mentioned that in a case of adding/rotating keys the jwk_set_json also should be updated here.
         Besides, the "issuer" parameter should be set even if the JWKS will be resolved locally.
@@ -5649,7 +5647,6 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["ActivateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         """
-        *
         Activates an existing federation.
         By default, a newly created federation is in the active state.
         
@@ -5680,7 +5677,6 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["DeactivateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         """
-        *
         Deactivates an existing federation.
         When a federation is inactive, all users under it will be unable to authenticate.
         

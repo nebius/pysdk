@@ -480,6 +480,11 @@ class DiskStatus(pb_classes.Message):
         
         @builtins.property
         def images(self) -> "abc.MutableSequence[builtins.str]":
+            """
+            Disk is locked for deletion and for read-write operations while image is being created.
+            Here is the list of these images.
+            """
+            
             return super()._get_field("images", explicit_presence=False,
             wrap=pb_classes.Repeated,
             )
