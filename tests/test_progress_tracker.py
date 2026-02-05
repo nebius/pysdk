@@ -265,3 +265,29 @@ async def test_operation_progress_tracker_updates() -> None:
         if channel is not None:
             await channel.close()
         await srv.stop(0)
+
+
+@pytest.mark.asyncio
+async def test_operation_progress_tracker_mlflow_cluster_operation() -> None:
+    import nebius.api.nebius.common.v1alpha1.operation_pb2 as operation_pb2
+    from nebius.aio.channel import Channel, NoCredentials
+    from nebius.aio.operation import Operation
+    from nebius.base.options import INSECURE
+
+    channel = None
+    try:
+        channel = Channel(
+            domain="localhost",
+            options=[(INSECURE, True)],
+            credentials=NoCredentials(),
+        )
+        op = operation_pb2.Operation(id="mlflow-op-1")
+        operation = Operation(
+            ".nebius.msp.mlflow.v1alpha1.ClusterService.Create",
+            channel,
+            op,
+        )
+        assert operation.progress_tracker() is None
+    finally:
+        if channel is not None:
+            await channel.close()

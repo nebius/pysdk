@@ -98,7 +98,7 @@ class CurrentStep:
         return float(done) / float(total)
 
     def __repr__(self) -> str:
-        parts = [f"CurrentStep({self.description()}"]
+        parts = [f"{self.description()}"]
         started = self.started_at()
         if started is not None:
             parts.append(f"started_at: {started}")
@@ -108,7 +108,7 @@ class CurrentStep:
         work = self.work_done()
         if work is not None and work.total_tick_count:
             parts.append(f"work_done: {work.done_tick_count}/{work.total_tick_count}")
-        return ", ".join(parts) + ")"
+        return "CurrentStep(" + ", ".join(parts) + ")"
 
 
 class OperationProgressTracker(Protocol):
@@ -293,7 +293,7 @@ class Operation(Generic[OperationPb]):
     def __repr__(self) -> str:
         """Return a compact string representation useful for debugging."""
         parts = [
-            f"Operation({self.id}",
+            f"{self.id}",
             f"resource_id: {self.resource_id}",
             f"status: {self.status()}",
         ]
@@ -307,7 +307,7 @@ class Operation(Generic[OperationPb]):
             eta = tracker.estimated_finished_at()
             if eta is not None:
                 parts.append(f"eta: {eta}")
-        return ", ".join(parts) + ")"
+        return "Operation(" + ", ".join(parts) + ")"
 
     def status(self) -> RequestStatus | None:
         """Return the operation's current status object or ``None``.
@@ -707,7 +707,7 @@ class _ProgressTrackerWrapper:
         return [CurrentStep(step) for step in steps]
 
     def __repr__(self) -> str:
-        parts = [f"OperationProgressTracker({self.description()}"]
+        parts = [f"{self.description()}"]
         started = self.started_at()
         if started is not None:
             parts.append(f"started_at: {started}")
@@ -723,7 +723,7 @@ class _ProgressTrackerWrapper:
         steps = self.steps()
         if steps:
             parts.append("steps: [" + ", ".join(repr(step) for step in steps) + "]")
-        return ", ".join(parts) + ")"
+        return "OperationProgressTracker(" + ", ".join(parts) + ")"
 
 
 def wrap_progress_tracker(
