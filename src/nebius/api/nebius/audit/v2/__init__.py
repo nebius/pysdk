@@ -503,7 +503,8 @@ class Authorization(pb_classes.Message):
     @builtins.property
     def authorized(self) -> "builtins.bool":
         """
-        Field is required. We do not use «(buf.validate.field).required = true» here as false value considered as unset (validation violation)
+        Field is required. We do not use ``(buf.validate.field).required = true`` here as false value
+        considered as unset (validation violation)
         """
         
         return super()._get_field("authorized", explicit_presence=False,
@@ -1164,7 +1165,8 @@ class AuditEvent(pb_classes.Message):
     @builtins.property
     def type(self) -> "builtins.str":
         """
-        The type of event related to the originating occurrence. Formed according to template: ``ai.nebius.<serviceName>.<resourceType>.<action>``
+        The type of event related to the originating occurrence. Formed according to template:
+        ``ai.nebius.<serviceName>.<resourceType>.<action>``
         """
         
         return super()._get_field("type", explicit_presence=False,
@@ -2063,14 +2065,18 @@ class AuditEventExportStatus(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         state: "AuditEventExportState|audit_event_export_pb2.AuditEventExportState|None|unset.UnsetType" = unset.Unset,
+        export_operation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
+        if not isinstance(export_operation_id, unset.UnsetType):
+            self.export_operation_id = export_operation_id
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
+            "export_operation_id",
         ]
     
     @builtins.property
@@ -2087,8 +2093,23 @@ class AuditEventExportStatus(pb_classes.Message):
         return super()._set_field("state",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def export_operation_id(self) -> "builtins.str":
+        """
+        Identifier of the audit logs export operation.
+        This value is used as the final path prefix for exported files in the destination object storage bucket.
+        """
+        
+        return super()._get_field("export_operation_id", explicit_presence=False,
+        )
+    @export_operation_id.setter
+    def export_operation_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("export_operation_id",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
+        "export_operation_id":"export_operation_id",
     }
     
 # file: nebius/audit/v2/audit_event_export_service.proto

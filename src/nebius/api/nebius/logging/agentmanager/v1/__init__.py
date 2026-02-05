@@ -916,7 +916,12 @@ class OSInfo(pb_classes.Message):
     def uname(self) -> "builtins.str":
         """
         Detailed system information from uname command.
-        Example: "Linux computeimage-abcdef 6.5.0-44-generic #44~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jun 18 14:36:16 UTC 2 x86_64 x86_64 x86_64 GNU/Linux"
+        
+        Example:
+        
+        .. code-block::
+        
+           Linux computeimage-abcdef 6.5.0-44-generic #44~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jun 18 14:36:16 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
         """
         
         return super()._get_field("uname", explicit_presence=False,

@@ -1110,12 +1110,14 @@ class LifecycleAccessFilter(pb_classes.Message):
             TYPE_UNSPECIFIED = 0
             INCLUDE = 1
             """
-            If an include type condition is the first condition that the request match, the request will be included in ``days_since_last_access`` calculation.
+            If an include type condition is the first condition that the request match, the request will be included in
+            ``days_since_last_access`` calculation.
             """
             
             EXCLUDE = 2
             """
-            If an exclude type condition is the first condition that the request match, the request will be ignored in ``days_since_last_access`` calculation.
+            If an exclude type condition is the first condition that the request match, the request will be ignored in ``days_since_last_access``
+            calculation.
             """
             
         

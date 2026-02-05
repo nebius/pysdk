@@ -5977,7 +5977,7 @@ class SubnetCidr(pb_classes.Message):
     @builtins.property
     def state(self) -> "AddressBlockState":
         """
-        Controls provisioning of IP addresses from the CIDR block . Defaults to AVAILABLE.
+        Controls provisioning of IP addresses from the CIDR block. Defaults to AVAILABLE.
         """
         
         return super()._get_field("state", explicit_presence=False,

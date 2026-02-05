@@ -46,6 +46,12 @@ class CreateImageRequest(_message.Message):
     spec: _image_pb2.ImageSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_image_pb2.ImageSpec, _Mapping]] = ...) -> None: ...
 
+class DeleteImageRequest(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
 class ListImagesResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]
     ITEMS_FIELD_NUMBER: _ClassVar[int]

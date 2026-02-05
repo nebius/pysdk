@@ -858,7 +858,8 @@ class SecretSpec(pb_classes.Message):
     @builtins.property
     def secret_version(self) -> "SecretVersionSpec":
         """
-        Secret's version specification, defines the secret version, including its payload. This parameter must be specified only during create operations.
+        Secret's version specification, defines the secret version, including its payload. This parameter must be specified only during create
+        operations.
         """
         
         return super()._get_field("secret_version", explicit_presence=False,

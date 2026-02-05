@@ -23,6 +23,7 @@ import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.common.v1.operation_service_pb2 as operation_service_pb2
 import nebius.api.nebius.common.v1.progress_tracker_pb2 as progress_tracker_pb2
 import nebius.api.nebius.common.v1.resource_event_pb2 as resource_event_pb2
+import nebius.api.nebius.common.v1.warning_pb2 as warning_pb2
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -1934,7 +1935,8 @@ class Operation(pb_classes.Message):
     
     class RequestHeader(pb_classes.Message):
         """
-        Request header is a container for all the values of a particular header of a request because there is no such thing as ``map<string, repeated string>``
+        Request header is a container for all the values of a particular header of a request because there is no such thing as
+        ``map<string, repeated string>``
         """
         
         __PB2_CLASS__ = operation_pb2.Operation.RequestHeader
@@ -2247,7 +2249,8 @@ class Operation(pb_classes.Message):
     @builtins.property
     def progress_data(self) -> "any_pb2.Any":
         """
-        Extra information about this operation's progress. MAY be absent while the operation is running, MUST be absent after the operation has completed.
+        Extra information about this operation's progress. MAY be absent while the operation is running, MUST be absent after the operation has
+        completed.
         
         Type of message that's stored inside [progress_data] is service-dependent.
         """
@@ -2517,7 +2520,8 @@ class OperationServiceClient(client.Client):
 # file: nebius/common/v1/resource_event.proto
 class ResourceEvent(pb_classes.Message):
     """
-    Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be reported is service-dependent
+    Represents an API Resource-related event which is potentially important to the end-user. What exactly constitutes an *event* to be
+    reported is service-dependent
     """
     
     __PB2_CLASS__ = resource_event_pb2.ResourceEvent
@@ -2546,7 +2550,8 @@ class ResourceEvent(pb_classes.Message):
         
         WARN = 3
         """
-        Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention, but requires no immediate action (yet)
+        Warning event. Indicates a potential or minor problem with the API resource and/or the corresponding processes. Needs user attention,
+        but requires no immediate action (yet)
         """
         
         ERROR = 4
@@ -2632,7 +2637,8 @@ class ResourceEvent(pb_classes.Message):
     @builtins.property
     def message(self) -> "builtins.str":
         """
-        A human-readable message describing what has happened (and suggested actions for the user, if this is a ``WARN``- or ``ERROR``-level event)
+        A human-readable message describing what has happened
+        (and suggested actions for the user, if this is a ``WARN`` or ``ERROR`` level event)
         """
         
         return super()._get_field("message", explicit_presence=False,
@@ -2645,7 +2651,9 @@ class ResourceEvent(pb_classes.Message):
     @builtins.property
     def error(self) -> "request_status.RequestStatus|None":
         """
-        Describes a GRPC error status associated with an ``ERROR``- or ``WARN``-level event, if known. The ``error`` **must** have a standard GRPC ``code`` (which **must not** be ``OK`` (0)) and a human-readable ``message``. A standard ``common.v1.ServiceError`` **should** also be included in ``details``
+        Describes a GRPC error status associated with an ``ERROR`` or ``WARN`` level event, if known. The ``error`` **must** have a standard GRPC
+        ``code`` (which **must not** be ``OK`` (0)) and a human-readable ``message``. A standard ``common.v1.ServiceError`` **should** also be
+        included in ``details``
         """
         
         return super()._get_field("error", explicit_presence=True,
@@ -2748,6 +2756,269 @@ class RecurrentResourceEvent(pb_classes.Message):
         "occurrence_count":"occurrence_count",
     }
     
+# file: nebius/common/v1/warning.proto
+class Warnings(pb_classes.Message):
+    __PB2_CLASS__ = warning_pb2.Warnings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.Warnings",warning_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        warnings: "abc.Iterable[Warning]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(warnings, unset.UnsetType):
+            self.warnings = warnings
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "warnings",
+        ]
+    
+    @builtins.property
+    def warnings(self) -> "abc.MutableSequence[Warning]":
+        """
+        List of warnings associated with the response.
+        """
+        
+        return super()._get_field("warnings", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Warning,None,None),
+        )
+    @warnings.setter
+    def warnings(self, value: "abc.Iterable[Warning]|None") -> None:
+        return super()._set_field("warnings",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "warnings":"warnings",
+    }
+    
+class Warning(pb_classes.Message):
+    __PB2_CLASS__ = warning_pb2.Warning
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.Warning",warning_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class Target(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.common.v1.Warning.Target",warning_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        TARGET_UNSPECIFIED = 0
+        """
+        Target is not specified.
+        """
+        
+        TARGET_CLI = 1
+        """
+        Warning is intended for CLI users.
+        """
+        
+        TARGET_TF = 2
+        """
+        Warning is intended for Terraform provider users.
+        """
+        
+        TARGET_CONSOLE = 3
+        """
+        Warning is intended for console users.
+        """
+        
+    
+    class Code(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.common.v1.Warning.Code",warning_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        CODE_UNSPECIFIED = 0
+        """
+        Code is not specified.
+        """
+        
+        CODE_REGION_ROUTING_FAILOVER = 1
+        """
+        The request was served via failover routing.
+        """
+        
+        CODE_DEPRECATED_TOOL_VERSION = 2
+        """
+        Client tool version is deprecated.
+        """
+        
+        CODE_DEPRECATED_ENDPOINT = 3
+        """
+        Endpoint is deprecated.
+        """
+        
+        CODE_DEPRECATED_PROTO = 4
+        """
+        Proto field, message or service is deprecated.
+        """
+        
+        CODE_DEPRECATED_SPEC_VALUE_REQUEST = 5
+        """
+        Deprecated value was used in the request.
+        """
+        
+        CODE_DEPRECATED_SPEC_VALUE_RESPONSE = 6
+        """
+        Deprecated value was observed in the response.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        target: "Warning.Target|warning_pb2.Warning.Target|None|unset.UnsetType" = unset.Unset,
+        code: "Warning.Code|warning_pb2.Warning.Code|None|unset.UnsetType" = unset.Unset,
+        summary: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        summary_fallback: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        details: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        details_fallback: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        path: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(target, unset.UnsetType):
+            self.target = target
+        if not isinstance(code, unset.UnsetType):
+            self.code = code
+        if not isinstance(summary, unset.UnsetType):
+            self.summary = summary
+        if not isinstance(summary_fallback, unset.UnsetType):
+            self.summary_fallback = summary_fallback
+        if not isinstance(details, unset.UnsetType):
+            self.details = details
+        if not isinstance(details_fallback, unset.UnsetType):
+            self.details_fallback = details_fallback
+        if not isinstance(path, unset.UnsetType):
+            self.path = path
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "target",
+            "code",
+            "summary",
+            "summary_fallback",
+            "details",
+            "details_fallback",
+            "path",
+            "Target",
+            "Code",
+        ]
+    
+    @builtins.property
+    def target(self) -> "Warning.Target":
+        """
+        Target client or tool for which this warning is intended.
+        """
+        
+        return super()._get_field("target", explicit_presence=False,
+        wrap=Warning.Target,
+        )
+    @target.setter
+    def target(self, value: "Warning.Target|warning_pb2.Warning.Target|None") -> None:
+        return super()._set_field("target",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def code(self) -> "Warning.Code":
+        """
+        Warning category.
+        """
+        
+        return super()._get_field("code", explicit_presence=False,
+        wrap=Warning.Code,
+        )
+    @code.setter
+    def code(self, value: "Warning.Code|warning_pb2.Warning.Code|None") -> None:
+        return super()._set_field("code",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def summary(self) -> "builtins.str":
+        """
+        User-facing summary text. Can contain a liquid format template which must be executed on client side.
+        Empty means use summary_fallback.
+        """
+        
+        return super()._get_field("summary", explicit_presence=False,
+        )
+    @summary.setter
+    def summary(self, value: "builtins.str|None") -> None:
+        return super()._set_field("summary",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def summary_fallback(self) -> "builtins.str":
+        """
+        Summary text to use when summary is empty or not applicable.
+        Can contain a liquid format template which must be executed on client side.
+        """
+        
+        return super()._get_field("summary_fallback", explicit_presence=False,
+        )
+    @summary_fallback.setter
+    def summary_fallback(self, value: "builtins.str|None") -> None:
+        return super()._set_field("summary_fallback",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def details(self) -> "builtins.str":
+        """
+        User-facing details text. Can contain a liquid format template which must be executed on client side.
+        Empty means use details_fallback.
+        """
+        
+        return super()._get_field("details", explicit_presence=False,
+        )
+    @details.setter
+    def details(self, value: "builtins.str|None") -> None:
+        return super()._set_field("details",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def details_fallback(self) -> "builtins.str":
+        """
+        Details text to use when details is empty or not applicable.
+        Can contain a liquid format template which must be executed on client side.
+        """
+        
+        return super()._get_field("details_fallback", explicit_presence=False,
+        )
+    @details_fallback.setter
+    def details_fallback(self, value: "builtins.str|None") -> None:
+        return super()._set_field("details_fallback",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def path(self) -> "builtins.str":
+        """
+        Contains a Full Service/Method name or a select mask for a field.
+        Examples:
+          nebius.compute.v1.InstanceService
+          nebius.compute.v1.InstanceService/Get
+          spec.control_plane.version
+          spec.network_interfaces.0.subnet_id
+          items.0.spec.control_plane.version
+        """
+        
+        return super()._get_field("path", explicit_presence=False,
+        )
+    @path.setter
+    def path(self, value: "builtins.str|None") -> None:
+        return super()._set_field("path",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "target":"target",
+        "code":"code",
+        "summary":"summary",
+        "summary_fallback":"summary_fallback",
+        "details":"details",
+        "details_fallback":"details_fallback",
+        "path":"path",
+        "Target":"Target",
+        "Code":"Code",
+    }
+    
 __all__ = [
     #@ local import names here @#
     "ServiceError",
@@ -2773,4 +3044,6 @@ __all__ = [
     "OperationServiceClient",
     "ResourceEvent",
     "RecurrentResourceEvent",
+    "Warnings",
+    "Warning",
 ]

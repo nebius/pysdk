@@ -190,7 +190,8 @@ class AccessKeySpec(pb_classes.Message):
     @builtins.property
     def secret_delivery_mode(self) -> "SecretDeliveryMode":
         """
-        Specifies how the secret will be delivered upon creation. This field is immutable — it cannot be changed after the resource is created.
+        Specifies how the secret will be delivered upon creation. This field is immutable — it cannot be changed after the resource is
+        created.
         """
         
         return super()._get_field("secret_delivery_mode", explicit_presence=False,

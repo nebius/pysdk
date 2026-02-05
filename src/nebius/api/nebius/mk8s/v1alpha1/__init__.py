@@ -1902,29 +1902,52 @@ class NodeTemplate(pb_classes.Message):
         """
         OS version that will be used to create the boot disk of Compute Instances in the NodeGroup.
         Supported platform / k8s version /  OS / driver presets combinations
-          gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm, cpu-e1, cpu-e2, cpu-d3:
-            drivers_preset: ""
-              k8s: 1.30 → "ubuntu22.04"
-              k8s: 1.31 → "ubuntu22.04" (default), "ubuntu24.04"
-          gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm:
-            drivers_preset: "cuda12" (CUDA 12.4)
-              k8s: 1.30, 1.31 → "ubuntu22.04"
-            drivers_preset: "cuda12.4"
-              k8s: 1.31 → "ubuntu22.04"
-            drivers_preset: "cuda12.8"
-              k8s: 1.31 → "ubuntu24.04"
-          gpu-b200-sxm:
-            drivers_preset: ""
-              k8s: 1.30, 1.31 → "ubuntu24.04"
-            drivers_preset: "cuda12" (CUDA 12.8)
-              k8s: 1.30, 1.31 → "ubuntu24.04"
-            drivers_preset: "cuda12.8"
-              k8s: 1.31 → "ubuntu24.04"
-          gpu-b200-sxm-a:
-            drivers_preset: ""
-              k8s: 1.31 → "ubuntu24.04"
-            drivers_preset: "cuda12.8"
-              k8s: 1.31 → "ubuntu24.04"
+        
+        
+        * gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm, cpu-e1, cpu-e2, cpu-d3:
+        
+          * drivers_preset: ""
+        
+            * k8s: 1.30 → "ubuntu22.04"
+            * k8s: 1.31 → "ubuntu22.04" (default), "ubuntu24.04"
+        
+        * gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm:
+        
+          * drivers_preset: "cuda12" (CUDA 12.4)
+        
+            * k8s: 1.30, 1.31 → "ubuntu22.04"
+        
+          * drivers_preset: "cuda12.4"
+        
+            * k8s: 1.31 → "ubuntu22.04"
+        
+          * drivers_preset: "cuda12.8"
+        
+            * k8s: 1.31 → "ubuntu24.04"
+        
+        * gpu-b200-sxm:
+        
+          * drivers_preset: ""
+        
+            * k8s: 1.30, 1.31 → "ubuntu24.04"
+        
+          * drivers_preset: "cuda12" (CUDA 12.8)
+        
+            * k8s: 1.30, 1.31 → "ubuntu24.04"
+        
+          * drivers_preset: "cuda12.8"
+        
+            * k8s: 1.31 → "ubuntu24.04"
+        
+        * gpu-b200-sxm-a:
+        
+          * drivers_preset: ""
+        
+            * k8s: 1.31 → "ubuntu24.04"
+        
+          * drivers_preset: "cuda12.8"
+        
+            * k8s: 1.31 → "ubuntu24.04"
         """
         
         return super()._get_field("os", explicit_presence=False,
@@ -1980,9 +2003,9 @@ class NodeTemplate(pb_classes.Message):
     @builtins.property
     def service_account_id(self) -> "builtins.str":
         """
-        the Nebius service account whose credentials will be available on the nodes of the group.
-        With these credentials, it is possible to make ``nebius`` CLI or public API requests from the nodes without the need for extra authentication.
-        This service account is also used to make requests to container registry.
+        the Nebius service account whose credentials will be available on the nodes of the group. With these credentials, it is possible to
+        make ``nebius`` CLI or public API requests from the nodes without the need for extra authentication. This service account is also used to
+        make requests to container registry.
         
         ``resource.serviceaccount.issueAccessToken`` permission is required to use this field.
         """
@@ -2146,13 +2169,20 @@ class GpuSettings(pb_classes.Message):
         """
         Identifier of the predefined set of drivers included in the ComputeImage deployed on ComputeInstances that are part of the NodeGroup.
         Supported presets for different platform / k8s version combinations:
-          gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm:
-            k8s: 1.30 → "cuda12" (CUDA 12.4)
-            k8s: 1.31 → "cuda12" (CUDA 12.4), "cuda12.4", "cuda12.8"
-          gpu-b200-sxm:
-            k8s: 1.31 → "cuda12" (CUDA 12.8), "cuda12.8"
-          gpu-b200-sxm-a:
-            k8s: 1.31 → "cuda12.8"
+        
+        
+        * gpu-l40s-a, gpu-l40s-d, gpu-h100-sxm, gpu-h200-sxm:
+        
+          * k8s: 1.30 → "cuda12" (CUDA 12.4)
+          * k8s: 1.31 → "cuda12" (CUDA 12.4), "cuda12.4", "cuda12.8"
+        
+        * gpu-b200-sxm:
+        
+          * k8s: 1.31 → "cuda12" (CUDA 12.8), "cuda12.8"
+        
+        * gpu-b200-sxm-a:
+        
+          * k8s: 1.31 → "cuda12.8"
         """
         
         return super()._get_field("drivers_preset", explicit_presence=False,
@@ -2242,7 +2272,7 @@ class NetworkInterfaceTemplate(pb_classes.Message):
     @builtins.property
     def subnet_id(self) -> "builtins.str":
         """
-        Subnet ID that will be attached to a node cloud intstance network interface.
+        Subnet ID that will be attached to a node cloud instance network interface.
         By default control plane subnet_id used.
         Subnet should be located in the same network with control plane and have same parent ID as cluster.
         """
@@ -3502,7 +3532,8 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
     @builtins.property
     def latest_infra_version(self) -> "empty_pb2.Empty|None":
         """
-        Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the same.
+        Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the
+        same.
         """
         
         return super()._get_field("latest_infra_version", explicit_presence=True,

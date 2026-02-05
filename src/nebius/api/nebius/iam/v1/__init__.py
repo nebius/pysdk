@@ -3413,7 +3413,7 @@ class OidcCredentialsProvider(pb_classes.Message):
         
         
         * token service limits the number of handled keys by 50. If your JWKS return more than 50,
-          the only first 50  will be used for signature verifying.
+          the only first 50 will be used for signature verifying.
         * response size for jwks_uri and "/.well-known/openid-configuration limited by 100KB.
         """
         
@@ -6155,7 +6155,8 @@ class UserAccountStatus(pb_classes.Message):
         
         DELETING = 3
         """
-        federated user can be deleted/forgot, in this state user cannot log into the system and various internal removal interactions are in progress
+        federated user can be deleted/forgot, in this state user cannot log into the system and various internal removal interactions are in
+        progress
         """
         
     
@@ -7026,8 +7027,9 @@ class TenantUserAccountStatus(pb_classes.Message):
         STATE_UNSPECIFIED = 0
         ACTIVE = 1
         """
-        in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
-        in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources immediately
+        * in case of ordinary tenant user account a corresponding user can log into the system and use granted tenant resources
+        * in case of invited tenant user account once the invitation is accepted a corresponding user can start using granted resources
+          immediately
         """
         
         INACTIVE = 2
@@ -7037,8 +7039,10 @@ class TenantUserAccountStatus(pb_classes.Message):
         
         BLOCKED = 3
         """
-        in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant resources
-        in case of invited tenant user account once the invitation is accepted a corresponding user cannot start using granted resources until is unblocked
+        * in case of ordinary tenant user account a corresponding user can log into the system but cannot be authorized to use tenant
+          resources
+        * in case of invited tenant user account once the invitation is accepted a corresponding user cannot start using granted resources
+          until is unblocked
         """
         
     
@@ -7097,7 +7101,8 @@ class TenantUserAccountStatus(pb_classes.Message):
     @builtins.property
     def federation_id(self) -> "builtins.str":
         """
-        the federation id of the linked user account. Could be empty in a case of a tenant user account belongs to an invitation which wasn't accepted.
+        the federation id of the linked user account. Could be empty in a case of a tenant user account belongs to an invitation which wasn't
+        accepted.
         """
         
         return super()._get_field("federation_id", explicit_presence=False,
@@ -13122,7 +13127,8 @@ class ExchangeTokenRequest(pb_classes.Message):
     @builtins.property
     def actor_token_type(self) -> "builtins.str":
         """
-        optional, token type for the impersonation/delegation (who want to impersonate/delegate). Usually it's urn:ietf:params:oauth:token-type:access_token
+        optional, token type for the impersonation/delegation (who want to impersonate/delegate). Usually it's
+        urn:ietf:params:oauth:token-type:access_token
         """
         
         return super()._get_field("actor_token_type", explicit_presence=False,

@@ -3434,10 +3434,15 @@ class InstanceSpec(pb_classes.Message):
     @builtins.property
     def recovery_policy(self) -> "InstanceRecoveryPolicy":
         """
-        Recovery policy defines how the instance will be treated in case of a failure. Common source of failure is a host failure, but it can be any other failure.
-        Instance undergoing a guest shutdown (poweroff, etc.) will be subject to recovery policy, meaning that it could be restarted and billed accordingly. Stop instance via API or UI to stop it to avoid recovering.
-        If set to RECOVER, instance will be restarted, if possible. It could be restarted on the same host or on another host.
-        If set to FAIL, instance will be stopped and not restarted.
+        Recovery policy defines how the instance will be treated in case of a failure.
+        Common source of failure is a host failure, but it can be any other failure.
+        Instance undergoing a guest shutdown (poweroff, etc.) will be subject to recovery policy,
+        meaning that it could be restarted and billed accordingly.
+        Stop instance via API or UI to stop it to avoid recovering.
+        
+        
+        * If set to RECOVER, instance will be restarted, if possible. It could be restarted on the same host or on another host.
+        * If set to FAIL, instance will be stopped and not restarted.
         """
         
         return super()._get_field("recovery_policy", explicit_presence=False,

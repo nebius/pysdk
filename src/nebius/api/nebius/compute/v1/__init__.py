@@ -3883,6 +3883,40 @@ class CreateImageRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class DeleteImageRequest(pb_classes.Message):
+    __PB2_CLASS__ = image_service_pb2.DeleteImageRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteImageRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
 class ListImagesResponse(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.ListImagesResponse
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListImagesResponse",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4163,6 +4197,35 @@ class ImageServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operati
         
         return super().request(
             method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteImageRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteImageRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Deletes an existing image resource by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.DeleteImageRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
             request=request,
             result_pb2_class=operation_pb2.Operation,
             result_wrapper=operation.Operation,
@@ -5119,10 +5182,14 @@ class InstanceSpec(pb_classes.Message):
     @builtins.property
     def recovery_policy(self) -> "InstanceRecoveryPolicy":
         """
-        Recovery policy defines how the instance will be treated in case of a failure. Common source of failure is a host failure, but it can be any other failure.
-        Instance undergoing a guest shutdown (poweroff, etc.) will be subject to recovery policy, meaning that it could be restarted and billed accordingly. Stop instance via API or UI to stop it to avoid recovering.
-        If set to RECOVER, instance will be restarted, if possible. It could be restarted on the same host or on another host.
-        If set to FAIL, instance will be stopped and not restarted.
+        Recovery policy defines how the instance will be treated in case of a failure.
+        Common source of failure is a host failure, but it can be any other failure.
+        Instance undergoing a guest shutdown (poweroff, etc.) will be subject to recovery policy, meaning that it could
+        be restarted and billed accordingly. Stop instance via API or UI to stop it to avoid recovering.
+        
+        
+        * If set to RECOVER, instance will be restarted, if possible. It could be restarted on the same host or on another host.
+        * If set to FAIL, instance will be stopped and not restarted.
         """
         
         return super()._get_field("recovery_policy", explicit_presence=False,
@@ -7842,6 +7909,7 @@ __all__ = [
     "GetImageLatestByFamilyRequest",
     "ListImagesRequest",
     "CreateImageRequest",
+    "DeleteImageRequest",
     "ListImagesResponse",
     "ListPublicRequest",
     "ImageServiceClient",

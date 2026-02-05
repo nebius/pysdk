@@ -508,9 +508,10 @@ class ControlPlaneStatus(pb_classes.Message):
     def version(self) -> "builtins.str":
         """
         Actual Kubernetes and configuration version.
-        Version have format ``<major>.<minor>.<patch>-nebius-cp.<infra_version>`` like "1.30.0-nebius-cp.3".
-        Where ``<major>.<minor>.<patch>`` is Kubernetes version and ``<infra_version>`` is version of control plane infrastructure and configuration,
-        which update may include bug fixes, security updates and new features of components running on control plane, like CCM or Cluster Autoscaler.
+        Version has format ``<major>.<minor>.<patch>-nebius-cp.<infra_version>`` like
+        "1.30.0-nebius-cp.3", where ``<major>.<minor>.<patch>`` is Kubernetes version and ``<infra_version>`` is version of control plane
+        infrastructure and configuration, updating of which may include bug fixes, security updates and new features of components running on
+        control plane, like CCM or Cluster Autoscaler.
         """
         
         return super()._get_field("version", explicit_presence=False,
@@ -2065,7 +2066,8 @@ class NodeTemplate(pb_classes.Message):
     def service_account_id(self) -> "builtins.str":
         """
         the Nebius service account whose credentials will be available on the nodes of the group.
-        With these credentials, it is possible to make ``nebius`` CLI or public API requests from the nodes without the need for extra authentication.
+        With these credentials, it is possible to make ``nebius`` CLI or public API requests from the nodes
+        without the need for extra authentication.
         This service account is also used to make requests to container registry.
         
         ``resource.serviceaccount.issueAccessToken`` permission is required to use this field.
@@ -2690,10 +2692,15 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
     def max_unavailable(self) -> "PercentOrCount":
         """
         The maximum number of nodes that can be simultaneously unavailable during the update process.
-        This value can be specified either as an absolute number (for example 3) or as a percentage of the desired number of nodes (for example 5%).
+        
+        This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
+        number of nodes (for example 5%).
+        
         When specified as a percentage, the actual number is calculated by rounding down to the nearest whole number.
         This value cannot be 0 if ``max_surge`` is also set to 0.
+        
         Defaults to 0.
+        
         Example: If set to 20%, up to 20% of the nodes can be taken offline at once during the update,
         ensuring that at least 80% of the desired nodes remain operational.
         """
@@ -2710,19 +2717,24 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
     def max_surge(self) -> "PercentOrCount":
         """
         The maximum number of additional nodes that can be provisioned above the desired number of nodes during the update process.
-        This value can be specified either as an absolute number (for example 3) or as a percentage of the desired number of nodes (for example 5%).
+        
+        This value can be specified either as an absolute number (for example 3) or as a percentage of the desired
+        number of nodes (for example 5%).
+        
         When specified as a percentage, the actual number is calculated by rounding up to the nearest whole number.
         This value cannot be 0 if ``max_unavailable`` is also set to 0.
+        
         Defaults to 1.
+        
         Example: If set to 25%, the node group can scale up by an additional 25% during the update,
         allowing new nodes to be added before old nodes are removed, which helps minimize workload disruption.
         
         NOTE:
         
-          it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
-          Available quota effectively limits ``max_surge``.
-          In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
-          Such error will be visible in Operation.progress_data.
+        it is user responsibility to ensure that there are enough quota for provision nodes above the desired number.
+        Available quota effectively limits ``max_surge``.
+        In case of not enough quota even for one extra node, update operation will hung because of quota exhausted error.
+        Such error will be visible in Operation.progress_data.
         """
         
         return super()._get_field("max_surge", explicit_presence=False,
@@ -3897,7 +3909,8 @@ class UpgradeNodeGroupRequest(pb_classes.Message):
     @builtins.property
     def latest_infra_version(self) -> "empty_pb2.Empty|None":
         """
-        Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the same.
+        Upgrades to the latest infra version, which includes latest supported kubernetes patch version. Kubernetes minor version remain the
+        same.
         """
         
         return super()._get_field("latest_infra_version", explicit_presence=True,
