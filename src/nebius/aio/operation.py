@@ -9,10 +9,13 @@ older v1alpha1 variant and routes calls to the corresponding operation
 service client.
 """
 
+from __future__ import annotations
+
 from asyncio import sleep
+from collections.abc import Sequence
 from datetime import datetime, timedelta
 from time import time
-from typing import Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, Protocol, TypeVar, cast
 
 from grpc import StatusCode
 from typing_extensions import Unpack
@@ -27,6 +30,9 @@ from nebius.base.protos.well_known import local_timezone
 from .constant_channel import Constant
 from .request_status import RequestStatus
 
+if TYPE_CHECKING:
+    from nebius.api.nebius.common.v1 import ProgressTracker
+
 OperationPb = TypeVar("OperationPb")
 """
 A convenience wrapper around operation protobufs.
@@ -34,6 +40,134 @@ Either :class:`nebius.api.nebius.common.v1.Operation` or
 :class:`nebius.api.nebius.common.v1alpha1.Operation`, or their protobuf classes.
 """
 T = TypeVar("T")
+
+
+class CurrentStep:
+    """Wrapper describing a step of an operation progress tracker.
+
+    This class wraps a ``ProgressTracker.Step`` instance and exposes
+    convenient accessors that normalize missing fields as ``None``.
+
+    When a step includes work estimates (``work_done``), the
+    :meth:`work_fraction` helper converts them into a usable fraction.
+    The method returns ``None`` when the fraction cannot be computed.
+
+    Example
+    -------
+
+    Inspecting steps and progress::
+
+        tracker = operation.progress_tracker()
+        if tracker:
+            for step in tracker.steps():
+                fraction = step.work_fraction()
+                if fraction is None:
+                    print(step.description())
+                else:
+                    print(f"{step.description()}: {fraction:.0%}")
+    """
+
+    def __init__(self, step: object) -> None:
+        self._step = step
+
+    def description(self) -> str:
+        """Return a human-readable description of the step."""
+        return getattr(self._step, "description", "")
+
+    def started_at(self) -> datetime | None:
+        """Return the step start timestamp or ``None`` if unknown."""
+        return _get_timestamp(self._step, "started_at")
+
+    def finished_at(self) -> datetime | None:
+        """Return the step finished timestamp or ``None`` if unfinished."""
+        return _get_timestamp(self._step, "finished_at")
+
+    def work_done(self) -> ProgressTracker.WorkDone | None:
+        """Return work progress details for the step when available."""
+        return _get_work_done(self._step)
+
+    def work_fraction(self) -> float | None:
+        """Return the completed work fraction or ``None`` when unavailable."""
+        work_done = self.work_done()
+        if work_done is None:
+            return None
+        total = getattr(work_done, "total_tick_count", 0)
+        if total <= 0:
+            return None
+        done = getattr(work_done, "done_tick_count", 0)
+        return float(done) / float(total)
+
+    def __repr__(self) -> str:
+        parts = [f"CurrentStep({self.description()}"]
+        started = self.started_at()
+        if started is not None:
+            parts.append(f"started_at: {started}")
+        finished = self.finished_at()
+        if finished is not None:
+            parts.append(f"finished_at: {finished}")
+        work = self.work_done()
+        if work is not None and work.total_tick_count:
+            parts.append(f"work_done: {work.done_tick_count}/{work.total_tick_count}")
+        return ", ".join(parts) + ")"
+
+
+class OperationProgressTracker(Protocol):
+    """Protocol describing operation-level progress tracking.
+
+    This protocol mirrors the server-side ``ProgressTracker`` object and adds
+    convenience helpers for time and work fractions.
+
+    The tracker is only available for v1 operations that include a
+    ``progress_tracker`` field. For v1alpha1 operations,
+    :meth:`Operation.progress_tracker` returns ``None``.
+
+    Example
+    -------
+
+    Reading overall progress::
+
+        tracker = operation.progress_tracker()
+        if tracker:
+            print(tracker.description())
+            work_fraction = tracker.work_fraction()
+            if work_fraction is not None:
+                print(f"Work: {work_fraction:.0%}")
+            time_fraction = tracker.time_fraction()
+            if time_fraction is not None:
+                print(f"Time: {time_fraction:.0%}")
+    """
+
+    def description(self) -> str:
+        """Return a human-readable description of the tracker."""
+        ...
+
+    def started_at(self) -> datetime | None:
+        """Return the tracker start timestamp or ``None`` if unknown."""
+        ...
+
+    def finished_at(self) -> datetime | None:
+        """Return the tracker finished timestamp or ``None`` if unfinished."""
+        ...
+
+    def work_done(self) -> ProgressTracker.WorkDone | None:
+        """Return work progress details for the tracker when available."""
+        ...
+
+    def work_fraction(self) -> float | None:
+        """Return the completed work fraction or ``None`` when unavailable."""
+        ...
+
+    def estimated_finished_at(self) -> datetime | None:
+        """Return the estimated completion timestamp when available."""
+        ...
+
+    def time_fraction(self) -> float | None:
+        """Return elapsed time fraction or ``None`` when unavailable."""
+        ...
+
+    def steps(self) -> Sequence[CurrentStep]:
+        """Return steps reported by the progress tracker."""
+        ...
 
 
 class Operation(Generic[OperationPb]):
@@ -158,10 +292,22 @@ class Operation(Generic[OperationPb]):
 
     def __repr__(self) -> str:
         """Return a compact string representation useful for debugging."""
-        return (
-            f"Operation({self.id}, resource_id: {self.resource_id}, "
-            f"status: {self.status()})"
-        )
+        parts = [
+            f"Operation({self.id}",
+            f"resource_id: {self.resource_id}",
+            f"status: {self.status()}",
+        ]
+        tracker = self.progress_tracker()
+        if tracker is not None:
+            work = tracker.work_done()
+            if work is not None and work.total_tick_count:
+                parts.append(
+                    f"work_done: {work.done_tick_count}/{work.total_tick_count}"
+                )
+            eta = tracker.estimated_finished_at()
+            if eta is not None:
+                parts.append(f"eta: {eta}")
+        return ", ".join(parts) + ")"
 
     def status(self) -> RequestStatus | None:
         """Return the operation's current status object or ``None``.
@@ -169,6 +315,52 @@ class Operation(Generic[OperationPb]):
         :rtype: :class:`RequestStatus` or nothing
         """
         return self._operation.status
+
+    def progress_tracker(self) -> OperationProgressTracker | None:
+        """Return an operation progress tracker when available.
+
+        This helper returns ``None`` when the operation does not expose a
+        progress tracker (for example, v1alpha1 operations or services that do
+        not provide progress details).
+
+        Example
+        -------
+
+        Polling with a single-line progress display::
+
+            from asyncio import sleep
+            from datetime import datetime
+            from nebius.base.protos.well_known import local_timezone
+
+            while not operation.done():
+                await operation.update()
+                tracker = operation.progress_tracker()
+                parts = [f"waiting for operation {operation.id} to complete:"]
+
+                if tracker:
+                    work = tracker.work_fraction()
+                    if work is not None:
+                        parts.append(f"{work:.0%}")
+
+                    desc = tracker.description()
+                    if desc:
+                        parts.append(desc)
+
+                    started = tracker.started_at()
+                    if started is not None:
+                        elapsed = datetime.now(local_timezone) - started
+                        parts.append(f"{elapsed}")
+
+                    eta = tracker.estimated_finished_at()
+                    if eta is not None:
+                        parts.append(f"eta {eta}")
+
+                print(" ".join(parts), end="\\r", flush=True)
+                await sleep(1)
+
+            print()
+        """
+        return wrap_progress_tracker(self)
 
     def done(self) -> bool:
         """Return True when the operation has reached a terminal state."""
@@ -394,3 +586,172 @@ class Operation(Generic[OperationPb]):
         normalized wrapper.
         """
         return self._operation  # type: ignore
+
+
+def _check_presence(message: object, field: str) -> bool:
+    checker = getattr(message, "check_presence", None)
+    if checker is None:
+        return True
+    try:
+        return bool(checker(field))
+    except Exception:
+        return False
+
+
+def _get_timestamp(message: object, field: str) -> datetime | None:
+    if not _check_presence(message, field):
+        return None
+    value = getattr(message, field, None)
+    if value is None:
+        return None
+    return cast(datetime, value)
+
+
+def _get_work_done(message: object) -> ProgressTracker.WorkDone | None:
+    if not _check_presence(message, "work_done"):
+        return None
+    return getattr(message, "work_done", None)
+
+
+class _ProgressTrackerWrapper:
+    def __init__(self, operation: Operation[OperationPb]) -> None:
+        self._operation = operation
+
+    def _tracker(self) -> object | None:
+        op_proto = getattr(self._operation, "_operation", None)
+        if op_proto is None:
+            return None
+        if not _check_presence(op_proto, "progress_tracker"):
+            return None
+        return getattr(op_proto, "progress_tracker", None)
+
+    def description(self) -> str:
+        tracker = self._tracker()
+        if tracker is None:
+            return ""
+        return getattr(tracker, "description", "")
+
+    def started_at(self) -> datetime | None:
+        tracker = self._tracker()
+        if tracker is None:
+            return None
+        return _get_timestamp(tracker, "started_at")
+
+    def finished_at(self) -> datetime | None:
+        tracker = self._tracker()
+        if tracker is None:
+            return None
+        return _get_timestamp(tracker, "finished_at")
+
+    def work_done(self) -> ProgressTracker.WorkDone | None:
+        tracker = self._tracker()
+        if tracker is None:
+            return None
+        return _get_work_done(tracker)
+
+    def work_fraction(self) -> float | None:
+        if self._operation.done():
+            return 1.0
+        tracker = self._tracker()
+        if tracker is None:
+            return None
+        work_done = self.work_done()
+        if work_done is None:
+            return None
+        total = getattr(work_done, "total_tick_count", 0)
+        if total <= 0:
+            return None
+        done = getattr(work_done, "done_tick_count", 0)
+        return float(done) / float(total)
+
+    def estimated_finished_at(self) -> datetime | None:
+        tracker = self._tracker()
+        if tracker is None:
+            return _get_timestamp(self._operation._operation, "finished_at")
+        finished = _get_timestamp(tracker, "finished_at")
+        if finished is not None:
+            return finished
+        operation_finished = _get_timestamp(self._operation._operation, "finished_at")
+        if operation_finished is not None:
+            return operation_finished
+        return _get_timestamp(tracker, "estimated_finished_at")
+
+    def time_fraction(self) -> float | None:
+        if self._operation.done():
+            return 1.0
+        tracker = self._tracker()
+        if tracker is None:
+            return None
+        started_at = _get_timestamp(tracker, "started_at")
+        if started_at is None:
+            return None
+        estimated_finished_at = _get_timestamp(tracker, "estimated_finished_at")
+        if estimated_finished_at is None:
+            return None
+        now = datetime.now(local_timezone)
+        if now < started_at:
+            return 0.0
+        if now > estimated_finished_at:
+            return 1.0
+        total_duration = (estimated_finished_at - started_at).total_seconds()
+        elapsed_duration = (now - started_at).total_seconds()
+        if total_duration <= 0 or elapsed_duration < 0:
+            return None
+        return elapsed_duration / total_duration
+
+    def steps(self) -> Sequence[CurrentStep]:
+        tracker = self._tracker()
+        if tracker is None:
+            return []
+        steps = getattr(tracker, "steps", [])
+        return [CurrentStep(step) for step in steps]
+
+    def __repr__(self) -> str:
+        parts = [f"OperationProgressTracker({self.description()}"]
+        started = self.started_at()
+        if started is not None:
+            parts.append(f"started_at: {started}")
+        finished = self.finished_at()
+        if finished is not None:
+            parts.append(f"finished_at: {finished}")
+        eta = self.estimated_finished_at()
+        if eta is not None:
+            parts.append(f"eta: {eta}")
+        work = self.work_done()
+        if work is not None and work.total_tick_count:
+            parts.append(f"work_done: {work.done_tick_count}/{work.total_tick_count}")
+        steps = self.steps()
+        if steps:
+            parts.append("steps: [" + ", ".join(repr(step) for step in steps) + "]")
+        return ", ".join(parts) + ")"
+
+
+def wrap_progress_tracker(
+    operation: Operation[OperationPb] | None,
+) -> OperationProgressTracker | None:
+    """Return a progress tracker wrapper for an operation if available.
+
+    This helper is exposed as :meth:`Operation.progress_tracker` and performs
+    the presence checks needed to avoid accessing default/absent fields on
+    protobuf wrappers.
+
+    Example
+    -------
+
+    Using the helper directly::
+
+        tracker = wrap_progress_tracker(operation)
+        if tracker is not None:
+            print(tracker.description())
+    """
+    if operation is None:
+        return None
+    op_proto = getattr(operation, "_operation", None)
+    if op_proto is None:
+        return None
+    if not _check_presence(op_proto, "progress_tracker"):
+        return None
+    tracker = getattr(op_proto, "progress_tracker", None)
+    if tracker is None:
+        return None
+    return _ProgressTrackerWrapper(operation)

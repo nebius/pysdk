@@ -328,6 +328,49 @@ operation.wait_sync()
 print(f"New bucket ID: {operation.resource_id}")
 ```
 
+##### Progress tracker
+
+Some operations expose a progress tracker with ETA, work completion, and step
+details. You can access it via [`Operation.progress_tracker`](https://nebius.github.io/pysdk/nebius.aio.operation.Operation.html#progress_tracker).
+For operations that do not provide progress details (or v1alpha1 operations),
+this returns `None`.
+
+Example of polling with a single-line progress display:
+
+```python
+from asyncio import sleep
+from datetime import datetime
+from nebius.base.protos.well_known import local_timezone
+
+while not operation.done():
+    await operation.update()
+    tracker = operation.progress_tracker()
+    parts = [f"waiting for operation {operation.id} to complete:"]
+
+    if tracker:
+        work = tracker.work_fraction()
+        if work is not None:
+            parts.append(f"{work:.0%}")
+
+        desc = tracker.description()
+        if desc:
+            parts.append(desc)
+
+        started = tracker.started_at()
+        if started is not None:
+            elapsed = datetime.now(local_timezone) - started
+            parts.append(f"{elapsed}")
+
+        eta = tracker.estimated_finished_at()
+        if eta is not None:
+            parts.append(f"eta {eta}")
+
+    print(" ".join(parts), end="\r", flush=True)
+    await sleep(1)
+
+print()
+```
+
 ##### Operations service
 
 If you need to get an operation or list operations, you will need an [`OperationServiceClient`](https://nebius.github.io/pysdk/nebius.api.nebius.common.v1.OperationServiceClient.html).
