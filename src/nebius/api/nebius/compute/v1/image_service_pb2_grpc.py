@@ -44,6 +44,11 @@ class ImageServiceStub(object):
                 request_serializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.CreateImageRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
+        self.Update = channel.unary_unary(
+                '/nebius.compute.v1.ImageService/Update',
+                request_serializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.UpdateImageRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.compute.v1.ImageService/Delete',
                 request_serializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.DeleteImageRequest.SerializeToString,
@@ -100,6 +105,13 @@ class ImageServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Update(self, request, context):
+        """Updates an existing image resource. Only specific fields can be updated, such as labels and name.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Delete(self, request, context):
         """Deletes an existing image resource by its ID.
         """
@@ -150,6 +162,11 @@ def add_ImageServiceServicer_to_server(servicer, server):
             'Create': grpc.unary_unary_rpc_method_handler(
                     servicer.Create,
                     request_deserializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.CreateImageRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_compute_dot_v1_dot_image__service__pb2.UpdateImageRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
@@ -258,6 +275,23 @@ class ImageService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/Create',
             nebius_dot_compute_dot_v1_dot_image__service__pb2.CreateImageRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.ImageService/Update',
+            nebius_dot_compute_dot_v1_dot_image__service__pb2.UpdateImageRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

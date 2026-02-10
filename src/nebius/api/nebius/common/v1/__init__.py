@@ -2993,11 +2993,14 @@ class Warning(pb_classes.Message):
         """
         Contains a Full Service/Method name or a select mask for a field.
         Examples:
-          nebius.compute.v1.InstanceService
-          nebius.compute.v1.InstanceService/Get
-          spec.control_plane.version
-          spec.network_interfaces.0.subnet_id
-          items.0.spec.control_plane.version
+        
+        .. code-block::
+        
+           nebius.compute.v1.InstanceService
+           nebius.compute.v1.InstanceService/Get
+           spec.control_plane.version
+           spec.network_interfaces.0.subnet_id
+           items.0.spec.control_plane.version
         """
         
         return super()._get_field("path", explicit_presence=False,

@@ -15,7 +15,7 @@ from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validat
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%nebius/storage/v1/bucket_policy.proto\x12\x11nebius.storage.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\xb0\x02\n\x0c\x42ucketPolicy\x12\x44\n\x05rules\x18\x01 \x03(\x0b\x32$.nebius.storage.v1.BucketPolicy.RuleB\x08\xbaH\x05\x92\x01\x02\x10\nR\x05rules\x1a\xd9\x01\n\x04Rule\x12\x1e\n\x05paths\x18\x01 \x03(\tB\x08\xbaH\x05\x92\x01\x02\x10\nR\x05paths\x12\x14\n\x05roles\x18\x02 \x03(\tR\x05roles\x12\x1b\n\x08group_id\x18\x04 \x01(\tH\x00R\x07groupId\x12Z\n\tanonymous\x18\x05 \x01(\x0b\x32\x34.nebius.storage.v1.BucketPolicy.Rule.AnonymousAccessB\x04\xbaJ\x01\x06H\x00R\tanonymous\x1a\x11\n\x0f\x41nonymousAccessB\t\n\x07subjectJ\x04\x08\x03\x10\x04\x42`\n\x18\x61i.nebius.pub.storage.v1B\x11\x42ucketPolicyProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%nebius/storage/v1/bucket_policy.proto\x12\x11nebius.storage.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\xbc\x02\n\x0c\x42ucketPolicy\x12\x44\n\x05rules\x18\x01 \x03(\x0b\x32$.nebius.storage.v1.BucketPolicy.RuleB\x08\xbaH\x05\x92\x01\x02\x10\nR\x05rules\x1a\xe5\x01\n\x04Rule\x12\x1e\n\x05paths\x18\x01 \x03(\tB\x08\xbaH\x05\x92\x01\x02\x10\nR\x05paths\x12\x14\n\x05roles\x18\x02 \x03(\tR\x05roles\x12\'\n\x08group_id\x18\x04 \x01(\tB\n\xe2J\x07\n\x05groupH\x00R\x07groupId\x12Z\n\tanonymous\x18\x05 \x01(\x0b\x32\x34.nebius.storage.v1.BucketPolicy.Rule.AnonymousAccessB\x04\xbaJ\x01\x06H\x00R\tanonymous\x1a\x11\n\x0f\x41nonymousAccessB\t\n\x07subjectJ\x04\x08\x03\x10\x04\x42`\n\x18\x61i.nebius.pub.storage.v1B\x11\x42ucketPolicyProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/storage/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -26,14 +26,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._serialized_options = b'\n\030ai.nebius.pub.storage.v1B\021BucketPolicyProtoP\001Z/github.com/nebius/gosdk/proto/nebius/storage/v1'
   _BUCKETPOLICY_RULE.fields_by_name['paths']._options = None
   _BUCKETPOLICY_RULE.fields_by_name['paths']._serialized_options = b'\272H\005\222\001\002\020\n'
+  _BUCKETPOLICY_RULE.fields_by_name['group_id']._options = None
+  _BUCKETPOLICY_RULE.fields_by_name['group_id']._serialized_options = b'\342J\007\n\005group'
   _BUCKETPOLICY_RULE.fields_by_name['anonymous']._options = None
   _BUCKETPOLICY_RULE.fields_by_name['anonymous']._serialized_options = b'\272J\001\006'
   _BUCKETPOLICY.fields_by_name['rules']._options = None
   _BUCKETPOLICY.fields_by_name['rules']._serialized_options = b'\272H\005\222\001\002\020\n'
   _globals['_BUCKETPOLICY']._serialized_start=116
-  _globals['_BUCKETPOLICY']._serialized_end=420
+  _globals['_BUCKETPOLICY']._serialized_end=432
   _globals['_BUCKETPOLICY_RULE']._serialized_start=203
-  _globals['_BUCKETPOLICY_RULE']._serialized_end=420
-  _globals['_BUCKETPOLICY_RULE_ANONYMOUSACCESS']._serialized_start=386
-  _globals['_BUCKETPOLICY_RULE_ANONYMOUSACCESS']._serialized_end=403
+  _globals['_BUCKETPOLICY_RULE']._serialized_end=432
+  _globals['_BUCKETPOLICY_RULE_ANONYMOUSACCESS']._serialized_start=398
+  _globals['_BUCKETPOLICY_RULE_ANONYMOUSACCESS']._serialized_end=415
 # @@protoc_insertion_point(module_scope)

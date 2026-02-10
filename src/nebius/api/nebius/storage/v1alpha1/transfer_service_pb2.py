@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.storage.v1alpha1 import transfer_pb2 as nebius_dot_storage_dot_v1alpha1_dot_transfer__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n.nebius/storage/v1alpha1/transfer_service.proto\x12\x17nebius.storage.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a&nebius/storage/v1alpha1/transfer.proto\",\n\x12GetTransferRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"w\n\x14ListTransfersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"x\n\x15ListTransfersResponse\x12\x37\n\x05items\x18\x01 \x03(\x0b\x32!.nebius.storage.v1alpha1.TransferR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa2\x01\n\x15\x43reateTransferRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x41\n\x04spec\x18\x02 \x01(\x0b\x32%.nebius.storage.v1alpha1.TransferSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xa2\x01\n\x15UpdateTransferRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x41\n\x04spec\x18\x02 \x01(\x0b\x32%.nebius.storage.v1alpha1.TransferSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"-\n\x13StopTransferRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"/\n\x15ResumeTransferRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Z\n\x15\x44\x65leteTransferRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12)\n\x10resource_version\x18\x02 \x01(\x03R\x0fresourceVersion\"\x81\x01\n\x1aGetIterationHistoryRequest\x12\'\n\x0btransfer_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\ntransferId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x91\x01\n\x1bGetIterationHistoryResponse\x12J\n\niterations\x18\x01 \x03(\x0b\x32*.nebius.storage.v1alpha1.TransferIterationR\niterations\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xea\x06\n\x0fTransferService\x12U\n\x03Get\x12+.nebius.storage.v1alpha1.GetTransferRequest\x1a!.nebius.storage.v1alpha1.Transfer\x12R\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a!.nebius.storage.v1alpha1.Transfer\x12\x65\n\x04List\x12-.nebius.storage.v1alpha1.ListTransfersRequest\x1a..nebius.storage.v1alpha1.ListTransfersResponse\x12U\n\x06\x43reate\x12..nebius.storage.v1alpha1.CreateTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12U\n\x06Update\x12..nebius.storage.v1alpha1.UpdateTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12Q\n\x04Stop\x12,.nebius.storage.v1alpha1.StopTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12U\n\x06Resume\x12..nebius.storage.v1alpha1.ResumeTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12U\n\x06\x44\x65lete\x12..nebius.storage.v1alpha1.DeleteTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12\x80\x01\n\x13GetIterationHistory\x12\x33.nebius.storage.v1alpha1.GetIterationHistoryRequest\x1a\x34.nebius.storage.v1alpha1.GetIterationHistoryResponse\x1a\x13\xbaJ\x10transfer.storageBo\n\x1e\x61i.nebius.pub.storage.v1alpha1B\x14TransferServiceProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/storage/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n.nebius/storage/v1alpha1/transfer_service.proto\x12\x17nebius.storage.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a&nebius/storage/v1alpha1/transfer.proto\"@\n\x12GetTransferRequest\x12*\n\x02id\x18\x01 \x01(\tB\x1a\xbaH\x03\xc8\x01\x01\xe2J\x11\n\x0fstoragetransferR\x02id\"w\n\x14ListTransfersRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"x\n\x15ListTransfersResponse\x12\x37\n\x05items\x18\x01 \x03(\x0b\x32!.nebius.storage.v1alpha1.TransferR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa2\x01\n\x15\x43reateTransferRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x41\n\x04spec\x18\x02 \x01(\x0b\x32%.nebius.storage.v1alpha1.TransferSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xa2\x01\n\x15UpdateTransferRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x41\n\x04spec\x18\x02 \x01(\x0b\x32%.nebius.storage.v1alpha1.TransferSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"A\n\x13StopTransferRequest\x12*\n\x02id\x18\x01 \x01(\tB\x1a\xbaH\x03\xc8\x01\x01\xe2J\x11\n\x0fstoragetransferR\x02id\"C\n\x15ResumeTransferRequest\x12*\n\x02id\x18\x01 \x01(\tB\x1a\xbaH\x03\xc8\x01\x01\xe2J\x11\n\x0fstoragetransferR\x02id\"n\n\x15\x44\x65leteTransferRequest\x12*\n\x02id\x18\x01 \x01(\tB\x1a\xbaH\x03\xc8\x01\x01\xe2J\x11\n\x0fstoragetransferR\x02id\x12)\n\x10resource_version\x18\x02 \x01(\x03R\x0fresourceVersion\"\x95\x01\n\x1aGetIterationHistoryRequest\x12;\n\x0btransfer_id\x18\x01 \x01(\tB\x1a\xbaH\x03\xc8\x01\x01\xe2J\x11\n\x0fstoragetransferR\ntransferId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x91\x01\n\x1bGetIterationHistoryResponse\x12J\n\niterations\x18\x01 \x03(\x0b\x32*.nebius.storage.v1alpha1.TransferIterationR\niterations\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xea\x06\n\x0fTransferService\x12U\n\x03Get\x12+.nebius.storage.v1alpha1.GetTransferRequest\x1a!.nebius.storage.v1alpha1.Transfer\x12R\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a!.nebius.storage.v1alpha1.Transfer\x12\x65\n\x04List\x12-.nebius.storage.v1alpha1.ListTransfersRequest\x1a..nebius.storage.v1alpha1.ListTransfersResponse\x12U\n\x06\x43reate\x12..nebius.storage.v1alpha1.CreateTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12U\n\x06Update\x12..nebius.storage.v1alpha1.UpdateTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12Q\n\x04Stop\x12,.nebius.storage.v1alpha1.StopTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12U\n\x06Resume\x12..nebius.storage.v1alpha1.ResumeTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12U\n\x06\x44\x65lete\x12..nebius.storage.v1alpha1.DeleteTransferRequest\x1a\x1b.nebius.common.v1.Operation\x12\x80\x01\n\x13GetIterationHistory\x12\x33.nebius.storage.v1alpha1.GetIterationHistoryRequest\x1a\x34.nebius.storage.v1alpha1.GetIterationHistoryResponse\x1a\x13\xbaJ\x10transfer.storageBo\n\x1e\x61i.nebius.pub.storage.v1alpha1B\x14TransferServiceProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/storage/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,7 +28,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\036ai.nebius.pub.storage.v1alpha1B\024TransferServiceProtoP\001Z5github.com/nebius/gosdk/proto/nebius/storage/v1alpha1'
   _GETTRANSFERREQUEST.fields_by_name['id']._options = None
-  _GETTRANSFERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETTRANSFERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\021\n\017storagetransfer'
   _LISTTRANSFERSREQUEST.fields_by_name['parent_id']._options = None
   _LISTTRANSFERSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
   _CREATETRANSFERREQUEST.fields_by_name['metadata']._options = None
@@ -40,35 +40,35 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _UPDATETRANSFERREQUEST.fields_by_name['spec']._options = None
   _UPDATETRANSFERREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _STOPTRANSFERREQUEST.fields_by_name['id']._options = None
-  _STOPTRANSFERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _STOPTRANSFERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\021\n\017storagetransfer'
   _RESUMETRANSFERREQUEST.fields_by_name['id']._options = None
-  _RESUMETRANSFERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _RESUMETRANSFERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\021\n\017storagetransfer'
   _DELETETRANSFERREQUEST.fields_by_name['id']._options = None
-  _DELETETRANSFERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETETRANSFERREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\021\n\017storagetransfer'
   _GETITERATIONHISTORYREQUEST.fields_by_name['transfer_id']._options = None
-  _GETITERATIONHISTORYREQUEST.fields_by_name['transfer_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETITERATIONHISTORYREQUEST.fields_by_name['transfer_id']._serialized_options = b'\272H\003\310\001\001\342J\021\n\017storagetransfer'
   _TRANSFERSERVICE._options = None
   _TRANSFERSERVICE._serialized_options = b'\272J\020transfer.storage'
   _globals['_GETTRANSFERREQUEST']._serialized_start=237
-  _globals['_GETTRANSFERREQUEST']._serialized_end=281
-  _globals['_LISTTRANSFERSREQUEST']._serialized_start=283
-  _globals['_LISTTRANSFERSREQUEST']._serialized_end=402
-  _globals['_LISTTRANSFERSRESPONSE']._serialized_start=404
-  _globals['_LISTTRANSFERSRESPONSE']._serialized_end=524
-  _globals['_CREATETRANSFERREQUEST']._serialized_start=527
-  _globals['_CREATETRANSFERREQUEST']._serialized_end=689
-  _globals['_UPDATETRANSFERREQUEST']._serialized_start=692
-  _globals['_UPDATETRANSFERREQUEST']._serialized_end=854
-  _globals['_STOPTRANSFERREQUEST']._serialized_start=856
-  _globals['_STOPTRANSFERREQUEST']._serialized_end=901
-  _globals['_RESUMETRANSFERREQUEST']._serialized_start=903
-  _globals['_RESUMETRANSFERREQUEST']._serialized_end=950
-  _globals['_DELETETRANSFERREQUEST']._serialized_start=952
-  _globals['_DELETETRANSFERREQUEST']._serialized_end=1042
-  _globals['_GETITERATIONHISTORYREQUEST']._serialized_start=1045
-  _globals['_GETITERATIONHISTORYREQUEST']._serialized_end=1174
-  _globals['_GETITERATIONHISTORYRESPONSE']._serialized_start=1177
-  _globals['_GETITERATIONHISTORYRESPONSE']._serialized_end=1322
-  _globals['_TRANSFERSERVICE']._serialized_start=1325
-  _globals['_TRANSFERSERVICE']._serialized_end=2199
+  _globals['_GETTRANSFERREQUEST']._serialized_end=301
+  _globals['_LISTTRANSFERSREQUEST']._serialized_start=303
+  _globals['_LISTTRANSFERSREQUEST']._serialized_end=422
+  _globals['_LISTTRANSFERSRESPONSE']._serialized_start=424
+  _globals['_LISTTRANSFERSRESPONSE']._serialized_end=544
+  _globals['_CREATETRANSFERREQUEST']._serialized_start=547
+  _globals['_CREATETRANSFERREQUEST']._serialized_end=709
+  _globals['_UPDATETRANSFERREQUEST']._serialized_start=712
+  _globals['_UPDATETRANSFERREQUEST']._serialized_end=874
+  _globals['_STOPTRANSFERREQUEST']._serialized_start=876
+  _globals['_STOPTRANSFERREQUEST']._serialized_end=941
+  _globals['_RESUMETRANSFERREQUEST']._serialized_start=943
+  _globals['_RESUMETRANSFERREQUEST']._serialized_end=1010
+  _globals['_DELETETRANSFERREQUEST']._serialized_start=1012
+  _globals['_DELETETRANSFERREQUEST']._serialized_end=1122
+  _globals['_GETITERATIONHISTORYREQUEST']._serialized_start=1125
+  _globals['_GETITERATIONHISTORYREQUEST']._serialized_end=1274
+  _globals['_GETITERATIONHISTORYRESPONSE']._serialized_start=1277
+  _globals['_GETITERATIONHISTORYRESPONSE']._serialized_end=1422
+  _globals['_TRANSFERSERVICE']._serialized_start=1425
+  _globals['_TRANSFERSERVICE']._serialized_end=2299
 # @@protoc_insertion_point(module_scope)

@@ -106,7 +106,8 @@ class InstanceServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Delete(self, request, context):
-        """Deletes a VM instance by its ID.
+        """Deletes a VM instance by its ID. Also deletes all the managed disks, declared in the instance spec.
+        Fails if cannot delete any of the managed disks.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')

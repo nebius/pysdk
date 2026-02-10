@@ -3883,6 +3883,56 @@ class CreateImageRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class UpdateImageRequest(pb_classes.Message):
+    __PB2_CLASS__ = image_service_pb2.UpdateImageRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.UpdateImageRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ImageSpec|image_pb2.ImageSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ImageSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ImageSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ImageSpec|image_pb2.ImageSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class DeleteImageRequest(pb_classes.Message):
     __PB2_CLASS__ = image_service_pb2.DeleteImageRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteImageRequest",image_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -4197,6 +4247,36 @@ class ImageServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operati
         
         return super().request(
             method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateImageRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateImageRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Updates an existing image resource. Only specific fields can be updated, such as labels and name.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.UpdateImageRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
             request=request,
             result_pb2_class=operation_pb2.Operation,
             result_wrapper=operation.Operation,
@@ -5515,6 +5595,26 @@ class AttachedDiskSpec(pb_classes.Message):
     
     @builtins.property
     def existing_disk(self) -> "ExistingDisk|None":
+        """
+        Attach an existing disk.
+        
+        Lifecycle:
+        
+        
+        * The disk is preserved when the instance is deleted (it will be detached).
+        
+        Switching to a managed disk:
+        
+        
+        * To delete the disk together with the instance, switch to ManagedDisk in the instance spec.
+        * For the switch, ``ManagedDisk.name`` MUST match the current disk ``name``
+          (see DiskService.Get for the disk referenced by ``ExistingDisk.id``).
+        * When converting an ExistingDisk to a ManagedDisk, you must provide ``ManagedDisk.name`` and ``ManagedDisk.spec``
+          exactly as they are currently defined in the disk resource.
+          Obtain the current values via ``DiskService.Get`` and copy them verbatim.
+          If ``ManagedDisk.spec`` differs from the current disk spec, the instance update will fail.
+        """
+        
         return super()._get_field("existing_disk", explicit_presence=True,
         wrap=ExistingDisk,
         )
@@ -6510,7 +6610,8 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["DeleteInstanceRequest","operation.Operation[v1_1.Operation]"]:
         """
-        Deletes a VM instance by its ID.
+        Deletes a VM instance by its ID. Also deletes all the managed disks, declared in the instance spec.
+        Fails if cannot delete any of the managed disks.
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.compute.v1.DeleteInstanceRequest`
@@ -7909,6 +8010,7 @@ __all__ = [
     "GetImageLatestByFamilyRequest",
     "ListImagesRequest",
     "CreateImageRequest",
+    "UpdateImageRequest",
     "DeleteImageRequest",
     "ListImagesResponse",
     "ListPublicRequest",

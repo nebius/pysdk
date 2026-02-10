@@ -46,6 +46,14 @@ class CreateImageRequest(_message.Message):
     spec: _image_pb2.ImageSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_image_pb2.ImageSpec, _Mapping]] = ...) -> None: ...
 
+class UpdateImageRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: _image_pb2.ImageSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_image_pb2.ImageSpec, _Mapping]] = ...) -> None: ...
+
 class DeleteImageRequest(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
