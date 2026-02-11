@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/iam/v1/federated_credentials.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xec\x01\n\x14\x46\x65\x64\x65ratedCredentials\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x43\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.iam.v1.FederatedCredentialsSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b\x32).nebius.iam.v1.FederatedCredentialsStatusB\x04\xbaJ\x01\x05R\x06status\"\xe9\x01\n\x18\x46\x65\x64\x65ratedCredentialsSpec\x12M\n\roidc_provider\x18\x01 \x01(\x0b\x32&.nebius.iam.v1.OidcCredentialsProviderH\x00R\x0coidcProvider\x12\x38\n\x14\x66\x65\x64\x65rated_subject_id\x18\x65 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x12\x66\x65\x64\x65ratedSubjectId\x12%\n\nsubject_id\x18o \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tsubjectIdB\x1d\n\x14\x63redentials_provider\x12\x05\xbaH\x02\x08\x01\"b\n\x17OidcCredentialsProvider\x12%\n\nissuer_url\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tissuerUrl\x12 \n\x0cjwk_set_json\x18\x02 \x01(\tR\njwkSetJson\"\x1c\n\x1a\x46\x65\x64\x65ratedCredentialsStatusB`\n\x14\x61i.nebius.pub.iam.v1B\x19\x46\x65\x64\x65ratedCredentialsProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/iam/v1/federated_credentials.proto\x12\rnebius.iam.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xec\x01\n\x14\x46\x65\x64\x65ratedCredentials\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x43\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.iam.v1.FederatedCredentialsSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b\x32).nebius.iam.v1.FederatedCredentialsStatusB\x04\xbaJ\x01\x05R\x06status\"\xe1\x01\n\x18\x46\x65\x64\x65ratedCredentialsSpec\x12M\n\roidc_provider\x18\x01 \x01(\x0b\x32&.nebius.iam.v1.OidcCredentialsProviderH\x00R\x0coidcProvider\x12\x30\n\x14\x66\x65\x64\x65rated_subject_id\x18\x65 \x01(\tR\x12\x66\x65\x64\x65ratedSubjectId\x12%\n\nsubject_id\x18o \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tsubjectIdB\x1d\n\x14\x63redentials_provider\x12\x05\xbaH\x02\x08\x01\"b\n\x17OidcCredentialsProvider\x12%\n\nissuer_url\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tissuerUrl\x12 \n\x0cjwk_set_json\x18\x02 \x01(\tR\njwkSetJson\"\x1c\n\x1a\x46\x65\x64\x65ratedCredentialsStatusB`\n\x14\x61i.nebius.pub.iam.v1B\x19\x46\x65\x64\x65ratedCredentialsProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,8 +33,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _FEDERATEDCREDENTIALS.fields_by_name['status']._serialized_options = b'\272J\001\005'
   _FEDERATEDCREDENTIALSSPEC.oneofs_by_name['credentials_provider']._options = None
   _FEDERATEDCREDENTIALSSPEC.oneofs_by_name['credentials_provider']._serialized_options = b'\272H\002\010\001'
-  _FEDERATEDCREDENTIALSSPEC.fields_by_name['federated_subject_id']._options = None
-  _FEDERATEDCREDENTIALSSPEC.fields_by_name['federated_subject_id']._serialized_options = b'\272H\003\310\001\001'
   _FEDERATEDCREDENTIALSSPEC.fields_by_name['subject_id']._options = None
   _FEDERATEDCREDENTIALSSPEC.fields_by_name['subject_id']._serialized_options = b'\272H\003\310\001\001'
   _OIDCCREDENTIALSPROVIDER.fields_by_name['issuer_url']._options = None
@@ -42,9 +40,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_FEDERATEDCREDENTIALS']._serialized_start=149
   _globals['_FEDERATEDCREDENTIALS']._serialized_end=385
   _globals['_FEDERATEDCREDENTIALSSPEC']._serialized_start=388
-  _globals['_FEDERATEDCREDENTIALSSPEC']._serialized_end=621
-  _globals['_OIDCCREDENTIALSPROVIDER']._serialized_start=623
-  _globals['_OIDCCREDENTIALSPROVIDER']._serialized_end=721
-  _globals['_FEDERATEDCREDENTIALSSTATUS']._serialized_start=723
-  _globals['_FEDERATEDCREDENTIALSSTATUS']._serialized_end=751
+  _globals['_FEDERATEDCREDENTIALSSPEC']._serialized_end=613
+  _globals['_OIDCCREDENTIALSPROVIDER']._serialized_start=615
+  _globals['_OIDCCREDENTIALSPROVIDER']._serialized_end=713
+  _globals['_FEDERATEDCREDENTIALSSTATUS']._serialized_start=715
+  _globals['_FEDERATEDCREDENTIALSSTATUS']._serialized_end=743
 # @@protoc_insertion_point(module_scope)
