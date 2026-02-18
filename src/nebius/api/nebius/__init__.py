@@ -98,6 +98,45 @@ class FieldBehavior(pb_enum.Enum):
     """
     
 
+class MethodBehavior(pb_enum.Enum):
+    """
+    MethodBehavior describes special behaviors of a method that affect
+    code generation and tooling.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.MethodBehavior",annotations_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    METHOD_BEHAVIOR_UNSPECIFIED = 0
+    """
+    Indicates that the method behavior is default and is not specified.
+    For instance, an Update method will lose its update semantics if this value
+    is set.
+    Does not mean anything if set along with other values.
+    """
+    
+    METHOD_UPDATER = 2
+    """
+    Indicates that the method is used to update a resource or a number of
+    resources, therefore it requires a reset mask to unset fields.
+    This will enable SDKs to generate the reset mask on request, as well as the
+    gateway to pass and sanitize it. The CLI will add flags to set partial or
+    full updates and custom reset masks.
+    """
+    
+    METHOD_PAGINATED = 3
+    """
+    Indicates that the method is used to list something, and supports
+    pagination.
+    """
+    
+    METHOD_WITHOUT_GET = 4
+    """
+    Indicates that the method will create an operation, which doesn't have a
+    gettable resource after its completion, and therefore must not call a ``get``
+    method. For instance, it can be used for long-running operations that
+    don't return any resource, or for resource deletion operations.
+    """
+    
+
 class ServicePySDKSettings(pb_classes.Message):
     __PB2_CLASS__ = annotations_pb2.ServicePySDKSettings
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ServicePySDKSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -481,6 +520,7 @@ service_py_sdk = annotations_pb2.service_py_sdk
 method_deprecation_details = annotations_pb2.method_deprecation_details
 method_py_sdk = annotations_pb2.method_py_sdk
 send_reset_mask = annotations_pb2.send_reset_mask
+method_behavior = annotations_pb2.method_behavior
 resource_behavior = annotations_pb2.resource_behavior
 message_deprecation_details = annotations_pb2.message_deprecation_details
 message_py_sdk = annotations_pb2.message_py_sdk
@@ -500,6 +540,7 @@ __all__ = [
     #@ local import names here @#
     "ResourceBehavior",
     "FieldBehavior",
+    "MethodBehavior",
     "file_deprecation_details",
     "api_service_name",
     "service_deprecation_details",
@@ -507,6 +548,7 @@ __all__ = [
     "method_deprecation_details",
     "method_py_sdk",
     "send_reset_mask",
+    "method_behavior",
     "resource_behavior",
     "message_deprecation_details",
     "message_py_sdk",

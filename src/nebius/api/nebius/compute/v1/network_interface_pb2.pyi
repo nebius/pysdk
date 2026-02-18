@@ -8,18 +8,20 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class NetworkInterfaceSpec(_message.Message):
-    __slots__ = ["subnet_id", "name", "ip_address", "public_ip_address", "aliases"]
+    __slots__ = ["subnet_id", "name", "ip_address", "public_ip_address", "aliases", "security_groups"]
     SUBNET_ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     ALIASES_FIELD_NUMBER: _ClassVar[int]
+    SECURITY_GROUPS_FIELD_NUMBER: _ClassVar[int]
     subnet_id: str
     name: str
     ip_address: IPAddress
     public_ip_address: PublicIPAddress
     aliases: _containers.RepeatedCompositeFieldContainer[IPAlias]
-    def __init__(self, subnet_id: _Optional[str] = ..., name: _Optional[str] = ..., ip_address: _Optional[_Union[IPAddress, _Mapping]] = ..., public_ip_address: _Optional[_Union[PublicIPAddress, _Mapping]] = ..., aliases: _Optional[_Iterable[_Union[IPAlias, _Mapping]]] = ...) -> None: ...
+    security_groups: _containers.RepeatedCompositeFieldContainer[SecurityGroup]
+    def __init__(self, subnet_id: _Optional[str] = ..., name: _Optional[str] = ..., ip_address: _Optional[_Union[IPAddress, _Mapping]] = ..., public_ip_address: _Optional[_Union[PublicIPAddress, _Mapping]] = ..., aliases: _Optional[_Iterable[_Union[IPAlias, _Mapping]]] = ..., security_groups: _Optional[_Iterable[_Union[SecurityGroup, _Mapping]]] = ...) -> None: ...
 
 class IPAddress(_message.Message):
     __slots__ = ["allocation_id"]
@@ -82,3 +84,9 @@ class IPAliasesStatus(_message.Message):
     CIDRS_FIELD_NUMBER: _ClassVar[int]
     cidrs: _containers.RepeatedScalarFieldContainer[str]
     def __init__(self, cidrs: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class SecurityGroup(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...

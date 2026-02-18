@@ -4394,6 +4394,7 @@ class NetworkInterfaceSpec(pb_classes.Message):
         ip_address: "IPAddress|network_interface_pb2.IPAddress|None|unset.UnsetType" = unset.Unset,
         public_ip_address: "PublicIPAddress|network_interface_pb2.PublicIPAddress|None|unset.UnsetType" = unset.Unset,
         aliases: "abc.Iterable[IPAlias]|None|unset.UnsetType" = unset.Unset,
+        security_groups: "abc.Iterable[SecurityGroup]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(subnet_id, unset.UnsetType):
@@ -4406,6 +4407,8 @@ class NetworkInterfaceSpec(pb_classes.Message):
             self.public_ip_address = public_ip_address
         if not isinstance(aliases, unset.UnsetType):
             self.aliases = aliases
+        if not isinstance(security_groups, unset.UnsetType):
+            self.security_groups = security_groups
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -4414,6 +4417,7 @@ class NetworkInterfaceSpec(pb_classes.Message):
             "ip_address",
             "public_ip_address",
             "aliases",
+            "security_groups",
         ]
     
     @builtins.property
@@ -4486,12 +4490,29 @@ class NetworkInterfaceSpec(pb_classes.Message):
         return super()._set_field("aliases",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def security_groups(self) -> "abc.MutableSequence[SecurityGroup]":
+        """
+        Security groups associated with the network interface.
+        If an empty list is provided, the default security group for the network will be used.
+        Effective security groups can be seen in the status.
+        """
+        
+        return super()._get_field("security_groups", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(SecurityGroup,None,None),
+        )
+    @security_groups.setter
+    def security_groups(self, value: "abc.Iterable[SecurityGroup]|None") -> None:
+        return super()._set_field("security_groups",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "subnet_id":"subnet_id",
         "name":"name",
         "ip_address":"ip_address",
         "public_ip_address":"public_ip_address",
         "aliases":"aliases",
+        "security_groups":"security_groups",
     }
     
 class IPAddress(pb_classes.Message):
@@ -4988,6 +5009,44 @@ class IPAliasesStatus(pb_classes.Message):
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "cidrs":"cidrs",
+    }
+    
+class SecurityGroup(pb_classes.Message):
+    __PB2_CLASS__ = network_interface_pb2.SecurityGroup
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.SecurityGroup",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        Security group identifier
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
     }
     
 # file: nebius/compute/v1/instance.proto
@@ -8023,6 +8082,7 @@ __all__ = [
     "IPAddressStatus",
     "PublicIPAddressStatus",
     "IPAliasesStatus",
+    "SecurityGroup",
     "InstanceRecoveryPolicy",
     "Instance",
     "InstanceSpec",

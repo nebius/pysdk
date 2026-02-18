@@ -15,7 +15,7 @@ from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validat
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/compute/v1/network_interface.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\xd1\x02\n\x14NetworkInterfaceSpec\x12\'\n\tsubnet_id\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x08subnetId\x12:\n\x04name\x18\x02 \x01(\tB&\xbaH\x1f\xc8\x01\x01r\x1a\x10\x01\x18<2\x14^[0-9a-z][0-9a-z-]*$\xbaJ\x01\x02R\x04name\x12H\n\nip_address\x18\x03 \x01(\x0b\x32\x1c.nebius.compute.v1.IPAddressB\x0b\xbaH\x03\xc8\x01\x01\xbaJ\x02\x06\x02R\tipAddress\x12T\n\x11public_ip_address\x18\x04 \x01(\x0b\x32\".nebius.compute.v1.PublicIPAddressB\x04\xbaJ\x01\x06R\x0fpublicIpAddress\x12\x34\n\x07\x61liases\x18\x06 \x03(\x0b\x32\x1a.nebius.compute.v1.IPAliasR\x07\x61liases\"0\n\tIPAddress\x12#\n\rallocation_id\x18\x01 \x01(\tR\x0c\x61llocationId\"^\n\x0fPublicIPAddress\x12%\n\rallocation_id\x18\x01 \x01(\tH\x00R\x0c\x61llocationId\x12\x16\n\x06static\x18\x03 \x01(\x08R\x06staticB\x0c\n\nallocation\"6\n\x07IPAlias\x12+\n\rallocation_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0c\x61llocationId\"\xce\x02\n\x16NetworkInterfaceStatus\x12\x14\n\x05index\x18\x01 \x01(\x05R\x05index\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12\x41\n\nip_address\x18\x03 \x01(\x0b\x32\".nebius.compute.v1.IPAddressStatusR\tipAddress\x12T\n\x11public_ip_address\x18\x04 \x01(\x0b\x32(.nebius.compute.v1.PublicIPAddressStatusR\x0fpublicIpAddress\x12<\n\x07\x61liases\x18\x06 \x01(\x0b\x32\".nebius.compute.v1.IPAliasesStatusR\x07\x61liases\x12\x1f\n\x0bmac_address\x18\x07 \x01(\tR\nmacAddress\x12\x12\n\x04\x66qdn\x18\t \x01(\tR\x04\x66qdn\"P\n\x0fIPAddressStatus\x12\x18\n\x07\x61\x64\x64ress\x18\x01 \x01(\tR\x07\x61\x64\x64ress\x12#\n\rallocation_id\x18\x02 \x01(\tR\x0c\x61llocationId\"n\n\x15PublicIPAddressStatus\x12\x18\n\x07\x61\x64\x64ress\x18\x01 \x01(\tR\x07\x61\x64\x64ress\x12#\n\rallocation_id\x18\x02 \x01(\tR\x0c\x61llocationId\x12\x16\n\x06static\x18\x03 \x01(\x08R\x06static\"\'\n\x0fIPAliasesStatus\x12\x14\n\x05\x63idrs\x18\x02 \x03(\tR\x05\x63idrsBd\n\x18\x61i.nebius.pub.compute.v1B\x15NetworkInterfaceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/compute/v1/network_interface.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\"\x9c\x03\n\x14NetworkInterfaceSpec\x12\'\n\tsubnet_id\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x08subnetId\x12:\n\x04name\x18\x02 \x01(\tB&\xbaH\x1f\xc8\x01\x01r\x1a\x10\x01\x18<2\x14^[0-9a-z][0-9a-z-]*$\xbaJ\x01\x02R\x04name\x12H\n\nip_address\x18\x03 \x01(\x0b\x32\x1c.nebius.compute.v1.IPAddressB\x0b\xbaH\x03\xc8\x01\x01\xbaJ\x02\x06\x02R\tipAddress\x12T\n\x11public_ip_address\x18\x04 \x01(\x0b\x32\".nebius.compute.v1.PublicIPAddressB\x04\xbaJ\x01\x06R\x0fpublicIpAddress\x12\x34\n\x07\x61liases\x18\x06 \x03(\x0b\x32\x1a.nebius.compute.v1.IPAliasR\x07\x61liases\x12I\n\x0fsecurity_groups\x18\x07 \x03(\x0b\x32 .nebius.compute.v1.SecurityGroupR\x0esecurityGroups\"0\n\tIPAddress\x12#\n\rallocation_id\x18\x01 \x01(\tR\x0c\x61llocationId\"^\n\x0fPublicIPAddress\x12%\n\rallocation_id\x18\x01 \x01(\tH\x00R\x0c\x61llocationId\x12\x16\n\x06static\x18\x03 \x01(\x08R\x06staticB\x0c\n\nallocation\"6\n\x07IPAlias\x12+\n\rallocation_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x0c\x61llocationId\"\xce\x02\n\x16NetworkInterfaceStatus\x12\x14\n\x05index\x18\x01 \x01(\x05R\x05index\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12\x41\n\nip_address\x18\x03 \x01(\x0b\x32\".nebius.compute.v1.IPAddressStatusR\tipAddress\x12T\n\x11public_ip_address\x18\x04 \x01(\x0b\x32(.nebius.compute.v1.PublicIPAddressStatusR\x0fpublicIpAddress\x12<\n\x07\x61liases\x18\x06 \x01(\x0b\x32\".nebius.compute.v1.IPAliasesStatusR\x07\x61liases\x12\x1f\n\x0bmac_address\x18\x07 \x01(\tR\nmacAddress\x12\x12\n\x04\x66qdn\x18\t \x01(\tR\x04\x66qdn\"P\n\x0fIPAddressStatus\x12\x18\n\x07\x61\x64\x64ress\x18\x01 \x01(\tR\x07\x61\x64\x64ress\x12#\n\rallocation_id\x18\x02 \x01(\tR\x0c\x61llocationId\"n\n\x15PublicIPAddressStatus\x12\x18\n\x07\x61\x64\x64ress\x18\x01 \x01(\tR\x07\x61\x64\x64ress\x12#\n\rallocation_id\x18\x02 \x01(\tR\x0c\x61llocationId\x12\x16\n\x06static\x18\x03 \x01(\x08R\x06static\"\'\n\x0fIPAliasesStatus\x12\x14\n\x05\x63idrs\x18\x02 \x03(\tR\x05\x63idrs\"\x1f\n\rSecurityGroup\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02idBd\n\x18\x61i.nebius.pub.compute.v1B\x15NetworkInterfaceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,19 +35,21 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _IPALIAS.fields_by_name['allocation_id']._options = None
   _IPALIAS.fields_by_name['allocation_id']._serialized_options = b'\272H\003\310\001\001'
   _globals['_NETWORKINTERFACESPEC']._serialized_start=120
-  _globals['_NETWORKINTERFACESPEC']._serialized_end=457
-  _globals['_IPADDRESS']._serialized_start=459
-  _globals['_IPADDRESS']._serialized_end=507
-  _globals['_PUBLICIPADDRESS']._serialized_start=509
-  _globals['_PUBLICIPADDRESS']._serialized_end=603
-  _globals['_IPALIAS']._serialized_start=605
-  _globals['_IPALIAS']._serialized_end=659
-  _globals['_NETWORKINTERFACESTATUS']._serialized_start=662
-  _globals['_NETWORKINTERFACESTATUS']._serialized_end=996
-  _globals['_IPADDRESSSTATUS']._serialized_start=998
-  _globals['_IPADDRESSSTATUS']._serialized_end=1078
-  _globals['_PUBLICIPADDRESSSTATUS']._serialized_start=1080
-  _globals['_PUBLICIPADDRESSSTATUS']._serialized_end=1190
-  _globals['_IPALIASESSTATUS']._serialized_start=1192
-  _globals['_IPALIASESSTATUS']._serialized_end=1231
+  _globals['_NETWORKINTERFACESPEC']._serialized_end=532
+  _globals['_IPADDRESS']._serialized_start=534
+  _globals['_IPADDRESS']._serialized_end=582
+  _globals['_PUBLICIPADDRESS']._serialized_start=584
+  _globals['_PUBLICIPADDRESS']._serialized_end=678
+  _globals['_IPALIAS']._serialized_start=680
+  _globals['_IPALIAS']._serialized_end=734
+  _globals['_NETWORKINTERFACESTATUS']._serialized_start=737
+  _globals['_NETWORKINTERFACESTATUS']._serialized_end=1071
+  _globals['_IPADDRESSSTATUS']._serialized_start=1073
+  _globals['_IPADDRESSSTATUS']._serialized_end=1153
+  _globals['_PUBLICIPADDRESSSTATUS']._serialized_start=1155
+  _globals['_PUBLICIPADDRESSSTATUS']._serialized_end=1265
+  _globals['_IPALIASESSTATUS']._serialized_start=1267
+  _globals['_IPALIASESSTATUS']._serialized_end=1306
+  _globals['_SECURITYGROUP']._serialized_start=1308
+  _globals['_SECURITYGROUP']._serialized_end=1339
 # @@protoc_insertion_point(module_scope)

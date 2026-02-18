@@ -25,6 +25,10 @@ import nebius.api.nebius.vpc.v1.route_pb2 as route_pb2
 import nebius.api.nebius.vpc.v1.route_service_pb2 as route_service_pb2
 import nebius.api.nebius.vpc.v1.route_table_pb2 as route_table_pb2
 import nebius.api.nebius.vpc.v1.route_table_service_pb2 as route_table_service_pb2
+import nebius.api.nebius.vpc.v1.security_group_pb2 as security_group_pb2
+import nebius.api.nebius.vpc.v1.security_group_service_pb2 as security_group_service_pb2
+import nebius.api.nebius.vpc.v1.security_rule_pb2 as security_rule_pb2
+import nebius.api.nebius.vpc.v1.security_rule_service_pb2 as security_rule_service_pb2
 import nebius.api.nebius.vpc.v1.subnet_pb2 as subnet_pb2
 import nebius.api.nebius.vpc.v1.subnet_service_pb2 as subnet_service_pb2
 import nebius.api.nebius.vpc.v1.target_group_pb2 as target_group_pb2
@@ -5594,6 +5598,2031 @@ class RouteTableServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         )
     
 
+# file: nebius/vpc/v1/security_group.proto
+class SecurityGroup(pb_classes.Message):
+    """
+    SecurityGroup is a logical grouping of resources
+    used to manage and apply network security policies collectively.
+    Security group applies implicit deny at the end (traffic not matched by any rule will be denied).
+    """
+    
+    __PB2_CLASS__ = security_group_pb2.SecurityGroup
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SecurityGroup",security_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "SecurityGroupSpec|security_group_pb2.SecurityGroupSpec|None|unset.UnsetType" = unset.Unset,
+        status: "SecurityGroupStatus|security_group_pb2.SecurityGroupStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        ``metadata.parent_id`` represents the Project.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "SecurityGroupSpec":
+        """
+        Specification of the security group's configuration.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=SecurityGroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "SecurityGroupSpec|security_group_pb2.SecurityGroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "SecurityGroupStatus":
+        """
+        Current status of the security group.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=SecurityGroupStatus,
+        )
+    @status.setter
+    def status(self, value: "SecurityGroupStatus|security_group_pb2.SecurityGroupStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class SecurityGroupSpec(pb_classes.Message):
+    __PB2_CLASS__ = security_group_pb2.SecurityGroupSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SecurityGroupSpec",security_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(network_id, unset.UnsetType):
+            self.network_id = network_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "network_id",
+        ]
+    
+    @builtins.property
+    def network_id(self) -> "builtins.str":
+        """
+        ID of the VPC network this security group belongs to.
+        """
+        
+        return super()._get_field("network_id", explicit_presence=False,
+        )
+    @network_id.setter
+    def network_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("network_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "network_id":"network_id",
+    }
+    
+class SecurityGroupStatus(pb_classes.Message):
+    __PB2_CLASS__ = security_group_pb2.SecurityGroupStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SecurityGroupStatus",security_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class State(pb_enum.Enum):
+        """
+        Enumeration of possible states of the security group.
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.SecurityGroupStatus.State",security_group_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        """
+        Default state, unspecified.
+        """
+        
+        READY = 2
+        """
+        Security group is ready for use.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "SecurityGroupStatus.State|security_group_pb2.SecurityGroupStatus.State|None|unset.UnsetType" = unset.Unset,
+        default: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(default, unset.UnsetType):
+            self.default = default
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "default",
+            "State",
+        ]
+    
+    @builtins.property
+    def state(self) -> "SecurityGroupStatus.State":
+        """
+        Current state of the security group.
+        """
+        
+        return super()._get_field("state", explicit_presence=False,
+        wrap=SecurityGroupStatus.State,
+        )
+    @state.setter
+    def state(self, value: "SecurityGroupStatus.State|security_group_pb2.SecurityGroupStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def default(self) -> "builtins.bool":
+        """
+        Indicates if this is the default security group for the network.
+        Only one security group can be default per network.
+        Will be used on the interface if no other is specified.
+        """
+        
+        return super()._get_field("default", explicit_presence=False,
+        )
+    @default.setter
+    def default(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("default",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "default":"default",
+        "State":"State",
+    }
+    
+# file: nebius/vpc/v1/security_group_service.proto
+class GetSecurityGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_group_service_pb2.GetSecurityGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetSecurityGroupRequest",security_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetSecurityGroupByNameRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_group_service_pb2.GetSecurityGroupByNameRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetSecurityGroupByNameRequest",security_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the Project.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
+    
+class ListSecurityGroupsRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_group_service_pb2.ListSecurityGroupsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSecurityGroupsRequest",security_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the Project.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListSecurityGroupsByNetworkRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_group_service_pb2.ListSecurityGroupsByNetworkRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSecurityGroupsByNetworkRequest",security_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        network_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(network_id, unset.UnsetType):
+            self.network_id = network_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "network_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def network_id(self) -> "builtins.str":
+        """
+        ID of the Network.
+        """
+        
+        return super()._get_field("network_id", explicit_presence=False,
+        )
+    @network_id.setter
+    def network_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("network_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "network_id":"network_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListSecurityGroupsResponse(pb_classes.Message):
+    __PB2_CLASS__ = security_group_service_pb2.ListSecurityGroupsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSecurityGroupsResponse",security_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[SecurityGroup]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[SecurityGroup]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(SecurityGroup,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[SecurityGroup]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class CreateSecurityGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_group_service_pb2.CreateSecurityGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.CreateSecurityGroupRequest",security_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "SecurityGroupSpec|security_group_pb2.SecurityGroupSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "SecurityGroupSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=SecurityGroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "SecurityGroupSpec|security_group_pb2.SecurityGroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateSecurityGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_group_service_pb2.UpdateSecurityGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdateSecurityGroupRequest",security_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "SecurityGroupSpec|security_group_pb2.SecurityGroupSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "SecurityGroupSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=SecurityGroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "SecurityGroupSpec|security_group_pb2.SecurityGroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteSecurityGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_group_service_pb2.DeleteSecurityGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.DeleteSecurityGroupRequest",security_group_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+
+class SecurityGroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    SecurityGroupService provides operations for managing security groups.
+    
+    This class provides the client methods for the ``.nebius.vpc.v1.SecurityGroupService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.vpc.v1.SecurityGroupService",security_group_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.vpc.v1.SecurityGroupService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def get(self,
+        request: "GetSecurityGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetSecurityGroupRequest","SecurityGroup"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.GetSecurityGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.vpc.v1.SecurityGroup`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=security_group_pb2.SecurityGroup,
+            result_wrapper=pb_classes.simple_wrapper(SecurityGroup),
+            **kwargs,
+        )
+    
+    def get_by_name(self,
+        request: "GetSecurityGroupByNameRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetSecurityGroupByNameRequest","SecurityGroup"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.GetSecurityGroupByNameRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.vpc.v1.SecurityGroup`.
+        """
+        
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=security_group_pb2.SecurityGroup,
+            result_wrapper=pb_classes.simple_wrapper(SecurityGroup),
+            **kwargs,
+        )
+    
+    def list(self,
+        request: "ListSecurityGroupsRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListSecurityGroupsRequest","ListSecurityGroupsResponse"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.ListSecurityGroupsRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.vpc.v1.ListSecurityGroupsResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=security_group_service_pb2.ListSecurityGroupsResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListSecurityGroupsResponse),
+            **kwargs,
+        )
+    
+    def list_by_network(self,
+        request: "ListSecurityGroupsByNetworkRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListSecurityGroupsByNetworkRequest","ListSecurityGroupsResponse"]:
+        """
+        Lists security groups in a specific network.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.ListSecurityGroupsByNetworkRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.vpc.v1.ListSecurityGroupsResponse`.
+        """
+        
+        return super().request(
+            method="ListByNetwork",
+            request=request,
+            result_pb2_class=security_group_service_pb2.ListSecurityGroupsResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListSecurityGroupsResponse),
+            **kwargs,
+        )
+    
+    def create(self,
+        request: "CreateSecurityGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateSecurityGroupRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.CreateSecurityGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateSecurityGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateSecurityGroupRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.UpdateSecurityGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteSecurityGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteSecurityGroupRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.DeleteSecurityGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+
+# file: nebius/vpc/v1/security_rule.proto
+class RuleDirection(pb_enum.Enum):
+    """
+    Direction specifies whether traffic is INGRESS (incoming) or EGRESS (outgoing).
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.RuleDirection",security_rule_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    DIRECTION_UNSPECIFIED = 0
+    INGRESS = 1
+    EGRESS = 2
+
+class RuleProtocol(pb_enum.Enum):
+    """
+    Protocol specifies traffic protocol.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.RuleProtocol",security_rule_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    PROTOCOL_UNSPECIFIED = 0
+    ANY = 1
+    TCP = 2
+    UDP = 3
+    ICMP = 4
+
+class RuleAccessAction(pb_enum.Enum):
+    """
+    Access specifies action on matching traffic: ALLOW or DENY.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.RuleAccessAction",security_rule_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    ACCESS_UNSPECIFIED = 0
+    ALLOW = 1
+    DENY = 2
+
+class RuleType(pb_enum.Enum):
+    """
+    RuleType specifies whether the security rule is stateful or stateless.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.RuleType",security_rule_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    RULE_TYPE_UNSPECIFIED = 0
+    STATEFUL = 1
+    STATELESS = 2
+
+class SecurityRule(pb_classes.Message):
+    """
+    SecurityRules define rules for controlling network traffic within a network.
+    These rules specify when traffic is ALLOWED or DENIED based on direction, protocol,
+    match source, and ports.
+    """
+    
+    __PB2_CLASS__ = security_rule_pb2.SecurityRule
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SecurityRule",security_rule_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "SecurityRuleSpec|security_rule_pb2.SecurityRuleSpec|None|unset.UnsetType" = unset.Unset,
+        status: "SecurityRuleStatus|security_rule_pb2.SecurityRuleStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        ``metadata.parent_id`` represents the SecurityGroup.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "SecurityRuleSpec":
+        """
+        Specification of the security rule's configuration.
+        Defines the parameters and constraints for rules that control network traffic.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=SecurityRuleSpec,
+        )
+    @spec.setter
+    def spec(self, value: "SecurityRuleSpec|security_rule_pb2.SecurityRuleSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "SecurityRuleStatus":
+        """
+        Current status of the security rule.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=SecurityRuleStatus,
+        )
+    @status.setter
+    def status(self, value: "SecurityRuleStatus|security_rule_pb2.SecurityRuleStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class SecurityRuleSpec(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_pb2.SecurityRuleSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SecurityRuleSpec",security_rule_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_s_match__(pb_classes.OneOf):
+        name: builtins.str= "match"
+        
+        def __init__(self, msg: "SecurityRuleSpec") -> None:
+            super().__init__()
+            self._message: "SecurityRuleSpec" = msg
+    
+    class __OneOfClass_s_match_ingress__(__OneOfClass_s_match__):
+        field: typing.Literal["ingress"] = "ingress"
+        
+        def __init__(self, msg: "SecurityRuleSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "RuleIngress":
+            return self._message.ingress
+    
+    class __OneOfClass_s_match_egress__(__OneOfClass_s_match__):
+        field: typing.Literal["egress"] = "egress"
+        
+        def __init__(self, msg: "SecurityRuleSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "RuleEgress":
+            return self._message.egress
+    
+    @builtins.property
+    def s_match(self) -> __OneOfClass_s_match_ingress__|__OneOfClass_s_match_egress__|None:
+        """
+        Indicating whether the rule matches incoming or outgoing traffic.
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("match")
+        match field_name_1:
+            case "ingress":
+                return self.__OneOfClass_s_match_ingress__(self)
+            case "egress":
+                return self.__OneOfClass_s_match_egress__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        access: "RuleAccessAction|security_rule_pb2.RuleAccessAction|None|unset.UnsetType" = unset.Unset,
+        priority: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        protocol: "RuleProtocol|security_rule_pb2.RuleProtocol|None|unset.UnsetType" = unset.Unset,
+        ingress: "RuleIngress|security_rule_pb2.RuleIngress|None|unset.UnsetType" = unset.Unset,
+        egress: "RuleEgress|security_rule_pb2.RuleEgress|None|unset.UnsetType" = unset.Unset,
+        type: "RuleType|security_rule_pb2.RuleType|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(access, unset.UnsetType):
+            self.access = access
+        if not isinstance(priority, unset.UnsetType):
+            self.priority = priority
+        if not isinstance(protocol, unset.UnsetType):
+            self.protocol = protocol
+        if not isinstance(ingress, unset.UnsetType):
+            self.ingress = ingress
+        if not isinstance(egress, unset.UnsetType):
+            self.egress = egress
+        if not isinstance(type, unset.UnsetType):
+            self.type = type
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "access",
+            "priority",
+            "protocol",
+            "ingress",
+            "egress",
+            "type",
+            "s_match",
+        ]
+    
+    @builtins.property
+    def access(self) -> "RuleAccessAction":
+        """
+        Access action for the rule.
+        Required. Determines whether matching traffic is allowed or denied.
+        """
+        
+        return super()._get_field("access", explicit_presence=False,
+        wrap=RuleAccessAction,
+        )
+    @access.setter
+    def access(self, value: "RuleAccessAction|security_rule_pb2.RuleAccessAction|None") -> None:
+        return super()._set_field("access",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def priority(self) -> "builtins.int":
+        """
+        Priority of the rule. Valid range: 0-1000.
+        Optional. If not specified or set to 0, defaults to 500.
+        Rules are evaluated in priority order (lower numbers first) using a first-match algorithm:
+        only the first matching rule takes effect (ALLOW or DENY), and subsequent rules are skipped.
+        
+        When multiple rules share the same priority, DENY rules are evaluated before ALLOW rules.
+        The final evaluation order is reflected in 'effective_priority' (see SecurityRuleStatus).
+        """
+        
+        return super()._get_field("priority", explicit_presence=False,
+        )
+    @priority.setter
+    def priority(self, value: "builtins.int|None") -> None:
+        return super()._set_field("priority",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def protocol(self) -> "RuleProtocol":
+        """
+        Protocol used in the rule.
+        Supported values: ANY, TCP, UDP, ICMP.
+        """
+        
+        return super()._get_field("protocol", explicit_presence=False,
+        wrap=RuleProtocol,
+        )
+    @protocol.setter
+    def protocol(self, value: "RuleProtocol|security_rule_pb2.RuleProtocol|None") -> None:
+        return super()._set_field("protocol",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def ingress(self) -> "RuleIngress|None":
+        return super()._get_field("ingress", explicit_presence=True,
+        wrap=RuleIngress,
+        )
+    @ingress.setter
+    def ingress(self, value: "RuleIngress|security_rule_pb2.RuleIngress|None") -> None:
+        return super()._set_field("ingress",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def egress(self) -> "RuleEgress|None":
+        return super()._get_field("egress", explicit_presence=True,
+        wrap=RuleEgress,
+        )
+    @egress.setter
+    def egress(self, value: "RuleEgress|security_rule_pb2.RuleEgress|None") -> None:
+        return super()._set_field("egress",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def type(self) -> "RuleType":
+        """
+        Type of the rule (STATEFUL or STATELESS)
+        Default value is STATEFUL
+        """
+        
+        return super()._get_field("type", explicit_presence=False,
+        wrap=RuleType,
+        )
+    @type.setter
+    def type(self, value: "RuleType|security_rule_pb2.RuleType|None") -> None:
+        return super()._set_field("type",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "access":"access",
+        "priority":"priority",
+        "protocol":"protocol",
+        "ingress":"ingress",
+        "egress":"egress",
+        "type":"type",
+        "s_match":"match",
+    }
+    
+class RuleIngress(pb_classes.Message):
+    """
+    Defines match for incoming traffic.
+    """
+    
+    __PB2_CLASS__ = security_rule_pb2.RuleIngress
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RuleIngress",security_rule_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        source_security_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        destination_ports: "abc.Iterable[builtins.int]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(source_security_group_id, unset.UnsetType):
+            self.source_security_group_id = source_security_group_id
+        if not isinstance(source_cidrs, unset.UnsetType):
+            self.source_cidrs = source_cidrs
+        if not isinstance(destination_ports, unset.UnsetType):
+            self.destination_ports = destination_ports
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "source_security_group_id",
+            "source_cidrs",
+            "destination_ports",
+        ]
+    
+    @builtins.property
+    def source_security_group_id(self) -> "builtins.str":
+        """
+        ID of the referenced Security Group as the source.
+        """
+        
+        return super()._get_field("source_security_group_id", explicit_presence=False,
+        )
+    @source_security_group_id.setter
+    def source_security_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_security_group_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def source_cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        CIDR blocks as the source.
+        Optional. Empty list means any address.
+        Must be a valid IPv4
+        Maximum of 8 CIDRs can be specified.
+        """
+        
+        return super()._get_field("source_cidrs", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @source_cidrs.setter
+    def source_cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("source_cidrs",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def destination_ports(self) -> "abc.MutableSequence[builtins.int]":
+        """
+        List of destination ports to which the rule applies.
+        Optional. Empty list means any port.
+        Valid range: 1–65535.
+        Maximum of 8 ports can be specified.
+        """
+        
+        return super()._get_field("destination_ports", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @destination_ports.setter
+    def destination_ports(self, value: "abc.Iterable[builtins.int]|None") -> None:
+        return super()._set_field("destination_ports",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "source_security_group_id":"source_security_group_id",
+        "source_cidrs":"source_cidrs",
+        "destination_ports":"destination_ports",
+    }
+    
+class RuleEgress(pb_classes.Message):
+    """
+    Defines match for outgoing traffic.
+    """
+    
+    __PB2_CLASS__ = security_rule_pb2.RuleEgress
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RuleEgress",security_rule_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        destination_security_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        destination_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        destination_ports: "abc.Iterable[builtins.int]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(destination_security_group_id, unset.UnsetType):
+            self.destination_security_group_id = destination_security_group_id
+        if not isinstance(destination_cidrs, unset.UnsetType):
+            self.destination_cidrs = destination_cidrs
+        if not isinstance(destination_ports, unset.UnsetType):
+            self.destination_ports = destination_ports
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "destination_security_group_id",
+            "destination_cidrs",
+            "destination_ports",
+        ]
+    
+    @builtins.property
+    def destination_security_group_id(self) -> "builtins.str":
+        """
+        ID of the referenced Security Group as the destination.
+        """
+        
+        return super()._get_field("destination_security_group_id", explicit_presence=False,
+        )
+    @destination_security_group_id.setter
+    def destination_security_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("destination_security_group_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def destination_cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        CIDR blocks as the destination.
+        Optional. Empty list means any address.
+        Must be a valid IPv4.
+        Maximum of 8 CIDRs can be specified.
+        """
+        
+        return super()._get_field("destination_cidrs", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @destination_cidrs.setter
+    def destination_cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("destination_cidrs",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def destination_ports(self) -> "abc.MutableSequence[builtins.int]":
+        """
+        List of ports to which the rule applies.
+        Optional. Empty list means any port.
+        Valid range: 1–65535.
+        Maximum of 8 ports can be specified.
+        """
+        
+        return super()._get_field("destination_ports", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @destination_ports.setter
+    def destination_ports(self, value: "abc.Iterable[builtins.int]|None") -> None:
+        return super()._set_field("destination_ports",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "destination_security_group_id":"destination_security_group_id",
+        "destination_cidrs":"destination_cidrs",
+        "destination_ports":"destination_ports",
+    }
+    
+class SecurityRuleStatus(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_pb2.SecurityRuleStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SecurityRuleStatus",security_rule_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class State(pb_enum.Enum):
+        """
+        State describes lifecycle phases of a security rule.
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.SecurityRuleStatus.State",security_rule_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        CREATING = 1
+        READY = 2
+        DELETING = 3
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "SecurityRuleStatus.State|security_rule_pb2.SecurityRuleStatus.State|None|unset.UnsetType" = unset.Unset,
+        effective_priority: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        direction: "RuleDirection|security_rule_pb2.RuleDirection|None|unset.UnsetType" = unset.Unset,
+        source: "RuleMatchStatus|security_rule_pb2.RuleMatchStatus|None|unset.UnsetType" = unset.Unset,
+        destination: "RuleMatchStatus|security_rule_pb2.RuleMatchStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(effective_priority, unset.UnsetType):
+            self.effective_priority = effective_priority
+        if not isinstance(direction, unset.UnsetType):
+            self.direction = direction
+        if not isinstance(source, unset.UnsetType):
+            self.source = source
+        if not isinstance(destination, unset.UnsetType):
+            self.destination = destination
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "effective_priority",
+            "direction",
+            "source",
+            "destination",
+            "State",
+        ]
+    
+    @builtins.property
+    def state(self) -> "SecurityRuleStatus.State":
+        return super()._get_field("state", explicit_presence=False,
+        wrap=SecurityRuleStatus.State,
+        )
+    @state.setter
+    def state(self, value: "SecurityRuleStatus.State|security_rule_pb2.SecurityRuleStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def effective_priority(self) -> "builtins.int":
+        """
+        Effective priority used for rule evaluation order, calculated by the system.
+        This value is computed from the user-specified 'priority' (SecurityRuleSpec).
+        Rules are evaluated in ascending order of effective_priority using a first-match algorithm.
+        """
+        
+        return super()._get_field("effective_priority", explicit_presence=False,
+        )
+    @effective_priority.setter
+    def effective_priority(self, value: "builtins.int|None") -> None:
+        return super()._set_field("effective_priority",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def direction(self) -> "RuleDirection":
+        """
+        Direction of traffic affected by the rule.
+        """
+        
+        return super()._get_field("direction", explicit_presence=False,
+        wrap=RuleDirection,
+        )
+    @direction.setter
+    def direction(self, value: "RuleDirection|security_rule_pb2.RuleDirection|None") -> None:
+        return super()._set_field("direction",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def source(self) -> "RuleMatchStatus":
+        """
+        Source of the traffic that matched the rule.
+        """
+        
+        return super()._get_field("source", explicit_presence=False,
+        wrap=RuleMatchStatus,
+        )
+    @source.setter
+    def source(self, value: "RuleMatchStatus|security_rule_pb2.RuleMatchStatus|None") -> None:
+        return super()._set_field("source",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def destination(self) -> "RuleMatchStatus":
+        """
+        Destination of the traffic that matched the rule.
+        """
+        
+        return super()._get_field("destination", explicit_presence=False,
+        wrap=RuleMatchStatus,
+        )
+    @destination.setter
+    def destination(self, value: "RuleMatchStatus|security_rule_pb2.RuleMatchStatus|None") -> None:
+        return super()._set_field("destination",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "effective_priority":"effective_priority",
+        "direction":"direction",
+        "source":"source",
+        "destination":"destination",
+        "State":"State",
+    }
+    
+class RuleMatchStatus(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_pb2.RuleMatchStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.RuleMatchStatus",security_rule_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        security_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        ports: "abc.Iterable[builtins.int]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(security_group_id, unset.UnsetType):
+            self.security_group_id = security_group_id
+        if not isinstance(cidrs, unset.UnsetType):
+            self.cidrs = cidrs
+        if not isinstance(ports, unset.UnsetType):
+            self.ports = ports
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "security_group_id",
+            "cidrs",
+            "ports",
+        ]
+    
+    @builtins.property
+    def security_group_id(self) -> "builtins.str":
+        """
+        ID of the Security Group.
+        """
+        
+        return super()._get_field("security_group_id", explicit_presence=False,
+        )
+    @security_group_id.setter
+    def security_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("security_group_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        List of CIDR blocks.
+        """
+        
+        return super()._get_field("cidrs", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @cidrs.setter
+    def cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("cidrs",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def ports(self) -> "abc.MutableSequence[builtins.int]":
+        """
+        List of ports.
+        """
+        
+        return super()._get_field("ports", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @ports.setter
+    def ports(self, value: "abc.Iterable[builtins.int]|None") -> None:
+        return super()._set_field("ports",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "security_group_id":"security_group_id",
+        "cidrs":"cidrs",
+        "ports":"ports",
+    }
+    
+# file: nebius/vpc/v1/security_rule_service.proto
+class GetSecurityRuleRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_service_pb2.GetSecurityRuleRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetSecurityRuleRequest",security_rule_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetSecurityRuleByNameRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_service_pb2.GetSecurityRuleByNameRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.GetSecurityRuleByNameRequest",security_rule_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "name",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the Security Group.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "name":"name",
+    }
+    
+class ListSecurityRulesRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_service_pb2.ListSecurityRulesRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSecurityRulesRequest",security_rule_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the Security Group.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListSecurityRulesResponse(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_service_pb2.ListSecurityRulesResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.ListSecurityRulesResponse",security_rule_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[SecurityRule]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[SecurityRule]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(SecurityRule,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[SecurityRule]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class CreateSecurityRuleRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_service_pb2.CreateSecurityRuleRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.CreateSecurityRuleRequest",security_rule_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "SecurityRuleSpec|security_rule_pb2.SecurityRuleSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "SecurityRuleSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=SecurityRuleSpec,
+        )
+    @spec.setter
+    def spec(self, value: "SecurityRuleSpec|security_rule_pb2.SecurityRuleSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateSecurityRuleRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_service_pb2.UpdateSecurityRuleRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.UpdateSecurityRuleRequest",security_rule_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "SecurityRuleSpec|security_rule_pb2.SecurityRuleSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "SecurityRuleSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=SecurityRuleSpec,
+        )
+    @spec.setter
+    def spec(self, value: "SecurityRuleSpec|security_rule_pb2.SecurityRuleSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteSecurityRuleRequest(pb_classes.Message):
+    __PB2_CLASS__ = security_rule_service_pb2.DeleteSecurityRuleRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.DeleteSecurityRuleRequest",security_rule_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+
+class SecurityRuleServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    SecurityRuleService provides operations for managing security rules.
+    
+    This class provides the client methods for the ``.nebius.vpc.v1.SecurityRuleService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.vpc.v1.SecurityRuleService",security_rule_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.vpc.v1.SecurityRuleService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def get(self,
+        request: "GetSecurityRuleRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetSecurityRuleRequest","SecurityRule"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.GetSecurityRuleRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.vpc.v1.SecurityRule`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=security_rule_pb2.SecurityRule,
+            result_wrapper=pb_classes.simple_wrapper(SecurityRule),
+            **kwargs,
+        )
+    
+    def get_by_name(self,
+        request: "GetSecurityRuleByNameRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetSecurityRuleByNameRequest","SecurityRule"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.GetSecurityRuleByNameRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.vpc.v1.SecurityRule`.
+        """
+        
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=security_rule_pb2.SecurityRule,
+            result_wrapper=pb_classes.simple_wrapper(SecurityRule),
+            **kwargs,
+        )
+    
+    def list(self,
+        request: "ListSecurityRulesRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListSecurityRulesRequest","ListSecurityRulesResponse"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.ListSecurityRulesRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.vpc.v1.ListSecurityRulesResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=security_rule_service_pb2.ListSecurityRulesResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListSecurityRulesResponse),
+            **kwargs,
+        )
+    
+    def create(self,
+        request: "CreateSecurityRuleRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateSecurityRuleRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.CreateSecurityRuleRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateSecurityRuleRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateSecurityRuleRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.UpdateSecurityRuleRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteSecurityRuleRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteSecurityRuleRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.vpc.v1.DeleteSecurityRuleRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+
 # file: nebius/vpc/v1/subnet.proto
 class Subnet(pb_classes.Message):
     """
@@ -7434,6 +9463,36 @@ __all__ = [
     "UpdateRouteTableRequest",
     "DeleteRouteTableRequest",
     "RouteTableServiceClient",
+    "SecurityGroup",
+    "SecurityGroupSpec",
+    "SecurityGroupStatus",
+    "GetSecurityGroupRequest",
+    "GetSecurityGroupByNameRequest",
+    "ListSecurityGroupsRequest",
+    "ListSecurityGroupsByNetworkRequest",
+    "ListSecurityGroupsResponse",
+    "CreateSecurityGroupRequest",
+    "UpdateSecurityGroupRequest",
+    "DeleteSecurityGroupRequest",
+    "SecurityGroupServiceClient",
+    "RuleDirection",
+    "RuleProtocol",
+    "RuleAccessAction",
+    "RuleType",
+    "SecurityRule",
+    "SecurityRuleSpec",
+    "RuleIngress",
+    "RuleEgress",
+    "SecurityRuleStatus",
+    "RuleMatchStatus",
+    "GetSecurityRuleRequest",
+    "GetSecurityRuleByNameRequest",
+    "ListSecurityRulesRequest",
+    "ListSecurityRulesResponse",
+    "CreateSecurityRuleRequest",
+    "UpdateSecurityRuleRequest",
+    "DeleteSecurityRuleRequest",
+    "SecurityRuleServiceClient",
     "Subnet",
     "SubnetSpec",
     "IPv4PrivateSubnetPools",
