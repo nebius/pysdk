@@ -23,6 +23,13 @@ class FieldBehavior(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     OUTPUT_ONLY: _ClassVar[FieldBehavior]
     MEANINGFUL_EMPTY_VALUE: _ClassVar[FieldBehavior]
     NON_EMPTY_DEFAULT: _ClassVar[FieldBehavior]
+
+class MethodBehavior(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = []
+    METHOD_BEHAVIOR_UNSPECIFIED: _ClassVar[MethodBehavior]
+    METHOD_UPDATER: _ClassVar[MethodBehavior]
+    METHOD_PAGINATED: _ClassVar[MethodBehavior]
+    METHOD_WITHOUT_GET: _ClassVar[MethodBehavior]
 RESOURCE_BEHAVIOR_UNSPECIFIED: ResourceBehavior
 MOVABLE: ResourceBehavior
 UNNAMED: ResourceBehavior
@@ -34,6 +41,10 @@ INPUT_ONLY: FieldBehavior
 OUTPUT_ONLY: FieldBehavior
 MEANINGFUL_EMPTY_VALUE: FieldBehavior
 NON_EMPTY_DEFAULT: FieldBehavior
+METHOD_BEHAVIOR_UNSPECIFIED: MethodBehavior
+METHOD_UPDATER: MethodBehavior
+METHOD_PAGINATED: MethodBehavior
+METHOD_WITHOUT_GET: MethodBehavior
 FILE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
 file_deprecation_details: _descriptor.FieldDescriptor
 API_SERVICE_NAME_FIELD_NUMBER: _ClassVar[int]
@@ -48,6 +59,8 @@ METHOD_PY_SDK_FIELD_NUMBER: _ClassVar[int]
 method_py_sdk: _descriptor.FieldDescriptor
 SEND_RESET_MASK_FIELD_NUMBER: _ClassVar[int]
 send_reset_mask: _descriptor.FieldDescriptor
+METHOD_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
+method_behavior: _descriptor.FieldDescriptor
 RESOURCE_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 resource_behavior: _descriptor.FieldDescriptor
 MESSAGE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
