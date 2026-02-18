@@ -3,11 +3,12 @@ from typing import Any, cast
 
 from nebius.api.nebius import (
     FieldBehavior,
+    MethodBehavior,
     enum_value_deprecation_details,
     field_deprecation_details,
     message_deprecation_details,
+    method_behavior,
     method_deprecation_details,
-    send_reset_mask,
     service_deprecation_details,
 )
 
@@ -784,22 +785,23 @@ def is_operation_output(method: Method) -> bool:
     )
 
 
-def _send_reset_mask_setting(method: Method) -> bool | None:
+def _method_behavior_setting(method: Method) -> list[MethodBehavior] | None:
     """
-    Returns True/False when annotation is set, otherwise None.
+    Returns method behavior values when annotation is set, otherwise None.
     """
-    ext = cast(Any, send_reset_mask)
+    ext = cast(Any, method_behavior)
     options = method.descriptor.options
-    if not options.HasExtension(ext):
+    values = [MethodBehavior(value) for value in options.Extensions[ext]]
+    if not values:
         return None
-    return bool(options.Extensions[ext])
+    return values
 
 
 def _should_add_reset_mask(method: Method) -> bool:
-    setting = _send_reset_mask_setting(method)
+    setting = _method_behavior_setting(method)
     if setting is None:
         return method.name == "Update"
-    return setting
+    return MethodBehavior.METHOD_UPDATER in setting
 
 
 def generate_service(srv: Service, g: PyGenFile) -> None:
