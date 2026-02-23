@@ -3279,33 +3279,6 @@ class ImageSpec(pb_classes.Message):
             case _:
                 raise pb_classes.OneOfMatchError(field_name_1)
     
-    class __OneOfClass__description__(pb_classes.OneOf):
-        name: builtins.str= "_description"
-        
-        def __init__(self, msg: "ImageSpec") -> None:
-            super().__init__()
-            self._message: "ImageSpec" = msg
-    
-    class __OneOfClass__description_description__(__OneOfClass__description__):
-        field: typing.Literal["description"] = "description"
-        
-        def __init__(self, msg: "ImageSpec") -> None:
-            super().__init__(msg)
-        @builtins.property
-        def value(self) -> "builtins.str":
-            return self._message.description
-    
-    @builtins.property
-    def _description(self) -> __OneOfClass__description_description__|None:
-        field_name_1: str|None = super().which_field_in_oneof("_description")
-        match field_name_1:
-            case "description":
-                return self.__OneOfClass__description_description__(self)
-            case None:
-                return None
-            case _:
-                raise pb_classes.OneOfMatchError(field_name_1)
-    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -3349,29 +3322,16 @@ class ImageSpec(pb_classes.Message):
             "unsupported_platforms",
             "UnsupportedPlatformsEntry",
             "source",
-            "_description",
             "CPUArchitecture",
         ]
     
     @builtins.property
-    def description(self) -> "builtins.str|None":
-        """
-        Supported until 01/01/26. The field is empty.
-        """
-        
-        logging.getLogger("deprecation").warning(
-        """Field .nebius.compute.v1.ImageSpec.description is deprecated. Supported until 01/01/26. The field is empty."""
-        , stack_info=True, stacklevel=2)
-        
-        return super()._get_field("description", explicit_presence=True,
+    def description(self) -> "builtins.str":
+        return super()._get_field("description", explicit_presence=False,
         )
     @description.setter
     def description(self, value: "builtins.str|None") -> None:
-        logging.getLogger("deprecation").warning(
-        """Field .nebius.compute.v1.ImageSpec.description is deprecated. Supported until 01/01/26. The field is empty."""
-        , stack_info=True, stacklevel=2)
-        
-        return super()._set_field("description",value,explicit_presence=True,
+        return super()._set_field("description",value,explicit_presence=False,
         )
     
     @builtins.property
@@ -3475,7 +3435,6 @@ class ImageSpec(pb_classes.Message):
         "unsupported_platforms":"unsupported_platforms",
         "UnsupportedPlatformsEntry":"UnsupportedPlatformsEntry",
         "source":"source",
-        "_description":"_description",
         "CPUArchitecture":"CPUArchitecture",
     }
     

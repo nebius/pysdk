@@ -2095,6 +2095,7 @@ class BucketStatus(pb_classes.Message):
         purge_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         domain_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
         region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        anonymous_access_enabled: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(counters, unset.UnsetType):
@@ -2111,6 +2112,8 @@ class BucketStatus(pb_classes.Message):
             self.domain_name = domain_name
         if not isinstance(region, unset.UnsetType):
             self.region = region
+        if not isinstance(anonymous_access_enabled, unset.UnsetType):
+            self.anonymous_access_enabled = anonymous_access_enabled
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -2121,6 +2124,7 @@ class BucketStatus(pb_classes.Message):
             "purge_at",
             "domain_name",
             "region",
+            "anonymous_access_enabled",
             "State",
             "SuspensionState",
         ]
@@ -2213,6 +2217,20 @@ class BucketStatus(pb_classes.Message):
         return super()._set_field("region",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def anonymous_access_enabled(self) -> "builtins.bool":
+        """
+        Indicator flag showing whether the bucket has any BucketPolicy rule
+        that grants anonymous access to any object, prefix, or the entire bucket.
+        """
+        
+        return super()._get_field("anonymous_access_enabled", explicit_presence=False,
+        )
+    @anonymous_access_enabled.setter
+    def anonymous_access_enabled(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("anonymous_access_enabled",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "counters":"counters",
         "state":"state",
@@ -2221,6 +2239,7 @@ class BucketStatus(pb_classes.Message):
         "purge_at":"purge_at",
         "domain_name":"domain_name",
         "region":"region",
+        "anonymous_access_enabled":"anonymous_access_enabled",
         "State":"State",
         "SuspensionState":"SuspensionState",
     }

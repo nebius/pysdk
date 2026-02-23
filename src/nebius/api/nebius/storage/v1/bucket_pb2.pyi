@@ -58,7 +58,7 @@ class BucketSpec(_message.Message):
     def __init__(self, versioning_policy: _Optional[_Union[_base_pb2.VersioningPolicy, str]] = ..., max_size_bytes: _Optional[int] = ..., lifecycle_configuration: _Optional[_Union[_lifecycle_pb2.LifecycleConfiguration, _Mapping]] = ..., cors: _Optional[_Union[_cors_pb2.CORSConfiguration, _Mapping]] = ..., default_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., override_storage_class: _Optional[_Union[_base_pb2.StorageClass, str]] = ..., force_storage_class: bool = ..., object_audit_logging: _Optional[_Union[BucketSpec.ObjectAuditLogging, str]] = ..., bucket_policy: _Optional[_Union[_bucket_policy_pb2.BucketPolicy, _Mapping]] = ...) -> None: ...
 
 class BucketStatus(_message.Message):
-    __slots__ = ["counters", "state", "suspension_state", "deleted_at", "purge_at", "domain_name", "region"]
+    __slots__ = ["counters", "state", "suspension_state", "deleted_at", "purge_at", "domain_name", "region", "anonymous_access_enabled"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[BucketStatus.State]
@@ -86,6 +86,7 @@ class BucketStatus(_message.Message):
     PURGE_AT_FIELD_NUMBER: _ClassVar[int]
     DOMAIN_NAME_FIELD_NUMBER: _ClassVar[int]
     REGION_FIELD_NUMBER: _ClassVar[int]
+    ANONYMOUS_ACCESS_ENABLED_FIELD_NUMBER: _ClassVar[int]
     counters: _containers.RepeatedCompositeFieldContainer[_bucket_counters_pb2.BucketCounters]
     state: BucketStatus.State
     suspension_state: BucketStatus.SuspensionState
@@ -93,4 +94,5 @@ class BucketStatus(_message.Message):
     purge_at: _timestamp_pb2.Timestamp
     domain_name: str
     region: str
-    def __init__(self, counters: _Optional[_Iterable[_Union[_bucket_counters_pb2.BucketCounters, _Mapping]]] = ..., state: _Optional[_Union[BucketStatus.State, str]] = ..., suspension_state: _Optional[_Union[BucketStatus.SuspensionState, str]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., purge_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., domain_name: _Optional[str] = ..., region: _Optional[str] = ...) -> None: ...
+    anonymous_access_enabled: bool
+    def __init__(self, counters: _Optional[_Iterable[_Union[_bucket_counters_pb2.BucketCounters, _Mapping]]] = ..., state: _Optional[_Union[BucketStatus.State, str]] = ..., suspension_state: _Optional[_Union[BucketStatus.SuspensionState, str]] = ..., deleted_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., purge_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., domain_name: _Optional[str] = ..., region: _Optional[str] = ..., anonymous_access_enabled: bool = ...) -> None: ...

@@ -519,7 +519,6 @@ service_deprecation_details = annotations_pb2.service_deprecation_details
 service_py_sdk = annotations_pb2.service_py_sdk
 method_deprecation_details = annotations_pb2.method_deprecation_details
 method_py_sdk = annotations_pb2.method_py_sdk
-send_reset_mask = annotations_pb2.send_reset_mask
 method_behavior = annotations_pb2.method_behavior
 resource_behavior = annotations_pb2.resource_behavior
 message_deprecation_details = annotations_pb2.message_deprecation_details
@@ -547,7 +546,6 @@ __all__ = [
     "service_py_sdk",
     "method_deprecation_details",
     "method_py_sdk",
-    "send_reset_mask",
     "method_behavior",
     "resource_behavior",
     "message_deprecation_details",
