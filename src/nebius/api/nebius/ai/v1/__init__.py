@@ -24,7 +24,6 @@ import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.compute.v1 as v1_2
 import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
 import nebius.api.nebius.compute.v1.instance_pb2 as instance_pb2
-import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -1494,56 +1493,6 @@ class DeleteEndpointRequest(pb_classes.Message):
         "id":"id",
     }
     
-class UpdateEndpointRequest(pb_classes.Message):
-    __PB2_CLASS__ = endpoint_service_pb2.UpdateEndpointRequest
-    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.UpdateEndpointRequest",endpoint_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
-    __mask_functions__ = {
-    }
-    
-    def __init__(
-        self,
-        initial_message: message_1.Message|None = None,
-        *,
-        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
-        spec: "EndpointSpec|endpoint_pb2.EndpointSpec|None|unset.UnsetType" = unset.Unset,
-    ) -> None:
-        super().__init__(initial_message)
-        if not isinstance(metadata, unset.UnsetType):
-            self.metadata = metadata
-        if not isinstance(spec, unset.UnsetType):
-            self.spec = spec
-    
-    def __dir__(self) ->abc.Iterable[builtins.str]:
-        return [
-            "metadata",
-            "spec",
-        ]
-    
-    @builtins.property
-    def metadata(self) -> "v1_1.ResourceMetadata":
-        return super()._get_field("metadata", explicit_presence=False,
-        wrap=v1_1.ResourceMetadata,
-        )
-    @metadata.setter
-    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
-        return super()._set_field("metadata",value,explicit_presence=False,
-        )
-    
-    @builtins.property
-    def spec(self) -> "EndpointSpec":
-        return super()._get_field("spec", explicit_presence=False,
-        wrap=EndpointSpec,
-        )
-    @spec.setter
-    def spec(self, value: "EndpointSpec|endpoint_pb2.EndpointSpec|None") -> None:
-        return super()._set_field("spec",value,explicit_presence=False,
-        )
-    
-    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
-        "metadata":"metadata",
-        "spec":"spec",
-    }
-    
 class StartEndpointRequest(pb_classes.Message):
     __PB2_CLASS__ = endpoint_service_pb2.StartEndpointRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.StartEndpointRequest",endpoint_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -1826,36 +1775,6 @@ class EndpointServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         
         return super().request(
             method="Delete",
-            request=request,
-            result_pb2_class=operation_pb2.Operation,
-            result_wrapper=operation.Operation,
-            **kwargs,
-        )
-    
-    def update(self,
-        request: "UpdateEndpointRequest",
-        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request_1.Request["UpdateEndpointRequest","operation.Operation[v1_1.Operation]"]:
-        """
-        Updates an endpoint.
-        
-        :param request: The request object to send.
-        :type request: :class:`nebius.api.nebius.ai.v1.UpdateEndpointRequest`
-        
-        Other parameters can be provided as keyword arguments in the
-        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
-        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
-        
-        :return: A :class:`nebius.aio.request.Request` object representing the
-            in-flight RPC. It can be awaited (async) or waited
-            synchronously using its ``.wait()`` helpers.
-        :rtype: :class:`nebius.aio.request.Request` of
-            :class:`nebius.api.nebius.common.v1.Operation`.
-        """
-        
-        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
-        return super().request(
-            method="Update",
             request=request,
             result_pb2_class=operation_pb2.Operation,
             result_wrapper=operation.Operation,
@@ -3715,7 +3634,6 @@ __all__ = [
     "ListEndpointsRequest",
     "CreateEndpointRequest",
     "DeleteEndpointRequest",
-    "UpdateEndpointRequest",
     "StartEndpointRequest",
     "StopEndpointRequest",
     "ListEndpointsResponse",

@@ -960,6 +960,55 @@ class GetVersionResponse(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class FeatureFlagsEntry(pb_classes.Message):
+        __PB2_CLASS__ = version_service_pb2.GetVersionResponse.FeatureFlagsEntry
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.logging.agentmanager.v1.GetVersionResponse.FeatureFlagsEntry",version_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message.Message|None = None,
+            *,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
+            if not isinstance(value, unset.UnsetType):
+                self.value = value
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
+        @builtins.property
+        def key(self) -> "builtins.str":
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return super()._get_field("value", explicit_presence=False,
+            )
+        @value.setter
+        def value(self, value: "builtins.str|None") -> None:
+            return super()._set_field("value",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
+        
+    
     class __OneOfClass_response__(pb_classes.OneOf):
         name: builtins.str= "response"
         
@@ -1021,6 +1070,7 @@ class GetVersionResponse(pb_classes.Message):
         nop: "NopActionParams|version_service_pb2.NopActionParams|None|unset.UnsetType" = unset.Unset,
         update: "UpdateActionParams|version_service_pb2.UpdateActionParams|None|unset.UnsetType" = unset.Unset,
         restart: "RestartActionParams|version_service_pb2.RestartActionParams|None|unset.UnsetType" = unset.Unset,
+        feature_flags: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(action, unset.UnsetType):
@@ -1031,6 +1081,8 @@ class GetVersionResponse(pb_classes.Message):
             self.update = update
         if not isinstance(restart, unset.UnsetType):
             self.restart = restart
+        if not isinstance(feature_flags, unset.UnsetType):
+            self.feature_flags = feature_flags
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1038,6 +1090,8 @@ class GetVersionResponse(pb_classes.Message):
             "nop",
             "update",
             "restart",
+            "feature_flags",
+            "FeatureFlagsEntry",
             "response",
         ]
     
@@ -1097,11 +1151,27 @@ class GetVersionResponse(pb_classes.Message):
         return super()._set_field("restart",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def feature_flags(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        """
+        Feature flags for the agent. Keys are UPPER_CASE flag names, values are flag values (typically "true"/"false").
+        """
+        
+        return super()._get_field("feature_flags", explicit_presence=False,
+        wrap=pb_classes.Map,
+        )
+    @feature_flags.setter
+    def feature_flags(self, value: "abc.Mapping[builtins.str,builtins.str]|None") -> None:
+        return super()._set_field("feature_flags",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "action":"action",
         "nop":"nop",
         "update":"update",
         "restart":"restart",
+        "feature_flags":"feature_flags",
+        "FeatureFlagsEntry":"FeatureFlagsEntry",
         "response":"response",
     }
     

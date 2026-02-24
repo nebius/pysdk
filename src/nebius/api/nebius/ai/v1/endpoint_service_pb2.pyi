@@ -50,14 +50,6 @@ class DeleteEndpointRequest(_message.Message):
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
-class UpdateEndpointRequest(_message.Message):
-    __slots__ = ["metadata", "spec"]
-    METADATA_FIELD_NUMBER: _ClassVar[int]
-    SPEC_FIELD_NUMBER: _ClassVar[int]
-    metadata: _metadata_pb2.ResourceMetadata
-    spec: _endpoint_pb2.EndpointSpec
-    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_endpoint_pb2.EndpointSpec, _Mapping]] = ...) -> None: ...
-
 class StartEndpointRequest(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]

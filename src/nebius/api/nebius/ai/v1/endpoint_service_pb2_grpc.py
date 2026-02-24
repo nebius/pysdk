@@ -42,11 +42,6 @@ class EndpointServiceStub(object):
                 request_serializer=nebius_dot_ai_dot_v1_dot_endpoint__service__pb2.DeleteEndpointRequest.SerializeToString,
                 response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
                 )
-        self.Update = channel.unary_unary(
-                '/nebius.ai.v1.EndpointService/Update',
-                request_serializer=nebius_dot_ai_dot_v1_dot_endpoint__service__pb2.UpdateEndpointRequest.SerializeToString,
-                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-                )
         self.Start = channel.unary_unary(
                 '/nebius.ai.v1.EndpointService/Start',
                 request_serializer=nebius_dot_ai_dot_v1_dot_endpoint__service__pb2.StartEndpointRequest.SerializeToString,
@@ -98,13 +93,6 @@ class EndpointServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Update(self, request, context):
-        """Updates an endpoint.
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def Start(self, request, context):
         """Starts an endpoint.
         """
@@ -145,11 +133,6 @@ def add_EndpointServiceServicer_to_server(servicer, server):
             'Delete': grpc.unary_unary_rpc_method_handler(
                     servicer.Delete,
                     request_deserializer=nebius_dot_ai_dot_v1_dot_endpoint__service__pb2.DeleteEndpointRequest.FromString,
-                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
-            ),
-            'Update': grpc.unary_unary_rpc_method_handler(
-                    servicer.Update,
-                    request_deserializer=nebius_dot_ai_dot_v1_dot_endpoint__service__pb2.UpdateEndpointRequest.FromString,
                     response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Start': grpc.unary_unary_rpc_method_handler(
@@ -254,23 +237,6 @@ class EndpointService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.ai.v1.EndpointService/Delete',
             nebius_dot_ai_dot_v1_dot_endpoint__service__pb2.DeleteEndpointRequest.SerializeToString,
-            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def Update(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/nebius.ai.v1.EndpointService/Update',
-            nebius_dot_ai_dot_v1_dot_endpoint__service__pb2.UpdateEndpointRequest.SerializeToString,
             nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

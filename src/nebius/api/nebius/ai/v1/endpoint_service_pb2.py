@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/ai/v1/endpoint_service.proto\x12\x0cnebius.ai.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1bnebius/ai/v1/endpoint.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\";\n\x12GetEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\"[\n\x18GetEndpointByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"w\n\x14ListEndpointsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\xb0\x01\n\x15\x43reateEndpointRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x36\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.ai.v1.EndpointSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x17\n\x07\x64ry_run\x18\x03 \x01(\x08R\x06\x64ryRun\">\n\x15\x44\x65leteEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\"\x97\x01\n\x15UpdateEndpointRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x36\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.ai.v1.EndpointSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"=\n\x14StartEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\"<\n\x13StopEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\"m\n\x15ListEndpointsResponse\x12,\n\x05items\x18\x01 \x03(\x0b\x32\x16.nebius.ai.v1.EndpointR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xf3\x04\n\x0f\x45ndpointService\x12?\n\x03Get\x12 .nebius.ai.v1.GetEndpointRequest\x1a\x16.nebius.ai.v1.Endpoint\x12K\n\tGetByName\x12&.nebius.ai.v1.GetEndpointByNameRequest\x1a\x16.nebius.ai.v1.Endpoint\x12O\n\x04List\x12\".nebius.ai.v1.ListEndpointsRequest\x1a#.nebius.ai.v1.ListEndpointsResponse\x12J\n\x06\x43reate\x12#.nebius.ai.v1.CreateEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06\x44\x65lete\x12#.nebius.ai.v1.DeleteEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06Update\x12#.nebius.ai.v1.UpdateEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12H\n\x05Start\x12\".nebius.ai.v1.StartEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12\x46\n\x04Stop\x12!.nebius.ai.v1.StopEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0b\xbaJ\x08\x61pps.mspBY\n\x13\x61i.nebius.pub.ai.v1B\x14\x45ndpointServiceProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/ai/v1/endpoint_service.proto\x12\x0cnebius.ai.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1bnebius/ai/v1/endpoint.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\";\n\x12GetEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\"[\n\x18GetEndpointByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"w\n\x14ListEndpointsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\xb0\x01\n\x15\x43reateEndpointRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x36\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.ai.v1.EndpointSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x17\n\x07\x64ry_run\x18\x03 \x01(\x08R\x06\x64ryRun\">\n\x15\x44\x65leteEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\"=\n\x14StartEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\"<\n\x13StopEndpointRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\naiendpointR\x02id\"m\n\x15ListEndpointsResponse\x12,\n\x05items\x18\x01 \x03(\x0b\x32\x16.nebius.ai.v1.EndpointR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xa7\x04\n\x0f\x45ndpointService\x12?\n\x03Get\x12 .nebius.ai.v1.GetEndpointRequest\x1a\x16.nebius.ai.v1.Endpoint\x12K\n\tGetByName\x12&.nebius.ai.v1.GetEndpointByNameRequest\x1a\x16.nebius.ai.v1.Endpoint\x12O\n\x04List\x12\".nebius.ai.v1.ListEndpointsRequest\x1a#.nebius.ai.v1.ListEndpointsResponse\x12J\n\x06\x43reate\x12#.nebius.ai.v1.CreateEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06\x44\x65lete\x12#.nebius.ai.v1.DeleteEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12H\n\x05Start\x12\".nebius.ai.v1.StartEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x12\x46\n\x04Stop\x12!.nebius.ai.v1.StopEndpointRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0b\xbaJ\x08\x61pps.mspBY\n\x13\x61i.nebius.pub.ai.v1B\x14\x45ndpointServiceProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -41,10 +41,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CREATEENDPOINTREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _DELETEENDPOINTREQUEST.fields_by_name['id']._options = None
   _DELETEENDPOINTREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\014\n\naiendpoint'
-  _UPDATEENDPOINTREQUEST.fields_by_name['metadata']._options = None
-  _UPDATEENDPOINTREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
-  _UPDATEENDPOINTREQUEST.fields_by_name['spec']._options = None
-  _UPDATEENDPOINTREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _STARTENDPOINTREQUEST.fields_by_name['id']._options = None
   _STARTENDPOINTREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\014\n\naiendpoint'
   _STOPENDPOINTREQUEST.fields_by_name['id']._options = None
@@ -61,14 +57,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_CREATEENDPOINTREQUEST']._serialized_end=656
   _globals['_DELETEENDPOINTREQUEST']._serialized_start=658
   _globals['_DELETEENDPOINTREQUEST']._serialized_end=720
-  _globals['_UPDATEENDPOINTREQUEST']._serialized_start=723
-  _globals['_UPDATEENDPOINTREQUEST']._serialized_end=874
-  _globals['_STARTENDPOINTREQUEST']._serialized_start=876
-  _globals['_STARTENDPOINTREQUEST']._serialized_end=937
-  _globals['_STOPENDPOINTREQUEST']._serialized_start=939
-  _globals['_STOPENDPOINTREQUEST']._serialized_end=999
-  _globals['_LISTENDPOINTSRESPONSE']._serialized_start=1001
-  _globals['_LISTENDPOINTSRESPONSE']._serialized_end=1110
-  _globals['_ENDPOINTSERVICE']._serialized_start=1113
-  _globals['_ENDPOINTSERVICE']._serialized_end=1740
+  _globals['_STARTENDPOINTREQUEST']._serialized_start=722
+  _globals['_STARTENDPOINTREQUEST']._serialized_end=783
+  _globals['_STOPENDPOINTREQUEST']._serialized_start=785
+  _globals['_STOPENDPOINTREQUEST']._serialized_end=845
+  _globals['_LISTENDPOINTSRESPONSE']._serialized_start=847
+  _globals['_LISTENDPOINTSRESPONSE']._serialized_end=956
+  _globals['_ENDPOINTSERVICE']._serialized_start=959
+  _globals['_ENDPOINTSERVICE']._serialized_end=1510
 # @@protoc_insertion_point(module_scope)
