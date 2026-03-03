@@ -67,9 +67,11 @@ class AuditEventExportParams(_message.Message):
     def __init__(self, to: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., filter: _Optional[str] = ..., event_type: _Optional[_Union[_audit_event_service_pb2.EventType, str]] = ..., **kwargs) -> None: ...
 
 class AuditEventExportStatus(_message.Message):
-    __slots__ = ["state", "export_operation_id"]
+    __slots__ = ["state", "export_operation_id", "message"]
     STATE_FIELD_NUMBER: _ClassVar[int]
     EXPORT_OPERATION_ID_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
     state: AuditEventExportState
     export_operation_id: str
-    def __init__(self, state: _Optional[_Union[AuditEventExportState, str]] = ..., export_operation_id: _Optional[str] = ...) -> None: ...
+    message: str
+    def __init__(self, state: _Optional[_Union[AuditEventExportState, str]] = ..., export_operation_id: _Optional[str] = ..., message: _Optional[str] = ...) -> None: ...

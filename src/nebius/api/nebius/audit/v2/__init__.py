@@ -2066,17 +2066,21 @@ class AuditEventExportStatus(pb_classes.Message):
         *,
         state: "AuditEventExportState|audit_event_export_pb2.AuditEventExportState|None|unset.UnsetType" = unset.Unset,
         export_operation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
         if not isinstance(export_operation_id, unset.UnsetType):
             self.export_operation_id = export_operation_id
+        if not isinstance(message, unset.UnsetType):
+            self.message = message
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "export_operation_id",
+            "message",
         ]
     
     @builtins.property
@@ -2107,9 +2111,23 @@ class AuditEventExportStatus(pb_classes.Message):
         return super()._set_field("export_operation_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def message(self) -> "builtins.str":
+        """
+        Error message in case of export failure.
+        """
+        
+        return super()._get_field("message", explicit_presence=False,
+        )
+    @message.setter
+    def message(self, value: "builtins.str|None") -> None:
+        return super()._set_field("message",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "export_operation_id":"export_operation_id",
+        "message":"message",
     }
     
 # file: nebius/audit/v2/audit_event_export_service.proto
