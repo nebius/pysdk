@@ -22,7 +22,7 @@ class Endpoint(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[EndpointSpec, _Mapping]] = ..., status: _Optional[_Union[EndpointStatus, _Mapping]] = ...) -> None: ...
 
 class EndpointSpec(_message.Message):
-    __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "auth_token"]
+    __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "preemptible", "auth_token"]
     class EnvironmentVariable(_message.Message):
         __slots__ = ["name", "value"]
         NAME_FIELD_NUMBER: _ClassVar[int]
@@ -99,6 +99,7 @@ class EndpointSpec(_message.Message):
     SUBNET_ID_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_IP_FIELD_NUMBER: _ClassVar[int]
     SSH_AUTHORIZED_KEYS_FIELD_NUMBER: _ClassVar[int]
+    PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
     AUTH_TOKEN_FIELD_NUMBER: _ClassVar[int]
     image: str
     environment_variables: _containers.RepeatedCompositeFieldContainer[EndpointSpec.EnvironmentVariable]
@@ -115,8 +116,9 @@ class EndpointSpec(_message.Message):
     subnet_id: str
     public_ip: bool
     ssh_authorized_keys: _containers.RepeatedScalarFieldContainer[str]
+    preemptible: bool
     auth_token: str
-    def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[EndpointSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[EndpointSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[EndpointSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[EndpointSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[EndpointSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., auth_token: _Optional[str] = ...) -> None: ...
+    def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[EndpointSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[EndpointSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[EndpointSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[EndpointSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[EndpointSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., preemptible: bool = ..., auth_token: _Optional[str] = ...) -> None: ...
 
 class EndpointStatus(_message.Message):
     __slots__ = ["private_endpoints", "public_endpoints", "instances", "state", "state_details"]

@@ -553,6 +553,7 @@ class EndpointSpec(pb_classes.Message):
         subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         public_ip: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         ssh_authorized_keys: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        preemptible: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         auth_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -586,6 +587,8 @@ class EndpointSpec(pb_classes.Message):
             self.public_ip = public_ip
         if not isinstance(ssh_authorized_keys, unset.UnsetType):
             self.ssh_authorized_keys = ssh_authorized_keys
+        if not isinstance(preemptible, unset.UnsetType):
+            self.preemptible = preemptible
         if not isinstance(auth_token, unset.UnsetType):
             self.auth_token = auth_token
     
@@ -606,6 +609,7 @@ class EndpointSpec(pb_classes.Message):
             "subnet_id",
             "public_ip",
             "ssh_authorized_keys",
+            "preemptible",
             "auth_token",
             "EnvironmentVariable",
             "Port",
@@ -816,6 +820,20 @@ class EndpointSpec(pb_classes.Message):
         )
     
     @builtins.property
+    def preemptible(self) -> "builtins.bool":
+        """
+        Whether to use a preemptible VM for the endpoint.
+        Preemptible VMs are cheaper but can be stopped by the platform at any time.
+        """
+        
+        return super()._get_field("preemptible", explicit_presence=False,
+        )
+    @preemptible.setter
+    def preemptible(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("preemptible",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def auth_token(self) -> "builtins.str":
         """
         Authentication token needed to access the endpoint.
@@ -848,6 +866,7 @@ class EndpointSpec(pb_classes.Message):
         "subnet_id":"subnet_id",
         "public_ip":"public_ip",
         "ssh_authorized_keys":"ssh_authorized_keys",
+        "preemptible":"preemptible",
         "auth_token":"auth_token",
         "EnvironmentVariable":"EnvironmentVariable",
         "Port":"Port",
@@ -2362,6 +2381,7 @@ class JobSpec(pb_classes.Message):
         subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         public_ip: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         ssh_authorized_keys: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        preemptible: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         restart_attempts: "builtins.int|None|unset.UnsetType" = unset.Unset,
         timeout: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -2396,6 +2416,8 @@ class JobSpec(pb_classes.Message):
             self.public_ip = public_ip
         if not isinstance(ssh_authorized_keys, unset.UnsetType):
             self.ssh_authorized_keys = ssh_authorized_keys
+        if not isinstance(preemptible, unset.UnsetType):
+            self.preemptible = preemptible
         if not isinstance(restart_attempts, unset.UnsetType):
             self.restart_attempts = restart_attempts
         if not isinstance(timeout, unset.UnsetType):
@@ -2418,6 +2440,7 @@ class JobSpec(pb_classes.Message):
             "subnet_id",
             "public_ip",
             "ssh_authorized_keys",
+            "preemptible",
             "restart_attempts",
             "timeout",
             "EnvironmentVariable",
@@ -2629,6 +2652,20 @@ class JobSpec(pb_classes.Message):
         )
     
     @builtins.property
+    def preemptible(self) -> "builtins.bool":
+        """
+        Whether to use a preemptible VM for the job.
+        Preemptible VMs are cheaper but can be stopped by the platform at any time.
+        """
+        
+        return super()._get_field("preemptible", explicit_presence=False,
+        )
+    @preemptible.setter
+    def preemptible(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("preemptible",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def restart_attempts(self) -> "builtins.int":
         """
         Restart attempts for the job.
@@ -2672,6 +2709,7 @@ class JobSpec(pb_classes.Message):
         "subnet_id":"subnet_id",
         "public_ip":"public_ip",
         "ssh_authorized_keys":"ssh_authorized_keys",
+        "preemptible":"preemptible",
         "restart_attempts":"restart_attempts",
         "timeout":"timeout",
         "EnvironmentVariable":"EnvironmentVariable",
