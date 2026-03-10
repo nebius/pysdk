@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/vpc/v1/security_rule.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xbe\x01\n\x0cSecurityRule\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1.SecurityRuleSpecR\x04spec\x12\x39\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.vpc.v1.SecurityRuleStatusR\x06status\"\x8a\x03\n\x10SecurityRuleSpec\x12\x43\n\x06\x61\x63\x63\x65ss\x18\x01 \x01(\x0e\x32\x1f.nebius.vpc.v1.RuleAccessActionB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x06\x61\x63\x63\x65ss\x12+\n\x08priority\x18\x02 \x01(\x05\x42\x0f\xbaH\x07\x1a\x05\x18\xe8\x07(\x00\xbaJ\x02\x02\x07R\x08priority\x12\x43\n\x08protocol\x18\x03 \x01(\x0e\x32\x1b.nebius.vpc.v1.RuleProtocolB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x08protocol\x12<\n\x07ingress\x18\x04 \x01(\x0b\x32\x1a.nebius.vpc.v1.RuleIngressB\x04\xbaJ\x01\x02H\x00R\x07ingress\x12\x39\n\x06\x65gress\x18\x05 \x01(\x0b\x32\x19.nebius.vpc.v1.RuleEgressB\x04\xbaJ\x01\x02H\x00R\x06\x65gress\x12\x32\n\x04type\x18\x06 \x01(\x0e\x32\x17.nebius.vpc.v1.RuleTypeB\x05\xbaJ\x02\x02\x07R\x04typeB\x12\n\x05match\x12\t\xbaH\x02\x08\x01\xbaJ\x01\x02\"\xff\x01\n\x0bRuleIngress\x12\x37\n\x18source_security_group_id\x18\x01 \x01(\tR\x15sourceSecurityGroupId\x12v\n\x0csource_cidrs\x18\x02 \x03(\tBS\xbaHP\x92\x01M\x10\x08\"I\xba\x01\x46\n\x11string.valid_cidr\x12\x1avalue must be a valid CIDR\x1a\x15this.isIpPrefix(true)R\x0bsourceCidrs\x12?\n\x11\x64\x65stination_ports\x18\x03 \x03(\x05\x42\x12\xbaH\x0f\x92\x01\x0c\x10\x08\"\x08\x1a\x06\x18\xff\xff\x03(\x01R\x10\x64\x65stinationPorts\"\x93\x02\n\nRuleEgress\x12\x41\n\x1d\x64\x65stination_security_group_id\x18\x01 \x01(\tR\x1a\x64\x65stinationSecurityGroupId\x12\x80\x01\n\x11\x64\x65stination_cidrs\x18\x02 \x03(\tBS\xbaHP\x92\x01M\x10\x08\"I\xba\x01\x46\n\x11string.valid_cidr\x12\x1avalue must be a valid CIDR\x1a\x15this.isIpPrefix(true)R\x10\x64\x65stinationCidrs\x12?\n\x11\x64\x65stination_ports\x18\x03 \x03(\x05\x42\x12\xbaH\x0f\x92\x01\x0c\x10\x08\"\x08\x1a\x06\x18\xff\xff\x03(\x01R\x10\x64\x65stinationPorts\"\xff\x02\n\x12SecurityRuleStatus\x12=\n\x05state\x18\x01 \x01(\x0e\x32\'.nebius.vpc.v1.SecurityRuleStatus.StateR\x05state\x12-\n\x12\x65\x66\x66\x65\x63tive_priority\x18\x04 \x01(\x05R\x11\x65\x66\x66\x65\x63tivePriority\x12:\n\tdirection\x18\x06 \x01(\x0e\x32\x1c.nebius.vpc.v1.RuleDirectionR\tdirection\x12\x36\n\x06source\x18\x07 \x01(\x0b\x32\x1e.nebius.vpc.v1.RuleMatchStatusR\x06source\x12@\n\x0b\x64\x65stination\x18\x08 \x01(\x0b\x32\x1e.nebius.vpc.v1.RuleMatchStatusR\x0b\x64\x65stination\"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08\x44\x45LETING\x10\x03\"i\n\x0fRuleMatchStatus\x12*\n\x11security_group_id\x18\x01 \x01(\tR\x0fsecurityGroupId\x12\x14\n\x05\x63idrs\x18\x02 \x03(\tR\x05\x63idrs\x12\x14\n\x05ports\x18\x03 \x03(\x05R\x05ports*C\n\rRuleDirection\x12\x19\n\x15\x44IRECTION_UNSPECIFIED\x10\x00\x12\x0b\n\x07INGRESS\x10\x01\x12\n\n\x06\x45GRESS\x10\x02*M\n\x0cRuleProtocol\x12\x18\n\x14PROTOCOL_UNSPECIFIED\x10\x00\x12\x07\n\x03\x41NY\x10\x01\x12\x07\n\x03TCP\x10\x02\x12\x07\n\x03UDP\x10\x03\x12\x08\n\x04ICMP\x10\x04*?\n\x10RuleAccessAction\x12\x16\n\x12\x41\x43\x43\x45SS_UNSPECIFIED\x10\x00\x12\t\n\x05\x41LLOW\x10\x01\x12\x08\n\x04\x44\x45NY\x10\x02*B\n\x08RuleType\x12\x19\n\x15RULE_TYPE_UNSPECIFIED\x10\x00\x12\x0c\n\x08STATEFUL\x10\x01\x12\r\n\tSTATELESS\x10\x02\x42X\n\x14\x61i.nebius.pub.vpc.v1B\x11SecurityRuleProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/vpc/v1/security_rule.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xd5\x01\n\x0cSecurityRule\x12U\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x15\xe2J\x12\x12\x10vpcsecuritygroupR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1.SecurityRuleSpecR\x04spec\x12\x39\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.vpc.v1.SecurityRuleStatusR\x06status\"\x8a\x03\n\x10SecurityRuleSpec\x12\x43\n\x06\x61\x63\x63\x65ss\x18\x01 \x01(\x0e\x32\x1f.nebius.vpc.v1.RuleAccessActionB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x06\x61\x63\x63\x65ss\x12+\n\x08priority\x18\x02 \x01(\x05\x42\x0f\xbaH\x07\x1a\x05\x18\xe8\x07(\x00\xbaJ\x02\x02\x07R\x08priority\x12\x43\n\x08protocol\x18\x03 \x01(\x0e\x32\x1b.nebius.vpc.v1.RuleProtocolB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x08protocol\x12<\n\x07ingress\x18\x04 \x01(\x0b\x32\x1a.nebius.vpc.v1.RuleIngressB\x04\xbaJ\x01\x02H\x00R\x07ingress\x12\x39\n\x06\x65gress\x18\x05 \x01(\x0b\x32\x19.nebius.vpc.v1.RuleEgressB\x04\xbaJ\x01\x02H\x00R\x06\x65gress\x12\x32\n\x04type\x18\x06 \x01(\x0e\x32\x17.nebius.vpc.v1.RuleTypeB\x05\xbaJ\x02\x02\x07R\x04typeB\x12\n\x05match\x12\t\xbaH\x02\x08\x01\xbaJ\x01\x02\"\x96\x02\n\x0bRuleIngress\x12N\n\x18source_security_group_id\x18\x01 \x01(\tB\x15\xe2J\x12\n\x10vpcsecuritygroupR\x15sourceSecurityGroupId\x12v\n\x0csource_cidrs\x18\x02 \x03(\tBS\xbaHP\x92\x01M\x10\x08\"I\xba\x01\x46\n\x11string.valid_cidr\x12\x1avalue must be a valid CIDR\x1a\x15this.isIpPrefix(true)R\x0bsourceCidrs\x12?\n\x11\x64\x65stination_ports\x18\x03 \x03(\x05\x42\x12\xbaH\x0f\x92\x01\x0c\x10\x08\"\x08\x1a\x06\x18\xff\xff\x03(\x01R\x10\x64\x65stinationPorts\"\xaa\x02\n\nRuleEgress\x12X\n\x1d\x64\x65stination_security_group_id\x18\x01 \x01(\tB\x15\xe2J\x12\n\x10vpcsecuritygroupR\x1a\x64\x65stinationSecurityGroupId\x12\x80\x01\n\x11\x64\x65stination_cidrs\x18\x02 \x03(\tBS\xbaHP\x92\x01M\x10\x08\"I\xba\x01\x46\n\x11string.valid_cidr\x12\x1avalue must be a valid CIDR\x1a\x15this.isIpPrefix(true)R\x10\x64\x65stinationCidrs\x12?\n\x11\x64\x65stination_ports\x18\x03 \x03(\x05\x42\x12\xbaH\x0f\x92\x01\x0c\x10\x08\"\x08\x1a\x06\x18\xff\xff\x03(\x01R\x10\x64\x65stinationPorts\"\xff\x02\n\x12SecurityRuleStatus\x12=\n\x05state\x18\x01 \x01(\x0e\x32\'.nebius.vpc.v1.SecurityRuleStatus.StateR\x05state\x12-\n\x12\x65\x66\x66\x65\x63tive_priority\x18\x04 \x01(\x05R\x11\x65\x66\x66\x65\x63tivePriority\x12:\n\tdirection\x18\x06 \x01(\x0e\x32\x1c.nebius.vpc.v1.RuleDirectionR\tdirection\x12\x36\n\x06source\x18\x07 \x01(\x0b\x32\x1e.nebius.vpc.v1.RuleMatchStatusR\x06source\x12@\n\x0b\x64\x65stination\x18\x08 \x01(\x0b\x32\x1e.nebius.vpc.v1.RuleMatchStatusR\x0b\x64\x65stination\"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08\x44\x45LETING\x10\x03\"\x80\x01\n\x0fRuleMatchStatus\x12\x41\n\x11security_group_id\x18\x01 \x01(\tB\x15\xe2J\x12\n\x10vpcsecuritygroupR\x0fsecurityGroupId\x12\x14\n\x05\x63idrs\x18\x02 \x03(\tR\x05\x63idrs\x12\x14\n\x05ports\x18\x03 \x03(\x05R\x05ports*C\n\rRuleDirection\x12\x19\n\x15\x44IRECTION_UNSPECIFIED\x10\x00\x12\x0b\n\x07INGRESS\x10\x01\x12\n\n\x06\x45GRESS\x10\x02*M\n\x0cRuleProtocol\x12\x18\n\x14PROTOCOL_UNSPECIFIED\x10\x00\x12\x07\n\x03\x41NY\x10\x01\x12\x07\n\x03TCP\x10\x02\x12\x07\n\x03UDP\x10\x03\x12\x08\n\x04ICMP\x10\x04*?\n\x10RuleAccessAction\x12\x16\n\x12\x41\x43\x43\x45SS_UNSPECIFIED\x10\x00\x12\t\n\x05\x41LLOW\x10\x01\x12\x08\n\x04\x44\x45NY\x10\x02*B\n\x08RuleType\x12\x19\n\x15RULE_TYPE_UNSPECIFIED\x10\x00\x12\x0c\n\x08STATEFUL\x10\x01\x12\r\n\tSTATELESS\x10\x02\x42X\n\x14\x61i.nebius.pub.vpc.v1B\x11SecurityRuleProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,6 +25,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\021SecurityRuleProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
+  _SECURITYRULE.fields_by_name['metadata']._options = None
+  _SECURITYRULE.fields_by_name['metadata']._serialized_options = b'\342J\022\022\020vpcsecuritygroup'
   _SECURITYRULESPEC.oneofs_by_name['match']._options = None
   _SECURITYRULESPEC.oneofs_by_name['match']._serialized_options = b'\272H\002\010\001\272J\001\002'
   _SECURITYRULESPEC.fields_by_name['access']._options = None
@@ -39,34 +41,40 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _SECURITYRULESPEC.fields_by_name['egress']._serialized_options = b'\272J\001\002'
   _SECURITYRULESPEC.fields_by_name['type']._options = None
   _SECURITYRULESPEC.fields_by_name['type']._serialized_options = b'\272J\002\002\007'
+  _RULEINGRESS.fields_by_name['source_security_group_id']._options = None
+  _RULEINGRESS.fields_by_name['source_security_group_id']._serialized_options = b'\342J\022\n\020vpcsecuritygroup'
   _RULEINGRESS.fields_by_name['source_cidrs']._options = None
   _RULEINGRESS.fields_by_name['source_cidrs']._serialized_options = b'\272HP\222\001M\020\010\"I\272\001F\n\021string.valid_cidr\022\032value must be a valid CIDR\032\025this.isIpPrefix(true)'
   _RULEINGRESS.fields_by_name['destination_ports']._options = None
   _RULEINGRESS.fields_by_name['destination_ports']._serialized_options = b'\272H\017\222\001\014\020\010\"\010\032\006\030\377\377\003(\001'
+  _RULEEGRESS.fields_by_name['destination_security_group_id']._options = None
+  _RULEEGRESS.fields_by_name['destination_security_group_id']._serialized_options = b'\342J\022\n\020vpcsecuritygroup'
   _RULEEGRESS.fields_by_name['destination_cidrs']._options = None
   _RULEEGRESS.fields_by_name['destination_cidrs']._serialized_options = b'\272HP\222\001M\020\010\"I\272\001F\n\021string.valid_cidr\022\032value must be a valid CIDR\032\025this.isIpPrefix(true)'
   _RULEEGRESS.fields_by_name['destination_ports']._options = None
   _RULEEGRESS.fields_by_name['destination_ports']._serialized_options = b'\272H\017\222\001\014\020\010\"\010\032\006\030\377\377\003(\001'
-  _globals['_RULEDIRECTION']._serialized_start=1759
-  _globals['_RULEDIRECTION']._serialized_end=1826
-  _globals['_RULEPROTOCOL']._serialized_start=1828
-  _globals['_RULEPROTOCOL']._serialized_end=1905
-  _globals['_RULEACCESSACTION']._serialized_start=1907
-  _globals['_RULEACCESSACTION']._serialized_end=1970
-  _globals['_RULETYPE']._serialized_start=1972
-  _globals['_RULETYPE']._serialized_end=2038
+  _RULEMATCHSTATUS.fields_by_name['security_group_id']._options = None
+  _RULEMATCHSTATUS.fields_by_name['security_group_id']._serialized_options = b'\342J\022\n\020vpcsecuritygroup'
+  _globals['_RULEDIRECTION']._serialized_start=1852
+  _globals['_RULEDIRECTION']._serialized_end=1919
+  _globals['_RULEPROTOCOL']._serialized_start=1921
+  _globals['_RULEPROTOCOL']._serialized_end=1998
+  _globals['_RULEACCESSACTION']._serialized_start=2000
+  _globals['_RULEACCESSACTION']._serialized_end=2063
+  _globals['_RULETYPE']._serialized_start=2065
+  _globals['_RULETYPE']._serialized_end=2131
   _globals['_SECURITYRULE']._serialized_start=141
-  _globals['_SECURITYRULE']._serialized_end=331
-  _globals['_SECURITYRULESPEC']._serialized_start=334
-  _globals['_SECURITYRULESPEC']._serialized_end=728
-  _globals['_RULEINGRESS']._serialized_start=731
-  _globals['_RULEINGRESS']._serialized_end=986
-  _globals['_RULEEGRESS']._serialized_start=989
-  _globals['_RULEEGRESS']._serialized_end=1264
-  _globals['_SECURITYRULESTATUS']._serialized_start=1267
-  _globals['_SECURITYRULESTATUS']._serialized_end=1650
-  _globals['_SECURITYRULESTATUS_STATE']._serialized_start=1581
-  _globals['_SECURITYRULESTATUS_STATE']._serialized_end=1650
-  _globals['_RULEMATCHSTATUS']._serialized_start=1652
-  _globals['_RULEMATCHSTATUS']._serialized_end=1757
+  _globals['_SECURITYRULE']._serialized_end=354
+  _globals['_SECURITYRULESPEC']._serialized_start=357
+  _globals['_SECURITYRULESPEC']._serialized_end=751
+  _globals['_RULEINGRESS']._serialized_start=754
+  _globals['_RULEINGRESS']._serialized_end=1032
+  _globals['_RULEEGRESS']._serialized_start=1035
+  _globals['_RULEEGRESS']._serialized_end=1333
+  _globals['_SECURITYRULESTATUS']._serialized_start=1336
+  _globals['_SECURITYRULESTATUS']._serialized_end=1719
+  _globals['_SECURITYRULESTATUS_STATE']._serialized_start=1650
+  _globals['_SECURITYRULESTATUS_STATE']._serialized_end=1719
+  _globals['_RULEMATCHSTATUS']._serialized_start=1722
+  _globals['_RULEMATCHSTATUS']._serialized_end=1850
 # @@protoc_insertion_point(module_scope)

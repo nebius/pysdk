@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.vpc.v1 import pool_pb2 as nebius_dot_vpc_dot_v1_dot_pool__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/vpc/v1/pool_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x18nebius/vpc/v1/pool.proto\"(\n\x0eGetPoolRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"W\n\x14GetPoolByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"s\n\x10ListPoolsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x87\x01\n\x1cListPoolsBySourcePoolRequest\x12+\n\x07pool_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x06poolId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"f\n\x11ListPoolsResponse\x12)\n\x05items\x18\x01 \x03(\x0b\x32\x13.nebius.vpc.v1.PoolR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xd5\x02\n\x11\x43reatePoolRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x17.nebius.vpc.v1.PoolSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xca\x02\n\x11UpdatePoolRequest\x12\x87\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc6\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')R\x08metadata\x12+\n\x04spec\x18\x02 \x01(\x0b\x32\x17.nebius.vpc.v1.PoolSpecR\x04spec\"+\n\x11\x44\x65letePoolRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xa0\x04\n\x0bPoolService\x12\x39\n\x03Get\x12\x1d.nebius.vpc.v1.GetPoolRequest\x1a\x13.nebius.vpc.v1.Pool\x12\x45\n\tGetByName\x12#.nebius.vpc.v1.GetPoolByNameRequest\x1a\x13.nebius.vpc.v1.Pool\x12I\n\x04List\x12\x1f.nebius.vpc.v1.ListPoolsRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12\x61\n\x10ListBySourcePool\x12+.nebius.vpc.v1.ListPoolsBySourcePoolRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12G\n\x06\x43reate\x12 .nebius.vpc.v1.CreatePoolRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06Update\x12 .nebius.vpc.v1.UpdatePoolRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06\x44\x65lete\x12 .nebius.vpc.v1.DeletePoolRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBW\n\x14\x61i.nebius.pub.vpc.v1B\x10PoolServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/vpc/v1/pool_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x18nebius/vpc/v1/pool.proto\"4\n\x0eGetPoolRequest\x12\"\n\x02id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x02id\"c\n\x14GetPoolByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x7f\n\x10ListPoolsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x87\x01\n\x1cListPoolsBySourcePoolRequest\x12+\n\x07pool_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x06poolId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"f\n\x11ListPoolsResponse\x12)\n\x05items\x18\x01 \x03(\x0b\x32\x13.nebius.vpc.v1.PoolR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe1\x02\n\x11\x43reatePoolRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x17.nebius.vpc.v1.PoolSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xd6\x02\n\x11UpdatePoolRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xe2J\t\x12\x07projectR\x08metadata\x12+\n\x04spec\x18\x02 \x01(\x0b\x32\x17.nebius.vpc.v1.PoolSpecR\x04spec\"7\n\x11\x44\x65letePoolRequest\x12\"\n\x02id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07vpcpoolR\x02id2\xa0\x04\n\x0bPoolService\x12\x39\n\x03Get\x12\x1d.nebius.vpc.v1.GetPoolRequest\x1a\x13.nebius.vpc.v1.Pool\x12\x45\n\tGetByName\x12#.nebius.vpc.v1.GetPoolByNameRequest\x1a\x13.nebius.vpc.v1.Pool\x12I\n\x04List\x12\x1f.nebius.vpc.v1.ListPoolsRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12\x61\n\x10ListBySourcePool\x12+.nebius.vpc.v1.ListPoolsBySourcePoolRequest\x1a .nebius.vpc.v1.ListPoolsResponse\x12G\n\x06\x43reate\x12 .nebius.vpc.v1.CreatePoolRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06Update\x12 .nebius.vpc.v1.UpdatePoolRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06\x44\x65lete\x12 .nebius.vpc.v1.DeletePoolRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBW\n\x14\x61i.nebius.pub.vpc.v1B\x10PoolServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,41 +28,41 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\020PoolServiceProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
   _GETPOOLREQUEST.fields_by_name['id']._options = None
-  _GETPOOLREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETPOOLREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007vpcpool'
   _GETPOOLBYNAMEREQUEST.fields_by_name['parent_id']._options = None
-  _GETPOOLBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETPOOLBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _GETPOOLBYNAMEREQUEST.fields_by_name['name']._options = None
   _GETPOOLBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTPOOLSREQUEST.fields_by_name['parent_id']._options = None
-  _LISTPOOLSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTPOOLSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _LISTPOOLSBYSOURCEPOOLREQUEST.fields_by_name['pool_id']._options = None
   _LISTPOOLSBYSOURCEPOOLREQUEST.fields_by_name['pool_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007vpcpool'
   _CREATEPOOLREQUEST.fields_by_name['metadata']._options = None
-  _CREATEPOOLREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001'
+  _CREATEPOOLREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001\342J\t\022\007project'
   _CREATEPOOLREQUEST.fields_by_name['spec']._options = None
   _CREATEPOOLREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _UPDATEPOOLREQUEST.fields_by_name['metadata']._options = None
-  _UPDATEPOOLREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')'
+  _UPDATEPOOLREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\342J\t\022\007project'
   _DELETEPOOLREQUEST.fields_by_name['id']._options = None
-  _DELETEPOOLREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETEPOOLREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007vpcpool'
   _POOLSERVICE._options = None
   _POOLSERVICE._serialized_options = b'\272J\003vpc'
   _globals['_GETPOOLREQUEST']._serialized_start=199
-  _globals['_GETPOOLREQUEST']._serialized_end=239
-  _globals['_GETPOOLBYNAMEREQUEST']._serialized_start=241
-  _globals['_GETPOOLBYNAMEREQUEST']._serialized_end=328
-  _globals['_LISTPOOLSREQUEST']._serialized_start=330
-  _globals['_LISTPOOLSREQUEST']._serialized_end=445
-  _globals['_LISTPOOLSBYSOURCEPOOLREQUEST']._serialized_start=448
-  _globals['_LISTPOOLSBYSOURCEPOOLREQUEST']._serialized_end=583
-  _globals['_LISTPOOLSRESPONSE']._serialized_start=585
-  _globals['_LISTPOOLSRESPONSE']._serialized_end=687
-  _globals['_CREATEPOOLREQUEST']._serialized_start=690
-  _globals['_CREATEPOOLREQUEST']._serialized_end=1031
-  _globals['_UPDATEPOOLREQUEST']._serialized_start=1034
-  _globals['_UPDATEPOOLREQUEST']._serialized_end=1364
-  _globals['_DELETEPOOLREQUEST']._serialized_start=1366
-  _globals['_DELETEPOOLREQUEST']._serialized_end=1409
-  _globals['_POOLSERVICE']._serialized_start=1412
-  _globals['_POOLSERVICE']._serialized_end=1956
+  _globals['_GETPOOLREQUEST']._serialized_end=251
+  _globals['_GETPOOLBYNAMEREQUEST']._serialized_start=253
+  _globals['_GETPOOLBYNAMEREQUEST']._serialized_end=352
+  _globals['_LISTPOOLSREQUEST']._serialized_start=354
+  _globals['_LISTPOOLSREQUEST']._serialized_end=481
+  _globals['_LISTPOOLSBYSOURCEPOOLREQUEST']._serialized_start=484
+  _globals['_LISTPOOLSBYSOURCEPOOLREQUEST']._serialized_end=619
+  _globals['_LISTPOOLSRESPONSE']._serialized_start=621
+  _globals['_LISTPOOLSRESPONSE']._serialized_end=723
+  _globals['_CREATEPOOLREQUEST']._serialized_start=726
+  _globals['_CREATEPOOLREQUEST']._serialized_end=1079
+  _globals['_UPDATEPOOLREQUEST']._serialized_start=1082
+  _globals['_UPDATEPOOLREQUEST']._serialized_end=1424
+  _globals['_DELETEPOOLREQUEST']._serialized_start=1426
+  _globals['_DELETEPOOLREQUEST']._serialized_end=1481
+  _globals['_POOLSERVICE']._serialized_start=1484
+  _globals['_POOLSERVICE']._serialized_end=2028
 # @@protoc_insertion_point(module_scope)

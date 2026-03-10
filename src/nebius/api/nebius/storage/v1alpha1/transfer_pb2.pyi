@@ -48,14 +48,18 @@ class TransferSpec(_message.Message):
         limiters: TransferSpec.Limiters
         def __init__(self, endpoint: _Optional[str] = ..., bucket_name: _Optional[str] = ..., region: _Optional[str] = ..., prefix: _Optional[str] = ..., credentials: _Optional[_Union[TransferSpec.BucketCredentials, _Mapping]] = ..., limiters: _Optional[_Union[TransferSpec.Limiters, _Mapping]] = ...) -> None: ...
     class DestinationBucket(_message.Message):
-        __slots__ = ["bucket_name", "prefix", "credentials"]
+        __slots__ = ["bucket_name", "prefix", "credentials", "endpoint", "region"]
         BUCKET_NAME_FIELD_NUMBER: _ClassVar[int]
         PREFIX_FIELD_NUMBER: _ClassVar[int]
         CREDENTIALS_FIELD_NUMBER: _ClassVar[int]
+        ENDPOINT_FIELD_NUMBER: _ClassVar[int]
+        REGION_FIELD_NUMBER: _ClassVar[int]
         bucket_name: str
         prefix: str
         credentials: TransferSpec.BucketCredentials
-        def __init__(self, bucket_name: _Optional[str] = ..., prefix: _Optional[str] = ..., credentials: _Optional[_Union[TransferSpec.BucketCredentials, _Mapping]] = ...) -> None: ...
+        endpoint: str
+        region: str
+        def __init__(self, bucket_name: _Optional[str] = ..., prefix: _Optional[str] = ..., credentials: _Optional[_Union[TransferSpec.BucketCredentials, _Mapping]] = ..., endpoint: _Optional[str] = ..., region: _Optional[str] = ...) -> None: ...
     class BucketCredentials(_message.Message):
         __slots__ = ["anonymous", "access_key", "azure_access_key"]
         class CredentialsAnonymous(_message.Message):

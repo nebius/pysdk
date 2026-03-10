@@ -17,7 +17,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.vpc.v1 import pool_pb2 as nebius_dot_vpc_dot_v1_dot_pool__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1enebius/vpc/v1/allocation.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/vpc/v1/pool.proto\"\xb8\x01\n\nAllocation\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.AllocationSpecR\x04spec\x12\x37\n\x06status\x18\x03 \x01(\x0b\x32\x1f.nebius.vpc.v1.AllocationStatusR\x06status\"\xbd\x01\n\x0e\x41llocationSpec\x12M\n\x0cipv4_private\x18\x01 \x01(\x0b\x32(.nebius.vpc.v1.IPv4PrivateAllocationSpecH\x00R\x0bipv4Private\x12J\n\x0bipv4_public\x18\x02 \x01(\x0b\x32\'.nebius.vpc.v1.IPv4PublicAllocationSpecH\x00R\nipv4PublicB\x10\n\x07ip_spec\x12\x05\xbaH\x02\x08\x01\"\xc3\x02\n\x19IPv4PrivateAllocationSpec\x12\xcc\x01\n\x04\x63idr\x18\x01 \x01(\tB\xb7\x01\xbaH\xaf\x01\xba\x01\xab\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1a\x66this == \'\' || this.matches(\'^/([0-9]|[1-2][0-9]|3[0-2])$\') || this.isIp(4) || this.isIpPrefix(4, true)\xbaJ\x01\x02R\x04\x63idr\x12#\n\tsubnet_id\x18\x02 \x01(\tB\x04\xbaJ\x01\x02H\x00R\x08subnetId\x12\x1f\n\x07pool_id\x18\x03 \x01(\tB\x04\xbaJ\x01\x02H\x00R\x06poolIdB\x11\n\x04pool\x12\t\xbaH\x02\x08\x01\xbaJ\x01\x02\"\xc2\x02\n\x18IPv4PublicAllocationSpec\x12\xcc\x01\n\x04\x63idr\x18\x01 \x01(\tB\xb7\x01\xbaH\xaf\x01\xba\x01\xab\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1a\x66this == \'\' || this.matches(\'^/([0-9]|[1-2][0-9]|3[0-2])$\') || this.isIp(4) || this.isIpPrefix(4, true)\xbaJ\x01\x02R\x04\x63idr\x12#\n\tsubnet_id\x18\x02 \x01(\tB\x04\xbaJ\x01\x02H\x00R\x08subnetId\x12\x1f\n\x07pool_id\x18\x03 \x01(\tB\x04\xbaJ\x01\x02H\x00R\x06poolIdB\x11\n\x04pool\x12\t\xbaH\x02\x08\x01\xbaJ\x01\x02\"\xb7\x02\n\x10\x41llocationStatus\x12;\n\x05state\x18\x01 \x01(\x0e\x32%.nebius.vpc.v1.AllocationStatus.StateR\x05state\x12:\n\x07\x64\x65tails\x18\x02 \x01(\x0b\x32 .nebius.vpc.v1.AllocationDetailsR\x07\x64\x65tails\x12\x39\n\nassignment\x18\x03 \x01(\x0b\x32\x19.nebius.vpc.v1.AssignmentR\nassignment\x12\x16\n\x06static\x18\x04 \x01(\x08R\x06static\"W\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\r\n\tALLOCATED\x10\x02\x12\x0c\n\x08\x41SSIGNED\x10\x03\x12\x0c\n\x08\x44\x45LETING\x10\x04\"\xa4\x01\n\x11\x41llocationDetails\x12%\n\x0e\x61llocated_cidr\x18\x01 \x01(\tR\rallocatedCidr\x12\x17\n\x07pool_id\x18\x02 \x01(\tR\x06poolId\x12\x32\n\x07version\x18\x04 \x01(\x0e\x32\x18.nebius.vpc.v1.IpVersionR\x07version\x12\x1b\n\tsubnet_id\x18\x05 \x01(\tR\x08subnetId\"\xbc\x01\n\nAssignment\x12X\n\x11network_interface\x18\x01 \x01(\x0b\x32).nebius.vpc.v1.NetworkInterfaceAssignmentH\x00R\x10networkInterface\x12L\n\rload_balancer\x18\x02 \x01(\x0b\x32%.nebius.vpc.v1.LoadBalancerAssignmentH\x00R\x0cloadBalancerB\x06\n\x04type\"Q\n\x1aNetworkInterfaceAssignment\x12\x1f\n\x0binstance_id\x18\x01 \x01(\tR\ninstanceId\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\"(\n\x16LoadBalancerAssignment\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02idBV\n\x14\x61i.nebius.pub.vpc.v1B\x0f\x41llocationProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1enebius/vpc/v1/allocation.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/vpc/v1/pool.proto\"\xc6\x01\n\nAllocation\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.AllocationSpecR\x04spec\x12\x37\n\x06status\x18\x03 \x01(\x0b\x32\x1f.nebius.vpc.v1.AllocationStatusR\x06status\"\xbd\x01\n\x0e\x41llocationSpec\x12M\n\x0cipv4_private\x18\x01 \x01(\x0b\x32(.nebius.vpc.v1.IPv4PrivateAllocationSpecH\x00R\x0bipv4Private\x12J\n\x0bipv4_public\x18\x02 \x01(\x0b\x32\'.nebius.vpc.v1.IPv4PublicAllocationSpecH\x00R\nipv4PublicB\x10\n\x07ip_spec\x12\x05\xbaH\x02\x08\x01\"\xdd\x02\n\x19IPv4PrivateAllocationSpec\x12\xcc\x01\n\x04\x63idr\x18\x01 \x01(\tB\xb7\x01\xbaH\xaf\x01\xba\x01\xab\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1a\x66this == \'\' || this.matches(\'^/([0-9]|[1-2][0-9]|3[0-2])$\') || this.isIp(4) || this.isIpPrefix(4, true)\xbaJ\x01\x02R\x04\x63idr\x12\x31\n\tsubnet_id\x18\x02 \x01(\tB\x12\xbaJ\x01\x02\xe2J\x0b\n\tvpcsubnetH\x00R\x08subnetId\x12+\n\x07pool_id\x18\x03 \x01(\tB\x10\xbaJ\x01\x02\xe2J\t\n\x07vpcpoolH\x00R\x06poolIdB\x11\n\x04pool\x12\t\xbaH\x02\x08\x01\xbaJ\x01\x02\"\xdc\x02\n\x18IPv4PublicAllocationSpec\x12\xcc\x01\n\x04\x63idr\x18\x01 \x01(\tB\xb7\x01\xbaH\xaf\x01\xba\x01\xab\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1a\x66this == \'\' || this.matches(\'^/([0-9]|[1-2][0-9]|3[0-2])$\') || this.isIp(4) || this.isIpPrefix(4, true)\xbaJ\x01\x02R\x04\x63idr\x12\x31\n\tsubnet_id\x18\x02 \x01(\tB\x12\xbaJ\x01\x02\xe2J\x0b\n\tvpcsubnetH\x00R\x08subnetId\x12+\n\x07pool_id\x18\x03 \x01(\tB\x10\xbaJ\x01\x02\xe2J\t\n\x07vpcpoolH\x00R\x06poolIdB\x11\n\x04pool\x12\t\xbaH\x02\x08\x01\xbaJ\x01\x02\"\xb7\x02\n\x10\x41llocationStatus\x12;\n\x05state\x18\x01 \x01(\x0e\x32%.nebius.vpc.v1.AllocationStatus.StateR\x05state\x12:\n\x07\x64\x65tails\x18\x02 \x01(\x0b\x32 .nebius.vpc.v1.AllocationDetailsR\x07\x64\x65tails\x12\x39\n\nassignment\x18\x03 \x01(\x0b\x32\x19.nebius.vpc.v1.AssignmentR\nassignment\x12\x16\n\x06static\x18\x04 \x01(\x08R\x06static\"W\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\r\n\tALLOCATED\x10\x02\x12\x0c\n\x08\x41SSIGNED\x10\x03\x12\x0c\n\x08\x44\x45LETING\x10\x04\"\xc2\x01\n\x11\x41llocationDetails\x12%\n\x0e\x61llocated_cidr\x18\x01 \x01(\tR\rallocatedCidr\x12%\n\x07pool_id\x18\x02 \x01(\tB\x0c\xe2J\t\n\x07vpcpoolR\x06poolId\x12\x32\n\x07version\x18\x04 \x01(\x0e\x32\x18.nebius.vpc.v1.IpVersionR\x07version\x12+\n\tsubnet_id\x18\x05 \x01(\tB\x0e\xe2J\x0b\n\tvpcsubnetR\x08subnetId\"\xbc\x01\n\nAssignment\x12X\n\x11network_interface\x18\x01 \x01(\x0b\x32).nebius.vpc.v1.NetworkInterfaceAssignmentH\x00R\x10networkInterface\x12L\n\rload_balancer\x18\x02 \x01(\x0b\x32%.nebius.vpc.v1.LoadBalancerAssignmentH\x00R\x0cloadBalancerB\x06\n\x04type\"g\n\x1aNetworkInterfaceAssignment\x12\x35\n\x0binstance_id\x18\x01 \x01(\tB\x14\xe2J\x11\n\x0f\x63omputeinstanceR\ninstanceId\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\">\n\x16LoadBalancerAssignment\x12$\n\x02id\x18\x01 \x01(\tB\x14\xe2J\x11\n\x0fvpcloadbalancerR\x02idBV\n\x14\x61i.nebius.pub.vpc.v1B\x0f\x41llocationProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -26,6 +26,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\017AllocationProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
+  _ALLOCATION.fields_by_name['metadata']._options = None
+  _ALLOCATION.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007project'
   _ALLOCATIONSPEC.oneofs_by_name['ip_spec']._options = None
   _ALLOCATIONSPEC.oneofs_by_name['ip_spec']._serialized_options = b'\272H\002\010\001'
   _IPV4PRIVATEALLOCATIONSPEC.oneofs_by_name['pool']._options = None
@@ -33,35 +35,43 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _IPV4PRIVATEALLOCATIONSPEC.fields_by_name['cidr']._options = None
   _IPV4PRIVATEALLOCATIONSPEC.fields_by_name['cidr']._serialized_options = b'\272H\257\001\272\001\253\001\n\021string.valid_cidr\022.value must be a valid IP address, CIDR or mask\032fthis == \'\' || this.matches(\'^/([0-9]|[1-2][0-9]|3[0-2])$\') || this.isIp(4) || this.isIpPrefix(4, true)\272J\001\002'
   _IPV4PRIVATEALLOCATIONSPEC.fields_by_name['subnet_id']._options = None
-  _IPV4PRIVATEALLOCATIONSPEC.fields_by_name['subnet_id']._serialized_options = b'\272J\001\002'
+  _IPV4PRIVATEALLOCATIONSPEC.fields_by_name['subnet_id']._serialized_options = b'\272J\001\002\342J\013\n\tvpcsubnet'
   _IPV4PRIVATEALLOCATIONSPEC.fields_by_name['pool_id']._options = None
-  _IPV4PRIVATEALLOCATIONSPEC.fields_by_name['pool_id']._serialized_options = b'\272J\001\002'
+  _IPV4PRIVATEALLOCATIONSPEC.fields_by_name['pool_id']._serialized_options = b'\272J\001\002\342J\t\n\007vpcpool'
   _IPV4PUBLICALLOCATIONSPEC.oneofs_by_name['pool']._options = None
   _IPV4PUBLICALLOCATIONSPEC.oneofs_by_name['pool']._serialized_options = b'\272H\002\010\001\272J\001\002'
   _IPV4PUBLICALLOCATIONSPEC.fields_by_name['cidr']._options = None
   _IPV4PUBLICALLOCATIONSPEC.fields_by_name['cidr']._serialized_options = b'\272H\257\001\272\001\253\001\n\021string.valid_cidr\022.value must be a valid IP address, CIDR or mask\032fthis == \'\' || this.matches(\'^/([0-9]|[1-2][0-9]|3[0-2])$\') || this.isIp(4) || this.isIpPrefix(4, true)\272J\001\002'
   _IPV4PUBLICALLOCATIONSPEC.fields_by_name['subnet_id']._options = None
-  _IPV4PUBLICALLOCATIONSPEC.fields_by_name['subnet_id']._serialized_options = b'\272J\001\002'
+  _IPV4PUBLICALLOCATIONSPEC.fields_by_name['subnet_id']._serialized_options = b'\272J\001\002\342J\013\n\tvpcsubnet'
   _IPV4PUBLICALLOCATIONSPEC.fields_by_name['pool_id']._options = None
-  _IPV4PUBLICALLOCATIONSPEC.fields_by_name['pool_id']._serialized_options = b'\272J\001\002'
+  _IPV4PUBLICALLOCATIONSPEC.fields_by_name['pool_id']._serialized_options = b'\272J\001\002\342J\t\n\007vpcpool'
+  _ALLOCATIONDETAILS.fields_by_name['pool_id']._options = None
+  _ALLOCATIONDETAILS.fields_by_name['pool_id']._serialized_options = b'\342J\t\n\007vpcpool'
+  _ALLOCATIONDETAILS.fields_by_name['subnet_id']._options = None
+  _ALLOCATIONDETAILS.fields_by_name['subnet_id']._serialized_options = b'\342J\013\n\tvpcsubnet'
+  _NETWORKINTERFACEASSIGNMENT.fields_by_name['instance_id']._options = None
+  _NETWORKINTERFACEASSIGNMENT.fields_by_name['instance_id']._serialized_options = b'\342J\021\n\017computeinstance'
+  _LOADBALANCERASSIGNMENT.fields_by_name['id']._options = None
+  _LOADBALANCERASSIGNMENT.fields_by_name['id']._serialized_options = b'\342J\021\n\017vpcloadbalancer'
   _globals['_ALLOCATION']._serialized_start=164
-  _globals['_ALLOCATION']._serialized_end=348
-  _globals['_ALLOCATIONSPEC']._serialized_start=351
-  _globals['_ALLOCATIONSPEC']._serialized_end=540
-  _globals['_IPV4PRIVATEALLOCATIONSPEC']._serialized_start=543
-  _globals['_IPV4PRIVATEALLOCATIONSPEC']._serialized_end=866
-  _globals['_IPV4PUBLICALLOCATIONSPEC']._serialized_start=869
-  _globals['_IPV4PUBLICALLOCATIONSPEC']._serialized_end=1191
-  _globals['_ALLOCATIONSTATUS']._serialized_start=1194
-  _globals['_ALLOCATIONSTATUS']._serialized_end=1505
-  _globals['_ALLOCATIONSTATUS_STATE']._serialized_start=1418
-  _globals['_ALLOCATIONSTATUS_STATE']._serialized_end=1505
-  _globals['_ALLOCATIONDETAILS']._serialized_start=1508
-  _globals['_ALLOCATIONDETAILS']._serialized_end=1672
-  _globals['_ASSIGNMENT']._serialized_start=1675
-  _globals['_ASSIGNMENT']._serialized_end=1863
-  _globals['_NETWORKINTERFACEASSIGNMENT']._serialized_start=1865
-  _globals['_NETWORKINTERFACEASSIGNMENT']._serialized_end=1946
-  _globals['_LOADBALANCERASSIGNMENT']._serialized_start=1948
-  _globals['_LOADBALANCERASSIGNMENT']._serialized_end=1988
+  _globals['_ALLOCATION']._serialized_end=362
+  _globals['_ALLOCATIONSPEC']._serialized_start=365
+  _globals['_ALLOCATIONSPEC']._serialized_end=554
+  _globals['_IPV4PRIVATEALLOCATIONSPEC']._serialized_start=557
+  _globals['_IPV4PRIVATEALLOCATIONSPEC']._serialized_end=906
+  _globals['_IPV4PUBLICALLOCATIONSPEC']._serialized_start=909
+  _globals['_IPV4PUBLICALLOCATIONSPEC']._serialized_end=1257
+  _globals['_ALLOCATIONSTATUS']._serialized_start=1260
+  _globals['_ALLOCATIONSTATUS']._serialized_end=1571
+  _globals['_ALLOCATIONSTATUS_STATE']._serialized_start=1484
+  _globals['_ALLOCATIONSTATUS_STATE']._serialized_end=1571
+  _globals['_ALLOCATIONDETAILS']._serialized_start=1574
+  _globals['_ALLOCATIONDETAILS']._serialized_end=1768
+  _globals['_ASSIGNMENT']._serialized_start=1771
+  _globals['_ASSIGNMENT']._serialized_end=1959
+  _globals['_NETWORKINTERFACEASSIGNMENT']._serialized_start=1961
+  _globals['_NETWORKINTERFACEASSIGNMENT']._serialized_end=2064
+  _globals['_LOADBALANCERASSIGNMENT']._serialized_start=2066
+  _globals['_LOADBALANCERASSIGNMENT']._serialized_end=2128
 # @@protoc_insertion_point(module_scope)

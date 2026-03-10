@@ -6,14 +6,24 @@
 
 import builtins as builtins
 import collections.abc as abc
+import datetime as datetime
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
+import google.protobuf.timestamp_pb2 as timestamp_pb2
 import nebius.aio.client as client
+import nebius.aio.operation as operation
 import nebius.aio.request as request_1
 import nebius.aio.request_kwargs as request_kwargs
+import nebius.api.nebius.billing.v1alpha1.billing_report_exporter_pb2 as billing_report_exporter_pb2
 import nebius.api.nebius.billing.v1alpha1.calculator_pb2 as calculator_pb2
 import nebius.api.nebius.billing.v1alpha1.calculator_service_pb2 as calculator_service_pb2
 import nebius.api.nebius.billing.v1alpha1.offer_type_pb2 as offer_type_pb2
+import nebius.api.nebius.billing.v1alpha1.one_time_export_pb2 as one_time_export_pb2
+import nebius.api.nebius.billing.v1alpha1.one_time_export_service_pb2 as one_time_export_service_pb2
+import nebius.api.nebius.common.v1 as v1_2
+import nebius.api.nebius.common.v1.error_pb2 as error_pb2
+import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.compute.v1 as v1_1
 import nebius.api.nebius.compute.v1.disk_service_pb2 as disk_service_pb2
 import nebius.api.nebius.compute.v1.filesystem_service_pb2 as filesystem_service_pb2
@@ -22,9 +32,25 @@ import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.base.protos.unset as unset
+import nebius.base.protos.well_known as well_known_1
 import typing as typing
 import typing_extensions as typing_extensions
 #@ local imports here @#
+
+# file: nebius/billing/v1alpha1/billing_report_exporter.proto
+class ExportFormat(pb_enum.Enum):
+    """
+    Supported export formats for billing reports.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.billing.v1alpha1.ExportFormat",billing_report_exporter_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    EXPORT_FORMAT_UNSPECIFIED = 0
+    EXPORT_FORMAT_FOCUS_1_2_CSV = 1
+    """
+    FOCUS (FinOps Open Cost and Usage Specification) v1.2 CSV format.
+    See: https://focus.finops.org/focus-specification/v1-2/
+    """
+    
 
 # file: nebius/billing/v1alpha1/calculator.proto
 class ResourceSpec(pb_classes.Message):
@@ -784,8 +810,697 @@ class CalculatorServiceClient(client.Client):
         )
     
 
+# file: nebius/billing/v1alpha1/one_time_export.proto
+class OneTimeExportState(pb_enum.Enum):
+    """
+    Lifecycle states for one-time export.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.billing.v1alpha1.OneTimeExportState",one_time_export_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+    ONE_TIME_EXPORT_STATE_UNSPECIFIED = 0
+    ONE_TIME_EXPORT_STATE_SCHEDULED = 1
+    """
+    Export has been created and is scheduled for processing.
+    """
+    
+    ONE_TIME_EXPORT_STATE_RUNNING = 2
+    """
+    Export is in progress.
+    """
+    
+    ONE_TIME_EXPORT_STATE_SUCCESS = 3
+    """
+    Export completed successfully. Download URL is available.
+    """
+    
+    ONE_TIME_EXPORT_STATE_FAILED = 4
+    """
+    Export failed. See error field for details.
+    """
+    
+    ONE_TIME_EXPORT_STATE_ARCHIVED = 5
+    """
+    Export has been archived and the archive is no longer available for download.
+    """
+    
+
+class OneTimeExport(pb_classes.Message):
+    """
+    One-time export of billing reports as a downloadable archive.
+    Creates a .tar.gz archive of FOCUS billing data for the requested period
+    and provides a presigned download URL.
+    """
+    
+    __PB2_CLASS__ = one_time_export_pb2.OneTimeExport
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.billing.v1alpha1.OneTimeExport",one_time_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_2.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "OneTimeExportSpec|one_time_export_pb2.OneTimeExportSpec|None|unset.UnsetType" = unset.Unset,
+        status: "OneTimeExportStatus|one_time_export_pb2.OneTimeExportStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_2.ResourceMetadata":
+        """
+        Parent is Contract ID.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_2.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_2.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "OneTimeExportSpec":
+        """
+        Export configuration specification.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=OneTimeExportSpec,
+        )
+    @spec.setter
+    def spec(self, value: "OneTimeExportSpec|one_time_export_pb2.OneTimeExportSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "OneTimeExportStatus":
+        """
+        Current status of the one-time export.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=OneTimeExportStatus,
+        )
+    @status.setter
+    def status(self, value: "OneTimeExportStatus|one_time_export_pb2.OneTimeExportStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class OneTimeExportSpec(pb_classes.Message):
+    """
+    Specification for one-time billing report export.
+    """
+    
+    __PB2_CLASS__ = one_time_export_pb2.OneTimeExportSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.billing.v1alpha1.OneTimeExportSpec",one_time_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        format: "ExportFormat|billing_report_exporter_pb2.ExportFormat|None|unset.UnsetType" = unset.Unset,
+        start_period: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        end_period: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(format, unset.UnsetType):
+            self.format = format
+        if not isinstance(start_period, unset.UnsetType):
+            self.start_period = start_period
+        if not isinstance(end_period, unset.UnsetType):
+            self.end_period = end_period
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "format",
+            "start_period",
+            "end_period",
+        ]
+    
+    @builtins.property
+    def format(self) -> "ExportFormat":
+        """
+        Format of the exported billing reports.
+        """
+        
+        return super()._get_field("format", explicit_presence=False,
+        wrap=ExportFormat,
+        )
+    @format.setter
+    def format(self, value: "ExportFormat|billing_report_exporter_pb2.ExportFormat|None") -> None:
+        return super()._set_field("format",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def start_period(self) -> "builtins.str":
+        """
+        The first billing period to include in the export (inclusive).
+        Example: "2025-04".
+        """
+        
+        return super()._get_field("start_period", explicit_presence=False,
+        )
+    @start_period.setter
+    def start_period(self, value: "builtins.str|None") -> None:
+        return super()._set_field("start_period",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def end_period(self) -> "builtins.str":
+        """
+        The last billing period to include in the export (inclusive).
+        Example: "2025-06".
+        """
+        
+        return super()._get_field("end_period", explicit_presence=False,
+        )
+    @end_period.setter
+    def end_period(self, value: "builtins.str|None") -> None:
+        return super()._set_field("end_period",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "format":"format",
+        "start_period":"start_period",
+        "end_period":"end_period",
+    }
+    
+class OneTimeExportStatus(pb_classes.Message):
+    """
+    Status information for one-time export.
+    """
+    
+    __PB2_CLASS__ = one_time_export_pb2.OneTimeExportStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.billing.v1alpha1.OneTimeExportStatus",one_time_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "expires_at": well_known_1.ts_mask,
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "OneTimeExportState|one_time_export_pb2.OneTimeExportState|None|unset.UnsetType" = unset.Unset,
+        download_url: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        expires_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        state_details: "OneTimeExportStateDetails|one_time_export_pb2.OneTimeExportStateDetails|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(download_url, unset.UnsetType):
+            self.download_url = download_url
+        if not isinstance(expires_at, unset.UnsetType):
+            self.expires_at = expires_at
+        if not isinstance(state_details, unset.UnsetType):
+            self.state_details = state_details
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "download_url",
+            "expires_at",
+            "state_details",
+        ]
+    
+    @builtins.property
+    def state(self) -> "OneTimeExportState":
+        """
+        Current state of the export.
+        """
+        
+        return super()._get_field("state", explicit_presence=False,
+        wrap=OneTimeExportState,
+        )
+    @state.setter
+    def state(self, value: "OneTimeExportState|one_time_export_pb2.OneTimeExportState|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def download_url(self) -> "builtins.str":
+        """
+        Presigned download URL for the archive.
+        Populated only when state is DONE. Each Get request generates a fresh URL.
+        """
+        
+        return super()._get_field("download_url", explicit_presence=False,
+        )
+    @download_url.setter
+    def download_url(self, value: "builtins.str|None") -> None:
+        return super()._set_field("download_url",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def expires_at(self) -> "datetime.datetime":
+        """
+        Timestamp when this export expires.
+        """
+        
+        return super()._get_field("expires_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @expires_at.setter
+    def expires_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("expires_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def state_details(self) -> "OneTimeExportStateDetails":
+        """
+        Additional details about the current state.
+        """
+        
+        return super()._get_field("state_details", explicit_presence=False,
+        wrap=OneTimeExportStateDetails,
+        )
+    @state_details.setter
+    def state_details(self, value: "OneTimeExportStateDetails|one_time_export_pb2.OneTimeExportStateDetails|None") -> None:
+        return super()._set_field("state_details",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "download_url":"download_url",
+        "expires_at":"expires_at",
+        "state_details":"state_details",
+    }
+    
+class OneTimeExportStateDetails(pb_classes.Message):
+    """
+    Additional details about the current state of the export.
+    """
+    
+    __PB2_CLASS__ = one_time_export_pb2.OneTimeExportStateDetails
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.billing.v1alpha1.OneTimeExportStateDetails",one_time_export_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        error: "v1_2.ServiceError|error_pb2.ServiceError|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(error, unset.UnsetType):
+            self.error = error
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "error",
+        ]
+    
+    @builtins.property
+    def error(self) -> "v1_2.ServiceError":
+        """
+        Error encountered during export.
+        Populated only when state is FAILED.
+        """
+        
+        return super()._get_field("error", explicit_presence=False,
+        wrap=v1_2.ServiceError,
+        )
+    @error.setter
+    def error(self, value: "v1_2.ServiceError|error_pb2.ServiceError|None") -> None:
+        return super()._set_field("error",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "error":"error",
+    }
+    
+# file: nebius/billing/v1alpha1/one_time_export_service.proto
+class CreateOneTimeExportRequest(pb_classes.Message):
+    __PB2_CLASS__ = one_time_export_service_pb2.CreateOneTimeExportRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.billing.v1alpha1.CreateOneTimeExportRequest",one_time_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_2.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "OneTimeExportSpec|one_time_export_pb2.OneTimeExportSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_2.ResourceMetadata":
+        """
+        Resource metadata including parent contract ID.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_2.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_2.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "OneTimeExportSpec":
+        """
+        Export configuration specification.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=OneTimeExportSpec,
+        )
+    @spec.setter
+    def spec(self, value: "OneTimeExportSpec|one_time_export_pb2.OneTimeExportSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class GetOneTimeExportRequest(pb_classes.Message):
+    __PB2_CLASS__ = one_time_export_service_pb2.GetOneTimeExportRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.billing.v1alpha1.GetOneTimeExportRequest",one_time_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        Unique identifier of the one-time export.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListOneTimeExportsRequest(pb_classes.Message):
+    __PB2_CLASS__ = one_time_export_service_pb2.ListOneTimeExportsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.billing.v1alpha1.ListOneTimeExportsRequest",one_time_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        Parent contract ID for which to list one-time exports.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Maximum number of items to return per page.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Token for retrieving the next page of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListOneTimeExportsResponse(pb_classes.Message):
+    __PB2_CLASS__ = one_time_export_service_pb2.ListOneTimeExportsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.billing.v1alpha1.ListOneTimeExportsResponse",one_time_export_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[OneTimeExport]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[OneTimeExport]":
+        """
+        List of one-time exports for the specified contract.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(OneTimeExport,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[OneTimeExport]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+        Token for retrieving the next page of results. Empty if no more pages.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+
+class OneTimeExportServiceClient(client.ClientWithOperations[v1_2.Operation,v1_2.OperationServiceClient]):
+    """
+    Service for managing one-time billing report exports.
+    Enables creation of downloadable archives of billing data for a specified period.
+    
+    This class provides the client methods for the ``.nebius.billing.v1alpha1.OneTimeExportService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.billing.v1alpha1.OneTimeExportService",one_time_export_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.billing.v1alpha1.OneTimeExportService"
+    __operation_type__ = v1_2.Operation
+    __operation_service_class__ = v1_2.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def create(self,
+        request: "CreateOneTimeExportRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateOneTimeExportRequest","operation.Operation[v1_2.Operation]"]:
+        """
+        Creates a new one-time export of billing reports for the requested period.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.billing.v1alpha1.CreateOneTimeExportRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def get(self,
+        request: "GetOneTimeExportRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetOneTimeExportRequest","OneTimeExport"]:
+        """
+        Retrieves details of a specific one-time export.
+        When the export is complete, the response includes a fresh presigned download URL.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.billing.v1alpha1.GetOneTimeExportRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.billing.v1alpha1.OneTimeExport`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=one_time_export_pb2.OneTimeExport,
+            result_wrapper=pb_classes.simple_wrapper(OneTimeExport),
+            **kwargs,
+        )
+    
+    def list(self,
+        request: "ListOneTimeExportsRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListOneTimeExportsRequest","ListOneTimeExportsResponse"]:
+        """
+        Lists one-time exports for a given contract.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.billing.v1alpha1.ListOneTimeExportsRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.billing.v1alpha1.ListOneTimeExportsResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=one_time_export_service_pb2.ListOneTimeExportsResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListOneTimeExportsResponse),
+            **kwargs,
+        )
+    
+
 __all__ = [
     #@ local import names here @#
+    "ExportFormat",
     "ResourceSpec",
     "ResourceGroupCost",
     "GeneralTotalCost",
@@ -797,4 +1512,14 @@ __all__ = [
     "EstimateBatchRequest",
     "EstimateBatchResponse",
     "CalculatorServiceClient",
+    "OneTimeExportState",
+    "OneTimeExport",
+    "OneTimeExportSpec",
+    "OneTimeExportStatus",
+    "OneTimeExportStateDetails",
+    "CreateOneTimeExportRequest",
+    "GetOneTimeExportRequest",
+    "ListOneTimeExportsRequest",
+    "ListOneTimeExportsResponse",
+    "OneTimeExportServiceClient",
 ]

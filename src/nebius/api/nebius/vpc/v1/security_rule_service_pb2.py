@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.vpc.v1 import security_rule_pb2 as nebius_dot_vpc_dot_v1_dot_security__rule__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/vpc/v1/security_rule_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a!nebius/vpc/v1/security_rule.proto\"0\n\x16GetSecurityRuleRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"_\n\x1cGetSecurityRuleByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"{\n\x18ListSecurityRulesRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"v\n\x19ListSecurityRulesResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.vpc.v1.SecurityRuleR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe5\x02\n\x19\x43reateSecurityRuleRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1.SecurityRuleSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xda\x02\n\x19UpdateSecurityRuleRequest\x12\x87\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc6\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')R\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1.SecurityRuleSpecR\x04spec\"3\n\x19\x44\x65leteSecurityRuleRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\x8d\x04\n\x13SecurityRuleService\x12I\n\x03Get\x12%.nebius.vpc.v1.GetSecurityRuleRequest\x1a\x1b.nebius.vpc.v1.SecurityRule\x12U\n\tGetByName\x12+.nebius.vpc.v1.GetSecurityRuleByNameRequest\x1a\x1b.nebius.vpc.v1.SecurityRule\x12Y\n\x04List\x12\'.nebius.vpc.v1.ListSecurityRulesRequest\x1a(.nebius.vpc.v1.ListSecurityRulesResponse\x12O\n\x06\x43reate\x12(.nebius.vpc.v1.CreateSecurityRuleRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06Update\x12(.nebius.vpc.v1.UpdateSecurityRuleRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06\x44\x65lete\x12(.nebius.vpc.v1.DeleteSecurityRuleRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB_\n\x14\x61i.nebius.pub.vpc.v1B\x18SecurityRuleServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/vpc/v1/security_rule_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a!nebius/vpc/v1/security_rule.proto\"D\n\x16GetSecurityRuleRequest\x12*\n\x02id\x18\x01 \x01(\tB\x1a\xbaH\x03\xc8\x01\x01\xe2J\x11\n\x0fvpcsecurityruleR\x02id\"t\n\x1cGetSecurityRuleByNameRequest\x12\x38\n\tparent_id\x18\x01 \x01(\tB\x1b\xbaH\x03\xc8\x01\x01\xe2J\x12\n\x10vpcsecuritygroupR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x90\x01\n\x18ListSecurityRulesRequest\x12\x38\n\tparent_id\x18\x01 \x01(\tB\x1b\xbaH\x03\xc8\x01\x01\xe2J\x12\n\x10vpcsecuritygroupR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"v\n\x19ListSecurityRulesResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.vpc.v1.SecurityRuleR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xfa\x02\n\x19\x43reateSecurityRuleRequest\x12\x9f\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xde\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01\xe2J\x12\x12\x10vpcsecuritygroupR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1.SecurityRuleSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xef\x02\n\x19UpdateSecurityRuleRequest\x12\x9c\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xdb\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xe2J\x12\x12\x10vpcsecuritygroupR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1.SecurityRuleSpecR\x04spec\"G\n\x19\x44\x65leteSecurityRuleRequest\x12*\n\x02id\x18\x01 \x01(\tB\x1a\xbaH\x03\xc8\x01\x01\xe2J\x11\n\x0fvpcsecurityruleR\x02id2\x8d\x04\n\x13SecurityRuleService\x12I\n\x03Get\x12%.nebius.vpc.v1.GetSecurityRuleRequest\x1a\x1b.nebius.vpc.v1.SecurityRule\x12U\n\tGetByName\x12+.nebius.vpc.v1.GetSecurityRuleByNameRequest\x1a\x1b.nebius.vpc.v1.SecurityRule\x12Y\n\x04List\x12\'.nebius.vpc.v1.ListSecurityRulesRequest\x1a(.nebius.vpc.v1.ListSecurityRulesResponse\x12O\n\x06\x43reate\x12(.nebius.vpc.v1.CreateSecurityRuleRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06Update\x12(.nebius.vpc.v1.UpdateSecurityRuleRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06\x44\x65lete\x12(.nebius.vpc.v1.DeleteSecurityRuleRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB_\n\x14\x61i.nebius.pub.vpc.v1B\x18SecurityRuleServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,37 +28,37 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\030SecurityRuleServiceProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
   _GETSECURITYRULEREQUEST.fields_by_name['id']._options = None
-  _GETSECURITYRULEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETSECURITYRULEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\021\n\017vpcsecurityrule'
   _GETSECURITYRULEBYNAMEREQUEST.fields_by_name['parent_id']._options = None
-  _GETSECURITYRULEBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETSECURITYRULEBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\022\n\020vpcsecuritygroup'
   _GETSECURITYRULEBYNAMEREQUEST.fields_by_name['name']._options = None
   _GETSECURITYRULEBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTSECURITYRULESREQUEST.fields_by_name['parent_id']._options = None
-  _LISTSECURITYRULESREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTSECURITYRULESREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\022\n\020vpcsecuritygroup'
   _CREATESECURITYRULEREQUEST.fields_by_name['metadata']._options = None
-  _CREATESECURITYRULEREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001'
+  _CREATESECURITYRULEREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001\342J\022\022\020vpcsecuritygroup'
   _CREATESECURITYRULEREQUEST.fields_by_name['spec']._options = None
   _CREATESECURITYRULEREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _UPDATESECURITYRULEREQUEST.fields_by_name['metadata']._options = None
-  _UPDATESECURITYRULEREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')'
+  _UPDATESECURITYRULEREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\342J\022\022\020vpcsecuritygroup'
   _DELETESECURITYRULEREQUEST.fields_by_name['id']._options = None
-  _DELETESECURITYRULEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETESECURITYRULEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\021\n\017vpcsecurityrule'
   _SECURITYRULESERVICE._options = None
   _SECURITYRULESERVICE._serialized_options = b'\272J\003vpc'
   _globals['_GETSECURITYRULEREQUEST']._serialized_start=217
-  _globals['_GETSECURITYRULEREQUEST']._serialized_end=265
-  _globals['_GETSECURITYRULEBYNAMEREQUEST']._serialized_start=267
-  _globals['_GETSECURITYRULEBYNAMEREQUEST']._serialized_end=362
-  _globals['_LISTSECURITYRULESREQUEST']._serialized_start=364
-  _globals['_LISTSECURITYRULESREQUEST']._serialized_end=487
-  _globals['_LISTSECURITYRULESRESPONSE']._serialized_start=489
-  _globals['_LISTSECURITYRULESRESPONSE']._serialized_end=607
-  _globals['_CREATESECURITYRULEREQUEST']._serialized_start=610
-  _globals['_CREATESECURITYRULEREQUEST']._serialized_end=967
-  _globals['_UPDATESECURITYRULEREQUEST']._serialized_start=970
-  _globals['_UPDATESECURITYRULEREQUEST']._serialized_end=1316
-  _globals['_DELETESECURITYRULEREQUEST']._serialized_start=1318
-  _globals['_DELETESECURITYRULEREQUEST']._serialized_end=1369
-  _globals['_SECURITYRULESERVICE']._serialized_start=1372
-  _globals['_SECURITYRULESERVICE']._serialized_end=1897
+  _globals['_GETSECURITYRULEREQUEST']._serialized_end=285
+  _globals['_GETSECURITYRULEBYNAMEREQUEST']._serialized_start=287
+  _globals['_GETSECURITYRULEBYNAMEREQUEST']._serialized_end=403
+  _globals['_LISTSECURITYRULESREQUEST']._serialized_start=406
+  _globals['_LISTSECURITYRULESREQUEST']._serialized_end=550
+  _globals['_LISTSECURITYRULESRESPONSE']._serialized_start=552
+  _globals['_LISTSECURITYRULESRESPONSE']._serialized_end=670
+  _globals['_CREATESECURITYRULEREQUEST']._serialized_start=673
+  _globals['_CREATESECURITYRULEREQUEST']._serialized_end=1051
+  _globals['_UPDATESECURITYRULEREQUEST']._serialized_start=1054
+  _globals['_UPDATESECURITYRULEREQUEST']._serialized_end=1421
+  _globals['_DELETESECURITYRULEREQUEST']._serialized_start=1423
+  _globals['_DELETESECURITYRULEREQUEST']._serialized_end=1494
+  _globals['_SECURITYRULESERVICE']._serialized_start=1497
+  _globals['_SECURITYRULESERVICE']._serialized_end=2022
 # @@protoc_insertion_point(module_scope)
