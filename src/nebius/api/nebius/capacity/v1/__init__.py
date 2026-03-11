@@ -17,6 +17,8 @@ import nebius.api.nebius.capacity.v1.capacity_block_group_pb2 as capacity_block_
 import nebius.api.nebius.capacity.v1.capacity_block_group_service_pb2 as capacity_block_group_service_pb2
 import nebius.api.nebius.capacity.v1.capacity_interval_pb2 as capacity_interval_pb2
 import nebius.api.nebius.capacity.v1.capacity_interval_service_pb2 as capacity_interval_service_pb2
+import nebius.api.nebius.capacity.v1.resource_advice_pb2 as resource_advice_pb2
+import nebius.api.nebius.capacity.v1.resource_advice_service_pb2 as resource_advice_service_pb2
 import nebius.api.nebius.capacity.v1.resource_affinity_pb2 as resource_affinity_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
@@ -1798,6 +1800,823 @@ class CapacityIntervalServiceClient(client.Client):
         )
     
 
+# file: nebius/capacity/v1/resource_advice.proto
+class ResourceAdvice(pb_classes.Message):
+    """
+    ResourceAdvice is a virtual resource representing the availability
+    of a specific technical configuration in a specific scope.
+    """
+    
+    __PB2_CLASS__ = resource_advice_pb2.ResourceAdvice
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ResourceAdvice",resource_advice_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ResourceAdviceSpec|resource_advice_pb2.ResourceAdviceSpec|None|unset.UnsetType" = unset.Unset,
+        status: "ResourceAdviceStatus|resource_advice_pb2.ResourceAdviceStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Standard metadata. parent_id is the User's Tenant/Project NID.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ResourceAdviceSpec":
+        """
+        Identifiers for the capacity scope and technical configuration.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ResourceAdviceSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ResourceAdviceSpec|resource_advice_pb2.ResourceAdviceSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "ResourceAdviceStatus":
+        """
+        The current state of availability, including quotas and data freshness.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=ResourceAdviceStatus,
+        )
+    @status.setter
+    def status(self, value: "ResourceAdviceStatus|resource_advice_pb2.ResourceAdviceStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class ResourceAdviceSpec(pb_classes.Message):
+    """
+    Resource Advice specification.
+    """
+    
+    __PB2_CLASS__ = resource_advice_pb2.ResourceAdviceSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ResourceAdviceSpec",resource_advice_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_resource_details__(pb_classes.OneOf):
+        name: builtins.str= "resource_details"
+        
+        def __init__(self, msg: "ResourceAdviceSpec") -> None:
+            super().__init__()
+            self._message: "ResourceAdviceSpec" = msg
+    
+    class __OneOfClass_resource_details_compute_instance__(__OneOfClass_resource_details__):
+        field: typing.Literal["compute_instance"] = "compute_instance"
+        
+        def __init__(self, msg: "ResourceAdviceSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ComputeInstanceDetails":
+            return self._message.compute_instance
+    
+    @builtins.property
+    def resource_details(self) -> __OneOfClass_resource_details_compute_instance__|None:
+        """
+        Details specific to the type of resource being advised.
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("resource_details")
+        match field_name_1:
+            case "compute_instance":
+                return self.__OneOfClass_resource_details_compute_instance__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        fabric: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        compute_instance: "ComputeInstanceDetails|resource_advice_pb2.ComputeInstanceDetails|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
+        if not isinstance(fabric, unset.UnsetType):
+            self.fabric = fabric
+        if not isinstance(compute_instance, unset.UnsetType):
+            self.compute_instance = compute_instance
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "region",
+            "fabric",
+            "compute_instance",
+            "resource_details",
+        ]
+    
+    @builtins.property
+    def region(self) -> "builtins.str":
+        """
+        Geographical region identifier.
+        """
+        
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def fabric(self) -> "builtins.str":
+        """
+        Data center fabric or cluster identifier.
+        """
+        
+        return super()._get_field("fabric", explicit_presence=False,
+        )
+    @fabric.setter
+    def fabric(self, value: "builtins.str|None") -> None:
+        return super()._set_field("fabric",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def compute_instance(self) -> "ComputeInstanceDetails|None":
+        return super()._get_field("compute_instance", explicit_presence=True,
+        wrap=ComputeInstanceDetails,
+        )
+    @compute_instance.setter
+    def compute_instance(self, value: "ComputeInstanceDetails|resource_advice_pb2.ComputeInstanceDetails|None") -> None:
+        return super()._set_field("compute_instance",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "region":"region",
+        "fabric":"fabric",
+        "compute_instance":"compute_instance",
+        "resource_details":"resource_details",
+    }
+    
+class ComputeInstanceDetails(pb_classes.Message):
+    """
+    Details for Compute/GPU capacity.
+    """
+    
+    __PB2_CLASS__ = resource_advice_pb2.ComputeInstanceDetails
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ComputeInstanceDetails",resource_advice_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class Preset(pb_classes.Message):
+        """
+        Preset details.
+        """
+        
+        __PB2_CLASS__ = resource_advice_pb2.ComputeInstanceDetails.Preset
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ComputeInstanceDetails.Preset",resource_advice_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        class Resources(pb_classes.Message):
+            """
+            All resources existing in a preset.
+            """
+            
+            __PB2_CLASS__ = resource_advice_pb2.ComputeInstanceDetails.Preset.Resources
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ComputeInstanceDetails.Preset.Resources",resource_advice_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+            __mask_functions__ = {
+            }
+            
+            def __init__(
+                self,
+                initial_message: message_1.Message|None = None,
+                *,
+                vcpu_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+                memory_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+                gpu_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+            ) -> None:
+                super().__init__(initial_message)
+                if not isinstance(vcpu_count, unset.UnsetType):
+                    self.vcpu_count = vcpu_count
+                if not isinstance(memory_gibibytes, unset.UnsetType):
+                    self.memory_gibibytes = memory_gibibytes
+                if not isinstance(gpu_count, unset.UnsetType):
+                    self.gpu_count = gpu_count
+            
+            def __dir__(self) ->abc.Iterable[builtins.str]:
+                return [
+                    "vcpu_count",
+                    "memory_gibibytes",
+                    "gpu_count",
+                ]
+            
+            @builtins.property
+            def vcpu_count(self) -> "builtins.int":
+                """
+                Number of vCPUs.
+                """
+                
+                return super()._get_field("vcpu_count", explicit_presence=False,
+                )
+            @vcpu_count.setter
+            def vcpu_count(self, value: "builtins.int|None") -> None:
+                return super()._set_field("vcpu_count",value,explicit_presence=False,
+                )
+            
+            @builtins.property
+            def memory_gibibytes(self) -> "builtins.int":
+                """
+                Memory size.
+                """
+                
+                return super()._get_field("memory_gibibytes", explicit_presence=False,
+                )
+            @memory_gibibytes.setter
+            def memory_gibibytes(self, value: "builtins.int|None") -> None:
+                return super()._set_field("memory_gibibytes",value,explicit_presence=False,
+                )
+            
+            @builtins.property
+            def gpu_count(self) -> "builtins.int":
+                """
+                Number of GPU cores.
+                """
+                
+                return super()._get_field("gpu_count", explicit_presence=False,
+                )
+            @gpu_count.setter
+            def gpu_count(self, value: "builtins.int|None") -> None:
+                return super()._set_field("gpu_count",value,explicit_presence=False,
+                )
+            
+            __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+                "vcpu_count":"vcpu_count",
+                "memory_gibibytes":"memory_gibibytes",
+                "gpu_count":"gpu_count",
+            }
+            
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            resources: "ComputeInstanceDetails.Preset.Resources|resource_advice_pb2.ComputeInstanceDetails.Preset.Resources|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(name, unset.UnsetType):
+                self.name = name
+            if not isinstance(resources, unset.UnsetType):
+                self.resources = resources
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "name",
+                "resources",
+                "Resources",
+            ]
+        
+        @builtins.property
+        def name(self) -> "builtins.str":
+            """
+            Name of the preset (e.g., "8gpu-128vcpu-1600gb").
+            """
+            
+            return super()._get_field("name", explicit_presence=False,
+            )
+        @name.setter
+        def name(self, value: "builtins.str|None") -> None:
+            return super()._set_field("name",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def resources(self) -> "ComputeInstanceDetails.Preset.Resources":
+            """
+            Resources for the specified preset.
+            """
+            
+            return super()._get_field("resources", explicit_presence=False,
+            wrap=ComputeInstanceDetails.Preset.Resources,
+            )
+        @resources.setter
+        def resources(self, value: "ComputeInstanceDetails.Preset.Resources|resource_advice_pb2.ComputeInstanceDetails.Preset.Resources|None") -> None:
+            return super()._set_field("resources",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "name":"name",
+            "resources":"resources",
+            "Resources":"Resources",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        platform: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        preset: "ComputeInstanceDetails.Preset|resource_advice_pb2.ComputeInstanceDetails.Preset|None|unset.UnsetType" = unset.Unset,
+        gpu_memory_gigabytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(platform, unset.UnsetType):
+            self.platform = platform
+        if not isinstance(preset, unset.UnsetType):
+            self.preset = preset
+        if not isinstance(gpu_memory_gigabytes, unset.UnsetType):
+            self.gpu_memory_gigabytes = gpu_memory_gigabytes
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "platform",
+            "preset",
+            "gpu_memory_gigabytes",
+            "Preset",
+        ]
+    
+    @builtins.property
+    def platform(self) -> "builtins.str":
+        """
+        Specific platform. Example: "gpu-h200-sxm".
+        """
+        
+        return super()._get_field("platform", explicit_presence=False,
+        )
+    @platform.setter
+    def platform(self, value: "builtins.str|None") -> None:
+        return super()._set_field("platform",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def preset(self) -> "ComputeInstanceDetails.Preset":
+        """
+        The specific VM preset this advice applies to.
+        """
+        
+        return super()._get_field("preset", explicit_presence=False,
+        wrap=ComputeInstanceDetails.Preset,
+        )
+    @preset.setter
+    def preset(self, value: "ComputeInstanceDetails.Preset|resource_advice_pb2.ComputeInstanceDetails.Preset|None") -> None:
+        return super()._set_field("preset",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def gpu_memory_gigabytes(self) -> "builtins.int":
+        """
+        GPU memory size.
+        """
+        
+        return super()._get_field("gpu_memory_gigabytes", explicit_presence=False,
+        )
+    @gpu_memory_gigabytes.setter
+    def gpu_memory_gigabytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("gpu_memory_gigabytes",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "platform":"platform",
+        "preset":"preset",
+        "gpu_memory_gigabytes":"gpu_memory_gigabytes",
+        "Preset":"Preset",
+    }
+    
+class ResourceAdviceStatus(pb_classes.Message):
+    """
+    Resource Advice status.
+    """
+    
+    __PB2_CLASS__ = resource_advice_pb2.ResourceAdviceStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ResourceAdviceStatus",resource_advice_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class Availability(pb_classes.Message):
+        """
+        Shows the available resources.
+        """
+        
+        __PB2_CLASS__ = resource_advice_pb2.ResourceAdviceStatus.Availability
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ResourceAdviceStatus.Availability",resource_advice_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+            "effective_at": well_known_1.ts_mask,
+        }
+        
+        class DataState(pb_enum.Enum):
+            """
+            Shows if data could be trusted.
+            """
+            
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.capacity.v1.ResourceAdviceStatus.Availability.DataState",resource_advice_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+            DATA_STATE_UNSPECIFIED = 0
+            """
+            Shouldn't ever happen.
+            """
+            
+            DATA_STATE_FRESH = 1
+            """
+            Data is relevant and reflects current state of the system.
+            """
+            
+            DATA_STATE_STALE = 2
+            """
+            Data is not relevant anymore as it was fetched long time ago.
+            """
+            
+            DATA_STATE_UNKNOWN = 10
+            """
+            Failed to retrieve data.
+            """
+            
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            data_state: "ResourceAdviceStatus.Availability.DataState|resource_advice_pb2.ResourceAdviceStatus.Availability.DataState|None|unset.UnsetType" = unset.Unset,
+            available: "builtins.int|None|unset.UnsetType" = unset.Unset,
+            limit: "builtins.int|None|unset.UnsetType" = unset.Unset,
+            effective_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(data_state, unset.UnsetType):
+                self.data_state = data_state
+            if not isinstance(available, unset.UnsetType):
+                self.available = available
+            if not isinstance(limit, unset.UnsetType):
+                self.limit = limit
+            if not isinstance(effective_at, unset.UnsetType):
+                self.effective_at = effective_at
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "data_state",
+                "available",
+                "limit",
+                "effective_at",
+                "DataState",
+            ]
+        
+        @builtins.property
+        def data_state(self) -> "ResourceAdviceStatus.Availability.DataState":
+            """
+            Reflects relevance of the data.
+            """
+            
+            return super()._get_field("data_state", explicit_presence=False,
+            wrap=ResourceAdviceStatus.Availability.DataState,
+            )
+        @data_state.setter
+        def data_state(self, value: "ResourceAdviceStatus.Availability.DataState|resource_advice_pb2.ResourceAdviceStatus.Availability.DataState|None") -> None:
+            return super()._set_field("data_state",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def available(self) -> "builtins.int":
+            """
+            Current units that can be allocated immediately (clipped by quota).
+            """
+            
+            return super()._get_field("available", explicit_presence=False,
+            )
+        @available.setter
+        def available(self, value: "builtins.int|None") -> None:
+            return super()._set_field("available",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def limit(self) -> "builtins.int":
+            """
+            The user's maximum quota limit for this resource type.
+            """
+            
+            return super()._get_field("limit", explicit_presence=False,
+            )
+        @limit.setter
+        def limit(self, value: "builtins.int|None") -> None:
+            return super()._set_field("limit",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def effective_at(self) -> "datetime.datetime":
+            """
+            The timestamp of the actual infrastructure measurement.
+            """
+            
+            return super()._get_field("effective_at", explicit_presence=False,
+            wrap=well_known_1.from_timestamp
+            )
+        @effective_at.setter
+        def effective_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+            return super()._set_field("effective_at",value,explicit_presence=False,
+            unwrap=well_known_1.to_timestamp
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "data_state":"data_state",
+            "available":"available",
+            "limit":"limit",
+            "effective_at":"effective_at",
+            "DataState":"DataState",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        reserved: "ResourceAdviceStatus.Availability|resource_advice_pb2.ResourceAdviceStatus.Availability|None|unset.UnsetType" = unset.Unset,
+        on_demand: "ResourceAdviceStatus.Availability|resource_advice_pb2.ResourceAdviceStatus.Availability|None|unset.UnsetType" = unset.Unset,
+        preemptible: "ResourceAdviceStatus.Availability|resource_advice_pb2.ResourceAdviceStatus.Availability|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(reserved, unset.UnsetType):
+            self.reserved = reserved
+        if not isinstance(on_demand, unset.UnsetType):
+            self.on_demand = on_demand
+        if not isinstance(preemptible, unset.UnsetType):
+            self.preemptible = preemptible
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "reserved",
+            "on_demand",
+            "preemptible",
+            "Availability",
+        ]
+    
+    @builtins.property
+    def reserved(self) -> "ResourceAdviceStatus.Availability":
+        """
+        Capacity for reserved/guaranteed resources through Capacity Blocks.
+        """
+        
+        return super()._get_field("reserved", explicit_presence=False,
+        wrap=ResourceAdviceStatus.Availability,
+        )
+    @reserved.setter
+    def reserved(self, value: "ResourceAdviceStatus.Availability|resource_advice_pb2.ResourceAdviceStatus.Availability|None") -> None:
+        return super()._set_field("reserved",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def on_demand(self) -> "ResourceAdviceStatus.Availability":
+        """
+        Capacity for regular on-demand resources.
+        """
+        
+        return super()._get_field("on_demand", explicit_presence=False,
+        wrap=ResourceAdviceStatus.Availability,
+        )
+    @on_demand.setter
+    def on_demand(self, value: "ResourceAdviceStatus.Availability|resource_advice_pb2.ResourceAdviceStatus.Availability|None") -> None:
+        return super()._set_field("on_demand",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def preemptible(self) -> "ResourceAdviceStatus.Availability":
+        """
+        Capacity for preemptible/spot resources.
+        """
+        
+        return super()._get_field("preemptible", explicit_presence=False,
+        wrap=ResourceAdviceStatus.Availability,
+        )
+    @preemptible.setter
+    def preemptible(self, value: "ResourceAdviceStatus.Availability|resource_advice_pb2.ResourceAdviceStatus.Availability|None") -> None:
+        return super()._set_field("preemptible",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "reserved":"reserved",
+        "on_demand":"on_demand",
+        "preemptible":"preemptible",
+        "Availability":"Availability",
+    }
+    
+# file: nebius/capacity/v1/resource_advice_service.proto
+class ListResourceAdviceRequest(pb_classes.Message):
+    __PB2_CLASS__ = resource_advice_service_pb2.ListResourceAdviceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ListResourceAdviceRequest",resource_advice_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        Tenant NID.
+        Required to calculate 'available' numbers clipped by user quotas.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Maximum number of items to return.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Page token for pagination.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListResourceAdviceResponse(pb_classes.Message):
+    __PB2_CLASS__ = resource_advice_service_pb2.ListResourceAdviceResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ListResourceAdviceResponse",resource_advice_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[ResourceAdvice]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[ResourceAdvice]":
+        """
+        List of resource advice items matching the request.
+        Each item represents a unique combination of Resource Type + Tier/Preset.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(ResourceAdvice,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[ResourceAdvice]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+        Token for retrieving the next page of results.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+
+class ResourceAdviceServiceClient(client.Client):
+    """
+    ResourceAdvisorService provides insights into capacity availability for various resources.
+    It helps users understand where they can launch instances or allocate storage based on their
+    quotas and the current physical buffers in the data centers.
+    
+    This class provides the client methods for the ``.nebius.capacity.v1.ResourceAdviceService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.capacity.v1.ResourceAdviceService",resource_advice_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.capacity.v1.ResourceAdviceService"
+    
+    def list(self,
+        request: "ListResourceAdviceRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request.Request["ListResourceAdviceRequest","ListResourceAdviceResponse"]:
+        """
+        Lists resource advice resources.
+        Supports filtering by region, resource type, or platform.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.ListResourceAdviceRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.capacity.v1.ListResourceAdviceResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=resource_advice_service_pb2.ListResourceAdviceResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListResourceAdviceResponse),
+            **kwargs,
+        )
+    
+
 __all__ = [
     #@ local import names here @#
     "ResourceAffinityComputeV1",
@@ -1820,4 +2639,11 @@ __all__ = [
     "ListCapacityIntervalsRequest",
     "ListCapacityIntervalsResponse",
     "CapacityIntervalServiceClient",
+    "ResourceAdvice",
+    "ResourceAdviceSpec",
+    "ComputeInstanceDetails",
+    "ResourceAdviceStatus",
+    "ListResourceAdviceRequest",
+    "ListResourceAdviceResponse",
+    "ResourceAdviceServiceClient",
 ]
