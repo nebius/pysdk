@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.vpc.v1 import network_pb2 as nebius_dot_vpc_dot_v1_dot_network__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/vpc/v1/network_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1bnebius/vpc/v1/network.proto\"+\n\x11GetNetworkRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"Z\n\x17GetNetworkByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"v\n\x13ListNetworksRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"l\n\x14ListNetworksResponse\x12,\n\x05items\x18\x01 \x03(\x0b\x32\x16.nebius.vpc.v1.NetworkR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xd3\x02\n\x14\x43reateNetworkRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\x12.\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.vpc.v1.NetworkSpecR\x04spec\"\xaa\x02\n\x1b\x43reateDefaultNetworkRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\"\xd0\x02\n\x14UpdateNetworkRequest\x12\x87\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc6\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')R\x08metadata\x12.\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.vpc.v1.NetworkSpecR\x04spec\".\n\x14\x44\x65leteNetworkRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xb5\x04\n\x0eNetworkService\x12?\n\x03Get\x12 .nebius.vpc.v1.GetNetworkRequest\x1a\x16.nebius.vpc.v1.Network\x12K\n\tGetByName\x12&.nebius.vpc.v1.GetNetworkByNameRequest\x1a\x16.nebius.vpc.v1.Network\x12O\n\x04List\x12\".nebius.vpc.v1.ListNetworksRequest\x1a#.nebius.vpc.v1.ListNetworksResponse\x12J\n\x06\x43reate\x12#.nebius.vpc.v1.CreateNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12X\n\rCreateDefault\x12*.nebius.vpc.v1.CreateDefaultNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06Update\x12#.nebius.vpc.v1.UpdateNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06\x44\x65lete\x12#.nebius.vpc.v1.DeleteNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBZ\n\x14\x61i.nebius.pub.vpc.v1B\x13NetworkServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/vpc/v1/network_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1bnebius/vpc/v1/network.proto\":\n\x11GetNetworkRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\x02id\"f\n\x17GetNetworkByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x82\x01\n\x13ListNetworksRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"l\n\x14ListNetworksResponse\x12,\n\x05items\x18\x01 \x03(\x0b\x32\x16.nebius.vpc.v1.NetworkR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xdf\x02\n\x14\x43reateNetworkRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12.\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.vpc.v1.NetworkSpecR\x04spec\"\xb6\x02\n\x1b\x43reateDefaultNetworkRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\"\xdc\x02\n\x14UpdateNetworkRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xe2J\t\x12\x07projectR\x08metadata\x12.\n\x04spec\x18\x02 \x01(\x0b\x32\x1a.nebius.vpc.v1.NetworkSpecR\x04spec\"=\n\x14\x44\x65leteNetworkRequest\x12%\n\x02id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\x02id2\xb5\x04\n\x0eNetworkService\x12?\n\x03Get\x12 .nebius.vpc.v1.GetNetworkRequest\x1a\x16.nebius.vpc.v1.Network\x12K\n\tGetByName\x12&.nebius.vpc.v1.GetNetworkByNameRequest\x1a\x16.nebius.vpc.v1.Network\x12O\n\x04List\x12\".nebius.vpc.v1.ListNetworksRequest\x1a#.nebius.vpc.v1.ListNetworksResponse\x12J\n\x06\x43reate\x12#.nebius.vpc.v1.CreateNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12X\n\rCreateDefault\x12*.nebius.vpc.v1.CreateDefaultNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06Update\x12#.nebius.vpc.v1.UpdateNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x12J\n\x06\x44\x65lete\x12#.nebius.vpc.v1.DeleteNetworkRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcBZ\n\x14\x61i.nebius.pub.vpc.v1B\x13NetworkServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,39 +28,39 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\023NetworkServiceProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
   _GETNETWORKREQUEST.fields_by_name['id']._options = None
-  _GETNETWORKREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETNETWORKREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\014\n\nvpcnetwork'
   _GETNETWORKBYNAMEREQUEST.fields_by_name['parent_id']._options = None
-  _GETNETWORKBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETNETWORKBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _GETNETWORKBYNAMEREQUEST.fields_by_name['name']._options = None
   _GETNETWORKBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTNETWORKSREQUEST.fields_by_name['parent_id']._options = None
-  _LISTNETWORKSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTNETWORKSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _CREATENETWORKREQUEST.fields_by_name['metadata']._options = None
-  _CREATENETWORKREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001'
+  _CREATENETWORKREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001\342J\t\022\007project'
   _CREATEDEFAULTNETWORKREQUEST.fields_by_name['metadata']._options = None
-  _CREATEDEFAULTNETWORKREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001'
+  _CREATEDEFAULTNETWORKREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001\342J\t\022\007project'
   _UPDATENETWORKREQUEST.fields_by_name['metadata']._options = None
-  _UPDATENETWORKREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')'
+  _UPDATENETWORKREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\342J\t\022\007project'
   _DELETENETWORKREQUEST.fields_by_name['id']._options = None
-  _DELETENETWORKREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETENETWORKREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\014\n\nvpcnetwork'
   _NETWORKSERVICE._options = None
   _NETWORKSERVICE._serialized_options = b'\272J\003vpc'
   _globals['_GETNETWORKREQUEST']._serialized_start=205
-  _globals['_GETNETWORKREQUEST']._serialized_end=248
-  _globals['_GETNETWORKBYNAMEREQUEST']._serialized_start=250
-  _globals['_GETNETWORKBYNAMEREQUEST']._serialized_end=340
-  _globals['_LISTNETWORKSREQUEST']._serialized_start=342
-  _globals['_LISTNETWORKSREQUEST']._serialized_end=460
-  _globals['_LISTNETWORKSRESPONSE']._serialized_start=462
-  _globals['_LISTNETWORKSRESPONSE']._serialized_end=570
-  _globals['_CREATENETWORKREQUEST']._serialized_start=573
-  _globals['_CREATENETWORKREQUEST']._serialized_end=912
-  _globals['_CREATEDEFAULTNETWORKREQUEST']._serialized_start=915
-  _globals['_CREATEDEFAULTNETWORKREQUEST']._serialized_end=1213
-  _globals['_UPDATENETWORKREQUEST']._serialized_start=1216
-  _globals['_UPDATENETWORKREQUEST']._serialized_end=1552
-  _globals['_DELETENETWORKREQUEST']._serialized_start=1554
-  _globals['_DELETENETWORKREQUEST']._serialized_end=1600
-  _globals['_NETWORKSERVICE']._serialized_start=1603
-  _globals['_NETWORKSERVICE']._serialized_end=2168
+  _globals['_GETNETWORKREQUEST']._serialized_end=263
+  _globals['_GETNETWORKBYNAMEREQUEST']._serialized_start=265
+  _globals['_GETNETWORKBYNAMEREQUEST']._serialized_end=367
+  _globals['_LISTNETWORKSREQUEST']._serialized_start=370
+  _globals['_LISTNETWORKSREQUEST']._serialized_end=500
+  _globals['_LISTNETWORKSRESPONSE']._serialized_start=502
+  _globals['_LISTNETWORKSRESPONSE']._serialized_end=610
+  _globals['_CREATENETWORKREQUEST']._serialized_start=613
+  _globals['_CREATENETWORKREQUEST']._serialized_end=964
+  _globals['_CREATEDEFAULTNETWORKREQUEST']._serialized_start=967
+  _globals['_CREATEDEFAULTNETWORKREQUEST']._serialized_end=1277
+  _globals['_UPDATENETWORKREQUEST']._serialized_start=1280
+  _globals['_UPDATENETWORKREQUEST']._serialized_end=1628
+  _globals['_DELETENETWORKREQUEST']._serialized_start=1630
+  _globals['_DELETENETWORKREQUEST']._serialized_end=1691
+  _globals['_NETWORKSERVICE']._serialized_start=1694
+  _globals['_NETWORKSERVICE']._serialized_end=2259
 # @@protoc_insertion_point(module_scope)

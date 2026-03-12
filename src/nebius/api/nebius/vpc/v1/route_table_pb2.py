@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1fnebius/vpc/v1/route_table.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xb8\x01\n\nRouteTable\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.RouteTableSpecR\x04spec\x12\x37\n\x06status\x18\x03 \x01(\x0b\x32\x1f.nebius.vpc.v1.RouteTableStatusR\x06status\";\n\x0eRouteTableSpec\x12)\n\nnetwork_id\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\tnetworkId\"\xd9\x01\n\x10RouteTableStatus\x12;\n\x05state\x18\x01 \x01(\x0e\x32%.nebius.vpc.v1.RouteTableStatus.StateR\x05state\x12\x18\n\x07\x64\x65\x66\x61ult\x18\x02 \x01(\x08R\x07\x64\x65\x66\x61ult\x12\x43\n\nassignment\x18\x03 \x01(\x0b\x32#.nebius.vpc.v1.RouteTableAssignmentR\nassignment\")\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\n\"0\n\x14RouteTableAssignment\x12\x18\n\x07subnets\x18\x01 \x03(\tR\x07subnetsBV\n\x14\x61i.nebius.pub.vpc.v1B\x0fRouteTableProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1fnebius/vpc/v1/route_table.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xc6\x01\n\nRouteTable\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.RouteTableSpecR\x04spec\x12\x37\n\x06status\x18\x03 \x01(\x0b\x32\x1f.nebius.vpc.v1.RouteTableStatusR\x06status\"J\n\x0eRouteTableSpec\x12\x38\n\nnetwork_id\x18\x01 \x01(\tB\x19\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x0c\n\nvpcnetworkR\tnetworkId\"\xd9\x01\n\x10RouteTableStatus\x12;\n\x05state\x18\x01 \x01(\x0e\x32%.nebius.vpc.v1.RouteTableStatus.StateR\x05state\x12\x18\n\x07\x64\x65\x66\x61ult\x18\x02 \x01(\x08R\x07\x64\x65\x66\x61ult\x12\x43\n\nassignment\x18\x03 \x01(\x0b\x32#.nebius.vpc.v1.RouteTableAssignmentR\nassignment\")\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\n\"@\n\x14RouteTableAssignment\x12(\n\x07subnets\x18\x01 \x03(\tB\x0e\xe2J\x0b\n\tvpcsubnetR\x07subnetsBV\n\x14\x61i.nebius.pub.vpc.v1B\x0fRouteTableProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,16 +25,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\017RouteTableProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
+  _ROUTETABLE.fields_by_name['metadata']._options = None
+  _ROUTETABLE.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007project'
   _ROUTETABLESPEC.fields_by_name['network_id']._options = None
-  _ROUTETABLESPEC.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001\272J\001\002'
+  _ROUTETABLESPEC.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001\272J\001\002\342J\014\n\nvpcnetwork'
+  _ROUTETABLEASSIGNMENT.fields_by_name['subnets']._options = None
+  _ROUTETABLEASSIGNMENT.fields_by_name['subnets']._serialized_options = b'\342J\013\n\tvpcsubnet'
   _globals['_ROUTETABLE']._serialized_start=139
-  _globals['_ROUTETABLE']._serialized_end=323
-  _globals['_ROUTETABLESPEC']._serialized_start=325
-  _globals['_ROUTETABLESPEC']._serialized_end=384
-  _globals['_ROUTETABLESTATUS']._serialized_start=387
-  _globals['_ROUTETABLESTATUS']._serialized_end=604
-  _globals['_ROUTETABLESTATUS_STATE']._serialized_start=563
-  _globals['_ROUTETABLESTATUS_STATE']._serialized_end=604
-  _globals['_ROUTETABLEASSIGNMENT']._serialized_start=606
-  _globals['_ROUTETABLEASSIGNMENT']._serialized_end=654
+  _globals['_ROUTETABLE']._serialized_end=337
+  _globals['_ROUTETABLESPEC']._serialized_start=339
+  _globals['_ROUTETABLESPEC']._serialized_end=413
+  _globals['_ROUTETABLESTATUS']._serialized_start=416
+  _globals['_ROUTETABLESTATUS']._serialized_end=633
+  _globals['_ROUTETABLESTATUS_STATE']._serialized_start=592
+  _globals['_ROUTETABLESTATUS_STATE']._serialized_end=633
+  _globals['_ROUTETABLEASSIGNMENT']._serialized_start=635
+  _globals['_ROUTETABLEASSIGNMENT']._serialized_end=699
 # @@protoc_insertion_point(module_scope)

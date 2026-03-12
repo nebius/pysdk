@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/vpc/v1/security_group.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xc1\x01\n\rSecurityGroup\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x34\n\x04spec\x18\x02 \x01(\x0b\x32 .nebius.vpc.v1.SecurityGroupSpecR\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b\x32\".nebius.vpc.v1.SecurityGroupStatusR\x06status\">\n\x11SecurityGroupSpec\x12)\n\nnetwork_id\x18\x01 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\tnetworkId\"\x9a\x01\n\x13SecurityGroupStatus\x12>\n\x05state\x18\x01 \x01(\x0e\x32(.nebius.vpc.v1.SecurityGroupStatus.StateR\x05state\x12\x18\n\x07\x64\x65\x66\x61ult\x18\x02 \x01(\x08R\x07\x64\x65\x66\x61ult\")\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\x02\x42Y\n\x14\x61i.nebius.pub.vpc.v1B\x12SecurityGroupProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/vpc/v1/security_group.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xcf\x01\n\rSecurityGroup\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12\x34\n\x04spec\x18\x02 \x01(\x0b\x32 .nebius.vpc.v1.SecurityGroupSpecR\x04spec\x12:\n\x06status\x18\x03 \x01(\x0b\x32\".nebius.vpc.v1.SecurityGroupStatusR\x06status\"M\n\x11SecurityGroupSpec\x12\x38\n\nnetwork_id\x18\x01 \x01(\tB\x19\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x0c\n\nvpcnetworkR\tnetworkId\"\x9a\x01\n\x13SecurityGroupStatus\x12>\n\x05state\x18\x01 \x01(\x0e\x32(.nebius.vpc.v1.SecurityGroupStatus.StateR\x05state\x12\x18\n\x07\x64\x65\x66\x61ult\x18\x02 \x01(\x08R\x07\x64\x65\x66\x61ult\")\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\x02\x42Y\n\x14\x61i.nebius.pub.vpc.v1B\x12SecurityGroupProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,14 +25,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\022SecurityGroupProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
+  _SECURITYGROUP.fields_by_name['metadata']._options = None
+  _SECURITYGROUP.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007project'
   _SECURITYGROUPSPEC.fields_by_name['network_id']._options = None
-  _SECURITYGROUPSPEC.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001\272J\001\002'
+  _SECURITYGROUPSPEC.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001\272J\001\002\342J\014\n\nvpcnetwork'
   _globals['_SECURITYGROUP']._serialized_start=142
-  _globals['_SECURITYGROUP']._serialized_end=335
-  _globals['_SECURITYGROUPSPEC']._serialized_start=337
-  _globals['_SECURITYGROUPSPEC']._serialized_end=399
-  _globals['_SECURITYGROUPSTATUS']._serialized_start=402
-  _globals['_SECURITYGROUPSTATUS']._serialized_end=556
-  _globals['_SECURITYGROUPSTATUS_STATE']._serialized_start=515
-  _globals['_SECURITYGROUPSTATUS_STATE']._serialized_end=556
+  _globals['_SECURITYGROUP']._serialized_end=349
+  _globals['_SECURITYGROUPSPEC']._serialized_start=351
+  _globals['_SECURITYGROUPSPEC']._serialized_end=428
+  _globals['_SECURITYGROUPSTATUS']._serialized_start=431
+  _globals['_SECURITYGROUPSTATUS']._serialized_end=585
+  _globals['_SECURITYGROUPSTATUS_STATE']._serialized_start=544
+  _globals['_SECURITYGROUPSTATUS_STATE']._serialized_end=585
 # @@protoc_insertion_point(module_scope)

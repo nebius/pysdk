@@ -12,11 +12,12 @@ _sym_db = _symbol_database.Default()
 
 
 from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
+from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 from nebius.api.nebius.vpc.v1alpha1 import pool_pb2 as nebius_dot_vpc_dot_v1alpha1_dot_pool__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/vpc/v1alpha1/subnet.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1enebius/vpc/v1alpha1/pool.proto\"\xb8\x01\n\x06Subnet\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1alpha1.SubnetSpecR\x04spec\x12\x39\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.vpc.v1alpha1.SubnetStatusR\x06status\"\x9e\x01\n\nSubnetSpec\x12%\n\nnetwork_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\tnetworkId\x12=\n\x05pools\x18\x02 \x03(\x0b\x32\x1f.nebius.vpc.v1alpha1.SubnetPoolB\x06\xbaH\x03\xc8\x01\x01R\x05pools\x12*\n\x11\x65nable_egress_nat\x18\x03 \x01(\x08R\x0f\x65nableEgressNat\"q\n\nSubnetPool\x12\x39\n\x04spec\x18\x01 \x01(\x0b\x32#.nebius.vpc.v1alpha1.SubnetPoolSpecH\x00R\x04spec\x12\x19\n\x07pool_id\x18\x02 \x01(\tH\x00R\x06poolIdB\r\n\x04pool\x12\x05\xbaH\x02\x08\x01\"\x89\x01\n\x0eSubnetPoolSpec\x12@\n\x07version\x18\x01 \x01(\x0e\x32\x1e.nebius.vpc.v1alpha1.IpVersionB\x06\xbaH\x03\xc8\x01\x01R\x07version\x12\x35\n\x05\x63idrs\x18\x02 \x03(\x0b\x32\x1f.nebius.vpc.v1alpha1.SubnetCidrR\x05\x63idrs\"\xa0\x03\n\nSubnetCidr\x12\x9d\x02\n\x04\x63idr\x18\x01 \x01(\tB\x88\x02\xbaH\x84\x02\xba\x01\xac\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1agthis == \'\' || this.matches(\'^/([0-9]|[1-9][0-9]|1[0-2][0-8])$\') || this.isIp() || this.isIpPrefix(true)\xba\x01N\n\x0fstring.ip_empty\x12/value is empty, which is not a valid IP address\x1a\nthis != \'\'\xc8\x01\x01R\x04\x63idr\x12@\n\x05state\x18\x02 \x01(\x0e\x32\".nebius.vpc.v1alpha1.PoolCidrStateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x12\x30\n\x0c\x61llowed_mask\x18\x03 \x01(\x03\x42\r\xbaH\n\xc8\x01\x01\"\x05\x18\x80\x01(\x00R\x0b\x61llowedMask\"\xb3\x01\n\x0cSubnetStatus\x12=\n\x05state\x18\x01 \x01(\x0e\x32\'.nebius.vpc.v1alpha1.SubnetStatus.StateR\x05state\x12\x1d\n\nipv4_cidrs\x18\x02 \x03(\tR\tipv4Cidrs\"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08\x44\x45LETING\x10\x03\x42^\n\x1a\x61i.nebius.pub.vpc.v1alpha1B\x0bSubnetProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/vpc/v1alpha1/subnet.proto\x12\x13nebius.vpc.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1enebius/vpc/v1alpha1/pool.proto\"\xc6\x01\n\x06Subnet\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1alpha1.SubnetSpecR\x04spec\x12\x39\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.vpc.v1alpha1.SubnetStatusR\x06status\"\xad\x01\n\nSubnetSpec\x12\x34\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12=\n\x05pools\x18\x02 \x03(\x0b\x32\x1f.nebius.vpc.v1alpha1.SubnetPoolB\x06\xbaH\x03\xc8\x01\x01R\x05pools\x12*\n\x11\x65nable_egress_nat\x18\x03 \x01(\x08R\x0f\x65nableEgressNat\"\x7f\n\nSubnetPool\x12\x39\n\x04spec\x18\x01 \x01(\x0b\x32#.nebius.vpc.v1alpha1.SubnetPoolSpecH\x00R\x04spec\x12\'\n\x07pool_id\x18\x02 \x01(\tB\x0c\xe2J\t\n\x07vpcpoolH\x00R\x06poolIdB\r\n\x04pool\x12\x05\xbaH\x02\x08\x01\"\x89\x01\n\x0eSubnetPoolSpec\x12@\n\x07version\x18\x01 \x01(\x0e\x32\x1e.nebius.vpc.v1alpha1.IpVersionB\x06\xbaH\x03\xc8\x01\x01R\x07version\x12\x35\n\x05\x63idrs\x18\x02 \x03(\x0b\x32\x1f.nebius.vpc.v1alpha1.SubnetCidrR\x05\x63idrs\"\xa0\x03\n\nSubnetCidr\x12\x9d\x02\n\x04\x63idr\x18\x01 \x01(\tB\x88\x02\xbaH\x84\x02\xba\x01\xac\x01\n\x11string.valid_cidr\x12.value must be a valid IP address, CIDR or mask\x1agthis == \'\' || this.matches(\'^/([0-9]|[1-9][0-9]|1[0-2][0-8])$\') || this.isIp() || this.isIpPrefix(true)\xba\x01N\n\x0fstring.ip_empty\x12/value is empty, which is not a valid IP address\x1a\nthis != \'\'\xc8\x01\x01R\x04\x63idr\x12@\n\x05state\x18\x02 \x01(\x0e\x32\".nebius.vpc.v1alpha1.PoolCidrStateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x12\x30\n\x0c\x61llowed_mask\x18\x03 \x01(\x03\x42\r\xbaH\n\xc8\x01\x01\"\x05\x18\x80\x01(\x00R\x0b\x61llowedMask\"\xb3\x01\n\x0cSubnetStatus\x12=\n\x05state\x18\x01 \x01(\x0e\x32\'.nebius.vpc.v1alpha1.SubnetStatus.StateR\x05state\x12\x1d\n\nipv4_cidrs\x18\x02 \x03(\tR\tipv4Cidrs\"E\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08\x44\x45LETING\x10\x03\x42^\n\x1a\x61i.nebius.pub.vpc.v1alpha1B\x0bSubnetProtoP\x01Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,12 +26,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\032ai.nebius.pub.vpc.v1alpha1B\013SubnetProtoP\001Z1github.com/nebius/gosdk/proto/nebius/vpc/v1alpha1'
+  _SUBNET.fields_by_name['metadata']._options = None
+  _SUBNET.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007project'
   _SUBNETSPEC.fields_by_name['network_id']._options = None
-  _SUBNETSPEC.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001'
+  _SUBNETSPEC.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001\342J\014\n\nvpcnetwork'
   _SUBNETSPEC.fields_by_name['pools']._options = None
   _SUBNETSPEC.fields_by_name['pools']._serialized_options = b'\272H\003\310\001\001'
   _SUBNETPOOL.oneofs_by_name['pool']._options = None
   _SUBNETPOOL.oneofs_by_name['pool']._serialized_options = b'\272H\002\010\001'
+  _SUBNETPOOL.fields_by_name['pool_id']._options = None
+  _SUBNETPOOL.fields_by_name['pool_id']._serialized_options = b'\342J\t\n\007vpcpool'
   _SUBNETPOOLSPEC.fields_by_name['version']._options = None
   _SUBNETPOOLSPEC.fields_by_name['version']._serialized_options = b'\272H\003\310\001\001'
   _SUBNETCIDR.fields_by_name['cidr']._options = None
@@ -39,18 +44,18 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _SUBNETCIDR.fields_by_name['state']._serialized_options = b'\272H\003\310\001\001'
   _SUBNETCIDR.fields_by_name['allowed_mask']._options = None
   _SUBNETCIDR.fields_by_name['allowed_mask']._serialized_options = b'\272H\n\310\001\001\"\005\030\200\001(\000'
-  _globals['_SUBNET']._serialized_start=152
-  _globals['_SUBNET']._serialized_end=336
-  _globals['_SUBNETSPEC']._serialized_start=339
-  _globals['_SUBNETSPEC']._serialized_end=497
-  _globals['_SUBNETPOOL']._serialized_start=499
-  _globals['_SUBNETPOOL']._serialized_end=612
-  _globals['_SUBNETPOOLSPEC']._serialized_start=615
-  _globals['_SUBNETPOOLSPEC']._serialized_end=752
-  _globals['_SUBNETCIDR']._serialized_start=755
-  _globals['_SUBNETCIDR']._serialized_end=1171
-  _globals['_SUBNETSTATUS']._serialized_start=1174
-  _globals['_SUBNETSTATUS']._serialized_end=1353
-  _globals['_SUBNETSTATUS_STATE']._serialized_start=1284
-  _globals['_SUBNETSTATUS_STATE']._serialized_end=1353
+  _globals['_SUBNET']._serialized_start=178
+  _globals['_SUBNET']._serialized_end=376
+  _globals['_SUBNETSPEC']._serialized_start=379
+  _globals['_SUBNETSPEC']._serialized_end=552
+  _globals['_SUBNETPOOL']._serialized_start=554
+  _globals['_SUBNETPOOL']._serialized_end=681
+  _globals['_SUBNETPOOLSPEC']._serialized_start=684
+  _globals['_SUBNETPOOLSPEC']._serialized_end=821
+  _globals['_SUBNETCIDR']._serialized_start=824
+  _globals['_SUBNETCIDR']._serialized_end=1240
+  _globals['_SUBNETSTATUS']._serialized_start=1243
+  _globals['_SUBNETSTATUS']._serialized_end=1422
+  _globals['_SUBNETSTATUS_STATE']._serialized_start=1353
+  _globals['_SUBNETSTATUS_STATE']._serialized_end=1422
 # @@protoc_insertion_point(module_scope)

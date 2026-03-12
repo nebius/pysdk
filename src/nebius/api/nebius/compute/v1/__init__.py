@@ -252,6 +252,7 @@ class DiskSpec(pb_classes.Message):
         source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_image_family: "SourceImageFamily|disk_pb2.SourceImageFamily|None|unset.UnsetType" = unset.Unset,
         disk_encryption: "DiskEncryption|disk_pb2.DiskEncryption|None|unset.UnsetType" = unset.Unset,
+        forbid_deletion: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(size_bytes, unset.UnsetType):
@@ -272,6 +273,8 @@ class DiskSpec(pb_classes.Message):
             self.source_image_family = source_image_family
         if not isinstance(disk_encryption, unset.UnsetType):
             self.disk_encryption = disk_encryption
+        if not isinstance(forbid_deletion, unset.UnsetType):
+            self.forbid_deletion = forbid_deletion
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -284,6 +287,7 @@ class DiskSpec(pb_classes.Message):
             "source_image_id",
             "source_image_family",
             "disk_encryption",
+            "forbid_deletion",
             "size",
             "source",
             "DiskType",
@@ -388,6 +392,19 @@ class DiskSpec(pb_classes.Message):
         return super()._set_field("disk_encryption",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def forbid_deletion(self) -> "builtins.bool":
+        """
+        Prevents deletion whilst set
+        """
+        
+        return super()._get_field("forbid_deletion", explicit_presence=False,
+        )
+    @forbid_deletion.setter
+    def forbid_deletion(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("forbid_deletion",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "size_bytes":"size_bytes",
         "size_kibibytes":"size_kibibytes",
@@ -398,6 +415,7 @@ class DiskSpec(pb_classes.Message):
         "source_image_id":"source_image_id",
         "source_image_family":"source_image_family",
         "disk_encryption":"disk_encryption",
+        "forbid_deletion":"forbid_deletion",
         "size":"size",
         "source":"source",
         "DiskType":"DiskType",
@@ -1526,6 +1544,7 @@ class FilesystemSpec(pb_classes.Message):
         size_gibibytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         type: "FilesystemSpec.FilesystemType|filesystem_pb2.FilesystemSpec.FilesystemType|None|unset.UnsetType" = unset.Unset,
+        forbid_deletion: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(size_bytes, unset.UnsetType):
@@ -1540,6 +1559,8 @@ class FilesystemSpec(pb_classes.Message):
             self.block_size_bytes = block_size_bytes
         if not isinstance(type, unset.UnsetType):
             self.type = type
+        if not isinstance(forbid_deletion, unset.UnsetType):
+            self.forbid_deletion = forbid_deletion
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1549,6 +1570,7 @@ class FilesystemSpec(pb_classes.Message):
             "size_gibibytes",
             "block_size_bytes",
             "type",
+            "forbid_deletion",
             "size",
             "FilesystemType",
         ]
@@ -1619,6 +1641,19 @@ class FilesystemSpec(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def forbid_deletion(self) -> "builtins.bool":
+        """
+        Prevents deletion whilst set
+        """
+        
+        return super()._get_field("forbid_deletion", explicit_presence=False,
+        )
+    @forbid_deletion.setter
+    def forbid_deletion(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("forbid_deletion",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "size_bytes":"size_bytes",
         "size_kibibytes":"size_kibibytes",
@@ -1626,6 +1661,7 @@ class FilesystemSpec(pb_classes.Message):
         "size_gibibytes":"size_gibibytes",
         "block_size_bytes":"block_size_bytes",
         "type":"type",
+        "forbid_deletion":"forbid_deletion",
         "size":"size",
         "FilesystemType":"FilesystemType",
     }

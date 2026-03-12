@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/vpc/v1/target_group.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xbb\x01\n\x0bTargetGroup\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x32\n\x04spec\x18\x02 \x01(\x0b\x32\x1e.nebius.vpc.v1.TargetGroupSpecR\x04spec\x12\x38\n\x06status\x18\x03 \x01(\x0b\x32 .nebius.vpc.v1.TargetGroupStatusR\x06status\"B\n\x0fTargetGroupSpec\x12/\n\x07targets\x18\x01 \x03(\x0b\x32\x15.nebius.vpc.v1.TargetR\x07targets\"f\n\x06Target\x12K\n\x10\x63ompute_instance\x18\x01 \x01(\x0b\x32\x1e.nebius.vpc.v1.ComputeInstanceH\x00R\x0f\x63omputeInstanceB\x0f\n\x06target\x12\x05\xbaH\x02\x08\x01\"e\n\x0f\x43omputeInstance\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12:\n\x16network_interface_name\x18\x02 \x01(\tB\x04\xbaJ\x01\x07R\x14networkInterfaceName\"\x85\x01\n\x11TargetGroupStatus\x12*\n\x11load_balancer_ids\x18\x01 \x03(\tR\x0floadBalancerIds\x12\x44\n\x0ftarget_statuses\x18\x02 \x03(\x0b\x32\x1b.nebius.vpc.v1.TargetStatusR\x0etargetStatuses\"\xdd\x01\n\x0cTargetStatus\x12.\n\x13\x63ompute_instance_id\x18\x01 \x01(\tR\x11\x63omputeInstanceId\x12J\n\x0ctarget_state\x18\x02 \x01(\x0e\x32\'.nebius.vpc.v1.TargetStatus.TargetStateR\x0btargetState\"Q\n\x0bTargetState\x12\x1c\n\x18TARGET_STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08\x44ISABLED\x10\x02\x12\x0b\n\x07\x44\x45LETED\x10\x03\x42W\n\x14\x61i.nebius.pub.vpc.v1B\x10TargetGroupProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/vpc/v1/target_group.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xc9\x01\n\x0bTargetGroup\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12\x32\n\x04spec\x18\x02 \x01(\x0b\x32\x1e.nebius.vpc.v1.TargetGroupSpecR\x04spec\x12\x38\n\x06status\x18\x03 \x01(\x0b\x32 .nebius.vpc.v1.TargetGroupStatusR\x06status\"B\n\x0fTargetGroupSpec\x12/\n\x07targets\x18\x01 \x03(\x0b\x32\x15.nebius.vpc.v1.TargetR\x07targets\"f\n\x06Target\x12K\n\x10\x63ompute_instance\x18\x01 \x01(\x0b\x32\x1e.nebius.vpc.v1.ComputeInstanceH\x00R\x0f\x63omputeInstanceB\x0f\n\x06target\x12\x05\xbaH\x02\x08\x01\"y\n\x0f\x43omputeInstance\x12*\n\x02id\x18\x01 \x01(\tB\x1a\xbaH\x03\xc8\x01\x01\xe2J\x11\n\x0f\x63omputeinstanceR\x02id\x12:\n\x16network_interface_name\x18\x02 \x01(\tB\x04\xbaJ\x01\x07R\x14networkInterfaceName\"\x9b\x01\n\x11TargetGroupStatus\x12@\n\x11load_balancer_ids\x18\x01 \x03(\tB\x14\xe2J\x11\n\x0fvpcloadbalancerR\x0floadBalancerIds\x12\x44\n\x0ftarget_statuses\x18\x02 \x03(\x0b\x32\x1b.nebius.vpc.v1.TargetStatusR\x0etargetStatuses\"\xf3\x01\n\x0cTargetStatus\x12\x44\n\x13\x63ompute_instance_id\x18\x01 \x01(\tB\x14\xe2J\x11\n\x0f\x63omputeinstanceR\x11\x63omputeInstanceId\x12J\n\x0ctarget_state\x18\x02 \x01(\x0e\x32\'.nebius.vpc.v1.TargetStatus.TargetStateR\x0btargetState\"Q\n\x0bTargetState\x12\x1c\n\x18TARGET_STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\x01\x12\x0c\n\x08\x44ISABLED\x10\x02\x12\x0b\n\x07\x44\x45LETED\x10\x03\x42W\n\x14\x61i.nebius.pub.vpc.v1B\x10TargetGroupProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,24 +25,30 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\020TargetGroupProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
+  _TARGETGROUP.fields_by_name['metadata']._options = None
+  _TARGETGROUP.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007project'
   _TARGET.oneofs_by_name['target']._options = None
   _TARGET.oneofs_by_name['target']._serialized_options = b'\272H\002\010\001'
   _COMPUTEINSTANCE.fields_by_name['id']._options = None
-  _COMPUTEINSTANCE.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _COMPUTEINSTANCE.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\021\n\017computeinstance'
   _COMPUTEINSTANCE.fields_by_name['network_interface_name']._options = None
   _COMPUTEINSTANCE.fields_by_name['network_interface_name']._serialized_options = b'\272J\001\007'
+  _TARGETGROUPSTATUS.fields_by_name['load_balancer_ids']._options = None
+  _TARGETGROUPSTATUS.fields_by_name['load_balancer_ids']._serialized_options = b'\342J\021\n\017vpcloadbalancer'
+  _TARGETSTATUS.fields_by_name['compute_instance_id']._options = None
+  _TARGETSTATUS.fields_by_name['compute_instance_id']._serialized_options = b'\342J\021\n\017computeinstance'
   _globals['_TARGETGROUP']._serialized_start=140
-  _globals['_TARGETGROUP']._serialized_end=327
-  _globals['_TARGETGROUPSPEC']._serialized_start=329
-  _globals['_TARGETGROUPSPEC']._serialized_end=395
-  _globals['_TARGET']._serialized_start=397
-  _globals['_TARGET']._serialized_end=499
-  _globals['_COMPUTEINSTANCE']._serialized_start=501
-  _globals['_COMPUTEINSTANCE']._serialized_end=602
-  _globals['_TARGETGROUPSTATUS']._serialized_start=605
-  _globals['_TARGETGROUPSTATUS']._serialized_end=738
-  _globals['_TARGETSTATUS']._serialized_start=741
-  _globals['_TARGETSTATUS']._serialized_end=962
-  _globals['_TARGETSTATUS_TARGETSTATE']._serialized_start=881
-  _globals['_TARGETSTATUS_TARGETSTATE']._serialized_end=962
+  _globals['_TARGETGROUP']._serialized_end=341
+  _globals['_TARGETGROUPSPEC']._serialized_start=343
+  _globals['_TARGETGROUPSPEC']._serialized_end=409
+  _globals['_TARGET']._serialized_start=411
+  _globals['_TARGET']._serialized_end=513
+  _globals['_COMPUTEINSTANCE']._serialized_start=515
+  _globals['_COMPUTEINSTANCE']._serialized_end=636
+  _globals['_TARGETGROUPSTATUS']._serialized_start=639
+  _globals['_TARGETGROUPSTATUS']._serialized_end=794
+  _globals['_TARGETSTATUS']._serialized_start=797
+  _globals['_TARGETSTATUS']._serialized_end=1040
+  _globals['_TARGETSTATUS_TARGETSTATE']._serialized_start=959
+  _globals['_TARGETSTATUS_TARGETSTATE']._serialized_end=1040
 # @@protoc_insertion_point(module_scope)

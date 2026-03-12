@@ -252,6 +252,8 @@ class TransferSpec(pb_classes.Message):
             bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
             prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
             credentials: "TransferSpec.BucketCredentials|transfer_pb2.TransferSpec.BucketCredentials|None|unset.UnsetType" = unset.Unset,
+            endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            region: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(bucket_name, unset.UnsetType):
@@ -260,12 +262,18 @@ class TransferSpec(pb_classes.Message):
                 self.prefix = prefix
             if not isinstance(credentials, unset.UnsetType):
                 self.credentials = credentials
+            if not isinstance(endpoint, unset.UnsetType):
+                self.endpoint = endpoint
+            if not isinstance(region, unset.UnsetType):
+                self.region = region
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "bucket_name",
                 "prefix",
                 "credentials",
+                "endpoint",
+                "region",
             ]
         
         @builtins.property
@@ -309,10 +317,36 @@ class TransferSpec(pb_classes.Message):
             return super()._set_field("credentials",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def endpoint(self) -> "builtins.str":
+            """
+            The endpoint must be in the form of a URL, starting with the protocol (https),
+            followed by the endpoint address without a trailing slash.
+            Example: https://storage.us-central1.nebius.cloud
+            """
+            
+            return super()._get_field("endpoint", explicit_presence=False,
+            )
+        @endpoint.setter
+        def endpoint(self, value: "builtins.str|None") -> None:
+            return super()._set_field("endpoint",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def region(self) -> "builtins.str":
+            return super()._get_field("region", explicit_presence=False,
+            )
+        @region.setter
+        def region(self, value: "builtins.str|None") -> None:
+            return super()._set_field("region",value,explicit_presence=False,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "bucket_name":"bucket_name",
             "prefix":"prefix",
             "credentials":"credentials",
+            "endpoint":"endpoint",
+            "region":"region",
         }
         
     

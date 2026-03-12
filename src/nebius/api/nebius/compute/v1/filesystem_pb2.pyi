@@ -20,7 +20,7 @@ class Filesystem(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[FilesystemSpec, _Mapping]] = ..., status: _Optional[_Union[FilesystemStatus, _Mapping]] = ...) -> None: ...
 
 class FilesystemSpec(_message.Message):
-    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type"]
+    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type", "forbid_deletion"]
     class FilesystemType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[FilesystemSpec.FilesystemType]
@@ -39,13 +39,15 @@ class FilesystemSpec(_message.Message):
     SIZE_GIBIBYTES_FIELD_NUMBER: _ClassVar[int]
     BLOCK_SIZE_BYTES_FIELD_NUMBER: _ClassVar[int]
     TYPE_FIELD_NUMBER: _ClassVar[int]
+    FORBID_DELETION_FIELD_NUMBER: _ClassVar[int]
     size_bytes: int
     size_kibibytes: int
     size_mebibytes: int
     size_gibibytes: int
     block_size_bytes: int
     type: FilesystemSpec.FilesystemType
-    def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[FilesystemSpec.FilesystemType, str]] = ...) -> None: ...
+    forbid_deletion: bool
+    def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[FilesystemSpec.FilesystemType, str]] = ..., forbid_deletion: bool = ...) -> None: ...
 
 class FilesystemStatus(_message.Message):
     __slots__ = ["state", "state_description", "read_write_attachments", "read_only_attachments", "size_bytes", "reconciling", "block_size_bytes"]

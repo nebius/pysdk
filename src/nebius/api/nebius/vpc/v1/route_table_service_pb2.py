@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.vpc.v1 import route_table_pb2 as nebius_dot_vpc_dot_v1_dot_route__table__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'nebius/vpc/v1/route_table_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1fnebius/vpc/v1/route_table.proto\".\n\x14GetRouteTableRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"]\n\x1aGetRouteTableByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"y\n\x16ListRouteTablesRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x93\x01\n\x1fListRouteTablesByNetworkRequest\x12\x34\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"r\n\x17ListRouteTablesResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.vpc.v1.RouteTableR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xe1\x02\n\x17\x43reateRouteTableRequest\x12\x8a\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc9\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01R\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.RouteTableSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xd6\x02\n\x17UpdateRouteTableRequest\x12\x87\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xc6\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')R\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.RouteTableSpecR\x04spec\"1\n\x17\x44\x65leteRouteTableRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id2\xe2\x04\n\x11RouteTableService\x12\x45\n\x03Get\x12#.nebius.vpc.v1.GetRouteTableRequest\x1a\x19.nebius.vpc.v1.RouteTable\x12Q\n\tGetByName\x12).nebius.vpc.v1.GetRouteTableByNameRequest\x1a\x19.nebius.vpc.v1.RouteTable\x12U\n\x04List\x12%.nebius.vpc.v1.ListRouteTablesRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12g\n\rListByNetwork\x12..nebius.vpc.v1.ListRouteTablesByNetworkRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12M\n\x06\x43reate\x12&.nebius.vpc.v1.CreateRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.vpc.v1.UpdateRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.vpc.v1.DeleteRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB]\n\x14\x61i.nebius.pub.vpc.v1B\x16RouteTableServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'nebius/vpc/v1/route_table_service.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1fnebius/vpc/v1/route_table.proto\"@\n\x14GetRouteTableRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcroutetableR\x02id\"i\n\x1aGetRouteTableByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x85\x01\n\x16ListRouteTablesRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x93\x01\n\x1fListRouteTablesByNetworkRequest\x12\x34\n\nnetwork_id\x18\x01 \x01(\tB\x15\xbaH\x03\xc8\x01\x01\xe2J\x0c\n\nvpcnetworkR\tnetworkId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"r\n\x17ListRouteTablesResponse\x12/\n\x05items\x18\x01 \x03(\x0b\x32\x19.nebius.vpc.v1.RouteTableR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xed\x02\n\x17\x43reateRouteTableRequest\x12\x96\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xd5\x01\xbaH\xc5\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.RouteTableSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xe2\x02\n\x17UpdateRouteTableRequest\x12\x93\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\xd2\x01\xbaH\xc2\x01\xba\x01\xbe\x01\n\rmetadata_name\x12s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\x1a\x38this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\xe2J\t\x12\x07projectR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x1d.nebius.vpc.v1.RouteTableSpecR\x04spec\"C\n\x17\x44\x65leteRouteTableRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcroutetableR\x02id2\xe2\x04\n\x11RouteTableService\x12\x45\n\x03Get\x12#.nebius.vpc.v1.GetRouteTableRequest\x1a\x19.nebius.vpc.v1.RouteTable\x12Q\n\tGetByName\x12).nebius.vpc.v1.GetRouteTableByNameRequest\x1a\x19.nebius.vpc.v1.RouteTable\x12U\n\x04List\x12%.nebius.vpc.v1.ListRouteTablesRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12g\n\rListByNetwork\x12..nebius.vpc.v1.ListRouteTablesByNetworkRequest\x1a&.nebius.vpc.v1.ListRouteTablesResponse\x12M\n\x06\x43reate\x12&.nebius.vpc.v1.CreateRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06Update\x12&.nebius.vpc.v1.UpdateRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x06\x44\x65lete\x12&.nebius.vpc.v1.DeleteRouteTableRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03vpcB]\n\x14\x61i.nebius.pub.vpc.v1B\x16RouteTableServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,41 +28,41 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.vpc.v1B\026RouteTableServiceProtoP\001Z+github.com/nebius/gosdk/proto/nebius/vpc/v1'
   _GETROUTETABLEREQUEST.fields_by_name['id']._options = None
-  _GETROUTETABLEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETROUTETABLEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\017\n\rvpcroutetable'
   _GETROUTETABLEBYNAMEREQUEST.fields_by_name['parent_id']._options = None
-  _GETROUTETABLEBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETROUTETABLEBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _GETROUTETABLEBYNAMEREQUEST.fields_by_name['name']._options = None
   _GETROUTETABLEBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTROUTETABLESREQUEST.fields_by_name['parent_id']._options = None
-  _LISTROUTETABLESREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTROUTETABLESREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _LISTROUTETABLESBYNETWORKREQUEST.fields_by_name['network_id']._options = None
   _LISTROUTETABLESBYNETWORKREQUEST.fields_by_name['network_id']._serialized_options = b'\272H\003\310\001\001\342J\014\n\nvpcnetwork'
   _CREATEROUTETABLEREQUEST.fields_by_name['metadata']._options = None
-  _CREATEROUTETABLEREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001'
+  _CREATEROUTETABLEREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\305\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\310\001\001\342J\t\022\007project'
   _CREATEROUTETABLEREQUEST.fields_by_name['spec']._options = None
   _CREATEROUTETABLEREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _UPDATEROUTETABLEREQUEST.fields_by_name['metadata']._options = None
-  _UPDATEROUTETABLEREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')'
+  _UPDATEROUTETABLEREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\302\001\272\001\276\001\n\rmetadata_name\022s\'name\' must start with a letter or digit, allow \'-\', \'_\', \'.\', \'/\', and have a length between 2 and 255 characters.\0328this.name.matches(\'^[a-zA-Z0-9][-_./a-zA-Z0-9]{1,254}$\')\342J\t\022\007project'
   _DELETEROUTETABLEREQUEST.fields_by_name['id']._options = None
-  _DELETEROUTETABLEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETEROUTETABLEREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\017\n\rvpcroutetable'
   _ROUTETABLESERVICE._options = None
   _ROUTETABLESERVICE._serialized_options = b'\272J\003vpc'
   _globals['_GETROUTETABLEREQUEST']._serialized_start=213
-  _globals['_GETROUTETABLEREQUEST']._serialized_end=259
-  _globals['_GETROUTETABLEBYNAMEREQUEST']._serialized_start=261
-  _globals['_GETROUTETABLEBYNAMEREQUEST']._serialized_end=354
-  _globals['_LISTROUTETABLESREQUEST']._serialized_start=356
-  _globals['_LISTROUTETABLESREQUEST']._serialized_end=477
-  _globals['_LISTROUTETABLESBYNETWORKREQUEST']._serialized_start=480
-  _globals['_LISTROUTETABLESBYNETWORKREQUEST']._serialized_end=627
-  _globals['_LISTROUTETABLESRESPONSE']._serialized_start=629
-  _globals['_LISTROUTETABLESRESPONSE']._serialized_end=743
-  _globals['_CREATEROUTETABLEREQUEST']._serialized_start=746
-  _globals['_CREATEROUTETABLEREQUEST']._serialized_end=1099
-  _globals['_UPDATEROUTETABLEREQUEST']._serialized_start=1102
-  _globals['_UPDATEROUTETABLEREQUEST']._serialized_end=1444
-  _globals['_DELETEROUTETABLEREQUEST']._serialized_start=1446
-  _globals['_DELETEROUTETABLEREQUEST']._serialized_end=1495
-  _globals['_ROUTETABLESERVICE']._serialized_start=1498
-  _globals['_ROUTETABLESERVICE']._serialized_end=2108
+  _globals['_GETROUTETABLEREQUEST']._serialized_end=277
+  _globals['_GETROUTETABLEBYNAMEREQUEST']._serialized_start=279
+  _globals['_GETROUTETABLEBYNAMEREQUEST']._serialized_end=384
+  _globals['_LISTROUTETABLESREQUEST']._serialized_start=387
+  _globals['_LISTROUTETABLESREQUEST']._serialized_end=520
+  _globals['_LISTROUTETABLESBYNETWORKREQUEST']._serialized_start=523
+  _globals['_LISTROUTETABLESBYNETWORKREQUEST']._serialized_end=670
+  _globals['_LISTROUTETABLESRESPONSE']._serialized_start=672
+  _globals['_LISTROUTETABLESRESPONSE']._serialized_end=786
+  _globals['_CREATEROUTETABLEREQUEST']._serialized_start=789
+  _globals['_CREATEROUTETABLEREQUEST']._serialized_end=1154
+  _globals['_UPDATEROUTETABLEREQUEST']._serialized_start=1157
+  _globals['_UPDATEROUTETABLEREQUEST']._serialized_end=1511
+  _globals['_DELETEROUTETABLEREQUEST']._serialized_start=1513
+  _globals['_DELETEROUTETABLEREQUEST']._serialized_end=1580
+  _globals['_ROUTETABLESERVICE']._serialized_start=1583
+  _globals['_ROUTETABLESERVICE']._serialized_end=2193
 # @@protoc_insertion_point(module_scope)
