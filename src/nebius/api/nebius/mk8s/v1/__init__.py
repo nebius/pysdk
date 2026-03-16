@@ -169,6 +169,7 @@ class ControlPlaneSpec(pb_classes.Message):
         endpoints: "ControlPlaneEndpointsSpec|cluster_pb2.ControlPlaneEndpointsSpec|None|unset.UnsetType" = unset.Unset,
         etcd_cluster_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
         audit_logs: "AuditLogsSpec|cluster_pb2.AuditLogsSpec|None|unset.UnsetType" = unset.Unset,
+        karpenter: "Karpenter|cluster_pb2.Karpenter|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -181,6 +182,8 @@ class ControlPlaneSpec(pb_classes.Message):
             self.etcd_cluster_size = etcd_cluster_size
         if not isinstance(audit_logs, unset.UnsetType):
             self.audit_logs = audit_logs
+        if not isinstance(karpenter, unset.UnsetType):
+            self.karpenter = karpenter
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -189,6 +192,7 @@ class ControlPlaneSpec(pb_classes.Message):
             "endpoints",
             "etcd_cluster_size",
             "audit_logs",
+            "karpenter",
         ]
     
     @builtins.property
@@ -264,12 +268,33 @@ class ControlPlaneSpec(pb_classes.Message):
         return super()._set_field("audit_logs",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def karpenter(self) -> "Karpenter|None":
+        """
+        Enables installation of the Karpenter inside a cluster.
+        Karpenter will be installed as a helm chart inside cluster
+        so it requires creation of at least one CPU public node group.
+        
+        Please note that there is no feature parity between Karpenter node pools and
+        public node groups.
+        By default cluster will be created without it.
+        """
+        
+        return super()._get_field("karpenter", explicit_presence=True,
+        wrap=Karpenter,
+        )
+    @karpenter.setter
+    def karpenter(self, value: "Karpenter|cluster_pb2.Karpenter|None") -> None:
+        return super()._set_field("karpenter",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "version":"version",
         "subnet_id":"subnet_id",
         "endpoints":"endpoints",
         "etcd_cluster_size":"etcd_cluster_size",
         "audit_logs":"audit_logs",
+        "karpenter":"karpenter",
     }
     
 class ControlPlaneEndpointsSpec(pb_classes.Message):
@@ -378,6 +403,25 @@ class KubeNetworkSpec(pb_classes.Message):
 class AuditLogsSpec(pb_classes.Message):
     __PB2_CLASS__ = cluster_pb2.AuditLogsSpec
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.AuditLogsSpec",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+class Karpenter(pb_classes.Message):
+    __PB2_CLASS__ = cluster_pb2.Karpenter
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.Karpenter",cluster_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -4273,6 +4317,7 @@ __all__ = [
     "PublicEndpointSpec",
     "KubeNetworkSpec",
     "AuditLogsSpec",
+    "Karpenter",
     "ClusterStatus",
     "ControlPlaneStatus",
     "ControlPlaneStatusEndpoints",
