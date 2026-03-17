@@ -3,7 +3,7 @@ from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Optional as _Optional
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -59,6 +59,8 @@ METHOD_PY_SDK_FIELD_NUMBER: _ClassVar[int]
 method_py_sdk: _descriptor.FieldDescriptor
 METHOD_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 method_behavior: _descriptor.FieldDescriptor
+REQUEST_FIELDS_FIELD_NUMBER: _ClassVar[int]
+request_fields: _descriptor.FieldDescriptor
 RESOURCE_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 resource_behavior: _descriptor.FieldDescriptor
 MESSAGE_DEPRECATION_DETAILS_FIELD_NUMBER: _ClassVar[int]
@@ -77,6 +79,8 @@ FIELD_PY_SDK_FIELD_NUMBER: _ClassVar[int]
 field_py_sdk: _descriptor.FieldDescriptor
 NID_FIELD_NUMBER: _ClassVar[int]
 nid: _descriptor.FieldDescriptor
+SUBFIELD_SETTINGS_FIELD_NUMBER: _ClassVar[int]
+subfield_settings: _descriptor.FieldDescriptor
 ONEOF_BEHAVIOR_FIELD_NUMBER: _ClassVar[int]
 oneof_behavior: _descriptor.FieldDescriptor
 ONEOF_PY_SDK_FIELD_NUMBER: _ClassVar[int]
@@ -149,3 +153,13 @@ class NIDFieldSettings(_message.Message):
     resource: _containers.RepeatedScalarFieldContainer[str]
     parent_resource: _containers.RepeatedScalarFieldContainer[str]
     def __init__(self, resource: _Optional[_Iterable[str]] = ..., parent_resource: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class SubfieldSettings(_message.Message):
+    __slots__ = ["field_path", "nid", "is_required"]
+    FIELD_PATH_FIELD_NUMBER: _ClassVar[int]
+    NID_FIELD_NUMBER: _ClassVar[int]
+    IS_REQUIRED_FIELD_NUMBER: _ClassVar[int]
+    field_path: str
+    nid: NIDFieldSettings
+    is_required: bool
+    def __init__(self, field_path: _Optional[str] = ..., nid: _Optional[_Union[NIDFieldSettings, _Mapping]] = ..., is_required: bool = ...) -> None: ...

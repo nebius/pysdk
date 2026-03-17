@@ -50,7 +50,7 @@ class EndpointSpec(_message.Message):
         protocol: EndpointSpec.Port.Protocol
         def __init__(self, container_port: _Optional[int] = ..., host_port: _Optional[int] = ..., protocol: _Optional[_Union[EndpointSpec.Port.Protocol, str]] = ...) -> None: ...
     class VolumeMount(_message.Message):
-        __slots__ = ["source", "source_path", "container_path", "mode"]
+        __slots__ = ["source", "source_path", "container_path", "mode", "s3_config"]
         class Mode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = []
             MODE_UNSPECIFIED: _ClassVar[EndpointSpec.VolumeMount.Mode]
@@ -59,15 +59,35 @@ class EndpointSpec(_message.Message):
         MODE_UNSPECIFIED: EndpointSpec.VolumeMount.Mode
         READ_ONLY: EndpointSpec.VolumeMount.Mode
         READ_WRITE: EndpointSpec.VolumeMount.Mode
+        class S3Config(_message.Message):
+            __slots__ = ["endpoint", "region", "credentials"]
+            class S3Credentials(_message.Message):
+                __slots__ = ["access_key_id", "secret_access_key", "session_token"]
+                ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
+                SECRET_ACCESS_KEY_FIELD_NUMBER: _ClassVar[int]
+                SESSION_TOKEN_FIELD_NUMBER: _ClassVar[int]
+                access_key_id: str
+                secret_access_key: str
+                session_token: str
+                def __init__(self, access_key_id: _Optional[str] = ..., secret_access_key: _Optional[str] = ..., session_token: _Optional[str] = ...) -> None: ...
+            ENDPOINT_FIELD_NUMBER: _ClassVar[int]
+            REGION_FIELD_NUMBER: _ClassVar[int]
+            CREDENTIALS_FIELD_NUMBER: _ClassVar[int]
+            endpoint: str
+            region: str
+            credentials: EndpointSpec.VolumeMount.S3Config.S3Credentials
+            def __init__(self, endpoint: _Optional[str] = ..., region: _Optional[str] = ..., credentials: _Optional[_Union[EndpointSpec.VolumeMount.S3Config.S3Credentials, _Mapping]] = ...) -> None: ...
         SOURCE_FIELD_NUMBER: _ClassVar[int]
         SOURCE_PATH_FIELD_NUMBER: _ClassVar[int]
         CONTAINER_PATH_FIELD_NUMBER: _ClassVar[int]
         MODE_FIELD_NUMBER: _ClassVar[int]
+        S3_CONFIG_FIELD_NUMBER: _ClassVar[int]
         source: str
         source_path: str
         container_path: str
         mode: EndpointSpec.VolumeMount.Mode
-        def __init__(self, source: _Optional[str] = ..., source_path: _Optional[str] = ..., container_path: _Optional[str] = ..., mode: _Optional[_Union[EndpointSpec.VolumeMount.Mode, str]] = ...) -> None: ...
+        s3_config: EndpointSpec.VolumeMount.S3Config
+        def __init__(self, source: _Optional[str] = ..., source_path: _Optional[str] = ..., container_path: _Optional[str] = ..., mode: _Optional[_Union[EndpointSpec.VolumeMount.Mode, str]] = ..., s3_config: _Optional[_Union[EndpointSpec.VolumeMount.S3Config, _Mapping]] = ...) -> None: ...
     class DiskSpec(_message.Message):
         __slots__ = ["type", "size_bytes"]
         TYPE_FIELD_NUMBER: _ClassVar[int]

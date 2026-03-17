@@ -5138,6 +5138,7 @@ class InstanceSpec(pb_classes.Message):
         preemptible: "PreemptibleSpec|instance_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
         hostname: "builtins.str|None|unset.UnsetType" = unset.Unset,
         reservation_policy: "ReservationPolicy|instance_pb2.ReservationPolicy|None|unset.UnsetType" = unset.Unset,
+        local_disks: "LocalDisksSpec|instance_pb2.LocalDisksSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(service_account_id, unset.UnsetType):
@@ -5166,6 +5167,8 @@ class InstanceSpec(pb_classes.Message):
             self.hostname = hostname
         if not isinstance(reservation_policy, unset.UnsetType):
             self.reservation_policy = reservation_policy
+        if not isinstance(local_disks, unset.UnsetType):
+            self.local_disks = local_disks
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -5182,6 +5185,7 @@ class InstanceSpec(pb_classes.Message):
             "preemptible",
             "hostname",
             "reservation_policy",
+            "local_disks",
         ]
     
     @builtins.property
@@ -5373,6 +5377,25 @@ class InstanceSpec(pb_classes.Message):
         return super()._set_field("reservation_policy",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def local_disks(self) -> "LocalDisksSpec":
+        """
+        Local disks are meaningfully different from regular (remote) disks:
+        they are provided by the underlying host and are tied to a particular VM run.
+        Local disk data is not preserved across Stop-Start initiated via Compute API.
+        Local disks are not provided by default. To get them, explicitly request them via this field.
+        Availability depends on the selected platform, preset and region.
+        Changing this field will result in disks change and content loss, but only after stop and start the instance.
+        """
+        
+        return super()._get_field("local_disks", explicit_presence=False,
+        wrap=LocalDisksSpec,
+        )
+    @local_disks.setter
+    def local_disks(self, value: "LocalDisksSpec|instance_pb2.LocalDisksSpec|None") -> None:
+        return super()._set_field("local_disks",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "service_account_id":"service_account_id",
         "resources":"resources",
@@ -5387,6 +5410,7 @@ class InstanceSpec(pb_classes.Message):
         "preemptible":"preemptible",
         "hostname":"hostname",
         "reservation_policy":"reservation_policy",
+        "local_disks":"local_disks",
     }
     
 class PreemptibleSpec(pb_classes.Message):
@@ -6138,6 +6162,118 @@ class ReservationPolicy(pb_classes.Message):
         "policy":"policy",
         "reservation_ids":"reservation_ids",
         "Policy":"Policy",
+    }
+    
+class LocalDisksSpec(pb_classes.Message):
+    __PB2_CLASS__ = instance_pb2.LocalDisksSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.LocalDisksSpec",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_request__(pb_classes.OneOf):
+        name: builtins.str= "request"
+        
+        def __init__(self, msg: "LocalDisksSpec") -> None:
+            super().__init__()
+            self._message: "LocalDisksSpec" = msg
+    
+    class __OneOfClass_request_passthrough_group__(__OneOfClass_request__):
+        field: typing.Literal["passthrough_group"] = "passthrough_group"
+        
+        def __init__(self, msg: "LocalDisksSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "PassthroughGroupRequest":
+            return self._message.passthrough_group
+    
+    @builtins.property
+    def request(self) -> __OneOfClass_request_passthrough_group__|None:
+        field_name_1: str|None = super().which_field_in_oneof("request")
+        match field_name_1:
+            case "passthrough_group":
+                return self.__OneOfClass_request_passthrough_group__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        passthrough_group: "PassthroughGroupRequest|instance_pb2.PassthroughGroupRequest|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(passthrough_group, unset.UnsetType):
+            self.passthrough_group = passthrough_group
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "passthrough_group",
+            "request",
+        ]
+    
+    @builtins.property
+    def passthrough_group(self) -> "PassthroughGroupRequest|None":
+        """
+        Requests passthrough local disks from the host.
+        Topology of the provided disks is preserved during stop and start
+        for every instance of a specific platform and preset in the region.
+        """
+        
+        return super()._get_field("passthrough_group", explicit_presence=True,
+        wrap=PassthroughGroupRequest,
+        )
+    @passthrough_group.setter
+    def passthrough_group(self, value: "PassthroughGroupRequest|instance_pb2.PassthroughGroupRequest|None") -> None:
+        return super()._set_field("passthrough_group",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "passthrough_group":"passthrough_group",
+        "request":"request",
+    }
+    
+class PassthroughGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = instance_pb2.PassthroughGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.PassthroughGroupRequest",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        requested: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(requested, unset.UnsetType):
+            self.requested = requested
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "requested",
+        ]
+    
+    @builtins.property
+    def requested(self) -> "builtins.bool":
+        """
+        Passthrough local disks from the underlying host.
+        
+        Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
+        but the exact number depends on the preset.
+        Enabled only when this field is explicitly set.
+        """
+        
+        return super()._get_field("requested", explicit_presence=False,
+        )
+    @requested.setter
+    def requested(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("requested",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "requested":"requested",
     }
     
 # file: nebius/compute/v1/instance_service.proto
@@ -8091,6 +8227,8 @@ __all__ = [
     "InstanceStatus",
     "InstanceStatusInfinibandTopologyPath",
     "ReservationPolicy",
+    "LocalDisksSpec",
+    "PassthroughGroupRequest",
     "GetInstanceRequest",
     "ListInstancesRequest",
     "CreateInstanceRequest",

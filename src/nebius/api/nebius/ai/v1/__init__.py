@@ -29,6 +29,7 @@ import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.base.protos.unset as unset
 import nebius.base.protos.well_known as well_known_1
+import typing as typing
 import typing_extensions as typing_extensions
 #@ local imports here @#
 
@@ -286,6 +287,202 @@ class EndpointSpec(pb_classes.Message):
         __mask_functions__ = {
         }
         
+        class S3Config(pb_classes.Message):
+            """
+            Config for accessing an external S3-compatible storage.
+            
+            The bucket name is specified in the ``source`` field as an S3 URI.
+            """
+            
+            __PB2_CLASS__ = endpoint_pb2.EndpointSpec.VolumeMount.S3Config
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.EndpointSpec.VolumeMount.S3Config",endpoint_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+            __mask_functions__ = {
+            }
+            
+            class S3Credentials(pb_classes.Message):
+                """
+                Inline S3 credentials.
+                """
+                
+                __PB2_CLASS__ = endpoint_pb2.EndpointSpec.VolumeMount.S3Config.S3Credentials
+                __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.EndpointSpec.VolumeMount.S3Config.S3Credentials",endpoint_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+                __mask_functions__ = {
+                }
+                
+                def __init__(
+                    self,
+                    initial_message: message_1.Message|None = None,
+                    *,
+                    access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                    secret_access_key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                    session_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                ) -> None:
+                    super().__init__(initial_message)
+                    if not isinstance(access_key_id, unset.UnsetType):
+                        self.access_key_id = access_key_id
+                    if not isinstance(secret_access_key, unset.UnsetType):
+                        self.secret_access_key = secret_access_key
+                    if not isinstance(session_token, unset.UnsetType):
+                        self.session_token = session_token
+                
+                def __dir__(self) ->abc.Iterable[builtins.str]:
+                    return [
+                        "access_key_id",
+                        "secret_access_key",
+                        "session_token",
+                    ]
+                
+                @builtins.property
+                def access_key_id(self) -> "builtins.str":
+                    """
+                    Access key ID.
+                    """
+                    
+                    return super()._get_field("access_key_id", explicit_presence=False,
+                    )
+                @access_key_id.setter
+                def access_key_id(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("access_key_id",value,explicit_presence=False,
+                    )
+                
+                @builtins.property
+                def secret_access_key(self) -> "builtins.str":
+                    """
+                    Secret access key.
+                    """
+                    
+                    return super()._get_field("secret_access_key", explicit_presence=False,
+                    )
+                @secret_access_key.setter
+                def secret_access_key(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("secret_access_key",value,explicit_presence=False,
+                    )
+                
+                @builtins.property
+                def session_token(self) -> "builtins.str":
+                    """
+                    Session token (optional, for temporary credentials).
+                    """
+                    
+                    return super()._get_field("session_token", explicit_presence=False,
+                    )
+                @session_token.setter
+                def session_token(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("session_token",value,explicit_presence=False,
+                    )
+                
+                __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+                    "access_key_id":"access_key_id",
+                    "secret_access_key":"secret_access_key",
+                    "session_token":"session_token",
+                }
+                
+            
+            class __OneOfClass_auth__(pb_classes.OneOf):
+                name: builtins.str= "auth"
+                
+                def __init__(self, msg: "EndpointSpec.VolumeMount.S3Config") -> None:
+                    super().__init__()
+                    self._message: "EndpointSpec.VolumeMount.S3Config" = msg
+            
+            class __OneOfClass_auth_credentials__(__OneOfClass_auth__):
+                field: typing.Literal["credentials"] = "credentials"
+                
+                def __init__(self, msg: "EndpointSpec.VolumeMount.S3Config") -> None:
+                    super().__init__(msg)
+                @builtins.property
+                def value(self) -> "EndpointSpec.VolumeMount.S3Config.S3Credentials":
+                    return self._message.credentials
+            
+            @builtins.property
+            def auth(self) -> __OneOfClass_auth_credentials__|None:
+                """
+                Authentication method.
+                """
+                
+                field_name_1: str|None = super().which_field_in_oneof("auth")
+                match field_name_1:
+                    case "credentials":
+                        return self.__OneOfClass_auth_credentials__(self)
+                    case None:
+                        return None
+                    case _:
+                        raise pb_classes.OneOfMatchError(field_name_1)
+            
+            def __init__(
+                self,
+                initial_message: message_1.Message|None = None,
+                *,
+                endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                credentials: "EndpointSpec.VolumeMount.S3Config.S3Credentials|endpoint_pb2.EndpointSpec.VolumeMount.S3Config.S3Credentials|None|unset.UnsetType" = unset.Unset,
+            ) -> None:
+                super().__init__(initial_message)
+                if not isinstance(endpoint, unset.UnsetType):
+                    self.endpoint = endpoint
+                if not isinstance(region, unset.UnsetType):
+                    self.region = region
+                if not isinstance(credentials, unset.UnsetType):
+                    self.credentials = credentials
+            
+            def __dir__(self) ->abc.Iterable[builtins.str]:
+                return [
+                    "endpoint",
+                    "region",
+                    "credentials",
+                    "S3Credentials",
+                    "auth",
+                ]
+            
+            @builtins.property
+            def endpoint(self) -> "builtins.str":
+                """
+                S3-compatible endpoint URL (e.g. "https://s3.amazonaws.com").
+                """
+                
+                return super()._get_field("endpoint", explicit_presence=False,
+                )
+            @endpoint.setter
+            def endpoint(self, value: "builtins.str|None") -> None:
+                return super()._set_field("endpoint",value,explicit_presence=False,
+                )
+            
+            @builtins.property
+            def region(self) -> "builtins.str":
+                """
+                S3 region.
+                """
+                
+                return super()._get_field("region", explicit_presence=False,
+                )
+            @region.setter
+            def region(self, value: "builtins.str|None") -> None:
+                return super()._set_field("region",value,explicit_presence=False,
+                )
+            
+            @builtins.property
+            def credentials(self) -> "EndpointSpec.VolumeMount.S3Config.S3Credentials|None":
+                """
+                Inline S3 credentials.
+                """
+                
+                return super()._get_field("credentials", explicit_presence=True,
+                wrap=EndpointSpec.VolumeMount.S3Config.S3Credentials,
+                )
+            @credentials.setter
+            def credentials(self, value: "EndpointSpec.VolumeMount.S3Config.S3Credentials|endpoint_pb2.EndpointSpec.VolumeMount.S3Config.S3Credentials|None") -> None:
+                return super()._set_field("credentials",value,explicit_presence=True,
+                )
+            
+            __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+                "endpoint":"endpoint",
+                "region":"region",
+                "credentials":"credentials",
+                "S3Credentials":"S3Credentials",
+                "auth":"auth",
+            }
+            
+        
         class Mode(pb_enum.Enum):
             """
             Mode that will be used to mount the volume.
@@ -304,6 +501,37 @@ class EndpointSpec(pb_classes.Message):
             """
             
         
+        class __OneOfClass_source_config__(pb_classes.OneOf):
+            name: builtins.str= "source_config"
+            
+            def __init__(self, msg: "EndpointSpec.VolumeMount") -> None:
+                super().__init__()
+                self._message: "EndpointSpec.VolumeMount" = msg
+        
+        class __OneOfClass_source_config_s3_config__(__OneOfClass_source_config__):
+            field: typing.Literal["s3_config"] = "s3_config"
+            
+            def __init__(self, msg: "EndpointSpec.VolumeMount") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "EndpointSpec.VolumeMount.S3Config":
+                return self._message.s3_config
+        
+        @builtins.property
+        def source_config(self) -> __OneOfClass_source_config_s3_config__|None:
+            """
+            Source Config
+            """
+            
+            field_name_1: str|None = super().which_field_in_oneof("source_config")
+            match field_name_1:
+                case "s3_config":
+                    return self.__OneOfClass_source_config_s3_config__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
         def __init__(
             self,
             initial_message: message_1.Message|None = None,
@@ -312,6 +540,7 @@ class EndpointSpec(pb_classes.Message):
             source_path: "builtins.str|None|unset.UnsetType" = unset.Unset,
             container_path: "builtins.str|None|unset.UnsetType" = unset.Unset,
             mode: "EndpointSpec.VolumeMount.Mode|endpoint_pb2.EndpointSpec.VolumeMount.Mode|None|unset.UnsetType" = unset.Unset,
+            s3_config: "EndpointSpec.VolumeMount.S3Config|endpoint_pb2.EndpointSpec.VolumeMount.S3Config|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(source, unset.UnsetType):
@@ -322,6 +551,8 @@ class EndpointSpec(pb_classes.Message):
                 self.container_path = container_path
             if not isinstance(mode, unset.UnsetType):
                 self.mode = mode
+            if not isinstance(s3_config, unset.UnsetType):
+                self.s3_config = s3_config
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
@@ -329,6 +560,9 @@ class EndpointSpec(pb_classes.Message):
                 "source_path",
                 "container_path",
                 "mode",
+                "s3_config",
+                "S3Config",
+                "source_config",
                 "Mode",
             ]
         
@@ -337,7 +571,8 @@ class EndpointSpec(pb_classes.Message):
             """
             Source of the volume mount.
             
-            Can be a name of an ID of Nebius Storage bucket or filesystem.
+            Can be a name or an ID of Nebius Storage bucket or filesystem,
+            or an S3 URI (e.g. "s3://bucket-name") when using external S3 storage.
             """
             
             return super()._get_field("source", explicit_presence=False,
@@ -391,11 +626,24 @@ class EndpointSpec(pb_classes.Message):
             return super()._set_field("mode",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def s3_config(self) -> "EndpointSpec.VolumeMount.S3Config|None":
+            return super()._get_field("s3_config", explicit_presence=True,
+            wrap=EndpointSpec.VolumeMount.S3Config,
+            )
+        @s3_config.setter
+        def s3_config(self, value: "EndpointSpec.VolumeMount.S3Config|endpoint_pb2.EndpointSpec.VolumeMount.S3Config|None") -> None:
+            return super()._set_field("s3_config",value,explicit_presence=True,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "source":"source",
             "source_path":"source_path",
             "container_path":"container_path",
             "mode":"mode",
+            "s3_config":"s3_config",
+            "S3Config":"S3Config",
+            "source_config":"source_config",
             "Mode":"Mode",
         }
         
@@ -2114,6 +2362,202 @@ class JobSpec(pb_classes.Message):
         __mask_functions__ = {
         }
         
+        class S3Config(pb_classes.Message):
+            """
+            Config for accessing an external S3-compatible storage.
+            
+            The bucket name is specified in the ``source`` field as an S3 URI.
+            """
+            
+            __PB2_CLASS__ = job_pb2.JobSpec.VolumeMount.S3Config
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.JobSpec.VolumeMount.S3Config",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+            __mask_functions__ = {
+            }
+            
+            class S3Credentials(pb_classes.Message):
+                """
+                Inline S3 credentials.
+                """
+                
+                __PB2_CLASS__ = job_pb2.JobSpec.VolumeMount.S3Config.S3Credentials
+                __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.JobSpec.VolumeMount.S3Config.S3Credentials",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+                __mask_functions__ = {
+                }
+                
+                def __init__(
+                    self,
+                    initial_message: message_1.Message|None = None,
+                    *,
+                    access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                    secret_access_key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                    session_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                ) -> None:
+                    super().__init__(initial_message)
+                    if not isinstance(access_key_id, unset.UnsetType):
+                        self.access_key_id = access_key_id
+                    if not isinstance(secret_access_key, unset.UnsetType):
+                        self.secret_access_key = secret_access_key
+                    if not isinstance(session_token, unset.UnsetType):
+                        self.session_token = session_token
+                
+                def __dir__(self) ->abc.Iterable[builtins.str]:
+                    return [
+                        "access_key_id",
+                        "secret_access_key",
+                        "session_token",
+                    ]
+                
+                @builtins.property
+                def access_key_id(self) -> "builtins.str":
+                    """
+                    Access key ID.
+                    """
+                    
+                    return super()._get_field("access_key_id", explicit_presence=False,
+                    )
+                @access_key_id.setter
+                def access_key_id(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("access_key_id",value,explicit_presence=False,
+                    )
+                
+                @builtins.property
+                def secret_access_key(self) -> "builtins.str":
+                    """
+                    Secret access key.
+                    """
+                    
+                    return super()._get_field("secret_access_key", explicit_presence=False,
+                    )
+                @secret_access_key.setter
+                def secret_access_key(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("secret_access_key",value,explicit_presence=False,
+                    )
+                
+                @builtins.property
+                def session_token(self) -> "builtins.str":
+                    """
+                    Session token (optional, for temporary credentials).
+                    """
+                    
+                    return super()._get_field("session_token", explicit_presence=False,
+                    )
+                @session_token.setter
+                def session_token(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("session_token",value,explicit_presence=False,
+                    )
+                
+                __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+                    "access_key_id":"access_key_id",
+                    "secret_access_key":"secret_access_key",
+                    "session_token":"session_token",
+                }
+                
+            
+            class __OneOfClass_auth__(pb_classes.OneOf):
+                name: builtins.str= "auth"
+                
+                def __init__(self, msg: "JobSpec.VolumeMount.S3Config") -> None:
+                    super().__init__()
+                    self._message: "JobSpec.VolumeMount.S3Config" = msg
+            
+            class __OneOfClass_auth_credentials__(__OneOfClass_auth__):
+                field: typing.Literal["credentials"] = "credentials"
+                
+                def __init__(self, msg: "JobSpec.VolumeMount.S3Config") -> None:
+                    super().__init__(msg)
+                @builtins.property
+                def value(self) -> "JobSpec.VolumeMount.S3Config.S3Credentials":
+                    return self._message.credentials
+            
+            @builtins.property
+            def auth(self) -> __OneOfClass_auth_credentials__|None:
+                """
+                Authentication method.
+                """
+                
+                field_name_1: str|None = super().which_field_in_oneof("auth")
+                match field_name_1:
+                    case "credentials":
+                        return self.__OneOfClass_auth_credentials__(self)
+                    case None:
+                        return None
+                    case _:
+                        raise pb_classes.OneOfMatchError(field_name_1)
+            
+            def __init__(
+                self,
+                initial_message: message_1.Message|None = None,
+                *,
+                endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                credentials: "JobSpec.VolumeMount.S3Config.S3Credentials|job_pb2.JobSpec.VolumeMount.S3Config.S3Credentials|None|unset.UnsetType" = unset.Unset,
+            ) -> None:
+                super().__init__(initial_message)
+                if not isinstance(endpoint, unset.UnsetType):
+                    self.endpoint = endpoint
+                if not isinstance(region, unset.UnsetType):
+                    self.region = region
+                if not isinstance(credentials, unset.UnsetType):
+                    self.credentials = credentials
+            
+            def __dir__(self) ->abc.Iterable[builtins.str]:
+                return [
+                    "endpoint",
+                    "region",
+                    "credentials",
+                    "S3Credentials",
+                    "auth",
+                ]
+            
+            @builtins.property
+            def endpoint(self) -> "builtins.str":
+                """
+                S3-compatible endpoint URL (e.g. "https://s3.amazonaws.com").
+                """
+                
+                return super()._get_field("endpoint", explicit_presence=False,
+                )
+            @endpoint.setter
+            def endpoint(self, value: "builtins.str|None") -> None:
+                return super()._set_field("endpoint",value,explicit_presence=False,
+                )
+            
+            @builtins.property
+            def region(self) -> "builtins.str":
+                """
+                S3 region.
+                """
+                
+                return super()._get_field("region", explicit_presence=False,
+                )
+            @region.setter
+            def region(self, value: "builtins.str|None") -> None:
+                return super()._set_field("region",value,explicit_presence=False,
+                )
+            
+            @builtins.property
+            def credentials(self) -> "JobSpec.VolumeMount.S3Config.S3Credentials|None":
+                """
+                Inline S3 credentials.
+                """
+                
+                return super()._get_field("credentials", explicit_presence=True,
+                wrap=JobSpec.VolumeMount.S3Config.S3Credentials,
+                )
+            @credentials.setter
+            def credentials(self, value: "JobSpec.VolumeMount.S3Config.S3Credentials|job_pb2.JobSpec.VolumeMount.S3Config.S3Credentials|None") -> None:
+                return super()._set_field("credentials",value,explicit_presence=True,
+                )
+            
+            __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+                "endpoint":"endpoint",
+                "region":"region",
+                "credentials":"credentials",
+                "S3Credentials":"S3Credentials",
+                "auth":"auth",
+            }
+            
+        
         class Mode(pb_enum.Enum):
             """
             Mode that will be used to mount the volume.
@@ -2132,6 +2576,37 @@ class JobSpec(pb_classes.Message):
             """
             
         
+        class __OneOfClass_source_config__(pb_classes.OneOf):
+            name: builtins.str= "source_config"
+            
+            def __init__(self, msg: "JobSpec.VolumeMount") -> None:
+                super().__init__()
+                self._message: "JobSpec.VolumeMount" = msg
+        
+        class __OneOfClass_source_config_s3_config__(__OneOfClass_source_config__):
+            field: typing.Literal["s3_config"] = "s3_config"
+            
+            def __init__(self, msg: "JobSpec.VolumeMount") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "JobSpec.VolumeMount.S3Config":
+                return self._message.s3_config
+        
+        @builtins.property
+        def source_config(self) -> __OneOfClass_source_config_s3_config__|None:
+            """
+            Source Config
+            """
+            
+            field_name_1: str|None = super().which_field_in_oneof("source_config")
+            match field_name_1:
+                case "s3_config":
+                    return self.__OneOfClass_source_config_s3_config__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
         def __init__(
             self,
             initial_message: message_1.Message|None = None,
@@ -2140,6 +2615,7 @@ class JobSpec(pb_classes.Message):
             source_path: "builtins.str|None|unset.UnsetType" = unset.Unset,
             container_path: "builtins.str|None|unset.UnsetType" = unset.Unset,
             mode: "JobSpec.VolumeMount.Mode|job_pb2.JobSpec.VolumeMount.Mode|None|unset.UnsetType" = unset.Unset,
+            s3_config: "JobSpec.VolumeMount.S3Config|job_pb2.JobSpec.VolumeMount.S3Config|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(source, unset.UnsetType):
@@ -2150,6 +2626,8 @@ class JobSpec(pb_classes.Message):
                 self.container_path = container_path
             if not isinstance(mode, unset.UnsetType):
                 self.mode = mode
+            if not isinstance(s3_config, unset.UnsetType):
+                self.s3_config = s3_config
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
@@ -2157,6 +2635,9 @@ class JobSpec(pb_classes.Message):
                 "source_path",
                 "container_path",
                 "mode",
+                "s3_config",
+                "S3Config",
+                "source_config",
                 "Mode",
             ]
         
@@ -2165,7 +2646,8 @@ class JobSpec(pb_classes.Message):
             """
             Source of the volume mount.
             
-            Can be a name of an ID of Nebius Storage bucket or filesystem.
+            Can be a name or an ID of Nebius Storage bucket or filesystem,
+            or an S3 URI (e.g. "s3://bucket-name") when using external S3 storage.
             """
             
             return super()._get_field("source", explicit_presence=False,
@@ -2219,11 +2701,24 @@ class JobSpec(pb_classes.Message):
             return super()._set_field("mode",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def s3_config(self) -> "JobSpec.VolumeMount.S3Config|None":
+            return super()._get_field("s3_config", explicit_presence=True,
+            wrap=JobSpec.VolumeMount.S3Config,
+            )
+        @s3_config.setter
+        def s3_config(self, value: "JobSpec.VolumeMount.S3Config|job_pb2.JobSpec.VolumeMount.S3Config|None") -> None:
+            return super()._set_field("s3_config",value,explicit_presence=True,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "source":"source",
             "source_path":"source_path",
             "container_path":"container_path",
             "mode":"mode",
+            "s3_config":"s3_config",
+            "S3Config":"S3Config",
+            "source_config":"source_config",
             "Mode":"Mode",
         }
         

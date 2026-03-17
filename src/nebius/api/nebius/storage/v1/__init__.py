@@ -11,7 +11,6 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.duration_pb2 as duration_pb2
 import google.protobuf.message as message_1
 import google.protobuf.timestamp_pb2 as timestamp_pb2
-import logging as logging
 import nebius.aio.client as client
 import nebius.aio.operation as operation
 import nebius.aio.request as request_1
@@ -42,7 +41,7 @@ class StorageClass(pb_enum.Enum):
     STORAGE_CLASS_UNSPECIFIED = 0
     STANDARD = 1
     ENHANCED_THROUGHPUT = 2
-    INTELLIGENT_TIERING = 3
+    INTELLIGENT = 3
 
 class VersioningPolicy(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.VersioningPolicy",base_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
@@ -1851,7 +1850,6 @@ class BucketSpec(pb_classes.Message):
         lifecycle_configuration: "LifecycleConfiguration|lifecycle_pb2.LifecycleConfiguration|None|unset.UnsetType" = unset.Unset,
         cors: "CORSConfiguration|cors_pb2.CORSConfiguration|None|unset.UnsetType" = unset.Unset,
         default_storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
-        override_storage_class: "StorageClass|base_pb2.StorageClass|None|unset.UnsetType" = unset.Unset,
         force_storage_class: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         object_audit_logging: "BucketSpec.ObjectAuditLogging|bucket_pb2.BucketSpec.ObjectAuditLogging|None|unset.UnsetType" = unset.Unset,
         bucket_policy: "BucketPolicy|bucket_policy_pb2.BucketPolicy|None|unset.UnsetType" = unset.Unset,
@@ -1867,8 +1865,6 @@ class BucketSpec(pb_classes.Message):
             self.cors = cors
         if not isinstance(default_storage_class, unset.UnsetType):
             self.default_storage_class = default_storage_class
-        if not isinstance(override_storage_class, unset.UnsetType):
-            self.override_storage_class = override_storage_class
         if not isinstance(force_storage_class, unset.UnsetType):
             self.force_storage_class = force_storage_class
         if not isinstance(object_audit_logging, unset.UnsetType):
@@ -1883,7 +1879,6 @@ class BucketSpec(pb_classes.Message):
             "lifecycle_configuration",
             "cors",
             "default_storage_class",
-            "override_storage_class",
             "force_storage_class",
             "object_audit_logging",
             "bucket_policy",
@@ -1965,32 +1960,6 @@ class BucketSpec(pb_classes.Message):
         )
     
     @builtins.property
-    def override_storage_class(self) -> "StorageClass":
-        """
-        Storage class to override any other storage class of uploading objects. It overrides the storage class regardless
-        of how the original storage class was specified - either the default storage class
-        or the one provided via the ``x-amz-storage-class`` header.
-        
-        Supported until 12/01/25. Use ``default_storage_class`` with ``force_storage_class`` instead.
-        """
-        
-        logging.getLogger("deprecation").warning(
-        """Field .nebius.storage.v1.BucketSpec.override_storage_class is deprecated. Supported until 12/01/25. Use `default_storage_class` with `force_storage_class` instead."""
-        , stack_info=True, stacklevel=2)
-        
-        return super()._get_field("override_storage_class", explicit_presence=False,
-        wrap=StorageClass,
-        )
-    @override_storage_class.setter
-    def override_storage_class(self, value: "StorageClass|base_pb2.StorageClass|None") -> None:
-        logging.getLogger("deprecation").warning(
-        """Field .nebius.storage.v1.BucketSpec.override_storage_class is deprecated. Supported until 12/01/25. Use `default_storage_class` with `force_storage_class` instead."""
-        , stack_info=True, stacklevel=2)
-        
-        return super()._set_field("override_storage_class",value,explicit_presence=False,
-        )
-    
-    @builtins.property
     def force_storage_class(self) -> "builtins.bool":
         """
         Flag to force usage of default_storage_class, ignoring ``x-amz-storage-class`` header.
@@ -2037,7 +2006,6 @@ class BucketSpec(pb_classes.Message):
         "lifecycle_configuration":"lifecycle_configuration",
         "cors":"cors",
         "default_storage_class":"default_storage_class",
-        "override_storage_class":"override_storage_class",
         "force_storage_class":"force_storage_class",
         "object_audit_logging":"object_audit_logging",
         "bucket_policy":"bucket_policy",

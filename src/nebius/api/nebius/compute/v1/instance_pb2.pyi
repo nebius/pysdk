@@ -28,7 +28,7 @@ class Instance(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[InstanceSpec, _Mapping]] = ..., status: _Optional[_Union[InstanceStatus, _Mapping]] = ...) -> None: ...
 
 class InstanceSpec(_message.Message):
-    __slots__ = ["service_account_id", "resources", "gpu_cluster", "network_interfaces", "boot_disk", "secondary_disks", "filesystems", "cloud_init_user_data", "stopped", "recovery_policy", "preemptible", "hostname", "reservation_policy"]
+    __slots__ = ["service_account_id", "resources", "gpu_cluster", "network_interfaces", "boot_disk", "secondary_disks", "filesystems", "cloud_init_user_data", "stopped", "recovery_policy", "preemptible", "hostname", "reservation_policy", "local_disks"]
     SERVICE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
     GPU_CLUSTER_FIELD_NUMBER: _ClassVar[int]
@@ -42,6 +42,7 @@ class InstanceSpec(_message.Message):
     PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
     HOSTNAME_FIELD_NUMBER: _ClassVar[int]
     RESERVATION_POLICY_FIELD_NUMBER: _ClassVar[int]
+    LOCAL_DISKS_FIELD_NUMBER: _ClassVar[int]
     service_account_id: str
     resources: ResourcesSpec
     gpu_cluster: InstanceGpuClusterSpec
@@ -55,7 +56,8 @@ class InstanceSpec(_message.Message):
     preemptible: PreemptibleSpec
     hostname: str
     reservation_policy: ReservationPolicy
-    def __init__(self, service_account_id: _Optional[str] = ..., resources: _Optional[_Union[ResourcesSpec, _Mapping]] = ..., gpu_cluster: _Optional[_Union[InstanceGpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceSpec, _Mapping]]] = ..., boot_disk: _Optional[_Union[AttachedDiskSpec, _Mapping]] = ..., secondary_disks: _Optional[_Iterable[_Union[AttachedDiskSpec, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., stopped: bool = ..., recovery_policy: _Optional[_Union[InstanceRecoveryPolicy, str]] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ..., hostname: _Optional[str] = ..., reservation_policy: _Optional[_Union[ReservationPolicy, _Mapping]] = ...) -> None: ...
+    local_disks: LocalDisksSpec
+    def __init__(self, service_account_id: _Optional[str] = ..., resources: _Optional[_Union[ResourcesSpec, _Mapping]] = ..., gpu_cluster: _Optional[_Union[InstanceGpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceSpec, _Mapping]]] = ..., boot_disk: _Optional[_Union[AttachedDiskSpec, _Mapping]] = ..., secondary_disks: _Optional[_Iterable[_Union[AttachedDiskSpec, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., stopped: bool = ..., recovery_policy: _Optional[_Union[InstanceRecoveryPolicy, str]] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ..., hostname: _Optional[str] = ..., reservation_policy: _Optional[_Union[ReservationPolicy, _Mapping]] = ..., local_disks: _Optional[_Union[LocalDisksSpec, _Mapping]] = ...) -> None: ...
 
 class PreemptibleSpec(_message.Message):
     __slots__ = ["on_preemption", "priority"]
@@ -190,3 +192,15 @@ class ReservationPolicy(_message.Message):
     policy: ReservationPolicy.Policy
     reservation_ids: _containers.RepeatedScalarFieldContainer[str]
     def __init__(self, policy: _Optional[_Union[ReservationPolicy.Policy, str]] = ..., reservation_ids: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class LocalDisksSpec(_message.Message):
+    __slots__ = ["passthrough_group"]
+    PASSTHROUGH_GROUP_FIELD_NUMBER: _ClassVar[int]
+    passthrough_group: PassthroughGroupRequest
+    def __init__(self, passthrough_group: _Optional[_Union[PassthroughGroupRequest, _Mapping]] = ...) -> None: ...
+
+class PassthroughGroupRequest(_message.Message):
+    __slots__ = ["requested"]
+    REQUESTED_FIELD_NUMBER: _ClassVar[int]
+    requested: bool
+    def __init__(self, requested: bool = ...) -> None: ...

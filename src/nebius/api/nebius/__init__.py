@@ -13,6 +13,7 @@ import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
 import nebius.base.protos.unset as unset
+import typing as typing
 #@ local imports here @#
 
 # file: nebius/annotations.proto
@@ -52,6 +53,9 @@ class FieldBehavior(pb_enum.Enum):
     """
     This indicates that the field can't be changed during a resource update.
     Changing the field value will cause an ``INVALID_ARGUMENT`` error.
+    For message fields, this applies to the field itself. Nested immutable
+    fields do not make a mutable parent message immutable, and such a parent
+    message may still be cleared.
     Resource recreate requires a change of the field value.
     """
     
@@ -480,7 +484,7 @@ class NIDFieldSettings(pb_classes.Message):
     def resource(self) -> "abc.MutableSequence[builtins.str]":
         """
         Fields annotated with this option are treated as NIDs.
-        ``resource`` lists allowed NID resource types (prefixes). Leave empty to accept any type.
+        ``resource`` lists allowed NID resource types (prefixes). Leave empty or set to ``*`` to accept any type.
         Validation only produces warnings.
         """
         
@@ -496,7 +500,7 @@ class NIDFieldSettings(pb_classes.Message):
     def parent_resource(self) -> "abc.MutableSequence[builtins.str]":
         """
         For metadata fields, ``parent_resource`` lists allowed parent resource types for ``metadata.parent_id``.
-        Leave empty to allow any type. Validation only produces warnings.
+        Leave empty or set to ``*`` to allow any type. Validation only produces warnings.
         Typically set on the resource message; request-level overrides are supported.
         """
         
@@ -513,6 +517,149 @@ class NIDFieldSettings(pb_classes.Message):
         "parent_resource":"parent_resource",
     }
     
+class SubfieldSettings(pb_classes.Message):
+    """
+    SubfieldSettings describes overrides for some settings for subfields of a
+    field. Overrides are applied to fields in order of appearance, so the first
+    matching override is applied, and the rest are ignored.
+    
+    Example:
+    
+    .. code-block:: protobuf
+    
+       message MyMessage {
+         string field1 = 1;
+       }
+       message MyMessage2 {
+         MyMessage field2 = 1 [(subfield_settings) = { field_path: "field1", is_required: true }];
+       }
+    
+    In this example, ``field1`` in ``MyMessage2`` is required, even if it is not
+    required in ``MyMessage``.
+    The following example will override the setting again:
+    
+    .. code-block:: protobuf
+    
+       service MyService {
+         rpc MyMethod(MyMessage2) returns (MyMessage2) {
+           option (method_behavior) = METHOD_UPDATER;
+           option (request_fields) = { field_path: "field2.field1", is_required: false };
+         }
+       }
+    
+    In this example, ``field1`` in ``MyMessage2`` is not required for the ``MyMethod``,
+    even if it is required in ``MyMessage2``.
+    """
+    
+    __PB2_CLASS__ = annotations_pb2.SubfieldSettings
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.SubfieldSettings",annotations_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass__is_required__(pb_classes.OneOf):
+        name: builtins.str= "_is_required"
+        
+        def __init__(self, msg: "SubfieldSettings") -> None:
+            super().__init__()
+            self._message: "SubfieldSettings" = msg
+    
+    class __OneOfClass__is_required_is_required__(__OneOfClass__is_required__):
+        field: typing.Literal["is_required"] = "is_required"
+        
+        def __init__(self, msg: "SubfieldSettings") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.is_required
+    
+    @builtins.property
+    def _is_required(self) -> __OneOfClass__is_required_is_required__|None:
+        field_name: str|None = super().which_field_in_oneof("_is_required")
+        match field_name:
+            case "is_required":
+                return self.__OneOfClass__is_required_is_required__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name)
+    
+    def __init__(
+        self,
+        initial_message: message.Message|None = None,
+        *,
+        field_path: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        nid: "NIDFieldSettings|annotations_pb2.NIDFieldSettings|None|unset.UnsetType" = unset.Unset,
+        is_required: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(field_path, unset.UnsetType):
+            self.field_path = field_path
+        if not isinstance(nid, unset.UnsetType):
+            self.nid = nid
+        if not isinstance(is_required, unset.UnsetType):
+            self.is_required = is_required
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "field_path",
+            "nid",
+            "is_required",
+            "_is_required",
+        ]
+    
+    @builtins.property
+    def field_path(self) -> "builtins.str":
+        """
+        Subfield path in the message, for example ``metadata.parent_id`` or ``metadata.name``.
+        Must be a valid SelectMask.
+        May match several fields, if necessary. For example, ``some.*.subfield`` or
+        ``some.(subfield,another_field)``.
+        """
+        
+        return super()._get_field("field_path", explicit_presence=False,
+        )
+    @field_path.setter
+    def field_path(self, value: "builtins.str|None") -> None:
+        return super()._set_field("field_path",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def nid(self) -> "NIDFieldSettings":
+        """
+        For fields annotated with this option, values are treated as NIDs and
+        warnings are emitted when they are not valid. These warnings are separate from server-side validation.
+        """
+        
+        return super()._get_field("nid", explicit_presence=False,
+        wrap=NIDFieldSettings,
+        )
+    @nid.setter
+    def nid(self, value: "NIDFieldSettings|annotations_pb2.NIDFieldSettings|None") -> None:
+        return super()._set_field("nid",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def is_required(self) -> "builtins.bool|None":
+        """
+        Mark a field as required, even if it is not required in the message it contains.
+        Unlike cel expressions, this setting can be reflected in tools documentation and
+        help messages.
+        """
+        
+        return super()._get_field("is_required", explicit_presence=True,
+        )
+    @is_required.setter
+    def is_required(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("is_required",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "field_path":"field_path",
+        "nid":"nid",
+        "is_required":"is_required",
+        "_is_required":"_is_required",
+    }
+    
 file_deprecation_details = annotations_pb2.file_deprecation_details
 api_service_name = annotations_pb2.api_service_name
 service_deprecation_details = annotations_pb2.service_deprecation_details
@@ -520,6 +667,7 @@ service_py_sdk = annotations_pb2.service_py_sdk
 method_deprecation_details = annotations_pb2.method_deprecation_details
 method_py_sdk = annotations_pb2.method_py_sdk
 method_behavior = annotations_pb2.method_behavior
+request_fields = annotations_pb2.request_fields
 resource_behavior = annotations_pb2.resource_behavior
 message_deprecation_details = annotations_pb2.message_deprecation_details
 message_py_sdk = annotations_pb2.message_py_sdk
@@ -529,6 +677,7 @@ credentials = annotations_pb2.credentials
 field_deprecation_details = annotations_pb2.field_deprecation_details
 field_py_sdk = annotations_pb2.field_py_sdk
 nid = annotations_pb2.nid
+subfield_settings = annotations_pb2.subfield_settings
 oneof_behavior = annotations_pb2.oneof_behavior
 oneof_py_sdk = annotations_pb2.oneof_py_sdk
 enum_py_sdk = annotations_pb2.enum_py_sdk
@@ -547,6 +696,7 @@ __all__ = [
     "method_deprecation_details",
     "method_py_sdk",
     "method_behavior",
+    "request_fields",
     "resource_behavior",
     "message_deprecation_details",
     "message_py_sdk",
@@ -556,6 +706,7 @@ __all__ = [
     "field_deprecation_details",
     "field_py_sdk",
     "nid",
+    "subfield_settings",
     "oneof_behavior",
     "oneof_py_sdk",
     "enum_py_sdk",
@@ -571,4 +722,5 @@ __all__ = [
     "EnumValuePySDKSettings",
     "DeprecationDetails",
     "NIDFieldSettings",
+    "SubfieldSettings",
 ]

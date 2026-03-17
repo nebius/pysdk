@@ -82,7 +82,7 @@ class GetVersionRequest(_message.Message):
     def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ..., mk8s_cluster_id: _Optional[str] = ..., modules_health: _Optional[_Union[ModulesHealth, _Mapping]] = ..., cloud_init_status: _Optional[str] = ..., instance_id_used_fallback: bool = ..., last_agent_logs: _Optional[str] = ..., gpu_model: _Optional[str] = ..., gpu_number: _Optional[int] = ..., dcgm_version: _Optional[str] = ..., healthcheck_logs: _Optional[_Union[HealthCheckLogs, _Mapping]] = ...) -> None: ...
 
 class ModulesHealth(_message.Message):
-    __slots__ = ["process", "gpu_pipeline", "cpu_pipeline", "cilium_pipeline", "vmapps_pipeline", "common_service_logs_pipeline", "vm_service_logs_pipeline"]
+    __slots__ = ["process", "gpu_pipeline", "cpu_pipeline", "cilium_pipeline", "vmapps_pipeline", "common_service_logs_pipeline", "vm_service_logs_pipeline", "compute_gpu_logs_pipeline", "journald_pipeline", "nccl_metrics_pipeline"]
     PROCESS_FIELD_NUMBER: _ClassVar[int]
     GPU_PIPELINE_FIELD_NUMBER: _ClassVar[int]
     CPU_PIPELINE_FIELD_NUMBER: _ClassVar[int]
@@ -90,6 +90,9 @@ class ModulesHealth(_message.Message):
     VMAPPS_PIPELINE_FIELD_NUMBER: _ClassVar[int]
     COMMON_SERVICE_LOGS_PIPELINE_FIELD_NUMBER: _ClassVar[int]
     VM_SERVICE_LOGS_PIPELINE_FIELD_NUMBER: _ClassVar[int]
+    COMPUTE_GPU_LOGS_PIPELINE_FIELD_NUMBER: _ClassVar[int]
+    JOURNALD_PIPELINE_FIELD_NUMBER: _ClassVar[int]
+    NCCL_METRICS_PIPELINE_FIELD_NUMBER: _ClassVar[int]
     process: ModuleHealth
     gpu_pipeline: ModuleHealth
     cpu_pipeline: ModuleHealth
@@ -97,7 +100,10 @@ class ModulesHealth(_message.Message):
     vmapps_pipeline: ModuleHealth
     common_service_logs_pipeline: ModuleHealth
     vm_service_logs_pipeline: ModuleHealth
-    def __init__(self, process: _Optional[_Union[ModuleHealth, _Mapping]] = ..., gpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cilium_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vmapps_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., common_service_logs_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vm_service_logs_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ...) -> None: ...
+    compute_gpu_logs_pipeline: ModuleHealth
+    journald_pipeline: ModuleHealth
+    nccl_metrics_pipeline: ModuleHealth
+    def __init__(self, process: _Optional[_Union[ModuleHealth, _Mapping]] = ..., gpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cpu_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., cilium_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vmapps_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., common_service_logs_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., vm_service_logs_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., compute_gpu_logs_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., journald_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ..., nccl_metrics_pipeline: _Optional[_Union[ModuleHealth, _Mapping]] = ...) -> None: ...
 
 class HealthCheckLogs(_message.Message):
     __slots__ = ["directory_size_bytes", "mountpoint_total_bytes"]

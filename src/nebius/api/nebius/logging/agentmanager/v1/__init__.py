@@ -528,6 +528,9 @@ class ModulesHealth(pb_classes.Message):
         vmapps_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         common_service_logs_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
         vm_service_logs_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        compute_gpu_logs_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        journald_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
+        nccl_metrics_pipeline: "ModuleHealth|version_service_pb2.ModuleHealth|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(process, unset.UnsetType):
@@ -544,6 +547,12 @@ class ModulesHealth(pb_classes.Message):
             self.common_service_logs_pipeline = common_service_logs_pipeline
         if not isinstance(vm_service_logs_pipeline, unset.UnsetType):
             self.vm_service_logs_pipeline = vm_service_logs_pipeline
+        if not isinstance(compute_gpu_logs_pipeline, unset.UnsetType):
+            self.compute_gpu_logs_pipeline = compute_gpu_logs_pipeline
+        if not isinstance(journald_pipeline, unset.UnsetType):
+            self.journald_pipeline = journald_pipeline
+        if not isinstance(nccl_metrics_pipeline, unset.UnsetType):
+            self.nccl_metrics_pipeline = nccl_metrics_pipeline
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -554,6 +563,9 @@ class ModulesHealth(pb_classes.Message):
             "vmapps_pipeline",
             "common_service_logs_pipeline",
             "vm_service_logs_pipeline",
+            "compute_gpu_logs_pipeline",
+            "journald_pipeline",
+            "nccl_metrics_pipeline",
         ]
     
     @builtins.property
@@ -654,6 +666,48 @@ class ModulesHealth(pb_classes.Message):
         return super()._set_field("vm_service_logs_pipeline",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def compute_gpu_logs_pipeline(self) -> "ModuleHealth":
+        """
+        Health status of the compute GPU logs pipeline module.
+        """
+        
+        return super()._get_field("compute_gpu_logs_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @compute_gpu_logs_pipeline.setter
+    def compute_gpu_logs_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("compute_gpu_logs_pipeline",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def journald_pipeline(self) -> "ModuleHealth":
+        """
+        Health status of the journald pipeline module.
+        """
+        
+        return super()._get_field("journald_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @journald_pipeline.setter
+    def journald_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("journald_pipeline",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def nccl_metrics_pipeline(self) -> "ModuleHealth":
+        """
+        Health status of the NCCL metrics pipeline module.
+        """
+        
+        return super()._get_field("nccl_metrics_pipeline", explicit_presence=False,
+        wrap=ModuleHealth,
+        )
+    @nccl_metrics_pipeline.setter
+    def nccl_metrics_pipeline(self, value: "ModuleHealth|version_service_pb2.ModuleHealth|None") -> None:
+        return super()._set_field("nccl_metrics_pipeline",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "process":"process",
         "gpu_pipeline":"gpu_pipeline",
@@ -662,6 +716,9 @@ class ModulesHealth(pb_classes.Message):
         "vmapps_pipeline":"vmapps_pipeline",
         "common_service_logs_pipeline":"common_service_logs_pipeline",
         "vm_service_logs_pipeline":"vm_service_logs_pipeline",
+        "compute_gpu_logs_pipeline":"compute_gpu_logs_pipeline",
+        "journald_pipeline":"journald_pipeline",
+        "nccl_metrics_pipeline":"nccl_metrics_pipeline",
     }
     
 class HealthCheckLogs(pb_classes.Message):

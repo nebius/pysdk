@@ -869,6 +869,7 @@ class ZoneSpec(pb_classes.Message):
     def domain_name(self) -> "builtins.str":
         """
         Fully qualified domain name of this zone, including ``.`` at the end
+        Cannot be changed after creating the zone
         """
         
         return super()._get_field("domain_name", explicit_presence=False,
