@@ -1,3 +1,5 @@
+from nebius.api.buf.validate import validate_pb2 as _validate_pb2
+from google.rpc import status_pb2 as _status_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.common.v1 import operation_pb2 as _operation_pb2
@@ -68,3 +70,29 @@ class StopInstanceRequest(_message.Message):
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class BatchGetRequest(_message.Message):
+    __slots__ = ["instance_ids"]
+    INSTANCE_IDS_FIELD_NUMBER: _ClassVar[int]
+    instance_ids: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, instance_ids: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class BatchGetResponse(_message.Message):
+    __slots__ = ["items"]
+    class BatchGetResult(_message.Message):
+        __slots__ = ["instance", "error"]
+        INSTANCE_FIELD_NUMBER: _ClassVar[int]
+        ERROR_FIELD_NUMBER: _ClassVar[int]
+        instance: _instance_pb2.Instance
+        error: _status_pb2.Status
+        def __init__(self, instance: _Optional[_Union[_instance_pb2.Instance, _Mapping]] = ..., error: _Optional[_Union[_status_pb2.Status, _Mapping]] = ...) -> None: ...
+    class ItemsEntry(_message.Message):
+        __slots__ = ["key", "value"]
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: BatchGetResponse.BatchGetResult
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[_Union[BatchGetResponse.BatchGetResult, _Mapping]] = ...) -> None: ...
+    ITEMS_FIELD_NUMBER: _ClassVar[int]
+    items: _containers.MessageMap[str, BatchGetResponse.BatchGetResult]
+    def __init__(self, items: _Optional[_Mapping[str, BatchGetResponse.BatchGetResult]] = ...) -> None: ...

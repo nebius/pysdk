@@ -10,11 +10,13 @@ import datetime as datetime
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import google.protobuf.timestamp_pb2 as timestamp_pb2
+import google.rpc.status_pb2 as status_pb2
 import logging as logging
 import nebius.aio.client as client
 import nebius.aio.operation as operation
 import nebius.aio.request as request_1
 import nebius.aio.request_kwargs as request_kwargs
+import nebius.aio.request_status as request_status
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
 import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
@@ -6624,6 +6626,239 @@ class StopInstanceRequest(pb_classes.Message):
         "id":"id",
     }
     
+class BatchGetRequest(pb_classes.Message):
+    __PB2_CLASS__ = instance_service_pb2.BatchGetRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.BatchGetRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        instance_ids: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(instance_ids, unset.UnsetType):
+            self.instance_ids = instance_ids
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "instance_ids",
+        ]
+    
+    @builtins.property
+    def instance_ids(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        List of instances to fetch.
+        """
+        
+        return super()._get_field("instance_ids", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @instance_ids.setter
+    def instance_ids(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("instance_ids",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "instance_ids":"instance_ids",
+    }
+    
+class BatchGetResponse(pb_classes.Message):
+    __PB2_CLASS__ = instance_service_pb2.BatchGetResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.BatchGetResponse",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class BatchGetResult(pb_classes.Message):
+        __PB2_CLASS__ = instance_service_pb2.BatchGetResponse.BatchGetResult
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.BatchGetResponse.BatchGetResult",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+            "error": well_known_1.status_mask,
+        }
+        
+        class __OneOfClass_result__(pb_classes.OneOf):
+            name: builtins.str= "result"
+            
+            def __init__(self, msg: "BatchGetResponse.BatchGetResult") -> None:
+                super().__init__()
+                self._message: "BatchGetResponse.BatchGetResult" = msg
+        
+        class __OneOfClass_result_instance__(__OneOfClass_result__):
+            field: typing.Literal["instance"] = "instance"
+            
+            def __init__(self, msg: "BatchGetResponse.BatchGetResult") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "Instance":
+                return self._message.instance
+        
+        class __OneOfClass_result_error__(__OneOfClass_result__):
+            field: typing.Literal["error"] = "error"
+            
+            def __init__(self, msg: "BatchGetResponse.BatchGetResult") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "request_status.RequestStatus":
+                return self._message.error
+        
+        @builtins.property
+        def result(self) -> __OneOfClass_result_instance__|__OneOfClass_result_error__|None:
+            field_name_1: str|None = super().which_field_in_oneof("result")
+            match field_name_1:
+                case "instance":
+                    return self.__OneOfClass_result_instance__(self)
+                case "error":
+                    return self.__OneOfClass_result_error__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            instance: "Instance|instance_pb2.Instance|None|unset.UnsetType" = unset.Unset,
+            error: "status_pb2.Status|request_status.RequestStatus|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(instance, unset.UnsetType):
+                self.instance = instance
+            if not isinstance(error, unset.UnsetType):
+                self.error = error
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "instance",
+                "error",
+                "result",
+            ]
+        
+        @builtins.property
+        def instance(self) -> "Instance|None":
+            """
+            Will be set if we successfully fetched instance info.
+            """
+            
+            return super()._get_field("instance", explicit_presence=True,
+            wrap=Instance,
+            )
+        @instance.setter
+        def instance(self, value: "Instance|instance_pb2.Instance|None") -> None:
+            return super()._set_field("instance",value,explicit_presence=True,
+            )
+        
+        @builtins.property
+        def error(self) -> "request_status.RequestStatus|None":
+            """
+            Will be set if any error happened during instance info fetch (not found, permission denied).
+            """
+            
+            return super()._get_field("error", explicit_presence=True,
+            wrap=request_status.request_status_from_rpc_status
+            )
+        @error.setter
+        def error(self, value: "status_pb2.Status|request_status.RequestStatus|None") -> None:
+            return super()._set_field("error",value,explicit_presence=True,
+            unwrap=request_status.request_status_to_rpc_status
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "instance":"instance",
+            "error":"error",
+            "result":"result",
+        }
+        
+    
+    class ItemsEntry(pb_classes.Message):
+        __PB2_CLASS__ = instance_service_pb2.BatchGetResponse.ItemsEntry
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.BatchGetResponse.ItemsEntry",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "BatchGetResponse.BatchGetResult|instance_service_pb2.BatchGetResponse.BatchGetResult|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
+            if not isinstance(value, unset.UnsetType):
+                self.value = value
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
+        @builtins.property
+        def key(self) -> "builtins.str":
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def value(self) -> "BatchGetResponse.BatchGetResult":
+            return super()._get_field("value", explicit_presence=False,
+            wrap=BatchGetResponse.BatchGetResult,
+            )
+        @value.setter
+        def value(self, value: "BatchGetResponse.BatchGetResult|instance_service_pb2.BatchGetResponse.BatchGetResult|None") -> None:
+            return super()._set_field("value",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Mapping[builtins.str,BatchGetResponse.BatchGetResult]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "BatchGetResult",
+            "ItemsEntry",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableMapping[builtins.str,BatchGetResponse.BatchGetResult]":
+        """
+        Map where key is instance id from original request array.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Map.with_wrap(BatchGetResponse.BatchGetResult,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Mapping[builtins.str,BatchGetResponse.BatchGetResult]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "BatchGetResult":"BatchGetResult",
+        "ItemsEntry":"ItemsEntry",
+    }
+    
 
 class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     """
@@ -6703,6 +6938,36 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
             request=request,
             result_pb2_class=instance_pb2.Instance,
             result_wrapper=pb_classes.simple_wrapper(Instance),
+            **kwargs,
+        )
+    
+    def batch_get(self,
+        request: "BatchGetRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["BatchGetRequest","BatchGetResponse"]:
+        """
+        Retrieves detailed information about specific VMs by their IDs.
+        If instance cannot be retrieved (e.g. not found) error is returned in place of instance instead.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.BatchGetRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.BatchGetResponse`.
+        """
+        
+        return super().request(
+            method="BatchGet",
+            request=request,
+            result_pb2_class=instance_service_pb2.BatchGetResponse,
+            result_wrapper=pb_classes.simple_wrapper(BatchGetResponse),
             **kwargs,
         )
     
@@ -8237,6 +8502,8 @@ __all__ = [
     "ListInstancesResponse",
     "StartInstanceRequest",
     "StopInstanceRequest",
+    "BatchGetRequest",
+    "BatchGetResponse",
     "InstanceServiceClient",
     "MaintenanceEvent",
     "MaintenanceEventSpec",

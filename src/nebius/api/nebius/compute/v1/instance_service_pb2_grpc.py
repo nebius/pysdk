@@ -29,6 +29,11 @@ class InstanceServiceStub(object):
                 request_serializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_instance__pb2.Instance.FromString,
                 )
+        self.BatchGet = channel.unary_unary(
+                '/nebius.compute.v1.InstanceService/BatchGet',
+                request_serializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.BatchGetRequest.SerializeToString,
+                response_deserializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.BatchGetResponse.FromString,
+                )
         self.List = channel.unary_unary(
                 '/nebius.compute.v1.InstanceService/List',
                 request_serializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesRequest.SerializeToString,
@@ -78,6 +83,14 @@ class InstanceServiceServicer(object):
 
     def GetByName(self, request, context):
         """Retrieves detailed information about a specific VM instance by its parent and name.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def BatchGet(self, request, context):
+        """Retrieves detailed information about specific VMs by their IDs.
+        If instance cannot be retrieved (e.g. not found) error is returned in place of instance instead.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -146,6 +159,11 @@ def add_InstanceServiceServicer_to_server(servicer, server):
                     servicer.GetByName,
                     request_deserializer=nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.FromString,
                     response_serializer=nebius_dot_compute_dot_v1_dot_instance__pb2.Instance.SerializeToString,
+            ),
+            'BatchGet': grpc.unary_unary_rpc_method_handler(
+                    servicer.BatchGet,
+                    request_deserializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.BatchGetRequest.FromString,
+                    response_serializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.BatchGetResponse.SerializeToString,
             ),
             'List': grpc.unary_unary_rpc_method_handler(
                     servicer.List,
@@ -223,6 +241,23 @@ class InstanceService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.InstanceService/GetByName',
             nebius_dot_common_dot_v1_dot_metadata__pb2.GetByNameRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_instance__pb2.Instance.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def BatchGet(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.InstanceService/BatchGet',
+            nebius_dot_compute_dot_v1_dot_instance__service__pb2.BatchGetRequest.SerializeToString,
+            nebius_dot_compute_dot_v1_dot_instance__service__pb2.BatchGetResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -11,6 +11,8 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from nebius.api.buf.validate import validate_pb2 as buf_dot_validate_dot_validate__pb2
+from google.rpc import status_pb2 as google_dot_rpc_dot_status__pb2
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
@@ -19,7 +21,7 @@ from nebius.api.nebius.compute.v1 import instance_pb2 as nebius_dot_compute_dot_
 from nebius.api.nebius.compute.v1 import operation_service_pb2 as nebius_dot_compute_dot_v1_dot_operation__service__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n(nebius/compute/v1/instance_service.proto\x12\x11nebius.compute.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a(nebius/common/v1/operation_service.proto\x1a nebius/compute/v1/instance.proto\x1a)nebius/compute/v1/operation_service.proto\"$\n\x12GetInstanceRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"o\n\x14ListInstancesRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8c\x01\n\x15\x43reateInstanceRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.InstanceSpecR\x04spec\"\x8c\x01\n\x15UpdateInstanceRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.InstanceSpecR\x04spec\"\'\n\x15\x44\x65leteInstanceRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"r\n\x15ListInstancesResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.compute.v1.InstanceR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"&\n\x14StartInstanceRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"%\n\x13StopInstanceRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id2\x96\x06\n\x0fInstanceService\x12I\n\x03Get\x12%.nebius.compute.v1.GetInstanceRequest\x1a\x1b.nebius.compute.v1.Instance\x12L\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x1b.nebius.compute.v1.Instance\x12Y\n\x04List\x12\'.nebius.compute.v1.ListInstancesRequest\x1a(.nebius.compute.v1.ListInstancesResponse\x12O\n\x06\x43reate\x12(.nebius.compute.v1.CreateInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06Update\x12(.nebius.compute.v1.UpdateInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06\x44\x65lete\x12(.nebius.compute.v1.DeleteInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x05Start\x12\'.nebius.compute.v1.StartInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12K\n\x04Stop\x12&.nebius.compute.v1.StopInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12t\n\x16ListOperationsByParent\x12\x30.nebius.compute.v1.ListOperationsByParentRequest\x1a(.nebius.common.v1.ListOperationsResponse\x1a\n\xbaJ\x07\x63omputeBc\n\x18\x61i.nebius.pub.compute.v1B\x14InstanceServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n(nebius/compute/v1/instance_service.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x17google/rpc/status.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a(nebius/common/v1/operation_service.proto\x1a nebius/compute/v1/instance.proto\x1a)nebius/compute/v1/operation_service.proto\"$\n\x12GetInstanceRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"o\n\x14ListInstancesRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x8c\x01\n\x15\x43reateInstanceRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.InstanceSpecR\x04spec\"\x8c\x01\n\x15UpdateInstanceRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.compute.v1.InstanceSpecR\x04spec\"\'\n\x15\x44\x65leteInstanceRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"r\n\x15ListInstancesResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.compute.v1.InstanceR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"&\n\x14StartInstanceRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"%\n\x13StopInstanceRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"B\n\x0f\x42\x61tchGetRequest\x12/\n\x0cinstance_ids\x18\x01 \x03(\tB\x0c\xbaH\t\xc8\x01\x01\x92\x01\x03\x10\xe8\x07R\x0binstanceIds\"\xca\x02\n\x10\x42\x61tchGetResponse\x12\x44\n\x05items\x18\x01 \x03(\x0b\x32..nebius.compute.v1.BatchGetResponse.ItemsEntryR\x05items\x1a\x81\x01\n\x0e\x42\x61tchGetResult\x12\x39\n\x08instance\x18\x01 \x01(\x0b\x32\x1b.nebius.compute.v1.InstanceH\x00R\x08instance\x12*\n\x05\x65rror\x18\x02 \x01(\x0b\x32\x12.google.rpc.StatusH\x00R\x05\x65rrorB\x08\n\x06result\x1al\n\nItemsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12H\n\x05value\x18\x02 \x01(\x0b\x32\x32.nebius.compute.v1.BatchGetResponse.BatchGetResultR\x05value:\x02\x38\x01\x32\xeb\x06\n\x0fInstanceService\x12I\n\x03Get\x12%.nebius.compute.v1.GetInstanceRequest\x1a\x1b.nebius.compute.v1.Instance\x12L\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x1b.nebius.compute.v1.Instance\x12S\n\x08\x42\x61tchGet\x12\".nebius.compute.v1.BatchGetRequest\x1a#.nebius.compute.v1.BatchGetResponse\x12Y\n\x04List\x12\'.nebius.compute.v1.ListInstancesRequest\x1a(.nebius.compute.v1.ListInstancesResponse\x12O\n\x06\x43reate\x12(.nebius.compute.v1.CreateInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06Update\x12(.nebius.compute.v1.UpdateInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06\x44\x65lete\x12(.nebius.compute.v1.DeleteInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12M\n\x05Start\x12\'.nebius.compute.v1.StartInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12K\n\x04Stop\x12&.nebius.compute.v1.StopInstanceRequest\x1a\x1b.nebius.common.v1.Operation\x12t\n\x16ListOperationsByParent\x12\x30.nebius.compute.v1.ListOperationsByParentRequest\x1a(.nebius.common.v1.ListOperationsResponse\x1a\n\xbaJ\x07\x63omputeBc\n\x18\x61i.nebius.pub.compute.v1B\x14InstanceServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,24 +30,36 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\030ai.nebius.pub.compute.v1B\024InstanceServiceProtoP\001Z/github.com/nebius/gosdk/proto/nebius/compute/v1'
+  _BATCHGETREQUEST.fields_by_name['instance_ids']._options = None
+  _BATCHGETREQUEST.fields_by_name['instance_ids']._serialized_options = b'\272H\t\310\001\001\222\001\003\020\350\007'
+  _BATCHGETRESPONSE_ITEMSENTRY._options = None
+  _BATCHGETRESPONSE_ITEMSENTRY._serialized_options = b'8\001'
   _INSTANCESERVICE._options = None
   _INSTANCESERVICE._serialized_options = b'\272J\007compute'
-  _globals['_GETINSTANCEREQUEST']._serialized_start=275
-  _globals['_GETINSTANCEREQUEST']._serialized_end=311
-  _globals['_LISTINSTANCESREQUEST']._serialized_start=313
-  _globals['_LISTINSTANCESREQUEST']._serialized_end=424
-  _globals['_CREATEINSTANCEREQUEST']._serialized_start=427
-  _globals['_CREATEINSTANCEREQUEST']._serialized_end=567
-  _globals['_UPDATEINSTANCEREQUEST']._serialized_start=570
-  _globals['_UPDATEINSTANCEREQUEST']._serialized_end=710
-  _globals['_DELETEINSTANCEREQUEST']._serialized_start=712
-  _globals['_DELETEINSTANCEREQUEST']._serialized_end=751
-  _globals['_LISTINSTANCESRESPONSE']._serialized_start=753
-  _globals['_LISTINSTANCESRESPONSE']._serialized_end=867
-  _globals['_STARTINSTANCEREQUEST']._serialized_start=869
-  _globals['_STARTINSTANCEREQUEST']._serialized_end=907
-  _globals['_STOPINSTANCEREQUEST']._serialized_start=909
-  _globals['_STOPINSTANCEREQUEST']._serialized_end=946
-  _globals['_INSTANCESERVICE']._serialized_start=949
-  _globals['_INSTANCESERVICE']._serialized_end=1739
+  _globals['_GETINSTANCEREQUEST']._serialized_start=329
+  _globals['_GETINSTANCEREQUEST']._serialized_end=365
+  _globals['_LISTINSTANCESREQUEST']._serialized_start=367
+  _globals['_LISTINSTANCESREQUEST']._serialized_end=478
+  _globals['_CREATEINSTANCEREQUEST']._serialized_start=481
+  _globals['_CREATEINSTANCEREQUEST']._serialized_end=621
+  _globals['_UPDATEINSTANCEREQUEST']._serialized_start=624
+  _globals['_UPDATEINSTANCEREQUEST']._serialized_end=764
+  _globals['_DELETEINSTANCEREQUEST']._serialized_start=766
+  _globals['_DELETEINSTANCEREQUEST']._serialized_end=805
+  _globals['_LISTINSTANCESRESPONSE']._serialized_start=807
+  _globals['_LISTINSTANCESRESPONSE']._serialized_end=921
+  _globals['_STARTINSTANCEREQUEST']._serialized_start=923
+  _globals['_STARTINSTANCEREQUEST']._serialized_end=961
+  _globals['_STOPINSTANCEREQUEST']._serialized_start=963
+  _globals['_STOPINSTANCEREQUEST']._serialized_end=1000
+  _globals['_BATCHGETREQUEST']._serialized_start=1002
+  _globals['_BATCHGETREQUEST']._serialized_end=1068
+  _globals['_BATCHGETRESPONSE']._serialized_start=1071
+  _globals['_BATCHGETRESPONSE']._serialized_end=1401
+  _globals['_BATCHGETRESPONSE_BATCHGETRESULT']._serialized_start=1162
+  _globals['_BATCHGETRESPONSE_BATCHGETRESULT']._serialized_end=1291
+  _globals['_BATCHGETRESPONSE_ITEMSENTRY']._serialized_start=1293
+  _globals['_BATCHGETRESPONSE_ITEMSENTRY']._serialized_end=1401
+  _globals['_INSTANCESERVICE']._serialized_start=1404
+  _globals['_INSTANCESERVICE']._serialized_end=2279
 # @@protoc_insertion_point(module_scope)
