@@ -50,7 +50,7 @@ class NodeGroupSpec(_message.Message):
     def __init__(self, version: _Optional[str] = ..., fixed_node_count: _Optional[int] = ..., autoscaling: _Optional[_Union[NodeGroupAutoscalingSpec, _Mapping]] = ..., template: _Optional[_Union[NodeTemplate, _Mapping]] = ..., strategy: _Optional[_Union[NodeGroupDeploymentStrategy, _Mapping]] = ..., auto_repair: _Optional[_Union[NodeGroupAutoRepairSpec, _Mapping]] = ...) -> None: ...
 
 class NodeTemplate(_message.Message):
-    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_settings", "os", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id", "preemptible", "reservation_policy"]
+    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_settings", "os", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id", "preemptible", "reservation_policy", "local_disks"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     TAINTS_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
@@ -64,6 +64,7 @@ class NodeTemplate(_message.Message):
     SERVICE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
     RESERVATION_POLICY_FIELD_NUMBER: _ClassVar[int]
+    LOCAL_DISKS_FIELD_NUMBER: _ClassVar[int]
     metadata: NodeMetadataTemplate
     taints: _containers.RepeatedCompositeFieldContainer[NodeTaint]
     resources: _instance_template_pb2.ResourcesSpec
@@ -77,7 +78,8 @@ class NodeTemplate(_message.Message):
     service_account_id: str
     preemptible: PreemptibleSpec
     reservation_policy: ReservationPolicy
-    def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_settings: _Optional[_Union[GpuSettings, _Mapping]] = ..., os: _Optional[str] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ..., reservation_policy: _Optional[_Union[ReservationPolicy, _Mapping]] = ...) -> None: ...
+    local_disks: LocalDisksSpec
+    def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_settings: _Optional[_Union[GpuSettings, _Mapping]] = ..., os: _Optional[str] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ..., reservation_policy: _Optional[_Union[ReservationPolicy, _Mapping]] = ..., local_disks: _Optional[_Union[LocalDisksSpec, _Mapping]] = ...) -> None: ...
 
 class NodeMetadataTemplate(_message.Message):
     __slots__ = ["labels"]
@@ -223,6 +225,26 @@ class ReservationPolicy(_message.Message):
     policy: ReservationPolicy.Policy
     reservation_ids: _containers.RepeatedScalarFieldContainer[str]
     def __init__(self, policy: _Optional[_Union[ReservationPolicy.Policy, str]] = ..., reservation_ids: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class LocalDisksSpec(_message.Message):
+    __slots__ = ["passthrough_group", "config"]
+    PASSTHROUGH_GROUP_FIELD_NUMBER: _ClassVar[int]
+    CONFIG_FIELD_NUMBER: _ClassVar[int]
+    passthrough_group: PassthroughGroupRequest
+    config: LocalDisksSpecConfig
+    def __init__(self, passthrough_group: _Optional[_Union[PassthroughGroupRequest, _Mapping]] = ..., config: _Optional[_Union[LocalDisksSpecConfig, _Mapping]] = ...) -> None: ...
+
+class PassthroughGroupRequest(_message.Message):
+    __slots__ = ["requested"]
+    REQUESTED_FIELD_NUMBER: _ClassVar[int]
+    requested: bool
+    def __init__(self, requested: bool = ...) -> None: ...
+
+class LocalDisksSpecConfig(_message.Message):
+    __slots__ = ["none"]
+    NONE_FIELD_NUMBER: _ClassVar[int]
+    none: bool
+    def __init__(self, none: bool = ...) -> None: ...
 
 class NodeGroupStatus(_message.Message):
     __slots__ = ["state", "version", "target_node_count", "node_count", "outdated_node_count", "ready_node_count", "events", "reconciling"]

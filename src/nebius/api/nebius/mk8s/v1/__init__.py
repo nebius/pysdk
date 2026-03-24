@@ -1877,6 +1877,7 @@ class NodeTemplate(pb_classes.Message):
         service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         preemptible: "PreemptibleSpec|node_group_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
         reservation_policy: "ReservationPolicy|node_group_pb2.ReservationPolicy|None|unset.UnsetType" = unset.Unset,
+        local_disks: "LocalDisksSpec|node_group_pb2.LocalDisksSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1905,6 +1906,8 @@ class NodeTemplate(pb_classes.Message):
             self.preemptible = preemptible
         if not isinstance(reservation_policy, unset.UnsetType):
             self.reservation_policy = reservation_policy
+        if not isinstance(local_disks, unset.UnsetType):
+            self.local_disks = local_disks
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1921,6 +1924,7 @@ class NodeTemplate(pb_classes.Message):
             "service_account_id",
             "preemptible",
             "reservation_policy",
+            "local_disks",
         ]
     
     @builtins.property
@@ -2153,6 +2157,21 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("reservation_policy",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def local_disks(self) -> "LocalDisksSpec":
+        """
+        local_disks enables the provisioning of fast local drives.
+        This type of storage is strictly ephemeral: on node restart, all data is erased, similar to RAM.
+        """
+        
+        return super()._get_field("local_disks", explicit_presence=False,
+        wrap=LocalDisksSpec,
+        )
+    @local_disks.setter
+    def local_disks(self, value: "LocalDisksSpec|node_group_pb2.LocalDisksSpec|None") -> None:
+        return super()._set_field("local_disks",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "metadata":"metadata",
         "taints":"taints",
@@ -2167,6 +2186,7 @@ class NodeTemplate(pb_classes.Message):
         "service_account_id":"service_account_id",
         "preemptible":"preemptible",
         "reservation_policy":"reservation_policy",
+        "local_disks":"local_disks",
     }
     
 class NodeMetadataTemplate(pb_classes.Message):
@@ -3179,6 +3199,210 @@ class ReservationPolicy(pb_classes.Message):
         "policy":"policy",
         "reservation_ids":"reservation_ids",
         "Policy":"Policy",
+    }
+    
+class LocalDisksSpec(pb_classes.Message):
+    __PB2_CLASS__ = node_group_pb2.LocalDisksSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.LocalDisksSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_request__(pb_classes.OneOf):
+        name: builtins.str= "request"
+        
+        def __init__(self, msg: "LocalDisksSpec") -> None:
+            super().__init__()
+            self._message: "LocalDisksSpec" = msg
+    
+    class __OneOfClass_request_passthrough_group__(__OneOfClass_request__):
+        field: typing.Literal["passthrough_group"] = "passthrough_group"
+        
+        def __init__(self, msg: "LocalDisksSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "PassthroughGroupRequest":
+            return self._message.passthrough_group
+    
+    @builtins.property
+    def request(self) -> __OneOfClass_request_passthrough_group__|None:
+        field_name_1: str|None = super().which_field_in_oneof("request")
+        match field_name_1:
+            case "passthrough_group":
+                return self.__OneOfClass_request_passthrough_group__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        passthrough_group: "PassthroughGroupRequest|node_group_pb2.PassthroughGroupRequest|None|unset.UnsetType" = unset.Unset,
+        config: "LocalDisksSpecConfig|node_group_pb2.LocalDisksSpecConfig|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(passthrough_group, unset.UnsetType):
+            self.passthrough_group = passthrough_group
+        if not isinstance(config, unset.UnsetType):
+            self.config = config
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "passthrough_group",
+            "config",
+            "request",
+        ]
+    
+    @builtins.property
+    def passthrough_group(self) -> "PassthroughGroupRequest|None":
+        """
+        Requests passthrough local disks from the host.
+        Topology of the provided disks is preserved during stop and start
+        for every instance of a specific platform and preset in the region.
+        """
+        
+        return super()._get_field("passthrough_group", explicit_presence=True,
+        wrap=PassthroughGroupRequest,
+        )
+    @passthrough_group.setter
+    def passthrough_group(self, value: "PassthroughGroupRequest|node_group_pb2.PassthroughGroupRequest|None") -> None:
+        return super()._set_field("passthrough_group",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def config(self) -> "LocalDisksSpecConfig":
+        """
+        config defines actions that managed Kubernetes service performs on mounted local disks
+        to provide them inside Kubernetes cluster with a convenient interface.
+        """
+        
+        return super()._get_field("config", explicit_presence=False,
+        wrap=LocalDisksSpecConfig,
+        )
+    @config.setter
+    def config(self, value: "LocalDisksSpecConfig|node_group_pb2.LocalDisksSpecConfig|None") -> None:
+        return super()._set_field("config",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "passthrough_group":"passthrough_group",
+        "config":"config",
+        "request":"request",
+    }
+    
+class PassthroughGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = node_group_pb2.PassthroughGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.PassthroughGroupRequest",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        requested: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(requested, unset.UnsetType):
+            self.requested = requested
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "requested",
+        ]
+    
+    @builtins.property
+    def requested(self) -> "builtins.bool":
+        """
+        Passthrough local disks from the underlying host.
+        
+        Devices are expected to appear in the guest as NVMe devices (nvme0, nvme1, ...),
+        but the exact number depends on the preset.
+        Enabled only when this field is explicitly set.
+        """
+        
+        return super()._get_field("requested", explicit_presence=False,
+        )
+    @requested.setter
+    def requested(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("requested",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "requested":"requested",
+    }
+    
+class LocalDisksSpecConfig(pb_classes.Message):
+    """
+    LocalDisksSpecConfig defines actions that managed Kubernetes service performs on mounted local disks
+    to provide them inside Kubernetes cluster with a convenient interface.
+    """
+    
+    __PB2_CLASS__ = node_group_pb2.LocalDisksSpecConfig
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.LocalDisksSpecConfig",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_type__(pb_classes.OneOf):
+        name: builtins.str= "type"
+        
+        def __init__(self, msg: "LocalDisksSpecConfig") -> None:
+            super().__init__()
+            self._message: "LocalDisksSpecConfig" = msg
+    
+    class __OneOfClass_type_none__(__OneOfClass_type__):
+        field: typing.Literal["none"] = "none"
+        
+        def __init__(self, msg: "LocalDisksSpecConfig") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.none
+    
+    @builtins.property
+    def type(self) -> __OneOfClass_type_none__|None:
+        field_name_1: str|None = super().which_field_in_oneof("type")
+        match field_name_1:
+            case "none":
+                return self.__OneOfClass_type_none__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        none: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(none, unset.UnsetType):
+            self.none = none
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "none",
+            "type",
+        ]
+    
+    @builtins.property
+    def none(self) -> "builtins.bool|None":
+        """
+        none: "do nothing" - local disks will be provisioned as on a regular compute instance.
+        """
+        
+        return super()._get_field("none", explicit_presence=True,
+        )
+    @none.setter
+    def none(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("none",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "none":"none",
+        "type":"type",
     }
     
 class NodeGroupStatus(pb_classes.Message):
@@ -4353,6 +4577,9 @@ __all__ = [
     "NodeAutoRepairCondition",
     "PreemptibleSpec",
     "ReservationPolicy",
+    "LocalDisksSpec",
+    "PassthroughGroupRequest",
+    "LocalDisksSpecConfig",
     "NodeGroupStatus",
     "GetNodeGroupCompatibilityMatrixRequest",
     "NodeGroupCompatibilityMatrix",
