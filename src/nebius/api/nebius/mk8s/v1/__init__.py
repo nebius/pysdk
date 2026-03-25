@@ -2264,8 +2264,12 @@ class NodeMetadataTemplate(pb_classes.Message):
     def labels(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         """
         Kubernetes Node labels.
+        
+        Keys and values must follow Kubernetes label syntax:
+        https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+        
         For now change will not be propagated to existing nodes, so will be applied only to Kubernetes Nodes created after the field change.
-        That behaviour may change later.
+        That behavior may change later.
         So, for now you will need to manually set them to existing nodes, if that is needed.
         
         System labels containing "kubernetes.io" and "k8s.io" will be ignored.
