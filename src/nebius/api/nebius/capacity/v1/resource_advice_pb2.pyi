@@ -58,7 +58,7 @@ class ComputeInstanceDetails(_message.Message):
 class ResourceAdviceStatus(_message.Message):
     __slots__ = ["reserved", "on_demand", "preemptible"]
     class Availability(_message.Message):
-        __slots__ = ["data_state", "available", "limit", "effective_at"]
+        __slots__ = ["data_state", "available", "limit", "availability_level", "effective_at"]
         class DataState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
             __slots__ = []
             DATA_STATE_UNSPECIFIED: _ClassVar[ResourceAdviceStatus.Availability.DataState]
@@ -69,15 +69,31 @@ class ResourceAdviceStatus(_message.Message):
         DATA_STATE_FRESH: ResourceAdviceStatus.Availability.DataState
         DATA_STATE_STALE: ResourceAdviceStatus.Availability.DataState
         DATA_STATE_UNKNOWN: ResourceAdviceStatus.Availability.DataState
+        class AvailabilityLevel(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+            __slots__ = []
+            AVAILABILITY_LEVEL_UNSPECIFIED: _ClassVar[ResourceAdviceStatus.Availability.AvailabilityLevel]
+            AVAILABILITY_LEVEL_HIGH: _ClassVar[ResourceAdviceStatus.Availability.AvailabilityLevel]
+            AVAILABILITY_LEVEL_MEDIUM: _ClassVar[ResourceAdviceStatus.Availability.AvailabilityLevel]
+            AVAILABILITY_LEVEL_LOW: _ClassVar[ResourceAdviceStatus.Availability.AvailabilityLevel]
+            AVAILABILITY_LEVEL_LIMIT_REACHED: _ClassVar[ResourceAdviceStatus.Availability.AvailabilityLevel]
+            AVAILABILITY_LEVEL_UNKNOWN: _ClassVar[ResourceAdviceStatus.Availability.AvailabilityLevel]
+        AVAILABILITY_LEVEL_UNSPECIFIED: ResourceAdviceStatus.Availability.AvailabilityLevel
+        AVAILABILITY_LEVEL_HIGH: ResourceAdviceStatus.Availability.AvailabilityLevel
+        AVAILABILITY_LEVEL_MEDIUM: ResourceAdviceStatus.Availability.AvailabilityLevel
+        AVAILABILITY_LEVEL_LOW: ResourceAdviceStatus.Availability.AvailabilityLevel
+        AVAILABILITY_LEVEL_LIMIT_REACHED: ResourceAdviceStatus.Availability.AvailabilityLevel
+        AVAILABILITY_LEVEL_UNKNOWN: ResourceAdviceStatus.Availability.AvailabilityLevel
         DATA_STATE_FIELD_NUMBER: _ClassVar[int]
         AVAILABLE_FIELD_NUMBER: _ClassVar[int]
         LIMIT_FIELD_NUMBER: _ClassVar[int]
+        AVAILABILITY_LEVEL_FIELD_NUMBER: _ClassVar[int]
         EFFECTIVE_AT_FIELD_NUMBER: _ClassVar[int]
         data_state: ResourceAdviceStatus.Availability.DataState
         available: int
         limit: int
+        availability_level: ResourceAdviceStatus.Availability.AvailabilityLevel
         effective_at: _timestamp_pb2.Timestamp
-        def __init__(self, data_state: _Optional[_Union[ResourceAdviceStatus.Availability.DataState, str]] = ..., available: _Optional[int] = ..., limit: _Optional[int] = ..., effective_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+        def __init__(self, data_state: _Optional[_Union[ResourceAdviceStatus.Availability.DataState, str]] = ..., available: _Optional[int] = ..., limit: _Optional[int] = ..., availability_level: _Optional[_Union[ResourceAdviceStatus.Availability.AvailabilityLevel, str]] = ..., effective_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
     RESERVED_FIELD_NUMBER: _ClassVar[int]
     ON_DEMAND_FIELD_NUMBER: _ClassVar[int]
     PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
