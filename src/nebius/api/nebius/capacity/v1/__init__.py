@@ -2263,6 +2263,43 @@ class ResourceAdviceStatus(pb_classes.Message):
             """
             
         
+        class AvailabilityLevel(pb_enum.Enum):
+            """
+            Indicates the likelihood of a successful allocation.
+            """
+            
+            __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.capacity.v1.ResourceAdviceStatus.Availability.AvailabilityLevel",resource_advice_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+            AVAILABILITY_LEVEL_UNSPECIFIED = 0
+            """
+            Shouldn't ever happen.
+            """
+            
+            AVAILABILITY_LEVEL_HIGH = 1
+            """
+            Plenty of room for large requests.
+            """
+            
+            AVAILABILITY_LEVEL_MEDIUM = 2
+            """
+            Room for medium requests.
+            """
+            
+            AVAILABILITY_LEVEL_LOW = 3
+            """
+            High risk of Not Enough Resources (NER).
+            """
+            
+            AVAILABILITY_LEVEL_LIMIT_REACHED = 4
+            """
+            Not enough quota or capacity block on the customer's side.
+            """
+            
+            AVAILABILITY_LEVEL_UNKNOWN = 5
+            """
+            Failed to retrieve data.
+            """
+            
+        
         def __init__(
             self,
             initial_message: message_1.Message|None = None,
@@ -2270,6 +2307,7 @@ class ResourceAdviceStatus(pb_classes.Message):
             data_state: "ResourceAdviceStatus.Availability.DataState|resource_advice_pb2.ResourceAdviceStatus.Availability.DataState|None|unset.UnsetType" = unset.Unset,
             available: "builtins.int|None|unset.UnsetType" = unset.Unset,
             limit: "builtins.int|None|unset.UnsetType" = unset.Unset,
+            availability_level: "ResourceAdviceStatus.Availability.AvailabilityLevel|resource_advice_pb2.ResourceAdviceStatus.Availability.AvailabilityLevel|None|unset.UnsetType" = unset.Unset,
             effective_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
@@ -2279,6 +2317,8 @@ class ResourceAdviceStatus(pb_classes.Message):
                 self.available = available
             if not isinstance(limit, unset.UnsetType):
                 self.limit = limit
+            if not isinstance(availability_level, unset.UnsetType):
+                self.availability_level = availability_level
             if not isinstance(effective_at, unset.UnsetType):
                 self.effective_at = effective_at
         
@@ -2287,8 +2327,10 @@ class ResourceAdviceStatus(pb_classes.Message):
                 "data_state",
                 "available",
                 "limit",
+                "availability_level",
                 "effective_at",
                 "DataState",
+                "AvailabilityLevel",
             ]
         
         @builtins.property
@@ -2332,6 +2374,20 @@ class ResourceAdviceStatus(pb_classes.Message):
             )
         
         @builtins.property
+        def availability_level(self) -> "ResourceAdviceStatus.Availability.AvailabilityLevel":
+            """
+            Categorical indicator for resources availability.
+            """
+            
+            return super()._get_field("availability_level", explicit_presence=False,
+            wrap=ResourceAdviceStatus.Availability.AvailabilityLevel,
+            )
+        @availability_level.setter
+        def availability_level(self, value: "ResourceAdviceStatus.Availability.AvailabilityLevel|resource_advice_pb2.ResourceAdviceStatus.Availability.AvailabilityLevel|None") -> None:
+            return super()._set_field("availability_level",value,explicit_presence=False,
+            )
+        
+        @builtins.property
         def effective_at(self) -> "datetime.datetime":
             """
             The timestamp of the actual infrastructure measurement.
@@ -2350,8 +2406,10 @@ class ResourceAdviceStatus(pb_classes.Message):
             "data_state":"data_state",
             "available":"available",
             "limit":"limit",
+            "availability_level":"availability_level",
             "effective_at":"effective_at",
             "DataState":"DataState",
+            "AvailabilityLevel":"AvailabilityLevel",
         }
         
     

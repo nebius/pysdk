@@ -1,5 +1,6 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.audit.v2 import authentication_pb2 as _authentication_pb2
 from nebius.api.nebius.audit.v2 import authorization_pb2 as _authorization_pb2
 from nebius.api.nebius.audit.v2 import region_pb2 as _region_pb2
