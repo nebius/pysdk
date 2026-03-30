@@ -29,11 +29,11 @@ from grpc.aio._base_channel import (
 )
 from grpc.aio._typing import (
     DeserializingFunction,
-    MetadataType,
     RequestIterableType,
     SerializingFunction,
 )
 
+from nebius.aio._metadata_type import MetadataType
 from nebius.base.error import SDKError
 from nebius.base.methods import service_from_method_name
 
