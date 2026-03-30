@@ -45,10 +45,10 @@ from grpc.aio._interceptor import ClientInterceptor
 from grpc.aio._typing import (
     ChannelArgumentType,
     DeserializingFunction,
-    MetadataType,
     SerializingFunction,
 )
 
+from nebius.aio._metadata_type import MetadataType
 from nebius.aio.abc import GracefulInterface
 from nebius.aio.authorization.authorization import Provider as AuthorizationProvider
 from nebius.aio.authorization.token import TokenProvider
