@@ -1528,8 +1528,8 @@ class ResourceMetadata(pb_classes.Message):
     
 class GetByNameRequest(pb_classes.Message):
     """
-    if service supports uniqueness of ResourceMetadata.name within tuple (scope) <resource_type, parent_id>
-    it also must have grpc method GetByName
+    This message is used as the request for the ``GetByName`` method in services supporting uniqueness
+    of ``ResourceMetadata.name`` within tuple (scope) <resource_type, ``parent_id``>.
     """
     
     __PB2_CLASS__ = metadata_pb2.GetByNameRequest

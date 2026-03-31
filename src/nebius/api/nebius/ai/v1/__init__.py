@@ -129,17 +129,21 @@ class EndpointSpec(pb_classes.Message):
             *,
             name: "builtins.str|None|unset.UnsetType" = unset.Unset,
             value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            mysterybox_secret: "EndpointSpec.MysteryBoxSecretRef|endpoint_pb2.EndpointSpec.MysteryBoxSecretRef|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(name, unset.UnsetType):
                 self.name = name
             if not isinstance(value, unset.UnsetType):
                 self.value = value
+            if not isinstance(mysterybox_secret, unset.UnsetType):
+                self.mysterybox_secret = mysterybox_secret
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "name",
                 "value",
+                "mysterybox_secret",
             ]
         
         @builtins.property
@@ -159,6 +163,7 @@ class EndpointSpec(pb_classes.Message):
         def value(self) -> "builtins.str":
             """
             Environment variable value.
+            Mutually exclusive with ``mysterybox_secret``.
             """
             
             return super()._get_field("value", explicit_presence=False,
@@ -168,9 +173,26 @@ class EndpointSpec(pb_classes.Message):
             return super()._set_field("value",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def mysterybox_secret(self) -> "EndpointSpec.MysteryBoxSecretRef":
+            """
+            Secret storing the environment variable value.
+            Mutually exclusive with ``value``.
+            Must reference a secret payload containing a key matching ``name``.
+            """
+            
+            return super()._get_field("mysterybox_secret", explicit_presence=False,
+            wrap=EndpointSpec.MysteryBoxSecretRef,
+            )
+        @mysterybox_secret.setter
+        def mysterybox_secret(self, value: "EndpointSpec.MysteryBoxSecretRef|endpoint_pb2.EndpointSpec.MysteryBoxSecretRef|None") -> None:
+            return super()._set_field("mysterybox_secret",value,explicit_presence=False,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "name":"name",
             "value":"value",
+            "mysterybox_secret":"mysterybox_secret",
         }
         
     
@@ -378,6 +400,67 @@ class EndpointSpec(pb_classes.Message):
                 }
                 
             
+            class MysteryBoxSecretRef(pb_classes.Message):
+                """
+                Reference to a MysteryBox secret.
+                """
+                
+                __PB2_CLASS__ = endpoint_pb2.EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef
+                __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef",endpoint_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+                __mask_functions__ = {
+                }
+                
+                def __init__(
+                    self,
+                    initial_message: message_1.Message|None = None,
+                    *,
+                    secret_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                    version_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                ) -> None:
+                    super().__init__(initial_message)
+                    if not isinstance(secret_id, unset.UnsetType):
+                        self.secret_id = secret_id
+                    if not isinstance(version_id, unset.UnsetType):
+                        self.version_id = version_id
+                
+                def __dir__(self) ->abc.Iterable[builtins.str]:
+                    return [
+                        "secret_id",
+                        "version_id",
+                    ]
+                
+                @builtins.property
+                def secret_id(self) -> "builtins.str":
+                    """
+                    MysteryBox secret ID.
+                    """
+                    
+                    return super()._get_field("secret_id", explicit_presence=False,
+                    )
+                @secret_id.setter
+                def secret_id(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("secret_id",value,explicit_presence=False,
+                    )
+                
+                @builtins.property
+                def version_id(self) -> "builtins.str":
+                    """
+                    MysteryBox secret version ID.
+                    """
+                    
+                    return super()._get_field("version_id", explicit_presence=False,
+                    )
+                @version_id.setter
+                def version_id(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("version_id",value,explicit_presence=False,
+                    )
+                
+                __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+                    "secret_id":"secret_id",
+                    "version_id":"version_id",
+                }
+                
+            
             class __OneOfClass_auth__(pb_classes.OneOf):
                 name: builtins.str= "auth"
                 
@@ -394,8 +477,17 @@ class EndpointSpec(pb_classes.Message):
                 def value(self) -> "EndpointSpec.VolumeMount.S3Config.S3Credentials":
                     return self._message.credentials
             
+            class __OneOfClass_auth_mysterybox_secret__(__OneOfClass_auth__):
+                field: typing.Literal["mysterybox_secret"] = "mysterybox_secret"
+                
+                def __init__(self, msg: "EndpointSpec.VolumeMount.S3Config") -> None:
+                    super().__init__(msg)
+                @builtins.property
+                def value(self) -> "EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef":
+                    return self._message.mysterybox_secret
+            
             @builtins.property
-            def auth(self) -> __OneOfClass_auth_credentials__|None:
+            def auth(self) -> __OneOfClass_auth_credentials__|__OneOfClass_auth_mysterybox_secret__|None:
                 """
                 Authentication method.
                 """
@@ -404,6 +496,8 @@ class EndpointSpec(pb_classes.Message):
                 match field_name_1:
                     case "credentials":
                         return self.__OneOfClass_auth_credentials__(self)
+                    case "mysterybox_secret":
+                        return self.__OneOfClass_auth_mysterybox_secret__(self)
                     case None:
                         return None
                     case _:
@@ -416,6 +510,7 @@ class EndpointSpec(pb_classes.Message):
                 endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
                 region: "builtins.str|None|unset.UnsetType" = unset.Unset,
                 credentials: "EndpointSpec.VolumeMount.S3Config.S3Credentials|endpoint_pb2.EndpointSpec.VolumeMount.S3Config.S3Credentials|None|unset.UnsetType" = unset.Unset,
+                mysterybox_secret: "EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef|endpoint_pb2.EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef|None|unset.UnsetType" = unset.Unset,
             ) -> None:
                 super().__init__(initial_message)
                 if not isinstance(endpoint, unset.UnsetType):
@@ -424,13 +519,17 @@ class EndpointSpec(pb_classes.Message):
                     self.region = region
                 if not isinstance(credentials, unset.UnsetType):
                     self.credentials = credentials
+                if not isinstance(mysterybox_secret, unset.UnsetType):
+                    self.mysterybox_secret = mysterybox_secret
             
             def __dir__(self) ->abc.Iterable[builtins.str]:
                 return [
                     "endpoint",
                     "region",
                     "credentials",
+                    "mysterybox_secret",
                     "S3Credentials",
+                    "MysteryBoxSecretRef",
                     "auth",
                 ]
             
@@ -474,11 +573,27 @@ class EndpointSpec(pb_classes.Message):
                 return super()._set_field("credentials",value,explicit_presence=True,
                 )
             
+            @builtins.property
+            def mysterybox_secret(self) -> "EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef|None":
+                """
+                Reference to a MysteryBox secret containing S3 credentials.
+                """
+                
+                return super()._get_field("mysterybox_secret", explicit_presence=True,
+                wrap=EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef,
+                )
+            @mysterybox_secret.setter
+            def mysterybox_secret(self, value: "EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef|endpoint_pb2.EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef|None") -> None:
+                return super()._set_field("mysterybox_secret",value,explicit_presence=True,
+                )
+            
             __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
                 "endpoint":"endpoint",
                 "region":"region",
                 "credentials":"credentials",
+                "mysterybox_secret":"mysterybox_secret",
                 "S3Credentials":"S3Credentials",
+                "MysteryBoxSecretRef":"MysteryBoxSecretRef",
                 "auth":"auth",
             }
             
@@ -782,6 +897,67 @@ class EndpointSpec(pb_classes.Message):
         }
         
     
+    class MysteryBoxSecretRef(pb_classes.Message):
+        """
+        Reference to a MysteryBox secret.
+        """
+        
+        __PB2_CLASS__ = endpoint_pb2.EndpointSpec.MysteryBoxSecretRef
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.EndpointSpec.MysteryBoxSecretRef",endpoint_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            secret_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            version_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(secret_id, unset.UnsetType):
+                self.secret_id = secret_id
+            if not isinstance(version_id, unset.UnsetType):
+                self.version_id = version_id
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "secret_id",
+                "version_id",
+            ]
+        
+        @builtins.property
+        def secret_id(self) -> "builtins.str":
+            """
+            MysteryBox secret ID.
+            """
+            
+            return super()._get_field("secret_id", explicit_presence=False,
+            )
+        @secret_id.setter
+        def secret_id(self, value: "builtins.str|None") -> None:
+            return super()._set_field("secret_id",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def version_id(self) -> "builtins.str":
+            """
+            MysteryBox secret version ID.
+            """
+            
+            return super()._get_field("version_id", explicit_presence=False,
+            )
+        @version_id.setter
+        def version_id(self, value: "builtins.str|None") -> None:
+            return super()._set_field("version_id",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "secret_id":"secret_id",
+            "version_id":"version_id",
+        }
+        
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -803,6 +979,7 @@ class EndpointSpec(pb_classes.Message):
         ssh_authorized_keys: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         preemptible: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         auth_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        auth_token_mysterybox_secret: "EndpointSpec.MysteryBoxSecretRef|endpoint_pb2.EndpointSpec.MysteryBoxSecretRef|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(image, unset.UnsetType):
@@ -839,6 +1016,8 @@ class EndpointSpec(pb_classes.Message):
             self.preemptible = preemptible
         if not isinstance(auth_token, unset.UnsetType):
             self.auth_token = auth_token
+        if not isinstance(auth_token_mysterybox_secret, unset.UnsetType):
+            self.auth_token_mysterybox_secret = auth_token_mysterybox_secret
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -859,11 +1038,13 @@ class EndpointSpec(pb_classes.Message):
             "ssh_authorized_keys",
             "preemptible",
             "auth_token",
+            "auth_token_mysterybox_secret",
             "EnvironmentVariable",
             "Port",
             "VolumeMount",
             "DiskSpec",
             "RegistryCredentials",
+            "MysteryBoxSecretRef",
         ]
     
     @builtins.property
@@ -1088,7 +1269,8 @@ class EndpointSpec(pb_classes.Message):
         
         Authentication can only be enabled if the endpoint exposes one and only one HTTP port.
         
-        If not provided, a authentication will be disabled.
+        Mutually exclusive with ``auth_token_mysterybox_secret``.
+        If not provided, authentication will be disabled.
         """
         
         return super()._get_field("auth_token", explicit_presence=False,
@@ -1096,6 +1278,22 @@ class EndpointSpec(pb_classes.Message):
     @auth_token.setter
     def auth_token(self, value: "builtins.str|None") -> None:
         return super()._set_field("auth_token",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def auth_token_mysterybox_secret(self) -> "EndpointSpec.MysteryBoxSecretRef":
+        """
+        Secret storing the authentication token.
+        Mutually exclusive with ``auth_token``.
+        Must reference a secret payload containing ``AUTH_TOKEN``.
+        """
+        
+        return super()._get_field("auth_token_mysterybox_secret", explicit_presence=False,
+        wrap=EndpointSpec.MysteryBoxSecretRef,
+        )
+    @auth_token_mysterybox_secret.setter
+    def auth_token_mysterybox_secret(self, value: "EndpointSpec.MysteryBoxSecretRef|endpoint_pb2.EndpointSpec.MysteryBoxSecretRef|None") -> None:
+        return super()._set_field("auth_token_mysterybox_secret",value,explicit_presence=False,
         )
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
@@ -1116,11 +1314,13 @@ class EndpointSpec(pb_classes.Message):
         "ssh_authorized_keys":"ssh_authorized_keys",
         "preemptible":"preemptible",
         "auth_token":"auth_token",
+        "auth_token_mysterybox_secret":"auth_token_mysterybox_secret",
         "EnvironmentVariable":"EnvironmentVariable",
         "Port":"Port",
         "VolumeMount":"VolumeMount",
         "DiskSpec":"DiskSpec",
         "RegistryCredentials":"RegistryCredentials",
+        "MysteryBoxSecretRef":"MysteryBoxSecretRef",
     }
     
 class EndpointStatus(pb_classes.Message):
@@ -2204,17 +2404,21 @@ class JobSpec(pb_classes.Message):
             *,
             name: "builtins.str|None|unset.UnsetType" = unset.Unset,
             value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            mysterybox_secret: "JobSpec.MysteryBoxSecretRef|job_pb2.JobSpec.MysteryBoxSecretRef|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(name, unset.UnsetType):
                 self.name = name
             if not isinstance(value, unset.UnsetType):
                 self.value = value
+            if not isinstance(mysterybox_secret, unset.UnsetType):
+                self.mysterybox_secret = mysterybox_secret
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "name",
                 "value",
+                "mysterybox_secret",
             ]
         
         @builtins.property
@@ -2234,6 +2438,7 @@ class JobSpec(pb_classes.Message):
         def value(self) -> "builtins.str":
             """
             Environment variable value.
+            Mutually exclusive with ``mysterybox_secret``.
             """
             
             return super()._get_field("value", explicit_presence=False,
@@ -2243,9 +2448,26 @@ class JobSpec(pb_classes.Message):
             return super()._set_field("value",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def mysterybox_secret(self) -> "JobSpec.MysteryBoxSecretRef":
+            """
+            Secret storing the environment variable value.
+            Mutually exclusive with ``value``.
+            Must reference a secret payload containing a key matching ``name``.
+            """
+            
+            return super()._get_field("mysterybox_secret", explicit_presence=False,
+            wrap=JobSpec.MysteryBoxSecretRef,
+            )
+        @mysterybox_secret.setter
+        def mysterybox_secret(self, value: "JobSpec.MysteryBoxSecretRef|job_pb2.JobSpec.MysteryBoxSecretRef|None") -> None:
+            return super()._set_field("mysterybox_secret",value,explicit_presence=False,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "name":"name",
             "value":"value",
+            "mysterybox_secret":"mysterybox_secret",
         }
         
     
@@ -2453,6 +2675,67 @@ class JobSpec(pb_classes.Message):
                 }
                 
             
+            class MysteryBoxSecretRef(pb_classes.Message):
+                """
+                Reference to a MysteryBox secret.
+                """
+                
+                __PB2_CLASS__ = job_pb2.JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef
+                __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+                __mask_functions__ = {
+                }
+                
+                def __init__(
+                    self,
+                    initial_message: message_1.Message|None = None,
+                    *,
+                    secret_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                    version_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+                ) -> None:
+                    super().__init__(initial_message)
+                    if not isinstance(secret_id, unset.UnsetType):
+                        self.secret_id = secret_id
+                    if not isinstance(version_id, unset.UnsetType):
+                        self.version_id = version_id
+                
+                def __dir__(self) ->abc.Iterable[builtins.str]:
+                    return [
+                        "secret_id",
+                        "version_id",
+                    ]
+                
+                @builtins.property
+                def secret_id(self) -> "builtins.str":
+                    """
+                    MysteryBox secret ID.
+                    """
+                    
+                    return super()._get_field("secret_id", explicit_presence=False,
+                    )
+                @secret_id.setter
+                def secret_id(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("secret_id",value,explicit_presence=False,
+                    )
+                
+                @builtins.property
+                def version_id(self) -> "builtins.str":
+                    """
+                    MysteryBox secret version ID.
+                    """
+                    
+                    return super()._get_field("version_id", explicit_presence=False,
+                    )
+                @version_id.setter
+                def version_id(self, value: "builtins.str|None") -> None:
+                    return super()._set_field("version_id",value,explicit_presence=False,
+                    )
+                
+                __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+                    "secret_id":"secret_id",
+                    "version_id":"version_id",
+                }
+                
+            
             class __OneOfClass_auth__(pb_classes.OneOf):
                 name: builtins.str= "auth"
                 
@@ -2469,8 +2752,17 @@ class JobSpec(pb_classes.Message):
                 def value(self) -> "JobSpec.VolumeMount.S3Config.S3Credentials":
                     return self._message.credentials
             
+            class __OneOfClass_auth_mysterybox_secret__(__OneOfClass_auth__):
+                field: typing.Literal["mysterybox_secret"] = "mysterybox_secret"
+                
+                def __init__(self, msg: "JobSpec.VolumeMount.S3Config") -> None:
+                    super().__init__(msg)
+                @builtins.property
+                def value(self) -> "JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef":
+                    return self._message.mysterybox_secret
+            
             @builtins.property
-            def auth(self) -> __OneOfClass_auth_credentials__|None:
+            def auth(self) -> __OneOfClass_auth_credentials__|__OneOfClass_auth_mysterybox_secret__|None:
                 """
                 Authentication method.
                 """
@@ -2479,6 +2771,8 @@ class JobSpec(pb_classes.Message):
                 match field_name_1:
                     case "credentials":
                         return self.__OneOfClass_auth_credentials__(self)
+                    case "mysterybox_secret":
+                        return self.__OneOfClass_auth_mysterybox_secret__(self)
                     case None:
                         return None
                     case _:
@@ -2491,6 +2785,7 @@ class JobSpec(pb_classes.Message):
                 endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
                 region: "builtins.str|None|unset.UnsetType" = unset.Unset,
                 credentials: "JobSpec.VolumeMount.S3Config.S3Credentials|job_pb2.JobSpec.VolumeMount.S3Config.S3Credentials|None|unset.UnsetType" = unset.Unset,
+                mysterybox_secret: "JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef|job_pb2.JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef|None|unset.UnsetType" = unset.Unset,
             ) -> None:
                 super().__init__(initial_message)
                 if not isinstance(endpoint, unset.UnsetType):
@@ -2499,13 +2794,17 @@ class JobSpec(pb_classes.Message):
                     self.region = region
                 if not isinstance(credentials, unset.UnsetType):
                     self.credentials = credentials
+                if not isinstance(mysterybox_secret, unset.UnsetType):
+                    self.mysterybox_secret = mysterybox_secret
             
             def __dir__(self) ->abc.Iterable[builtins.str]:
                 return [
                     "endpoint",
                     "region",
                     "credentials",
+                    "mysterybox_secret",
                     "S3Credentials",
+                    "MysteryBoxSecretRef",
                     "auth",
                 ]
             
@@ -2549,11 +2848,27 @@ class JobSpec(pb_classes.Message):
                 return super()._set_field("credentials",value,explicit_presence=True,
                 )
             
+            @builtins.property
+            def mysterybox_secret(self) -> "JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef|None":
+                """
+                Reference to a MysteryBox secret containing S3 credentials.
+                """
+                
+                return super()._get_field("mysterybox_secret", explicit_presence=True,
+                wrap=JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef,
+                )
+            @mysterybox_secret.setter
+            def mysterybox_secret(self, value: "JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef|job_pb2.JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef|None") -> None:
+                return super()._set_field("mysterybox_secret",value,explicit_presence=True,
+                )
+            
             __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
                 "endpoint":"endpoint",
                 "region":"region",
                 "credentials":"credentials",
+                "mysterybox_secret":"mysterybox_secret",
                 "S3Credentials":"S3Credentials",
+                "MysteryBoxSecretRef":"MysteryBoxSecretRef",
                 "auth":"auth",
             }
             
@@ -2857,6 +3172,67 @@ class JobSpec(pb_classes.Message):
         }
         
     
+    class MysteryBoxSecretRef(pb_classes.Message):
+        """
+        Reference to a MysteryBox secret.
+        """
+        
+        __PB2_CLASS__ = job_pb2.JobSpec.MysteryBoxSecretRef
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.JobSpec.MysteryBoxSecretRef",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            secret_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            version_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(secret_id, unset.UnsetType):
+                self.secret_id = secret_id
+            if not isinstance(version_id, unset.UnsetType):
+                self.version_id = version_id
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "secret_id",
+                "version_id",
+            ]
+        
+        @builtins.property
+        def secret_id(self) -> "builtins.str":
+            """
+            MysteryBox secret ID.
+            """
+            
+            return super()._get_field("secret_id", explicit_presence=False,
+            )
+        @secret_id.setter
+        def secret_id(self, value: "builtins.str|None") -> None:
+            return super()._set_field("secret_id",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def version_id(self) -> "builtins.str":
+            """
+            MysteryBox secret version ID.
+            """
+            
+            return super()._get_field("version_id", explicit_presence=False,
+            )
+        @version_id.setter
+        def version_id(self, value: "builtins.str|None") -> None:
+            return super()._set_field("version_id",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "secret_id":"secret_id",
+            "version_id":"version_id",
+        }
+        
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -2943,6 +3319,7 @@ class JobSpec(pb_classes.Message):
             "VolumeMount",
             "DiskSpec",
             "RegistryCredentials",
+            "MysteryBoxSecretRef",
         ]
     
     @builtins.property
@@ -3212,6 +3589,7 @@ class JobSpec(pb_classes.Message):
         "VolumeMount":"VolumeMount",
         "DiskSpec":"DiskSpec",
         "RegistryCredentials":"RegistryCredentials",
+        "MysteryBoxSecretRef":"MysteryBoxSecretRef",
     }
     
 class JobStatus(pb_classes.Message):

@@ -22,14 +22,16 @@ class Endpoint(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[EndpointSpec, _Mapping]] = ..., status: _Optional[_Union[EndpointStatus, _Mapping]] = ...) -> None: ...
 
 class EndpointSpec(_message.Message):
-    __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "preemptible", "auth_token"]
+    __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "preemptible", "auth_token", "auth_token_mysterybox_secret"]
     class EnvironmentVariable(_message.Message):
-        __slots__ = ["name", "value"]
+        __slots__ = ["name", "value", "mysterybox_secret"]
         NAME_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
+        MYSTERYBOX_SECRET_FIELD_NUMBER: _ClassVar[int]
         name: str
         value: str
-        def __init__(self, name: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+        mysterybox_secret: EndpointSpec.MysteryBoxSecretRef
+        def __init__(self, name: _Optional[str] = ..., value: _Optional[str] = ..., mysterybox_secret: _Optional[_Union[EndpointSpec.MysteryBoxSecretRef, _Mapping]] = ...) -> None: ...
     class Port(_message.Message):
         __slots__ = ["container_port", "host_port", "protocol"]
         class Protocol(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -60,7 +62,7 @@ class EndpointSpec(_message.Message):
         READ_ONLY: EndpointSpec.VolumeMount.Mode
         READ_WRITE: EndpointSpec.VolumeMount.Mode
         class S3Config(_message.Message):
-            __slots__ = ["endpoint", "region", "credentials"]
+            __slots__ = ["endpoint", "region", "credentials", "mysterybox_secret"]
             class S3Credentials(_message.Message):
                 __slots__ = ["access_key_id", "secret_access_key", "session_token"]
                 ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
@@ -70,13 +72,22 @@ class EndpointSpec(_message.Message):
                 secret_access_key: str
                 session_token: str
                 def __init__(self, access_key_id: _Optional[str] = ..., secret_access_key: _Optional[str] = ..., session_token: _Optional[str] = ...) -> None: ...
+            class MysteryBoxSecretRef(_message.Message):
+                __slots__ = ["secret_id", "version_id"]
+                SECRET_ID_FIELD_NUMBER: _ClassVar[int]
+                VERSION_ID_FIELD_NUMBER: _ClassVar[int]
+                secret_id: str
+                version_id: str
+                def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ...) -> None: ...
             ENDPOINT_FIELD_NUMBER: _ClassVar[int]
             REGION_FIELD_NUMBER: _ClassVar[int]
             CREDENTIALS_FIELD_NUMBER: _ClassVar[int]
+            MYSTERYBOX_SECRET_FIELD_NUMBER: _ClassVar[int]
             endpoint: str
             region: str
             credentials: EndpointSpec.VolumeMount.S3Config.S3Credentials
-            def __init__(self, endpoint: _Optional[str] = ..., region: _Optional[str] = ..., credentials: _Optional[_Union[EndpointSpec.VolumeMount.S3Config.S3Credentials, _Mapping]] = ...) -> None: ...
+            mysterybox_secret: EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef
+            def __init__(self, endpoint: _Optional[str] = ..., region: _Optional[str] = ..., credentials: _Optional[_Union[EndpointSpec.VolumeMount.S3Config.S3Credentials, _Mapping]] = ..., mysterybox_secret: _Optional[_Union[EndpointSpec.VolumeMount.S3Config.MysteryBoxSecretRef, _Mapping]] = ...) -> None: ...
         SOURCE_FIELD_NUMBER: _ClassVar[int]
         SOURCE_PATH_FIELD_NUMBER: _ClassVar[int]
         CONTAINER_PATH_FIELD_NUMBER: _ClassVar[int]
@@ -104,6 +115,13 @@ class EndpointSpec(_message.Message):
         password: str
         mysterybox_secret_version: str
         def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ..., mysterybox_secret_version: _Optional[str] = ...) -> None: ...
+    class MysteryBoxSecretRef(_message.Message):
+        __slots__ = ["secret_id", "version_id"]
+        SECRET_ID_FIELD_NUMBER: _ClassVar[int]
+        VERSION_ID_FIELD_NUMBER: _ClassVar[int]
+        secret_id: str
+        version_id: str
+        def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ...) -> None: ...
     IMAGE_FIELD_NUMBER: _ClassVar[int]
     ENVIRONMENT_VARIABLES_FIELD_NUMBER: _ClassVar[int]
     PORTS_FIELD_NUMBER: _ClassVar[int]
@@ -121,6 +139,7 @@ class EndpointSpec(_message.Message):
     SSH_AUTHORIZED_KEYS_FIELD_NUMBER: _ClassVar[int]
     PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
     AUTH_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    AUTH_TOKEN_MYSTERYBOX_SECRET_FIELD_NUMBER: _ClassVar[int]
     image: str
     environment_variables: _containers.RepeatedCompositeFieldContainer[EndpointSpec.EnvironmentVariable]
     ports: _containers.RepeatedCompositeFieldContainer[EndpointSpec.Port]
@@ -138,7 +157,8 @@ class EndpointSpec(_message.Message):
     ssh_authorized_keys: _containers.RepeatedScalarFieldContainer[str]
     preemptible: bool
     auth_token: str
-    def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[EndpointSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[EndpointSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[EndpointSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[EndpointSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[EndpointSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., preemptible: bool = ..., auth_token: _Optional[str] = ...) -> None: ...
+    auth_token_mysterybox_secret: EndpointSpec.MysteryBoxSecretRef
+    def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[EndpointSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[EndpointSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[EndpointSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[EndpointSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[EndpointSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., preemptible: bool = ..., auth_token: _Optional[str] = ..., auth_token_mysterybox_secret: _Optional[_Union[EndpointSpec.MysteryBoxSecretRef, _Mapping]] = ...) -> None: ...
 
 class EndpointStatus(_message.Message):
     __slots__ = ["private_endpoints", "public_endpoints", "instances", "state", "state_details"]

@@ -25,12 +25,14 @@ class Job(_message.Message):
 class JobSpec(_message.Message):
     __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "preemptible", "restart_attempts", "timeout"]
     class EnvironmentVariable(_message.Message):
-        __slots__ = ["name", "value"]
+        __slots__ = ["name", "value", "mysterybox_secret"]
         NAME_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
+        MYSTERYBOX_SECRET_FIELD_NUMBER: _ClassVar[int]
         name: str
         value: str
-        def __init__(self, name: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+        mysterybox_secret: JobSpec.MysteryBoxSecretRef
+        def __init__(self, name: _Optional[str] = ..., value: _Optional[str] = ..., mysterybox_secret: _Optional[_Union[JobSpec.MysteryBoxSecretRef, _Mapping]] = ...) -> None: ...
     class Port(_message.Message):
         __slots__ = ["container_port", "host_port", "protocol"]
         class Protocol(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
@@ -61,7 +63,7 @@ class JobSpec(_message.Message):
         READ_WRITE: JobSpec.VolumeMount.Mode
         READ_ONLY: JobSpec.VolumeMount.Mode
         class S3Config(_message.Message):
-            __slots__ = ["endpoint", "region", "credentials"]
+            __slots__ = ["endpoint", "region", "credentials", "mysterybox_secret"]
             class S3Credentials(_message.Message):
                 __slots__ = ["access_key_id", "secret_access_key", "session_token"]
                 ACCESS_KEY_ID_FIELD_NUMBER: _ClassVar[int]
@@ -71,13 +73,22 @@ class JobSpec(_message.Message):
                 secret_access_key: str
                 session_token: str
                 def __init__(self, access_key_id: _Optional[str] = ..., secret_access_key: _Optional[str] = ..., session_token: _Optional[str] = ...) -> None: ...
+            class MysteryBoxSecretRef(_message.Message):
+                __slots__ = ["secret_id", "version_id"]
+                SECRET_ID_FIELD_NUMBER: _ClassVar[int]
+                VERSION_ID_FIELD_NUMBER: _ClassVar[int]
+                secret_id: str
+                version_id: str
+                def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ...) -> None: ...
             ENDPOINT_FIELD_NUMBER: _ClassVar[int]
             REGION_FIELD_NUMBER: _ClassVar[int]
             CREDENTIALS_FIELD_NUMBER: _ClassVar[int]
+            MYSTERYBOX_SECRET_FIELD_NUMBER: _ClassVar[int]
             endpoint: str
             region: str
             credentials: JobSpec.VolumeMount.S3Config.S3Credentials
-            def __init__(self, endpoint: _Optional[str] = ..., region: _Optional[str] = ..., credentials: _Optional[_Union[JobSpec.VolumeMount.S3Config.S3Credentials, _Mapping]] = ...) -> None: ...
+            mysterybox_secret: JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef
+            def __init__(self, endpoint: _Optional[str] = ..., region: _Optional[str] = ..., credentials: _Optional[_Union[JobSpec.VolumeMount.S3Config.S3Credentials, _Mapping]] = ..., mysterybox_secret: _Optional[_Union[JobSpec.VolumeMount.S3Config.MysteryBoxSecretRef, _Mapping]] = ...) -> None: ...
         SOURCE_FIELD_NUMBER: _ClassVar[int]
         SOURCE_PATH_FIELD_NUMBER: _ClassVar[int]
         CONTAINER_PATH_FIELD_NUMBER: _ClassVar[int]
@@ -105,6 +116,13 @@ class JobSpec(_message.Message):
         password: str
         mysterybox_secret_version: str
         def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ..., mysterybox_secret_version: _Optional[str] = ...) -> None: ...
+    class MysteryBoxSecretRef(_message.Message):
+        __slots__ = ["secret_id", "version_id"]
+        SECRET_ID_FIELD_NUMBER: _ClassVar[int]
+        VERSION_ID_FIELD_NUMBER: _ClassVar[int]
+        secret_id: str
+        version_id: str
+        def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ...) -> None: ...
     IMAGE_FIELD_NUMBER: _ClassVar[int]
     ENVIRONMENT_VARIABLES_FIELD_NUMBER: _ClassVar[int]
     PORTS_FIELD_NUMBER: _ClassVar[int]
