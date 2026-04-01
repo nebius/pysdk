@@ -530,7 +530,7 @@ class Operation(Generic[OperationPb]):
         :class:`SDKError` is raised.
         """
         if isinstance(operation, self._operation.__class__):
-            self._operation = operation  # type: ignore
+            self._operation = operation  # type: ignore[unused-ignore,assignment]
         else:
             raise SDKError(f"Operation type {type(operation)} not supported.")
 
