@@ -39,7 +39,7 @@ async def test_credentials_updater() -> None:
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
-        key_size=1024,
+        key_size=2048,
     )
 
     # Set up logging
@@ -169,7 +169,7 @@ async def test_credentials_updater_sync() -> None:
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
-        key_size=1024,
+        key_size=2048,
     )
 
     # Set up logging
@@ -311,7 +311,7 @@ async def test_credentials_updater_sync_error() -> None:
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
-        key_size=1024,
+        key_size=2048,
     )
 
     # Set up logging
