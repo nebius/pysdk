@@ -15,7 +15,9 @@ from typing import (
 )
 
 from google.protobuf.descriptor import Descriptor
+from google.protobuf.duration_pb2 import Duration
 from google.protobuf.message import Message as PMessage
+from google.protobuf.timestamp_pb2 import Timestamp
 
 from nebius.aio.abc import ClientChannelInterface
 from nebius.base.error import SDKError
@@ -372,6 +374,12 @@ class Message:
         if explicit_presence and not self.__pb2_message__.HasField(el_pb2):  # type: ignore[unused-ignore]
             return None
         ret = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
+        if (
+            not explicit_presence
+            and isinstance(ret, (Timestamp, Duration))
+            and not self.__pb2_message__.HasField(el_pb2)  # type: ignore[unused-ignore]
+        ):
+            return None
         ret = wrap_type(ret, wrap)
         if has_method(ret, "set_mask"):
             el_key = FieldKey(el_pb2)

@@ -1,6 +1,7 @@
 .vscode
 .ruff_cache
 .tox
+.codex
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
