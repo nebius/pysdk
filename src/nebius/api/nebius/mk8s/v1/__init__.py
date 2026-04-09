@@ -3279,6 +3279,8 @@ class LocalDisksSpec(pb_classes.Message):
         """
         config defines actions that managed Kubernetes service performs on mounted local disks
         to provide them inside Kubernetes cluster with a convenient interface.
+        
+        When omitted, a default value is generated.
         """
         
         return super()._get_field("config", explicit_presence=False,
@@ -3364,12 +3366,23 @@ class LocalDisksSpecConfig(pb_classes.Message):
         def value(self) -> "builtins.bool":
             return self._message.none
     
+    class __OneOfClass_type_kubelet_ephemeral__(__OneOfClass_type__):
+        field: typing.Literal["kubelet_ephemeral"] = "kubelet_ephemeral"
+        
+        def __init__(self, msg: "LocalDisksSpecConfig") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.bool":
+            return self._message.kubelet_ephemeral
+    
     @builtins.property
-    def type(self) -> __OneOfClass_type_none__|None:
+    def type(self) -> __OneOfClass_type_none__|__OneOfClass_type_kubelet_ephemeral__|None:
         field_name_1: str|None = super().which_field_in_oneof("type")
         match field_name_1:
             case "none":
                 return self.__OneOfClass_type_none__(self)
+            case "kubelet_ephemeral":
+                return self.__OneOfClass_type_kubelet_ephemeral__(self)
             case None:
                 return None
             case _:
@@ -3380,14 +3393,18 @@ class LocalDisksSpecConfig(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         none: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        kubelet_ephemeral: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(none, unset.UnsetType):
             self.none = none
+        if not isinstance(kubelet_ephemeral, unset.UnsetType):
+            self.kubelet_ephemeral = kubelet_ephemeral
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "none",
+            "kubelet_ephemeral",
             "type",
         ]
     
@@ -3404,8 +3421,25 @@ class LocalDisksSpecConfig(pb_classes.Message):
         return super()._set_field("none",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def kubelet_ephemeral(self) -> "builtins.bool|None":
+        """
+        kubelet_ephemeral: combine all local disks into a single storage volume and use it as kubelet's local ephemeral storage on the node
+        See also https://kubernetes.io/docs/concepts/storage/ephemeral-storage/
+        
+        The default when LocalDisksSpecConfig is not set.
+        """
+        
+        return super()._get_field("kubelet_ephemeral", explicit_presence=True,
+        )
+    @kubelet_ephemeral.setter
+    def kubelet_ephemeral(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("kubelet_ephemeral",value,explicit_presence=True,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "none":"none",
+        "kubelet_ephemeral":"kubelet_ephemeral",
         "type":"type",
     }
     

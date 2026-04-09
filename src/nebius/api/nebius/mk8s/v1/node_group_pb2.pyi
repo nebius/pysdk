@@ -241,10 +241,12 @@ class PassthroughGroupRequest(_message.Message):
     def __init__(self, requested: bool = ...) -> None: ...
 
 class LocalDisksSpecConfig(_message.Message):
-    __slots__ = ["none"]
+    __slots__ = ["none", "kubelet_ephemeral"]
     NONE_FIELD_NUMBER: _ClassVar[int]
+    KUBELET_EPHEMERAL_FIELD_NUMBER: _ClassVar[int]
     none: bool
-    def __init__(self, none: bool = ...) -> None: ...
+    kubelet_ephemeral: bool
+    def __init__(self, none: bool = ..., kubelet_ephemeral: bool = ...) -> None: ...
 
 class NodeGroupStatus(_message.Message):
     __slots__ = ["state", "version", "target_node_count", "node_count", "outdated_node_count", "ready_node_count", "events", "reconciling"]

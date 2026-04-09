@@ -7305,17 +7305,21 @@ class GroupMembershipStatus(pb_classes.Message):
         *,
         tenant_user_account_status: "TenantUserAccountStatus|tenant_user_account_pb2.TenantUserAccountStatus|None|unset.UnsetType" = unset.Unset,
         service_account_status: "ServiceAccountStatus|service_account_pb2.ServiceAccountStatus|None|unset.UnsetType" = unset.Unset,
+        group_member_metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(tenant_user_account_status, unset.UnsetType):
             self.tenant_user_account_status = tenant_user_account_status
         if not isinstance(service_account_status, unset.UnsetType):
             self.service_account_status = service_account_status
+        if not isinstance(group_member_metadata, unset.UnsetType):
+            self.group_member_metadata = group_member_metadata
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "tenant_user_account_status",
             "service_account_status",
+            "group_member_metadata",
             "group_member_status",
         ]
     
@@ -7339,9 +7343,20 @@ class GroupMembershipStatus(pb_classes.Message):
         return super()._set_field("service_account_status",value,explicit_presence=True,
         )
     
+    @builtins.property
+    def group_member_metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("group_member_metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @group_member_metadata.setter
+    def group_member_metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("group_member_metadata",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "tenant_user_account_status":"tenant_user_account_status",
         "service_account_status":"service_account_status",
+        "group_member_metadata":"group_member_metadata",
         "group_member_status":"group_member_status",
     }
     
