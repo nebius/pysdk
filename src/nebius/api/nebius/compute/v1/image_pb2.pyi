@@ -21,7 +21,7 @@ class Image(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ImageSpec, _Mapping]] = ..., status: _Optional[_Union[ImageStatus, _Mapping]] = ...) -> None: ...
 
 class ImageSpec(_message.Message):
-    __slots__ = ["description", "image_family", "version", "source_disk_id", "cpu_architecture", "image_family_human_readable", "recommended_platforms", "unsupported_platforms"]
+    __slots__ = ["description", "image_family", "version", "source_disk_id", "source_storage", "cpu_architecture", "image_family_human_readable", "recommended_platforms", "unsupported_platforms"]
     class CPUArchitecture(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[ImageSpec.CPUArchitecture]
@@ -30,6 +30,13 @@ class ImageSpec(_message.Message):
     UNSPECIFIED: ImageSpec.CPUArchitecture
     AMD64: ImageSpec.CPUArchitecture
     ARM64: ImageSpec.CPUArchitecture
+    class SourceStorage(_message.Message):
+        __slots__ = ["bucket_name", "object_name"]
+        BUCKET_NAME_FIELD_NUMBER: _ClassVar[int]
+        OBJECT_NAME_FIELD_NUMBER: _ClassVar[int]
+        bucket_name: str
+        object_name: str
+        def __init__(self, bucket_name: _Optional[str] = ..., object_name: _Optional[str] = ...) -> None: ...
     class UnsupportedPlatformsEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -41,6 +48,7 @@ class ImageSpec(_message.Message):
     IMAGE_FAMILY_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     SOURCE_DISK_ID_FIELD_NUMBER: _ClassVar[int]
+    SOURCE_STORAGE_FIELD_NUMBER: _ClassVar[int]
     CPU_ARCHITECTURE_FIELD_NUMBER: _ClassVar[int]
     IMAGE_FAMILY_HUMAN_READABLE_FIELD_NUMBER: _ClassVar[int]
     RECOMMENDED_PLATFORMS_FIELD_NUMBER: _ClassVar[int]
@@ -49,11 +57,12 @@ class ImageSpec(_message.Message):
     image_family: str
     version: str
     source_disk_id: str
+    source_storage: ImageSpec.SourceStorage
     cpu_architecture: ImageSpec.CPUArchitecture
     image_family_human_readable: str
     recommended_platforms: _containers.RepeatedScalarFieldContainer[str]
     unsupported_platforms: _containers.ScalarMap[str, str]
-    def __init__(self, description: _Optional[str] = ..., image_family: _Optional[str] = ..., version: _Optional[str] = ..., source_disk_id: _Optional[str] = ..., cpu_architecture: _Optional[_Union[ImageSpec.CPUArchitecture, str]] = ..., image_family_human_readable: _Optional[str] = ..., recommended_platforms: _Optional[_Iterable[str]] = ..., unsupported_platforms: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    def __init__(self, description: _Optional[str] = ..., image_family: _Optional[str] = ..., version: _Optional[str] = ..., source_disk_id: _Optional[str] = ..., source_storage: _Optional[_Union[ImageSpec.SourceStorage, _Mapping]] = ..., cpu_architecture: _Optional[_Union[ImageSpec.CPUArchitecture, str]] = ..., image_family_human_readable: _Optional[str] = ..., recommended_platforms: _Optional[_Iterable[str]] = ..., unsupported_platforms: _Optional[_Mapping[str, str]] = ...) -> None: ...
 
 class ImageStatus(_message.Message):
     __slots__ = ["state", "state_description", "storage_size_bytes", "min_disk_size_bytes", "reconciling", "image_family_deprecation"]

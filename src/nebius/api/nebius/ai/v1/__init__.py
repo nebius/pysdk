@@ -10,6 +10,7 @@ import datetime as datetime
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.duration_pb2 as duration_pb2
 import google.protobuf.message as message_1
+import google.protobuf.timestamp_pb2 as timestamp_pb2
 import nebius.aio.client as client
 import nebius.aio.operation as operation
 import nebius.aio.request as request_1
@@ -3600,6 +3601,8 @@ class JobStatus(pb_classes.Message):
     __PB2_CLASS__ = job_pb2.JobStatus
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.JobStatus",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
+        "started_at": well_known_1.ts_mask,
+        "finished_at": well_known_1.ts_mask,
     }
     
     class State(pb_enum.Enum):
@@ -3664,6 +3667,8 @@ class JobStatus(pb_classes.Message):
         instances: "abc.Iterable[JobInstanceStatus]|None|unset.UnsetType" = unset.Unset,
         state: "JobStatus.State|job_pb2.JobStatus.State|None|unset.UnsetType" = unset.Unset,
         state_details: "JobStateDetails|job_pb2.JobStateDetails|None|unset.UnsetType" = unset.Unset,
+        started_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(private_endpoints, unset.UnsetType):
@@ -3676,6 +3681,10 @@ class JobStatus(pb_classes.Message):
             self.state = state
         if not isinstance(state_details, unset.UnsetType):
             self.state_details = state_details
+        if not isinstance(started_at, unset.UnsetType):
+            self.started_at = started_at
+        if not isinstance(finished_at, unset.UnsetType):
+            self.finished_at = finished_at
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -3684,6 +3693,8 @@ class JobStatus(pb_classes.Message):
             "instances",
             "state",
             "state_details",
+            "started_at",
+            "finished_at",
             "State",
         ]
     
@@ -3757,12 +3768,44 @@ class JobStatus(pb_classes.Message):
         return super()._set_field("state_details",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def started_at(self) -> "datetime.datetime":
+        """
+        Time when the job workload started.
+        """
+        
+        return super()._get_field("started_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @started_at.setter
+    def started_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("started_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def finished_at(self) -> "datetime.datetime":
+        """
+        Time when the job workload finished.
+        """
+        
+        return super()._get_field("finished_at", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @finished_at.setter
+    def finished_at(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("finished_at",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "private_endpoints":"private_endpoints",
         "public_endpoints":"public_endpoints",
         "instances":"instances",
         "state":"state",
         "state_details":"state_details",
+        "started_at":"started_at",
+        "finished_at":"finished_at",
         "State":"State",
     }
     

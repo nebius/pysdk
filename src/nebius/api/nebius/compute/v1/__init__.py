@@ -3235,6 +3235,55 @@ class ImageSpec(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class SourceStorage(pb_classes.Message):
+        __PB2_CLASS__ = image_pb2.ImageSpec.SourceStorage
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ImageSpec.SourceStorage",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            object_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(bucket_name, unset.UnsetType):
+                self.bucket_name = bucket_name
+            if not isinstance(object_name, unset.UnsetType):
+                self.object_name = object_name
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "bucket_name",
+                "object_name",
+            ]
+        
+        @builtins.property
+        def bucket_name(self) -> "builtins.str":
+            return super()._get_field("bucket_name", explicit_presence=False,
+            )
+        @bucket_name.setter
+        def bucket_name(self, value: "builtins.str|None") -> None:
+            return super()._set_field("bucket_name",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def object_name(self) -> "builtins.str":
+            return super()._get_field("object_name", explicit_presence=False,
+            )
+        @object_name.setter
+        def object_name(self, value: "builtins.str|None") -> None:
+            return super()._set_field("object_name",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "bucket_name":"bucket_name",
+            "object_name":"object_name",
+        }
+        
+    
     class UnsupportedPlatformsEntry(pb_classes.Message):
         __PB2_CLASS__ = image_pb2.ImageSpec.UnsupportedPlatformsEntry
         __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ImageSpec.UnsupportedPlatformsEntry",image_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -3306,12 +3355,23 @@ class ImageSpec(pb_classes.Message):
         def value(self) -> "builtins.str":
             return self._message.source_disk_id
     
+    class __OneOfClass_source_source_storage__(__OneOfClass_source__):
+        field: typing.Literal["source_storage"] = "source_storage"
+        
+        def __init__(self, msg: "ImageSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ImageSpec.SourceStorage":
+            return self._message.source_storage
+    
     @builtins.property
-    def source(self) -> __OneOfClass_source_source_disk_id__|None:
+    def source(self) -> __OneOfClass_source_source_disk_id__|__OneOfClass_source_source_storage__|None:
         field_name_1: str|None = super().which_field_in_oneof("source")
         match field_name_1:
             case "source_disk_id":
                 return self.__OneOfClass_source_source_disk_id__(self)
+            case "source_storage":
+                return self.__OneOfClass_source_source_storage__(self)
             case None:
                 return None
             case _:
@@ -3325,6 +3385,7 @@ class ImageSpec(pb_classes.Message):
         image_family: "builtins.str|None|unset.UnsetType" = unset.Unset,
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_disk_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        source_storage: "ImageSpec.SourceStorage|image_pb2.ImageSpec.SourceStorage|None|unset.UnsetType" = unset.Unset,
         cpu_architecture: "ImageSpec.CPUArchitecture|image_pb2.ImageSpec.CPUArchitecture|None|unset.UnsetType" = unset.Unset,
         image_family_human_readable: "builtins.str|None|unset.UnsetType" = unset.Unset,
         recommended_platforms: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
@@ -3339,6 +3400,8 @@ class ImageSpec(pb_classes.Message):
             self.version = version
         if not isinstance(source_disk_id, unset.UnsetType):
             self.source_disk_id = source_disk_id
+        if not isinstance(source_storage, unset.UnsetType):
+            self.source_storage = source_storage
         if not isinstance(cpu_architecture, unset.UnsetType):
             self.cpu_architecture = cpu_architecture
         if not isinstance(image_family_human_readable, unset.UnsetType):
@@ -3354,10 +3417,12 @@ class ImageSpec(pb_classes.Message):
             "image_family",
             "version",
             "source_disk_id",
+            "source_storage",
             "cpu_architecture",
             "image_family_human_readable",
             "recommended_platforms",
             "unsupported_platforms",
+            "SourceStorage",
             "UnsupportedPlatformsEntry",
             "source",
             "CPUArchitecture",
@@ -3405,6 +3470,16 @@ class ImageSpec(pb_classes.Message):
     @source_disk_id.setter
     def source_disk_id(self, value: "builtins.str|None") -> None:
         return super()._set_field("source_disk_id",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def source_storage(self) -> "ImageSpec.SourceStorage|None":
+        return super()._get_field("source_storage", explicit_presence=True,
+        wrap=ImageSpec.SourceStorage,
+        )
+    @source_storage.setter
+    def source_storage(self, value: "ImageSpec.SourceStorage|image_pb2.ImageSpec.SourceStorage|None") -> None:
+        return super()._set_field("source_storage",value,explicit_presence=True,
         )
     
     @builtins.property
@@ -3467,10 +3542,12 @@ class ImageSpec(pb_classes.Message):
         "image_family":"image_family",
         "version":"version",
         "source_disk_id":"source_disk_id",
+        "source_storage":"source_storage",
         "cpu_architecture":"cpu_architecture",
         "image_family_human_readable":"image_family_human_readable",
         "recommended_platforms":"recommended_platforms",
         "unsupported_platforms":"unsupported_platforms",
+        "SourceStorage":"SourceStorage",
         "UnsupportedPlatformsEntry":"UnsupportedPlatformsEntry",
         "source":"source",
         "CPUArchitecture":"CPUArchitecture",

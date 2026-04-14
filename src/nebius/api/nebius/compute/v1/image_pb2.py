@@ -17,7 +17,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dnebius/compute/v1/image.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xb1\x01\n\x05Image\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x30\n\x04spec\x18\x02 \x01(\x0b\x32\x1c.nebius.compute.v1.ImageSpecR\x04spec\x12\x36\n\x06status\x18\x03 \x01(\x0b\x32\x1e.nebius.compute.v1.ImageStatusR\x06status\"\x88\x05\n\tImageSpec\x12*\n\x0b\x64\x65scription\x18\x01 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x08R\x0b\x64\x65scription\x12\'\n\x0cimage_family\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\x0bimageFamily\x12\x1e\n\x07version\x18\x03 \x01(\tB\x04\xbaJ\x01\x02R\x07version\x12,\n\x0esource_disk_id\x18\x04 \x01(\tB\x04\xbaJ\x01\x02H\x00R\x0csourceDiskId\x12]\n\x10\x63pu_architecture\x18\x06 \x01(\x0e\x32,.nebius.compute.v1.ImageSpec.CPUArchitectureB\x04\xbaJ\x01\x02R\x0f\x63puArchitecture\x12\x43\n\x1bimage_family_human_readable\x18\x07 \x01(\tB\x04\xbaJ\x01\x02R\x18imageFamilyHumanReadable\x12\x33\n\x15recommended_platforms\x18\x08 \x03(\tR\x14recommendedPlatforms\x12k\n\x15unsupported_platforms\x18\t \x03(\x0b\x32\x36.nebius.compute.v1.ImageSpec.UnsupportedPlatformsEntryR\x14unsupportedPlatforms\x1aG\n\x19UnsupportedPlatformsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\"8\n\x0f\x43PUArchitecture\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\t\n\x05\x41MD64\x10\x01\x12\t\n\x05\x41RM64\x10\x02\x42\x0f\n\x06source\x12\x05\xbaH\x02\x08\x01\"\xc1\x04\n\x0bImageStatus\x12:\n\x05state\x18\x01 \x01(\x0e\x32$.nebius.compute.v1.ImageStatus.StateR\x05state\x12+\n\x11state_description\x18\x02 \x01(\tR\x10stateDescription\x12,\n\x12storage_size_bytes\x18\x03 \x01(\x03R\x10storageSizeBytes\x12-\n\x13min_disk_size_bytes\x18\x04 \x01(\x03R\x10minDiskSizeBytes\x12 \n\x0breconciling\x18\x05 \x01(\x08R\x0breconciling\x12u\n\x18image_family_deprecation\x18\x06 \x01(\x0b\x32;.nebius.compute.v1.ImageStatus.ImageFamilyDeprecationStatusR\x16imageFamilyDeprecation\x1ay\n\x1cImageFamilyDeprecationStatus\x12?\n\rdeprecated_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x0c\x64\x65precatedAt\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\"X\n\x05State\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x0c\n\x08\x44\x45LETING\x10\x04\x12\t\n\x05\x45RROR\x10\x05\x42Y\n\x18\x61i.nebius.pub.compute.v1B\nImageProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1dnebius/compute/v1/image.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xb1\x01\n\x05Image\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x30\n\x04spec\x18\x02 \x01(\x0b\x32\x1c.nebius.compute.v1.ImageSpecR\x04spec\x12\x36\n\x06status\x18\x03 \x01(\x0b\x32\x1e.nebius.compute.v1.ImageStatusR\x06status\"\xb6\x06\n\tImageSpec\x12*\n\x0b\x64\x65scription\x18\x01 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x08R\x0b\x64\x65scription\x12\'\n\x0cimage_family\x18\x02 \x01(\tB\x04\xbaJ\x01\x02R\x0bimageFamily\x12\x1e\n\x07version\x18\x03 \x01(\tB\x04\xbaJ\x01\x02R\x07version\x12,\n\x0esource_disk_id\x18\x04 \x01(\tB\x04\xbaJ\x01\x02H\x00R\x0csourceDiskId\x12Y\n\x0esource_storage\x18\x0b \x01(\x0b\x32*.nebius.compute.v1.ImageSpec.SourceStorageB\x04\xbaJ\x01\x02H\x00R\rsourceStorage\x12]\n\x10\x63pu_architecture\x18\x06 \x01(\x0e\x32,.nebius.compute.v1.ImageSpec.CPUArchitectureB\x04\xbaJ\x01\x02R\x0f\x63puArchitecture\x12\x43\n\x1bimage_family_human_readable\x18\x07 \x01(\tB\x04\xbaJ\x01\x02R\x18imageFamilyHumanReadable\x12\x33\n\x15recommended_platforms\x18\x08 \x03(\tR\x14recommendedPlatforms\x12k\n\x15unsupported_platforms\x18\t \x03(\x0b\x32\x36.nebius.compute.v1.ImageSpec.UnsupportedPlatformsEntryR\x14unsupportedPlatforms\x1aQ\n\rSourceStorage\x12\x1f\n\x0b\x62ucket_name\x18\x01 \x01(\tR\nbucketName\x12\x1f\n\x0bobject_name\x18\x02 \x01(\tR\nobjectName\x1aG\n\x19UnsupportedPlatformsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\"8\n\x0f\x43PUArchitecture\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\t\n\x05\x41MD64\x10\x01\x12\t\n\x05\x41RM64\x10\x02\x42\x0f\n\x06source\x12\x05\xbaH\x02\x08\x01\"\xc1\x04\n\x0bImageStatus\x12:\n\x05state\x18\x01 \x01(\x0e\x32$.nebius.compute.v1.ImageStatus.StateR\x05state\x12+\n\x11state_description\x18\x02 \x01(\tR\x10stateDescription\x12,\n\x12storage_size_bytes\x18\x03 \x01(\x03R\x10storageSizeBytes\x12-\n\x13min_disk_size_bytes\x18\x04 \x01(\x03R\x10minDiskSizeBytes\x12 \n\x0breconciling\x18\x05 \x01(\x08R\x0breconciling\x12u\n\x18image_family_deprecation\x18\x06 \x01(\x0b\x32;.nebius.compute.v1.ImageStatus.ImageFamilyDeprecationStatusR\x16imageFamilyDeprecation\x1ay\n\x1cImageFamilyDeprecationStatus\x12?\n\rdeprecated_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x0c\x64\x65precatedAt\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\"X\n\x05State\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\x0c\n\x08\x43REATING\x10\x01\x12\t\n\x05READY\x10\x02\x12\x0c\n\x08UPDATING\x10\x03\x12\x0c\n\x08\x44\x45LETING\x10\x04\x12\t\n\x05\x45RROR\x10\x05\x42Y\n\x18\x61i.nebius.pub.compute.v1B\nImageProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -38,6 +38,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _IMAGESPEC.fields_by_name['version']._serialized_options = b'\272J\001\002'
   _IMAGESPEC.fields_by_name['source_disk_id']._options = None
   _IMAGESPEC.fields_by_name['source_disk_id']._serialized_options = b'\272J\001\002'
+  _IMAGESPEC.fields_by_name['source_storage']._options = None
+  _IMAGESPEC.fields_by_name['source_storage']._serialized_options = b'\272J\001\002'
   _IMAGESPEC.fields_by_name['cpu_architecture']._options = None
   _IMAGESPEC.fields_by_name['cpu_architecture']._serialized_options = b'\272J\001\002'
   _IMAGESPEC.fields_by_name['image_family_human_readable']._options = None
@@ -45,15 +47,17 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_IMAGE']._serialized_start=174
   _globals['_IMAGE']._serialized_end=351
   _globals['_IMAGESPEC']._serialized_start=354
-  _globals['_IMAGESPEC']._serialized_end=1002
-  _globals['_IMAGESPEC_UNSUPPORTEDPLATFORMSENTRY']._serialized_start=856
-  _globals['_IMAGESPEC_UNSUPPORTEDPLATFORMSENTRY']._serialized_end=927
-  _globals['_IMAGESPEC_CPUARCHITECTURE']._serialized_start=929
-  _globals['_IMAGESPEC_CPUARCHITECTURE']._serialized_end=985
-  _globals['_IMAGESTATUS']._serialized_start=1005
-  _globals['_IMAGESTATUS']._serialized_end=1582
-  _globals['_IMAGESTATUS_IMAGEFAMILYDEPRECATIONSTATUS']._serialized_start=1371
-  _globals['_IMAGESTATUS_IMAGEFAMILYDEPRECATIONSTATUS']._serialized_end=1492
-  _globals['_IMAGESTATUS_STATE']._serialized_start=1494
-  _globals['_IMAGESTATUS_STATE']._serialized_end=1582
+  _globals['_IMAGESPEC']._serialized_end=1176
+  _globals['_IMAGESPEC_SOURCESTORAGE']._serialized_start=947
+  _globals['_IMAGESPEC_SOURCESTORAGE']._serialized_end=1028
+  _globals['_IMAGESPEC_UNSUPPORTEDPLATFORMSENTRY']._serialized_start=1030
+  _globals['_IMAGESPEC_UNSUPPORTEDPLATFORMSENTRY']._serialized_end=1101
+  _globals['_IMAGESPEC_CPUARCHITECTURE']._serialized_start=1103
+  _globals['_IMAGESPEC_CPUARCHITECTURE']._serialized_end=1159
+  _globals['_IMAGESTATUS']._serialized_start=1179
+  _globals['_IMAGESTATUS']._serialized_end=1756
+  _globals['_IMAGESTATUS_IMAGEFAMILYDEPRECATIONSTATUS']._serialized_start=1545
+  _globals['_IMAGESTATUS_IMAGEFAMILYDEPRECATIONSTATUS']._serialized_end=1666
+  _globals['_IMAGESTATUS_STATE']._serialized_start=1668
+  _globals['_IMAGESTATUS_STATE']._serialized_end=1756
 # @@protoc_insertion_point(module_scope)

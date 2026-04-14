@@ -1,5 +1,6 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from google.protobuf import duration_pb2 as _duration_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.compute.v1 import disk_pb2 as _disk_pb2
@@ -162,7 +163,7 @@ class JobSpec(_message.Message):
     def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[JobSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[JobSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[JobSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[JobSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[JobSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., preemptible: bool = ..., restart_attempts: _Optional[int] = ..., timeout: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ...) -> None: ...
 
 class JobStatus(_message.Message):
-    __slots__ = ["private_endpoints", "public_endpoints", "instances", "state", "state_details"]
+    __slots__ = ["private_endpoints", "public_endpoints", "instances", "state", "state_details", "started_at", "finished_at"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[JobStatus.State]
@@ -190,12 +191,16 @@ class JobStatus(_message.Message):
     INSTANCES_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     STATE_DETAILS_FIELD_NUMBER: _ClassVar[int]
+    STARTED_AT_FIELD_NUMBER: _ClassVar[int]
+    FINISHED_AT_FIELD_NUMBER: _ClassVar[int]
     private_endpoints: _containers.RepeatedScalarFieldContainer[str]
     public_endpoints: _containers.RepeatedScalarFieldContainer[str]
     instances: _containers.RepeatedCompositeFieldContainer[JobInstanceStatus]
     state: JobStatus.State
     state_details: JobStateDetails
-    def __init__(self, private_endpoints: _Optional[_Iterable[str]] = ..., public_endpoints: _Optional[_Iterable[str]] = ..., instances: _Optional[_Iterable[_Union[JobInstanceStatus, _Mapping]]] = ..., state: _Optional[_Union[JobStatus.State, str]] = ..., state_details: _Optional[_Union[JobStateDetails, _Mapping]] = ...) -> None: ...
+    started_at: _timestamp_pb2.Timestamp
+    finished_at: _timestamp_pb2.Timestamp
+    def __init__(self, private_endpoints: _Optional[_Iterable[str]] = ..., public_endpoints: _Optional[_Iterable[str]] = ..., instances: _Optional[_Iterable[_Union[JobInstanceStatus, _Mapping]]] = ..., state: _Optional[_Union[JobStatus.State, str]] = ..., state_details: _Optional[_Union[JobStateDetails, _Mapping]] = ..., started_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., finished_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class JobStateDetails(_message.Message):
     __slots__ = ["code", "message"]
