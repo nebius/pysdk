@@ -7376,6 +7376,7 @@ class MaintenanceEventStatus(pb_classes.Message):
         finished_at: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         sla_deadline_ts: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         support_center_ticket_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        maintenance_reason: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(maintenance_id, unset.UnsetType):
@@ -7388,6 +7389,8 @@ class MaintenanceEventStatus(pb_classes.Message):
             self.sla_deadline_ts = sla_deadline_ts
         if not isinstance(support_center_ticket_id, unset.UnsetType):
             self.support_center_ticket_id = support_center_ticket_id
+        if not isinstance(maintenance_reason, unset.UnsetType):
+            self.maintenance_reason = maintenance_reason
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -7396,6 +7399,7 @@ class MaintenanceEventStatus(pb_classes.Message):
             "finished_at",
             "sla_deadline_ts",
             "support_center_ticket_id",
+            "maintenance_reason",
         ]
     
     @builtins.property
@@ -7465,12 +7469,26 @@ class MaintenanceEventStatus(pb_classes.Message):
         return super()._set_field("support_center_ticket_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def maintenance_reason(self) -> "builtins.str":
+        """
+        Reason of the maintenance
+        """
+        
+        return super()._get_field("maintenance_reason", explicit_presence=False,
+        )
+    @maintenance_reason.setter
+    def maintenance_reason(self, value: "builtins.str|None") -> None:
+        return super()._set_field("maintenance_reason",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "maintenance_id":"maintenance_id",
         "created_at":"created_at",
         "finished_at":"finished_at",
         "sla_deadline_ts":"sla_deadline_ts",
         "support_center_ticket_id":"support_center_ticket_id",
+        "maintenance_reason":"maintenance_reason",
     }
     
 # file: nebius/compute/v1/maintenance_service.proto

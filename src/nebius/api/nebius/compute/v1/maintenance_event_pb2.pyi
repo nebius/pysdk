@@ -23,15 +23,17 @@ class MaintenanceEventSpec(_message.Message):
     def __init__(self, is_planned: bool = ...) -> None: ...
 
 class MaintenanceEventStatus(_message.Message):
-    __slots__ = ["maintenance_id", "created_at", "finished_at", "sla_deadline_ts", "support_center_ticket_id"]
+    __slots__ = ["maintenance_id", "created_at", "finished_at", "sla_deadline_ts", "support_center_ticket_id", "maintenance_reason"]
     MAINTENANCE_ID_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
     FINISHED_AT_FIELD_NUMBER: _ClassVar[int]
     SLA_DEADLINE_TS_FIELD_NUMBER: _ClassVar[int]
     SUPPORT_CENTER_TICKET_ID_FIELD_NUMBER: _ClassVar[int]
+    MAINTENANCE_REASON_FIELD_NUMBER: _ClassVar[int]
     maintenance_id: str
     created_at: _timestamp_pb2.Timestamp
     finished_at: _timestamp_pb2.Timestamp
     sla_deadline_ts: _timestamp_pb2.Timestamp
     support_center_ticket_id: str
-    def __init__(self, maintenance_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., finished_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., sla_deadline_ts: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., support_center_ticket_id: _Optional[str] = ...) -> None: ...
+    maintenance_reason: str
+    def __init__(self, maintenance_id: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., finished_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., sla_deadline_ts: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., support_center_ticket_id: _Optional[str] = ..., maintenance_reason: _Optional[str] = ...) -> None: ...

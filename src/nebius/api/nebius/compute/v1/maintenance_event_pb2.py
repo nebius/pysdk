@@ -15,7 +15,7 @@ from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/compute/v1/maintenance_event.proto\x12\x11nebius.compute.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\"\xa8\x01\n\x10MaintenanceEvent\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.compute.v1.MaintenanceEventSpecR\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b\x32).nebius.compute.v1.MaintenanceEventStatusB\x04\xbaJ\x01\x05R\x06status\";\n\x14MaintenanceEventSpec\x12#\n\nis_planned\x18\x05 \x01(\x08\x42\x04\xbaJ\x01\x02R\tisPlanned\"\xb4\x02\n\x16MaintenanceEventStatus\x12%\n\x0emaintenance_id\x18\x01 \x01(\tR\rmaintenanceId\x12\x39\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12;\n\x0b\x66inished_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\nfinishedAt\x12\x42\n\x0fsla_deadline_ts\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\rslaDeadlineTs\x12\x37\n\x18support_center_ticket_id\x18\t \x01(\tR\x15supportCenterTicketIdBd\n\x18\x61i.nebius.pub.compute.v1B\x15MaintenanceEventProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/compute/v1/maintenance_event.proto\x12\x11nebius.compute.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\"\xa8\x01\n\x10MaintenanceEvent\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.compute.v1.MaintenanceEventSpecR\x04spec\x12G\n\x06status\x18\x03 \x01(\x0b\x32).nebius.compute.v1.MaintenanceEventStatusB\x04\xbaJ\x01\x05R\x06status\";\n\x14MaintenanceEventSpec\x12#\n\nis_planned\x18\x05 \x01(\x08\x42\x04\xbaJ\x01\x02R\tisPlanned\"\xe3\x02\n\x16MaintenanceEventStatus\x12%\n\x0emaintenance_id\x18\x01 \x01(\tR\rmaintenanceId\x12\x39\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12;\n\x0b\x66inished_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\nfinishedAt\x12\x42\n\x0fsla_deadline_ts\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\rslaDeadlineTs\x12\x37\n\x18support_center_ticket_id\x18\t \x01(\tR\x15supportCenterTicketId\x12-\n\x12maintenance_reason\x18\x0c \x01(\tR\x11maintenanceReasonBd\n\x18\x61i.nebius.pub.compute.v1B\x15MaintenanceEventProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,5 +33,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_MAINTENANCEEVENTSPEC']._serialized_start=294
   _globals['_MAINTENANCEEVENTSPEC']._serialized_end=353
   _globals['_MAINTENANCEEVENTSTATUS']._serialized_start=356
-  _globals['_MAINTENANCEEVENTSTATUS']._serialized_end=664
+  _globals['_MAINTENANCEEVENTSTATUS']._serialized_end=711
 # @@protoc_insertion_point(module_scope)
