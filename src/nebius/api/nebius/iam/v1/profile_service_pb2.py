@@ -17,7 +17,7 @@ from nebius.api.nebius.iam.v1 import tenant_user_account_pb2 as nebius_dot_iam_d
 from nebius.api.nebius.iam.v1 import user_account_pb2 as nebius_dot_iam_dot_v1_dot_user__account__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/iam/v1/profile_service.proto\x12\rnebius.iam.v1\x1a\x18nebius/annotations.proto\x1a#nebius/iam/v1/service_account.proto\x1a\'nebius/iam/v1/tenant_user_account.proto\x1a nebius/iam/v1/user_account.proto\"\x13\n\x11GetProfileRequest\"\x90\x02\n\x12GetProfileResponse\x12?\n\x0cuser_profile\x18\x01 \x01(\x0b\x32\x1a.nebius.iam.v1.UserProfileH\x00R\x0buserProfile\x12^\n\x17service_account_profile\x18\x02 \x01(\x0b\x32$.nebius.iam.v1.ServiceAccountProfileH\x00R\x15serviceAccountProfile\x12N\n\x11\x61nonymous_profile\x18\x03 \x01(\x0b\x32\x1f.nebius.iam.v1.AnonymousAccountH\x00R\x10\x61nonymousProfileB\t\n\x07profile\"\xc0\x02\n\x0bUserProfile\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12M\n\x0f\x66\x65\x64\x65ration_info\x18\x02 \x01(\x0b\x32$.nebius.iam.v1.UserAccountExternalIdR\x0e\x66\x65\x64\x65rationInfo\x12?\n\nattributes\x18\x03 \x01(\x0b\x32\x1d.nebius.iam.v1.UserAttributesH\x00R\nattributes\x12\x41\n\x10retrieving_error\x18\x04 \x01(\x0b\x32\x14.nebius.iam.v1.ErrorH\x00R\x0fretrievingError\x12\x37\n\x07tenants\x18\x05 \x03(\x0b\x32\x1d.nebius.iam.v1.UserTenantInfoR\x07tenantsB\x15\n\x13\x61ttributes_optional\"b\n\x0eUserTenantInfo\x12\x1b\n\ttenant_id\x18\x01 \x01(\tR\x08tenantId\x12\x33\n\x16tenant_user_account_id\x18\x02 \x01(\tR\x13tenantUserAccountId\"J\n\x15ServiceAccountProfile\x12\x31\n\x04info\x18\x01 \x01(\x0b\x32\x1d.nebius.iam.v1.ServiceAccountR\x04info\"\x12\n\x10\x41nonymousAccount2h\n\x0eProfileService\x12J\n\x03Get\x12 .nebius.iam.v1.GetProfileRequest\x1a!.nebius.iam.v1.GetProfileResponse\x1a\n\xbaJ\x07\x63pl.iamBZ\n\x14\x61i.nebius.pub.iam.v1B\x13ProfileServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/iam/v1/profile_service.proto\x12\rnebius.iam.v1\x1a\x18nebius/annotations.proto\x1a#nebius/iam/v1/service_account.proto\x1a\'nebius/iam/v1/tenant_user_account.proto\x1a nebius/iam/v1/user_account.proto\"\x13\n\x11GetProfileRequest\"\x90\x02\n\x12GetProfileResponse\x12?\n\x0cuser_profile\x18\x01 \x01(\x0b\x32\x1a.nebius.iam.v1.UserProfileH\x00R\x0buserProfile\x12^\n\x17service_account_profile\x18\x02 \x01(\x0b\x32$.nebius.iam.v1.ServiceAccountProfileH\x00R\x15serviceAccountProfile\x12N\n\x11\x61nonymous_profile\x18\x03 \x01(\x0b\x32\x1f.nebius.iam.v1.AnonymousAccountH\x00R\x10\x61nonymousProfileB\t\n\x07profile\"\x96\x03\n\x0bUserProfile\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12M\n\x0f\x66\x65\x64\x65ration_info\x18\x02 \x01(\x0b\x32$.nebius.iam.v1.UserAccountExternalIdR\x0e\x66\x65\x64\x65rationInfo\x12?\n\nattributes\x18\x03 \x01(\x0b\x32\x1d.nebius.iam.v1.UserAttributesH\x00R\nattributes\x12\x41\n\x10retrieving_error\x18\x04 \x01(\x0b\x32\x14.nebius.iam.v1.ErrorH\x00R\x0fretrievingError\x12\x37\n\x07tenants\x18\x05 \x03(\x0b\x32\x1d.nebius.iam.v1.UserTenantInfoR\x07tenants\x12T\n\x12user_account_state\x18\x06 \x01(\x0e\x32&.nebius.iam.v1.UserAccountStatus.StateR\x10userAccountStateB\x15\n\x13\x61ttributes_optional\"\xcb\x01\n\x0eUserTenantInfo\x12\x1b\n\ttenant_id\x18\x01 \x01(\tR\x08tenantId\x12\x33\n\x16tenant_user_account_id\x18\x02 \x01(\tR\x13tenantUserAccountId\x12g\n\x19tenant_user_account_state\x18\x03 \x01(\x0e\x32,.nebius.iam.v1.TenantUserAccountStatus.StateR\x16tenantUserAccountState\"J\n\x15ServiceAccountProfile\x12\x31\n\x04info\x18\x01 \x01(\x0b\x32\x1d.nebius.iam.v1.ServiceAccountR\x04info\"\x12\n\x10\x41nonymousAccount2h\n\x0eProfileService\x12J\n\x03Get\x12 .nebius.iam.v1.GetProfileRequest\x1a!.nebius.iam.v1.GetProfileResponse\x1a\n\xbaJ\x07\x63pl.iamBZ\n\x14\x61i.nebius.pub.iam.v1B\x13ProfileServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/iam/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,13 +33,13 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_GETPROFILERESPONSE']._serialized_start=214
   _globals['_GETPROFILERESPONSE']._serialized_end=486
   _globals['_USERPROFILE']._serialized_start=489
-  _globals['_USERPROFILE']._serialized_end=809
-  _globals['_USERTENANTINFO']._serialized_start=811
-  _globals['_USERTENANTINFO']._serialized_end=909
-  _globals['_SERVICEACCOUNTPROFILE']._serialized_start=911
-  _globals['_SERVICEACCOUNTPROFILE']._serialized_end=985
-  _globals['_ANONYMOUSACCOUNT']._serialized_start=987
-  _globals['_ANONYMOUSACCOUNT']._serialized_end=1005
-  _globals['_PROFILESERVICE']._serialized_start=1007
-  _globals['_PROFILESERVICE']._serialized_end=1111
+  _globals['_USERPROFILE']._serialized_end=895
+  _globals['_USERTENANTINFO']._serialized_start=898
+  _globals['_USERTENANTINFO']._serialized_end=1101
+  _globals['_SERVICEACCOUNTPROFILE']._serialized_start=1103
+  _globals['_SERVICEACCOUNTPROFILE']._serialized_end=1177
+  _globals['_ANONYMOUSACCOUNT']._serialized_start=1179
+  _globals['_ANONYMOUSACCOUNT']._serialized_end=1197
+  _globals['_PROFILESERVICE']._serialized_start=1199
+  _globals['_PROFILESERVICE']._serialized_end=1303
 # @@protoc_insertion_point(module_scope)

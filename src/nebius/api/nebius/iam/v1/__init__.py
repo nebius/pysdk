@@ -5065,6 +5065,7 @@ class FederationCertificateServiceClient(client.ClientWithOperations[v1_1.Operat
             :class:`nebius.api.nebius.common.v1.Operation`.
         """
         
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
         return super().request(
             method="UpdateBulk",
             request=request,
@@ -9738,6 +9739,7 @@ class UserProfile(pb_classes.Message):
         attributes: "UserAttributes|tenant_user_account_pb2.UserAttributes|None|unset.UnsetType" = unset.Unset,
         retrieving_error: "Error|tenant_user_account_pb2.Error|None|unset.UnsetType" = unset.Unset,
         tenants: "abc.Iterable[UserTenantInfo]|None|unset.UnsetType" = unset.Unset,
+        user_account_state: "UserAccountStatus.State|user_account_pb2.UserAccountStatus.State|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
@@ -9750,6 +9752,8 @@ class UserProfile(pb_classes.Message):
             self.retrieving_error = retrieving_error
         if not isinstance(tenants, unset.UnsetType):
             self.tenants = tenants
+        if not isinstance(user_account_state, unset.UnsetType):
+            self.user_account_state = user_account_state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -9758,6 +9762,7 @@ class UserProfile(pb_classes.Message):
             "attributes",
             "retrieving_error",
             "tenants",
+            "user_account_state",
             "attributes_optional",
         ]
     
@@ -9810,12 +9815,23 @@ class UserProfile(pb_classes.Message):
         return super()._set_field("tenants",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def user_account_state(self) -> "UserAccountStatus.State":
+        return super()._get_field("user_account_state", explicit_presence=False,
+        wrap=UserAccountStatus.State,
+        )
+    @user_account_state.setter
+    def user_account_state(self, value: "UserAccountStatus.State|user_account_pb2.UserAccountStatus.State|None") -> None:
+        return super()._set_field("user_account_state",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
         "federation_info":"federation_info",
         "attributes":"attributes",
         "retrieving_error":"retrieving_error",
         "tenants":"tenants",
+        "user_account_state":"user_account_state",
         "attributes_optional":"attributes_optional",
     }
     
@@ -9831,17 +9847,21 @@ class UserTenantInfo(pb_classes.Message):
         *,
         tenant_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         tenant_user_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        tenant_user_account_state: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(tenant_id, unset.UnsetType):
             self.tenant_id = tenant_id
         if not isinstance(tenant_user_account_id, unset.UnsetType):
             self.tenant_user_account_id = tenant_user_account_id
+        if not isinstance(tenant_user_account_state, unset.UnsetType):
+            self.tenant_user_account_state = tenant_user_account_state
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "tenant_id",
             "tenant_user_account_id",
+            "tenant_user_account_state",
         ]
     
     @builtins.property
@@ -9862,9 +9882,20 @@ class UserTenantInfo(pb_classes.Message):
         return super()._set_field("tenant_user_account_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def tenant_user_account_state(self) -> "TenantUserAccountStatus.State":
+        return super()._get_field("tenant_user_account_state", explicit_presence=False,
+        wrap=TenantUserAccountStatus.State,
+        )
+    @tenant_user_account_state.setter
+    def tenant_user_account_state(self, value: "TenantUserAccountStatus.State|tenant_user_account_pb2.TenantUserAccountStatus.State|None") -> None:
+        return super()._set_field("tenant_user_account_state",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "tenant_id":"tenant_id",
         "tenant_user_account_id":"tenant_user_account_id",
+        "tenant_user_account_state":"tenant_user_account_state",
     }
     
 class ServiceAccountProfile(pb_classes.Message):

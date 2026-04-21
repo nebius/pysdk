@@ -1,6 +1,7 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
+from nebius.api.nebius.compute.v1 import disk_pb2 as _disk_pb2
 from nebius.api.nebius.compute.v1 import network_interface_pb2 as _network_interface_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
@@ -88,7 +89,7 @@ class InstanceGpuClusterSpec(_message.Message):
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class AttachedDiskSpec(_message.Message):
-    __slots__ = ["attach_mode", "existing_disk", "device_id"]
+    __slots__ = ["attach_mode", "existing_disk", "managed_disk", "device_id"]
     class AttachMode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[AttachedDiskSpec.AttachMode]
@@ -99,17 +100,36 @@ class AttachedDiskSpec(_message.Message):
     READ_WRITE: AttachedDiskSpec.AttachMode
     ATTACH_MODE_FIELD_NUMBER: _ClassVar[int]
     EXISTING_DISK_FIELD_NUMBER: _ClassVar[int]
+    MANAGED_DISK_FIELD_NUMBER: _ClassVar[int]
     DEVICE_ID_FIELD_NUMBER: _ClassVar[int]
     attach_mode: AttachedDiskSpec.AttachMode
     existing_disk: ExistingDisk
+    managed_disk: ManagedDisk
     device_id: str
-    def __init__(self, attach_mode: _Optional[_Union[AttachedDiskSpec.AttachMode, str]] = ..., existing_disk: _Optional[_Union[ExistingDisk, _Mapping]] = ..., device_id: _Optional[str] = ...) -> None: ...
+    def __init__(self, attach_mode: _Optional[_Union[AttachedDiskSpec.AttachMode, str]] = ..., existing_disk: _Optional[_Union[ExistingDisk, _Mapping]] = ..., managed_disk: _Optional[_Union[ManagedDisk, _Mapping]] = ..., device_id: _Optional[str] = ...) -> None: ...
 
 class ExistingDisk(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class ManagedDisk(_message.Message):
+    __slots__ = ["name", "labels", "spec"]
+    class LabelsEntry(_message.Message):
+        __slots__ = ["key", "value"]
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: str
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    LABELS_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    labels: _containers.ScalarMap[str, str]
+    spec: _disk_pb2.DiskSpec
+    def __init__(self, name: _Optional[str] = ..., labels: _Optional[_Mapping[str, str]] = ..., spec: _Optional[_Union[_disk_pb2.DiskSpec, _Mapping]] = ...) -> None: ...
 
 class ExistingFilesystem(_message.Message):
     __slots__ = ["id"]
@@ -136,7 +156,7 @@ class AttachedFilesystemSpec(_message.Message):
     def __init__(self, attach_mode: _Optional[_Union[AttachedFilesystemSpec.AttachMode, str]] = ..., mount_tag: _Optional[str] = ..., existing_filesystem: _Optional[_Union[ExistingFilesystem, _Mapping]] = ...) -> None: ...
 
 class InstanceStatus(_message.Message):
-    __slots__ = ["state", "network_interfaces", "reconciling", "maintenance_event_id", "infiniband_topology_path", "reservation_id"]
+    __slots__ = ["state", "network_interfaces", "reconciling", "maintenance_event_id", "infiniband_topology_path", "reservation_id", "disk_attachments"]
     class InstanceState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[InstanceStatus.InstanceState]
@@ -163,13 +183,25 @@ class InstanceStatus(_message.Message):
     MAINTENANCE_EVENT_ID_FIELD_NUMBER: _ClassVar[int]
     INFINIBAND_TOPOLOGY_PATH_FIELD_NUMBER: _ClassVar[int]
     RESERVATION_ID_FIELD_NUMBER: _ClassVar[int]
+    DISK_ATTACHMENTS_FIELD_NUMBER: _ClassVar[int]
     state: InstanceStatus.InstanceState
     network_interfaces: _containers.RepeatedCompositeFieldContainer[_network_interface_pb2.NetworkInterfaceStatus]
     reconciling: bool
     maintenance_event_id: str
     infiniband_topology_path: InstanceStatusInfinibandTopologyPath
     reservation_id: str
-    def __init__(self, state: _Optional[_Union[InstanceStatus.InstanceState, str]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceStatus, _Mapping]]] = ..., reconciling: bool = ..., maintenance_event_id: _Optional[str] = ..., infiniband_topology_path: _Optional[_Union[InstanceStatusInfinibandTopologyPath, _Mapping]] = ..., reservation_id: _Optional[str] = ...) -> None: ...
+    disk_attachments: _containers.RepeatedCompositeFieldContainer[DiskAttachmentStatus]
+    def __init__(self, state: _Optional[_Union[InstanceStatus.InstanceState, str]] = ..., network_interfaces: _Optional[_Iterable[_Union[_network_interface_pb2.NetworkInterfaceStatus, _Mapping]]] = ..., reconciling: bool = ..., maintenance_event_id: _Optional[str] = ..., infiniband_topology_path: _Optional[_Union[InstanceStatusInfinibandTopologyPath, _Mapping]] = ..., reservation_id: _Optional[str] = ..., disk_attachments: _Optional[_Iterable[_Union[DiskAttachmentStatus, _Mapping]]] = ...) -> None: ...
+
+class DiskAttachmentStatus(_message.Message):
+    __slots__ = ["id", "name", "is_managed"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    IS_MANAGED_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    name: str
+    is_managed: bool
+    def __init__(self, id: _Optional[str] = ..., name: _Optional[str] = ..., is_managed: bool = ...) -> None: ...
 
 class InstanceStatusInfinibandTopologyPath(_message.Message):
     __slots__ = ["path"]

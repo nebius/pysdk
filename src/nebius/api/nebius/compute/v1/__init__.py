@@ -5704,12 +5704,23 @@ class AttachedDiskSpec(pb_classes.Message):
         def value(self) -> "ExistingDisk":
             return self._message.existing_disk
     
+    class __OneOfClass_type_managed_disk__(__OneOfClass_type__):
+        field: typing.Literal["managed_disk"] = "managed_disk"
+        
+        def __init__(self, msg: "AttachedDiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "ManagedDisk":
+            return self._message.managed_disk
+    
     @builtins.property
-    def type(self) -> __OneOfClass_type_existing_disk__|None:
+    def type(self) -> __OneOfClass_type_existing_disk__|__OneOfClass_type_managed_disk__|None:
         field_name_1: str|None = super().which_field_in_oneof("type")
         match field_name_1:
             case "existing_disk":
                 return self.__OneOfClass_type_existing_disk__(self)
+            case "managed_disk":
+                return self.__OneOfClass_type_managed_disk__(self)
             case None:
                 return None
             case _:
@@ -5721,6 +5732,7 @@ class AttachedDiskSpec(pb_classes.Message):
         *,
         attach_mode: "AttachedDiskSpec.AttachMode|instance_pb2.AttachedDiskSpec.AttachMode|None|unset.UnsetType" = unset.Unset,
         existing_disk: "ExistingDisk|instance_pb2.ExistingDisk|None|unset.UnsetType" = unset.Unset,
+        managed_disk: "ManagedDisk|instance_pb2.ManagedDisk|None|unset.UnsetType" = unset.Unset,
         device_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -5728,6 +5740,8 @@ class AttachedDiskSpec(pb_classes.Message):
             self.attach_mode = attach_mode
         if not isinstance(existing_disk, unset.UnsetType):
             self.existing_disk = existing_disk
+        if not isinstance(managed_disk, unset.UnsetType):
+            self.managed_disk = managed_disk
         if not isinstance(device_id, unset.UnsetType):
             self.device_id = device_id
     
@@ -5735,6 +5749,7 @@ class AttachedDiskSpec(pb_classes.Message):
         return [
             "attach_mode",
             "existing_disk",
+            "managed_disk",
             "device_id",
             "type",
             "AttachMode",
@@ -5781,6 +5796,71 @@ class AttachedDiskSpec(pb_classes.Message):
         )
     
     @builtins.property
+    def managed_disk(self) -> "ManagedDisk|None":
+        """
+        Attach a managed disk.
+        
+        Lifecycle:
+        
+        
+        * The disk is deleted when the instance is deleted.
+        
+        Semantics:
+        
+        
+        * Specifying a ManagedDisk expresses an intent to have that managed disk attached.
+        * If this intent cannot be satisfied, the entire operation fails.
+        * You can check the intent status in ``instance.status.disk_attachments``.
+        
+        Updates and matching:
+        
+        
+        * Managed disks can be updated only via instance spec updates. Updates via DiskService are not allowed.
+        * During updates, disks are matched by ``name``.
+        
+        Renaming and data loss:
+        
+        
+        * Changing the disk ``name`` triggers disk replacement (create a new disk and delete the old one),
+          which causes data loss.
+        * To rename a managed disk safely:
+          1) switch it to ExistingDisk in the instance spec, and
+          2) update/rename it via DiskService.
+        
+        Conflicts:
+        
+        
+        * Instance create/update fails if there is already a disk with the same ``name``.
+          as requested by any ManagedDisk.
+        
+        Finding the disk ID:
+        
+        
+        * The disk ID is available in ``instance.status.disk_attachments`` after it is created.
+          Use ``DiskAttachmentStatus.name`` to find the desired disk which matches ``name``.
+        
+        Switching to an existing (non-managed) disk:
+        
+        
+        * To preserve the disk after instance deletion, switch it to ExistingDisk in the instance spec,
+          use the disk ID from ``instance.status.disk_attachments``.
+        
+        Deletion protection:
+        
+        
+        * Switching ExistingDisk to ManagedDisk fails if ``Disk.spec.deletion_protection`` is enabled.
+        * Deleting an instance that has a ManagedDisk fails if ``Disk.spec.deletion_protection`` is enabled.
+        """
+        
+        return super()._get_field("managed_disk", explicit_presence=True,
+        wrap=ManagedDisk,
+        )
+    @managed_disk.setter
+    def managed_disk(self, value: "ManagedDisk|instance_pb2.ManagedDisk|None") -> None:
+        return super()._set_field("managed_disk",value,explicit_presence=True,
+        )
+    
+    @builtins.property
     def device_id(self) -> "builtins.str":
         """
         Specifies the user-defined identifier, allowing to use '/dev/disk/by-id/virtio-{device_id}' as a device path in mount command.
@@ -5796,6 +5876,7 @@ class AttachedDiskSpec(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "attach_mode":"attach_mode",
         "existing_disk":"existing_disk",
+        "managed_disk":"managed_disk",
         "device_id":"device_id",
         "type":"type",
         "AttachMode":"AttachMode",
@@ -5833,6 +5914,135 @@ class ExistingDisk(pb_classes.Message):
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
+    }
+    
+class ManagedDisk(pb_classes.Message):
+    __PB2_CLASS__ = instance_pb2.ManagedDisk
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ManagedDisk",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class LabelsEntry(pb_classes.Message):
+        __PB2_CLASS__ = instance_pb2.ManagedDisk.LabelsEntry
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ManagedDisk.LabelsEntry",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
+            if not isinstance(value, unset.UnsetType):
+                self.value = value
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
+        @builtins.property
+        def key(self) -> "builtins.str":
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return super()._get_field("value", explicit_presence=False,
+            )
+        @value.setter
+        def value(self, value: "builtins.str|None") -> None:
+            return super()._set_field("value",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        labels: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
+        spec: "DiskSpec|disk_pb2.DiskSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+        if not isinstance(labels, unset.UnsetType):
+            self.labels = labels
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "name",
+            "labels",
+            "spec",
+            "LabelsEntry",
+        ]
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        """
+        Name of a dependent disk.
+        Use it to convert an ExistingDisk to a dependent disk.
+        Changing the name will replace the disk and cause data loss.
+        """
+        
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def labels(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
+        """
+        Labels associated with disk resource.
+        """
+        
+        return super()._get_field("labels", explicit_presence=False,
+        wrap=pb_classes.Map,
+        )
+    @labels.setter
+    def labels(self, value: "abc.Mapping[builtins.str,builtins.str]|None") -> None:
+        return super()._set_field("labels",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "DiskSpec":
+        """
+        Specification of a dependent disk to be created.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=DiskSpec,
+        )
+    @spec.setter
+    def spec(self, value: "DiskSpec|disk_pb2.DiskSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "name":"name",
+        "labels":"labels",
+        "spec":"spec",
+        "LabelsEntry":"LabelsEntry",
     }
     
 class ExistingFilesystem(pb_classes.Message):
@@ -6029,6 +6239,7 @@ class InstanceStatus(pb_classes.Message):
         maintenance_event_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         infiniband_topology_path: "InstanceStatusInfinibandTopologyPath|instance_pb2.InstanceStatusInfinibandTopologyPath|None|unset.UnsetType" = unset.Unset,
         reservation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        disk_attachments: "abc.Iterable[DiskAttachmentStatus]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -6043,6 +6254,8 @@ class InstanceStatus(pb_classes.Message):
             self.infiniband_topology_path = infiniband_topology_path
         if not isinstance(reservation_id, unset.UnsetType):
             self.reservation_id = reservation_id
+        if not isinstance(disk_attachments, unset.UnsetType):
+            self.disk_attachments = disk_attachments
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -6052,6 +6265,7 @@ class InstanceStatus(pb_classes.Message):
             "maintenance_event_id",
             "infiniband_topology_path",
             "reservation_id",
+            "disk_attachments",
             "gpu_cluster_topology",
             "InstanceState",
         ]
@@ -6117,6 +6331,20 @@ class InstanceStatus(pb_classes.Message):
         return super()._set_field("reservation_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def disk_attachments(self) -> "abc.MutableSequence[DiskAttachmentStatus]":
+        """
+        Status of the requested disk attachments.
+        """
+        
+        return super()._get_field("disk_attachments", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(DiskAttachmentStatus,None,None),
+        )
+    @disk_attachments.setter
+    def disk_attachments(self, value: "abc.Iterable[DiskAttachmentStatus]|None") -> None:
+        return super()._set_field("disk_attachments",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "network_interfaces":"network_interfaces",
@@ -6124,8 +6352,97 @@ class InstanceStatus(pb_classes.Message):
         "maintenance_event_id":"maintenance_event_id",
         "infiniband_topology_path":"infiniband_topology_path",
         "reservation_id":"reservation_id",
+        "disk_attachments":"disk_attachments",
         "gpu_cluster_topology":"gpu_cluster_topology",
         "InstanceState":"InstanceState",
+    }
+    
+class DiskAttachmentStatus(pb_classes.Message):
+    __PB2_CLASS__ = instance_pb2.DiskAttachmentStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskAttachmentStatus",instance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        is_managed: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(name, unset.UnsetType):
+            self.name = name
+        if not isinstance(is_managed, unset.UnsetType):
+            self.is_managed = is_managed
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "name",
+            "is_managed",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        Disk ID.
+        
+        
+        * For ExistingDisk, this is the referenced disk ID.
+        * For ManagedDisk, may be empty while the attachment intent is still pending.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def name(self) -> "builtins.str":
+        """
+        Disk name used to match this status entry with the desired attachment
+        from the instance specification.
+        
+        Consistency:
+        
+        
+        * For ManagedDisk, this value is derived from the instance spec (ManagedDisk.name).
+        * For ExistingDisk, this value is derived from the disk resource name and may lag behind
+          in case of renaming. It is updated asynchronously and is eventually consistent.
+        """
+        
+        return super()._get_field("name", explicit_presence=False,
+        )
+    @name.setter
+    def name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("name",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def is_managed(self) -> "builtins.bool":
+        """
+        Indicates whether this attachment is managed by the instance lifecycle.
+        If true, the disk is expected to be deleted when the instance is deleted.
+        If false, the disk is preserved and only detached on instance deletion.
+        """
+        
+        return super()._get_field("is_managed", explicit_presence=False,
+        )
+    @is_managed.setter
+    def is_managed(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("is_managed",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "name":"name",
+        "is_managed":"is_managed",
     }
     
 class InstanceStatusInfinibandTopologyPath(pb_classes.Message):
@@ -8582,9 +8899,11 @@ __all__ = [
     "InstanceGpuClusterSpec",
     "AttachedDiskSpec",
     "ExistingDisk",
+    "ManagedDisk",
     "ExistingFilesystem",
     "AttachedFilesystemSpec",
     "InstanceStatus",
+    "DiskAttachmentStatus",
     "InstanceStatusInfinibandTopologyPath",
     "ReservationPolicy",
     "LocalDisksSpec",

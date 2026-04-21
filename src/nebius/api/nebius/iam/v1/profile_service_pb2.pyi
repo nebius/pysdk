@@ -24,26 +24,30 @@ class GetProfileResponse(_message.Message):
     def __init__(self, user_profile: _Optional[_Union[UserProfile, _Mapping]] = ..., service_account_profile: _Optional[_Union[ServiceAccountProfile, _Mapping]] = ..., anonymous_profile: _Optional[_Union[AnonymousAccount, _Mapping]] = ...) -> None: ...
 
 class UserProfile(_message.Message):
-    __slots__ = ["id", "federation_info", "attributes", "retrieving_error", "tenants"]
+    __slots__ = ["id", "federation_info", "attributes", "retrieving_error", "tenants", "user_account_state"]
     ID_FIELD_NUMBER: _ClassVar[int]
     FEDERATION_INFO_FIELD_NUMBER: _ClassVar[int]
     ATTRIBUTES_FIELD_NUMBER: _ClassVar[int]
     RETRIEVING_ERROR_FIELD_NUMBER: _ClassVar[int]
     TENANTS_FIELD_NUMBER: _ClassVar[int]
+    USER_ACCOUNT_STATE_FIELD_NUMBER: _ClassVar[int]
     id: str
     federation_info: _user_account_pb2.UserAccountExternalId
     attributes: _tenant_user_account_pb2.UserAttributes
     retrieving_error: _tenant_user_account_pb2.Error
     tenants: _containers.RepeatedCompositeFieldContainer[UserTenantInfo]
-    def __init__(self, id: _Optional[str] = ..., federation_info: _Optional[_Union[_user_account_pb2.UserAccountExternalId, _Mapping]] = ..., attributes: _Optional[_Union[_tenant_user_account_pb2.UserAttributes, _Mapping]] = ..., retrieving_error: _Optional[_Union[_tenant_user_account_pb2.Error, _Mapping]] = ..., tenants: _Optional[_Iterable[_Union[UserTenantInfo, _Mapping]]] = ...) -> None: ...
+    user_account_state: _user_account_pb2.UserAccountStatus.State
+    def __init__(self, id: _Optional[str] = ..., federation_info: _Optional[_Union[_user_account_pb2.UserAccountExternalId, _Mapping]] = ..., attributes: _Optional[_Union[_tenant_user_account_pb2.UserAttributes, _Mapping]] = ..., retrieving_error: _Optional[_Union[_tenant_user_account_pb2.Error, _Mapping]] = ..., tenants: _Optional[_Iterable[_Union[UserTenantInfo, _Mapping]]] = ..., user_account_state: _Optional[_Union[_user_account_pb2.UserAccountStatus.State, str]] = ...) -> None: ...
 
 class UserTenantInfo(_message.Message):
-    __slots__ = ["tenant_id", "tenant_user_account_id"]
+    __slots__ = ["tenant_id", "tenant_user_account_id", "tenant_user_account_state"]
     TENANT_ID_FIELD_NUMBER: _ClassVar[int]
     TENANT_USER_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
+    TENANT_USER_ACCOUNT_STATE_FIELD_NUMBER: _ClassVar[int]
     tenant_id: str
     tenant_user_account_id: str
-    def __init__(self, tenant_id: _Optional[str] = ..., tenant_user_account_id: _Optional[str] = ...) -> None: ...
+    tenant_user_account_state: _tenant_user_account_pb2.TenantUserAccountStatus.State
+    def __init__(self, tenant_id: _Optional[str] = ..., tenant_user_account_id: _Optional[str] = ..., tenant_user_account_state: _Optional[_Union[_tenant_user_account_pb2.TenantUserAccountStatus.State, str]] = ...) -> None: ...
 
 class ServiceAccountProfile(_message.Message):
     __slots__ = ["info"]
