@@ -25,6 +25,8 @@ import nebius.api.nebius.storage.v1.bucket_policy_pb2 as bucket_policy_pb2
 import nebius.api.nebius.storage.v1.bucket_service_pb2 as bucket_service_pb2
 import nebius.api.nebius.storage.v1.cors_pb2 as cors_pb2
 import nebius.api.nebius.storage.v1.lifecycle_pb2 as lifecycle_pb2
+import nebius.api.nebius.storage.v1.transfer_pb2 as transfer_pb2
+import nebius.api.nebius.storage.v1.transfer_service_pb2 as transfer_service_pb2
 import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
@@ -2981,6 +2983,2772 @@ class BucketServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operat
         )
     
 
+# file: nebius/storage/v1/transfer.proto
+class Transfer(pb_classes.Message):
+    """
+    Transfer that migrates data from other providers or across different regions of Nebius Object Storage.
+    Transfer consists of consecutive iterations where the service lists objects in the source bucket and
+    moves those that need to be transferred according to the specified overwrite strategy and touch unmanaged flag value.
+    After an iteration completes, the transfer will stop if its stop condition is met. Otherwise,
+    it will wait for the defined inter-iteration interval before starting the next iteration.
+    """
+    
+    __PB2_CLASS__ = transfer_pb2.Transfer
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.Transfer",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "TransferSpec|transfer_pb2.TransferSpec|None|unset.UnsetType" = unset.Unset,
+        status: "TransferStatus|transfer_pb2.TransferStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "TransferSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=TransferSpec,
+        )
+    @spec.setter
+    def spec(self, value: "TransferSpec|transfer_pb2.TransferSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "TransferStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=TransferStatus,
+        )
+    @status.setter
+    def status(self, value: "TransferStatus|transfer_pb2.TransferStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class TransferSpec(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSpec",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "inter_iteration_interval": well_known_1.duration_mask,
+    }
+    
+    class Limiters(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferSpec.Limiters
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSpec.Limiters",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            bandwidth_bytes_per_second: "builtins.int|None|unset.UnsetType" = unset.Unset,
+            requests_per_second: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(bandwidth_bytes_per_second, unset.UnsetType):
+                self.bandwidth_bytes_per_second = bandwidth_bytes_per_second
+            if not isinstance(requests_per_second, unset.UnsetType):
+                self.requests_per_second = requests_per_second
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "bandwidth_bytes_per_second",
+                "requests_per_second",
+            ]
+        
+        @builtins.property
+        def bandwidth_bytes_per_second(self) -> "builtins.int":
+            """
+            Maximum bandwidth in bytes per second. If set to zero, default limit will be applied.
+            """
+            
+            return super()._get_field("bandwidth_bytes_per_second", explicit_presence=False,
+            )
+        @bandwidth_bytes_per_second.setter
+        def bandwidth_bytes_per_second(self, value: "builtins.int|None") -> None:
+            return super()._set_field("bandwidth_bytes_per_second",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def requests_per_second(self) -> "builtins.int":
+            """
+            Maximum number of requests per second. If set to zero, default limit will be applied.
+            """
+            
+            return super()._get_field("requests_per_second", explicit_presence=False,
+            )
+        @requests_per_second.setter
+        def requests_per_second(self, value: "builtins.int|None") -> None:
+            return super()._set_field("requests_per_second",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "bandwidth_bytes_per_second":"bandwidth_bytes_per_second",
+            "requests_per_second":"requests_per_second",
+        }
+        
+    
+    class StopConditionAfterOneIteration(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferSpec.StopConditionAfterOneIteration
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSpec.StopConditionAfterOneIteration",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+        ) -> None:
+            super().__init__(initial_message)
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+            ]
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        }
+        
+    
+    class StopConditionAfterNEmptyIterations(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferSpec.StopConditionAfterNEmptyIterations
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSpec.StopConditionAfterNEmptyIterations",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            empty_iterations_threshold: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(empty_iterations_threshold, unset.UnsetType):
+                self.empty_iterations_threshold = empty_iterations_threshold
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "empty_iterations_threshold",
+            ]
+        
+        @builtins.property
+        def empty_iterations_threshold(self) -> "builtins.int":
+            """
+            Number of consecutive iterations with zero transferred objects required to stop transfer.
+            """
+            
+            return super()._get_field("empty_iterations_threshold", explicit_presence=False,
+            )
+        @empty_iterations_threshold.setter
+        def empty_iterations_threshold(self, value: "builtins.int|None") -> None:
+            return super()._set_field("empty_iterations_threshold",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "empty_iterations_threshold":"empty_iterations_threshold",
+        }
+        
+    
+    class StopConditionInfinite(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferSpec.StopConditionInfinite
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSpec.StopConditionInfinite",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+        ) -> None:
+            super().__init__(initial_message)
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+            ]
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        }
+        
+    
+    class OverwriteStrategy(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.TransferSpec.OverwriteStrategy",transfer_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        OVERWRITE_STRATEGY_UNSPECIFIED = 0
+        NEVER = 1
+        """
+        Never overwrite objects that exist in the destination.
+        If object exists in destination bucket, skip it.
+        Safest option to prevent any data loss.
+        """
+        
+        IF_NEWER = 2
+        """
+        Overwrite only if source object is newer than destination.
+        Comparison based on Last-Modified timestamp.
+        Recommended for incremental sync scenarios.
+        If touch_unmanaged flag isn't set, we do not overwrite objects that haven't been created by Data Transfer service.
+        """
+        
+    
+    class __OneOfClass_stop_condition__(pb_classes.OneOf):
+        name: builtins.str= "stop_condition"
+        
+        def __init__(self, msg: "TransferSpec") -> None:
+            super().__init__()
+            self._message: "TransferSpec" = msg
+    
+    class __OneOfClass_stop_condition_after_one_iteration__(__OneOfClass_stop_condition__):
+        field: typing.Literal["after_one_iteration"] = "after_one_iteration"
+        
+        def __init__(self, msg: "TransferSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TransferSpec.StopConditionAfterOneIteration":
+            return self._message.after_one_iteration
+    
+    class __OneOfClass_stop_condition_after_n_empty_iterations__(__OneOfClass_stop_condition__):
+        field: typing.Literal["after_n_empty_iterations"] = "after_n_empty_iterations"
+        
+        def __init__(self, msg: "TransferSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TransferSpec.StopConditionAfterNEmptyIterations":
+            return self._message.after_n_empty_iterations
+    
+    class __OneOfClass_stop_condition_infinite__(__OneOfClass_stop_condition__):
+        field: typing.Literal["infinite"] = "infinite"
+        
+        def __init__(self, msg: "TransferSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TransferSpec.StopConditionInfinite":
+            return self._message.infinite
+    
+    @builtins.property
+    def stop_condition(self) -> __OneOfClass_stop_condition_after_one_iteration__|__OneOfClass_stop_condition_after_n_empty_iterations__|__OneOfClass_stop_condition_infinite__|None:
+        """
+        The stop condition is checked after every iteration. If the condition is met, the transfer will stop.
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("stop_condition")
+        match field_name_1:
+            case "after_one_iteration":
+                return self.__OneOfClass_stop_condition_after_one_iteration__(self)
+            case "after_n_empty_iterations":
+                return self.__OneOfClass_stop_condition_after_n_empty_iterations__(self)
+            case "infinite":
+                return self.__OneOfClass_stop_condition_infinite__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        source: "TransferSource|transfer_pb2.TransferSource|None|unset.UnsetType" = unset.Unset,
+        destination: "TransferDestination|transfer_pb2.TransferDestination|None|unset.UnsetType" = unset.Unset,
+        limiters: "TransferSpec.Limiters|transfer_pb2.TransferSpec.Limiters|None|unset.UnsetType" = unset.Unset,
+        after_one_iteration: "TransferSpec.StopConditionAfterOneIteration|transfer_pb2.TransferSpec.StopConditionAfterOneIteration|None|unset.UnsetType" = unset.Unset,
+        after_n_empty_iterations: "TransferSpec.StopConditionAfterNEmptyIterations|transfer_pb2.TransferSpec.StopConditionAfterNEmptyIterations|None|unset.UnsetType" = unset.Unset,
+        infinite: "TransferSpec.StopConditionInfinite|transfer_pb2.TransferSpec.StopConditionInfinite|None|unset.UnsetType" = unset.Unset,
+        inter_iteration_interval: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
+        overwrite_strategy: "TransferSpec.OverwriteStrategy|transfer_pb2.TransferSpec.OverwriteStrategy|None|unset.UnsetType" = unset.Unset,
+        touch_unmanaged: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(source, unset.UnsetType):
+            self.source = source
+        if not isinstance(destination, unset.UnsetType):
+            self.destination = destination
+        if not isinstance(limiters, unset.UnsetType):
+            self.limiters = limiters
+        if not isinstance(after_one_iteration, unset.UnsetType):
+            self.after_one_iteration = after_one_iteration
+        if not isinstance(after_n_empty_iterations, unset.UnsetType):
+            self.after_n_empty_iterations = after_n_empty_iterations
+        if not isinstance(infinite, unset.UnsetType):
+            self.infinite = infinite
+        if not isinstance(inter_iteration_interval, unset.UnsetType):
+            self.inter_iteration_interval = inter_iteration_interval
+        if not isinstance(overwrite_strategy, unset.UnsetType):
+            self.overwrite_strategy = overwrite_strategy
+        if not isinstance(touch_unmanaged, unset.UnsetType):
+            self.touch_unmanaged = touch_unmanaged
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "source",
+            "destination",
+            "limiters",
+            "after_one_iteration",
+            "after_n_empty_iterations",
+            "infinite",
+            "inter_iteration_interval",
+            "overwrite_strategy",
+            "touch_unmanaged",
+            "Limiters",
+            "StopConditionAfterOneIteration",
+            "StopConditionAfterNEmptyIterations",
+            "StopConditionInfinite",
+            "stop_condition",
+            "OverwriteStrategy",
+        ]
+    
+    @builtins.property
+    def source(self) -> "TransferSource":
+        """
+        Source from which the transfer reads data.
+        """
+        
+        return super()._get_field("source", explicit_presence=False,
+        wrap=TransferSource,
+        )
+    @source.setter
+    def source(self, value: "TransferSource|transfer_pb2.TransferSource|None") -> None:
+        return super()._set_field("source",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def destination(self) -> "TransferDestination":
+        """
+        Destination to which the transfer writes data.
+        """
+        
+        return super()._get_field("destination", explicit_presence=False,
+        wrap=TransferDestination,
+        )
+    @destination.setter
+    def destination(self, value: "TransferDestination|transfer_pb2.TransferDestination|None") -> None:
+        return super()._set_field("destination",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def limiters(self) -> "TransferSpec.Limiters":
+        """
+        Limiters applied to source bucket operations. These limits include all operations
+        required for transfer (HeadObject, GetObject, ListObjects). For details about
+        which operations are used, see public documentation: http://docs.nebius.com/object-storage/transfer/quickstart#background.
+        
+        Note: Since the service performs comparable request volumes and data transfers
+        to both source and destination, these limits will indirectly constrain
+        destination operations as well.
+        """
+        
+        return super()._get_field("limiters", explicit_presence=False,
+        wrap=TransferSpec.Limiters,
+        )
+    @limiters.setter
+    def limiters(self, value: "TransferSpec.Limiters|transfer_pb2.TransferSpec.Limiters|None") -> None:
+        return super()._set_field("limiters",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def after_one_iteration(self) -> "TransferSpec.StopConditionAfterOneIteration|None":
+        return super()._get_field("after_one_iteration", explicit_presence=True,
+        wrap=TransferSpec.StopConditionAfterOneIteration,
+        )
+    @after_one_iteration.setter
+    def after_one_iteration(self, value: "TransferSpec.StopConditionAfterOneIteration|transfer_pb2.TransferSpec.StopConditionAfterOneIteration|None") -> None:
+        return super()._set_field("after_one_iteration",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def after_n_empty_iterations(self) -> "TransferSpec.StopConditionAfterNEmptyIterations|None":
+        return super()._get_field("after_n_empty_iterations", explicit_presence=True,
+        wrap=TransferSpec.StopConditionAfterNEmptyIterations,
+        )
+    @after_n_empty_iterations.setter
+    def after_n_empty_iterations(self, value: "TransferSpec.StopConditionAfterNEmptyIterations|transfer_pb2.TransferSpec.StopConditionAfterNEmptyIterations|None") -> None:
+        return super()._set_field("after_n_empty_iterations",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def infinite(self) -> "TransferSpec.StopConditionInfinite|None":
+        """
+        Infinite transfers do not stop automatically and can be stopped manually by the user.
+        """
+        
+        return super()._get_field("infinite", explicit_presence=True,
+        wrap=TransferSpec.StopConditionInfinite,
+        )
+    @infinite.setter
+    def infinite(self, value: "TransferSpec.StopConditionInfinite|transfer_pb2.TransferSpec.StopConditionInfinite|None") -> None:
+        return super()._set_field("infinite",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def inter_iteration_interval(self) -> "datetime.timedelta":
+        """
+        The time to wait since the previous iteration before starting the next one.
+        Default is 15 minutes if not specified.
+        """
+        
+        return super()._get_field("inter_iteration_interval", explicit_presence=False,
+        wrap=well_known_1.from_duration
+        )
+    @inter_iteration_interval.setter
+    def inter_iteration_interval(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("inter_iteration_interval",value,explicit_presence=False,
+        unwrap=well_known_1.to_duration
+        )
+    
+    @builtins.property
+    def overwrite_strategy(self) -> "TransferSpec.OverwriteStrategy":
+        """
+        Overwrite strategy set logic of overwrite already existed objects in destination bucket.
+        """
+        
+        return super()._get_field("overwrite_strategy", explicit_presence=False,
+        wrap=TransferSpec.OverwriteStrategy,
+        )
+    @overwrite_strategy.setter
+    def overwrite_strategy(self, value: "TransferSpec.OverwriteStrategy|transfer_pb2.TransferSpec.OverwriteStrategy|None") -> None:
+        return super()._set_field("overwrite_strategy",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def touch_unmanaged(self) -> "builtins.bool":
+        """
+        If touch_unmanaged flag is set, service will be allowed to overwrite and delete from destination objects that were not
+        created by Data Transfer Service. If this flag is false, Data Transfer Service will never overwrite or delete objects
+        that haven't been created by Data Transfer service.
+        """
+        
+        return super()._get_field("touch_unmanaged", explicit_presence=False,
+        )
+    @touch_unmanaged.setter
+    def touch_unmanaged(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("touch_unmanaged",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "source":"source",
+        "destination":"destination",
+        "limiters":"limiters",
+        "after_one_iteration":"after_one_iteration",
+        "after_n_empty_iterations":"after_n_empty_iterations",
+        "infinite":"infinite",
+        "inter_iteration_interval":"inter_iteration_interval",
+        "overwrite_strategy":"overwrite_strategy",
+        "touch_unmanaged":"touch_unmanaged",
+        "Limiters":"Limiters",
+        "StopConditionAfterOneIteration":"StopConditionAfterOneIteration",
+        "StopConditionAfterNEmptyIterations":"StopConditionAfterNEmptyIterations",
+        "StopConditionInfinite":"StopConditionInfinite",
+        "stop_condition":"stop_condition",
+        "OverwriteStrategy":"OverwriteStrategy",
+    }
+    
+class TransferSource(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferSource
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSource",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class NebiusProvider(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferSource.NebiusProvider
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSource.NebiusProvider",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        class __OneOfClass_credentials__(pb_classes.OneOf):
+            name: builtins.str= "credentials"
+            
+            def __init__(self, msg: "TransferSource.NebiusProvider") -> None:
+                super().__init__()
+                self._message: "TransferSource.NebiusProvider" = msg
+        
+        class __OneOfClass_credentials_anonymous__(__OneOfClass_credentials__):
+            field: typing.Literal["anonymous"] = "anonymous"
+            
+            def __init__(self, msg: "TransferSource.NebiusProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAnonymous":
+                return self._message.anonymous
+        
+        class __OneOfClass_credentials_access_key__(__OneOfClass_credentials__):
+            field: typing.Literal["access_key"] = "access_key"
+            
+            def __init__(self, msg: "TransferSource.NebiusProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAccessKey":
+                return self._message.access_key
+        
+        @builtins.property
+        def credentials(self) -> __OneOfClass_credentials_anonymous__|__OneOfClass_credentials_access_key__|None:
+            """
+            Credentials for accessing the source bucket. These credentials must have list and get permissions.
+            """
+            
+            field_name_1: str|None = super().which_field_in_oneof("credentials")
+            match field_name_1:
+                case "anonymous":
+                    return self.__OneOfClass_credentials_anonymous__(self)
+                case "access_key":
+                    return self.__OneOfClass_credentials_access_key__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            anonymous: "TransferCredentialsAnonymous|transfer_pb2.TransferCredentialsAnonymous|None|unset.UnsetType" = unset.Unset,
+            access_key: "TransferCredentialsAccessKey|transfer_pb2.TransferCredentialsAccessKey|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(region, unset.UnsetType):
+                self.region = region
+            if not isinstance(bucket_name, unset.UnsetType):
+                self.bucket_name = bucket_name
+            if not isinstance(anonymous, unset.UnsetType):
+                self.anonymous = anonymous
+            if not isinstance(access_key, unset.UnsetType):
+                self.access_key = access_key
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "region",
+                "bucket_name",
+                "anonymous",
+                "access_key",
+                "credentials",
+            ]
+        
+        @builtins.property
+        def region(self) -> "builtins.str":
+            """
+            Nebius region where the source bucket is located.
+            """
+            
+            return super()._get_field("region", explicit_presence=False,
+            )
+        @region.setter
+        def region(self, value: "builtins.str|None") -> None:
+            return super()._set_field("region",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def bucket_name(self) -> "builtins.str":
+            """
+            Name of the source bucket.
+            """
+            
+            return super()._get_field("bucket_name", explicit_presence=False,
+            )
+        @bucket_name.setter
+        def bucket_name(self, value: "builtins.str|None") -> None:
+            return super()._set_field("bucket_name",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def anonymous(self) -> "TransferCredentialsAnonymous|None":
+            return super()._get_field("anonymous", explicit_presence=True,
+            wrap=TransferCredentialsAnonymous,
+            )
+        @anonymous.setter
+        def anonymous(self, value: "TransferCredentialsAnonymous|transfer_pb2.TransferCredentialsAnonymous|None") -> None:
+            return super()._set_field("anonymous",value,explicit_presence=True,
+            )
+        
+        @builtins.property
+        def access_key(self) -> "TransferCredentialsAccessKey|None":
+            return super()._get_field("access_key", explicit_presence=True,
+            wrap=TransferCredentialsAccessKey,
+            )
+        @access_key.setter
+        def access_key(self, value: "TransferCredentialsAccessKey|transfer_pb2.TransferCredentialsAccessKey|None") -> None:
+            return super()._set_field("access_key",value,explicit_presence=True,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "region":"region",
+            "bucket_name":"bucket_name",
+            "anonymous":"anonymous",
+            "access_key":"access_key",
+            "credentials":"credentials",
+        }
+        
+    
+    class S3CompatibleProvider(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferSource.S3CompatibleProvider
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSource.S3CompatibleProvider",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        class __OneOfClass_credentials__(pb_classes.OneOf):
+            name: builtins.str= "credentials"
+            
+            def __init__(self, msg: "TransferSource.S3CompatibleProvider") -> None:
+                super().__init__()
+                self._message: "TransferSource.S3CompatibleProvider" = msg
+        
+        class __OneOfClass_credentials_anonymous__(__OneOfClass_credentials__):
+            field: typing.Literal["anonymous"] = "anonymous"
+            
+            def __init__(self, msg: "TransferSource.S3CompatibleProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAnonymous":
+                return self._message.anonymous
+        
+        class __OneOfClass_credentials_access_key__(__OneOfClass_credentials__):
+            field: typing.Literal["access_key"] = "access_key"
+            
+            def __init__(self, msg: "TransferSource.S3CompatibleProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAccessKey":
+                return self._message.access_key
+        
+        @builtins.property
+        def credentials(self) -> __OneOfClass_credentials_anonymous__|__OneOfClass_credentials_access_key__|None:
+            """
+            Credentials for accessing the source bucket. These credentials must have list and get permissions.
+            """
+            
+            field_name_1: str|None = super().which_field_in_oneof("credentials")
+            match field_name_1:
+                case "anonymous":
+                    return self.__OneOfClass_credentials_anonymous__(self)
+                case "access_key":
+                    return self.__OneOfClass_credentials_access_key__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            anonymous: "TransferCredentialsAnonymous|transfer_pb2.TransferCredentialsAnonymous|None|unset.UnsetType" = unset.Unset,
+            access_key: "TransferCredentialsAccessKey|transfer_pb2.TransferCredentialsAccessKey|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(endpoint, unset.UnsetType):
+                self.endpoint = endpoint
+            if not isinstance(region, unset.UnsetType):
+                self.region = region
+            if not isinstance(bucket_name, unset.UnsetType):
+                self.bucket_name = bucket_name
+            if not isinstance(anonymous, unset.UnsetType):
+                self.anonymous = anonymous
+            if not isinstance(access_key, unset.UnsetType):
+                self.access_key = access_key
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "endpoint",
+                "region",
+                "bucket_name",
+                "anonymous",
+                "access_key",
+                "credentials",
+            ]
+        
+        @builtins.property
+        def endpoint(self) -> "builtins.str":
+            """
+            The endpoint must be in the form of a URL, starting with the protocol (https),
+            followed by the endpoint address without a trailing slash.
+            Example: "https://storage.some-cloud".
+            """
+            
+            return super()._get_field("endpoint", explicit_presence=False,
+            )
+        @endpoint.setter
+        def endpoint(self, value: "builtins.str|None") -> None:
+            return super()._set_field("endpoint",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def region(self) -> "builtins.str":
+            """
+            S3-compatible provider region where source bucket is located.
+            """
+            
+            return super()._get_field("region", explicit_presence=False,
+            )
+        @region.setter
+        def region(self, value: "builtins.str|None") -> None:
+            return super()._set_field("region",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def bucket_name(self) -> "builtins.str":
+            """
+            Name of the source bucket.
+            """
+            
+            return super()._get_field("bucket_name", explicit_presence=False,
+            )
+        @bucket_name.setter
+        def bucket_name(self, value: "builtins.str|None") -> None:
+            return super()._set_field("bucket_name",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def anonymous(self) -> "TransferCredentialsAnonymous|None":
+            return super()._get_field("anonymous", explicit_presence=True,
+            wrap=TransferCredentialsAnonymous,
+            )
+        @anonymous.setter
+        def anonymous(self, value: "TransferCredentialsAnonymous|transfer_pb2.TransferCredentialsAnonymous|None") -> None:
+            return super()._set_field("anonymous",value,explicit_presence=True,
+            )
+        
+        @builtins.property
+        def access_key(self) -> "TransferCredentialsAccessKey|None":
+            return super()._get_field("access_key", explicit_presence=True,
+            wrap=TransferCredentialsAccessKey,
+            )
+        @access_key.setter
+        def access_key(self, value: "TransferCredentialsAccessKey|transfer_pb2.TransferCredentialsAccessKey|None") -> None:
+            return super()._set_field("access_key",value,explicit_presence=True,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "endpoint":"endpoint",
+            "region":"region",
+            "bucket_name":"bucket_name",
+            "anonymous":"anonymous",
+            "access_key":"access_key",
+            "credentials":"credentials",
+        }
+        
+    
+    class AzureBlobStorageProvider(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferSource.AzureBlobStorageProvider
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferSource.AzureBlobStorageProvider",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        class __OneOfClass_credentials__(pb_classes.OneOf):
+            name: builtins.str= "credentials"
+            
+            def __init__(self, msg: "TransferSource.AzureBlobStorageProvider") -> None:
+                super().__init__()
+                self._message: "TransferSource.AzureBlobStorageProvider" = msg
+        
+        class __OneOfClass_credentials_anonymous__(__OneOfClass_credentials__):
+            field: typing.Literal["anonymous"] = "anonymous"
+            
+            def __init__(self, msg: "TransferSource.AzureBlobStorageProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAnonymous":
+                return self._message.anonymous
+        
+        class __OneOfClass_credentials_azure_storage_account__(__OneOfClass_credentials__):
+            field: typing.Literal["azure_storage_account"] = "azure_storage_account"
+            
+            def __init__(self, msg: "TransferSource.AzureBlobStorageProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAzureStorageAccount":
+                return self._message.azure_storage_account
+        
+        @builtins.property
+        def credentials(self) -> __OneOfClass_credentials_anonymous__|__OneOfClass_credentials_azure_storage_account__|None:
+            """
+            Credentials for accessing the source container. These credentials must have list and get permissions.
+            """
+            
+            field_name_1: str|None = super().which_field_in_oneof("credentials")
+            match field_name_1:
+                case "anonymous":
+                    return self.__OneOfClass_credentials_anonymous__(self)
+                case "azure_storage_account":
+                    return self.__OneOfClass_credentials_azure_storage_account__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            container_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            anonymous: "TransferCredentialsAnonymous|transfer_pb2.TransferCredentialsAnonymous|None|unset.UnsetType" = unset.Unset,
+            azure_storage_account: "TransferCredentialsAzureStorageAccount|transfer_pb2.TransferCredentialsAzureStorageAccount|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(endpoint, unset.UnsetType):
+                self.endpoint = endpoint
+            if not isinstance(container_name, unset.UnsetType):
+                self.container_name = container_name
+            if not isinstance(anonymous, unset.UnsetType):
+                self.anonymous = anonymous
+            if not isinstance(azure_storage_account, unset.UnsetType):
+                self.azure_storage_account = azure_storage_account
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "endpoint",
+                "container_name",
+                "anonymous",
+                "azure_storage_account",
+                "credentials",
+            ]
+        
+        @builtins.property
+        def endpoint(self) -> "builtins.str":
+            """
+            The endpoint must be in the form of a URL, starting with the protocol (https),
+            followed by the endpoint address without a trailing slash.
+            Example: "https://storageaccountname.blob.core.windows.net".
+            """
+            
+            return super()._get_field("endpoint", explicit_presence=False,
+            )
+        @endpoint.setter
+        def endpoint(self, value: "builtins.str|None") -> None:
+            return super()._set_field("endpoint",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def container_name(self) -> "builtins.str":
+            """
+            Name of the source Azure Blob Storage container.
+            """
+            
+            return super()._get_field("container_name", explicit_presence=False,
+            )
+        @container_name.setter
+        def container_name(self, value: "builtins.str|None") -> None:
+            return super()._set_field("container_name",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def anonymous(self) -> "TransferCredentialsAnonymous|None":
+            return super()._get_field("anonymous", explicit_presence=True,
+            wrap=TransferCredentialsAnonymous,
+            )
+        @anonymous.setter
+        def anonymous(self, value: "TransferCredentialsAnonymous|transfer_pb2.TransferCredentialsAnonymous|None") -> None:
+            return super()._set_field("anonymous",value,explicit_presence=True,
+            )
+        
+        @builtins.property
+        def azure_storage_account(self) -> "TransferCredentialsAzureStorageAccount|None":
+            return super()._get_field("azure_storage_account", explicit_presence=True,
+            wrap=TransferCredentialsAzureStorageAccount,
+            )
+        @azure_storage_account.setter
+        def azure_storage_account(self, value: "TransferCredentialsAzureStorageAccount|transfer_pb2.TransferCredentialsAzureStorageAccount|None") -> None:
+            return super()._set_field("azure_storage_account",value,explicit_presence=True,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "endpoint":"endpoint",
+            "container_name":"container_name",
+            "anonymous":"anonymous",
+            "azure_storage_account":"azure_storage_account",
+            "credentials":"credentials",
+        }
+        
+    
+    class __OneOfClass_provider__(pb_classes.OneOf):
+        name: builtins.str= "provider"
+        
+        def __init__(self, msg: "TransferSource") -> None:
+            super().__init__()
+            self._message: "TransferSource" = msg
+    
+    class __OneOfClass_provider_nebius__(__OneOfClass_provider__):
+        field: typing.Literal["nebius"] = "nebius"
+        
+        def __init__(self, msg: "TransferSource") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TransferSource.NebiusProvider":
+            return self._message.nebius
+    
+    class __OneOfClass_provider_s3_compatible__(__OneOfClass_provider__):
+        field: typing.Literal["s3_compatible"] = "s3_compatible"
+        
+        def __init__(self, msg: "TransferSource") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TransferSource.S3CompatibleProvider":
+            return self._message.s3_compatible
+    
+    class __OneOfClass_provider_azure_blob_storage__(__OneOfClass_provider__):
+        field: typing.Literal["azure_blob_storage"] = "azure_blob_storage"
+        
+        def __init__(self, msg: "TransferSource") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TransferSource.AzureBlobStorageProvider":
+            return self._message.azure_blob_storage
+    
+    @builtins.property
+    def provider(self) -> __OneOfClass_provider_nebius__|__OneOfClass_provider_s3_compatible__|__OneOfClass_provider_azure_blob_storage__|None:
+        """
+        Source storage provider configuration.
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("provider")
+        match field_name_1:
+            case "nebius":
+                return self.__OneOfClass_provider_nebius__(self)
+            case "s3_compatible":
+                return self.__OneOfClass_provider_s3_compatible__(self)
+            case "azure_blob_storage":
+                return self.__OneOfClass_provider_azure_blob_storage__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        nebius: "TransferSource.NebiusProvider|transfer_pb2.TransferSource.NebiusProvider|None|unset.UnsetType" = unset.Unset,
+        s3_compatible: "TransferSource.S3CompatibleProvider|transfer_pb2.TransferSource.S3CompatibleProvider|None|unset.UnsetType" = unset.Unset,
+        azure_blob_storage: "TransferSource.AzureBlobStorageProvider|transfer_pb2.TransferSource.AzureBlobStorageProvider|None|unset.UnsetType" = unset.Unset,
+        prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(nebius, unset.UnsetType):
+            self.nebius = nebius
+        if not isinstance(s3_compatible, unset.UnsetType):
+            self.s3_compatible = s3_compatible
+        if not isinstance(azure_blob_storage, unset.UnsetType):
+            self.azure_blob_storage = azure_blob_storage
+        if not isinstance(prefix, unset.UnsetType):
+            self.prefix = prefix
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "nebius",
+            "s3_compatible",
+            "azure_blob_storage",
+            "prefix",
+            "NebiusProvider",
+            "S3CompatibleProvider",
+            "AzureBlobStorageProvider",
+            "provider",
+        ]
+    
+    @builtins.property
+    def nebius(self) -> "TransferSource.NebiusProvider|None":
+        return super()._get_field("nebius", explicit_presence=True,
+        wrap=TransferSource.NebiusProvider,
+        )
+    @nebius.setter
+    def nebius(self, value: "TransferSource.NebiusProvider|transfer_pb2.TransferSource.NebiusProvider|None") -> None:
+        return super()._set_field("nebius",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def s3_compatible(self) -> "TransferSource.S3CompatibleProvider|None":
+        return super()._get_field("s3_compatible", explicit_presence=True,
+        wrap=TransferSource.S3CompatibleProvider,
+        )
+    @s3_compatible.setter
+    def s3_compatible(self, value: "TransferSource.S3CompatibleProvider|transfer_pb2.TransferSource.S3CompatibleProvider|None") -> None:
+        return super()._set_field("s3_compatible",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def azure_blob_storage(self) -> "TransferSource.AzureBlobStorageProvider|None":
+        return super()._get_field("azure_blob_storage", explicit_presence=True,
+        wrap=TransferSource.AzureBlobStorageProvider,
+        )
+    @azure_blob_storage.setter
+    def azure_blob_storage(self, value: "TransferSource.AzureBlobStorageProvider|transfer_pb2.TransferSource.AzureBlobStorageProvider|None") -> None:
+        return super()._set_field("azure_blob_storage",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def prefix(self) -> "builtins.str":
+        """
+        Prefix to filter objects in the source. Only objects whose keys start with this prefix will be transferred.
+        During transfer, the resulting object key in the destination is computed
+        by removing source.prefix from the original key and then prepending destination.prefix (if provided).
+        Important: This transformation may result in an empty object key or one that exceeds allowed length limits.
+        Use prefixes that guarantee valid resulting object keys for your objects after transformation.
+        """
+        
+        return super()._get_field("prefix", explicit_presence=False,
+        )
+    @prefix.setter
+    def prefix(self, value: "builtins.str|None") -> None:
+        return super()._set_field("prefix",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "nebius":"nebius",
+        "s3_compatible":"s3_compatible",
+        "azure_blob_storage":"azure_blob_storage",
+        "prefix":"prefix",
+        "NebiusProvider":"NebiusProvider",
+        "S3CompatibleProvider":"S3CompatibleProvider",
+        "AzureBlobStorageProvider":"AzureBlobStorageProvider",
+        "provider":"provider",
+    }
+    
+class TransferDestination(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferDestination
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferDestination",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class NebiusProvider(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferDestination.NebiusProvider
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferDestination.NebiusProvider",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        class __OneOfClass_credentials__(pb_classes.OneOf):
+            name: builtins.str= "credentials"
+            
+            def __init__(self, msg: "TransferDestination.NebiusProvider") -> None:
+                super().__init__()
+                self._message: "TransferDestination.NebiusProvider" = msg
+        
+        class __OneOfClass_credentials_access_key__(__OneOfClass_credentials__):
+            field: typing.Literal["access_key"] = "access_key"
+            
+            def __init__(self, msg: "TransferDestination.NebiusProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAccessKey":
+                return self._message.access_key
+        
+        @builtins.property
+        def credentials(self) -> __OneOfClass_credentials_access_key__|None:
+            """
+            Credentials for accessing the destination bucket.
+            These credentials must have head, write permissions.
+            """
+            
+            field_name_1: str|None = super().which_field_in_oneof("credentials")
+            match field_name_1:
+                case "access_key":
+                    return self.__OneOfClass_credentials_access_key__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            access_key: "TransferCredentialsAccessKey|transfer_pb2.TransferCredentialsAccessKey|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(region, unset.UnsetType):
+                self.region = region
+            if not isinstance(bucket_name, unset.UnsetType):
+                self.bucket_name = bucket_name
+            if not isinstance(access_key, unset.UnsetType):
+                self.access_key = access_key
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "region",
+                "bucket_name",
+                "access_key",
+                "credentials",
+            ]
+        
+        @builtins.property
+        def region(self) -> "builtins.str":
+            """
+            Nebius region where the destination bucket is located.
+            """
+            
+            return super()._get_field("region", explicit_presence=False,
+            )
+        @region.setter
+        def region(self, value: "builtins.str|None") -> None:
+            return super()._set_field("region",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def bucket_name(self) -> "builtins.str":
+            """
+            Name of the destination bucket.
+            """
+            
+            return super()._get_field("bucket_name", explicit_presence=False,
+            )
+        @bucket_name.setter
+        def bucket_name(self, value: "builtins.str|None") -> None:
+            return super()._set_field("bucket_name",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def access_key(self) -> "TransferCredentialsAccessKey|None":
+            return super()._get_field("access_key", explicit_presence=True,
+            wrap=TransferCredentialsAccessKey,
+            )
+        @access_key.setter
+        def access_key(self, value: "TransferCredentialsAccessKey|transfer_pb2.TransferCredentialsAccessKey|None") -> None:
+            return super()._set_field("access_key",value,explicit_presence=True,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "region":"region",
+            "bucket_name":"bucket_name",
+            "access_key":"access_key",
+            "credentials":"credentials",
+        }
+        
+    
+    class S3CompatibleProvider(pb_classes.Message):
+        __PB2_CLASS__ = transfer_pb2.TransferDestination.S3CompatibleProvider
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferDestination.S3CompatibleProvider",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        class __OneOfClass_credentials__(pb_classes.OneOf):
+            name: builtins.str= "credentials"
+            
+            def __init__(self, msg: "TransferDestination.S3CompatibleProvider") -> None:
+                super().__init__()
+                self._message: "TransferDestination.S3CompatibleProvider" = msg
+        
+        class __OneOfClass_credentials_anonymous__(__OneOfClass_credentials__):
+            field: typing.Literal["anonymous"] = "anonymous"
+            
+            def __init__(self, msg: "TransferDestination.S3CompatibleProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAnonymous":
+                return self._message.anonymous
+        
+        class __OneOfClass_credentials_access_key__(__OneOfClass_credentials__):
+            field: typing.Literal["access_key"] = "access_key"
+            
+            def __init__(self, msg: "TransferDestination.S3CompatibleProvider") -> None:
+                super().__init__(msg)
+            @builtins.property
+            def value(self) -> "TransferCredentialsAccessKey":
+                return self._message.access_key
+        
+        @builtins.property
+        def credentials(self) -> __OneOfClass_credentials_anonymous__|__OneOfClass_credentials_access_key__|None:
+            """
+            Credentials for accessing the destination bucket.
+            These credentials must have head, write permissions.
+            """
+            
+            field_name_1: str|None = super().which_field_in_oneof("credentials")
+            match field_name_1:
+                case "anonymous":
+                    return self.__OneOfClass_credentials_anonymous__(self)
+                case "access_key":
+                    return self.__OneOfClass_credentials_access_key__(self)
+                case None:
+                    return None
+                case _:
+                    raise pb_classes.OneOfMatchError(field_name_1)
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            endpoint: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            region: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            bucket_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            anonymous: "TransferCredentialsAnonymous|transfer_pb2.TransferCredentialsAnonymous|None|unset.UnsetType" = unset.Unset,
+            access_key: "TransferCredentialsAccessKey|transfer_pb2.TransferCredentialsAccessKey|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(endpoint, unset.UnsetType):
+                self.endpoint = endpoint
+            if not isinstance(region, unset.UnsetType):
+                self.region = region
+            if not isinstance(bucket_name, unset.UnsetType):
+                self.bucket_name = bucket_name
+            if not isinstance(anonymous, unset.UnsetType):
+                self.anonymous = anonymous
+            if not isinstance(access_key, unset.UnsetType):
+                self.access_key = access_key
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "endpoint",
+                "region",
+                "bucket_name",
+                "anonymous",
+                "access_key",
+                "credentials",
+            ]
+        
+        @builtins.property
+        def endpoint(self) -> "builtins.str":
+            """
+            The endpoint must be in the form of a URL, starting with the protocol (https),
+            followed by the endpoint address without a trailing slash.
+            Example: "https://storage.some-cloud".
+            """
+            
+            return super()._get_field("endpoint", explicit_presence=False,
+            )
+        @endpoint.setter
+        def endpoint(self, value: "builtins.str|None") -> None:
+            return super()._set_field("endpoint",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def region(self) -> "builtins.str":
+            """
+            S3-compatible provider region where destination bucket is located.
+            """
+            
+            return super()._get_field("region", explicit_presence=False,
+            )
+        @region.setter
+        def region(self, value: "builtins.str|None") -> None:
+            return super()._set_field("region",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def bucket_name(self) -> "builtins.str":
+            """
+            Name of the destination bucket.
+            """
+            
+            return super()._get_field("bucket_name", explicit_presence=False,
+            )
+        @bucket_name.setter
+        def bucket_name(self, value: "builtins.str|None") -> None:
+            return super()._set_field("bucket_name",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def anonymous(self) -> "TransferCredentialsAnonymous|None":
+            return super()._get_field("anonymous", explicit_presence=True,
+            wrap=TransferCredentialsAnonymous,
+            )
+        @anonymous.setter
+        def anonymous(self, value: "TransferCredentialsAnonymous|transfer_pb2.TransferCredentialsAnonymous|None") -> None:
+            return super()._set_field("anonymous",value,explicit_presence=True,
+            )
+        
+        @builtins.property
+        def access_key(self) -> "TransferCredentialsAccessKey|None":
+            return super()._get_field("access_key", explicit_presence=True,
+            wrap=TransferCredentialsAccessKey,
+            )
+        @access_key.setter
+        def access_key(self, value: "TransferCredentialsAccessKey|transfer_pb2.TransferCredentialsAccessKey|None") -> None:
+            return super()._set_field("access_key",value,explicit_presence=True,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "endpoint":"endpoint",
+            "region":"region",
+            "bucket_name":"bucket_name",
+            "anonymous":"anonymous",
+            "access_key":"access_key",
+            "credentials":"credentials",
+        }
+        
+    
+    class __OneOfClass_provider__(pb_classes.OneOf):
+        name: builtins.str= "provider"
+        
+        def __init__(self, msg: "TransferDestination") -> None:
+            super().__init__()
+            self._message: "TransferDestination" = msg
+    
+    class __OneOfClass_provider_nebius__(__OneOfClass_provider__):
+        field: typing.Literal["nebius"] = "nebius"
+        
+        def __init__(self, msg: "TransferDestination") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TransferDestination.NebiusProvider":
+            return self._message.nebius
+    
+    class __OneOfClass_provider_s3_compatible__(__OneOfClass_provider__):
+        field: typing.Literal["s3_compatible"] = "s3_compatible"
+        
+        def __init__(self, msg: "TransferDestination") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "TransferDestination.S3CompatibleProvider":
+            return self._message.s3_compatible
+    
+    @builtins.property
+    def provider(self) -> __OneOfClass_provider_nebius__|__OneOfClass_provider_s3_compatible__|None:
+        """
+        Destination storage provider configuration.
+        """
+        
+        field_name_1: str|None = super().which_field_in_oneof("provider")
+        match field_name_1:
+            case "nebius":
+                return self.__OneOfClass_provider_nebius__(self)
+            case "s3_compatible":
+                return self.__OneOfClass_provider_s3_compatible__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        nebius: "TransferDestination.NebiusProvider|transfer_pb2.TransferDestination.NebiusProvider|None|unset.UnsetType" = unset.Unset,
+        s3_compatible: "TransferDestination.S3CompatibleProvider|transfer_pb2.TransferDestination.S3CompatibleProvider|None|unset.UnsetType" = unset.Unset,
+        prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(nebius, unset.UnsetType):
+            self.nebius = nebius
+        if not isinstance(s3_compatible, unset.UnsetType):
+            self.s3_compatible = s3_compatible
+        if not isinstance(prefix, unset.UnsetType):
+            self.prefix = prefix
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "nebius",
+            "s3_compatible",
+            "prefix",
+            "NebiusProvider",
+            "S3CompatibleProvider",
+            "provider",
+        ]
+    
+    @builtins.property
+    def nebius(self) -> "TransferDestination.NebiusProvider|None":
+        return super()._get_field("nebius", explicit_presence=True,
+        wrap=TransferDestination.NebiusProvider,
+        )
+    @nebius.setter
+    def nebius(self, value: "TransferDestination.NebiusProvider|transfer_pb2.TransferDestination.NebiusProvider|None") -> None:
+        return super()._set_field("nebius",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def s3_compatible(self) -> "TransferDestination.S3CompatibleProvider|None":
+        return super()._get_field("s3_compatible", explicit_presence=True,
+        wrap=TransferDestination.S3CompatibleProvider,
+        )
+    @s3_compatible.setter
+    def s3_compatible(self, value: "TransferDestination.S3CompatibleProvider|transfer_pb2.TransferDestination.S3CompatibleProvider|None") -> None:
+        return super()._set_field("s3_compatible",value,explicit_presence=True,
+        )
+    
+    @builtins.property
+    def prefix(self) -> "builtins.str":
+        """
+        Prefix to add to the beginning of each transferred object key in the destination.
+        During transfer, the resulting object key in the destination is computed
+        by removing source.prefix (if provided) from the original key and then prepending destination.prefix.
+        Important: This transformation may result in an empty object key or one that exceeds allowed length limits.
+        Use prefixes that guarantee valid resulting object keys for your objects after transformation.
+        """
+        
+        return super()._get_field("prefix", explicit_presence=False,
+        )
+    @prefix.setter
+    def prefix(self, value: "builtins.str|None") -> None:
+        return super()._set_field("prefix",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "nebius":"nebius",
+        "s3_compatible":"s3_compatible",
+        "prefix":"prefix",
+        "NebiusProvider":"NebiusProvider",
+        "S3CompatibleProvider":"S3CompatibleProvider",
+        "provider":"provider",
+    }
+    
+class TransferCredentialsAnonymous(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferCredentialsAnonymous
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferCredentialsAnonymous",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+    ) -> None:
+        super().__init__(initial_message)
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+        ]
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+class TransferCredentialsAccessKey(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferCredentialsAccessKey
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferCredentialsAccessKey",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        access_key_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        secret_access_key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(access_key_id, unset.UnsetType):
+            self.access_key_id = access_key_id
+        if not isinstance(secret_access_key, unset.UnsetType):
+            self.secret_access_key = secret_access_key
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "access_key_id",
+            "secret_access_key",
+        ]
+    
+    @builtins.property
+    def access_key_id(self) -> "builtins.str":
+        """
+        Access key ID.
+        """
+        
+        return super()._get_field("access_key_id", explicit_presence=False,
+        )
+    @access_key_id.setter
+    def access_key_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("access_key_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def secret_access_key(self) -> "builtins.str":
+        """
+        Secret access key.
+        """
+        
+        return super()._get_field("secret_access_key", explicit_presence=False,
+        )
+    @secret_access_key.setter
+    def secret_access_key(self, value: "builtins.str|None") -> None:
+        return super()._set_field("secret_access_key",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "access_key_id":"access_key_id",
+        "secret_access_key":"secret_access_key",
+    }
+    
+class TransferCredentialsAzureStorageAccount(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferCredentialsAzureStorageAccount
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferCredentialsAzureStorageAccount",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        account_name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        access_key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(account_name, unset.UnsetType):
+            self.account_name = account_name
+        if not isinstance(access_key, unset.UnsetType):
+            self.access_key = access_key
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "account_name",
+            "access_key",
+        ]
+    
+    @builtins.property
+    def account_name(self) -> "builtins.str":
+        """
+        Storage account name.
+        """
+        
+        return super()._get_field("account_name", explicit_presence=False,
+        )
+    @account_name.setter
+    def account_name(self, value: "builtins.str|None") -> None:
+        return super()._set_field("account_name",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def access_key(self) -> "builtins.str":
+        """
+        Storage account access key.
+        """
+        
+        return super()._get_field("access_key", explicit_presence=False,
+        )
+    @access_key.setter
+    def access_key(self, value: "builtins.str|None") -> None:
+        return super()._set_field("access_key",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "account_name":"account_name",
+        "access_key":"access_key",
+    }
+    
+class TransferStatus(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferStatus",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class State(pb_enum.Enum):
+        """
+        Transfer state.
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.TransferStatus.State",transfer_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        ACTIVE = 1
+        STOPPING = 2
+        STOPPED = 3
+        FAILING = 4
+        FAILED = 5
+        DELETING = 6
+    
+    class SuspensionState(pb_enum.Enum):
+        """
+        Transfer suspension state.
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.TransferStatus.SuspensionState",transfer_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        SUSPENSION_STATE_UNSPECIFIED = 0
+        NOT_SUSPENDED = 1
+        SUSPENDED = 2
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "TransferStatus.State|transfer_pb2.TransferStatus.State|None|unset.UnsetType" = unset.Unset,
+        error: "TransferError|transfer_pb2.TransferError|None|unset.UnsetType" = unset.Unset,
+        suspension_state: "TransferStatus.SuspensionState|transfer_pb2.TransferStatus.SuspensionState|None|unset.UnsetType" = unset.Unset,
+        last_iteration: "TransferIteration|transfer_pb2.TransferIteration|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(error, unset.UnsetType):
+            self.error = error
+        if not isinstance(suspension_state, unset.UnsetType):
+            self.suspension_state = suspension_state
+        if not isinstance(last_iteration, unset.UnsetType):
+            self.last_iteration = last_iteration
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "error",
+            "suspension_state",
+            "last_iteration",
+            "State",
+            "SuspensionState",
+        ]
+    
+    @builtins.property
+    def state(self) -> "TransferStatus.State":
+        """
+        Current transfer state.
+        """
+        
+        return super()._get_field("state", explicit_presence=False,
+        wrap=TransferStatus.State,
+        )
+    @state.setter
+    def state(self, value: "TransferStatus.State|transfer_pb2.TransferStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def error(self) -> "TransferError":
+        """
+        Error information if the transfer has failed.
+        """
+        
+        return super()._get_field("error", explicit_presence=False,
+        wrap=TransferError,
+        )
+    @error.setter
+    def error(self, value: "TransferError|transfer_pb2.TransferError|None") -> None:
+        return super()._set_field("error",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def suspension_state(self) -> "TransferStatus.SuspensionState":
+        """
+        If the transfer is suspended, transfer's suspension state becomes SUSPENDED.
+        """
+        
+        return super()._get_field("suspension_state", explicit_presence=False,
+        wrap=TransferStatus.SuspensionState,
+        )
+    @suspension_state.setter
+    def suspension_state(self, value: "TransferStatus.SuspensionState|transfer_pb2.TransferStatus.SuspensionState|None") -> None:
+        return super()._set_field("suspension_state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def last_iteration(self) -> "TransferIteration":
+        """
+        If there is active iteration, its status will be given.
+        If it is a new transfer that doesn't have iteration yet, nothing will be returned.
+        Otherwise, last finished transaction will be returned.
+        """
+        
+        return super()._get_field("last_iteration", explicit_presence=False,
+        wrap=TransferIteration,
+        )
+    @last_iteration.setter
+    def last_iteration(self, value: "TransferIteration|transfer_pb2.TransferIteration|None") -> None:
+        return super()._set_field("last_iteration",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "error":"error",
+        "suspension_state":"suspension_state",
+        "last_iteration":"last_iteration",
+        "State":"State",
+        "SuspensionState":"SuspensionState",
+    }
+    
+class TransferIteration(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferIteration
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferIteration",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+        "start_time": well_known_1.ts_mask,
+        "end_time": well_known_1.ts_mask,
+    }
+    
+    class State(pb_enum.Enum):
+        """
+        Iteration state.
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.TransferIteration.State",transfer_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        IN_PROGRESS = 1
+        COMPLETED = 2
+        INTERRUPTED = 3
+        FAILED = 4
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        sequence_number: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        state: "TransferIteration.State|transfer_pb2.TransferIteration.State|None|unset.UnsetType" = unset.Unset,
+        error: "TransferError|transfer_pb2.TransferError|None|unset.UnsetType" = unset.Unset,
+        start_time: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        end_time: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        objects_transferred_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        objects_transferred_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        average_throughput_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(sequence_number, unset.UnsetType):
+            self.sequence_number = sequence_number
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(error, unset.UnsetType):
+            self.error = error
+        if not isinstance(start_time, unset.UnsetType):
+            self.start_time = start_time
+        if not isinstance(end_time, unset.UnsetType):
+            self.end_time = end_time
+        if not isinstance(objects_transferred_count, unset.UnsetType):
+            self.objects_transferred_count = objects_transferred_count
+        if not isinstance(objects_transferred_size, unset.UnsetType):
+            self.objects_transferred_size = objects_transferred_size
+        if not isinstance(average_throughput_bytes, unset.UnsetType):
+            self.average_throughput_bytes = average_throughput_bytes
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "sequence_number",
+            "state",
+            "error",
+            "start_time",
+            "end_time",
+            "objects_transferred_count",
+            "objects_transferred_size",
+            "average_throughput_bytes",
+            "State",
+        ]
+    
+    @builtins.property
+    def sequence_number(self) -> "builtins.int":
+        """
+        Sequence number of the iteration in the transfer, starting from 1.
+        """
+        
+        return super()._get_field("sequence_number", explicit_presence=False,
+        )
+    @sequence_number.setter
+    def sequence_number(self, value: "builtins.int|None") -> None:
+        return super()._set_field("sequence_number",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def state(self) -> "TransferIteration.State":
+        """
+        Current iteration state.
+        """
+        
+        return super()._get_field("state", explicit_presence=False,
+        wrap=TransferIteration.State,
+        )
+    @state.setter
+    def state(self, value: "TransferIteration.State|transfer_pb2.TransferIteration.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def error(self) -> "TransferError":
+        """
+        Human-readable error description. Populated only if state is FAILED.
+        """
+        
+        return super()._get_field("error", explicit_presence=False,
+        wrap=TransferError,
+        )
+    @error.setter
+    def error(self, value: "TransferError|transfer_pb2.TransferError|None") -> None:
+        return super()._set_field("error",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def start_time(self) -> "datetime.datetime":
+        """
+        Iteration start time.
+        """
+        
+        return super()._get_field("start_time", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @start_time.setter
+    def start_time(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("start_time",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def end_time(self) -> "datetime.datetime":
+        """
+        Iteration end time.
+        """
+        
+        return super()._get_field("end_time", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @end_time.setter
+    def end_time(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("end_time",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
+    @builtins.property
+    def objects_transferred_count(self) -> "builtins.int":
+        """
+        Number of objects transferred during this iteration.
+        """
+        
+        return super()._get_field("objects_transferred_count", explicit_presence=False,
+        )
+    @objects_transferred_count.setter
+    def objects_transferred_count(self, value: "builtins.int|None") -> None:
+        return super()._set_field("objects_transferred_count",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def objects_transferred_size(self) -> "builtins.int":
+        """
+        Total size of objects transferred during this iteration.
+        """
+        
+        return super()._get_field("objects_transferred_size", explicit_presence=False,
+        )
+    @objects_transferred_size.setter
+    def objects_transferred_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("objects_transferred_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def average_throughput_bytes(self) -> "builtins.int":
+        """
+        Average throughput in bytes per second during the iteration.
+        """
+        
+        return super()._get_field("average_throughput_bytes", explicit_presence=False,
+        )
+    @average_throughput_bytes.setter
+    def average_throughput_bytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("average_throughput_bytes",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "sequence_number":"sequence_number",
+        "state":"state",
+        "error":"error",
+        "start_time":"start_time",
+        "end_time":"end_time",
+        "objects_transferred_count":"objects_transferred_count",
+        "objects_transferred_size":"objects_transferred_size",
+        "average_throughput_bytes":"average_throughput_bytes",
+        "State":"State",
+    }
+    
+class TransferError(pb_classes.Message):
+    __PB2_CLASS__ = transfer_pb2.TransferError
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.TransferError",transfer_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class Origin(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.TransferError.Origin",transfer_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        ORIGIN_UNSPECIFIED = 0
+        SOURCE = 1
+        """
+        Error originated from the source.
+        """
+        
+        DESTINATION = 2
+        """
+        Error originated from the destination.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        origin: "TransferError.Origin|transfer_pb2.TransferError.Origin|None|unset.UnsetType" = unset.Unset,
+        code: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        message: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(origin, unset.UnsetType):
+            self.origin = origin
+        if not isinstance(code, unset.UnsetType):
+            self.code = code
+        if not isinstance(message, unset.UnsetType):
+            self.message = message
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "origin",
+            "code",
+            "message",
+            "Origin",
+        ]
+    
+    @builtins.property
+    def origin(self) -> "TransferError.Origin":
+        """
+        Endpoint where the error occurred.
+        """
+        
+        return super()._get_field("origin", explicit_presence=False,
+        wrap=TransferError.Origin,
+        )
+    @origin.setter
+    def origin(self, value: "TransferError.Origin|transfer_pb2.TransferError.Origin|None") -> None:
+        return super()._set_field("origin",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def code(self) -> "builtins.str":
+        """
+        Error code, usually taken from the endpoint response.
+        """
+        
+        return super()._get_field("code", explicit_presence=False,
+        )
+    @code.setter
+    def code(self, value: "builtins.str|None") -> None:
+        return super()._set_field("code",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def message(self) -> "builtins.str":
+        """
+        Error message, usually taken from the endpoint response.
+        """
+        
+        return super()._get_field("message", explicit_presence=False,
+        )
+    @message.setter
+    def message(self, value: "builtins.str|None") -> None:
+        return super()._set_field("message",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "origin":"origin",
+        "code":"code",
+        "message":"message",
+        "Origin":"Origin",
+    }
+    
+# file: nebius/storage/v1/transfer_service.proto
+class GetTransferRequest(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.GetTransferRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetTransferRequest",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListTransfersRequest(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.ListTransfersRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListTransfersRequest",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        Represents the container ID.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Specifies the maximum number of items to return in the response. Default: 10.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListTransfersResponse(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.ListTransfersResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ListTransfersResponse",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[Transfer]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[Transfer]":
+        """
+        List of transfers returned in the response.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(Transfer,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[Transfer]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+        Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class CreateTransferRequest(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.CreateTransferRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.CreateTransferRequest",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "TransferSpec|transfer_pb2.TransferSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "TransferSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=TransferSpec,
+        )
+    @spec.setter
+    def spec(self, value: "TransferSpec|transfer_pb2.TransferSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateTransferRequest(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.UpdateTransferRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.UpdateTransferRequest",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "TransferSpec|transfer_pb2.TransferSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "TransferSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=TransferSpec,
+        )
+    @spec.setter
+    def spec(self, value: "TransferSpec|transfer_pb2.TransferSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class StopTransferRequest(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.StopTransferRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.StopTransferRequest",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ResumeTransferRequest(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.ResumeTransferRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.ResumeTransferRequest",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class DeleteTransferRequest(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.DeleteTransferRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.DeleteTransferRequest",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(resource_version, unset.UnsetType):
+            self.resource_version = resource_version
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "resource_version",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def resource_version(self) -> "builtins.int":
+        """
+        Optional: expected transfer version (``metadata.resource_version``)
+        
+        
+        * If specified, ensures that only the requested version is deleted (and a ``FAILED_PRECONDITION`` error is returned on version mismatch)
+        * If not specified or set to ``0``, the latest version will be deleted
+        """
+        
+        return super()._get_field("resource_version", explicit_presence=False,
+        )
+    @resource_version.setter
+    def resource_version(self, value: "builtins.int|None") -> None:
+        return super()._set_field("resource_version",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "resource_version":"resource_version",
+    }
+    
+class GetIterationHistoryRequest(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.GetIterationHistoryRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetIterationHistoryRequest",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        transfer_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(transfer_id, unset.UnsetType):
+            self.transfer_id = transfer_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "transfer_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def transfer_id(self) -> "builtins.str":
+        """
+        ID of the transfer whose iteration history to return.
+        """
+        
+        return super()._get_field("transfer_id", explicit_presence=False,
+        )
+    @transfer_id.setter
+    def transfer_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("transfer_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Specifies the maximum number of items to return in the response.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "transfer_id":"transfer_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class GetIterationHistoryResponse(pb_classes.Message):
+    __PB2_CLASS__ = transfer_service_pb2.GetIterationHistoryResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.GetIterationHistoryResponse",transfer_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        iterations: "abc.Iterable[TransferIteration]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(iterations, unset.UnsetType):
+            self.iterations = iterations
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "iterations",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def iterations(self) -> "abc.MutableSequence[TransferIteration]":
+        """
+        List of transfer iterations sorted from newest to oldest.
+        """
+        
+        return super()._get_field("iterations", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(TransferIteration,None,None),
+        )
+    @iterations.setter
+    def iterations(self, value: "abc.Iterable[TransferIteration]|None") -> None:
+        return super()._set_field("iterations",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+        Token for pagination, indicating the next set of results can be retrieved using this token.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "iterations":"iterations",
+        "next_page_token":"next_page_token",
+    }
+    
+
+class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    TransferService provides functionality for creating and managing transfers
+    that migrate data from other providers or across different regions of Nebius Object Storage.
+    
+    This class provides the client methods for the ``.nebius.storage.v1.TransferService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.storage.v1.TransferService",transfer_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.storage.v1.TransferService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def get(self,
+        request: "GetTransferRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetTransferRequest","Transfer"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.GetTransferRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.storage.v1.Transfer`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=transfer_pb2.Transfer,
+            result_wrapper=pb_classes.simple_wrapper(Transfer),
+            **kwargs,
+        )
+    
+    def get_by_name(self,
+        request: "v1_1.GetByNameRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["v1_1.GetByNameRequest","Transfer"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.common.v1.GetByNameRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.storage.v1.Transfer`.
+        """
+        
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=transfer_pb2.Transfer,
+            result_wrapper=pb_classes.simple_wrapper(Transfer),
+            **kwargs,
+        )
+    
+    def list(self,
+        request: "ListTransfersRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListTransfersRequest","ListTransfersResponse"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.ListTransfersRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.storage.v1.ListTransfersResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=transfer_service_pb2.ListTransfersResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListTransfersResponse),
+            **kwargs,
+        )
+    
+    def create(self,
+        request: "CreateTransferRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateTransferRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.CreateTransferRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateTransferRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateTransferRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.UpdateTransferRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def stop(self,
+        request: "StopTransferRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["StopTransferRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Stop active transfer. If the transfer is currently moving data,
+        it will be transitioned to the Stopping state and will move to the Stopped state once all processes have been stopped.
+        If the transfer is waiting between iterations, it will stop immediately.
+        Only transfers in Active state can be stopped.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.StopTransferRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Stop",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def resume(self,
+        request: "ResumeTransferRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ResumeTransferRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Resume stopped or failed transfer.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.ResumeTransferRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Resume",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteTransferRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteTransferRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Fully delete a transfer along with its history. If the transfer is active, it will be stopped and then deleted.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.DeleteTransferRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def get_iteration_history(self,
+        request: "GetIterationHistoryRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetIterationHistoryRequest","GetIterationHistoryResponse"]:
+        """
+        Get transfer iteration history.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.storage.v1.GetIterationHistoryRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.storage.v1.GetIterationHistoryResponse`.
+        """
+        
+        return super().request(
+            method="GetIterationHistory",
+            request=request,
+            result_pb2_class=transfer_service_pb2.GetIterationHistoryResponse,
+            result_wrapper=pb_classes.simple_wrapper(GetIterationHistoryResponse),
+            **kwargs,
+        )
+    
+
 __all__ = [
     #@ local import names here @#
     "StorageClass",
@@ -3013,4 +5781,25 @@ __all__ = [
     "ListBucketsRequest",
     "ListBucketsResponse",
     "BucketServiceClient",
+    "Transfer",
+    "TransferSpec",
+    "TransferSource",
+    "TransferDestination",
+    "TransferCredentialsAnonymous",
+    "TransferCredentialsAccessKey",
+    "TransferCredentialsAzureStorageAccount",
+    "TransferStatus",
+    "TransferIteration",
+    "TransferError",
+    "GetTransferRequest",
+    "ListTransfersRequest",
+    "ListTransfersResponse",
+    "CreateTransferRequest",
+    "UpdateTransferRequest",
+    "StopTransferRequest",
+    "ResumeTransferRequest",
+    "DeleteTransferRequest",
+    "GetIterationHistoryRequest",
+    "GetIterationHistoryResponse",
+    "TransferServiceClient",
 ]

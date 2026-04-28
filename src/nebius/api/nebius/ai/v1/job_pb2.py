@@ -20,7 +20,7 @@ from nebius.api.nebius.compute.v1 import disk_pb2 as nebius_dot_compute_dot_v1_d
 from nebius.api.nebius.compute.v1 import instance_pb2 as nebius_dot_compute_dot_v1_dot_instance__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16nebius/ai/v1/job.proto\x12\x0cnebius.ai.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/compute/v1/disk.proto\x1a nebius/compute/v1/instance.proto\"\xb7\x01\n\x03Job\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x15.nebius.ai.v1.JobSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x35\n\x06status\x18\x03 \x01(\x0b\x32\x17.nebius.ai.v1.JobStatusB\x04\xbaJ\x01\x05R\x06status\"\xb1\x14\n\x07JobSpec\x12\x1c\n\x05image\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05image\x12^\n\x15\x65nvironment_variables\x18\x02 \x03(\x0b\x32).nebius.ai.v1.JobSpec.EnvironmentVariableR\x14\x65nvironmentVariables\x12\x30\n\x05ports\x18\x03 \x03(\x0b\x32\x1a.nebius.ai.v1.JobSpec.PortR\x05ports\x12+\n\x11\x63ontainer_command\x18\x04 \x01(\tR\x10\x63ontainerCommand\x12\x12\n\x04\x61rgs\x18\x05 \x01(\tR\x04\x61rgs\x12)\n\x0bworking_dir\x18\x06 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x01R\nworkingDir\x12;\n\x07volumes\x18\x07 \x03(\x0b\x32!.nebius.ai.v1.JobSpec.VolumeMountR\x07volumes\x12\\\n\x14registry_credentials\x18\n \x01(\x0b\x32).nebius.ai.v1.JobSpec.RegistryCredentialsR\x13registryCredentials\x12\"\n\x08platform\x18\x14 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform\x12\x1e\n\x06preset\x18\x15 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06preset\x12-\n\x0eshm_size_bytes\x18\x16 \x01(\x03\x42\x07\xbaH\x04\"\x02(\x00R\x0cshmSizeBytes\x12:\n\x04\x64isk\x18\x17 \x01(\x0b\x32\x1e.nebius.ai.v1.JobSpec.DiskSpecB\x06\xbaH\x03\xc8\x01\x01R\x04\x64isk\x12\x31\n\tsubnet_id\x18\x18 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12\x1b\n\tpublic_ip\x18\x19 \x01(\x08R\x08publicIp\x12.\n\x13ssh_authorized_keys\x18\x1a \x03(\tR\x11sshAuthorizedKeys\x12 \n\x0bpreemptible\x18\x1b \x01(\x08R\x0bpreemptible\x12;\n\x10restart_attempts\x18\x1e \x01(\x03\x42\x10\xbaH\r\"\x0b(\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01R\x0frestartAttempts\x12\x33\n\x07timeout\x18\x1f \x01(\x0b\x32\x19.google.protobuf.DurationR\x07timeout\x1a\xa4\x01\n\x13\x45nvironmentVariable\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12\x19\n\x05value\x18\x02 \x01(\tB\x03\xc0J\x01R\x05value\x12V\n\x11mysterybox_secret\x18\x03 \x01(\x0b\x32).nebius.ai.v1.JobSpec.MysteryBoxSecretRefR\x10mysteryboxSecret\x1a\xef\x01\n\x04Port\x12\x32\n\x0e\x63ontainer_port\x18\x01 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x01R\rcontainerPort\x12(\n\thost_port\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x00R\x08hostPort\x12G\n\x08protocol\x18\x03 \x01(\x0e\x32#.nebius.ai.v1.JobSpec.Port.ProtocolB\x06\xbaH\x03\xc8\x01\x01R\x08protocol\"@\n\x08Protocol\x12\x18\n\x14PROTOCOL_UNSPECIFIED\x10\x00\x12\x08\n\x04HTTP\x10\x01\x12\x07\n\x03TCP\x10\x02\x12\x07\n\x03UDP\x10\x03\x1a\x9a\x07\n\x0bVolumeMount\x12\x16\n\x06source\x18\x01 \x01(\tR\x06source\x12\x1f\n\x0bsource_path\x18\x02 \x01(\tR\nsourcePath\x12%\n\x0e\x63ontainer_path\x18\x03 \x01(\tR\rcontainerPath\x12\x42\n\x04mode\x18\x04 \x01(\x0e\x32&.nebius.ai.v1.JobSpec.VolumeMount.ModeB\x06\xbaH\x03\xc8\x01\x01R\x04mode\x12I\n\ts3_config\x18\x05 \x01(\x0b\x32*.nebius.ai.v1.JobSpec.VolumeMount.S3ConfigH\x00R\x08s3Config\x1a\xcd\x04\n\x08S3Config\x12\"\n\x08\x65ndpoint\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08\x65ndpoint\x12\x1e\n\x06region\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06region\x12\\\n\x0b\x63redentials\x18\x04 \x01(\x0b\x32\x38.nebius.ai.v1.JobSpec.VolumeMount.S3Config.S3CredentialsH\x00R\x0b\x63redentials\x12m\n\x11mysterybox_secret\x18\x05 \x01(\x0b\x32>.nebius.ai.v1.JobSpec.VolumeMount.S3Config.MysteryBoxSecretRefH\x00R\x10mysteryboxSecret\x1a\x9f\x01\n\rS3Credentials\x12-\n\raccess_key_id\x18\x01 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0b\x61\x63\x63\x65ssKeyId\x12\x35\n\x11secret_access_key\x18\x02 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0fsecretAccessKey\x12(\n\rsession_token\x18\x03 \x01(\tB\x03\xc0J\x01R\x0csessionToken\x1ax\n\x13MysteryBoxSecretRef\x12-\n\tsecret_id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05mbsecR\x08secretId\x12\x32\n\nversion_id\x18\x02 \x01(\tB\x13\xbaH\x03\xc8\x01\x01\xe2J\n\n\x08mbsecverR\tversionIdB\x06\n\x04\x61uthJ\x04\x08\x02\x10\x03R\x06\x62ucket\";\n\x04Mode\x12\x14\n\x10MODE_UNSPECIFIED\x10\x00\x12\x0e\n\nREAD_WRITE\x10\x01\x12\r\n\tREAD_ONLY\x10\x02\x42\x0f\n\rsource_config\x1ak\n\x08\x44iskSpec\x12@\n\x04type\x18\x01 \x01(\x0e\x32$.nebius.compute.v1.DiskSpec.DiskTypeB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12\x1d\n\nsize_bytes\x18\x02 \x01(\x03R\tsizeBytes\x1a\x8e\x01\n\x13RegistryCredentials\x12\x1a\n\x08username\x18\x01 \x01(\tR\x08username\x12\x1f\n\x08password\x18\x02 \x01(\tB\x03\xc0J\x01R\x08password\x12:\n\x19mysterybox_secret_version\x18\x03 \x01(\tR\x17mysteryboxSecretVersion\x1ax\n\x13MysteryBoxSecretRef\x12-\n\tsecret_id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05mbsecR\x08secretId\x12\x32\n\nversion_id\x18\x02 \x01(\tB\x13\xbaH\x03\xc8\x01\x01\xe2J\n\n\x08mbsecverR\tversionId\"\xb4\x04\n\tJobStatus\x12+\n\x11private_endpoints\x18\x01 \x03(\tR\x10privateEndpoints\x12)\n\x10public_endpoints\x18\x02 \x03(\tR\x0fpublicEndpoints\x12=\n\tinstances\x18\n \x03(\x0b\x32\x1f.nebius.ai.v1.JobInstanceStatusR\tinstances\x12\x33\n\x05state\x18\x14 \x01(\x0e\x32\x1d.nebius.ai.v1.JobStatus.StateR\x05state\x12\x42\n\rstate_details\x18\x15 \x01(\x0b\x32\x1d.nebius.ai.v1.JobStateDetailsR\x0cstateDetails\x12\x39\n\nstarted_at\x18\x16 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tstartedAt\x12;\n\x0b\x66inished_at\x18\x17 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\nfinishedAt\"\x9e\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0c\n\x08STARTING\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0e\n\nCANCELLING\x10\x04\x12\x0c\n\x08\x44\x45LETING\x10\x05\x12\r\n\tCOMPLETED\x10\x06\x12\n\n\x06\x46\x41ILED\x10\x07\x12\r\n\tCANCELLED\x10\x08\x12\t\n\x05\x45RROR\x10\t\"G\n\x0fJobStateDetails\x12\x1a\n\x04\x63ode\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04\x63ode\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\"\xfa\x03\n\x11JobInstanceStatus\x12\x43\n\x05state\x18\x01 \x01(\x0e\x32%.nebius.ai.v1.JobInstanceStatus.StateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x12\x44\n\x13\x63ompute_instance_id\x18\n \x01(\tB\x14\xe2J\x11\n\x0f\x63omputeinstanceR\x11\x63omputeInstanceId\x12m\n\x16\x63ompute_instance_state\x18\x0b \x01(\x0e\x32/.nebius.compute.v1.InstanceStatus.InstanceStateB\x06\xbaH\x03\xc8\x01\x01R\x14\x63omputeInstanceState\x12\x1d\n\nprivate_ip\x18\x0c \x01(\tR\tprivateIp\x12\x1b\n\tpublic_ip\x18\r \x01(\tR\x08publicIp\"\xae\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0c\n\x08STARTING\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0e\n\nCOMPLETING\x10\x04\x12\x0e\n\nCANCELLING\x10\x05\x12\x0c\n\x08\x44\x45LETING\x10\x06\x12\r\n\tCOMPLETED\x10\x07\x12\n\n\x06\x46\x41ILED\x10\x08\x12\r\n\tCANCELLED\x10\t\x12\t\n\x05\x45RROR\x10\nBM\n\x13\x61i.nebius.pub.ai.v1B\x08JobProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16nebius/ai/v1/job.proto\x12\x0cnebius.ai.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1cnebius/compute/v1/disk.proto\x1a nebius/compute/v1/instance.proto\"\xb7\x01\n\x03Job\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x15.nebius.ai.v1.JobSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x35\n\x06status\x18\x03 \x01(\x0b\x32\x17.nebius.ai.v1.JobStatusB\x04\xbaJ\x01\x05R\x06status\"\xaf\x17\n\x07JobSpec\x12\x1c\n\x05image\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05image\x12^\n\x15\x65nvironment_variables\x18\x02 \x03(\x0b\x32).nebius.ai.v1.JobSpec.EnvironmentVariableR\x14\x65nvironmentVariables\x12\x30\n\x05ports\x18\x03 \x03(\x0b\x32\x1a.nebius.ai.v1.JobSpec.PortR\x05ports\x12+\n\x11\x63ontainer_command\x18\x04 \x01(\tR\x10\x63ontainerCommand\x12\x12\n\x04\x61rgs\x18\x05 \x01(\tR\x04\x61rgs\x12)\n\x0bworking_dir\x18\x06 \x01(\tB\x08\xbaH\x05r\x03\x18\x80\x01R\nworkingDir\x12;\n\x07volumes\x18\x07 \x03(\x0b\x32!.nebius.ai.v1.JobSpec.VolumeMountR\x07volumes\x12\\\n\x14registry_credentials\x18\n \x01(\x0b\x32).nebius.ai.v1.JobSpec.RegistryCredentialsR\x13registryCredentials\x12\"\n\x08platform\x18\x14 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08platform\x12\x1e\n\x06preset\x18\x15 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06preset\x12-\n\x0eshm_size_bytes\x18\x16 \x01(\x03\x42\x07\xbaH\x04\"\x02(\x00R\x0cshmSizeBytes\x12:\n\x04\x64isk\x18\x17 \x01(\x0b\x32\x1e.nebius.ai.v1.JobSpec.DiskSpecB\x06\xbaH\x03\xc8\x01\x01R\x04\x64isk\x12\x31\n\tsubnet_id\x18\x18 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12\x1b\n\tpublic_ip\x18\x19 \x01(\x08R\x08publicIp\x12.\n\x13ssh_authorized_keys\x18\x1a \x03(\tR\x11sshAuthorizedKeys\x12 \n\x0bpreemptible\x18\x1b \x01(\x08R\x0bpreemptible\x12;\n\x10restart_attempts\x18\x1e \x01(\x03\x42\x10\xbaH\r\"\x0b(\xff\xff\xff\xff\xff\xff\xff\xff\xff\x01R\x0frestartAttempts\x12\x33\n\x07timeout\x18\x1f \x01(\x0b\x32\x19.google.protobuf.DurationR\x07timeout\x1a\xef\x02\n\x13\x45nvironmentVariable\x12\x1a\n\x04name\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\x12\x19\n\x05value\x18\x02 \x01(\tB\x03\xc0J\x01R\x05value\x12V\n\x11mysterybox_secret\x18\x03 \x01(\x0b\x32).nebius.ai.v1.JobSpec.MysteryBoxSecretRefR\x10mysteryboxSecret:\xc8\x01\xbaH\xc4\x01\x1a\xc1\x01\n\x18mysterybox_secret_if_set\x12\x32mysterybox_secret must set secret_id or version_id\x1aq!has(this.mysterybox_secret) || this.mysterybox_secret.secret_id != \'\' || this.mysterybox_secret.version_id != \'\'\x1a\xef\x01\n\x04Port\x12\x32\n\x0e\x63ontainer_port\x18\x01 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x01R\rcontainerPort\x12(\n\thost_port\x18\x02 \x01(\x05\x42\x0b\xbaH\x08\x1a\x06\x18\xff\xff\x03(\x00R\x08hostPort\x12G\n\x08protocol\x18\x03 \x01(\x0e\x32#.nebius.ai.v1.JobSpec.Port.ProtocolB\x06\xbaH\x03\xc8\x01\x01R\x08protocol\"@\n\x08Protocol\x12\x18\n\x14PROTOCOL_UNSPECIFIED\x10\x00\x12\x08\n\x04HTTP\x10\x01\x12\x07\n\x03TCP\x10\x02\x12\x07\n\x03UDP\x10\x03\x1a\xd9\x08\n\x0bVolumeMount\x12\x16\n\x06source\x18\x01 \x01(\tR\x06source\x12\x1f\n\x0bsource_path\x18\x02 \x01(\tR\nsourcePath\x12%\n\x0e\x63ontainer_path\x18\x03 \x01(\tR\rcontainerPath\x12\x42\n\x04mode\x18\x04 \x01(\x0e\x32&.nebius.ai.v1.JobSpec.VolumeMount.ModeB\x06\xbaH\x03\xc8\x01\x01R\x04mode\x12I\n\ts3_config\x18\x05 \x01(\x0b\x32*.nebius.ai.v1.JobSpec.VolumeMount.S3ConfigH\x00R\x08s3Config\x1a\x8c\x06\n\x08S3Config\x12\"\n\x08\x65ndpoint\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08\x65ndpoint\x12\x1e\n\x06region\x18\x03 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x06region\x12\\\n\x0b\x63redentials\x18\x04 \x01(\x0b\x32\x38.nebius.ai.v1.JobSpec.VolumeMount.S3Config.S3CredentialsH\x00R\x0b\x63redentials\x12m\n\x11mysterybox_secret\x18\x05 \x01(\x0b\x32>.nebius.ai.v1.JobSpec.VolumeMount.S3Config.MysteryBoxSecretRefH\x00R\x10mysteryboxSecret\x1a\x9f\x01\n\rS3Credentials\x12-\n\raccess_key_id\x18\x01 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0b\x61\x63\x63\x65ssKeyId\x12\x35\n\x11secret_access_key\x18\x02 \x01(\tB\t\xbaH\x03\xc8\x01\x01\xc0J\x01R\x0fsecretAccessKey\x12(\n\rsession_token\x18\x03 \x01(\tB\x03\xc0J\x01R\x0csessionToken\x1al\n\x13MysteryBoxSecretRef\x12\'\n\tsecret_id\x18\x01 \x01(\tB\n\xe2J\x07\n\x05mbsecR\x08secretId\x12,\n\nversion_id\x18\x02 \x01(\tB\r\xe2J\n\n\x08mbsecverR\tversionId:\xc8\x01\xbaH\xc4\x01\x1a\xc1\x01\n\x18mysterybox_secret_if_set\x12\x32mysterybox_secret must set secret_id or version_id\x1aq!has(this.mysterybox_secret) || this.mysterybox_secret.secret_id != \'\' || this.mysterybox_secret.version_id != \'\'B\x06\n\x04\x61uthJ\x04\x08\x02\x10\x03R\x06\x62ucket\";\n\x04Mode\x12\x14\n\x10MODE_UNSPECIFIED\x10\x00\x12\x0e\n\nREAD_WRITE\x10\x01\x12\r\n\tREAD_ONLY\x10\x02\x42\x0f\n\rsource_config\x1ak\n\x08\x44iskSpec\x12@\n\x04type\x18\x01 \x01(\x0e\x32$.nebius.compute.v1.DiskSpec.DiskTypeB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12\x1d\n\nsize_bytes\x18\x02 \x01(\x03R\tsizeBytes\x1a\x8e\x01\n\x13RegistryCredentials\x12\x1a\n\x08username\x18\x01 \x01(\tR\x08username\x12\x1f\n\x08password\x18\x02 \x01(\tB\x03\xc0J\x01R\x08password\x12:\n\x19mysterybox_secret_version\x18\x03 \x01(\tR\x17mysteryboxSecretVersion\x1al\n\x13MysteryBoxSecretRef\x12\'\n\tsecret_id\x18\x01 \x01(\tB\n\xe2J\x07\n\x05mbsecR\x08secretId\x12,\n\nversion_id\x18\x02 \x01(\tB\r\xe2J\n\n\x08mbsecverR\tversionId\"\xb4\x04\n\tJobStatus\x12+\n\x11private_endpoints\x18\x01 \x03(\tR\x10privateEndpoints\x12)\n\x10public_endpoints\x18\x02 \x03(\tR\x0fpublicEndpoints\x12=\n\tinstances\x18\n \x03(\x0b\x32\x1f.nebius.ai.v1.JobInstanceStatusR\tinstances\x12\x33\n\x05state\x18\x14 \x01(\x0e\x32\x1d.nebius.ai.v1.JobStatus.StateR\x05state\x12\x42\n\rstate_details\x18\x15 \x01(\x0b\x32\x1d.nebius.ai.v1.JobStateDetailsR\x0cstateDetails\x12\x39\n\nstarted_at\x18\x16 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tstartedAt\x12;\n\x0b\x66inished_at\x18\x17 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\nfinishedAt\"\x9e\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0c\n\x08STARTING\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0e\n\nCANCELLING\x10\x04\x12\x0c\n\x08\x44\x45LETING\x10\x05\x12\r\n\tCOMPLETED\x10\x06\x12\n\n\x06\x46\x41ILED\x10\x07\x12\r\n\tCANCELLED\x10\x08\x12\t\n\x05\x45RROR\x10\t\"G\n\x0fJobStateDetails\x12\x1a\n\x04\x63ode\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04\x63ode\x12\x18\n\x07message\x18\x02 \x01(\tR\x07message\"\xfa\x03\n\x11JobInstanceStatus\x12\x43\n\x05state\x18\x01 \x01(\x0e\x32%.nebius.ai.v1.JobInstanceStatus.StateB\x06\xbaH\x03\xc8\x01\x01R\x05state\x12\x44\n\x13\x63ompute_instance_id\x18\n \x01(\tB\x14\xe2J\x11\n\x0f\x63omputeinstanceR\x11\x63omputeInstanceId\x12m\n\x16\x63ompute_instance_state\x18\x0b \x01(\x0e\x32/.nebius.compute.v1.InstanceStatus.InstanceStateB\x06\xbaH\x03\xc8\x01\x01R\x14\x63omputeInstanceState\x12\x1d\n\nprivate_ip\x18\x0c \x01(\tR\tprivateIp\x12\x1b\n\tpublic_ip\x18\r \x01(\tR\x08publicIp\"\xae\x01\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0c\n\x08STARTING\x10\x02\x12\x0b\n\x07RUNNING\x10\x03\x12\x0e\n\nCOMPLETING\x10\x04\x12\x0e\n\nCANCELLING\x10\x05\x12\x0c\n\x08\x44\x45LETING\x10\x06\x12\r\n\tCOMPLETED\x10\x07\x12\n\n\x06\x46\x41ILED\x10\x08\x12\r\n\tCANCELLED\x10\t\x12\t\n\x05\x45RROR\x10\nBM\n\x13\x61i.nebius.pub.ai.v1B\x08JobProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -39,6 +39,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _JOBSPEC_ENVIRONMENTVARIABLE.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _JOBSPEC_ENVIRONMENTVARIABLE.fields_by_name['value']._options = None
   _JOBSPEC_ENVIRONMENTVARIABLE.fields_by_name['value']._serialized_options = b'\300J\001'
+  _JOBSPEC_ENVIRONMENTVARIABLE._options = None
+  _JOBSPEC_ENVIRONMENTVARIABLE._serialized_options = b'\272H\304\001\032\301\001\n\030mysterybox_secret_if_set\0222mysterybox_secret must set secret_id or version_id\032q!has(this.mysterybox_secret) || this.mysterybox_secret.secret_id != \'\' || this.mysterybox_secret.version_id != \'\''
   _JOBSPEC_PORT.fields_by_name['container_port']._options = None
   _JOBSPEC_PORT.fields_by_name['container_port']._serialized_options = b'\272H\010\032\006\030\377\377\003(\001'
   _JOBSPEC_PORT.fields_by_name['host_port']._options = None
@@ -52,13 +54,15 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _JOBSPEC_VOLUMEMOUNT_S3CONFIG_S3CREDENTIALS.fields_by_name['session_token']._options = None
   _JOBSPEC_VOLUMEMOUNT_S3CONFIG_S3CREDENTIALS.fields_by_name['session_token']._serialized_options = b'\300J\001'
   _JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF.fields_by_name['secret_id']._options = None
-  _JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF.fields_by_name['secret_id']._serialized_options = b'\272H\003\310\001\001\342J\007\n\005mbsec'
+  _JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF.fields_by_name['secret_id']._serialized_options = b'\342J\007\n\005mbsec'
   _JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF.fields_by_name['version_id']._options = None
-  _JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF.fields_by_name['version_id']._serialized_options = b'\272H\003\310\001\001\342J\n\n\010mbsecver'
+  _JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF.fields_by_name['version_id']._serialized_options = b'\342J\n\n\010mbsecver'
   _JOBSPEC_VOLUMEMOUNT_S3CONFIG.fields_by_name['endpoint']._options = None
   _JOBSPEC_VOLUMEMOUNT_S3CONFIG.fields_by_name['endpoint']._serialized_options = b'\272H\003\310\001\001'
   _JOBSPEC_VOLUMEMOUNT_S3CONFIG.fields_by_name['region']._options = None
   _JOBSPEC_VOLUMEMOUNT_S3CONFIG.fields_by_name['region']._serialized_options = b'\272H\003\310\001\001'
+  _JOBSPEC_VOLUMEMOUNT_S3CONFIG._options = None
+  _JOBSPEC_VOLUMEMOUNT_S3CONFIG._serialized_options = b'\272H\304\001\032\301\001\n\030mysterybox_secret_if_set\0222mysterybox_secret must set secret_id or version_id\032q!has(this.mysterybox_secret) || this.mysterybox_secret.secret_id != \'\' || this.mysterybox_secret.version_id != \'\''
   _JOBSPEC_VOLUMEMOUNT.fields_by_name['mode']._options = None
   _JOBSPEC_VOLUMEMOUNT.fields_by_name['mode']._serialized_options = b'\272H\003\310\001\001'
   _JOBSPEC_DISKSPEC.fields_by_name['type']._options = None
@@ -66,9 +70,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _JOBSPEC_REGISTRYCREDENTIALS.fields_by_name['password']._options = None
   _JOBSPEC_REGISTRYCREDENTIALS.fields_by_name['password']._serialized_options = b'\300J\001'
   _JOBSPEC_MYSTERYBOXSECRETREF.fields_by_name['secret_id']._options = None
-  _JOBSPEC_MYSTERYBOXSECRETREF.fields_by_name['secret_id']._serialized_options = b'\272H\003\310\001\001\342J\007\n\005mbsec'
+  _JOBSPEC_MYSTERYBOXSECRETREF.fields_by_name['secret_id']._serialized_options = b'\342J\007\n\005mbsec'
   _JOBSPEC_MYSTERYBOXSECRETREF.fields_by_name['version_id']._options = None
-  _JOBSPEC_MYSTERYBOXSECRETREF.fields_by_name['version_id']._serialized_options = b'\272H\003\310\001\001\342J\n\n\010mbsecver'
+  _JOBSPEC_MYSTERYBOXSECRETREF.fields_by_name['version_id']._serialized_options = b'\342J\n\n\010mbsecver'
   _JOBSPEC.fields_by_name['image']._options = None
   _JOBSPEC.fields_by_name['image']._serialized_options = b'\272H\003\310\001\001'
   _JOBSPEC.fields_by_name['working_dir']._options = None
@@ -96,37 +100,37 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_JOB']._serialized_start=258
   _globals['_JOB']._serialized_end=441
   _globals['_JOBSPEC']._serialized_start=444
-  _globals['_JOBSPEC']._serialized_end=3053
+  _globals['_JOBSPEC']._serialized_end=3435
   _globals['_JOBSPEC_ENVIRONMENTVARIABLE']._serialized_start=1346
-  _globals['_JOBSPEC_ENVIRONMENTVARIABLE']._serialized_end=1510
-  _globals['_JOBSPEC_PORT']._serialized_start=1513
-  _globals['_JOBSPEC_PORT']._serialized_end=1752
-  _globals['_JOBSPEC_PORT_PROTOCOL']._serialized_start=1688
-  _globals['_JOBSPEC_PORT_PROTOCOL']._serialized_end=1752
-  _globals['_JOBSPEC_VOLUMEMOUNT']._serialized_start=1755
-  _globals['_JOBSPEC_VOLUMEMOUNT']._serialized_end=2677
-  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG']._serialized_start=2010
-  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG']._serialized_end=2599
-  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG_S3CREDENTIALS']._serialized_start=2296
-  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG_S3CREDENTIALS']._serialized_end=2455
-  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF']._serialized_start=2457
-  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF']._serialized_end=2577
-  _globals['_JOBSPEC_VOLUMEMOUNT_MODE']._serialized_start=2601
-  _globals['_JOBSPEC_VOLUMEMOUNT_MODE']._serialized_end=2660
-  _globals['_JOBSPEC_DISKSPEC']._serialized_start=2679
-  _globals['_JOBSPEC_DISKSPEC']._serialized_end=2786
-  _globals['_JOBSPEC_REGISTRYCREDENTIALS']._serialized_start=2789
-  _globals['_JOBSPEC_REGISTRYCREDENTIALS']._serialized_end=2931
-  _globals['_JOBSPEC_MYSTERYBOXSECRETREF']._serialized_start=2457
-  _globals['_JOBSPEC_MYSTERYBOXSECRETREF']._serialized_end=2577
-  _globals['_JOBSTATUS']._serialized_start=3056
-  _globals['_JOBSTATUS']._serialized_end=3620
-  _globals['_JOBSTATUS_STATE']._serialized_start=3462
-  _globals['_JOBSTATUS_STATE']._serialized_end=3620
-  _globals['_JOBSTATEDETAILS']._serialized_start=3622
-  _globals['_JOBSTATEDETAILS']._serialized_end=3693
-  _globals['_JOBINSTANCESTATUS']._serialized_start=3696
-  _globals['_JOBINSTANCESTATUS']._serialized_end=4202
-  _globals['_JOBINSTANCESTATUS_STATE']._serialized_start=4028
-  _globals['_JOBINSTANCESTATUS_STATE']._serialized_end=4202
+  _globals['_JOBSPEC_ENVIRONMENTVARIABLE']._serialized_end=1713
+  _globals['_JOBSPEC_PORT']._serialized_start=1716
+  _globals['_JOBSPEC_PORT']._serialized_end=1955
+  _globals['_JOBSPEC_PORT_PROTOCOL']._serialized_start=1891
+  _globals['_JOBSPEC_PORT_PROTOCOL']._serialized_end=1955
+  _globals['_JOBSPEC_VOLUMEMOUNT']._serialized_start=1958
+  _globals['_JOBSPEC_VOLUMEMOUNT']._serialized_end=3071
+  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG']._serialized_start=2213
+  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG']._serialized_end=2993
+  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG_S3CREDENTIALS']._serialized_start=2499
+  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG_S3CREDENTIALS']._serialized_end=2658
+  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF']._serialized_start=2660
+  _globals['_JOBSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF']._serialized_end=2768
+  _globals['_JOBSPEC_VOLUMEMOUNT_MODE']._serialized_start=2995
+  _globals['_JOBSPEC_VOLUMEMOUNT_MODE']._serialized_end=3054
+  _globals['_JOBSPEC_DISKSPEC']._serialized_start=3073
+  _globals['_JOBSPEC_DISKSPEC']._serialized_end=3180
+  _globals['_JOBSPEC_REGISTRYCREDENTIALS']._serialized_start=3183
+  _globals['_JOBSPEC_REGISTRYCREDENTIALS']._serialized_end=3325
+  _globals['_JOBSPEC_MYSTERYBOXSECRETREF']._serialized_start=2660
+  _globals['_JOBSPEC_MYSTERYBOXSECRETREF']._serialized_end=2768
+  _globals['_JOBSTATUS']._serialized_start=3438
+  _globals['_JOBSTATUS']._serialized_end=4002
+  _globals['_JOBSTATUS_STATE']._serialized_start=3844
+  _globals['_JOBSTATUS_STATE']._serialized_end=4002
+  _globals['_JOBSTATEDETAILS']._serialized_start=4004
+  _globals['_JOBSTATEDETAILS']._serialized_end=4075
+  _globals['_JOBINSTANCESTATUS']._serialized_start=4078
+  _globals['_JOBINSTANCESTATUS']._serialized_end=4584
+  _globals['_JOBINSTANCESTATUS_STATE']._serialized_start=4410
+  _globals['_JOBINSTANCESTATUS_STATE']._serialized_end=4584
 # @@protoc_insertion_point(module_scope)
