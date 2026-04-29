@@ -8,5 +8,7 @@ class ExportFormat(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
     EXPORT_FORMAT_UNSPECIFIED: _ClassVar[ExportFormat]
     EXPORT_FORMAT_FOCUS_1_2_CSV: _ClassVar[ExportFormat]
+    EXPORT_FORMAT_CONSUMPTION_BREAKDOWN_PDF: _ClassVar[ExportFormat]
 EXPORT_FORMAT_UNSPECIFIED: ExportFormat
 EXPORT_FORMAT_FOCUS_1_2_CSV: ExportFormat
+EXPORT_FORMAT_CONSUMPTION_BREAKDOWN_PDF: ExportFormat

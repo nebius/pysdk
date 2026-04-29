@@ -51,6 +51,12 @@ class ExportFormat(pb_enum.Enum):
     See: https://focus.finops.org/focus-specification/v1-2/
     """
     
+    EXPORT_FORMAT_CONSUMPTION_BREAKDOWN_PDF = 100
+    """
+    Consumption Breakdown PDF format.
+    Single-period human-readable cost breakdown report exported as a PDF file.
+    """
+    
 
 # file: nebius/billing/v1alpha1/calculator.proto
 class ResourceSpec(pb_classes.Message):

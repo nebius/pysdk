@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n5nebius/billing/v1alpha1/billing_report_exporter.proto\x12\x17nebius.billing.v1alpha1*N\n\x0c\x45xportFormat\x12\x1d\n\x19\x45XPORT_FORMAT_UNSPECIFIED\x10\x00\x12\x1f\n\x1b\x45XPORT_FORMAT_FOCUS_1_2_CSV\x10\x01\x42u\n\x1e\x61i.nebius.pub.billing.v1alpha1B\x1a\x42illingReportExporterProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/billing/v1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n5nebius/billing/v1alpha1/billing_report_exporter.proto\x12\x17nebius.billing.v1alpha1*{\n\x0c\x45xportFormat\x12\x1d\n\x19\x45XPORT_FORMAT_UNSPECIFIED\x10\x00\x12\x1f\n\x1b\x45XPORT_FORMAT_FOCUS_1_2_CSV\x10\x01\x12+\n\'EXPORT_FORMAT_CONSUMPTION_BREAKDOWN_PDF\x10\x64\x42u\n\x1e\x61i.nebius.pub.billing.v1alpha1B\x1a\x42illingReportExporterProtoP\x01Z5github.com/nebius/gosdk/proto/nebius/billing/v1alpha1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -23,5 +23,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\036ai.nebius.pub.billing.v1alpha1B\032BillingReportExporterProtoP\001Z5github.com/nebius/gosdk/proto/nebius/billing/v1alpha1'
   _globals['_EXPORTFORMAT']._serialized_start=82
-  _globals['_EXPORTFORMAT']._serialized_end=160
+  _globals['_EXPORTFORMAT']._serialized_end=205
 # @@protoc_insertion_point(module_scope)
