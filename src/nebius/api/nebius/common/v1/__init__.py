@@ -2862,6 +2862,11 @@ class Warning(pb_classes.Message):
         Deprecated value was observed in the response.
         """
         
+        CODE_NOT_RECOMMENDED_SPEC_VALUE_REQUEST = 7
+        """
+        Not-recommended value was used in the request.
+        """
+        
     
     def __init__(
         self,
