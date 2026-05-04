@@ -11,6 +11,7 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.duration_pb2 as duration_pb2
 import google.protobuf.empty_pb2 as empty_pb2
 import google.protobuf.message as message_1
+import google.protobuf.timestamp_pb2 as timestamp_pb2
 import nebius.aio.client as client
 import nebius.aio.operation as operation
 import nebius.aio.request as request_1
@@ -1076,6 +1077,7 @@ class ClusterControlPlaneVersion(pb_classes.Message):
     __PB2_CLASS__ = cluster_service_pb2.ClusterControlPlaneVersion
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.ClusterControlPlaneVersion",cluster_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
+        "end_of_life": well_known_1.ts_mask,
     }
     
     def __init__(
@@ -1083,14 +1085,22 @@ class ClusterControlPlaneVersion(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        restricted: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        end_of_life: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
             self.version = version
+        if not isinstance(restricted, unset.UnsetType):
+            self.restricted = restricted
+        if not isinstance(end_of_life, unset.UnsetType):
+            self.end_of_life = end_of_life
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "version",
+            "restricted",
+            "end_of_life",
         ]
     
     @builtins.property
@@ -1106,8 +1116,39 @@ class ClusterControlPlaneVersion(pb_classes.Message):
         return super()._set_field("version",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def restricted(self) -> "builtins.bool":
+        """
+        Restricted shows versions available only for internal Nebius use, mostly those about to get released to public.
+        To use such versions - a feature restricted_k8s_versions should be enabled on a cluster.
+        """
+        
+        return super()._get_field("restricted", explicit_presence=False,
+        )
+    @restricted.setter
+    def restricted(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("restricted",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def end_of_life(self) -> "datetime.datetime":
+        """
+        EndOfLife determines when the version will be forced out of use.
+        """
+        
+        return super()._get_field("end_of_life", explicit_presence=False,
+        wrap=well_known_1.from_timestamp
+        )
+    @end_of_life.setter
+    def end_of_life(self, value: "timestamp_pb2.Timestamp|datetime.datetime|None") -> None:
+        return super()._set_field("end_of_life",value,explicit_presence=False,
+        unwrap=well_known_1.to_timestamp
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "version":"version",
+        "restricted":"restricted",
+        "end_of_life":"end_of_life",
     }
     
 

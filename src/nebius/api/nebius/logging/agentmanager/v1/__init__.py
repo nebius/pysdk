@@ -1128,6 +1128,7 @@ class GetVersionResponse(pb_classes.Message):
         update: "UpdateActionParams|version_service_pb2.UpdateActionParams|None|unset.UnsetType" = unset.Unset,
         restart: "RestartActionParams|version_service_pb2.RestartActionParams|None|unset.UnsetType" = unset.Unset,
         feature_flags: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
+        feature_flags_unavailable: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(action, unset.UnsetType):
@@ -1140,6 +1141,8 @@ class GetVersionResponse(pb_classes.Message):
             self.restart = restart
         if not isinstance(feature_flags, unset.UnsetType):
             self.feature_flags = feature_flags
+        if not isinstance(feature_flags_unavailable, unset.UnsetType):
+            self.feature_flags_unavailable = feature_flags_unavailable
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1148,6 +1151,7 @@ class GetVersionResponse(pb_classes.Message):
             "update",
             "restart",
             "feature_flags",
+            "feature_flags_unavailable",
             "FeatureFlagsEntry",
             "response",
         ]
@@ -1212,6 +1216,8 @@ class GetVersionResponse(pb_classes.Message):
     def feature_flags(self) -> "abc.MutableMapping[builtins.str,builtins.str]":
         """
         Feature flags for the agent. Keys are UPPER_CASE flag names, values are flag values (typically "true"/"false").
+        When feature_flags_unavailable is true the agent must ignore this field and
+        keep its current flag set unchanged.
         """
         
         return super()._get_field("feature_flags", explicit_presence=False,
@@ -1222,12 +1228,29 @@ class GetVersionResponse(pb_classes.Message):
         return super()._set_field("feature_flags",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def feature_flags_unavailable(self) -> "builtins.bool":
+        """
+        True when the server could not load feature-flag state. The agent must
+        keep its current flag set instead of treating an empty feature_flags map
+        as "clear all". The default value of false means feature_flags is
+        authoritative — including legitimately empty.
+        """
+        
+        return super()._get_field("feature_flags_unavailable", explicit_presence=False,
+        )
+    @feature_flags_unavailable.setter
+    def feature_flags_unavailable(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("feature_flags_unavailable",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "action":"action",
         "nop":"nop",
         "update":"update",
         "restart":"restart",
         "feature_flags":"feature_flags",
+        "feature_flags_unavailable":"feature_flags_unavailable",
         "FeatureFlagsEntry":"FeatureFlagsEntry",
         "response":"response",
     }

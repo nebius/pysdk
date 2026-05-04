@@ -1,4 +1,5 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.common.v1 import operation_pb2 as _operation_pb2
@@ -69,7 +70,11 @@ class ListClusterControlPlaneVersionsResponse(_message.Message):
     def __init__(self, items: _Optional[_Iterable[_Union[ClusterControlPlaneVersion, _Mapping]]] = ...) -> None: ...
 
 class ClusterControlPlaneVersion(_message.Message):
-    __slots__ = ["version"]
+    __slots__ = ["version", "restricted", "end_of_life"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
+    RESTRICTED_FIELD_NUMBER: _ClassVar[int]
+    END_OF_LIFE_FIELD_NUMBER: _ClassVar[int]
     version: str
-    def __init__(self, version: _Optional[str] = ...) -> None: ...
+    restricted: bool
+    end_of_life: _timestamp_pb2.Timestamp
+    def __init__(self, version: _Optional[str] = ..., restricted: bool = ..., end_of_life: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...

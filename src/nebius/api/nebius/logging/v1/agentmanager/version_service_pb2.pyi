@@ -142,7 +142,7 @@ class OSInfo(_message.Message):
     def __init__(self, name: _Optional[str] = ..., uname: _Optional[str] = ..., architecture: _Optional[str] = ...) -> None: ...
 
 class GetVersionResponse(_message.Message):
-    __slots__ = ["action", "nop", "update", "restart", "feature_flags"]
+    __slots__ = ["action", "nop", "update", "restart", "feature_flags", "feature_flags_unavailable"]
     class FeatureFlagsEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -155,12 +155,14 @@ class GetVersionResponse(_message.Message):
     UPDATE_FIELD_NUMBER: _ClassVar[int]
     RESTART_FIELD_NUMBER: _ClassVar[int]
     FEATURE_FLAGS_FIELD_NUMBER: _ClassVar[int]
+    FEATURE_FLAGS_UNAVAILABLE_FIELD_NUMBER: _ClassVar[int]
     action: Action
     nop: NopActionParams
     update: UpdateActionParams
     restart: RestartActionParams
     feature_flags: _containers.ScalarMap[str, str]
-    def __init__(self, action: _Optional[_Union[Action, str]] = ..., nop: _Optional[_Union[NopActionParams, _Mapping]] = ..., update: _Optional[_Union[UpdateActionParams, _Mapping]] = ..., restart: _Optional[_Union[RestartActionParams, _Mapping]] = ..., feature_flags: _Optional[_Mapping[str, str]] = ...) -> None: ...
+    feature_flags_unavailable: bool
+    def __init__(self, action: _Optional[_Union[Action, str]] = ..., nop: _Optional[_Union[NopActionParams, _Mapping]] = ..., update: _Optional[_Union[UpdateActionParams, _Mapping]] = ..., restart: _Optional[_Union[RestartActionParams, _Mapping]] = ..., feature_flags: _Optional[_Mapping[str, str]] = ..., feature_flags_unavailable: bool = ...) -> None: ...
 
 class NopActionParams(_message.Message):
     __slots__ = []
