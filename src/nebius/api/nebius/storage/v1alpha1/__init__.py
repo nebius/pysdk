@@ -1757,6 +1757,8 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     After an iteration completes, the transfer will stop if its stop condition is met. Otherwise,
     it will wait for the defined inter-iteration interval before starting the next iteration.
     
+    Supported until 06/01/26. Data Transfer v1alpha1 API is deprecated. Please use the v1 API instead. All existing transfers remain accessible through the v1 API.
+    
     This class provides the client methods for the ``.nebius.storage.v1alpha1.TransferService`` service.
     
     Each method constructs a :class:`nebius.aio.request.Request` object
@@ -1777,6 +1779,9 @@ class TransferServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
     __operation_service_class__ = v1_1.OperationServiceClient
     __operation_source_method__ = "Create"
     """The method name that can be used to fetch the address channel for the operation."""
+    __service_deprecation_details__ = (
+    """Service .nebius.storage.v1alpha1.TransferService is deprecated. Supported until 06/01/26. Data Transfer v1alpha1 API is deprecated. Please use the v1 API instead. All existing transfers remain accessible through the v1 API."""
+    )
     
     def get(self,
         request: "GetTransferRequest",
