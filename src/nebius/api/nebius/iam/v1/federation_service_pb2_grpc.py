@@ -63,31 +63,36 @@ class FederationServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Create(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Creates a federation.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Get(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Retrieves information about a federation by ID.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetByName(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Retrieves information about a federation by name and parent container.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def List(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Lists federations by parent container.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Update(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Updates a federation.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -102,14 +107,15 @@ class FederationServiceServicer(object):
 
     def Deactivate(self, request, context):
         """Deactivates an existing federation.
-        When a federation is inactive, all users under it will be unable to authenticate.
+        When a federation is inactive, all users under it cannot authenticate.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Delete(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Deletes a federation. An active federation cannot be deleted and must be deactivated first.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')

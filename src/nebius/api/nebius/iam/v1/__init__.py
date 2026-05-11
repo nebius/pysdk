@@ -3238,6 +3238,10 @@ class FederatedCredentials(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Federated credentials resource metadata.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -3248,6 +3252,10 @@ class FederatedCredentials(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "FederatedCredentialsSpec":
+        """
+        Federated credentials resource specification.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederatedCredentialsSpec,
         )
@@ -3258,6 +3266,10 @@ class FederatedCredentials(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "FederatedCredentialsStatus":
+        """
+        Federated credentials resource status.
+        """
+        
         return super()._get_field("status", explicit_presence=False,
         wrap=FederatedCredentialsStatus,
         )
@@ -3297,7 +3309,7 @@ class FederatedCredentialsSpec(pb_classes.Message):
     @builtins.property
     def credentials_provider(self) -> __OneOfClass_credentials_provider_oidc_provider__|None:
         """
-        provider of federated credentials used for federated subject authentication
+        Provider settings used to authenticate a federated subject.
         """
         
         field_name_1: str|None = super().which_field_in_oneof("credentials_provider")
@@ -3346,7 +3358,8 @@ class FederatedCredentialsSpec(pb_classes.Message):
     @builtins.property
     def federated_subject_id(self) -> "builtins.str":
         """
-        Federated subject ID.For oidc_provider subject will be calculated based on the “sub” claim of the JWT federation token.
+        Federated subject ID. For oidc_provider, the subject is calculated from the
+        "sub" claim of the federated JWT token.
         """
         
         return super()._get_field("federated_subject_id", explicit_presence=False,
@@ -3359,7 +3372,7 @@ class FederatedCredentialsSpec(pb_classes.Message):
     @builtins.property
     def subject_id(self) -> "builtins.str":
         """
-        IAM subject, in which federated subject will be impersonated to. E.g. for workload identities it will be IAM service account.
+        IAM subject (service account) that the federated subject impersonates.
         """
         
         return super()._get_field("subject_id", explicit_presence=False,
@@ -3377,6 +3390,14 @@ class FederatedCredentialsSpec(pb_classes.Message):
     }
     
 class OidcCredentialsProvider(pb_classes.Message):
+    """
+    The OIDC provider does not have to be a full OIDC provider, but it must expose
+    OIDC discovery metadata at the "/.well-known/openid-configuration" endpoint.
+    The discovery metadata must contain "jwks_uri", which points to the JSON Web
+    Key Set (JWKS). The JWKS contains public keys used to verify JSON
+    Web Tokens (JWTs) issued by the identity provider.
+    """
+    
     __PB2_CLASS__ = federated_credentials_pb2.OidcCredentialsProvider
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.OidcCredentialsProvider",federated_credentials_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
@@ -3404,17 +3425,7 @@ class OidcCredentialsProvider(pb_classes.Message):
     @builtins.property
     def issuer_url(self) -> "builtins.str":
         """
-        It's not required provider OIDC issuer should be real OIDC provider, but should expose OIDC configuration
-        with "/.well-known/openid-configuration" endpoint. Configuration should contains the "jwks_uri" endpoint
-        where the JSON Web Key Set (JWKS) can be found; this set contains public keys used to verify
-        JSON Web Tokens (JWTs) issued by an identity provider.
-        
-        Limitations for external OIDC providers:
-        
-        
-        * token service limits the number of handled keys by 50. If your JWKS return more than 50,
-          the only first 50 will be used for signature verifying.
-        * response size for jwks_uri and "/.well-known/openid-configuration limited by 100KB.
+        OIDC-compatible JWT issuer URL.
         """
         
         return super()._get_field("issuer_url", explicit_presence=False,
@@ -3427,9 +3438,9 @@ class OidcCredentialsProvider(pb_classes.Message):
     @builtins.property
     def jwk_set_json(self) -> "builtins.str":
         """
-        Literally json, which represents JWKS with public keys for JWT verification.
-        It worth mentioned that in a case of adding/rotating keys the jwk_set_json also should be updated here.
-        Besides, the "issuer" parameter should be set even if the JWKS will be resolved locally.
+        JSON representation of a JSON Web Key Set (JWKS) with public keys used for
+        JWT signature verification.
+        If set, the token service uses this JWKS to verify token signatures.
         """
         
         return super()._get_field("jwk_set_json", explicit_presence=False,
@@ -3487,6 +3498,10 @@ class GetFederatedCredentialsRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+        Target federated credentials ID.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -3526,7 +3541,7 @@ class GetByNameFederatedCredentialsRequest(pb_classes.Message):
     @builtins.property
     def parent_id(self) -> "builtins.str":
         """
-        Container (project), which contains desired credentials.
+        Parent container ID for the federated credentials.
         """
         
         return super()._get_field("parent_id", explicit_presence=False,
@@ -3539,7 +3554,7 @@ class GetByNameFederatedCredentialsRequest(pb_classes.Message):
     @builtins.property
     def name(self) -> "builtins.str":
         """
-        Federated credentials name.
+        Target federated credentials name.
         """
         
         return super()._get_field("name", explicit_presence=False,
@@ -3581,6 +3596,10 @@ class CreateFederatedCredentialsRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Federated credentials resource metadata.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -3591,6 +3610,10 @@ class CreateFederatedCredentialsRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "FederatedCredentialsSpec":
+        """
+        Federated credentials resource specification.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederatedCredentialsSpec,
         )
@@ -3631,6 +3654,10 @@ class UpdateFederatedCredentialsRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Federated credentials resource metadata.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -3641,6 +3668,10 @@ class UpdateFederatedCredentialsRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "FederatedCredentialsSpec":
+        """
+        Federated credentials resource specification.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederatedCredentialsSpec,
         )
@@ -3690,7 +3721,7 @@ class ListFederatedCredentialsRequest(pb_classes.Message):
     @builtins.property
     def parent_id(self) -> "builtins.str":
         """
-        Represents the parent NID
+        Parent container ID for the federated credentials.
         """
         
         return super()._get_field("parent_id", explicit_presence=False,
@@ -3703,7 +3734,7 @@ class ListFederatedCredentialsRequest(pb_classes.Message):
     @builtins.property
     def page_size(self) -> "builtins.int":
         """
-        Specifies the maximum number of items to return in the response. Default is 10
+        Maximum number of items to return in the response. Default value: 10.
         """
         
         return super()._get_field("page_size", explicit_presence=False,
@@ -3729,7 +3760,7 @@ class ListFederatedCredentialsRequest(pb_classes.Message):
     @builtins.property
     def filter(self) -> "builtins.str":
         """
-        A filter to narrow down the results based on specific criteria.
+        Filter expression for narrowing down the results.
         """
         
         return super()._get_field("filter", explicit_presence=False,
@@ -3774,7 +3805,7 @@ class ListFederatedCredentialsResponse(pb_classes.Message):
     @builtins.property
     def items(self) -> "abc.MutableSequence[FederatedCredentials]":
         """
-        List of user accounts returned in the response. The field should be named as ``items`` for consistency.
+        List of federated credentials returned in the response.
         """
         
         return super()._get_field("items", explicit_presence=False,
@@ -3788,7 +3819,7 @@ class ListFederatedCredentialsResponse(pb_classes.Message):
     @builtins.property
     def next_page_token(self) -> "builtins.str":
         """
-        Token for pagination, indicating the next set of results can be retrieved using this token.
+        Token for pagination, allowing the retrieval of the next set of results.
         """
         
         return super()._get_field("next_page_token", explicit_presence=False,
@@ -3826,6 +3857,10 @@ class DeleteFederatedCredentialsRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+        Target federated credentials ID.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -3866,6 +3901,8 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["GetFederatedCredentialsRequest","FederatedCredentials"]:
         """
+        Retrieves information about federated credentials by ID.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.GetFederatedCredentialsRequest`
         
@@ -3893,6 +3930,8 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["GetByNameFederatedCredentialsRequest","FederatedCredentials"]:
         """
+        Retrieves information about federated credentials by name and parent container.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.GetByNameFederatedCredentialsRequest`
         
@@ -3920,6 +3959,8 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["ListFederatedCredentialsRequest","ListFederatedCredentialsResponse"]:
         """
+        Lists federated credentials by parent container.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.ListFederatedCredentialsRequest`
         
@@ -3947,6 +3988,8 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["CreateFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
         """
+        Creates federated credentials.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.CreateFederatedCredentialsRequest`
         
@@ -3974,6 +4017,8 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["UpdateFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
         """
+        Updates federated credentials.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.UpdateFederatedCredentialsRequest`
         
@@ -4002,6 +4047,8 @@ class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operati
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["DeleteFederatedCredentialsRequest","operation_1.Operation[v1_1.Operation]"]:
         """
+        Deletes federated credentials.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.DeleteFederatedCredentialsRequest`
         
@@ -4057,6 +4104,10 @@ class Federation(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Federation resource metadata.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -4067,6 +4118,10 @@ class Federation(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "FederationSpec":
+        """
+        Federation resource specification.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationSpec,
         )
@@ -4077,6 +4132,10 @@ class Federation(pb_classes.Message):
     
     @builtins.property
     def status(self) -> "FederationStatus":
+        """
+        Federation resource status.
+        """
+        
         return super()._get_field("status", explicit_presence=False,
         wrap=FederationStatus,
         )
@@ -4150,6 +4209,11 @@ class FederationSpec(pb_classes.Message):
     
     @builtins.property
     def user_account_auto_creation(self) -> "builtins.bool":
+        """
+        If false, users with access to the federation cannot sign in automatically
+        and user accounts for them must be pre-created by a federation administrator.
+        """
+        
         return super()._get_field("user_account_auto_creation", explicit_presence=False,
         )
     @user_account_auto_creation.setter
@@ -4159,6 +4223,10 @@ class FederationSpec(pb_classes.Message):
     
     @builtins.property
     def active(self) -> "builtins.bool":
+        """
+        Specifies if the federation in active state
+        """
+        
         return super()._get_field("active", explicit_presence=False,
         )
     @active.setter
@@ -4168,6 +4236,10 @@ class FederationSpec(pb_classes.Message):
     
     @builtins.property
     def saml_settings(self) -> "SamlSettings|None":
+        """
+        SAML federation settings.
+        """
+        
         return super()._get_field("saml_settings", explicit_presence=True,
         wrap=SamlSettings,
         )
@@ -4214,6 +4286,10 @@ class SamlSettings(pb_classes.Message):
     
     @builtins.property
     def idp_issuer(self) -> "builtins.str":
+        """
+        The unique identifier of the SAML Identity Provider. It usually matches the entityID from the IdP metadata.
+        """
+        
         return super()._get_field("idp_issuer", explicit_presence=False,
         )
     @idp_issuer.setter
@@ -4223,6 +4299,10 @@ class SamlSettings(pb_classes.Message):
     
     @builtins.property
     def sso_url(self) -> "builtins.str":
+        """
+        Identity Provider’s Single Sign-On endpoint. This is the URL where the user is redirected to start SAML login.
+        """
+        
         return super()._get_field("sso_url", explicit_presence=False,
         )
     @sso_url.setter
@@ -4287,6 +4367,10 @@ class FederationStatus(pb_classes.Message):
     
     @builtins.property
     def state(self) -> "FederationStatus.State":
+        """
+        Federation state.
+        """
+        
         return super()._get_field("state", explicit_presence=False,
         wrap=FederationStatus.State,
         )
@@ -4297,6 +4381,10 @@ class FederationStatus(pb_classes.Message):
     
     @builtins.property
     def users_count(self) -> "builtins.int":
+        """
+        Number of users registered in the IAM federation. This value may differ from the number of users in the identity provider.
+        """
+        
         return super()._get_field("users_count", explicit_presence=False,
         )
     @users_count.setter
@@ -4306,6 +4394,10 @@ class FederationStatus(pb_classes.Message):
     
     @builtins.property
     def certificates_count(self) -> "builtins.int":
+        """
+        Number of certificates attached to the SAML federation for verifying SAML responses.
+        """
+        
         return super()._get_field("certificates_count", explicit_presence=False,
         )
     @certificates_count.setter
@@ -5130,6 +5222,10 @@ class CreateFederationRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Federation resource metadata.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -5140,6 +5236,10 @@ class CreateFederationRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "FederationSpec":
+        """
+        Federation resource specification.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationSpec,
         )
@@ -5176,6 +5276,10 @@ class GetFederationRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+        Target federation ID.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -5222,6 +5326,10 @@ class ListFederationsRequest(pb_classes.Message):
     
     @builtins.property
     def parent_id(self) -> "builtins.str":
+        """
+        Parent container ID for the federations.
+        """
+        
         return super()._get_field("parent_id", explicit_presence=False,
         )
     @parent_id.setter
@@ -5232,7 +5340,7 @@ class ListFederationsRequest(pb_classes.Message):
     @builtins.property
     def page_size(self) -> "builtins.int":
         """
-        Default value: 10
+        Maximum number of items to return in the response. Default value: 10.
         """
         
         return super()._get_field("page_size", explicit_presence=False,
@@ -5244,6 +5352,10 @@ class ListFederationsRequest(pb_classes.Message):
     
     @builtins.property
     def page_token(self) -> "builtins.str":
+        """
+        Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("page_token", explicit_presence=False,
         )
     @page_token.setter
@@ -5253,6 +5365,10 @@ class ListFederationsRequest(pb_classes.Message):
     
     @builtins.property
     def filter(self) -> "builtins.str":
+        """
+        Filter expression for narrowing down the results.
+        """
+        
         return super()._get_field("filter", explicit_presence=False,
         )
     @filter.setter
@@ -5294,6 +5410,10 @@ class ListFederationsResponse(pb_classes.Message):
     
     @builtins.property
     def items(self) -> "abc.MutableSequence[Federation]":
+        """
+        List of federations returned in the response.
+        """
+        
         return super()._get_field("items", explicit_presence=False,
         wrap=pb_classes.Repeated.with_wrap(Federation,None,None),
         )
@@ -5304,6 +5424,10 @@ class ListFederationsResponse(pb_classes.Message):
     
     @builtins.property
     def next_page_token(self) -> "builtins.str":
+        """
+        Token for pagination, allowing the retrieval of the next set of results.
+        """
+        
         return super()._get_field("next_page_token", explicit_presence=False,
         )
     @next_page_token.setter
@@ -5347,6 +5471,10 @@ class UpdateFederationRequest(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Federation resource metadata.
+        """
+        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )
@@ -5357,6 +5485,10 @@ class UpdateFederationRequest(pb_classes.Message):
     
     @builtins.property
     def spec(self) -> "FederationSpec":
+        """
+        Federation resource specification.
+        """
+        
         return super()._get_field("spec", explicit_presence=False,
         wrap=FederationSpec,
         )
@@ -5404,6 +5536,10 @@ class ActivateFederationRequest(pb_classes.Message):
     
     @builtins.property
     def federation_id(self) -> "builtins.str":
+        """
+        Target federation ID.
+        """
+        
         return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
@@ -5438,6 +5574,10 @@ class DeactivateFederationRequest(pb_classes.Message):
     
     @builtins.property
     def federation_id(self) -> "builtins.str":
+        """
+        Target federation ID.
+        """
+        
         return super()._get_field("federation_id", explicit_presence=False,
         )
     @federation_id.setter
@@ -5472,6 +5612,10 @@ class DeleteFederationRequest(pb_classes.Message):
     
     @builtins.property
     def id(self) -> "builtins.str":
+        """
+        Target federation ID.
+        """
+        
         return super()._get_field("id", explicit_presence=False,
         )
     @id.setter
@@ -5512,6 +5656,8 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["CreateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         """
+        Creates a federation.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.CreateFederationRequest`
         
@@ -5539,6 +5685,8 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["GetFederationRequest","Federation"]:
         """
+        Retrieves information about a federation by ID.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.GetFederationRequest`
         
@@ -5566,6 +5714,8 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["v1_1.GetByNameRequest","Federation"]:
         """
+        Retrieves information about a federation by name and parent container.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.common.v1.GetByNameRequest`
         
@@ -5593,6 +5743,8 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["ListFederationsRequest","ListFederationsResponse"]:
         """
+        Lists federations by parent container.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.ListFederationsRequest`
         
@@ -5620,6 +5772,8 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["UpdateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         """
+        Updates a federation.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.UpdateFederationRequest`
         
@@ -5679,7 +5833,7 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
     ) -> request_1.Request["DeactivateFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         """
         Deactivates an existing federation.
-        When a federation is inactive, all users under it will be unable to authenticate.
+        When a federation is inactive, all users under it cannot authenticate.
         
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.DeactivateFederationRequest`
@@ -5708,6 +5862,8 @@ class FederationServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Op
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["DeleteFederationRequest","operation_1.Operation[v1_1.Operation]"]:
         """
+        Deletes a federation. An active federation cannot be deleted and must be deactivated first.
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.DeleteFederationRequest`
         
