@@ -42,13 +42,13 @@ def main() -> None:
         with open(file_path, "r") as file:
             data = tomlkit.parse(file.read())
 
-        version = data["project"]["version"]  # type: ignore
+        version = data["project"]["version"]  # type: ignore[unused-ignore,index]
         if part == "print":
             print(f"{version}")
             return
 
-        updated_version = increment_version(version, part)  # type: ignore
-        data["project"]["version"] = updated_version  # type: ignore
+        updated_version = increment_version(version, part)  # type: ignore[unused-ignore,arg-type]
+        data["project"]["version"] = updated_version  # type: ignore[unused-ignore,index]
 
         # Read the version file and update only the version line
         with open(version_file_path, "r") as version_file:
