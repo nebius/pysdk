@@ -3991,24 +3991,39 @@ class RouteStatus(pb_classes.Message):
         """
         
     
+    class Type(pb_enum.Enum):
+        """
+        Route type.
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.RouteStatus.Type",route_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        TYPE_UNSPECIFIED = 0
+        STATIC = 1
+        REDISTRIBUTED = 2
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
         state: "RouteStatus.State|route_pb2.RouteStatus.State|None|unset.UnsetType" = unset.Unset,
         next_hop: "NextHopState|route_pb2.NextHopState|None|unset.UnsetType" = unset.Unset,
+        type: "RouteStatus.Type|route_pb2.RouteStatus.Type|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
             self.state = state
         if not isinstance(next_hop, unset.UnsetType):
             self.next_hop = next_hop
+        if not isinstance(type, unset.UnsetType):
+            self.type = type
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "next_hop",
+            "type",
             "State",
+            "Type",
         ]
     
     @builtins.property
@@ -4039,10 +4054,27 @@ class RouteStatus(pb_classes.Message):
         return super()._set_field("next_hop",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def type(self) -> "RouteStatus.Type":
+        """
+        Indicates the route type.
+        REDISTRIBUTED routes cannot be deleted directly.
+        """
+        
+        return super()._get_field("type", explicit_presence=False,
+        wrap=RouteStatus.Type,
+        )
+    @type.setter
+    def type(self, value: "RouteStatus.Type|route_pb2.RouteStatus.Type|None") -> None:
+        return super()._set_field("type",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "next_hop":"next_hop",
+        "type":"type",
         "State":"State",
+        "Type":"Type",
     }
     
 class NextHopState(pb_classes.Message):

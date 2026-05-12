@@ -49,18 +49,28 @@ class AllocationNextHop(_message.Message):
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class RouteStatus(_message.Message):
-    __slots__ = ["state", "next_hop"]
+    __slots__ = ["state", "next_hop", "type"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[RouteStatus.State]
         READY: _ClassVar[RouteStatus.State]
     STATE_UNSPECIFIED: RouteStatus.State
     READY: RouteStatus.State
+    class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        TYPE_UNSPECIFIED: _ClassVar[RouteStatus.Type]
+        STATIC: _ClassVar[RouteStatus.Type]
+        REDISTRIBUTED: _ClassVar[RouteStatus.Type]
+    TYPE_UNSPECIFIED: RouteStatus.Type
+    STATIC: RouteStatus.Type
+    REDISTRIBUTED: RouteStatus.Type
     STATE_FIELD_NUMBER: _ClassVar[int]
     NEXT_HOP_FIELD_NUMBER: _ClassVar[int]
+    TYPE_FIELD_NUMBER: _ClassVar[int]
     state: RouteStatus.State
     next_hop: NextHopState
-    def __init__(self, state: _Optional[_Union[RouteStatus.State, str]] = ..., next_hop: _Optional[_Union[NextHopState, _Mapping]] = ...) -> None: ...
+    type: RouteStatus.Type
+    def __init__(self, state: _Optional[_Union[RouteStatus.State, str]] = ..., next_hop: _Optional[_Union[NextHopState, _Mapping]] = ..., type: _Optional[_Union[RouteStatus.Type, str]] = ...) -> None: ...
 
 class NextHopState(_message.Message):
     __slots__ = ["allocation", "default_egress_gateway"]

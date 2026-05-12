@@ -1871,14 +1871,18 @@ class DeleteProjectRequest(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        dry_run: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(id, unset.UnsetType):
             self.id = id
+        if not isinstance(dry_run, unset.UnsetType):
+            self.dry_run = dry_run
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "id",
+            "dry_run",
         ]
     
     @builtins.property
@@ -1894,8 +1898,22 @@ class DeleteProjectRequest(pb_classes.Message):
         return super()._set_field("id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def dry_run(self) -> "builtins.bool":
+        """
+        If true, performs a dry run of the deletion without actually deleting the project.
+        """
+        
+        return super()._get_field("dry_run", explicit_presence=False,
+        )
+    @dry_run.setter
+    def dry_run(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("dry_run",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "id":"id",
+        "dry_run":"dry_run",
     }
     
 class ListProjectsResponse(pb_classes.Message):

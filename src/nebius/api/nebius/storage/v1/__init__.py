@@ -44,6 +44,11 @@ class StorageClass(pb_enum.Enum):
     STANDARD = 1
     ENHANCED_THROUGHPUT = 2
     INTELLIGENT = 3
+    FILESYSTEM = 4
+    """
+    Special storage class only for filesystem buckets.
+    """
+    
 
 class VersioningPolicy(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.storage.v1.VersioningPolicy",base_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)

@@ -16,7 +16,7 @@ from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19nebius/vpc/v1/route.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xbd\x01\n\x05Route\x12R\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x12\xe2J\x0f\x12\rvpcroutetableR\x08metadata\x12,\n\x04spec\x18\x02 \x01(\x0b\x32\x18.nebius.vpc.v1.RouteSpecR\x04spec\x12\x32\n\x06status\x18\x03 \x01(\x0b\x32\x1a.nebius.vpc.v1.RouteStatusR\x06status\"\xbb\x01\n\tRouteSpec\x12 \n\x0b\x64\x65scription\x18\x01 \x01(\tR\x0b\x64\x65scription\x12M\n\x0b\x64\x65stination\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1.DestinationMatchB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x0b\x64\x65stination\x12=\n\x08next_hop\x18\x03 \x01(\x0b\x32\x16.nebius.vpc.v1.NextHopB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x07nextHop\"\xd4\x01\n\x10\x44\x65stinationMatch\x12\xbf\x01\n\x04\x63idr\x18\x01 \x01(\tB\xaa\x01\xbaH\xa2\x01\xba\x01\x9b\x01\n\x11string.valid_cidr\x12\x33\x64\x65stination.cidr must be a valid and specified CIDR\x1aQthis.matches(\'^([0-9]{1,3}\\\\.){3}[0-9]{1,3}/[0-9]+$\') && this.isIpPrefix(4, true)\xc8\x01\x01\xbaJ\x01\x02R\x04\x63idr\"\x98\x01\n\x07NextHop\x12\x42\n\nallocation\x18\x01 \x01(\x0b\x32 .nebius.vpc.v1.AllocationNextHopH\x00R\nallocation\x12\x36\n\x16\x64\x65\x66\x61ult_egress_gateway\x18\x02 \x01(\x08H\x00R\x14\x64\x65\x66\x61ultEgressGatewayB\x11\n\x08next_hop\x12\x05\xbaH\x02\x08\x01\"=\n\x11\x41llocationNextHop\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcallocationR\x02id\"\xa8\x01\n\x0bRouteStatus\x12\x36\n\x05state\x18\x01 \x01(\x0e\x32 .nebius.vpc.v1.RouteStatus.StateR\x05state\x12\x36\n\x08next_hop\x18\x02 \x01(\x0b\x32\x1b.nebius.vpc.v1.NextHopStateR\x07nextHop\")\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\n\"\xc5\x01\n\x0cNextHopState\x12G\n\nallocation\x18\x01 \x01(\x0b\x32%.nebius.vpc.v1.AllocationNextHopStateH\x00R\nallocation\x12`\n\x16\x64\x65\x66\x61ult_egress_gateway\x18\x02 \x01(\x0b\x32(.nebius.vpc.v1.DefaultEgressGatewayStateH\x00R\x14\x64\x65\x66\x61ultEgressGatewayB\n\n\x08next_hop\",\n\x16\x41llocationNextHopState\x12\x12\n\x04\x63idr\x18\x01 \x01(\tR\x04\x63idr\"\x1b\n\x19\x44\x65\x66\x61ultEgressGatewayStateBQ\n\x14\x61i.nebius.pub.vpc.v1B\nRouteProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19nebius/vpc/v1/route.proto\x12\rnebius.vpc.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\"\xbd\x01\n\x05Route\x12R\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x12\xe2J\x0f\x12\rvpcroutetableR\x08metadata\x12,\n\x04spec\x18\x02 \x01(\x0b\x32\x18.nebius.vpc.v1.RouteSpecR\x04spec\x12\x32\n\x06status\x18\x03 \x01(\x0b\x32\x1a.nebius.vpc.v1.RouteStatusR\x06status\"\xbb\x01\n\tRouteSpec\x12 \n\x0b\x64\x65scription\x18\x01 \x01(\tR\x0b\x64\x65scription\x12M\n\x0b\x64\x65stination\x18\x02 \x01(\x0b\x32\x1f.nebius.vpc.v1.DestinationMatchB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x0b\x64\x65stination\x12=\n\x08next_hop\x18\x03 \x01(\x0b\x32\x16.nebius.vpc.v1.NextHopB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x07nextHop\"\xd4\x01\n\x10\x44\x65stinationMatch\x12\xbf\x01\n\x04\x63idr\x18\x01 \x01(\tB\xaa\x01\xbaH\xa2\x01\xba\x01\x9b\x01\n\x11string.valid_cidr\x12\x33\x64\x65stination.cidr must be a valid and specified CIDR\x1aQthis.matches(\'^([0-9]{1,3}\\\\.){3}[0-9]{1,3}/[0-9]+$\') && this.isIpPrefix(4, true)\xc8\x01\x01\xbaJ\x01\x02R\x04\x63idr\"\x98\x01\n\x07NextHop\x12\x42\n\nallocation\x18\x01 \x01(\x0b\x32 .nebius.vpc.v1.AllocationNextHopH\x00R\nallocation\x12\x36\n\x16\x64\x65\x66\x61ult_egress_gateway\x18\x02 \x01(\x08H\x00R\x14\x64\x65\x66\x61ultEgressGatewayB\x11\n\x08next_hop\x12\x05\xbaH\x02\x08\x01\"=\n\x11\x41llocationNextHop\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rvpcallocationR\x02id\"\x9a\x02\n\x0bRouteStatus\x12\x36\n\x05state\x18\x01 \x01(\x0e\x32 .nebius.vpc.v1.RouteStatus.StateR\x05state\x12\x36\n\x08next_hop\x18\x02 \x01(\x0b\x32\x1b.nebius.vpc.v1.NextHopStateR\x07nextHop\x12\x33\n\x04type\x18\x03 \x01(\x0e\x32\x1f.nebius.vpc.v1.RouteStatus.TypeR\x04type\")\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\t\n\x05READY\x10\n\";\n\x04Type\x12\x14\n\x10TYPE_UNSPECIFIED\x10\x00\x12\n\n\x06STATIC\x10\x01\x12\x11\n\rREDISTRIBUTED\x10\x02\"\xc5\x01\n\x0cNextHopState\x12G\n\nallocation\x18\x01 \x01(\x0b\x32%.nebius.vpc.v1.AllocationNextHopStateH\x00R\nallocation\x12`\n\x16\x64\x65\x66\x61ult_egress_gateway\x18\x02 \x01(\x0b\x32(.nebius.vpc.v1.DefaultEgressGatewayStateH\x00R\x14\x64\x65\x66\x61ultEgressGatewayB\n\n\x08next_hop\",\n\x16\x41llocationNextHopState\x12\x12\n\x04\x63idr\x18\x01 \x01(\tR\x04\x63idr\"\x1b\n\x19\x44\x65\x66\x61ultEgressGatewayStateBQ\n\x14\x61i.nebius.pub.vpc.v1B\nRouteProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/vpc/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -48,13 +48,15 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_ALLOCATIONNEXTHOP']._serialized_start=884
   _globals['_ALLOCATIONNEXTHOP']._serialized_end=945
   _globals['_ROUTESTATUS']._serialized_start=948
-  _globals['_ROUTESTATUS']._serialized_end=1116
-  _globals['_ROUTESTATUS_STATE']._serialized_start=1075
-  _globals['_ROUTESTATUS_STATE']._serialized_end=1116
-  _globals['_NEXTHOPSTATE']._serialized_start=1119
-  _globals['_NEXTHOPSTATE']._serialized_end=1316
-  _globals['_ALLOCATIONNEXTHOPSTATE']._serialized_start=1318
-  _globals['_ALLOCATIONNEXTHOPSTATE']._serialized_end=1362
-  _globals['_DEFAULTEGRESSGATEWAYSTATE']._serialized_start=1364
-  _globals['_DEFAULTEGRESSGATEWAYSTATE']._serialized_end=1391
+  _globals['_ROUTESTATUS']._serialized_end=1230
+  _globals['_ROUTESTATUS_STATE']._serialized_start=1128
+  _globals['_ROUTESTATUS_STATE']._serialized_end=1169
+  _globals['_ROUTESTATUS_TYPE']._serialized_start=1171
+  _globals['_ROUTESTATUS_TYPE']._serialized_end=1230
+  _globals['_NEXTHOPSTATE']._serialized_start=1233
+  _globals['_NEXTHOPSTATE']._serialized_end=1430
+  _globals['_ALLOCATIONNEXTHOPSTATE']._serialized_start=1432
+  _globals['_ALLOCATIONNEXTHOPSTATE']._serialized_end=1476
+  _globals['_DEFAULTEGRESSGATEWAYSTATE']._serialized_start=1478
+  _globals['_DEFAULTEGRESSGATEWAYSTATE']._serialized_end=1505
 # @@protoc_insertion_point(module_scope)

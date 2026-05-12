@@ -53,10 +53,12 @@ class UpdateProjectRequest(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_project_pb2.ProjectSpec, _Mapping]] = ...) -> None: ...
 
 class DeleteProjectRequest(_message.Message):
-    __slots__ = ["id"]
+    __slots__ = ["id", "dry_run"]
     ID_FIELD_NUMBER: _ClassVar[int]
+    DRY_RUN_FIELD_NUMBER: _ClassVar[int]
     id: str
-    def __init__(self, id: _Optional[str] = ...) -> None: ...
+    dry_run: bool
+    def __init__(self, id: _Optional[str] = ..., dry_run: bool = ...) -> None: ...
 
 class ListProjectsResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]
