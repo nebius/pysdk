@@ -52,6 +52,11 @@ from datetime import timedelta
 from ssl import SSLContext
 from typing import TextIO
 
+from nebius.aio.metrics import (
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metrics_recorder,
+)
 from nebius.aio.token.token import Bearer as ParentBearer
 from nebius.aio.token.token import Receiver
 
@@ -123,6 +128,9 @@ class FederationBearer(ParentBearer):
     :param file_cache_throttle: Throttle interval passed to the file cache
         layer to reduce disk reads.
     :param ssl_ctx: Optional SSL context used for HTTPS requests.
+    :param metrics: Optional auth metrics callbacks. The same recorder is
+        shared across interactive federation auth and renewable file-cache
+        layers with the bearer metric provider label.
 
     Example
     -------
@@ -161,8 +169,12 @@ class FederationBearer(ParentBearer):
         retry_timeout_exponent: float = 1.5,
         file_cache_throttle: timedelta | float = timedelta(minutes=5),
         ssl_ctx: SSLContext | None = None,
+        metrics: AuthMetricsLike = None,
     ) -> None:
         """Initialize the federation bearer with renewable file cache."""
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
+            metrics, "federation"
+        )
         self._source = AsynchronousRenewableFileCacheBearer(
             FederationAuthBearer(
                 profile_name=profile_name,
@@ -172,6 +184,7 @@ class FederationBearer(ParentBearer):
                 writer=writer,
                 no_browser_open=no_browser_open,
                 ssl_ctx=ssl_ctx,
+                metrics=self._metrics,
             ),
             max_retries=max_retries,
             initial_safety_margin=initial_safety_margin,
@@ -182,6 +195,8 @@ class FederationBearer(ParentBearer):
             retry_timeout_exponent=retry_timeout_exponent,
             refresh_request_timeout=timeout,
             file_cache_throttle=file_cache_throttle,
+            metrics=self._metrics,
+            provider=self._metrics.provider,
         )
 
     @property
@@ -192,3 +207,9 @@ class FederationBearer(ParentBearer):
     def receiver(self) -> "Receiver":
         """Return a receiver from the underlying renewable file cache bearer."""
         return self._source.receiver()
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks and propagate them to the source."""
+
+        self._metrics.set_metrics(metrics)
+        self._source.set_metrics(self._metrics)

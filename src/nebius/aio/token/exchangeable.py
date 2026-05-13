@@ -33,6 +33,14 @@ from grpc_status import rpc_status
 
 from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.authorization.options import OPTION_TYPE, Types
+from nebius.aio.metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metrics_recorder,
+    metric_start,
+)
 from nebius.api.nebius.iam.v1 import CreateTokenResponse, TokenExchangeServiceClient
 from nebius.base.error import SDKError
 from nebius.base.metadata import Metadata as NebiusMetadata
@@ -89,6 +97,8 @@ class Receiver(ParentReceiver):
         :class:`TokenExchangeServiceClient` or an awaitable resolving to
         one (useful when the channel is created asynchronously).
     :param max_retries: Maximum retry attempts for this receiver.
+    :param metrics: Optional auth metrics callbacks used to record token
+        exchange attempts and token lifetimes.
     """
 
     def __init__(
@@ -96,12 +106,18 @@ class Receiver(ParentReceiver):
         requester: TokenRequester,
         service: TokenExchangeServiceClient | Awaitable[TokenExchangeServiceClient],
         max_retries: int = 2,
+        metrics: AuthMetricsLike = None,
+        provider: str | None = None,
     ) -> None:
         """Initialize the receiver."""
         super().__init__()
         self._requester = requester
         self._svc = service
         self._max_retries = max_retries
+        self._metrics = auth_metrics_recorder(
+            metrics,
+            provider or "token-exchange",
+        )
 
         self._trial = 0
 
@@ -157,6 +173,7 @@ class Receiver(ParentReceiver):
             ``"Bearer"``.
         """
         self._trial += 1
+        start = metric_start()
         req = self._requester.get_exchange_token_request()
 
         now = datetime.now(timezone.utc)
@@ -173,20 +190,42 @@ class Receiver(ParentReceiver):
                 auth_options={OPTION_TYPE: Types.DISABLE},
             )
         except AioRpcError as e:
+            self._metrics.token_acquire_from_start(
+                METRIC_RESULT_ERROR, start, self._trial
+            )
             self._raise_request_error(e)
-        if not isinstance(ret, CreateTokenResponse):
-            raise UnsupportedResponseError(CreateTokenResponse.__name__, ret)
+        except Exception:
+            self._metrics.token_acquire_from_start(
+                METRIC_RESULT_ERROR, start, self._trial
+            )
+            raise
+        try:
+            if not isinstance(ret, CreateTokenResponse):
+                raise UnsupportedResponseError(CreateTokenResponse.__name__, ret)
 
-        if ret.token_type != "Bearer":  # noqa: S105 — not a password
-            raise UnsupportedTokenTypeError(ret.token_type)
+            if ret.token_type != "Bearer":  # noqa: S105 — not a password
+                raise UnsupportedTokenTypeError(ret.token_type)
 
-        log.debug(
-            f"token fetched: {sanitizer.sanitize(ret.access_token)},"
-            f" expires in: {ret.expires_in} seconds."
-        )
-        return Token(
-            token=ret.access_token, expiration=now + timedelta(seconds=ret.expires_in)
-        )
+            log.debug(
+                f"token fetched: {sanitizer.sanitize(ret.access_token)},"
+                f" expires in: {ret.expires_in} seconds."
+            )
+            token = Token(
+                token=ret.access_token,
+                expiration=now + timedelta(seconds=ret.expires_in),
+            )
+            self._metrics.token_acquire_from_start(
+                METRIC_RESULT_SUCCESS,
+                start,
+                self._trial,
+                token,
+            )
+            return token
+        except Exception:
+            self._metrics.token_acquire_from_start(
+                METRIC_RESULT_ERROR, start, self._trial
+            )
+            raise
 
     def can_retry(
         self,
@@ -227,6 +266,8 @@ class Bearer(ParentBearer):
         obtaining a receiver.
     :param max_retries: Default retry attempts for receivers created
         by this bearer.
+    :param metrics: Optional auth metrics callbacks used by receivers created
+        by this bearer. Callbacks receive this bearer's metric provider label.
 
     Example
     -------
@@ -259,11 +300,15 @@ class Bearer(ParentBearer):
         requester: TokenRequester,
         channel: ClientChannelInterface | DeferredChannel | None = None,
         max_retries: int = 2,
+        metrics: AuthMetricsLike = None,
     ) -> None:
         """Create an exchangeable bearer."""
         super().__init__()
         self._requester = requester
         self._max_retries = max_retries
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
+            metrics, "token-exchange"
+        )
 
         self._svc: (
             TokenExchangeServiceClient
@@ -311,4 +356,15 @@ class Bearer(ParentBearer):
         """
         if self._svc is None:
             raise ValueError("gRPC channel is not set for the bearer.")
-        return Receiver(self._requester, self._svc, max_retries=self._max_retries)
+        return Receiver(
+            self._requester,
+            self._svc,
+            max_retries=self._max_retries,
+            metrics=self._metrics,
+            provider=self.metrics_provider,
+        )
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks used by subsequently created receivers."""
+
+        self._metrics.set_metrics(metrics)

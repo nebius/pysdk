@@ -44,6 +44,11 @@ Using an existing reader/token requester::
 from datetime import timedelta
 
 from nebius.aio.abc import ClientChannelInterface
+from nebius.aio.metrics import (
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metrics_recorder,
+)
 from nebius.aio.token.deferred_channel import DeferredChannel
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
 from nebius.aio.token.renewable import Bearer as RenewableBearer
@@ -91,6 +96,9 @@ class FederatedCredentialsBearer(ParentBearer):
     :param retry_timeout_exponent: Exponential backoff base.
     :param refresh_request_timeout: Timeout for a single refresh
         request.
+    :param metrics: Optional auth metrics callbacks. The same recorder is
+        shared across exchange, renewal, and cache layers with the
+        bearer metric provider label.
 
     Example
     -------
@@ -127,6 +135,7 @@ class FederatedCredentialsBearer(ParentBearer):
         max_retry_timeout: timedelta = timedelta(minutes=1),
         retry_timeout_exponent: float = 1.5,
         refresh_request_timeout: timedelta = timedelta(seconds=5),
+        metrics: AuthMetricsLike = None,
     ) -> None:
         """Create a federated credentials backed bearer."""
         if isinstance(federated_credentials, str):
@@ -149,10 +158,15 @@ class FederatedCredentialsBearer(ParentBearer):
                 f", got {type(federated_credentials)}"
             )
 
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
+            metrics, "federated-credentials"
+        )
+
         self._exchangeable = ExchangeableBearer(
             federated_credentials,
             channel=channel,
             max_retries=max_retries,
+            metrics=self._metrics,
         )
         self._source: ParentBearer = RenewableBearer(
             self._exchangeable,
@@ -162,6 +176,8 @@ class FederatedCredentialsBearer(ParentBearer):
             max_retry_timeout=max_retry_timeout,
             retry_timeout_exponent=retry_timeout_exponent,
             refresh_request_timeout=refresh_request_timeout,
+            metrics=self._metrics,
+            provider=self._metrics.provider,
         )
 
         if isinstance(federated_credentials.credentials, FileFederatedCredentials):
@@ -194,3 +210,12 @@ class FederatedCredentialsBearer(ParentBearer):
         :returns: A :class:`Receiver` from the underlying renewable bearer.
         """
         return self._source.receiver()
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks and propagate them to inner bearers."""
+
+        self._metrics.set_metrics(metrics)
+        self._exchangeable.set_metrics(self._metrics)
+        setter = getattr(self._source, "set_metrics", None)
+        if callable(setter):
+            setter(self._metrics)

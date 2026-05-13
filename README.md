@@ -125,7 +125,7 @@ from nebius.aio.cli_config import Config
 print(f"My default parent ID: {Config().parent_id}")
 ```
 
-Check the [`Config` documentation](https://nebius.github.io/pysdk/nebius.aio.cli_config.Config.html) for more settings like file path, profile name or environment variables names.
+Check the [`Config` documentation](https://nebius.github.io/pysdk/nebius.aio.cli_config.Config.html) for more settings like file path, profile name, metrics, or environment variables names. `Config(metrics=...)` receives config-reader and auth callbacks, while `Config(auth_metrics=...)` receives auth-only callbacks for credentials returned by the config reader. If callbacks are attached later with `Config.set_metrics(...)`, the last recorded config load event is replayed.
 
 ##### Initialize with the private key file
 
@@ -428,6 +428,37 @@ response = await service.get(req, auth_timeout=300.0)  # 5 minutes
 Notes:
 - `auth_timeout` starts at the beginning of the request, caps the `timeout` of the authorized request, which itself caps each `per_retry_timeout`.
 - If you use token renewal options (see below), individual token-exchange attempts may have their own short deadlines; `auth_timeout` caps the aggregate time across multiple attempts.
+
+##### Keepalive and metrics
+
+The SDK enables GoSDK-compatible gRPC keepalive settings by default. You can override them with environment variables (`NEBIUS_GRPC_KEEPALIVE_TIME`, `NEBIUS_GRPC_KEEPALIVE_TIMEOUT`, `NEBIUS_GRPC_KEEPALIVE_PERMIT_WITHOUT_STREAM`), disable SDK keepalive with `keepalive=False`, or pass explicit options:
+
+```python
+from nebius.aio.keepalive import KeepaliveOptions
+from nebius.sdk import SDK
+
+sdk = SDK(keepalive=KeepaliveOptions(time_ms=20_000, timeout_ms=10_000))
+```
+
+Metrics are callback-based and optional. Pass `metrics` to `SDK` or `Config` to receive config-reader and auth events; pass `auth_metrics` for auth-only events. Callback names may be snake_case or camelCase. Synchronous callbacks work in every context; async callbacks are scheduled when emitted from a running event loop and run to completion when emitted from synchronous code.
+
+```python
+from nebius.aio.cli_config import Config
+from nebius.sdk import SDK
+
+
+class Metrics:
+    def config_load(self, metric):
+        print(metric.source, metric.result, metric.duration_seconds)
+
+    def token_acquire(self, metric):
+        print(metric.provider, metric.result, metric.attempt)
+
+
+sdk = SDK(config_reader=Config(metrics=Metrics()))
+```
+
+Metric callback failures are ignored so instrumentation does not affect SDK requests. Token lifetime metrics are emitted only for timezone-aware expiration timestamps.
 
 
 ##### Retrieve additional metadata

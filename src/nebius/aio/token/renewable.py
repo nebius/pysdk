@@ -84,8 +84,19 @@ from asyncio import (
 from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 
+from nebius.aio.metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metric_provider,
+    auth_metrics_recorder,
+    bind_auth_metrics,
+    metric_duration_seconds,
+    metric_start,
+)
 from nebius.base.error import SDKError
 
 from .options import (
@@ -211,7 +222,7 @@ class Receiver(ParentReceiver):
             return False
         if not synchronous:
             # instruct parent to schedule a background renewal
-            self._parent.request_renewal()
+            self._parent.request_renewal(invalidate=True)
         return True
 
 
@@ -265,6 +276,11 @@ class Bearer(ParentBearer):
         grow retry delays between attempts.
     :param refresh_request_timeout: Timeout used for individual
         refresh requests when contacting the inner bearer.
+    :param metrics: Optional auth metrics callbacks. The recorder is also bound
+        to the wrapped source bearer when possible so token acquisition and
+        refresh/cache metrics share one callback sink.
+    :param provider: Optional provider label for emitted auth
+        metrics. When omitted, the label is inferred from ``source``.
     """
 
     def __init__(
@@ -276,10 +292,15 @@ class Bearer(ParentBearer):
         max_retry_timeout: timedelta = timedelta(minutes=1),
         retry_timeout_exponent: float = 1.5,
         refresh_request_timeout: timedelta = timedelta(seconds=5),
+        metrics: AuthMetricsLike = None,
+        provider: str | None = None,
     ) -> None:
         """Initialize the renewable bearer."""
         super().__init__()
-        self._source = source
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
+            metrics, provider or auth_metric_provider(source)
+        )
+        self._source = cast(ParentBearer, bind_auth_metrics(source, self._metrics))
         self._cache: Token | None = None
 
         self._is_fresh = Event()
@@ -310,6 +331,12 @@ class Bearer(ParentBearer):
     def wrapped(self) -> ParentBearer | None:
         """Return the wrapped bearer."""
         return self._source
+
+    @property
+    def metrics_provider(self) -> str:
+        """Return the metric provider label."""
+
+        return self._metrics.provider
 
     def bg_task(self, coro: Awaitable[T]) -> Task[None]:
         """Run a coroutine without awaiting or tracking, and log exceptions.
@@ -370,7 +397,9 @@ class Bearer(ParentBearer):
         if self._refresh_task is None:
             log.debug("no refresh task yet, starting it")
             self._refresh_task = self.bg_task(self._run())
-        if self.is_renewal_required() or required:
+        renewed = False
+        must_renew = self.is_renewal_required() or required
+        if must_renew:
             log.debug(f"renewal required, timeout {timeout}")
             if synchronous:
                 self._break_previous_attempt.set()
@@ -391,11 +420,28 @@ class Bearer(ParentBearer):
 
             self._renew_requested.set()
             if report_error or synchronous:
-                return await wait_for(self._renewal_future, timeout)  # type: ignore
+                try:
+                    token = await wait_for(self._renewal_future, timeout)  # type: ignore
+                    self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
+                    return token
+                except Exception:
+                    self._metrics.cache_miss(METRIC_RESULT_ERROR)
+                    raise
             else:
-                await wait_for(self._is_fresh.wait(), timeout)
+                try:
+                    await wait_for(self._is_fresh.wait(), timeout)
+                    renewed = True
+                except Exception:
+                    self._metrics.cache_miss(METRIC_RESULT_ERROR)
+                    raise
         if self._cache is None:
+            if must_renew:
+                self._metrics.cache_miss(METRIC_RESULT_ERROR)
             raise RenewalError("cache is empty after renewal")
+        if renewed:
+            self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
+        else:
+            self._metrics.cache_hit()
         return self._cache
 
     async def _fetch_once(self) -> Token:
@@ -443,9 +489,17 @@ class Bearer(ParentBearer):
         strategy is applied before the next attempt.
         """
         log.debug("refresh task started")
+        record_refresh = False
         while not self._is_stopped.is_set():
+            refresh_start = metric_start()
             try:
                 tok = await self._fetch_once()
+                if record_refresh:
+                    self._metrics.token_refresh(
+                        METRIC_RESULT_SUCCESS,
+                        metric_duration_seconds(refresh_start),
+                        True,
+                    )
                 exp = tok.expiration
                 if exp is None:
                     retry_timeout = VERY_LONG_TIMEOUT.total_seconds()
@@ -472,6 +526,12 @@ class Bearer(ParentBearer):
                         self._initial_retry_timeout.total_seconds() * mul,
                         self._max_retry_timeout.total_seconds(),
                     )
+                if record_refresh:
+                    self._metrics.token_refresh(
+                        METRIC_RESULT_ERROR,
+                        metric_duration_seconds(refresh_start),
+                        True,
+                    )
             if retry_timeout < self._initial_retry_timeout.total_seconds():
                 retry_timeout = self._initial_retry_timeout.total_seconds()
 
@@ -479,13 +539,13 @@ class Bearer(ParentBearer):
                 f"Will refresh token after {retry_timeout} seconds, "
                 f"renewal attempt number {self._renewal_attempt}"
             )
+            renew_task = self.bg_task(self._renew_requested.wait())
+            sleep_task = self.bg_task(sleep(retry_timeout))
             _done, pending = await wait(
-                [
-                    self.bg_task(self._renew_requested.wait()),
-                    self.bg_task(sleep(retry_timeout)),
-                ],
+                [renew_task, sleep_task],
                 return_when=FIRST_COMPLETED,
             )
+            record_refresh = sleep_task in _done
             for task in pending:
                 task.cancel()
             await gather(*pending, return_exceptions=True)
@@ -517,7 +577,7 @@ class Bearer(ParentBearer):
         """
         return self._cache is None or self._renew_requested.is_set()
 
-    def request_renewal(self) -> None:
+    def request_renewal(self, invalidate: bool = False) -> None:
         """Request a token renewal.
 
         If the bearer is not stopped this clears the freshness flag and
@@ -526,6 +586,8 @@ class Bearer(ParentBearer):
         """
         if not self._is_stopped.is_set():
             log.debug("token renewal requested")
+            if invalidate and self._cache is not None:
+                self._metrics.cache_invalidate()
             self._is_fresh.clear()
             self._renew_requested.set()
 
@@ -549,3 +611,11 @@ class Bearer(ParentBearer):
         :returns: A :class:`Receiver` instance.
         """
         return Receiver(self, max_retries=self._max_retries)
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks and propagate them to the source."""
+
+        self._metrics.set_metrics(metrics)
+        self._source = cast(
+            ParentBearer, bind_auth_metrics(self._source, self._metrics)
+        )

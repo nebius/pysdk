@@ -63,6 +63,14 @@ from logging import getLogger
 from ssl import SSLContext
 from typing import Any, TextIO, TypeVar
 
+from nebius.aio.metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metrics_recorder,
+    metric_start,
+)
 from nebius.aio.token.token import Bearer as ParentBearer
 from nebius.aio.token.token import Receiver as ParentReceiver
 from nebius.aio.token.token import Token
@@ -115,6 +123,8 @@ class Receiver(ParentReceiver):
         open a browser automatically but will just print a URL to the ``writer`` and
         logs.
     :param ssl_ctx: Optional SSL context to use for HTTPS requests.
+    :param metrics: Optional auth metrics callbacks used to record the
+        interactive token acquisition result and token lifetime.
     """
 
     def __init__(
@@ -125,6 +135,8 @@ class Receiver(ParentReceiver):
         writer: TextIO | None = None,
         no_browser_open: bool = False,
         ssl_ctx: SSLContext | None = None,
+        metrics: AuthMetricsLike = None,
+        provider: str | None = None,
     ) -> None:
         """Create a federation interactive receiver."""
         self._client_id = client_id
@@ -133,6 +145,10 @@ class Receiver(ParentReceiver):
         self._writer = writer
         self._no_browser_open = no_browser_open
         self._ssl_ctx = ssl_ctx
+        self._metrics = auth_metrics_recorder(
+            metrics,
+            provider or "federation",
+        )
 
     async def _fetch(
         self, timeout: float | None = None, options: dict[str, str] | None = None
@@ -153,23 +169,32 @@ class Receiver(ParentReceiver):
         from .auth import authorize
 
         now = datetime.now(timezone.utc)
-        tok = await authorize(
-            client_id=self._client_id,
-            federation_endpoint=self._federation_endpoint,
-            federation_id=self._federation_id,
-            writer=self._writer,
-            no_browser_open=self._no_browser_open,
-            timeout=timeout,
-            ssl_ctx=self._ssl_ctx,
-        )
-        return Token(
-            token=tok.access_token,
-            expiration=(
-                now + timedelta(seconds=tok.expires_in)
-                if tok.expires_in is not None
-                else None
-            ),
-        )
+        start = metric_start()
+        try:
+            tok = await authorize(
+                client_id=self._client_id,
+                federation_endpoint=self._federation_endpoint,
+                federation_id=self._federation_id,
+                writer=self._writer,
+                no_browser_open=self._no_browser_open,
+                timeout=timeout,
+                ssl_ctx=self._ssl_ctx,
+            )
+            token = Token(
+                token=tok.access_token,
+                expiration=(
+                    now + timedelta(seconds=tok.expires_in)
+                    if tok.expires_in is not None
+                    else None
+                ),
+            )
+            self._metrics.token_acquire_from_start(
+                METRIC_RESULT_SUCCESS, start, 0, token
+            )
+            return token
+        except Exception:
+            self._metrics.token_acquire_from_start(METRIC_RESULT_ERROR, start, 0)
+            raise
 
     def can_retry(
         self,
@@ -242,6 +267,8 @@ class Bearer(ParentBearer):
     :param no_browser_open: When true the receiver will not attempt to open
         a browser automatically.
     :param ssl_ctx: Optional SSL context for HTTPS requests.
+    :param metrics: Optional auth metrics callbacks used by receivers created
+        by this bearer. Callbacks receive this bearer's metric provider label.
 
     Example
     -------
@@ -271,6 +298,7 @@ class Bearer(ParentBearer):
         writer: TextIO | None = None,
         no_browser_open: bool = False,
         ssl_ctx: SSLContext | None = None,
+        metrics: AuthMetricsLike = None,
     ) -> None:
         """Create a federation interactive bearer."""
         self._profile_name = profile_name
@@ -280,6 +308,9 @@ class Bearer(ParentBearer):
         self._writer = writer
         self._no_browser_open = no_browser_open
         self._ssl_ctx = ssl_ctx
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
+            metrics, "federation"
+        )
 
         self._tasks = set[Task[Any]]()
 
@@ -303,4 +334,11 @@ class Bearer(ParentBearer):
             writer=self._writer,
             no_browser_open=self._no_browser_open,
             ssl_ctx=self._ssl_ctx,
+            metrics=self._metrics,
+            provider=self.metrics_provider,
         )
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks used by subsequently created receivers."""
+
+        self._metrics.set_metrics(metrics)

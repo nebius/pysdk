@@ -101,6 +101,32 @@ class SDK(Channel):
     - Set ``timeout=None`` to disable the request deadline.
     - Configure ``retries`` and ``per_retry_timeout`` per-call when needed.
 
+    Keepalive
+    ---------
+
+    - By default, SDK channels enable GoSDK-compatible gRPC keepalive settings
+      and read ``NEBIUS_GRPC_KEEPALIVE_*`` environment variables.
+    - Pass ``keepalive=False`` to disable SDK keepalive.
+    - Pass :class:`nebius.aio.keepalive.KeepaliveOptions` or a mapping with
+      ``time_ms``, ``timeout_ms`` and ``permit_without_stream`` to provide
+      explicit overrides.
+    - User-provided gRPC options in ``options`` or ``address_options`` are
+      still applied later and may override individual keepalive channel
+      arguments.
+
+    Metrics
+    -------
+
+    - Pass ``metrics`` to receive both config-reader and auth events, including
+      token acquisition, refresh, cache, config load, and credentials resolution.
+    - Pass ``auth_metrics`` to receive only auth events. If ``metrics`` is
+      provided, it is reused for auth callbacks and ``auth_metrics`` is ignored.
+    - Metric sinks may be objects with callback methods or mappings of callback
+      names to functions. Python snake_case and TypeScript-style camelCase names
+      are accepted.
+    - Callback failures are ignored so metrics collection does not affect SDK
+      requests.
+
     Parent ID auto-population
     -------------------------
 
