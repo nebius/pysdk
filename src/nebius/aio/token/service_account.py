@@ -42,6 +42,11 @@ from datetime import timedelta
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
 from nebius.aio.abc import ClientChannelInterface
+from nebius.aio.metrics import (
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metrics_recorder,
+)
 from nebius.aio.token.deferred_channel import DeferredChannel
 from nebius.aio.token.exchangeable import Bearer as ExchangeableBearer
 from nebius.aio.token.renewable import Bearer as RenewableBearer
@@ -97,6 +102,9 @@ class ServiceAccountBearer(ParentBearer):
         delays.
     :param refresh_request_timeout: Timeout for individual token refresh
         requests.
+    :param metrics: Optional auth metrics callbacks. The same recorder is
+        shared across exchange and renewal layers with the bearer metric
+        provider label.
 
     Example
     -------
@@ -137,6 +145,7 @@ class ServiceAccountBearer(ParentBearer):
         max_retry_timeout: timedelta = timedelta(minutes=1),
         retry_timeout_exponent: float = 1.5,
         refresh_request_timeout: timedelta = timedelta(seconds=5),
+        metrics: AuthMetricsLike = None,
     ) -> None:
         """Initialize a service-account based bearer.
 
@@ -188,11 +197,15 @@ class ServiceAccountBearer(ParentBearer):
         sa_id = service_account.service_account_id
         public_key_id = service_account.public_key_id
         private_key = service_account.private_key
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
+            metrics, "service-account"
+        )
 
         self._exchangeable = ExchangeableBearer(
             reader,
             channel=channel,
             max_retries=max_retries,
+            metrics=self._metrics,
         )
 
         self._source = NamedBearer(
@@ -204,6 +217,8 @@ class ServiceAccountBearer(ParentBearer):
                 max_retry_timeout=max_retry_timeout,
                 retry_timeout_exponent=retry_timeout_exponent,
                 refresh_request_timeout=refresh_request_timeout,
+                metrics=self._metrics,
+                provider=self._metrics.provider,
             ),
             f"service-account/{sa_id}/{public_key_id}",
         )
@@ -227,3 +242,13 @@ class ServiceAccountBearer(ParentBearer):
     def receiver(self) -> "Receiver":
         """Calls the receiver of the underlying bearer :class:`NamedBearer`."""
         return self._source.receiver()
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks and propagate them to inner bearers."""
+
+        self._metrics.set_metrics(metrics)
+        self._exchangeable.set_metrics(self._metrics)
+        wrapped = self._source.wrapped
+        setter = getattr(wrapped, "set_metrics", None)
+        if callable(setter):
+            setter(self._metrics)

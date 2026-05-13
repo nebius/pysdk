@@ -37,8 +37,19 @@ from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any, TypeVar, cast
 
+from nebius.aio.metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metric_provider,
+    auth_metrics_recorder,
+    bind_auth_metrics,
+    metric_duration_seconds,
+    metric_start,
+)
 from nebius.aio.token.token import Bearer as ParentBearer
 from nebius.aio.token.token import Receiver as ParentReceiver
 from nebius.aio.token.token import Token
@@ -146,7 +157,7 @@ class AsynchronousRenewableFileCacheReceiver(ParentReceiver):
         if not synchronous:
             # Proactively request an asynchronous renewal so other callers
             # may receive a fresh token.
-            self._parent.request_renewal()
+            self._parent.request_renewal(invalidate=True)
         return True
 
 
@@ -193,6 +204,11 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         wrapped receiver during refresh operations.
     :param file_cache_throttle: Throttle interval passed to
         :class:`ThrottledTokenCache` to reduce disk reads.
+    :param metrics: Optional auth metrics callbacks. The recorder is also
+        bound to the wrapped source bearer when possible so cache, refresh, and
+        acquisition events share one callback sink.
+    :param provider: Optional provider label for emitted auth
+        metrics. When omitted, the label is inferred from ``source``.
 
     Example
     -------
@@ -236,6 +252,8 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         retry_timeout_exponent: float = 1.5,
         refresh_request_timeout: timedelta = timedelta(seconds=5),
         file_cache_throttle: timedelta | float = timedelta(minutes=5),
+        metrics: AuthMetricsLike = None,
+        provider: str | None = None,
     ) -> None:
         """Initialize the asynchronous renewable bearer.
 
@@ -246,7 +264,10 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         :raises ValueError: When the wrapped bearer has no name.
         """
         super().__init__()
-        self._source = source
+        self._metrics: AuthMetricsRecorder = auth_metrics_recorder(
+            metrics, provider or auth_metric_provider(source)
+        )
+        self._source = cast(ParentBearer, bind_auth_metrics(source, self._metrics))
         if isinstance(initial_safety_margin, (float, int)):
             initial_safety_margin = timedelta(seconds=initial_safety_margin)
         self._retry_safety_margin = retry_safety_margin
@@ -294,6 +315,21 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         :returns: The underlying bearer provided at construction.
         """
         return self._source
+
+    @property
+    def metrics_provider(self) -> str:
+        """Return the metric provider label."""
+
+        return self._metrics.provider
+
+    def _is_token_fresh(self, token: Token) -> bool:
+        if token.is_expired():
+            return False
+        return (
+            self.safety_margin is None
+            or not token.expiration
+            or token.expiration - self.safety_margin > datetime.now(timezone.utc)
+        )
 
     def bg_task(self, coro: Awaitable[T]) -> Task[None]:
         """Run a coroutine in fire-and-forget mode.
@@ -355,23 +391,26 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
             synchronous = options.get(OPTION_RENEW_SYNCHRONOUS, "") != ""
             report_error = options.get(OPTION_REPORT_ERROR, "") != ""
 
-        tok = await self._file_cache.get()
-        if not required and tok is not None and not tok.is_expired():
-            if self.safety_margin is None or (
-                not tok.expiration
-                or (tok.expiration - self.safety_margin > datetime.now(timezone.utc))
-            ):
-                log.debug(f"token is fresh: {tok}")
-                if self._refresh_task is None:
-                    log.debug("no refresh task yet, starting it")
-                    self._refresh_task = self.bg_task(self._run(True))
-                return tok
+        try:
+            tok = await self._file_cache.get()
+        except Exception:
+            self._metrics.cache_miss(METRIC_RESULT_ERROR)
+            raise
+        if not required and tok is not None and self._is_token_fresh(tok):
+            log.debug(f"token is fresh: {tok}")
+            if self._refresh_task is None:
+                log.debug("no refresh task yet, starting it")
+                self._refresh_task = self.bg_task(self._run(True))
+            self._metrics.cache_hit()
+            return tok
         self.safety_margin = None  # reset safety margin after first fetch
 
         if self._refresh_task is None:
             log.debug("no refresh task yet, starting it")
             self._refresh_task = self.bg_task(self._run())
-        if self.is_renewal_required() or required:
+        renewed = False
+        must_renew = self.is_renewal_required() or required
+        if must_renew:
             log.debug(f"renewal required, timeout {timeout}")
             if synchronous:
                 self._break_previous_attempt.set()
@@ -392,12 +431,31 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
 
             self._renew_requested.set()
             if report_error or synchronous:
-                return await wait_for(self._renewal_future, timeout)  # type: ignore
+                try:
+                    token = await wait_for(self._renewal_future, timeout)  # type: ignore
+                    self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
+                    return token
+                except Exception:
+                    self._metrics.cache_miss(METRIC_RESULT_ERROR)
+                    raise
             else:
-                await wait_for(self._is_fresh.wait(), timeout)
-        tok = await self._file_cache.get()
+                try:
+                    await wait_for(self._is_fresh.wait(), timeout)
+                    renewed = True
+                except Exception:
+                    self._metrics.cache_miss(METRIC_RESULT_ERROR)
+                    raise
+        try:
+            tok = await self._file_cache.get()
+        except Exception:
+            if must_renew:
+                self._metrics.cache_miss(METRIC_RESULT_ERROR)
+            raise
         if tok is None:
+            self._metrics.cache_miss(METRIC_RESULT_ERROR)
             raise RenewalError("cache is empty after renewal")
+        if renewed:
+            self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
         return tok
 
     async def _fetch_once(self) -> Token:
@@ -433,7 +491,12 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         log.debug(f"received new token: {tok}")
         if self._renewal_future is not None and not self._renewal_future.done():
             self._renewal_future.set_result(tok)
-        await self._file_cache.set(tok)
+        try:
+            await self._file_cache.set(tok)
+        except Exception:
+            self._metrics.cache_store(METRIC_RESULT_ERROR)
+            raise
+        self._metrics.cache_store(METRIC_RESULT_SUCCESS)
         self._renewal_attempt = 0
         self._is_fresh.set()
         return tok
@@ -467,23 +530,32 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         else:
             retry_timeout = 0
 
+        skip_initial_sleep_refresh = not wait_for_timeout
         while not self._is_stopped.is_set():
             log.debug(
                 f"Will refresh token after {retry_timeout} seconds, "
                 f"renewal attempt number {self._renewal_attempt}"
             )
+            renew_task = self.bg_task(self._renew_requested.wait())
+            sleep_task = self.bg_task(sleep(retry_timeout))
             _done, pending = await wait(
-                [
-                    self.bg_task(self._renew_requested.wait()),
-                    self.bg_task(sleep(retry_timeout)),
-                ],
+                [renew_task, sleep_task],
                 return_when=FIRST_COMPLETED,
             )
+            record_refresh = sleep_task in _done and not skip_initial_sleep_refresh
+            skip_initial_sleep_refresh = False
             for task in pending:
                 task.cancel()
             await gather(*pending, return_exceptions=True)
+            refresh_start = metric_start()
             try:
                 tok = await self._fetch_once()
+                if record_refresh:
+                    self._metrics.token_refresh(
+                        METRIC_RESULT_SUCCESS,
+                        metric_duration_seconds(refresh_start),
+                        True,
+                    )
                 exp = tok.expiration
                 if exp is None:
                     retry_timeout = VERY_LONG_TIMEOUT.total_seconds()
@@ -509,6 +581,12 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
                     retry_timeout = min(
                         self._initial_retry_timeout.total_seconds() * mul,
                         self._max_retry_timeout.total_seconds(),
+                    )
+                if record_refresh:
+                    self._metrics.token_refresh(
+                        METRIC_RESULT_ERROR,
+                        metric_duration_seconds(refresh_start),
+                        True,
                     )
             if retry_timeout < self._initial_retry_timeout.total_seconds():
                 retry_timeout = self._initial_retry_timeout.total_seconds()
@@ -545,7 +623,7 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         """
         return self._file_cache.get_cached() is None or self._renew_requested.is_set()
 
-    def request_renewal(self) -> None:
+    def request_renewal(self, invalidate: bool = False) -> None:
         """Request a background token renewal.
 
         This method sets internal events so the background loop will attempt a
@@ -553,6 +631,8 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         """
         if not self._is_stopped.is_set():
             log.debug("token renewal requested")
+            if invalidate and self._file_cache.get_cached() is not None:
+                self._metrics.cache_invalidate()
             self._is_fresh.clear()
             self._renew_requested.set()
 
@@ -578,4 +658,12 @@ class AsynchronousRenewableFileCacheBearer(ParentBearer):
         return AsynchronousRenewableFileCacheReceiver(
             self,
             max_retries=self._max_retries,
+        )
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks and propagate them to the source."""
+
+        self._metrics.set_metrics(metrics)
+        self._source = cast(
+            ParentBearer, bind_auth_metrics(self._source, self._metrics)
         )

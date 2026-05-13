@@ -15,11 +15,12 @@ from asyncio import (
     sleep,
     wait,
 )
-from collections.abc import Awaitable, Coroutine, Sequence
+from collections.abc import Awaitable, Coroutine, Mapping, Sequence
+from contextlib import suppress
 from inspect import isawaitable
 from logging import getLogger
 from pathlib import Path
-from typing import Any, TextIO, TypeVar
+from typing import Any, TextIO, TypeVar, cast
 
 from google.protobuf.message import Message
 from grpc import (
@@ -54,6 +55,21 @@ from nebius.aio.authorization.authorization import Provider as AuthorizationProv
 from nebius.aio.authorization.token import TokenProvider
 from nebius.aio.cli_config import Config as ConfigReader
 from nebius.aio.idempotency import IdempotencyKeyInterceptor
+from nebius.aio.keepalive import (
+    KeepaliveOptions,
+    keepalive_channel_options,
+    keepalive_config_from_options,
+)
+from nebius.aio.metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    MetricsLike,
+    bind_auth_metrics,
+    metric_duration_seconds,
+    metric_start,
+    record_config_metric,
+)
 from nebius.aio.service_descriptor import ServiceStub, from_stub_class
 from nebius.aio.token import exchangeable, renewable
 from nebius.aio.token.static import Bearer as StaticTokenBearer
@@ -491,6 +507,30 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         credentials via the CLI-style configuration.
     :type config_reader: optional :class:`ConfigReader`
 
+    :param keepalive:
+        Optional SDK gRPC keepalive configuration. By default the channel uses
+        GoSDK-compatible defaults and reads ``NEBIUS_GRPC_KEEPALIVE_*``
+        environment variables. Pass ``False`` to disable SDK keepalive, or pass
+        :class:`nebius.aio.keepalive.KeepaliveOptions` / a mapping with
+        ``time_ms``, ``timeout_ms`` and ``permit_without_stream`` overrides.
+        Explicit keepalive options ignore the environment variables; user
+        channel options passed via ``options`` or ``address_options`` are still
+        applied later and may override individual gRPC keepalive arguments.
+    :type keepalive: optional :class:`KeepaliveOptions`, mapping or bool
+
+    :param metrics:
+        Optional callback object or mapping that receives both config-reader
+        and auth metrics. Supported callback names use Python snake_case, such
+        as ``token_acquire`` and ``credentials_resolve``; camelCase callback
+        names are also accepted for parity with the TypeScript SDK.
+    :type metrics: optional object or mapping
+
+    :param auth_metrics:
+        Optional callback object or mapping that receives auth-only metrics.
+        This is ignored when ``metrics`` is also provided because full metrics
+        are used for auth callbacks too.
+    :type auth_metrics: optional object or mapping
+
     :param tls_credentials:
         Optional gRPC channel TLS credentials (:class:`ChannelCredentials`).
         If omitted the constructor will load system root certificates via
@@ -550,6 +590,9 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         service_account_private_key_file_name: str | Path | None = None,
         credentials_file_name: str | Path | None = None,
         config_reader: ConfigReader | None = None,
+        keepalive: KeepaliveOptions | Mapping[str, object] | bool | None = None,
+        metrics: MetricsLike = None,
+        auth_metrics: AuthMetricsLike = None,
         tls_credentials: ChannelCredentials | None = None,
         event_loop: AbstractEventLoop | None = None,
         max_free_channels_per_address: int = 2,
@@ -604,6 +647,17 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
         import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # type: ignore[unused-ignore] # noqa: F401 - load for registration
+
+        self._metrics = metrics
+        self._auth_metrics = metrics if metrics is not None else auth_metrics
+        if metrics is not None and auth_metrics is not None:
+            logger.warning(
+                "Both metrics and auth_metrics provided; using metrics for "
+                "auth callbacks."
+            )
+        self._keepalive_config = keepalive_config_from_options(keepalive)
+        if config_reader is not None:
+            self._configure_metrics_on_config_reader(config_reader)
 
         if domain is None:
             if config_reader is not None:
@@ -663,10 +717,8 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         if self._parent_id is None and config_reader is not None:
             from .cli_config import NoParentIdError
 
-            try:
+            with suppress(NoParentIdError):
                 self._parent_id = config_reader.parent_id
-            except NoParentIdError:
-                pass
         if self._parent_id == "":
             raise SDKError("Parent id is empty")
 
@@ -692,14 +744,37 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     service_account_id,
                 )
             elif config_reader is not None:
-                credentials = config_reader.get_credentials(
-                    self,
-                    writer=federation_invitation_writer,
-                    no_browser_open=federation_invitation_no_browser_open,
+                metrics_aware = self._is_config_metrics_aware_config_reader(
+                    config_reader
                 )
+                start = metric_start()
+                try:
+                    credentials = config_reader.get_credentials(
+                        self,
+                        writer=federation_invitation_writer,
+                        no_browser_open=federation_invitation_no_browser_open,
+                    )
+                except Exception:
+                    if not metrics_aware:
+                        record_config_metric(
+                            self._metrics,
+                            "credentials_resolve",
+                            "config-reader",
+                            METRIC_RESULT_ERROR,
+                            metric_duration_seconds(start),
+                        )
+                    raise
+                if not metrics_aware:
+                    record_config_metric(
+                        self._metrics,
+                        "credentials_resolve",
+                        "config-reader",
+                        METRIC_RESULT_SUCCESS,
+                        metric_duration_seconds(start),
+                    )
             else:
                 credentials = EnvBearer()
-        if isinstance(credentials, str) or isinstance(credentials, Token):
+        if isinstance(credentials, (str, Token)):
             credentials = StaticTokenBearer(credentials)
         if isinstance(credentials, ServiceAccountReader):
             from nebius.aio.token.service_account import ServiceAccountBearer
@@ -707,12 +782,19 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             credentials = ServiceAccountBearer(
                 credentials,
                 self,
+                metrics=self._auth_metrics,
             )
         if isinstance(credentials, TokenRequestReader):
-            exchange = exchangeable.Bearer(credentials, self)
-            cache = renewable.Bearer(exchange)
+            exchange = exchangeable.Bearer(
+                credentials, self, metrics=self._auth_metrics
+            )
+            cache = renewable.Bearer(exchange, metrics=self._auth_metrics)
             credentials = cache
         if isinstance(credentials, TokenBearer):
+            credentials = cast(
+                TokenBearer,
+                bind_auth_metrics(credentials, self._auth_metrics),
+            )
             self._gracefuls.add(credentials)
             self._token_bearer = credentials
             credentials = TokenProvider(credentials)
@@ -723,6 +805,23 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._event_loop = event_loop
         self._closed = False
+
+    def _configure_metrics_on_config_reader(self, config_reader: ConfigReader) -> None:
+        reader = cast(Any, config_reader)
+        if self._metrics is not None and callable(getattr(reader, "set_metrics", None)):
+            reader.set_metrics(self._metrics)
+            return
+        if self._auth_metrics is not None and callable(
+            getattr(reader, "set_auth_metrics", None)
+        ):
+            reader.set_auth_metrics(self._auth_metrics)
+
+    def _is_config_metrics_aware_config_reader(
+        self, config_reader: ConfigReader
+    ) -> bool:
+        return self._metrics is not None and callable(
+            getattr(config_reader, "set_metrics", None)
+        )
 
     def get_authorization_provider(self) -> AuthorizationProvider | None:
         """Return the configured :class:`AuthorizationProvider`.
@@ -888,12 +987,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                     _run_awaitable_with_timeout(awaitable, timeout),
                     self._event_loop,
                 ).result()
-            else:
-                raise LoopError(
-                    "Synchronous call inside async context. Either use "
-                    "async/await or provide a safe and separate loop "
-                    "to run at the SDK initialization."
-                )
+            raise LoopError(
+                "Synchronous call inside async context. Either use "
+                "async/await or provide a safe and separate loop "
+                "to run at the SDK initialization."
+            )
 
         return self._event_loop.run_until_complete(
             _run_awaitable_with_timeout(awaitable, timeout)
@@ -1123,11 +1221,11 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :rtype: list of ``tuple[str, Any]``
         """
 
-        ret = [opt for opt in self._global_options]
+        ret = list(keepalive_channel_options(self._keepalive_config))
+        ret.extend(self._global_options)
         if addr in self._address_options:
             ret.extend(self._address_options[addr])
-        ret = set_user_agent_option(self.user_agent, ret)  # type: ignore[assignment]
-        return ret
+        return set_user_agent_option(self.user_agent, ret)
 
     def get_address_interceptors(self, addr: str) -> Sequence[ClientInterceptor]:
         """Return the ordered list of interceptors to apply to a channel.
@@ -1141,7 +1239,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         :rtype: A sequence of :class:`ClientInterceptor`
         """
 
-        ret = [opt for opt in self._global_interceptors]
+        ret = list(self._global_interceptors)
         if addr in self._address_interceptors:
             ret.extend(self._address_interceptors[addr])
         ret.extend(self._global_interceptors_inner)
@@ -1172,17 +1270,16 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
                 insecure_channel(addr, opts, compression, interceptors),  # type: ignore[unused-ignore,no-any-return]
                 addr,
             )
-        else:
-            return AddressChannel(
-                secure_channel(  # type: ignore[unused-ignore,no-any-return]
-                    addr,
-                    self._tls_credentials,
-                    opts,
-                    compression,
-                    interceptors,
-                ),
+        return AddressChannel(
+            secure_channel(  # type: ignore[unused-ignore,no-any-return]
                 addr,
-            )
+                self._tls_credentials,
+                opts,
+                compression,
+                interceptors,
+            ),
+            addr,
+        )
 
     def unary_unary(  # type: ignore[unused-ignore,override]
         self,

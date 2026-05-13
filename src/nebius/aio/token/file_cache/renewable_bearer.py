@@ -19,7 +19,17 @@ Classes
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from pathlib import Path
+from typing import cast
 
+from nebius.aio.metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metric_provider,
+    auth_metrics_recorder,
+    bind_auth_metrics,
+)
 from nebius.aio.token.token import Bearer as ParentBearer
 from nebius.aio.token.token import Receiver as ParentReceiver
 from nebius.aio.token.token import Token
@@ -78,25 +88,29 @@ class RenewableFileCacheReceiver(ParentReceiver):
         :returns: A valid :class:`Token` (possibly empty).
         """
         if self._from_cache:
-            token = await self._cache.get()
+            try:
+                token = await self._cache.get()
+            except Exception:
+                self._bearer.metrics.cache_miss(METRIC_RESULT_ERROR)
+                raise
         else:
-            token = await self._cache.refresh()
+            try:
+                token = await self._cache.refresh()
+            except Exception:
+                self._bearer.metrics.cache_refresh(METRIC_RESULT_ERROR)
+                raise
             if self._last_saved == token:
                 # Avoid reusing the same token after an error; treat as
                 # missing so the wrapped receiver will be invoked.
                 token = None
+            elif token is not None:
+                self._bearer.metrics.cache_refresh(METRIC_RESULT_SUCCESS)
 
-        if token is not None and not token.is_expired():
-            if self._bearer.safety_margin is None or (
-                not token.expiration
-                or (
-                    token.expiration - self._bearer.safety_margin
-                    > datetime.now(timezone.utc)
-                )
-            ):
-                self._from_cache = True
-                self._last_saved = token
-                return token
+        if token is not None and self._bearer._is_token_fresh(token):
+            self._from_cache = True
+            self._last_saved = token
+            self._bearer.metrics.cache_hit()
+            return token
 
         # Cache miss or token too close to expiry: fetch from wrapped
         # bearer.
@@ -107,11 +121,21 @@ class RenewableFileCacheReceiver(ParentReceiver):
             # the static checker cannot prove it.
             self._receiver = self._bearer.wrapped.receiver()  # type: ignore
 
-        token = await self._receiver.fetch(timeout=timeout, options=options)
+        try:
+            token = await self._receiver.fetch(timeout=timeout, options=options)
+        except Exception:
+            self._bearer.metrics.cache_miss(METRIC_RESULT_ERROR)
+            raise
+        self._bearer.metrics.cache_miss(METRIC_RESULT_SUCCESS)
         if token.is_empty():
             self._last_saved = None
             return token
-        await self._cache.set(token)
+        try:
+            await self._cache.set(token)
+        except Exception:
+            self._bearer.metrics.cache_store(METRIC_RESULT_ERROR)
+            raise
+        self._bearer.metrics.cache_store(METRIC_RESULT_SUCCESS)
         self._last_saved = token
         return token
 
@@ -135,6 +159,7 @@ class RenewableFileCacheReceiver(ParentReceiver):
         """
         if self._from_cache:
             self._from_cache = False
+            self._bearer.metrics.cache_invalidate()
             return True
 
         if self._receiver is None:
@@ -154,6 +179,11 @@ class RenewableFileCacheBearer(ParentBearer):
     :param safety_margin: Safety margin before token expiration.
     :param cache_file: Path to the file used for persistent cache.
     :param throttle: In-memory throttle interval for cache reads.
+    :param metrics: Optional auth metrics callbacks. The recorder is also
+        bound to the wrapped bearer when possible so cache and acquisition
+        events share one callback sink.
+    :param provider: Optional provider label for emitted auth
+        metrics. When omitted, the label is inferred from the wrapped bearer.
 
     Example
     -------
@@ -190,6 +220,8 @@ class RenewableFileCacheBearer(ParentBearer):
         safety_margin: timedelta | float = timedelta(hours=2),
         cache_file: str | Path = Path(DEFAULT_CONFIG_DIR) / DEFAULT_CREDENTIALS_FILE,
         throttle: timedelta | float = timedelta(minutes=5),
+        metrics: AuthMetricsLike = None,
+        provider: str | None = None,
     ) -> None:
         """Create a renewable file-backed bearer.
 
@@ -197,7 +229,10 @@ class RenewableFileCacheBearer(ParentBearer):
 
         :raises ValueError: When the wrapped bearer has no name.
         """
-        self._bearer = bearer
+        self.metrics: AuthMetricsRecorder = auth_metrics_recorder(
+            metrics, provider or auth_metric_provider(bearer)
+        )
+        self._bearer = cast(ParentBearer, bind_auth_metrics(bearer, self.metrics))
         if isinstance(safety_margin, (float, int)):
             safety_margin = timedelta(seconds=safety_margin)
         self.safety_margin: timedelta | None = safety_margin
@@ -218,6 +253,21 @@ class RenewableFileCacheBearer(ParentBearer):
         """
         return self._bearer
 
+    @property
+    def metrics_provider(self) -> str:
+        """Return the metric provider label."""
+
+        return self.metrics.provider
+
+    def _is_token_fresh(self, token: Token) -> bool:
+        if token.is_expired():
+            return False
+        return (
+            self.safety_margin is None
+            or not token.expiration
+            or token.expiration - self.safety_margin > datetime.now(timezone.utc)
+        )
+
     def receiver(self) -> ParentReceiver:
         """Return a :class:`RenewableFileCacheReceiver` bound to the cache.
 
@@ -225,3 +275,9 @@ class RenewableFileCacheBearer(ParentBearer):
             the wrapped bearer when necessary.
         """
         return RenewableFileCacheReceiver(self, self._cache)
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks and propagate them to the source."""
+
+        self.metrics.set_metrics(metrics)
+        self._bearer = cast(ParentBearer, bind_auth_metrics(self._bearer, self.metrics))

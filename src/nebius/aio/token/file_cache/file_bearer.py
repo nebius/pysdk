@@ -33,6 +33,13 @@ from datetime import timedelta
 from logging import getLogger
 from pathlib import Path
 
+from nebius.aio.metrics import (
+    METRIC_RESULT_ERROR,
+    METRIC_RESULT_SUCCESS,
+    AuthMetricsLike,
+    AuthMetricsRecorder,
+    auth_metrics_recorder,
+)
 from nebius.aio.token.token import Bearer as ParentBearer
 from nebius.aio.token.token import Receiver as ParentReceiver
 from nebius.aio.token.token import Token
@@ -56,13 +63,16 @@ class PureFileCacheReceiver(ParentReceiver):
     :param cache: Throttled token cache implementation.
     """
 
-    def __init__(self, cache: ThrottledTokenCache) -> None:
+    def __init__(
+        self, cache: ThrottledTokenCache, metrics: AuthMetricsRecorder
+    ) -> None:
         """Create a receiver backed by ``cache``.
 
         No file I/O occurs during construction; the cache performs I/O on demand.
         """
         super().__init__()
         self._cache = cache
+        self._metrics = metrics
 
     async def _fetch(
         self, timeout: float | None = None, options: dict[str, str] | None = None
@@ -74,7 +84,16 @@ class PureFileCacheReceiver(ParentReceiver):
         :returns: Token from the underlying cache or an empty token.
 
         """
-        return await self._cache.get() or Token.empty()
+        try:
+            token = await self._cache.get()
+        except Exception:
+            self._metrics.cache_miss(METRIC_RESULT_ERROR)
+            raise
+        if token is not None and not token.is_expired() and not token.is_empty():
+            self._metrics.cache_hit()
+            return token
+        self._metrics.cache_miss(METRIC_RESULT_SUCCESS)
+        return token or Token.empty()
 
     def can_retry(
         self,
@@ -103,6 +122,10 @@ class PureFileCacheBearer(ParentBearer):
     :param name: Logical name for the credential.
     :param cache_file: Destination YAML file used to persist tokens.
     :param throttle: Throttle interval for in-memory caching.
+    :param metrics: Optional auth metrics callbacks used to record cache hits
+        and misses.
+    :param provider: Optional provider label for emitted auth metrics. Defaults
+        to the fully qualified bearer class name.
 
     Example
     -------
@@ -122,9 +145,15 @@ class PureFileCacheBearer(ParentBearer):
         name: str,
         cache_file: str | Path = Path(DEFAULT_CONFIG_DIR) / DEFAULT_CREDENTIALS_FILE,
         throttle: timedelta | float = timedelta(minutes=5),
+        metrics: AuthMetricsLike = None,
+        provider: str | None = None,
     ) -> None:
         """Create a bearer backed by a throttled file cache."""
         self._name = name
+        self._metrics = auth_metrics_recorder(
+            metrics,
+            provider or "file-cache",
+        )
         self._cache = ThrottledTokenCache(
             name=self._name, cache_file=cache_file, throttle=throttle
         )
@@ -137,6 +166,12 @@ class PureFileCacheBearer(ParentBearer):
         """
         return self._name
 
+    @property
+    def metrics_provider(self) -> str:
+        """Return the metric provider label."""
+
+        return self._metrics.provider
+
     def receiver(self) -> ParentReceiver:
         """Return a :class:`PureFileCacheReceiver` bound to the cache.
 
@@ -145,4 +180,9 @@ class PureFileCacheBearer(ParentBearer):
 
         :returns: A receiver that reads from the shared cache.
         """
-        return PureFileCacheReceiver(self._cache)
+        return PureFileCacheReceiver(self._cache, self._metrics)
+
+    def set_metrics(self, metrics: AuthMetricsLike) -> None:
+        """Attach auth metrics callbacks used by subsequently created receivers."""
+
+        self._metrics.set_metrics(metrics)

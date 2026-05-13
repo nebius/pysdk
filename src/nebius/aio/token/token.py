@@ -334,6 +334,12 @@ class Bearer(ABC):
         """
         raise NotImplementedError("Method not implemented!")
 
+    @classmethod
+    def default_metrics_provider(cls) -> str:
+        """Return this bearer's default fully qualified metric provider label."""
+
+        return f"{cls.__module__}.{cls.__qualname__}"
+
     @property
     def name(self) -> str | None:
         """Optional human-readable name for the bearer.
@@ -351,6 +357,19 @@ class Bearer(ABC):
         if self.wrapped is not None:
             return self.wrapped.name
         return None
+
+    @property
+    def metrics_provider(self) -> str:
+        """Provider label used for auth metrics.
+
+        Custom bearers may override this property to control their metric
+        provider label. By default the label is the fully qualified class name,
+        or the wrapped bearer's provider label for wrapper bearers.
+        """
+
+        if self.wrapped is not None:
+            return self.wrapped.metrics_provider
+        return type(self).default_metrics_provider()
 
     @property
     def wrapped(self) -> "Bearer|None":
@@ -371,7 +390,6 @@ class Bearer(ABC):
         """
         if self.wrapped is not None:
             await self.wrapped.close(grace=grace)
-        return None
 
 
 class NamedBearer(Bearer):
