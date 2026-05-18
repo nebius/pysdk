@@ -11286,7 +11286,7 @@ class RevokeSessionRequest(pb_classes.Message):
     @builtins.property
     def service_account_id(self) -> "builtins.str|None":
         """
-        revoke all for specific service account - to revoke logout from all sessions for user
+        Revoke all tokens for a service account.
         """
         
         return super()._get_field("service_account_id", explicit_presence=True,
@@ -11299,7 +11299,7 @@ class RevokeSessionRequest(pb_classes.Message):
     @builtins.property
     def all_my_active(self) -> "builtins.bool|None":
         """
-        revoke all active session of current user
+        Revoke all active sessions and access tokens for the current user.
         """
         
         return super()._get_field("all_my_active", explicit_presence=True,
@@ -11312,7 +11312,7 @@ class RevokeSessionRequest(pb_classes.Message):
     @builtins.property
     def tenant_user_account_id(self) -> "builtins.str|None":
         """
-        revoke all for specific tenant user - to revoke logout from all sessions for user
+        Revoke all active sessions and tokens for a tenant user.
         """
         
         return super()._get_field("tenant_user_account_id", explicit_presence=True,
@@ -11373,6 +11373,8 @@ class SessionManagementServiceClient(client.Client):
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request_1.Request["RevokeSessionRequest","RevokeSessionResponse"]:
         """
+        Revoke sessions/tokens
+        
         :param request: The request object to send.
         :type request: :class:`nebius.api.nebius.iam.v1.RevokeSessionRequest`
         
