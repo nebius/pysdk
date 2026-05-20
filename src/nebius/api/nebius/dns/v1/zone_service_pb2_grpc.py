@@ -3,6 +3,7 @@
 import grpc
 
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.dns.v1 import zone_pb2 as nebius_dot_dns_dot_v1_dot_zone__pb2
 
 
@@ -31,6 +32,21 @@ class ZoneServiceStub(object):
                 request_serializer=nebius_dot_dns_dot_v1_dot_zone__pb2.ListZonesRequest.SerializeToString,
                 response_deserializer=nebius_dot_dns_dot_v1_dot_zone__pb2.ListZonesResponse.FromString,
                 )
+        self.Create = channel.unary_unary(
+                '/nebius.dns.v1.ZoneService/Create',
+                request_serializer=nebius_dot_dns_dot_v1_dot_zone__pb2.CreateZoneRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Update = channel.unary_unary(
+                '/nebius.dns.v1.ZoneService/Update',
+                request_serializer=nebius_dot_dns_dot_v1_dot_zone__pb2.UpdateZoneRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Delete = channel.unary_unary(
+                '/nebius.dns.v1.ZoneService/Delete',
+                request_serializer=nebius_dot_dns_dot_v1_dot_zone__pb2.DeleteZoneRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class ZoneServiceServicer(object):
@@ -58,6 +74,27 @@ class ZoneServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Create(self, request, context):
+        """Creates a DNS zone
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Update(self, request, context):
+        """Updates the DNS zone with the specified ID
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Delete(self, request, context):
+        """Deletes the DNS zone with the specified ID
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ZoneServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -75,6 +112,21 @@ def add_ZoneServiceServicer_to_server(servicer, server):
                     servicer.List,
                     request_deserializer=nebius_dot_dns_dot_v1_dot_zone__pb2.ListZonesRequest.FromString,
                     response_serializer=nebius_dot_dns_dot_v1_dot_zone__pb2.ListZonesResponse.SerializeToString,
+            ),
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=nebius_dot_dns_dot_v1_dot_zone__pb2.CreateZoneRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_dns_dot_v1_dot_zone__pb2.UpdateZoneRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=nebius_dot_dns_dot_v1_dot_zone__pb2.DeleteZoneRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -135,5 +187,56 @@ class ZoneService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.dns.v1.ZoneService/List',
             nebius_dot_dns_dot_v1_dot_zone__pb2.ListZonesRequest.SerializeToString,
             nebius_dot_dns_dot_v1_dot_zone__pb2.ListZonesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.dns.v1.ZoneService/Create',
+            nebius_dot_dns_dot_v1_dot_zone__pb2.CreateZoneRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.dns.v1.ZoneService/Update',
+            nebius_dot_dns_dot_v1_dot_zone__pb2.UpdateZoneRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.dns.v1.ZoneService/Delete',
+            nebius_dot_dns_dot_v1_dot_zone__pb2.DeleteZoneRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -3,6 +3,7 @@
 import grpc
 
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.dns.v1 import record_pb2 as nebius_dot_dns_dot_v1_dot_record__pb2
 
 
@@ -31,6 +32,21 @@ class RecordServiceStub(object):
                 request_serializer=nebius_dot_dns_dot_v1_dot_record__pb2.ListRecordsRequest.SerializeToString,
                 response_deserializer=nebius_dot_dns_dot_v1_dot_record__pb2.ListRecordsResponse.FromString,
                 )
+        self.Create = channel.unary_unary(
+                '/nebius.dns.v1.RecordService/Create',
+                request_serializer=nebius_dot_dns_dot_v1_dot_record__pb2.CreateRecordRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Update = channel.unary_unary(
+                '/nebius.dns.v1.RecordService/Update',
+                request_serializer=nebius_dot_dns_dot_v1_dot_record__pb2.UpdateRecordRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
+        self.Delete = channel.unary_unary(
+                '/nebius.dns.v1.RecordService/Delete',
+                request_serializer=nebius_dot_dns_dot_v1_dot_record__pb2.DeleteRecordRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
 
 
 class RecordServiceServicer(object):
@@ -58,6 +74,27 @@ class RecordServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Create(self, request, context):
+        """Creates a DNS record
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Update(self, request, context):
+        """Updates the DNS record with the specified ID
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Delete(self, request, context):
+        """Deletes the DNS record with the specified ID
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_RecordServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -75,6 +112,21 @@ def add_RecordServiceServicer_to_server(servicer, server):
                     servicer.List,
                     request_deserializer=nebius_dot_dns_dot_v1_dot_record__pb2.ListRecordsRequest.FromString,
                     response_serializer=nebius_dot_dns_dot_v1_dot_record__pb2.ListRecordsResponse.SerializeToString,
+            ),
+            'Create': grpc.unary_unary_rpc_method_handler(
+                    servicer.Create,
+                    request_deserializer=nebius_dot_dns_dot_v1_dot_record__pb2.CreateRecordRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_dns_dot_v1_dot_record__pb2.UpdateRecordRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=nebius_dot_dns_dot_v1_dot_record__pb2.DeleteRecordRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -135,5 +187,56 @@ class RecordService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.dns.v1.RecordService/List',
             nebius_dot_dns_dot_v1_dot_record__pb2.ListRecordsRequest.SerializeToString,
             nebius_dot_dns_dot_v1_dot_record__pb2.ListRecordsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Create(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.dns.v1.RecordService/Create',
+            nebius_dot_dns_dot_v1_dot_record__pb2.CreateRecordRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.dns.v1.RecordService/Update',
+            nebius_dot_dns_dot_v1_dot_record__pb2.UpdateRecordRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.dns.v1.RecordService/Delete',
+            nebius_dot_dns_dot_v1_dot_record__pb2.DeleteRecordRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

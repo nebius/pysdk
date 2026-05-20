@@ -35,6 +35,8 @@ import nebius.api.nebius.compute.v1.maintenance_event_pb2 as maintenance_event_p
 import nebius.api.nebius.compute.v1.maintenance_service_pb2 as maintenance_service_pb2
 import nebius.api.nebius.compute.v1.network_interface_pb2 as network_interface_pb2
 import nebius.api.nebius.compute.v1.node_service_pb2 as node_service_pb2
+import nebius.api.nebius.compute.v1.nvlinstancegroup_pb2 as nvlinstancegroup_pb2
+import nebius.api.nebius.compute.v1.nvlinstancegroup_service_pb2 as nvlinstancegroup_service_pb2
 import nebius.api.nebius.compute.v1.operation_service_pb2 as operation_service_pb2
 import nebius.api.nebius.compute.v1.platform_pb2 as platform_pb2
 import nebius.api.nebius.compute.v1.platform_service_pb2 as platform_service_pb2
@@ -5216,6 +5218,7 @@ class InstanceSpec(pb_classes.Message):
         recovery_policy: "InstanceRecoveryPolicy|instance_pb2.InstanceRecoveryPolicy|None|unset.UnsetType" = unset.Unset,
         preemptible: "PreemptibleSpec|instance_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
         hostname: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        nvl_instance_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         reservation_policy: "ReservationPolicy|instance_pb2.ReservationPolicy|None|unset.UnsetType" = unset.Unset,
         local_disks: "LocalDisksSpec|instance_pb2.LocalDisksSpec|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -5244,6 +5247,8 @@ class InstanceSpec(pb_classes.Message):
             self.preemptible = preemptible
         if not isinstance(hostname, unset.UnsetType):
             self.hostname = hostname
+        if not isinstance(nvl_instance_group_id, unset.UnsetType):
+            self.nvl_instance_group_id = nvl_instance_group_id
         if not isinstance(reservation_policy, unset.UnsetType):
             self.reservation_policy = reservation_policy
         if not isinstance(local_disks, unset.UnsetType):
@@ -5263,6 +5268,7 @@ class InstanceSpec(pb_classes.Message):
             "recovery_policy",
             "preemptible",
             "hostname",
+            "nvl_instance_group_id",
             "reservation_policy",
             "local_disks",
         ]
@@ -5447,6 +5453,19 @@ class InstanceSpec(pb_classes.Message):
         )
     
     @builtins.property
+    def nvl_instance_group_id(self) -> "builtins.str":
+        """
+        NVLink Instance Group ID associated with the VM
+        """
+        
+        return super()._get_field("nvl_instance_group_id", explicit_presence=False,
+        )
+    @nvl_instance_group_id.setter
+    def nvl_instance_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("nvl_instance_group_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def reservation_policy(self) -> "ReservationPolicy":
         return super()._get_field("reservation_policy", explicit_presence=False,
         wrap=ReservationPolicy,
@@ -5488,6 +5507,7 @@ class InstanceSpec(pb_classes.Message):
         "recovery_policy":"recovery_policy",
         "preemptible":"preemptible",
         "hostname":"hostname",
+        "nvl_instance_group_id":"nvl_instance_group_id",
         "reservation_policy":"reservation_policy",
         "local_disks":"local_disks",
     }
@@ -5541,14 +5561,21 @@ class PreemptibleSpec(pb_classes.Message):
     @builtins.property
     def priority(self) -> "builtins.int":
         """
-        The value can range from 1 to 5, where 5 indicates the highest priority.
-        Affects the order in which Compute tries to preempt VMs, but does not guarantee the exact order.
+        Supported until 05/11/26. It is deprecated and doesn't affect preemption behavior anymore.
         """
+        
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.compute.v1.PreemptibleSpec.priority is deprecated. Supported until 05/11/26. It is deprecated and doesn't affect preemption behavior anymore."""
+        , stack_info=True, stacklevel=2)
         
         return super()._get_field("priority", explicit_presence=False,
         )
     @priority.setter
     def priority(self, value: "builtins.int|None") -> None:
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.compute.v1.PreemptibleSpec.priority is deprecated. Supported until 05/11/26. It is deprecated and doesn't affect preemption behavior anymore."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._set_field("priority",value,explicit_presence=False,
         )
     
@@ -8260,6 +8287,680 @@ class NodeServiceClient(client.Client):
         )
     
 
+# file: nebius/compute/v1/nvlinstancegroup.proto
+class NVLInstanceGroup(pb_classes.Message):
+    """
+    Represents an NVLink InstanceGroup.
+    """
+    
+    __PB2_CLASS__ = nvlinstancegroup_pb2.NVLInstanceGroup
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NVLInstanceGroup",nvlinstancegroup_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "NVLInstanceGroupSpec|nvlinstancegroup_pb2.NVLInstanceGroupSpec|None|unset.UnsetType" = unset.Unset,
+        status: "NVLInstanceGroupStatus|nvlinstancegroup_pb2.NVLInstanceGroupStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "NVLInstanceGroupSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=NVLInstanceGroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "NVLInstanceGroupSpec|nvlinstancegroup_pb2.NVLInstanceGroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "NVLInstanceGroupStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=NVLInstanceGroupStatus,
+        )
+    @status.setter
+    def status(self, value: "NVLInstanceGroupStatus|nvlinstancegroup_pb2.NVLInstanceGroupStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class NVLInstanceGroupSpec(pb_classes.Message):
+    __PB2_CLASS__ = nvlinstancegroup_pb2.NVLInstanceGroupSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NVLInstanceGroupSpec",nvlinstancegroup_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class NVLInstanceGroupType(pb_enum.Enum):
+        """
+        Type of the NVLink InstanceGroup.
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.NVLInstanceGroupSpec.NVLInstanceGroupType",nvlinstancegroup_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        GB200 = 1
+        GB300 = 2
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        type: "NVLInstanceGroupSpec.NVLInstanceGroupType|nvlinstancegroup_pb2.NVLInstanceGroupSpec.NVLInstanceGroupType|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(type, unset.UnsetType):
+            self.type = type
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "type",
+            "NVLInstanceGroupType",
+        ]
+    
+    @builtins.property
+    def type(self) -> "NVLInstanceGroupSpec.NVLInstanceGroupType":
+        """
+        Type of the NVLink InstanceGroup (corresponds to the Compute platform)
+        """
+        
+        return super()._get_field("type", explicit_presence=False,
+        wrap=NVLInstanceGroupSpec.NVLInstanceGroupType,
+        )
+    @type.setter
+    def type(self, value: "NVLInstanceGroupSpec.NVLInstanceGroupType|nvlinstancegroup_pb2.NVLInstanceGroupSpec.NVLInstanceGroupType|None") -> None:
+        return super()._set_field("type",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "type":"type",
+        "NVLInstanceGroupType":"NVLInstanceGroupType",
+    }
+    
+class NVLInstanceGroupStatus(pb_classes.Message):
+    __PB2_CLASS__ = nvlinstancegroup_pb2.NVLInstanceGroupStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NVLInstanceGroupStatus",nvlinstancegroup_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class InstanceInfo(pb_classes.Message):
+        __PB2_CLASS__ = nvlinstancegroup_pb2.NVLInstanceGroupStatus.InstanceInfo
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NVLInstanceGroupStatus.InstanceInfo",nvlinstancegroup_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            instance_state: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(instance_state, unset.UnsetType):
+                self.instance_state = instance_state
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "instance_state",
+            ]
+        
+        @builtins.property
+        def instance_state(self) -> "InstanceStatus.InstanceState":
+            """
+            Current state of the instance.
+            """
+            
+            return super()._get_field("instance_state", explicit_presence=False,
+            wrap=InstanceStatus.InstanceState,
+            )
+        @instance_state.setter
+        def instance_state(self, value: "InstanceStatus.InstanceState|instance_pb2.InstanceStatus.InstanceState|None") -> None:
+            return super()._set_field("instance_state",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "instance_state":"instance_state",
+        }
+        
+    
+    class InstancesEntry(pb_classes.Message):
+        __PB2_CLASS__ = nvlinstancegroup_pb2.NVLInstanceGroupStatus.InstancesEntry
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.NVLInstanceGroupStatus.InstancesEntry",nvlinstancegroup_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "NVLInstanceGroupStatus.InstanceInfo|nvlinstancegroup_pb2.NVLInstanceGroupStatus.InstanceInfo|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
+            if not isinstance(value, unset.UnsetType):
+                self.value = value
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
+        @builtins.property
+        def key(self) -> "builtins.str":
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def value(self) -> "NVLInstanceGroupStatus.InstanceInfo":
+            return super()._get_field("value", explicit_presence=False,
+            wrap=NVLInstanceGroupStatus.InstanceInfo,
+            )
+        @value.setter
+        def value(self, value: "NVLInstanceGroupStatus.InstanceInfo|nvlinstancegroup_pb2.NVLInstanceGroupStatus.InstanceInfo|None") -> None:
+            return super()._set_field("value",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        instances: "abc.Mapping[builtins.str,NVLInstanceGroupStatus.InstanceInfo]|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(instances, unset.UnsetType):
+            self.instances = instances
+        if not isinstance(reconciling, unset.UnsetType):
+            self.reconciling = reconciling
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "instances",
+            "reconciling",
+            "InstanceInfo",
+            "InstancesEntry",
+        ]
+    
+    @builtins.property
+    def instances(self) -> "abc.MutableMapping[builtins.str,NVLInstanceGroupStatus.InstanceInfo]":
+        """
+        Instances that are associated with this NVLink InstanceGroup
+        """
+        
+        return super()._get_field("instances", explicit_presence=False,
+        wrap=pb_classes.Map.with_wrap(NVLInstanceGroupStatus.InstanceInfo,None,None),
+        )
+    @instances.setter
+    def instances(self, value: "abc.Mapping[builtins.str,NVLInstanceGroupStatus.InstanceInfo]|None") -> None:
+        return super()._set_field("instances",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def reconciling(self) -> "builtins.bool":
+        """
+        Indicates whether there is an ongoing operation with any VM in the InstanceGroup
+        """
+        
+        return super()._get_field("reconciling", explicit_presence=False,
+        )
+    @reconciling.setter
+    def reconciling(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("reconciling",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "instances":"instances",
+        "reconciling":"reconciling",
+        "InstanceInfo":"InstanceInfo",
+        "InstancesEntry":"InstancesEntry",
+    }
+    
+# file: nebius/compute/v1/nvlinstancegroup_service.proto
+class CreateNVLInstanceGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = nvlinstancegroup_service_pb2.CreateNVLInstanceGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateNVLInstanceGroupRequest",nvlinstancegroup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "NVLInstanceGroupSpec|nvlinstancegroup_pb2.NVLInstanceGroupSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "NVLInstanceGroupSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=NVLInstanceGroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "NVLInstanceGroupSpec|nvlinstancegroup_pb2.NVLInstanceGroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class GetNVLInstanceGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = nvlinstancegroup_service_pb2.GetNVLInstanceGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetNVLInstanceGroupRequest",nvlinstancegroup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListNVLInstanceGroupsRequest(pb_classes.Message):
+    __PB2_CLASS__ = nvlinstancegroup_service_pb2.ListNVLInstanceGroupsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListNVLInstanceGroupsRequest",nvlinstancegroup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListNVLInstanceGroupsResponse(pb_classes.Message):
+    __PB2_CLASS__ = nvlinstancegroup_service_pb2.ListNVLInstanceGroupsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListNVLInstanceGroupsResponse",nvlinstancegroup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[NVLInstanceGroup]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[NVLInstanceGroup]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(NVLInstanceGroup,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[NVLInstanceGroup]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class DeleteNVLInstanceGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = nvlinstancegroup_service_pb2.DeleteNVLInstanceGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteNVLInstanceGroupRequest",nvlinstancegroup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+
+class NVLInstanceGroupServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    Service for managing NVLink InstanceGroups.
+    
+    This class provides the client methods for the ``.nebius.compute.v1.NVLInstanceGroupService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1.NVLInstanceGroupService",nvlinstancegroup_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.compute.v1.NVLInstanceGroupService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def create(self,
+        request: "CreateNVLInstanceGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateNVLInstanceGroupRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Create creates a new NVL InstanceGroup.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.CreateNVLInstanceGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def get(self,
+        request: "GetNVLInstanceGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetNVLInstanceGroupRequest","NVLInstanceGroup"]:
+        """
+        Get retrieves the specified NVL InstanceGroup by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.GetNVLInstanceGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.NVLInstanceGroup`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=nvlinstancegroup_pb2.NVLInstanceGroup,
+            result_wrapper=pb_classes.simple_wrapper(NVLInstanceGroup),
+            **kwargs,
+        )
+    
+    def get_by_name(self,
+        request: "v1_1.GetByNameRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["v1_1.GetByNameRequest","NVLInstanceGroup"]:
+        """
+        GetByName retrieves the specified NVL InstanceGroup by its parent and name.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.common.v1.GetByNameRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.NVLInstanceGroup`.
+        """
+        
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=nvlinstancegroup_pb2.NVLInstanceGroup,
+            result_wrapper=pb_classes.simple_wrapper(NVLInstanceGroup),
+            **kwargs,
+        )
+    
+    def list(self,
+        request: "ListNVLInstanceGroupsRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListNVLInstanceGroupsRequest","ListNVLInstanceGroupsResponse"]:
+        """
+        List lists all NVL InstanceGroups in the specified parent.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.ListNVLInstanceGroupsRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.ListNVLInstanceGroupsResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=nvlinstancegroup_service_pb2.ListNVLInstanceGroupsResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListNVLInstanceGroupsResponse),
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteNVLInstanceGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteNVLInstanceGroupRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Delete deletes the specified NVL InstanceGroup by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.DeleteNVLInstanceGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+
 # file: nebius/compute/v1/platform.proto
 class Platform(pb_classes.Message):
     __PB2_CLASS__ = platform_pb2.Platform
@@ -8929,6 +9630,15 @@ __all__ = [
     "NodeSetUnhealthyRequest",
     "NodeSetUnhealthyResponse",
     "NodeServiceClient",
+    "NVLInstanceGroup",
+    "NVLInstanceGroupSpec",
+    "NVLInstanceGroupStatus",
+    "CreateNVLInstanceGroupRequest",
+    "GetNVLInstanceGroupRequest",
+    "ListNVLInstanceGroupsRequest",
+    "ListNVLInstanceGroupsResponse",
+    "DeleteNVLInstanceGroupRequest",
+    "NVLInstanceGroupServiceClient",
     "Platform",
     "PlatformSpec",
     "Preset",

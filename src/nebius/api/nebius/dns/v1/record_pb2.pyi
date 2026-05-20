@@ -96,3 +96,29 @@ class ListRecordsResponse(_message.Message):
     items: _containers.RepeatedCompositeFieldContainer[Record]
     next_page_token: str
     def __init__(self, items: _Optional[_Iterable[_Union[Record, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
+
+class CreateRecordRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: RecordSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[RecordSpec, _Mapping]] = ...) -> None: ...
+
+class UpdateRecordRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: RecordSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[RecordSpec, _Mapping]] = ...) -> None: ...
+
+class DeleteRecordRequest(_message.Message):
+    __slots__ = ["id", "resource_version", "force"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    RESOURCE_VERSION_FIELD_NUMBER: _ClassVar[int]
+    FORCE_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    resource_version: int
+    force: bool
+    def __init__(self, id: _Optional[str] = ..., resource_version: _Optional[int] = ..., force: bool = ...) -> None: ...

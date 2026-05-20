@@ -13,10 +13,11 @@ _sym_db = _symbol_database.Default()
 
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.dns.v1 import record_pb2 as nebius_dot_dns_dot_v1_dot_record__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/dns/v1/record_service.proto\x12\rnebius.dns.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1anebius/dns/v1/record.proto2\xed\x01\n\rRecordService\x12=\n\x03Get\x12\x1f.nebius.dns.v1.GetRecordRequest\x1a\x15.nebius.dns.v1.Record\x12\x46\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x15.nebius.dns.v1.Record\x12M\n\x04List\x12!.nebius.dns.v1.ListRecordsRequest\x1a\".nebius.dns.v1.ListRecordsResponse\x1a\x06\xbaJ\x03\x64nsBY\n\x14\x61i.nebius.pub.dns.v1B\x12RecordServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/dns/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"nebius/dns/v1/record_service.proto\x12\rnebius.dns.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x1anebius/dns/v1/record.proto2\xce\x03\n\rRecordService\x12=\n\x03Get\x12\x1f.nebius.dns.v1.GetRecordRequest\x1a\x15.nebius.dns.v1.Record\x12\x46\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x15.nebius.dns.v1.Record\x12M\n\x04List\x12!.nebius.dns.v1.ListRecordsRequest\x1a\".nebius.dns.v1.ListRecordsResponse\x12I\n\x06\x43reate\x12\".nebius.dns.v1.CreateRecordRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06Update\x12\".nebius.dns.v1.UpdateRecordRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x06\x44\x65lete\x12\".nebius.dns.v1.DeleteRecordRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03\x64nsBY\n\x14\x61i.nebius.pub.dns.v1B\x12RecordServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/dns/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -27,6 +28,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.dns.v1B\022RecordServiceProtoP\001Z+github.com/nebius/gosdk/proto/nebius/dns/v1'
   _RECORDSERVICE._options = None
   _RECORDSERVICE._serialized_options = b'\272J\003dns'
-  _globals['_RECORDSERVICE']._serialized_start=141
-  _globals['_RECORDSERVICE']._serialized_end=378
+  _globals['_RECORDSERVICE']._serialized_start=175
+  _globals['_RECORDSERVICE']._serialized_end=637
 # @@protoc_insertion_point(module_scope)

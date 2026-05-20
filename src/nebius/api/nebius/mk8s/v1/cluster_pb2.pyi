@@ -1,6 +1,7 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
+from nebius.api.nebius.common.v1 import resource_event_pb2 as _resource_event_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
@@ -68,7 +69,7 @@ class Karpenter(_message.Message):
     def __init__(self) -> None: ...
 
 class ClusterStatus(_message.Message):
-    __slots__ = ["state", "control_plane", "reconciling"]
+    __slots__ = ["state", "control_plane", "events", "reconciling"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[ClusterStatus.State]
@@ -81,11 +82,13 @@ class ClusterStatus(_message.Message):
     DELETING: ClusterStatus.State
     STATE_FIELD_NUMBER: _ClassVar[int]
     CONTROL_PLANE_FIELD_NUMBER: _ClassVar[int]
+    EVENTS_FIELD_NUMBER: _ClassVar[int]
     RECONCILING_FIELD_NUMBER: _ClassVar[int]
     state: ClusterStatus.State
     control_plane: ControlPlaneStatus
+    events: _containers.RepeatedCompositeFieldContainer[_resource_event_pb2.RecurrentResourceEvent]
     reconciling: bool
-    def __init__(self, state: _Optional[_Union[ClusterStatus.State, str]] = ..., control_plane: _Optional[_Union[ControlPlaneStatus, _Mapping]] = ..., reconciling: bool = ...) -> None: ...
+    def __init__(self, state: _Optional[_Union[ClusterStatus.State, str]] = ..., control_plane: _Optional[_Union[ControlPlaneStatus, _Mapping]] = ..., events: _Optional[_Iterable[_Union[_resource_event_pb2.RecurrentResourceEvent, _Mapping]]] = ..., reconciling: bool = ...) -> None: ...
 
 class ControlPlaneStatus(_message.Message):
     __slots__ = ["version", "endpoints", "etcd_cluster_size", "auth"]

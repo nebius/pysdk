@@ -13,10 +13,11 @@ _sym_db = _symbol_database.Default()
 
 from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1_dot_metadata__pb2
+from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 from nebius.api.nebius.dns.v1 import zone_pb2 as nebius_dot_dns_dot_v1_dot_zone__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/dns/v1/zone_service.proto\x12\rnebius.dns.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x18nebius/dns/v1/zone.proto2\xe1\x01\n\x0bZoneService\x12\x39\n\x03Get\x12\x1d.nebius.dns.v1.GetZoneRequest\x1a\x13.nebius.dns.v1.Zone\x12\x44\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x13.nebius.dns.v1.Zone\x12I\n\x04List\x12\x1f.nebius.dns.v1.ListZonesRequest\x1a .nebius.dns.v1.ListZonesResponse\x1a\x06\xbaJ\x03\x64nsBW\n\x14\x61i.nebius.pub.dns.v1B\x10ZoneServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/dns/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n nebius/dns/v1/zone_service.proto\x12\rnebius.dns.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a\x18nebius/dns/v1/zone.proto2\xbc\x03\n\x0bZoneService\x12\x39\n\x03Get\x12\x1d.nebius.dns.v1.GetZoneRequest\x1a\x13.nebius.dns.v1.Zone\x12\x44\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a\x13.nebius.dns.v1.Zone\x12I\n\x04List\x12\x1f.nebius.dns.v1.ListZonesRequest\x1a .nebius.dns.v1.ListZonesResponse\x12G\n\x06\x43reate\x12 .nebius.dns.v1.CreateZoneRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06Update\x12 .nebius.dns.v1.UpdateZoneRequest\x1a\x1b.nebius.common.v1.Operation\x12G\n\x06\x44\x65lete\x12 .nebius.dns.v1.DeleteZoneRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x06\xbaJ\x03\x64nsBW\n\x14\x61i.nebius.pub.dns.v1B\x10ZoneServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/dns/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -27,6 +28,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.dns.v1B\020ZoneServiceProtoP\001Z+github.com/nebius/gosdk/proto/nebius/dns/v1'
   _ZONESERVICE._options = None
   _ZONESERVICE._serialized_options = b'\272J\003dns'
-  _globals['_ZONESERVICE']._serialized_start=137
-  _globals['_ZONESERVICE']._serialized_end=362
+  _globals['_ZONESERVICE']._serialized_start=171
+  _globals['_ZONESERVICE']._serialized_end=615
 # @@protoc_insertion_point(module_scope)

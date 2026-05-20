@@ -458,6 +458,7 @@ class ClusterStatus(pb_classes.Message):
         *,
         state: "ClusterStatus.State|cluster_pb2.ClusterStatus.State|None|unset.UnsetType" = unset.Unset,
         control_plane: "ControlPlaneStatus|cluster_pb2.ControlPlaneStatus|None|unset.UnsetType" = unset.Unset,
+        events: "abc.Iterable[v1_1.RecurrentResourceEvent]|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -465,6 +466,8 @@ class ClusterStatus(pb_classes.Message):
             self.state = state
         if not isinstance(control_plane, unset.UnsetType):
             self.control_plane = control_plane
+        if not isinstance(events, unset.UnsetType):
+            self.events = events
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
@@ -472,6 +475,7 @@ class ClusterStatus(pb_classes.Message):
         return [
             "state",
             "control_plane",
+            "events",
             "reconciling",
             "State",
         ]
@@ -497,6 +501,16 @@ class ClusterStatus(pb_classes.Message):
         )
     
     @builtins.property
+    def events(self) -> "abc.MutableSequence[v1_1.RecurrentResourceEvent]":
+        return super()._get_field("events", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(v1_1.RecurrentResourceEvent,None,None),
+        )
+    @events.setter
+    def events(self, value: "abc.Iterable[v1_1.RecurrentResourceEvent]|None") -> None:
+        return super()._set_field("events",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         """
         Show that changes are in flight
@@ -512,6 +526,7 @@ class ClusterStatus(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "control_plane":"control_plane",
+        "events":"events",
         "reconciling":"reconciling",
         "State":"State",
     }
@@ -1680,10 +1695,6 @@ class NodeGroup(pb_classes.Message):
     
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
-        """
-        The parent_id is an ID of Cluster
-        """
-        
         return super()._get_field("metadata", explicit_presence=False,
         wrap=v1_1.ResourceMetadata,
         )

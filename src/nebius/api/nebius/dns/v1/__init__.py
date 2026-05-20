@@ -9,14 +9,17 @@ import collections.abc as abc
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import nebius.aio.client as client
-import nebius.aio.request as request
+import nebius.aio.operation as operation
+import nebius.aio.request as request_1
 import nebius.aio.request_kwargs as request_kwargs
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.dns.v1.record_pb2 as record_pb2
 import nebius.api.nebius.dns.v1.record_service_pb2 as record_service_pb2
 import nebius.api.nebius.dns.v1.zone_pb2 as zone_pb2
 import nebius.api.nebius.dns.v1.zone_service_pb2 as zone_service_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -596,9 +599,222 @@ class ListRecordsResponse(pb_classes.Message):
         "next_page_token":"next_page_token",
     }
     
+class CreateRecordRequest(pb_classes.Message):
+    """
+    Request to create a DNS record
+    """
+    
+    __PB2_CLASS__ = record_pb2.CreateRecordRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.dns.v1.CreateRecordRequest",record_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RecordSpec|record_pb2.RecordSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Metadata for the DNS record to create
+        The only required field is ``metadata.parent_id``, which must be set to the ID of this record's parent DNS zone
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "RecordSpec":
+        """
+        Specification for the DNS record to create
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=RecordSpec,
+        )
+    @spec.setter
+    def spec(self, value: "RecordSpec|record_pb2.RecordSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateRecordRequest(pb_classes.Message):
+    """
+    Request to update the DNS record by its ID
+    """
+    
+    __PB2_CLASS__ = record_pb2.UpdateRecordRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.dns.v1.UpdateRecordRequest",record_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "RecordSpec|record_pb2.RecordSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Metadata for the DNS record being updated
+        
+        
+        * The only required field is ``metadata.id``, which must be set to the ID of the DNS record being updated
+        * You may also set the expected DNS record version (``metadata.resource_version``), which ensures that only the requested version is
+          updated (and a ``FAILED_PRECONDITION`` error is returned on version mismatch)
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "RecordSpec":
+        """
+        New specification for the DNS record
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=RecordSpec,
+        )
+    @spec.setter
+    def spec(self, value: "RecordSpec|record_pb2.RecordSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteRecordRequest(pb_classes.Message):
+    """
+    Request to delete the DNS record by its ID
+    """
+    
+    __PB2_CLASS__ = record_pb2.DeleteRecordRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.dns.v1.DeleteRecordRequest",record_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        force: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(resource_version, unset.UnsetType):
+            self.resource_version = resource_version
+        if not isinstance(force, unset.UnsetType):
+            self.force = force
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "resource_version",
+            "force",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of the DNS record to delete
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def resource_version(self) -> "builtins.int":
+        """
+        Optional: expected DNS record version (``metadata.resource_version``)
+        
+        
+        * If specified, ensures that only the requested version is deleted (and a ``FAILED_PRECONDITION`` error is returned on version mismatch)
+        * If not specified or set to ``0``, the latest version will be deleted
+        """
+        
+        return super()._get_field("resource_version", explicit_presence=False,
+        )
+    @resource_version.setter
+    def resource_version(self, value: "builtins.int|None") -> None:
+        return super()._set_field("resource_version",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def force(self) -> "builtins.bool":
+        """
+        Indicates that deletion-protected records should be also deleted
+        Attempt to delete a protected record without this flag set to ``true`` will cause a ``FAILED_PRECONDITION`` error
+        """
+        
+        return super()._get_field("force", explicit_presence=False,
+        )
+    @force.setter
+    def force(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("force",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "resource_version":"resource_version",
+        "force":"force",
+    }
+    
 # file: nebius/dns/v1/record_service.proto
 
-class RecordServiceClient(client.Client):
+class RecordServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     """
     Service for managing DNS records (``Record`` resources)
     
@@ -618,11 +834,15 @@ class RecordServiceClient(client.Client):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.dns.v1.RecordService",record_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.dns.v1.RecordService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def get(self,
         request: "GetRecordRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["GetRecordRequest","Record"]:
+    ) -> request_1.Request["GetRecordRequest","Record"]:
         """
         Gets the DNS record with the specified ID
         
@@ -651,7 +871,7 @@ class RecordServiceClient(client.Client):
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["v1_1.GetByNameRequest","Record"]:
+    ) -> request_1.Request["v1_1.GetByNameRequest","Record"]:
         """
         Gets the DNS record by its parent DNS zone (``metadata.parent_id``) and ``metadata.name``
         
@@ -680,7 +900,7 @@ class RecordServiceClient(client.Client):
     def list(self,
         request: "ListRecordsRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["ListRecordsRequest","ListRecordsResponse"]:
+    ) -> request_1.Request["ListRecordsRequest","ListRecordsResponse"]:
         """
         Lists DNS records in the specified DNS zone
         
@@ -703,6 +923,94 @@ class RecordServiceClient(client.Client):
             request=request,
             result_pb2_class=record_pb2.ListRecordsResponse,
             result_wrapper=pb_classes.simple_wrapper(ListRecordsResponse),
+            **kwargs,
+        )
+    
+    def create(self,
+        request: "CreateRecordRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateRecordRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Creates a DNS record
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.dns.v1.CreateRecordRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateRecordRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateRecordRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Updates the DNS record with the specified ID
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.dns.v1.UpdateRecordRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteRecordRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteRecordRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Deletes the DNS record with the specified ID
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.dns.v1.DeleteRecordRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
             **kwargs,
         )
     
@@ -1271,9 +1579,199 @@ class ListZonesResponse(pb_classes.Message):
         "next_page_token":"next_page_token",
     }
     
+class CreateZoneRequest(pb_classes.Message):
+    """
+    Request to create a DNS zone
+    """
+    
+    __PB2_CLASS__ = zone_pb2.CreateZoneRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.dns.v1.CreateZoneRequest",zone_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ZoneSpec|zone_pb2.ZoneSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Metadata for the DNS zone to create
+        The only required field is ``metadata.parent_id``, which must be set to the ID of this zone's parent IAM container
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ZoneSpec":
+        """
+        Specification for the DNS zone to create
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ZoneSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ZoneSpec|zone_pb2.ZoneSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateZoneRequest(pb_classes.Message):
+    """
+    Request to update the DNS zone by its ID
+    """
+    
+    __PB2_CLASS__ = zone_pb2.UpdateZoneRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.dns.v1.UpdateZoneRequest",zone_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "ZoneSpec|zone_pb2.ZoneSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Metadata for the DNS zone being updated
+        
+        
+        * The only required field is ``metadata.id``, which must be set to the ID of the DNS zone being updated
+        * You may also set the expected DNS zone version (``metadata.resource_version``), which ensures that only the requested version is
+          updated (and a ``FAILED_PRECONDITION`` error is returned on version mismatch)
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "ZoneSpec":
+        """
+        New specification for the DNS zone
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=ZoneSpec,
+        )
+    @spec.setter
+    def spec(self, value: "ZoneSpec|zone_pb2.ZoneSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteZoneRequest(pb_classes.Message):
+    __PB2_CLASS__ = zone_pb2.DeleteZoneRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.dns.v1.DeleteZoneRequest",zone_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource_version: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+        if not isinstance(resource_version, unset.UnsetType):
+            self.resource_version = resource_version
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+            "resource_version",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of the DNS zone to delete
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def resource_version(self) -> "builtins.int":
+        """
+        Optional: expected DNS zone version (``metadata.resource_version``)
+        
+        
+        * If specified, ensures that only the requested version is deleted (and a ``FAILED_PRECONDITION`` error is returned on version mismatch)
+        * If not specified or set to ``0``, the latest version will be deleted
+        """
+        
+        return super()._get_field("resource_version", explicit_presence=False,
+        )
+    @resource_version.setter
+    def resource_version(self, value: "builtins.int|None") -> None:
+        return super()._set_field("resource_version",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+        "resource_version":"resource_version",
+    }
+    
 # file: nebius/dns/v1/zone_service.proto
 
-class ZoneServiceClient(client.Client):
+class ZoneServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     """
     Service for managing DNS zones (``Zone`` resources)
     
@@ -1293,11 +1791,15 @@ class ZoneServiceClient(client.Client):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.dns.v1.ZoneService",zone_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
     """The protobuf service descriptor extraction function."""
     __service_name__ = ".nebius.dns.v1.ZoneService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
     
     def get(self,
         request: "GetZoneRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["GetZoneRequest","Zone"]:
+    ) -> request_1.Request["GetZoneRequest","Zone"]:
         """
         Gets the DNS zone with the specified ID
         
@@ -1326,7 +1828,7 @@ class ZoneServiceClient(client.Client):
     def get_by_name(self,
         request: "v1_1.GetByNameRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["v1_1.GetByNameRequest","Zone"]:
+    ) -> request_1.Request["v1_1.GetByNameRequest","Zone"]:
         """
         Gets the DNS zone by its parent IAM container (``metadata.parent_id``) and ``metadata.name``
         
@@ -1355,7 +1857,7 @@ class ZoneServiceClient(client.Client):
     def list(self,
         request: "ListZonesRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["ListZonesRequest","ListZonesResponse"]:
+    ) -> request_1.Request["ListZonesRequest","ListZonesResponse"]:
         """
         Lists DNS zones in the specified parent IAM container
         
@@ -1381,6 +1883,94 @@ class ZoneServiceClient(client.Client):
             **kwargs,
         )
     
+    def create(self,
+        request: "CreateZoneRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateZoneRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Creates a DNS zone
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.dns.v1.CreateZoneRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateZoneRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateZoneRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Updates the DNS zone with the specified ID
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.dns.v1.UpdateZoneRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteZoneRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteZoneRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Deletes the DNS zone with the specified ID
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.dns.v1.DeleteZoneRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
 
 __all__ = [
     #@ local import names here @#
@@ -1390,6 +1980,9 @@ __all__ = [
     "GetRecordRequest",
     "ListRecordsRequest",
     "ListRecordsResponse",
+    "CreateRecordRequest",
+    "UpdateRecordRequest",
+    "DeleteRecordRequest",
     "RecordServiceClient",
     "Zone",
     "ZoneSpec",
@@ -1399,5 +1992,8 @@ __all__ = [
     "GetZoneRequest",
     "ListZonesRequest",
     "ListZonesResponse",
+    "CreateZoneRequest",
+    "UpdateZoneRequest",
+    "DeleteZoneRequest",
     "ZoneServiceClient",
 ]

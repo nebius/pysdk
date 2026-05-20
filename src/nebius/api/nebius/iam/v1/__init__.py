@@ -8,6 +8,7 @@ import builtins as builtins
 import collections.abc as abc
 import datetime as datetime
 import google.protobuf.descriptor as descriptor_1
+import google.protobuf.duration_pb2 as duration_pb2
 import google.protobuf.message as message_1
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import nebius.aio.client as client
@@ -9177,6 +9178,7 @@ class CreateInvitationRequest(pb_classes.Message):
     __PB2_CLASS__ = invitation_service_pb2.CreateInvitationRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.iam.v1.CreateInvitationRequest",invitation_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
+        "expires_in": well_known_1.duration_mask,
     }
     
     def __init__(
@@ -9186,6 +9188,7 @@ class CreateInvitationRequest(pb_classes.Message):
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
         spec: "InvitationSpec|invitation_pb2.InvitationSpec|None|unset.UnsetType" = unset.Unset,
         no_send: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        expires_in: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -9194,12 +9197,15 @@ class CreateInvitationRequest(pb_classes.Message):
             self.spec = spec
         if not isinstance(no_send, unset.UnsetType):
             self.no_send = no_send
+        if not isinstance(expires_in, unset.UnsetType):
+            self.expires_in = expires_in
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "metadata",
             "spec",
             "no_send",
+            "expires_in",
         ]
     
     @builtins.property
@@ -9235,10 +9241,26 @@ class CreateInvitationRequest(pb_classes.Message):
         return super()._set_field("no_send",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def expires_in(self) -> "datetime.timedelta":
+        """
+        How long the invitation remains valid after creation. If omitted, the service default is used.
+        """
+        
+        return super()._get_field("expires_in", explicit_presence=False,
+        wrap=well_known_1.from_duration
+        )
+    @expires_in.setter
+    def expires_in(self, value: "duration_pb2.Duration|datetime.timedelta|None") -> None:
+        return super()._set_field("expires_in",value,explicit_presence=False,
+        unwrap=well_known_1.to_duration
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "metadata":"metadata",
         "spec":"spec",
         "no_send":"no_send",
+        "expires_in":"expires_in",
     }
     
 class GetInvitationRequest(pb_classes.Message):

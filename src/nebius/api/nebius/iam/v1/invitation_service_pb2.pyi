@@ -1,4 +1,5 @@
 from nebius.api.buf.validate import validate_pb2 as _validate_pb2
+from google.protobuf import duration_pb2 as _duration_pb2
 from nebius.api.nebius import annotations_pb2 as _annotations_pb2
 from nebius.api.nebius.common.v1 import metadata_pb2 as _metadata_pb2
 from nebius.api.nebius.common.v1 import operation_pb2 as _operation_pb2
@@ -11,14 +12,16 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class CreateInvitationRequest(_message.Message):
-    __slots__ = ["metadata", "spec", "no_send"]
+    __slots__ = ["metadata", "spec", "no_send", "expires_in"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
     NO_SEND_FIELD_NUMBER: _ClassVar[int]
+    EXPIRES_IN_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
     spec: _invitation_pb2.InvitationSpec
     no_send: bool
-    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_invitation_pb2.InvitationSpec, _Mapping]] = ..., no_send: bool = ...) -> None: ...
+    expires_in: _duration_pb2.Duration
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_invitation_pb2.InvitationSpec, _Mapping]] = ..., no_send: bool = ..., expires_in: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ...) -> None: ...
 
 class GetInvitationRequest(_message.Message):
     __slots__ = ["id"]

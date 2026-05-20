@@ -73,3 +73,27 @@ class ListZonesResponse(_message.Message):
     items: _containers.RepeatedCompositeFieldContainer[Zone]
     next_page_token: str
     def __init__(self, items: _Optional[_Iterable[_Union[Zone, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
+
+class CreateZoneRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: ZoneSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ZoneSpec, _Mapping]] = ...) -> None: ...
+
+class UpdateZoneRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: ZoneSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[ZoneSpec, _Mapping]] = ...) -> None: ...
+
+class DeleteZoneRequest(_message.Message):
+    __slots__ = ["id", "resource_version"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    RESOURCE_VERSION_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    resource_version: int
+    def __init__(self, id: _Optional[str] = ..., resource_version: _Optional[int] = ...) -> None: ...
