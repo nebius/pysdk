@@ -11,9 +11,10 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from nebius.api.nebius import annotations_pb2 as nebius_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/audit/v2/authorization.proto\x12\x0fnebius.audit.v2\"/\n\rAuthorization\x12\x1e\n\nauthorized\x18\x01 \x01(\x08R\nauthorizedB]\n\x16\x61i.nebius.pub.audit.v2B\x12\x41uthorizationProtoP\x01Z-github.com/nebius/gosdk/proto/nebius/audit/v2b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n#nebius/audit/v2/authorization.proto\x12\x0fnebius.audit.v2\x1a\x18nebius/annotations.proto\"i\n\rAuthorization\x12X\n\nauthorized\x18\x01 \x01(\x08\x42\x38\x18\x01\xd2J3\x12\x31This flag is unreliable and soon will be removed.R\nauthorizedB]\n\x16\x61i.nebius.pub.audit.v2B\x12\x41uthorizationProtoP\x01Z-github.com/nebius/gosdk/proto/nebius/audit/v2b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,6 +23,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\026ai.nebius.pub.audit.v2B\022AuthorizationProtoP\001Z-github.com/nebius/gosdk/proto/nebius/audit/v2'
-  _globals['_AUTHORIZATION']._serialized_start=56
-  _globals['_AUTHORIZATION']._serialized_end=103
+  _AUTHORIZATION.fields_by_name['authorized']._options = None
+  _AUTHORIZATION.fields_by_name['authorized']._serialized_options = b'\030\001\322J3\0221This flag is unreliable and soon will be removed.'
+  _globals['_AUTHORIZATION']._serialized_start=82
+  _globals['_AUTHORIZATION']._serialized_end=187
 # @@protoc_insertion_point(module_scope)
