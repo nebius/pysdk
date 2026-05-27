@@ -47,14 +47,23 @@ class LifecycleRule(_message.Message):
     def __init__(self, id: _Optional[str] = ..., status: _Optional[_Union[LifecycleRule.Status, str]] = ..., filter: _Optional[_Union[LifecycleFilter, _Mapping]] = ..., expiration: _Optional[_Union[LifecycleExpiration, _Mapping]] = ..., noncurrent_version_expiration: _Optional[_Union[LifecycleNoncurrentVersionExpiration, _Mapping]] = ..., abort_incomplete_multipart_upload: _Optional[_Union[LifecycleAbortIncompleteMultipartUpload, _Mapping]] = ..., transition: _Optional[_Union[LifecycleTransition, _Mapping]] = ..., noncurrent_version_transition: _Optional[_Union[LifecycleNoncurrentVersionTransition, _Mapping]] = ...) -> None: ...
 
 class LifecycleFilter(_message.Message):
-    __slots__ = ["prefix", "object_size_greater_than_bytes", "object_size_less_than_bytes"]
+    __slots__ = ["prefix", "object_size_greater_than_bytes", "object_size_less_than_bytes", "tags"]
+    class Tag(_message.Message):
+        __slots__ = ["key", "value"]
+        KEY_FIELD_NUMBER: _ClassVar[int]
+        VALUE_FIELD_NUMBER: _ClassVar[int]
+        key: str
+        value: str
+        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
     PREFIX_FIELD_NUMBER: _ClassVar[int]
     OBJECT_SIZE_GREATER_THAN_BYTES_FIELD_NUMBER: _ClassVar[int]
     OBJECT_SIZE_LESS_THAN_BYTES_FIELD_NUMBER: _ClassVar[int]
+    TAGS_FIELD_NUMBER: _ClassVar[int]
     prefix: str
     object_size_greater_than_bytes: int
     object_size_less_than_bytes: int
-    def __init__(self, prefix: _Optional[str] = ..., object_size_greater_than_bytes: _Optional[int] = ..., object_size_less_than_bytes: _Optional[int] = ...) -> None: ...
+    tags: _containers.RepeatedCompositeFieldContainer[LifecycleFilter.Tag]
+    def __init__(self, prefix: _Optional[str] = ..., object_size_greater_than_bytes: _Optional[int] = ..., object_size_less_than_bytes: _Optional[int] = ..., tags: _Optional[_Iterable[_Union[LifecycleFilter.Tag, _Mapping]]] = ...) -> None: ...
 
 class LifecycleAccessFilter(_message.Message):
     __slots__ = ["conditions"]

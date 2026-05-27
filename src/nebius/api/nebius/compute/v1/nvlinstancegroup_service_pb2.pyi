@@ -17,6 +17,14 @@ class CreateNVLInstanceGroupRequest(_message.Message):
     spec: _nvlinstancegroup_pb2.NVLInstanceGroupSpec
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_nvlinstancegroup_pb2.NVLInstanceGroupSpec, _Mapping]] = ...) -> None: ...
 
+class UpdateNVLInstanceGroupRequest(_message.Message):
+    __slots__ = ["metadata", "spec"]
+    METADATA_FIELD_NUMBER: _ClassVar[int]
+    SPEC_FIELD_NUMBER: _ClassVar[int]
+    metadata: _metadata_pb2.ResourceMetadata
+    spec: _nvlinstancegroup_pb2.NVLInstanceGroupSpec
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_nvlinstancegroup_pb2.NVLInstanceGroupSpec, _Mapping]] = ...) -> None: ...
+
 class GetNVLInstanceGroupRequest(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]

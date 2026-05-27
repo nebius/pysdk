@@ -1838,7 +1838,7 @@ class ResourceAdvice(pb_classes.Message):
     @builtins.property
     def metadata(self) -> "v1_1.ResourceMetadata":
         """
-        Standard metadata. parent_id is the User's Tenant/Project NID.
+        Standard metadata. parent_id is the User's Tenant NID.
         """
         
         return super()._get_field("metadata", explicit_presence=False,
@@ -2625,7 +2625,7 @@ class ResourceAdviceServiceClient(client.Client):
     """
     ResourceAdvisorService provides insights into capacity availability for various resources.
     It helps users understand where they can launch instances or allocate storage based on their
-    quotas and the current physical buffers in the data centers.
+    quotas and the current physical capacity in the data centers.
     
     This class provides the client methods for the ``.nebius.capacity.v1.ResourceAdviceService`` service.
     
@@ -2649,7 +2649,12 @@ class ResourceAdviceServiceClient(client.Client):
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
     ) -> request.Request["ListResourceAdviceRequest","ListResourceAdviceResponse"]:
         """
-        Lists resource advice resources.
+        Returns a list of resource advice entries for the caller's tenant.
+        Each entry represents a unique combination of region, fabric, platform, and preset
+        (e.g., gpu-b200-sxm / 8gpu-160vcpu-1792gb in us-central1-b) and reports current
+        capacity availability across three allocation types: reserved, on-demand, and preemptible.
+        Use this method to determine where and which compute instances can be launched
+        given the tenant's quotas, capacity block groups, and the current physical capacity in data centers.
         Supports filtering by region, resource type, or platform.
         
         :param request: The request object to send.

@@ -17,7 +17,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.compute.v1 import nvlinstancegroup_pb2 as nebius_dot_compute_dot_v1_dot_nvlinstancegroup__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n0nebius/compute/v1/nvlinstancegroup_service.proto\x12\x11nebius.compute.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a(nebius/compute/v1/nvlinstancegroup.proto\"\x9c\x01\n\x1d\x43reateNVLInstanceGroupRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.compute.v1.NVLInstanceGroupSpecR\x04spec\",\n\x1aGetNVLInstanceGroupRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"w\n\x1cListNVLInstanceGroupsRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x82\x01\n\x1dListNVLInstanceGroupsResponse\x12\x39\n\x05items\x18\x01 \x03(\x0b\x32#.nebius.compute.v1.NVLInstanceGroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"/\n\x1d\x44\x65leteNVLInstanceGroupRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id2\xf3\x03\n\x17NVLInstanceGroupService\x12W\n\x06\x43reate\x12\x30.nebius.compute.v1.CreateNVLInstanceGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12Y\n\x03Get\x12-.nebius.compute.v1.GetNVLInstanceGroupRequest\x1a#.nebius.compute.v1.NVLInstanceGroup\x12T\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a#.nebius.compute.v1.NVLInstanceGroup\x12i\n\x04List\x12/.nebius.compute.v1.ListNVLInstanceGroupsRequest\x1a\x30.nebius.compute.v1.ListNVLInstanceGroupsResponse\x12W\n\x06\x44\x65lete\x12\x30.nebius.compute.v1.DeleteNVLInstanceGroupRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07\x63omputeBk\n\x18\x61i.nebius.pub.compute.v1B\x1cNvlinstancegroupServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n0nebius/compute/v1/nvlinstancegroup_service.proto\x12\x11nebius.compute.v1\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a(nebius/compute/v1/nvlinstancegroup.proto\"\x9c\x01\n\x1d\x43reateNVLInstanceGroupRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.compute.v1.NVLInstanceGroupSpecR\x04spec\"\x9c\x01\n\x1dUpdateNVLInstanceGroupRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.compute.v1.NVLInstanceGroupSpecR\x04spec\",\n\x1aGetNVLInstanceGroupRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"w\n\x1cListNVLInstanceGroupsRequest\x12\x1b\n\tparent_id\x18\x01 \x01(\tR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x82\x01\n\x1dListNVLInstanceGroupsResponse\x12\x39\n\x05items\x18\x01 \x03(\x0b\x32#.nebius.compute.v1.NVLInstanceGroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"/\n\x1d\x44\x65leteNVLInstanceGroupRequest\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id2\xcc\x04\n\x17NVLInstanceGroupService\x12W\n\x06\x43reate\x12\x30.nebius.compute.v1.CreateNVLInstanceGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12Y\n\x03Get\x12-.nebius.compute.v1.GetNVLInstanceGroupRequest\x1a#.nebius.compute.v1.NVLInstanceGroup\x12T\n\tGetByName\x12\".nebius.common.v1.GetByNameRequest\x1a#.nebius.compute.v1.NVLInstanceGroup\x12i\n\x04List\x12/.nebius.compute.v1.ListNVLInstanceGroupsRequest\x1a\x30.nebius.compute.v1.ListNVLInstanceGroupsResponse\x12W\n\x06Update\x12\x30.nebius.compute.v1.UpdateNVLInstanceGroupRequest\x1a\x1b.nebius.common.v1.Operation\x12W\n\x06\x44\x65lete\x12\x30.nebius.compute.v1.DeleteNVLInstanceGroupRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07\x63omputeBk\n\x18\x61i.nebius.pub.compute.v1B\x1cNvlinstancegroupServiceProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -30,14 +30,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _NVLINSTANCEGROUPSERVICE._serialized_options = b'\272J\007compute'
   _globals['_CREATENVLINSTANCEGROUPREQUEST']._serialized_start=207
   _globals['_CREATENVLINSTANCEGROUPREQUEST']._serialized_end=363
-  _globals['_GETNVLINSTANCEGROUPREQUEST']._serialized_start=365
-  _globals['_GETNVLINSTANCEGROUPREQUEST']._serialized_end=409
-  _globals['_LISTNVLINSTANCEGROUPSREQUEST']._serialized_start=411
-  _globals['_LISTNVLINSTANCEGROUPSREQUEST']._serialized_end=530
-  _globals['_LISTNVLINSTANCEGROUPSRESPONSE']._serialized_start=533
-  _globals['_LISTNVLINSTANCEGROUPSRESPONSE']._serialized_end=663
-  _globals['_DELETENVLINSTANCEGROUPREQUEST']._serialized_start=665
-  _globals['_DELETENVLINSTANCEGROUPREQUEST']._serialized_end=712
-  _globals['_NVLINSTANCEGROUPSERVICE']._serialized_start=715
-  _globals['_NVLINSTANCEGROUPSERVICE']._serialized_end=1214
+  _globals['_UPDATENVLINSTANCEGROUPREQUEST']._serialized_start=366
+  _globals['_UPDATENVLINSTANCEGROUPREQUEST']._serialized_end=522
+  _globals['_GETNVLINSTANCEGROUPREQUEST']._serialized_start=524
+  _globals['_GETNVLINSTANCEGROUPREQUEST']._serialized_end=568
+  _globals['_LISTNVLINSTANCEGROUPSREQUEST']._serialized_start=570
+  _globals['_LISTNVLINSTANCEGROUPSREQUEST']._serialized_end=689
+  _globals['_LISTNVLINSTANCEGROUPSRESPONSE']._serialized_start=692
+  _globals['_LISTNVLINSTANCEGROUPSRESPONSE']._serialized_end=822
+  _globals['_DELETENVLINSTANCEGROUPREQUEST']._serialized_start=824
+  _globals['_DELETENVLINSTANCEGROUPREQUEST']._serialized_end=871
+  _globals['_NVLINSTANCEGROUPSERVICE']._serialized_start=874
+  _globals['_NVLINSTANCEGROUPSERVICE']._serialized_end=1462
 # @@protoc_insertion_point(module_scope)

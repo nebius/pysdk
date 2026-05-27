@@ -11500,6 +11500,7 @@ class StaticKeySpec(pb_classes.Message):
         CONTAINER_REGISTRY = 2
         AI_STUDIO = 3
         TRACTO = 4
+        LINUX_IDENTITY = 5
     
     def __init__(
         self,

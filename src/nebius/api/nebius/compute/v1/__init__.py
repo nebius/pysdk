@@ -8610,6 +8610,56 @@ class CreateNVLInstanceGroupRequest(pb_classes.Message):
         "spec":"spec",
     }
     
+class UpdateNVLInstanceGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = nvlinstancegroup_service_pb2.UpdateNVLInstanceGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.UpdateNVLInstanceGroupRequest",nvlinstancegroup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "NVLInstanceGroupSpec|nvlinstancegroup_pb2.NVLInstanceGroupSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "NVLInstanceGroupSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=NVLInstanceGroupSpec,
+        )
+    @spec.setter
+    def spec(self, value: "NVLInstanceGroupSpec|nvlinstancegroup_pb2.NVLInstanceGroupSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
 class GetNVLInstanceGroupRequest(pb_classes.Message):
     __PB2_CLASS__ = nvlinstancegroup_service_pb2.GetNVLInstanceGroupRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetNVLInstanceGroupRequest",nvlinstancegroup_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -8928,6 +8978,36 @@ class NVLInstanceGroupServiceClient(client.ClientWithOperations[v1_1.Operation,v
             request=request,
             result_pb2_class=nvlinstancegroup_service_pb2.ListNVLInstanceGroupsResponse,
             result_wrapper=pb_classes.simple_wrapper(ListNVLInstanceGroupsResponse),
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateNVLInstanceGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateNVLInstanceGroupRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Update modifies the specified NVL InstanceGroup by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.UpdateNVLInstanceGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
             **kwargs,
         )
     
@@ -9634,6 +9714,7 @@ __all__ = [
     "NVLInstanceGroupSpec",
     "NVLInstanceGroupStatus",
     "CreateNVLInstanceGroupRequest",
+    "UpdateNVLInstanceGroupRequest",
     "GetNVLInstanceGroupRequest",
     "ListNVLInstanceGroupsRequest",
     "ListNVLInstanceGroupsResponse",

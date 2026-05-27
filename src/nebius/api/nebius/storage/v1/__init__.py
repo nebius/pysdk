@@ -1026,6 +1026,55 @@ class LifecycleFilter(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class Tag(pb_classes.Message):
+        __PB2_CLASS__ = lifecycle_pb2.LifecycleFilter.Tag
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.storage.v1.LifecycleFilter.Tag",lifecycle_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            value: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
+            if not isinstance(value, unset.UnsetType):
+                self.value = value
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "key",
+                "value",
+            ]
+        
+        @builtins.property
+        def key(self) -> "builtins.str":
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return super()._get_field("value", explicit_presence=False,
+            )
+        @value.setter
+        def value(self, value: "builtins.str|None") -> None:
+            return super()._set_field("value",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "key":"key",
+            "value":"value",
+        }
+        
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
@@ -1033,6 +1082,7 @@ class LifecycleFilter(pb_classes.Message):
         prefix: "builtins.str|None|unset.UnsetType" = unset.Unset,
         object_size_greater_than_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         object_size_less_than_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        tags: "abc.Iterable[LifecycleFilter.Tag]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(prefix, unset.UnsetType):
@@ -1041,12 +1091,16 @@ class LifecycleFilter(pb_classes.Message):
             self.object_size_greater_than_bytes = object_size_greater_than_bytes
         if not isinstance(object_size_less_than_bytes, unset.UnsetType):
             self.object_size_less_than_bytes = object_size_less_than_bytes
+        if not isinstance(tags, unset.UnsetType):
+            self.tags = tags
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "prefix",
             "object_size_greater_than_bytes",
             "object_size_less_than_bytes",
+            "tags",
+            "Tag",
         ]
     
     @builtins.property
@@ -1089,10 +1143,27 @@ class LifecycleFilter(pb_classes.Message):
         return super()._set_field("object_size_less_than_bytes",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def tags(self) -> "abc.MutableSequence[LifecycleFilter.Tag]":
+        """
+        Tags to filter objects by their tagging. Rule applies only to objects that
+        match all tags in a filter.
+        """
+        
+        return super()._get_field("tags", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(LifecycleFilter.Tag,None,None),
+        )
+    @tags.setter
+    def tags(self, value: "abc.Iterable[LifecycleFilter.Tag]|None") -> None:
+        return super()._set_field("tags",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "prefix":"prefix",
         "object_size_greater_than_bytes":"object_size_greater_than_bytes",
         "object_size_less_than_bytes":"object_size_less_than_bytes",
+        "tags":"tags",
+        "Tag":"Tag",
     }
     
 class LifecycleAccessFilter(pb_classes.Message):

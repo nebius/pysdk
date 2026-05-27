@@ -2868,12 +2868,12 @@ class NodeGroupDeploymentStrategy(pb_classes.Message):
     @builtins.property
     def drain_timeout(self) -> "datetime.timedelta":
         """
-        Maximum amount of time that the service will spend on attempting gracefully draining a node (evicting it's pods), before
-        falling back to pod deletion.
-        By default, node can be drained unlimited time.
-        Important consequence of that is if PodDisruptionBudget doesn't allow to evict a pod,
-        then NodeGroup update with node re-creation will hung on that pod eviction.
-        Note, that it is different from ``kubectl drain --timeout``
+        Maximum amount of time that the service will spend attempting to gracefully drain a node
+        (evicting its pods) before falling back to pod deletion.
+        A value of 0 (or when field is omitted) means no timeout: the node can be drained for an unlimited time.
+        Important consequence of that is if PodDisruptionBudget doesn't allow evicting a pod,
+        then NodeGroup update with node re-creation will hang on that pod eviction.
+        Note that this is different from ``kubectl drain --timeout``, which gives up and returns an error.
         """
         
         return super()._get_field("drain_timeout", explicit_presence=False,
@@ -3519,6 +3519,7 @@ class NodeGroupStatus(pb_classes.Message):
         outdated_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         ready_node_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         events: "abc.Iterable[v1_1.RecurrentResourceEvent]|None|unset.UnsetType" = unset.Unset,
+        strategy: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy|None|unset.UnsetType" = unset.Unset,
         reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -3536,6 +3537,8 @@ class NodeGroupStatus(pb_classes.Message):
             self.ready_node_count = ready_node_count
         if not isinstance(events, unset.UnsetType):
             self.events = events
+        if not isinstance(strategy, unset.UnsetType):
+            self.strategy = strategy
         if not isinstance(reconciling, unset.UnsetType):
             self.reconciling = reconciling
     
@@ -3548,6 +3551,7 @@ class NodeGroupStatus(pb_classes.Message):
             "outdated_node_count",
             "ready_node_count",
             "events",
+            "strategy",
             "reconciling",
             "State",
         ]
@@ -3645,6 +3649,22 @@ class NodeGroupStatus(pb_classes.Message):
         )
     
     @builtins.property
+    def strategy(self) -> "NodeGroupDeploymentStrategy":
+        """
+        Deployment strategy used by the service for node group rollouts and node deletions.
+        It includes default values applied by the service. A drain_timeout value of 0 means
+        that node draining is not time-limited.
+        """
+        
+        return super()._get_field("strategy", explicit_presence=False,
+        wrap=NodeGroupDeploymentStrategy,
+        )
+    @strategy.setter
+    def strategy(self, value: "NodeGroupDeploymentStrategy|node_group_pb2.NodeGroupDeploymentStrategy|None") -> None:
+        return super()._set_field("strategy",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def reconciling(self) -> "builtins.bool":
         """
         Show that there are changes are in flight.
@@ -3665,6 +3685,7 @@ class NodeGroupStatus(pb_classes.Message):
         "outdated_node_count":"outdated_node_count",
         "ready_node_count":"ready_node_count",
         "events":"events",
+        "strategy":"strategy",
         "reconciling":"reconciling",
         "State":"State",
     }

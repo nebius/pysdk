@@ -38,6 +38,11 @@ class NVLInstanceGroupServiceStub(object):
                 request_serializer=nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.ListNVLInstanceGroupsRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.ListNVLInstanceGroupsResponse.FromString,
                 )
+        self.Update = channel.unary_unary(
+                '/nebius.compute.v1.NVLInstanceGroupService/Update',
+                request_serializer=nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.UpdateNVLInstanceGroupRequest.SerializeToString,
+                response_deserializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
+                )
         self.Delete = channel.unary_unary(
                 '/nebius.compute.v1.NVLInstanceGroupService/Delete',
                 request_serializer=nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.DeleteNVLInstanceGroupRequest.SerializeToString,
@@ -77,6 +82,13 @@ class NVLInstanceGroupServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Update(self, request, context):
+        """Update modifies the specified NVL InstanceGroup by its ID.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def Delete(self, request, context):
         """Delete deletes the specified NVL InstanceGroup by its ID.
         """
@@ -106,6 +118,11 @@ def add_NVLInstanceGroupServiceServicer_to_server(servicer, server):
                     servicer.List,
                     request_deserializer=nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.ListNVLInstanceGroupsRequest.FromString,
                     response_serializer=nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.ListNVLInstanceGroupsResponse.SerializeToString,
+            ),
+            'Update': grpc.unary_unary_rpc_method_handler(
+                    servicer.Update,
+                    request_deserializer=nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.UpdateNVLInstanceGroupRequest.FromString,
+                    response_serializer=nebius_dot_common_dot_v1_dot_operation__pb2.Operation.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
                     servicer.Delete,
@@ -188,6 +205,23 @@ class NVLInstanceGroupService(object):
         return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.NVLInstanceGroupService/List',
             nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.ListNVLInstanceGroupsRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.ListNVLInstanceGroupsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Update(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.NVLInstanceGroupService/Update',
+            nebius_dot_compute_dot_v1_dot_nvlinstancegroup__service__pb2.UpdateNVLInstanceGroupRequest.SerializeToString,
+            nebius_dot_common_dot_v1_dot_operation__pb2.Operation.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
