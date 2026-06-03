@@ -5277,7 +5277,7 @@ class InstanceSpec(pb_classes.Message):
     def service_account_id(self) -> "builtins.str":
         """
         Unique identifier of the service account associated with this instance.
-        For details, see https://docs.nebius.dev/en/iam/about-iam/concepts/service-accounts
+        For details, see https://docs.nebius.com/iam/service-accounts/manage
         """
         
         return super()._get_field("service_account_id", explicit_presence=False,
