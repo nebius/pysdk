@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n0nebius/audit/v2/audit_event_export_service.proto\x12\x0fnebius.audit.v2\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a(nebius/audit/v2/audit_event_export.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\"\x89\x01\n\x0cStartRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32%.nebius.audit.v2.AuditEventExportSpecR\x04spec\"\'\n\rCancelRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"$\n\nGetRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"n\n\x0bListRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\x7f\n\x1cListAuditEventExportResponse\x12\x37\n\x05items\x18\x01 \x03(\x0b\x32!.nebius.audit.v2.AuditEventExportR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xcb\x02\n\x17\x41uditEventExportService\x12\x43\n\x05Start\x12\x1d.nebius.audit.v2.StartRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x06\x43\x61ncel\x12\x1e.nebius.audit.v2.CancelRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x03Get\x12\x1b.nebius.audit.v2.GetRequest\x1a!.nebius.audit.v2.AuditEventExport\x12S\n\x04List\x12\x1c.nebius.audit.v2.ListRequest\x1a-.nebius.audit.v2.ListAuditEventExportResponse\x1a\x08\xbaJ\x05\x61uditBg\n\x16\x61i.nebius.pub.audit.v2B\x1c\x41uditEventExportServiceProtoP\x01Z-github.com/nebius/gosdk/proto/nebius/audit/v2b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n0nebius/audit/v2/audit_event_export_service.proto\x12\x0fnebius.audit.v2\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a(nebius/audit/v2/audit_event_export.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\"\xa1\x01\n\x0cStartRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x39\n\x04spec\x18\x02 \x01(\x0b\x32%.nebius.audit.v2.AuditEventExportSpecR\x04spec\x12\x16\n\x06region\x18\x03 \x01(\tR\x06region\"\'\n\rCancelRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"$\n\nGetRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x86\x01\n\x0bListRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12\x16\n\x06region\x18\x04 \x01(\tR\x06region\"\x7f\n\x1cListAuditEventExportResponse\x12\x37\n\x05items\x18\x01 \x03(\x0b\x32!.nebius.audit.v2.AuditEventExportR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xcb\x02\n\x17\x41uditEventExportService\x12\x43\n\x05Start\x12\x1d.nebius.audit.v2.StartRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x06\x43\x61ncel\x12\x1e.nebius.audit.v2.CancelRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x03Get\x12\x1b.nebius.audit.v2.GetRequest\x1a!.nebius.audit.v2.AuditEventExport\x12S\n\x04List\x12\x1c.nebius.audit.v2.ListRequest\x1a-.nebius.audit.v2.ListAuditEventExportResponse\x1a\x08\xbaJ\x05\x61uditBg\n\x16\x61i.nebius.pub.audit.v2B\x1c\x41uditEventExportServiceProtoP\x01Z-github.com/nebius/gosdk/proto/nebius/audit/v2b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -36,15 +36,15 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _AUDITEVENTEXPORTSERVICE._options = None
   _AUDITEVENTEXPORTSERVICE._serialized_options = b'\272J\005audit'
   _globals['_STARTREQUEST']._serialized_start=234
-  _globals['_STARTREQUEST']._serialized_end=371
-  _globals['_CANCELREQUEST']._serialized_start=373
-  _globals['_CANCELREQUEST']._serialized_end=412
-  _globals['_GETREQUEST']._serialized_start=414
-  _globals['_GETREQUEST']._serialized_end=450
-  _globals['_LISTREQUEST']._serialized_start=452
-  _globals['_LISTREQUEST']._serialized_end=562
-  _globals['_LISTAUDITEVENTEXPORTRESPONSE']._serialized_start=564
-  _globals['_LISTAUDITEVENTEXPORTRESPONSE']._serialized_end=691
-  _globals['_AUDITEVENTEXPORTSERVICE']._serialized_start=694
-  _globals['_AUDITEVENTEXPORTSERVICE']._serialized_end=1025
+  _globals['_STARTREQUEST']._serialized_end=395
+  _globals['_CANCELREQUEST']._serialized_start=397
+  _globals['_CANCELREQUEST']._serialized_end=436
+  _globals['_GETREQUEST']._serialized_start=438
+  _globals['_GETREQUEST']._serialized_end=474
+  _globals['_LISTREQUEST']._serialized_start=477
+  _globals['_LISTREQUEST']._serialized_end=611
+  _globals['_LISTAUDITEVENTEXPORTRESPONSE']._serialized_start=613
+  _globals['_LISTAUDITEVENTEXPORTRESPONSE']._serialized_end=740
+  _globals['_AUDITEVENTEXPORTSERVICE']._serialized_start=743
+  _globals['_AUDITEVENTEXPORTSERVICE']._serialized_end=1074
 # @@protoc_insertion_point(module_scope)

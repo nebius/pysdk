@@ -11,12 +11,14 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class StartRequest(_message.Message):
-    __slots__ = ["metadata", "spec"]
+    __slots__ = ["metadata", "spec", "region"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     SPEC_FIELD_NUMBER: _ClassVar[int]
+    REGION_FIELD_NUMBER: _ClassVar[int]
     metadata: _metadata_pb2.ResourceMetadata
     spec: _audit_event_export_pb2.AuditEventExportSpec
-    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_audit_event_export_pb2.AuditEventExportSpec, _Mapping]] = ...) -> None: ...
+    region: str
+    def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[_audit_event_export_pb2.AuditEventExportSpec, _Mapping]] = ..., region: _Optional[str] = ...) -> None: ...
 
 class CancelRequest(_message.Message):
     __slots__ = ["id"]
@@ -31,14 +33,16 @@ class GetRequest(_message.Message):
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class ListRequest(_message.Message):
-    __slots__ = ["parent_id", "page_size", "page_token"]
+    __slots__ = ["parent_id", "page_size", "page_token", "region"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    REGION_FIELD_NUMBER: _ClassVar[int]
     parent_id: str
     page_size: int
     page_token: str
-    def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
+    region: str
+    def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ..., region: _Optional[str] = ...) -> None: ...
 
 class ListAuditEventExportResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]

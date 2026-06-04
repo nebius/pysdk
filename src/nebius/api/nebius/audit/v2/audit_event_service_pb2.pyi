@@ -20,7 +20,7 @@ CONTROL_PLANE: EventType
 DATA_PLANE: EventType
 
 class ListAuditEventRequest(_message.Message):
-    __slots__ = ["parent_id", "page_size", "start", "end", "page_token", "filter", "event_type"]
+    __slots__ = ["parent_id", "page_size", "start", "end", "page_token", "filter", "event_type", "region"]
     PARENT_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
     START_FIELD_NUMBER: _ClassVar[int]
@@ -28,6 +28,7 @@ class ListAuditEventRequest(_message.Message):
     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     FILTER_FIELD_NUMBER: _ClassVar[int]
     EVENT_TYPE_FIELD_NUMBER: _ClassVar[int]
+    REGION_FIELD_NUMBER: _ClassVar[int]
     parent_id: str
     page_size: int
     start: _timestamp_pb2.Timestamp
@@ -35,7 +36,8 @@ class ListAuditEventRequest(_message.Message):
     page_token: str
     filter: str
     event_type: EventType
-    def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., start: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., end: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ..., event_type: _Optional[_Union[EventType, str]] = ...) -> None: ...
+    region: str
+    def __init__(self, parent_id: _Optional[str] = ..., page_size: _Optional[int] = ..., start: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., end: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., page_token: _Optional[str] = ..., filter: _Optional[str] = ..., event_type: _Optional[_Union[EventType, str]] = ..., region: _Optional[str] = ...) -> None: ...
 
 class ListAuditEventResponse(_message.Message):
     __slots__ = ["items", "next_page_token"]

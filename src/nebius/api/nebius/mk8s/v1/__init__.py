@@ -1930,6 +1930,7 @@ class NodeTemplate(pb_classes.Message):
         preemptible: "PreemptibleSpec|node_group_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
         reservation_policy: "ReservationPolicy|node_group_pb2.ReservationPolicy|None|unset.UnsetType" = unset.Unset,
         local_disks: "LocalDisksSpec|node_group_pb2.LocalDisksSpec|None|unset.UnsetType" = unset.Unset,
+        max_pods: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
@@ -1960,6 +1961,8 @@ class NodeTemplate(pb_classes.Message):
             self.reservation_policy = reservation_policy
         if not isinstance(local_disks, unset.UnsetType):
             self.local_disks = local_disks
+        if not isinstance(max_pods, unset.UnsetType):
+            self.max_pods = max_pods
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1977,6 +1980,7 @@ class NodeTemplate(pb_classes.Message):
             "preemptible",
             "reservation_policy",
             "local_disks",
+            "max_pods",
         ]
     
     @builtins.property
@@ -2224,6 +2228,22 @@ class NodeTemplate(pb_classes.Message):
         return super()._set_field("local_disks",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def max_pods(self) -> "builtins.int":
+        """
+        The maximum number of Pods per node for your cluster. If omitted, MK8S assigns the default value of 110. When you
+        configure the maximum number of Pods per node for the cluster, MK8S uses this value to allocate a CIDR range for every node
+        in group. The node CIDR prefix is calculated as ``32 - ceil(log2(2 * max_pods))``, i.e. the smallest IPv4 subnet whose total address
+        count is at least ``2 * max_pods``. Not all IPs are usable for workload Pods because some of them are consumed by system Pods.
+        """
+        
+        return super()._get_field("max_pods", explicit_presence=False,
+        )
+    @max_pods.setter
+    def max_pods(self, value: "builtins.int|None") -> None:
+        return super()._set_field("max_pods",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "metadata":"metadata",
         "taints":"taints",
@@ -2239,6 +2259,7 @@ class NodeTemplate(pb_classes.Message):
         "preemptible":"preemptible",
         "reservation_policy":"reservation_policy",
         "local_disks":"local_disks",
+        "max_pods":"max_pods",
     }
     
 class NodeMetadataTemplate(pb_classes.Message):

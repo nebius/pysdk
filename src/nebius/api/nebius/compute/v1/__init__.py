@@ -558,6 +558,7 @@ class DiskStatus(pb_classes.Message):
         block_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
         source_image_cpu_architecture: "DiskStatus.SourceImageCPUArchitecture|disk_pb2.DiskStatus.SourceImageCPUArchitecture|None|unset.UnsetType" = unset.Unset,
         lock_state: "DiskStatus.LockState|disk_pb2.DiskStatus.LockState|None|unset.UnsetType" = unset.Unset,
+        managed_by: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -580,6 +581,8 @@ class DiskStatus(pb_classes.Message):
             self.source_image_cpu_architecture = source_image_cpu_architecture
         if not isinstance(lock_state, unset.UnsetType):
             self.lock_state = lock_state
+        if not isinstance(managed_by, unset.UnsetType):
+            self.managed_by = managed_by
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -593,6 +596,7 @@ class DiskStatus(pb_classes.Message):
             "block_size_bytes",
             "source_image_cpu_architecture",
             "lock_state",
+            "managed_by",
             "LockState",
             "State",
             "SourceImageCPUArchitecture",
@@ -709,6 +713,22 @@ class DiskStatus(pb_classes.Message):
         return super()._set_field("lock_state",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def managed_by(self) -> "builtins.str":
+        """
+        Indicates whether the disk is deleted along with an instance.
+        Set only for disks declared in the instance spec.
+        If set, the value is the instance ID that manages this disk's lifecycle (the disk is deleted when that instance is deleted).
+        To change this value, update the instance specification (see AttachedDiskSpec.type).
+        """
+        
+        return super()._get_field("managed_by", explicit_presence=False,
+        )
+    @managed_by.setter
+    def managed_by(self, value: "builtins.str|None") -> None:
+        return super()._set_field("managed_by",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "state_description":"state_description",
@@ -720,6 +740,7 @@ class DiskStatus(pb_classes.Message):
         "block_size_bytes":"block_size_bytes",
         "source_image_cpu_architecture":"source_image_cpu_architecture",
         "lock_state":"lock_state",
+        "managed_by":"managed_by",
         "LockState":"LockState",
         "State":"State",
         "SourceImageCPUArchitecture":"SourceImageCPUArchitecture",
