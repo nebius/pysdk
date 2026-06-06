@@ -1385,6 +1385,7 @@ class ListAuditEventRequest(pb_classes.Message):
         page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
         filter: "builtins.str|None|unset.UnsetType" = unset.Unset,
         event_type: "EventType|audit_event_service_pb2.EventType|None|unset.UnsetType" = unset.Unset,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -1401,6 +1402,8 @@ class ListAuditEventRequest(pb_classes.Message):
             self.filter = filter
         if not isinstance(event_type, unset.UnsetType):
             self.event_type = event_type
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1411,6 +1414,7 @@ class ListAuditEventRequest(pb_classes.Message):
             "page_token",
             "filter",
             "event_type",
+            "region",
         ]
     
     @builtins.property
@@ -1517,6 +1521,25 @@ class ListAuditEventRequest(pb_classes.Message):
         return super()._set_field("event_type",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def region(self) -> "builtins.str":
+        """
+        Region to retrieve audit logs (e.g. eu-north2, us-central1, eu-west1)
+        See https://docs.nebius.com/overview/regions
+        Default: eu-north1
+        
+        During a transition period (until 13-08-2026), events are written to
+        both eu-north1 and their origin region.
+        After that, events are only stored in their origin region, and this field becomes required.
+        """
+        
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "parent_id":"parent_id",
         "page_size":"page_size",
@@ -1525,6 +1548,7 @@ class ListAuditEventRequest(pb_classes.Message):
         "page_token":"page_token",
         "filter":"filter",
         "event_type":"event_type",
+        "region":"region",
     }
     
 class ListAuditEventResponse(pb_classes.Message):
@@ -2143,17 +2167,21 @@ class StartRequest(pb_classes.Message):
         *,
         metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
         spec: "AuditEventExportSpec|audit_event_export_pb2.AuditEventExportSpec|None|unset.UnsetType" = unset.Unset,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(metadata, unset.UnsetType):
             self.metadata = metadata
         if not isinstance(spec, unset.UnsetType):
             self.spec = spec
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "metadata",
             "spec",
+            "region",
         ]
     
     @builtins.property
@@ -2184,9 +2212,29 @@ class StartRequest(pb_classes.Message):
         return super()._set_field("spec",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def region(self) -> "builtins.str":
+        """
+        Region to retrieve audit logs (e.g. eu-north2, us-central1, eu-west1)
+        See https://docs.nebius.com/overview/regions
+        Default: eu-north1
+        
+        During a transition period (until 13-08-2026), events are written to
+        both eu-north1 and their origin region.
+        After that, events are only stored in their origin region, and this field becomes required.
+        """
+        
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "metadata":"metadata",
         "spec":"spec",
+        "region":"region",
     }
     
 class CancelRequest(pb_classes.Message):
@@ -2278,6 +2326,7 @@ class ListRequest(pb_classes.Message):
         parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
         page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        region: "builtins.str|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(parent_id, unset.UnsetType):
@@ -2286,12 +2335,15 @@ class ListRequest(pb_classes.Message):
             self.page_size = page_size
         if not isinstance(page_token, unset.UnsetType):
             self.page_token = page_token
+        if not isinstance(region, unset.UnsetType):
+            self.region = region
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "parent_id",
             "page_size",
             "page_token",
+            "region",
         ]
     
     @builtins.property
@@ -2333,10 +2385,28 @@ class ListRequest(pb_classes.Message):
         return super()._set_field("page_token",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def region(self) -> "builtins.str":
+        """
+        Region to retrieve audit exports (e.g. eu-north2, us-central1, eu-west1)
+        See https://docs.nebius.com/overview/regions
+        Default: eu-north1
+        
+        After a transition period (13-08-2026) this field becomes required.
+        """
+        
+        return super()._get_field("region", explicit_presence=False,
+        )
+    @region.setter
+    def region(self, value: "builtins.str|None") -> None:
+        return super()._set_field("region",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "parent_id":"parent_id",
         "page_size":"page_size",
         "page_token":"page_token",
+        "region":"region",
     }
     
 class ListAuditEventExportResponse(pb_classes.Message):
