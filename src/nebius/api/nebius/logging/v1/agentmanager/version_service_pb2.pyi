@@ -36,7 +36,7 @@ UPDATE: Action
 RESTART: Action
 
 class GetVersionRequest(_message.Message):
-    __slots__ = ["type", "agent_version", "updater_version", "parent_id", "instance_id", "os_info", "agent_state", "agent_uptime", "system_uptime", "updater_uptime", "agent_state_messages", "last_update_error", "mk8s_cluster_id", "modules_health", "cloud_init_status", "instance_id_used_fallback", "last_agent_logs", "gpu_model", "gpu_number", "dcgm_version", "healthcheck_logs"]
+    __slots__ = ["type", "agent_version", "updater_version", "parent_id", "instance_id", "os_info", "agent_state", "agent_uptime", "system_uptime", "updater_uptime", "agent_state_messages", "last_update_error", "mk8s_cluster_id", "modules_health", "cloud_init_status", "instance_id_used_fallback", "last_agent_logs", "gpu_model", "gpu_number", "dcgm_version", "healthcheck_logs", "last_seen_config_version"]
     TYPE_FIELD_NUMBER: _ClassVar[int]
     AGENT_VERSION_FIELD_NUMBER: _ClassVar[int]
     UPDATER_VERSION_FIELD_NUMBER: _ClassVar[int]
@@ -58,6 +58,7 @@ class GetVersionRequest(_message.Message):
     GPU_NUMBER_FIELD_NUMBER: _ClassVar[int]
     DCGM_VERSION_FIELD_NUMBER: _ClassVar[int]
     HEALTHCHECK_LOGS_FIELD_NUMBER: _ClassVar[int]
+    LAST_SEEN_CONFIG_VERSION_FIELD_NUMBER: _ClassVar[int]
     type: AgentType
     agent_version: str
     updater_version: str
@@ -79,7 +80,8 @@ class GetVersionRequest(_message.Message):
     gpu_number: int
     dcgm_version: str
     healthcheck_logs: HealthCheckLogs
-    def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ..., mk8s_cluster_id: _Optional[str] = ..., modules_health: _Optional[_Union[ModulesHealth, _Mapping]] = ..., cloud_init_status: _Optional[str] = ..., instance_id_used_fallback: bool = ..., last_agent_logs: _Optional[str] = ..., gpu_model: _Optional[str] = ..., gpu_number: _Optional[int] = ..., dcgm_version: _Optional[str] = ..., healthcheck_logs: _Optional[_Union[HealthCheckLogs, _Mapping]] = ...) -> None: ...
+    last_seen_config_version: int
+    def __init__(self, type: _Optional[_Union[AgentType, str]] = ..., agent_version: _Optional[str] = ..., updater_version: _Optional[str] = ..., parent_id: _Optional[str] = ..., instance_id: _Optional[str] = ..., os_info: _Optional[_Union[OSInfo, _Mapping]] = ..., agent_state: _Optional[_Union[AgentState, str]] = ..., agent_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., system_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., updater_uptime: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., agent_state_messages: _Optional[_Iterable[str]] = ..., last_update_error: _Optional[str] = ..., mk8s_cluster_id: _Optional[str] = ..., modules_health: _Optional[_Union[ModulesHealth, _Mapping]] = ..., cloud_init_status: _Optional[str] = ..., instance_id_used_fallback: bool = ..., last_agent_logs: _Optional[str] = ..., gpu_model: _Optional[str] = ..., gpu_number: _Optional[int] = ..., dcgm_version: _Optional[str] = ..., healthcheck_logs: _Optional[_Union[HealthCheckLogs, _Mapping]] = ..., last_seen_config_version: _Optional[int] = ...) -> None: ...
 
 class ModulesHealth(_message.Message):
     __slots__ = ["process", "gpu_pipeline", "cpu_pipeline", "cilium_pipeline", "vmapps_pipeline", "common_service_logs_pipeline", "vm_service_logs_pipeline", "compute_gpu_logs_pipeline", "journald_pipeline", "nccl_metrics_pipeline"]
@@ -142,7 +144,7 @@ class OSInfo(_message.Message):
     def __init__(self, name: _Optional[str] = ..., uname: _Optional[str] = ..., architecture: _Optional[str] = ...) -> None: ...
 
 class GetVersionResponse(_message.Message):
-    __slots__ = ["action", "nop", "update", "restart", "feature_flags", "feature_flags_unavailable"]
+    __slots__ = ["action", "nop", "update", "restart", "feature_flags", "feature_flags_unavailable", "config_version"]
     class FeatureFlagsEntry(_message.Message):
         __slots__ = ["key", "value"]
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -156,13 +158,15 @@ class GetVersionResponse(_message.Message):
     RESTART_FIELD_NUMBER: _ClassVar[int]
     FEATURE_FLAGS_FIELD_NUMBER: _ClassVar[int]
     FEATURE_FLAGS_UNAVAILABLE_FIELD_NUMBER: _ClassVar[int]
+    CONFIG_VERSION_FIELD_NUMBER: _ClassVar[int]
     action: Action
     nop: NopActionParams
     update: UpdateActionParams
     restart: RestartActionParams
     feature_flags: _containers.ScalarMap[str, str]
     feature_flags_unavailable: bool
-    def __init__(self, action: _Optional[_Union[Action, str]] = ..., nop: _Optional[_Union[NopActionParams, _Mapping]] = ..., update: _Optional[_Union[UpdateActionParams, _Mapping]] = ..., restart: _Optional[_Union[RestartActionParams, _Mapping]] = ..., feature_flags: _Optional[_Mapping[str, str]] = ..., feature_flags_unavailable: bool = ...) -> None: ...
+    config_version: int
+    def __init__(self, action: _Optional[_Union[Action, str]] = ..., nop: _Optional[_Union[NopActionParams, _Mapping]] = ..., update: _Optional[_Union[UpdateActionParams, _Mapping]] = ..., restart: _Optional[_Union[RestartActionParams, _Mapping]] = ..., feature_flags: _Optional[_Mapping[str, str]] = ..., feature_flags_unavailable: bool = ..., config_version: _Optional[int] = ...) -> None: ...
 
 class NopActionParams(_message.Message):
     __slots__ = []

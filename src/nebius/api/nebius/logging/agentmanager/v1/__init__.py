@@ -128,6 +128,7 @@ class GetVersionRequest(pb_classes.Message):
         gpu_number: "builtins.int|None|unset.UnsetType" = unset.Unset,
         dcgm_version: "builtins.str|None|unset.UnsetType" = unset.Unset,
         healthcheck_logs: "HealthCheckLogs|version_service_pb2.HealthCheckLogs|None|unset.UnsetType" = unset.Unset,
+        last_seen_config_version: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
@@ -172,6 +173,8 @@ class GetVersionRequest(pb_classes.Message):
             self.dcgm_version = dcgm_version
         if not isinstance(healthcheck_logs, unset.UnsetType):
             self.healthcheck_logs = healthcheck_logs
+        if not isinstance(last_seen_config_version, unset.UnsetType):
+            self.last_seen_config_version = last_seen_config_version
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -196,6 +199,7 @@ class GetVersionRequest(pb_classes.Message):
             "gpu_number",
             "dcgm_version",
             "healthcheck_logs",
+            "last_seen_config_version",
         ]
     
     @builtins.property
@@ -483,6 +487,19 @@ class GetVersionRequest(pb_classes.Message):
         return super()._set_field("healthcheck_logs",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def last_seen_config_version(self) -> "builtins.int":
+        """
+        Largest config_version this agent has already accepted; 0 if none.
+        """
+        
+        return super()._get_field("last_seen_config_version", explicit_presence=False,
+        )
+    @last_seen_config_version.setter
+    def last_seen_config_version(self, value: "builtins.int|None") -> None:
+        return super()._set_field("last_seen_config_version",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "type":"type",
         "agent_version":"agent_version",
@@ -505,6 +522,7 @@ class GetVersionRequest(pb_classes.Message):
         "gpu_number":"gpu_number",
         "dcgm_version":"dcgm_version",
         "healthcheck_logs":"healthcheck_logs",
+        "last_seen_config_version":"last_seen_config_version",
     }
     
 class ModulesHealth(pb_classes.Message):
@@ -1129,6 +1147,7 @@ class GetVersionResponse(pb_classes.Message):
         restart: "RestartActionParams|version_service_pb2.RestartActionParams|None|unset.UnsetType" = unset.Unset,
         feature_flags: "abc.Mapping[builtins.str,builtins.str]|None|unset.UnsetType" = unset.Unset,
         feature_flags_unavailable: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+        config_version: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(action, unset.UnsetType):
@@ -1143,6 +1162,8 @@ class GetVersionResponse(pb_classes.Message):
             self.feature_flags = feature_flags
         if not isinstance(feature_flags_unavailable, unset.UnsetType):
             self.feature_flags_unavailable = feature_flags_unavailable
+        if not isinstance(config_version, unset.UnsetType):
+            self.config_version = config_version
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1152,6 +1173,7 @@ class GetVersionResponse(pb_classes.Message):
             "restart",
             "feature_flags",
             "feature_flags_unavailable",
+            "config_version",
             "FeatureFlagsEntry",
             "response",
         ]
@@ -1244,6 +1266,20 @@ class GetVersionResponse(pb_classes.Message):
         return super()._set_field("feature_flags_unavailable",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def config_version(self) -> "builtins.int":
+        """
+        Version of the rollout state this response was built from. Agent echoes
+        it back as last_seen_config_version on the next request.
+        """
+        
+        return super()._get_field("config_version", explicit_presence=False,
+        )
+    @config_version.setter
+    def config_version(self, value: "builtins.int|None") -> None:
+        return super()._set_field("config_version",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "action":"action",
         "nop":"nop",
@@ -1251,6 +1287,7 @@ class GetVersionResponse(pb_classes.Message):
         "restart":"restart",
         "feature_flags":"feature_flags",
         "feature_flags_unavailable":"feature_flags_unavailable",
+        "config_version":"config_version",
         "FeatureFlagsEntry":"FeatureFlagsEntry",
         "response":"response",
     }
