@@ -1291,23 +1291,47 @@ class NetworkInterfaceAssignment(pb_classes.Message):
     __mask_functions__ = {
     }
     
+    class Type(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.vpc.v1.NetworkInterfaceAssignment.Type",allocation_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        TYPE_UNSPECIFIED = 0
+        PRIMARY = 1
+        """
+        Allocation is attached as the interface private IPv4 address.
+        """
+        
+        ALIAS = 2
+        """
+        Allocation is attached as an IP alias.
+        """
+        
+        PUBLIC = 3
+        """
+        Allocation is attached as the interface public IPv4 address.
+        """
+        
+    
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
         *,
         instance_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         name: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        type: "NetworkInterfaceAssignment.Type|allocation_pb2.NetworkInterfaceAssignment.Type|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(instance_id, unset.UnsetType):
             self.instance_id = instance_id
         if not isinstance(name, unset.UnsetType):
             self.name = name
+        if not isinstance(type, unset.UnsetType):
+            self.type = type
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "instance_id",
             "name",
+            "type",
+            "Type",
         ]
     
     @builtins.property
@@ -1336,9 +1360,25 @@ class NetworkInterfaceAssignment(pb_classes.Message):
         return super()._set_field("name",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def type(self) -> "NetworkInterfaceAssignment.Type":
+        """
+        Type of allocation attachment on the network interface.
+        """
+        
+        return super()._get_field("type", explicit_presence=False,
+        wrap=NetworkInterfaceAssignment.Type,
+        )
+    @type.setter
+    def type(self, value: "NetworkInterfaceAssignment.Type|allocation_pb2.NetworkInterfaceAssignment.Type|None") -> None:
+        return super()._set_field("type",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "instance_id":"instance_id",
         "name":"name",
+        "type":"type",
+        "Type":"Type",
     }
     
 class LoadBalancerAssignment(pb_classes.Message):

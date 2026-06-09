@@ -88,12 +88,24 @@ class Assignment(_message.Message):
     def __init__(self, network_interface: _Optional[_Union[NetworkInterfaceAssignment, _Mapping]] = ..., load_balancer: _Optional[_Union[LoadBalancerAssignment, _Mapping]] = ...) -> None: ...
 
 class NetworkInterfaceAssignment(_message.Message):
-    __slots__ = ["instance_id", "name"]
+    __slots__ = ["instance_id", "name", "type"]
+    class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        TYPE_UNSPECIFIED: _ClassVar[NetworkInterfaceAssignment.Type]
+        PRIMARY: _ClassVar[NetworkInterfaceAssignment.Type]
+        ALIAS: _ClassVar[NetworkInterfaceAssignment.Type]
+        PUBLIC: _ClassVar[NetworkInterfaceAssignment.Type]
+    TYPE_UNSPECIFIED: NetworkInterfaceAssignment.Type
+    PRIMARY: NetworkInterfaceAssignment.Type
+    ALIAS: NetworkInterfaceAssignment.Type
+    PUBLIC: NetworkInterfaceAssignment.Type
     INSTANCE_ID_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
+    TYPE_FIELD_NUMBER: _ClassVar[int]
     instance_id: str
     name: str
-    def __init__(self, instance_id: _Optional[str] = ..., name: _Optional[str] = ...) -> None: ...
+    type: NetworkInterfaceAssignment.Type
+    def __init__(self, instance_id: _Optional[str] = ..., name: _Optional[str] = ..., type: _Optional[_Union[NetworkInterfaceAssignment.Type, str]] = ...) -> None: ...
 
 class LoadBalancerAssignment(_message.Message):
     __slots__ = ["id"]
