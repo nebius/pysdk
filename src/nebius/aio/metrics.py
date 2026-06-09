@@ -362,7 +362,7 @@ def _metric_callback(
 # weak references to tasks, so without retaining them a pending task may be garbage
 # collected mid-execution, producing "Task was destroyed but it is pending!" warnings
 # (reported in #94 via SkyPilot).
-_metric_tasks: set[Task[object]] = set()
+_metric_tasks: set[Task[None]] = set()
 
 
 def _schedule_metric_awaitable(awaitable: Awaitable[object]) -> None:
