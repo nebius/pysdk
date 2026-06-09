@@ -31,6 +31,7 @@ from __future__ import annotations
 
 from asyncio import (
     CancelledError,
+    Task,
     create_task,
     get_running_loop,
 )
@@ -357,13 +358,22 @@ def _metric_callback(
     return None
 
 
+# Strong references to in-flight fire-and-forget metric tasks. asyncio keeps only
+# weak references to tasks, so without retaining them a pending task may be garbage
+# collected mid-execution, producing "Task was destroyed but it is pending!" warnings
+# (reported in #94 via SkyPilot).
+_metric_tasks: set[Task[object]] = set()
+
+
 def _schedule_metric_awaitable(awaitable: Awaitable[object]) -> None:
     try:
         get_running_loop()
     except RuntimeError:
         _run_metric_awaitable(awaitable)
         return
-    create_task(_swallow_metric_awaitable(awaitable))
+    task = create_task(_swallow_metric_awaitable(awaitable))
+    _metric_tasks.add(task)
+    task.add_done_callback(_metric_tasks.discard)
 
 
 async def _swallow_metric_awaitable(awaitable: Awaitable[object]) -> None:
