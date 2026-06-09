@@ -21,10 +21,11 @@ Auth metrics may implement:
 - ``cache_refresh(metric: CacheMetric)``
 - ``cache_invalidate(metric: CacheMetric)``
 
-Callbacks may be synchronous or asynchronous. Async callbacks are scheduled when
-emitted from a running event loop and run to completion when emitted from
-synchronous code. Callback exceptions are swallowed so metrics collection never
-changes request or authentication behavior.
+Callbacks may be synchronous or asynchronous. Awaitable callback results are
+bounded by a short timeout; they are scheduled when emitted from a running event
+loop and waited for when emitted from synchronous code. Callback exceptions are
+swallowed so metrics collection never changes request or authentication
+behavior.
 """
 
 from __future__ import annotations
@@ -34,6 +35,7 @@ from asyncio import (
     Task,
     create_task,
     get_running_loop,
+    wait_for,
 )
 from asyncio import (
     run as asyncio_run,
@@ -42,6 +44,7 @@ from collections.abc import Awaitable, Callable, Mapping
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from inspect import isawaitable
+from math import isfinite
 from time import monotonic
 from typing import Literal, cast
 
@@ -58,6 +61,22 @@ MetricsLike = object | None
 
 AuthMetricsLike = object | None
 """Object or mapping with optional auth metric callbacks."""
+
+DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS = 1.0
+"""Default wall-clock cap for awaitable metric callback results."""
+
+MIN_METRIC_CALLBACK_TIMEOUT_SECONDS = 0.001
+"""Lowest accepted wall-clock cap for awaitable metric callback results."""
+
+MAX_METRIC_CALLBACK_TIMEOUT_SECONDS = 5.0
+"""Highest accepted wall-clock cap for awaitable metric callback results."""
+
+_CALLBACK_TIMEOUT_NAMES = (
+    "callback_timeout_seconds",
+    "callbackTimeoutSeconds",
+    "callback_timeout",
+    "callbackTimeout",
+)
 
 
 @dataclass(frozen=True)
@@ -105,9 +124,50 @@ class ConfigMetric:
     duration_seconds: float
 
 
+MetricCallback = Callable[[object], object]
+"""Synchronous or asynchronous metric callback."""
+
+
+@dataclass
+class Metrics:
+    """Optional metric callbacks with bounded awaitable callback execution."""
+
+    config_load: MetricCallback | None = None
+    credentials_resolve: MetricCallback | None = None
+    token_acquire: MetricCallback | None = None
+    token_lifetime: MetricCallback | None = None
+    token_refresh: MetricCallback | None = None
+    cache_hit: MetricCallback | None = None
+    cache_miss: MetricCallback | None = None
+    cache_store: MetricCallback | None = None
+    cache_refresh: MetricCallback | None = None
+    cache_invalidate: MetricCallback | None = None
+    callback_timeout_seconds: object = DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
+
+    def __post_init__(self) -> None:
+        self.callback_timeout_seconds = sanitize_metric_callback_timeout_seconds(
+            self.callback_timeout_seconds
+        )
+
+
 @dataclass
 class _AuthMetricsCell:
     metrics: AuthMetricsLike
+
+
+def sanitize_metric_callback_timeout_seconds(value: object) -> float:
+    """Return a finite metric callback timeout bounded to SDK limits."""
+
+    if value is None:
+        return DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
+    try:
+        seconds = float(value)
+    except (TypeError, ValueError):
+        return DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
+    if not isfinite(seconds) or seconds <= 0:
+        return DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
+    seconds = max(seconds, MIN_METRIC_CALLBACK_TIMEOUT_SECONDS)
+    return min(seconds, MAX_METRIC_CALLBACK_TIMEOUT_SECONDS)
 
 
 def metric_start() -> float:
@@ -298,7 +358,10 @@ def emit_metric(metrics: object | None, names: tuple[str, str], metric: object) 
     except (CancelledError, Exception):
         return
     if isawaitable(result):
-        _schedule_metric_awaitable(cast(Awaitable[object], result))
+        _schedule_metric_awaitable(
+            cast(Awaitable[object], result),
+            timeout=_metric_callback_timeout(metrics),
+        )
 
 
 def auth_metric_provider(bearer: object | None) -> str:
@@ -358,6 +421,35 @@ def _metric_callback(
     return None
 
 
+def _metric_callback_timeout(metrics: object | None) -> float:
+    if metrics is None:
+        return DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
+    if isinstance(metrics, Mapping):
+        for name in _CALLBACK_TIMEOUT_NAMES:
+            value = _metric_mapping_value(metrics, name)
+            if value is not None:
+                return sanitize_metric_callback_timeout_seconds(value)
+    for name in _CALLBACK_TIMEOUT_NAMES:
+        value = _metric_attribute_value(metrics, name)
+        if value is not None:
+            return sanitize_metric_callback_timeout_seconds(value)
+    return DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
+
+
+def _metric_mapping_value(metrics: Mapping[object, object], name: str) -> object | None:
+    try:
+        return metrics.get(name)
+    except Exception:
+        return None
+
+
+def _metric_attribute_value(metrics: object, name: str) -> object | None:
+    try:
+        return getattr(metrics, name, None)
+    except Exception:
+        return None
+
+
 # Strong references to in-flight fire-and-forget metric tasks. asyncio keeps only
 # weak references to tasks, so without retaining them a pending task may be garbage
 # collected mid-execution, producing "Task was destroyed but it is pending!" warnings
@@ -365,27 +457,34 @@ def _metric_callback(
 _metric_tasks: set[Task[None]] = set()
 
 
-def _schedule_metric_awaitable(awaitable: Awaitable[object]) -> None:
+def _schedule_metric_awaitable(
+    awaitable: Awaitable[object],
+    timeout: object = DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS,
+) -> None:
+    timeout_seconds = sanitize_metric_callback_timeout_seconds(timeout)
     try:
         get_running_loop()
     except RuntimeError:
-        _run_metric_awaitable(awaitable)
+        _run_metric_awaitable(awaitable, timeout_seconds)
         return
-    task = create_task(_swallow_metric_awaitable(awaitable))
+    task = create_task(_swallow_metric_awaitable(awaitable, timeout_seconds))
     _metric_tasks.add(task)
     task.add_done_callback(_metric_tasks.discard)
 
 
-async def _swallow_metric_awaitable(awaitable: Awaitable[object]) -> None:
+async def _swallow_metric_awaitable(
+    awaitable: Awaitable[object],
+    timeout: float,
+) -> None:
     try:
-        await awaitable
+        await wait_for(awaitable, timeout)
     except (CancelledError, Exception):
         return
 
 
-def _run_metric_awaitable(awaitable: Awaitable[object]) -> None:
+def _run_metric_awaitable(awaitable: Awaitable[object], timeout: float) -> None:
     try:
-        asyncio_run(_swallow_metric_awaitable(awaitable))
+        asyncio_run(_swallow_metric_awaitable(awaitable, timeout))
     except (CancelledError, Exception):
         close = getattr(awaitable, "close", None)
         if callable(close):
