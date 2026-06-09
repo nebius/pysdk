@@ -46,7 +46,7 @@ from datetime import datetime, timezone
 from inspect import isawaitable
 from math import isfinite
 from time import monotonic
-from typing import Literal, cast
+from typing import Literal, SupportsFloat, SupportsIndex, cast
 
 from nebius.aio.token.token import Bearer as _TokenBearer
 from nebius.aio.token.token import Receiver as _TokenReceiver
@@ -159,6 +159,8 @@ def sanitize_metric_callback_timeout_seconds(value: object) -> float:
     """Return a finite metric callback timeout bounded to SDK limits."""
 
     if value is None:
+        return DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
+    if not isinstance(value, (str, SupportsFloat, SupportsIndex)):
         return DEFAULT_METRIC_CALLBACK_TIMEOUT_SECONDS
     try:
         seconds = float(value)
