@@ -124,6 +124,8 @@ class SDK(Channel):
     - Metric sinks may be objects with callback methods or mappings of callback
       names to functions. Python snake_case and TypeScript-style camelCase names
       are accepted.
+    - Awaitable callback results are capped by ``callback_timeout_seconds`` on
+      the metric sink. Invalid or too-large values are sanitized to SDK limits.
     - Callback failures are ignored so metrics collection does not affect SDK
       requests.
 

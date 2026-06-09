@@ -23,7 +23,7 @@ Create a bearer with a preconfigured channel::
 
 """
 
-from collections.abc import Awaitable, Coroutine
+from collections.abc import Awaitable
 from datetime import datetime, timedelta, timezone
 from logging import getLogger
 from typing import Any
@@ -310,11 +310,8 @@ class Bearer(ParentBearer):
             metrics, "token-exchange"
         )
 
-        self._svc: (
-            TokenExchangeServiceClient
-            | Coroutine[Any, Any, TokenExchangeServiceClient]
-            | None
-        ) = None
+        self._svc: TokenExchangeServiceClient | None = None
+        self._deferred_channel: DeferredChannel | None = None
         self.set_channel(channel)
 
     def set_channel(
@@ -331,21 +328,23 @@ class Bearer(ParentBearer):
         :param channel: The channel or awaitable resolving to a channel.
         """
         if isinstance(channel, Awaitable):  # type: ignore[unused-ignore]
-
-            async def token_exchange_service_stub() -> TokenExchangeServiceClient:
-                chan = await channel
-                if not isinstance(chan, ClientChannelInterface):  # type: ignore[unused-ignore]
-                    raise TypeError(
-                        f"Expected ClientChannelInterface, got {type(chan)} instead."
-                    )
-                return TokenExchangeServiceClient(chan)
-
-            self._svc = token_exchange_service_stub()
-
+            self._deferred_channel = channel
+            self._svc = None
         elif channel is not None:
+            self._deferred_channel = None
             self._svc = TokenExchangeServiceClient(channel)
         else:
+            self._deferred_channel = None
             self._svc = None
+
+    async def _token_exchange_service_stub(self) -> TokenExchangeServiceClient:
+        if self._deferred_channel is None:
+            raise ValueError("gRPC channel is not set for the bearer.")
+        chan = await self._deferred_channel
+        if not isinstance(chan, ClientChannelInterface):  # type: ignore[unused-ignore]
+            raise TypeError(f"Expected ClientChannelInterface, got {type(chan)}.")
+        self._svc = TokenExchangeServiceClient(chan)
+        return self._svc
 
     def receiver(self) -> Receiver:
         """Return a :class:`Receiver` that performs exchanges.
@@ -354,11 +353,16 @@ class Bearer(ParentBearer):
             bearer.
         :returns: A :class:`Receiver` instance.
         """
-        if self._svc is None:
+        if self._svc is None and self._deferred_channel is None:
             raise ValueError("gRPC channel is not set for the bearer.")
+        service: TokenExchangeServiceClient | Awaitable[TokenExchangeServiceClient]
+        if self._svc is None:
+            service = self._token_exchange_service_stub()
+        else:
+            service = self._svc
         return Receiver(
             self._requester,
-            self._svc,
+            service,
             max_retries=self._max_retries,
             metrics=self._metrics,
             provider=self.metrics_provider,

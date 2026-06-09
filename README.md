@@ -440,22 +440,31 @@ from nebius.sdk import SDK
 sdk = SDK(keepalive=KeepaliveOptions(time_ms=20_000, timeout_ms=10_000))
 ```
 
-Metrics are callback-based and optional. Pass `metrics` to `SDK` or `Config` to receive config-reader and auth events; pass `auth_metrics` for auth-only events. Callback names may be snake_case or camelCase. Synchronous callbacks work in every context; async callbacks are scheduled when emitted from a running event loop and run to completion when emitted from synchronous code.
+Metrics are callback-based and optional. Pass `metrics` to `SDK` or `Config` to receive config-reader and auth events; pass `auth_metrics` for auth-only events. Callback names may be snake_case or camelCase. Synchronous callbacks work in every context; async callbacks are scheduled when emitted from a running event loop and waited for when emitted from synchronous code. Awaitable callback results are capped by `callback_timeout_seconds`, which defaults to 1 second and is sanitized to SDK limits. This timeout uses cooperative cancellation: callbacks that ignore cancellation, perform blocking work, or spend a long time before their next await point can still block the event loop, so keep metric callbacks fast and non-blocking.
 
 ```python
 from nebius.aio.cli_config import Config
+from nebius.aio.metrics import Metrics
 from nebius.sdk import SDK
 
 
-class Metrics:
-    def config_load(self, metric):
-        print(metric.source, metric.result, metric.duration_seconds)
-
-    def token_acquire(self, metric):
-        print(metric.provider, metric.result, metric.attempt)
+def config_load(metric):
+    print(metric.source, metric.result, metric.duration_seconds)
 
 
-sdk = SDK(config_reader=Config(metrics=Metrics()))
+def token_acquire(metric):
+    print(metric.provider, metric.result, metric.attempt)
+
+
+sdk = SDK(
+    config_reader=Config(
+        metrics=Metrics(
+            config_load=config_load,
+            token_acquire=token_acquire,
+            callback_timeout_seconds=0.5,
+        )
+    )
+)
 ```
 
 Metric callback failures are ignored so instrumentation does not affect SDK requests. Token lifetime metrics are emitted only for timezone-aware expiration timestamps.
