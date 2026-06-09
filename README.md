@@ -440,7 +440,7 @@ from nebius.sdk import SDK
 sdk = SDK(keepalive=KeepaliveOptions(time_ms=20_000, timeout_ms=10_000))
 ```
 
-Metrics are callback-based and optional. Pass `metrics` to `SDK` or `Config` to receive config-reader and auth events; pass `auth_metrics` for auth-only events. Callback names may be snake_case or camelCase. Synchronous callbacks work in every context; async callbacks are scheduled when emitted from a running event loop and waited for when emitted from synchronous code. Awaitable callback results are capped by `callback_timeout_seconds`, which defaults to 1 second and is sanitized to SDK limits.
+Metrics are callback-based and optional. Pass `metrics` to `SDK` or `Config` to receive config-reader and auth events; pass `auth_metrics` for auth-only events. Callback names may be snake_case or camelCase. Synchronous callbacks work in every context; async callbacks are scheduled when emitted from a running event loop and waited for when emitted from synchronous code. Awaitable callback results are capped by `callback_timeout_seconds`, which defaults to 1 second and is sanitized to SDK limits. This timeout uses cooperative cancellation: callbacks that ignore cancellation, perform blocking work, or spend a long time before their next await point can still block the event loop, so keep metric callbacks fast and non-blocking.
 
 ```python
 from nebius.aio.cli_config import Config
