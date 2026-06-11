@@ -5,8 +5,11 @@ errors (``ServiceError`` PBs) and to decide retriability based on service
 semantics and gRPC status codes.
 """
 
+import re
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from io import StringIO
+from typing import cast
 
 from google.protobuf.any_pb2 import Any as AnyPb
 from google.rpc.status_pb2 import Status as StatusPb  # type: ignore
@@ -150,6 +153,91 @@ DefaultRetriableCodes = [
     StatusCode.UNAVAILABLE,
 ]
 
+_HTTP_STATUS_PATTERNS = [
+    re.compile(
+        r"\bunexpected\s+http\s+status(?:\s+code)?"
+        r"(?:\s+received\s+from\s+server)?\s*[:=]?\s*(?P<code>\d{3})",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\breceived\s+http2?\s+header\s+with\s+status\s*[:=]?\s*" r"(?P<code>\d{3})",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bhttp(?:/2|2)?\s+status(?:\s+code)?\s*[:=]?\s*" r"(?P<code>\d{3})",
+        re.IGNORECASE,
+    ),
+]
+
+
+def _is_unknown_code(code: object) -> bool:
+    """Return True when a gRPC status code value represents UNKNOWN."""
+    if code == StatusCode.UNKNOWN:
+        return True
+    if code == StatusCode.UNKNOWN.value[0]:
+        return True
+    if (
+        isinstance(code, tuple)
+        and len(code) > 0
+        and code[0] == StatusCode.UNKNOWN.value[0]
+    ):
+        return True
+    return getattr(code, "name", None) == "UNKNOWN"
+
+
+def _has_unexpected_http_52x_status(message: str | None) -> bool:
+    """Detect proxy-originated HTTP 52x statuses in Python gRPC messages."""
+    if not message:
+        return False
+    for pattern in _HTTP_STATUS_PATTERNS:
+        for match in pattern.finditer(message):
+            code = int(match.group("code"))
+            if 520 <= code < 530:
+                return True
+    return False
+
+
+def _call_error_method(err: BaseException, name: str) -> object | None:
+    value = getattr(err, name, None)
+    if value is None:
+        return None
+    if not callable(value):
+        return cast(object, value)
+    method = cast(Callable[[], object], value)
+    try:
+        return method()
+    except Exception:
+        return None
+
+
+def _grpc_error_has_unknown_http_52x_status(err: BaseException) -> bool:
+    code = _call_error_method(err, "code")
+    if not _is_unknown_code(code):
+        return False
+    for message in (
+        _call_error_method(err, "details"),
+        _call_error_method(err, "debug_error_string"),
+        str(err),
+    ):
+        if _has_unexpected_http_52x_status(None if message is None else str(message)):
+            return True
+    return False
+
+
+def _iter_error_chain(err: BaseException) -> Iterable[BaseException]:
+    seen: set[int] = set()
+    cur: BaseException | None = err
+    while cur is not None and id(cur) not in seen:
+        seen.add(id(cur))
+        yield cur
+        if cur.__cause__ is not None:
+            cur = cur.__cause__
+            continue
+        if cur.__context__ is not None and not cur.__suppress_context__:
+            cur = cur.__context__
+            continue
+        cur = None
+
 
 @dataclass
 class RequestStatusExtended(RequestStatus):
@@ -265,6 +353,11 @@ class RequestStatusExtended(RequestStatus):
         if deadline_retriable and self.code == StatusCode.DEADLINE_EXCEEDED:
             return True
 
+        if _is_unknown_code(self.code) and _has_unexpected_http_52x_status(
+            self.message
+        ):
+            return True
+
         return False
 
 
@@ -274,12 +367,20 @@ def is_retriable_error(err: Exception, deadline_retriable: bool = False) -> bool
     The function recognizes :class:`RequestError` (service-level errors) and
     also checks for common network/transport error conditions.
     """
-    if isinstance(err, RequestError):
-        return err.status.is_retriable(deadline_retriable)
+    for chained_err in _iter_error_chain(err):
+        if isinstance(chained_err, RequestError):
+            return chained_err.status.is_retriable(deadline_retriable)
 
-    # Network and transport error handling
-    if is_network_error(err) or is_transport_error(err) or is_dns_error(err):
-        return True
+        if _grpc_error_has_unknown_http_52x_status(chained_err):
+            return True
+
+        # Network and transport error handling
+        if isinstance(chained_err, Exception) and (
+            is_network_error(chained_err)
+            or is_transport_error(chained_err)
+            or is_dns_error(chained_err)
+        ):
+            return True
 
     return False
 
