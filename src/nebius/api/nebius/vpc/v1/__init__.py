@@ -4048,6 +4048,7 @@ class RouteStatus(pb_classes.Message):
         state: "RouteStatus.State|route_pb2.RouteStatus.State|None|unset.UnsetType" = unset.Unset,
         next_hop: "NextHopState|route_pb2.NextHopState|None|unset.UnsetType" = unset.Unset,
         type: "RouteStatus.Type|route_pb2.RouteStatus.Type|None|unset.UnsetType" = unset.Unset,
+        priority: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -4056,12 +4057,15 @@ class RouteStatus(pb_classes.Message):
             self.next_hop = next_hop
         if not isinstance(type, unset.UnsetType):
             self.type = type
+        if not isinstance(priority, unset.UnsetType):
+            self.priority = priority
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "state",
             "next_hop",
             "type",
+            "priority",
             "State",
             "Type",
         ]
@@ -4109,10 +4113,26 @@ class RouteStatus(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def priority(self) -> "builtins.int":
+        """
+        Indicates priority of the route.
+        That is 0 or a positive number.
+        Lower value = higher priority; 0 is the highest priority.
+        """
+        
+        return super()._get_field("priority", explicit_presence=False,
+        )
+    @priority.setter
+    def priority(self, value: "builtins.int|None") -> None:
+        return super()._set_field("priority",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "next_hop":"next_hop",
         "type":"type",
+        "priority":"priority",
         "State":"State",
         "Type":"Type",
     }
