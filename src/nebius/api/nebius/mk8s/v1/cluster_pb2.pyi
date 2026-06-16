@@ -51,8 +51,10 @@ class ControlPlaneEndpointsSpec(_message.Message):
     def __init__(self, public_endpoint: _Optional[_Union[PublicEndpointSpec, _Mapping]] = ...) -> None: ...
 
 class PublicEndpointSpec(_message.Message):
-    __slots__ = []
-    def __init__(self) -> None: ...
+    __slots__ = ["allowed_cidrs"]
+    ALLOWED_CIDRS_FIELD_NUMBER: _ClassVar[int]
+    allowed_cidrs: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, allowed_cidrs: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class KubeNetworkSpec(_message.Message):
     __slots__ = ["service_cidrs"]

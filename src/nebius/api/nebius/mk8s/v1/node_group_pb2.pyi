@@ -109,16 +109,24 @@ class GpuClusterSpec(_message.Message):
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class NetworkInterfaceTemplate(_message.Message):
-    __slots__ = ["public_ip_address", "subnet_id"]
+    __slots__ = ["public_ip_address", "subnet_id", "security_groups"]
     PUBLIC_IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     SUBNET_ID_FIELD_NUMBER: _ClassVar[int]
+    SECURITY_GROUPS_FIELD_NUMBER: _ClassVar[int]
     public_ip_address: PublicIPAddress
     subnet_id: str
-    def __init__(self, public_ip_address: _Optional[_Union[PublicIPAddress, _Mapping]] = ..., subnet_id: _Optional[str] = ...) -> None: ...
+    security_groups: _containers.RepeatedCompositeFieldContainer[SecurityGroup]
+    def __init__(self, public_ip_address: _Optional[_Union[PublicIPAddress, _Mapping]] = ..., subnet_id: _Optional[str] = ..., security_groups: _Optional[_Iterable[_Union[SecurityGroup, _Mapping]]] = ...) -> None: ...
 
 class PublicIPAddress(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
+
+class SecurityGroup(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
 
 class AttachedFilesystemSpec(_message.Message):
     __slots__ = ["attach_mode", "mount_tag", "existing_filesystem"]

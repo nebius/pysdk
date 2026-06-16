@@ -346,14 +346,35 @@ class PublicEndpointSpec(pb_classes.Message):
     def __init__(
         self,
         initial_message: message_1.Message|None = None,
+        *,
+        allowed_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
+        if not isinstance(allowed_cidrs, unset.UnsetType):
+            self.allowed_cidrs = allowed_cidrs
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
+            "allowed_cidrs",
         ]
     
+    @builtins.property
+    def allowed_cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        List of CIDR blocks from which access to public endpoint is allowed.
+        If field is not set, or list is empty, it means that access is not restricted at all.
+        """
+        
+        return super()._get_field("allowed_cidrs", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @allowed_cidrs.setter
+    def allowed_cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("allowed_cidrs",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "allowed_cidrs":"allowed_cidrs",
     }
     
 class KubeNetworkSpec(pb_classes.Message):
@@ -2465,17 +2486,21 @@ class NetworkInterfaceTemplate(pb_classes.Message):
         *,
         public_ip_address: "PublicIPAddress|node_group_pb2.PublicIPAddress|None|unset.UnsetType" = unset.Unset,
         subnet_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        security_groups: "abc.Iterable[SecurityGroup]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(public_ip_address, unset.UnsetType):
             self.public_ip_address = public_ip_address
         if not isinstance(subnet_id, unset.UnsetType):
             self.subnet_id = subnet_id
+        if not isinstance(security_groups, unset.UnsetType):
+            self.security_groups = security_groups
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "public_ip_address",
             "subnet_id",
+            "security_groups",
         ]
     
     @builtins.property
@@ -2508,9 +2533,24 @@ class NetworkInterfaceTemplate(pb_classes.Message):
         return super()._set_field("subnet_id",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def security_groups(self) -> "abc.MutableSequence[SecurityGroup]":
+        """
+        User provided VPC Security Groups which will be assigned to all nodes of this NodeGroup.
+        """
+        
+        return super()._get_field("security_groups", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(SecurityGroup,None,None),
+        )
+    @security_groups.setter
+    def security_groups(self, value: "abc.Iterable[SecurityGroup]|None") -> None:
+        return super()._set_field("security_groups",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "public_ip_address":"public_ip_address",
         "subnet_id":"subnet_id",
+        "security_groups":"security_groups",
     }
     
 class PublicIPAddress(pb_classes.Message):
@@ -2534,6 +2574,40 @@ class PublicIPAddress(pb_classes.Message):
         ]
     
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+    }
+    
+class SecurityGroup(pb_classes.Message):
+    __PB2_CLASS__ = node_group_pb2.SecurityGroup
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.SecurityGroup",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
     }
     
 class AttachedFilesystemSpec(pb_classes.Message):
@@ -4699,6 +4773,7 @@ __all__ = [
     "GpuClusterSpec",
     "NetworkInterfaceTemplate",
     "PublicIPAddress",
+    "SecurityGroup",
     "AttachedFilesystemSpec",
     "ExistingFilesystem",
     "NodeGroupAutoscalingSpec",
