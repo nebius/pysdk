@@ -179,7 +179,8 @@ class EndpointSpec(pb_classes.Message):
             """
             Secret storing the environment variable value.
             Mutually exclusive with ``value``.
-            Must reference a secret payload containing a key matching ``name``.
+            The payload entry is selected by ``mysterybox_secret.key``, which defaults
+            to ``name`` when empty.
             """
             
             return super()._get_field("mysterybox_secret", explicit_presence=False,
@@ -898,6 +899,72 @@ class EndpointSpec(pb_classes.Message):
         }
         
     
+    class FileInjection(pb_classes.Message):
+        """
+        FileInjection materializes a small file inside the container at launch.
+        """
+        
+        __PB2_CLASS__ = endpoint_pb2.EndpointSpec.FileInjection
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.EndpointSpec.FileInjection",endpoint_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            container_path: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            content: "builtins.bytes|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(container_path, unset.UnsetType):
+                self.container_path = container_path
+            if not isinstance(content, unset.UnsetType):
+                self.content = content
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "container_path",
+                "content",
+            ]
+        
+        @builtins.property
+        def container_path(self) -> "builtins.str":
+            """
+            Absolute path inside the container where the content is written.
+            
+            Must be a clean absolute path: root, trailing slashes, empty path
+            segments, "." and ".." are not allowed.
+            """
+            
+            return super()._get_field("container_path", explicit_presence=False,
+            )
+        @container_path.setter
+        def container_path(self, value: "builtins.str|None") -> None:
+            return super()._set_field("container_path",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def content(self) -> "builtins.bytes":
+            """
+            File content. Between 1 byte and 64 KiB (one mystery box secret payload).
+            
+            Not returned by read methods.
+            """
+            
+            return super()._get_field("content", explicit_presence=False,
+            )
+        @content.setter
+        def content(self, value: "builtins.bytes|None") -> None:
+            return super()._set_field("content",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "container_path":"container_path",
+            "content":"content",
+        }
+        
+    
     class MysteryBoxSecretRef(pb_classes.Message):
         """
         Reference to a MysteryBox secret.
@@ -914,17 +981,21 @@ class EndpointSpec(pb_classes.Message):
             *,
             secret_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
             version_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(secret_id, unset.UnsetType):
                 self.secret_id = secret_id
             if not isinstance(version_id, unset.UnsetType):
                 self.version_id = version_id
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "secret_id",
                 "version_id",
+                "key",
             ]
         
         @builtins.property
@@ -953,9 +1024,26 @@ class EndpointSpec(pb_classes.Message):
             return super()._set_field("version_id",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def key(self) -> "builtins.str":
+            """
+            Optional key of the payload entry to read the value from.
+            Honored for environment variable references, where it defaults to the
+            environment variable name when empty. References that read a fixed
+            payload key (such as auth token or S3 credentials) ignore this field.
+            """
+            
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "secret_id":"secret_id",
             "version_id":"version_id",
+            "key":"key",
         }
         
     
@@ -981,6 +1069,7 @@ class EndpointSpec(pb_classes.Message):
         preemptible: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         auth_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
         auth_token_mysterybox_secret: "EndpointSpec.MysteryBoxSecretRef|endpoint_pb2.EndpointSpec.MysteryBoxSecretRef|None|unset.UnsetType" = unset.Unset,
+        injected_files: "abc.Iterable[EndpointSpec.FileInjection]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(image, unset.UnsetType):
@@ -1019,6 +1108,8 @@ class EndpointSpec(pb_classes.Message):
             self.auth_token = auth_token
         if not isinstance(auth_token_mysterybox_secret, unset.UnsetType):
             self.auth_token_mysterybox_secret = auth_token_mysterybox_secret
+        if not isinstance(injected_files, unset.UnsetType):
+            self.injected_files = injected_files
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -1040,11 +1131,13 @@ class EndpointSpec(pb_classes.Message):
             "preemptible",
             "auth_token",
             "auth_token_mysterybox_secret",
+            "injected_files",
             "EnvironmentVariable",
             "Port",
             "VolumeMount",
             "DiskSpec",
             "RegistryCredentials",
+            "FileInjection",
             "MysteryBoxSecretRef",
         ]
     
@@ -1297,6 +1390,21 @@ class EndpointSpec(pb_classes.Message):
         return super()._set_field("auth_token_mysterybox_secret",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def injected_files(self) -> "abc.MutableSequence[EndpointSpec.FileInjection]":
+        """
+        Small config files injected into the container before the user process
+        starts. Intended for configs, not datasets.
+        """
+        
+        return super()._get_field("injected_files", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(EndpointSpec.FileInjection,None,None),
+        )
+    @injected_files.setter
+    def injected_files(self, value: "abc.Iterable[EndpointSpec.FileInjection]|None") -> None:
+        return super()._set_field("injected_files",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "image":"image",
         "environment_variables":"environment_variables",
@@ -1316,11 +1424,13 @@ class EndpointSpec(pb_classes.Message):
         "preemptible":"preemptible",
         "auth_token":"auth_token",
         "auth_token_mysterybox_secret":"auth_token_mysterybox_secret",
+        "injected_files":"injected_files",
         "EnvironmentVariable":"EnvironmentVariable",
         "Port":"Port",
         "VolumeMount":"VolumeMount",
         "DiskSpec":"DiskSpec",
         "RegistryCredentials":"RegistryCredentials",
+        "FileInjection":"FileInjection",
         "MysteryBoxSecretRef":"MysteryBoxSecretRef",
     }
     
@@ -2454,7 +2564,8 @@ class JobSpec(pb_classes.Message):
             """
             Secret storing the environment variable value.
             Mutually exclusive with ``value``.
-            Must reference a secret payload containing a key matching ``name``.
+            The payload entry is selected by ``mysterybox_secret.key``, which defaults
+            to ``name`` when empty.
             """
             
             return super()._get_field("mysterybox_secret", explicit_presence=False,
@@ -3173,6 +3284,72 @@ class JobSpec(pb_classes.Message):
         }
         
     
+    class FileInjection(pb_classes.Message):
+        """
+        FileInjection materializes a small file inside the container at launch.
+        """
+        
+        __PB2_CLASS__ = job_pb2.JobSpec.FileInjection
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.ai.v1.JobSpec.FileInjection",job_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            container_path: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            content: "builtins.bytes|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(container_path, unset.UnsetType):
+                self.container_path = container_path
+            if not isinstance(content, unset.UnsetType):
+                self.content = content
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "container_path",
+                "content",
+            ]
+        
+        @builtins.property
+        def container_path(self) -> "builtins.str":
+            """
+            Absolute path inside the container where the content is written.
+            
+            Must be a clean absolute path: root, trailing slashes, empty path
+            segments, "." and ".." are not allowed.
+            """
+            
+            return super()._get_field("container_path", explicit_presence=False,
+            )
+        @container_path.setter
+        def container_path(self, value: "builtins.str|None") -> None:
+            return super()._set_field("container_path",value,explicit_presence=False,
+            )
+        
+        @builtins.property
+        def content(self) -> "builtins.bytes":
+            """
+            File content. Between 1 byte and 64 KiB (one mystery box secret payload).
+            
+            Not returned by read methods.
+            """
+            
+            return super()._get_field("content", explicit_presence=False,
+            )
+        @content.setter
+        def content(self, value: "builtins.bytes|None") -> None:
+            return super()._set_field("content",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "container_path":"container_path",
+            "content":"content",
+        }
+        
+    
     class MysteryBoxSecretRef(pb_classes.Message):
         """
         Reference to a MysteryBox secret.
@@ -3189,17 +3366,21 @@ class JobSpec(pb_classes.Message):
             *,
             secret_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
             version_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(secret_id, unset.UnsetType):
                 self.secret_id = secret_id
             if not isinstance(version_id, unset.UnsetType):
                 self.version_id = version_id
+            if not isinstance(key, unset.UnsetType):
+                self.key = key
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "secret_id",
                 "version_id",
+                "key",
             ]
         
         @builtins.property
@@ -3228,9 +3409,26 @@ class JobSpec(pb_classes.Message):
             return super()._set_field("version_id",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def key(self) -> "builtins.str":
+            """
+            Optional key of the payload entry to read the value from.
+            Honored for environment variable references, where it defaults to the
+            environment variable name when empty. References that read a fixed
+            payload key (such as auth token or S3 credentials) ignore this field.
+            """
+            
+            return super()._get_field("key", explicit_presence=False,
+            )
+        @key.setter
+        def key(self, value: "builtins.str|None") -> None:
+            return super()._set_field("key",value,explicit_presence=False,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "secret_id":"secret_id",
             "version_id":"version_id",
+            "key":"key",
         }
         
     
@@ -3256,6 +3454,7 @@ class JobSpec(pb_classes.Message):
         preemptible: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         restart_attempts: "builtins.int|None|unset.UnsetType" = unset.Unset,
         timeout: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
+        injected_files: "abc.Iterable[JobSpec.FileInjection]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(image, unset.UnsetType):
@@ -3294,6 +3493,8 @@ class JobSpec(pb_classes.Message):
             self.restart_attempts = restart_attempts
         if not isinstance(timeout, unset.UnsetType):
             self.timeout = timeout
+        if not isinstance(injected_files, unset.UnsetType):
+            self.injected_files = injected_files
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -3315,11 +3516,13 @@ class JobSpec(pb_classes.Message):
             "preemptible",
             "restart_attempts",
             "timeout",
+            "injected_files",
             "EnvironmentVariable",
             "Port",
             "VolumeMount",
             "DiskSpec",
             "RegistryCredentials",
+            "FileInjection",
             "MysteryBoxSecretRef",
         ]
     
@@ -3566,6 +3769,21 @@ class JobSpec(pb_classes.Message):
         unwrap=well_known_1.to_duration
         )
     
+    @builtins.property
+    def injected_files(self) -> "abc.MutableSequence[JobSpec.FileInjection]":
+        """
+        Small config files injected into the container before the user process
+        starts. Intended for configs, not datasets.
+        """
+        
+        return super()._get_field("injected_files", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(JobSpec.FileInjection,None,None),
+        )
+    @injected_files.setter
+    def injected_files(self, value: "abc.Iterable[JobSpec.FileInjection]|None") -> None:
+        return super()._set_field("injected_files",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "image":"image",
         "environment_variables":"environment_variables",
@@ -3585,11 +3803,13 @@ class JobSpec(pb_classes.Message):
         "preemptible":"preemptible",
         "restart_attempts":"restart_attempts",
         "timeout":"timeout",
+        "injected_files":"injected_files",
         "EnvironmentVariable":"EnvironmentVariable",
         "Port":"Port",
         "VolumeMount":"VolumeMount",
         "DiskSpec":"DiskSpec",
         "RegistryCredentials":"RegistryCredentials",
+        "FileInjection":"FileInjection",
         "MysteryBoxSecretRef":"MysteryBoxSecretRef",
     }
     

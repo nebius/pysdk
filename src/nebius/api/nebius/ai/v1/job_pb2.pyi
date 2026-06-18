@@ -24,7 +24,7 @@ class Job(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[JobSpec, _Mapping]] = ..., status: _Optional[_Union[JobStatus, _Mapping]] = ...) -> None: ...
 
 class JobSpec(_message.Message):
-    __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "preemptible", "restart_attempts", "timeout"]
+    __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "preemptible", "restart_attempts", "timeout", "injected_files"]
     class EnvironmentVariable(_message.Message):
         __slots__ = ["name", "value", "mysterybox_secret"]
         NAME_FIELD_NUMBER: _ClassVar[int]
@@ -117,13 +117,22 @@ class JobSpec(_message.Message):
         password: str
         mysterybox_secret_version: str
         def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ..., mysterybox_secret_version: _Optional[str] = ...) -> None: ...
+    class FileInjection(_message.Message):
+        __slots__ = ["container_path", "content"]
+        CONTAINER_PATH_FIELD_NUMBER: _ClassVar[int]
+        CONTENT_FIELD_NUMBER: _ClassVar[int]
+        container_path: str
+        content: bytes
+        def __init__(self, container_path: _Optional[str] = ..., content: _Optional[bytes] = ...) -> None: ...
     class MysteryBoxSecretRef(_message.Message):
-        __slots__ = ["secret_id", "version_id"]
+        __slots__ = ["secret_id", "version_id", "key"]
         SECRET_ID_FIELD_NUMBER: _ClassVar[int]
         VERSION_ID_FIELD_NUMBER: _ClassVar[int]
+        KEY_FIELD_NUMBER: _ClassVar[int]
         secret_id: str
         version_id: str
-        def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ...) -> None: ...
+        key: str
+        def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ..., key: _Optional[str] = ...) -> None: ...
     IMAGE_FIELD_NUMBER: _ClassVar[int]
     ENVIRONMENT_VARIABLES_FIELD_NUMBER: _ClassVar[int]
     PORTS_FIELD_NUMBER: _ClassVar[int]
@@ -142,6 +151,7 @@ class JobSpec(_message.Message):
     PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
     RESTART_ATTEMPTS_FIELD_NUMBER: _ClassVar[int]
     TIMEOUT_FIELD_NUMBER: _ClassVar[int]
+    INJECTED_FILES_FIELD_NUMBER: _ClassVar[int]
     image: str
     environment_variables: _containers.RepeatedCompositeFieldContainer[JobSpec.EnvironmentVariable]
     ports: _containers.RepeatedCompositeFieldContainer[JobSpec.Port]
@@ -160,7 +170,8 @@ class JobSpec(_message.Message):
     preemptible: bool
     restart_attempts: int
     timeout: _duration_pb2.Duration
-    def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[JobSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[JobSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[JobSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[JobSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[JobSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., preemptible: bool = ..., restart_attempts: _Optional[int] = ..., timeout: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ...) -> None: ...
+    injected_files: _containers.RepeatedCompositeFieldContainer[JobSpec.FileInjection]
+    def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[JobSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[JobSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[JobSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[JobSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[JobSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., preemptible: bool = ..., restart_attempts: _Optional[int] = ..., timeout: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., injected_files: _Optional[_Iterable[_Union[JobSpec.FileInjection, _Mapping]]] = ...) -> None: ...
 
 class JobStatus(_message.Message):
     __slots__ = ["private_endpoints", "public_endpoints", "instances", "state", "state_details", "started_at", "finished_at"]

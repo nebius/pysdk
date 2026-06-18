@@ -22,7 +22,7 @@ class Endpoint(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[EndpointSpec, _Mapping]] = ..., status: _Optional[_Union[EndpointStatus, _Mapping]] = ...) -> None: ...
 
 class EndpointSpec(_message.Message):
-    __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "preemptible", "auth_token", "auth_token_mysterybox_secret"]
+    __slots__ = ["image", "environment_variables", "ports", "container_command", "args", "working_dir", "volumes", "registry_credentials", "platform", "preset", "shm_size_bytes", "disk", "subnet_id", "public_ip", "ssh_authorized_keys", "preemptible", "auth_token", "auth_token_mysterybox_secret", "injected_files"]
     class EnvironmentVariable(_message.Message):
         __slots__ = ["name", "value", "mysterybox_secret"]
         NAME_FIELD_NUMBER: _ClassVar[int]
@@ -115,13 +115,22 @@ class EndpointSpec(_message.Message):
         password: str
         mysterybox_secret_version: str
         def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ..., mysterybox_secret_version: _Optional[str] = ...) -> None: ...
+    class FileInjection(_message.Message):
+        __slots__ = ["container_path", "content"]
+        CONTAINER_PATH_FIELD_NUMBER: _ClassVar[int]
+        CONTENT_FIELD_NUMBER: _ClassVar[int]
+        container_path: str
+        content: bytes
+        def __init__(self, container_path: _Optional[str] = ..., content: _Optional[bytes] = ...) -> None: ...
     class MysteryBoxSecretRef(_message.Message):
-        __slots__ = ["secret_id", "version_id"]
+        __slots__ = ["secret_id", "version_id", "key"]
         SECRET_ID_FIELD_NUMBER: _ClassVar[int]
         VERSION_ID_FIELD_NUMBER: _ClassVar[int]
+        KEY_FIELD_NUMBER: _ClassVar[int]
         secret_id: str
         version_id: str
-        def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ...) -> None: ...
+        key: str
+        def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ..., key: _Optional[str] = ...) -> None: ...
     IMAGE_FIELD_NUMBER: _ClassVar[int]
     ENVIRONMENT_VARIABLES_FIELD_NUMBER: _ClassVar[int]
     PORTS_FIELD_NUMBER: _ClassVar[int]
@@ -140,6 +149,7 @@ class EndpointSpec(_message.Message):
     PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
     AUTH_TOKEN_FIELD_NUMBER: _ClassVar[int]
     AUTH_TOKEN_MYSTERYBOX_SECRET_FIELD_NUMBER: _ClassVar[int]
+    INJECTED_FILES_FIELD_NUMBER: _ClassVar[int]
     image: str
     environment_variables: _containers.RepeatedCompositeFieldContainer[EndpointSpec.EnvironmentVariable]
     ports: _containers.RepeatedCompositeFieldContainer[EndpointSpec.Port]
@@ -158,7 +168,8 @@ class EndpointSpec(_message.Message):
     preemptible: bool
     auth_token: str
     auth_token_mysterybox_secret: EndpointSpec.MysteryBoxSecretRef
-    def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[EndpointSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[EndpointSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[EndpointSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[EndpointSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[EndpointSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., preemptible: bool = ..., auth_token: _Optional[str] = ..., auth_token_mysterybox_secret: _Optional[_Union[EndpointSpec.MysteryBoxSecretRef, _Mapping]] = ...) -> None: ...
+    injected_files: _containers.RepeatedCompositeFieldContainer[EndpointSpec.FileInjection]
+    def __init__(self, image: _Optional[str] = ..., environment_variables: _Optional[_Iterable[_Union[EndpointSpec.EnvironmentVariable, _Mapping]]] = ..., ports: _Optional[_Iterable[_Union[EndpointSpec.Port, _Mapping]]] = ..., container_command: _Optional[str] = ..., args: _Optional[str] = ..., working_dir: _Optional[str] = ..., volumes: _Optional[_Iterable[_Union[EndpointSpec.VolumeMount, _Mapping]]] = ..., registry_credentials: _Optional[_Union[EndpointSpec.RegistryCredentials, _Mapping]] = ..., platform: _Optional[str] = ..., preset: _Optional[str] = ..., shm_size_bytes: _Optional[int] = ..., disk: _Optional[_Union[EndpointSpec.DiskSpec, _Mapping]] = ..., subnet_id: _Optional[str] = ..., public_ip: bool = ..., ssh_authorized_keys: _Optional[_Iterable[str]] = ..., preemptible: bool = ..., auth_token: _Optional[str] = ..., auth_token_mysterybox_secret: _Optional[_Union[EndpointSpec.MysteryBoxSecretRef, _Mapping]] = ..., injected_files: _Optional[_Iterable[_Union[EndpointSpec.FileInjection, _Mapping]]] = ...) -> None: ...
 
 class EndpointStatus(_message.Message):
     __slots__ = ["private_endpoints", "public_endpoints", "instances", "state", "state_details"]
