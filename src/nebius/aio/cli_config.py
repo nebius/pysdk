@@ -105,6 +105,10 @@ class Config:
         Ignored when ``metrics`` is provided because full metrics are reused for
         auth callbacks.
     :type auth_metrics: optional object or mapping
+    :param impersonate_service_account_id: Optional service account id to
+        impersonate. Overrides ``impersonate-service-account-id`` from the
+        selected profile.
+    :type impersonate_service_account_id: optional `str`
 
     Example
     -------
@@ -140,6 +144,7 @@ class Config:
         endpoint_env: str = ENDPOINT_ENV,
         metrics: MetricsLike = None,
         auth_metrics: AuthMetricsLike = None,
+        impersonate_service_account_id: str | None = None,
     ) -> None:
         """Initialize the config reader, and read the config file, selecting
         the active profile.
@@ -165,6 +170,7 @@ class Config:
         self._no_parent_id = no_parent_id
         self._config_file = Path(config_file).expanduser()
         self._max_retries = max_retries
+        self._impersonate_service_account_id = impersonate_service_account_id
         self._get_profile()
 
     def set_metrics(self, metrics: MetricsLike) -> None:
@@ -374,6 +380,7 @@ class Config:
         """
 
         def finish(source: str, start: float, credentials: Credentials) -> Credentials:
+            credentials = self._add_impersonation_if_set(credentials, channel)
             self._record_metric(
                 "credentials_resolve",
                 source,
@@ -611,3 +618,37 @@ class Config:
             start = metric_start()
             fail("config-reader", start)
             raise ConfigError(f"Unsupported auth-type {auth_type} in the profile.")
+
+    def _add_impersonation_if_set(
+        self,
+        credentials: Credentials,
+        channel: ClientChannelInterface,
+    ) -> Credentials:
+        """Wrap token credentials with service-account impersonation if configured."""
+        service_account_id = self._impersonate_service_account_id
+        if service_account_id is None:
+            value = self._profile.get("impersonate-service-account-id")
+            if value is None:
+                return credentials
+            if not isinstance(value, str):
+                raise ConfigError(
+                    "Impersonate service account id should be a string, got "
+                    f"{type(value)}."
+                )
+            service_account_id = value
+        if service_account_id == "":
+            return credentials
+        if not isinstance(credentials, TokenBearer):
+            raise ConfigError(
+                "Impersonation requires token bearer credentials, got "
+                f"{type(credentials)}."
+            )
+        from nebius.aio.token.impersonated import CachedBearer as ImpersonatedBearer
+
+        return ImpersonatedBearer(
+            service_account_id,
+            credentials,
+            channel=channel,
+            max_retries=self._max_retries,
+            metrics=self._auth_metrics,
+        )
