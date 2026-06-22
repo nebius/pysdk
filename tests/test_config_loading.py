@@ -96,6 +96,92 @@ profiles:
 
 
 @pytest.mark.asyncio
+async def test_impersonated_bearer_exchange_request() -> None:
+    from nebius.aio.token.impersonated import Receiver as ImpersonatedReceiver
+    from nebius.aio.token.static import Bearer as StaticBearer
+    from nebius.api.nebius.iam.v1 import (
+        CreateTokenResponse,
+        ExchangeTokenRequest,
+    )
+
+    seen: list[ExchangeTokenRequest] = []
+
+    class TokenExchange:
+        async def exchange(self, request, **kwargs):
+            seen.append(request)
+            assert kwargs["auth_options"]["type"] == "disable"
+            return CreateTokenResponse(
+                access_token="impersonated-token",
+                token_type="Bearer",
+                expires_in=3600,
+            )
+
+    receiver = ImpersonatedReceiver(
+        "target-sa",
+        StaticBearer("actor-token").receiver(),
+        TokenExchange(),  # type: ignore[arg-type]
+    )
+    token = await receiver.fetch()
+    assert token.token == "impersonated-token"
+    assert len(seen) == 1
+    request = seen[0]
+    assert request.grant_type == "urn:ietf:params:oauth:grant-type:token-exchange"
+    assert (
+        request.requested_token_type == "urn:ietf:params:oauth:token-type:access_token"
+    )
+    assert request.subject_token == "target-sa"
+    assert (
+        request.subject_token_type
+        == "urn:nebius:params:oauth:token-type:subject_identifier"
+    )
+    assert request.actor_token == "actor-token"
+    assert request.actor_token_type == "urn:ietf:params:oauth:token-type:access_token"
+
+
+@pytest.mark.asyncio
+async def test_config_impersonates_with_constructor_override(
+    tmp_path, monkeypatch
+) -> None:
+    from asyncio import Future
+
+    from nebius.aio.abc import ClientChannelInterface
+    from nebius.aio.cli_config import Config
+    from nebius.aio.token.impersonated import CachedBearer as ImpersonatedBearer
+
+    home = tmp_path / "home"
+    monkeypatch.setenv("HOME", str(home))
+    monkeypatch.delenv("NEBIUS_IAM_TOKEN", raising=False)
+    cfg_dir = home / ".nebius"
+    cfg_dir.mkdir(parents=True)
+    token_file = cfg_dir / "token.txt"
+    token_file.write_text("actor-token")
+    config_file = cfg_dir / "config.yaml"
+    config_file.write_text(
+        f"""
+default: prod
+profiles:
+  prod:
+    endpoint: example.net
+    parent-id: project-id
+    token-file: {token_file}
+    impersonate-service-account-id: profile-sa
+""",
+    )
+
+    config = Config(
+        "foo",
+        config_file=config_file,
+        no_env=True,
+        impersonate_service_account_id="override-sa",
+    )
+    credentials = config.get_credentials(Future[ClientChannelInterface]())
+    assert isinstance(credentials, ImpersonatedBearer)
+    assert credentials.name is not None
+    assert "override-sa" in credentials.name
+    assert "profile-sa" not in credentials.name
+
+
+@pytest.mark.asyncio
 async def test_load_config_no_env(tmp_path, monkeypatch) -> None:
     from asyncio import Future
 
