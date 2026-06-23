@@ -8399,14 +8399,18 @@ class NVLInstanceGroupSpec(pb_classes.Message):
         initial_message: message_1.Message|None = None,
         *,
         type: "NVLInstanceGroupSpec.NVLInstanceGroupType|nvlinstancegroup_pb2.NVLInstanceGroupSpec.NVLInstanceGroupType|None|unset.UnsetType" = unset.Unset,
+        size: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(type, unset.UnsetType):
             self.type = type
+        if not isinstance(size, unset.UnsetType):
+            self.size = size
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "type",
+            "size",
             "NVLInstanceGroupType",
         ]
     
@@ -8424,8 +8428,22 @@ class NVLInstanceGroupSpec(pb_classes.Message):
         return super()._set_field("type",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def size(self) -> "builtins.int":
+        """
+        Maximum number of instances in the NVLink InstanceGroup
+        """
+        
+        return super()._get_field("size", explicit_presence=False,
+        )
+    @size.setter
+    def size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("size",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "type":"type",
+        "size":"size",
         "NVLInstanceGroupType":"NVLInstanceGroupType",
     }
     

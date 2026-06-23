@@ -179,8 +179,8 @@ class EndpointSpec(pb_classes.Message):
             """
             Secret storing the environment variable value.
             Mutually exclusive with ``value``.
-            The payload entry is selected by ``mysterybox_secret.key``, which defaults
-            to ``name`` when empty.
+            The value is read from the payload entry whose key matches the variable
+            name, or the first entry when no such key exists.
             """
             
             return super()._get_field("mysterybox_secret", explicit_presence=False,
@@ -981,21 +981,17 @@ class EndpointSpec(pb_classes.Message):
             *,
             secret_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
             version_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(secret_id, unset.UnsetType):
                 self.secret_id = secret_id
             if not isinstance(version_id, unset.UnsetType):
                 self.version_id = version_id
-            if not isinstance(key, unset.UnsetType):
-                self.key = key
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "secret_id",
                 "version_id",
-                "key",
             ]
         
         @builtins.property
@@ -1024,26 +1020,9 @@ class EndpointSpec(pb_classes.Message):
             return super()._set_field("version_id",value,explicit_presence=False,
             )
         
-        @builtins.property
-        def key(self) -> "builtins.str":
-            """
-            Optional key of the payload entry to read the value from.
-            Honored for environment variable references, where it defaults to the
-            environment variable name when empty. References that read a fixed
-            payload key (such as auth token or S3 credentials) ignore this field.
-            """
-            
-            return super()._get_field("key", explicit_presence=False,
-            )
-        @key.setter
-        def key(self, value: "builtins.str|None") -> None:
-            return super()._set_field("key",value,explicit_presence=False,
-            )
-        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "secret_id":"secret_id",
             "version_id":"version_id",
-            "key":"key",
         }
         
     
@@ -2564,8 +2543,8 @@ class JobSpec(pb_classes.Message):
             """
             Secret storing the environment variable value.
             Mutually exclusive with ``value``.
-            The payload entry is selected by ``mysterybox_secret.key``, which defaults
-            to ``name`` when empty.
+            The value is read from the payload entry whose key matches the variable
+            name, or the first entry when no such key exists.
             """
             
             return super()._get_field("mysterybox_secret", explicit_presence=False,
@@ -3366,21 +3345,17 @@ class JobSpec(pb_classes.Message):
             *,
             secret_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
             version_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
-            key: "builtins.str|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(secret_id, unset.UnsetType):
                 self.secret_id = secret_id
             if not isinstance(version_id, unset.UnsetType):
                 self.version_id = version_id
-            if not isinstance(key, unset.UnsetType):
-                self.key = key
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "secret_id",
                 "version_id",
-                "key",
             ]
         
         @builtins.property
@@ -3409,26 +3384,9 @@ class JobSpec(pb_classes.Message):
             return super()._set_field("version_id",value,explicit_presence=False,
             )
         
-        @builtins.property
-        def key(self) -> "builtins.str":
-            """
-            Optional key of the payload entry to read the value from.
-            Honored for environment variable references, where it defaults to the
-            environment variable name when empty. References that read a fixed
-            payload key (such as auth token or S3 credentials) ignore this field.
-            """
-            
-            return super()._get_field("key", explicit_presence=False,
-            )
-        @key.setter
-        def key(self, value: "builtins.str|None") -> None:
-            return super()._set_field("key",value,explicit_presence=False,
-            )
-        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "secret_id":"secret_id",
             "version_id":"version_id",
-            "key":"key",
         }
         
     

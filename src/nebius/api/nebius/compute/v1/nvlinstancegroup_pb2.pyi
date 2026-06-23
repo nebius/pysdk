@@ -21,7 +21,7 @@ class NVLInstanceGroup(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[NVLInstanceGroupSpec, _Mapping]] = ..., status: _Optional[_Union[NVLInstanceGroupStatus, _Mapping]] = ...) -> None: ...
 
 class NVLInstanceGroupSpec(_message.Message):
-    __slots__ = ["type"]
+    __slots__ = ["type", "size"]
     class NVLInstanceGroupType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[NVLInstanceGroupSpec.NVLInstanceGroupType]
@@ -31,8 +31,10 @@ class NVLInstanceGroupSpec(_message.Message):
     GB200: NVLInstanceGroupSpec.NVLInstanceGroupType
     GB300: NVLInstanceGroupSpec.NVLInstanceGroupType
     TYPE_FIELD_NUMBER: _ClassVar[int]
+    SIZE_FIELD_NUMBER: _ClassVar[int]
     type: NVLInstanceGroupSpec.NVLInstanceGroupType
-    def __init__(self, type: _Optional[_Union[NVLInstanceGroupSpec.NVLInstanceGroupType, str]] = ...) -> None: ...
+    size: int
+    def __init__(self, type: _Optional[_Union[NVLInstanceGroupSpec.NVLInstanceGroupType, str]] = ..., size: _Optional[int] = ...) -> None: ...
 
 class NVLInstanceGroupStatus(_message.Message):
     __slots__ = ["instances", "reconciling"]

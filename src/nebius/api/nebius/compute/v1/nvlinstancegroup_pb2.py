@@ -17,7 +17,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.compute.v1 import instance_pb2 as nebius_dot_compute_dot_v1_dot_instance__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n(nebius/compute/v1/nvlinstancegroup.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/compute/v1/instance.proto\"\xd2\x01\n\x10NVLInstanceGroup\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.compute.v1.NVLInstanceGroupSpecR\x04spec\x12\x41\n\x06status\x18\x03 \x01(\x0b\x32).nebius.compute.v1.NVLInstanceGroupStatusR\x06status\"\xad\x01\n\x14NVLInstanceGroupSpec\x12V\n\x04type\x18\x01 \x01(\x0e\x32<.nebius.compute.v1.NVLInstanceGroupSpec.NVLInstanceGroupTypeB\x04\xbaJ\x01\x02R\x04type\"=\n\x14NVLInstanceGroupType\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\t\n\x05GB200\x10\x01\x12\t\n\x05GB300\x10\x02\"\xfe\x02\n\x16NVLInstanceGroupStatus\x12V\n\tinstances\x18\x01 \x03(\x0b\x32\x38.nebius.compute.v1.NVLInstanceGroupStatus.InstancesEntryR\tinstances\x12 \n\x0breconciling\x18\x03 \x01(\x08R\x0breconciling\x1an\n\x0cInstanceInfo\x12^\n\x0einstance_state\x18\x01 \x01(\x0e\x32/.nebius.compute.v1.InstanceStatus.InstanceStateB\x06\xbaH\x03\xc8\x01\x01R\rinstanceState\x1at\n\x0eInstancesEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12L\n\x05value\x18\x02 \x01(\x0b\x32\x36.nebius.compute.v1.NVLInstanceGroupStatus.InstanceInfoR\x05value:\x02\x38\x01J\x04\x08\x02\x10\x03\x42\x64\n\x18\x61i.nebius.pub.compute.v1B\x15NvlinstancegroupProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n(nebius/compute/v1/nvlinstancegroup.proto\x12\x11nebius.compute.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/compute/v1/instance.proto\"\xd2\x01\n\x10NVLInstanceGroup\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\'.nebius.compute.v1.NVLInstanceGroupSpecR\x04spec\x12\x41\n\x06status\x18\x03 \x01(\x0b\x32).nebius.compute.v1.NVLInstanceGroupStatusR\x06status\"\xd1\x01\n\x14NVLInstanceGroupSpec\x12V\n\x04type\x18\x01 \x01(\x0e\x32<.nebius.compute.v1.NVLInstanceGroupSpec.NVLInstanceGroupTypeB\x04\xbaJ\x01\x02R\x04type\x12\"\n\x04size\x18\x02 \x01(\x03\x42\x0e\xbaH\x07\xc8\x01\x01\"\x02 \x00\xbaJ\x01\x02R\x04size\"=\n\x14NVLInstanceGroupType\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\t\n\x05GB200\x10\x01\x12\t\n\x05GB300\x10\x02\"\xfe\x02\n\x16NVLInstanceGroupStatus\x12V\n\tinstances\x18\x01 \x03(\x0b\x32\x38.nebius.compute.v1.NVLInstanceGroupStatus.InstancesEntryR\tinstances\x12 \n\x0breconciling\x18\x03 \x01(\x08R\x0breconciling\x1an\n\x0cInstanceInfo\x12^\n\x0einstance_state\x18\x01 \x01(\x0e\x32/.nebius.compute.v1.InstanceStatus.InstanceStateB\x06\xbaH\x03\xc8\x01\x01R\rinstanceState\x1at\n\x0eInstancesEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12L\n\x05value\x18\x02 \x01(\x0b\x32\x36.nebius.compute.v1.NVLInstanceGroupStatus.InstanceInfoR\x05value:\x02\x38\x01J\x04\x08\x02\x10\x03\x42\x64\n\x18\x61i.nebius.pub.compute.v1B\x15NvlinstancegroupProtoP\x01Z/github.com/nebius/gosdk/proto/nebius/compute/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,6 +28,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._serialized_options = b'\n\030ai.nebius.pub.compute.v1B\025NvlinstancegroupProtoP\001Z/github.com/nebius/gosdk/proto/nebius/compute/v1'
   _NVLINSTANCEGROUPSPEC.fields_by_name['type']._options = None
   _NVLINSTANCEGROUPSPEC.fields_by_name['type']._serialized_options = b'\272J\001\002'
+  _NVLINSTANCEGROUPSPEC.fields_by_name['size']._options = None
+  _NVLINSTANCEGROUPSPEC.fields_by_name['size']._serialized_options = b'\272H\007\310\001\001\"\002 \000\272J\001\002'
   _NVLINSTANCEGROUPSTATUS_INSTANCEINFO.fields_by_name['instance_state']._options = None
   _NVLINSTANCEGROUPSTATUS_INSTANCEINFO.fields_by_name['instance_state']._serialized_options = b'\272H\003\310\001\001'
   _NVLINSTANCEGROUPSTATUS_INSTANCESENTRY._options = None
@@ -35,13 +37,13 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_NVLINSTANCEGROUP']._serialized_start=186
   _globals['_NVLINSTANCEGROUP']._serialized_end=396
   _globals['_NVLINSTANCEGROUPSPEC']._serialized_start=399
-  _globals['_NVLINSTANCEGROUPSPEC']._serialized_end=572
-  _globals['_NVLINSTANCEGROUPSPEC_NVLINSTANCEGROUPTYPE']._serialized_start=511
-  _globals['_NVLINSTANCEGROUPSPEC_NVLINSTANCEGROUPTYPE']._serialized_end=572
-  _globals['_NVLINSTANCEGROUPSTATUS']._serialized_start=575
-  _globals['_NVLINSTANCEGROUPSTATUS']._serialized_end=957
-  _globals['_NVLINSTANCEGROUPSTATUS_INSTANCEINFO']._serialized_start=723
-  _globals['_NVLINSTANCEGROUPSTATUS_INSTANCEINFO']._serialized_end=833
-  _globals['_NVLINSTANCEGROUPSTATUS_INSTANCESENTRY']._serialized_start=835
-  _globals['_NVLINSTANCEGROUPSTATUS_INSTANCESENTRY']._serialized_end=951
+  _globals['_NVLINSTANCEGROUPSPEC']._serialized_end=608
+  _globals['_NVLINSTANCEGROUPSPEC_NVLINSTANCEGROUPTYPE']._serialized_start=547
+  _globals['_NVLINSTANCEGROUPSPEC_NVLINSTANCEGROUPTYPE']._serialized_end=608
+  _globals['_NVLINSTANCEGROUPSTATUS']._serialized_start=611
+  _globals['_NVLINSTANCEGROUPSTATUS']._serialized_end=993
+  _globals['_NVLINSTANCEGROUPSTATUS_INSTANCEINFO']._serialized_start=759
+  _globals['_NVLINSTANCEGROUPSTATUS_INSTANCEINFO']._serialized_end=869
+  _globals['_NVLINSTANCEGROUPSTATUS_INSTANCESENTRY']._serialized_start=871
+  _globals['_NVLINSTANCEGROUPSTATUS_INSTANCESENTRY']._serialized_end=987
 # @@protoc_insertion_point(module_scope)

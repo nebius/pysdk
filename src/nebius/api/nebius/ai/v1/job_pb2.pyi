@@ -125,14 +125,12 @@ class JobSpec(_message.Message):
         content: bytes
         def __init__(self, container_path: _Optional[str] = ..., content: _Optional[bytes] = ...) -> None: ...
     class MysteryBoxSecretRef(_message.Message):
-        __slots__ = ["secret_id", "version_id", "key"]
+        __slots__ = ["secret_id", "version_id"]
         SECRET_ID_FIELD_NUMBER: _ClassVar[int]
         VERSION_ID_FIELD_NUMBER: _ClassVar[int]
-        KEY_FIELD_NUMBER: _ClassVar[int]
         secret_id: str
         version_id: str
-        key: str
-        def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ..., key: _Optional[str] = ...) -> None: ...
+        def __init__(self, secret_id: _Optional[str] = ..., version_id: _Optional[str] = ...) -> None: ...
     IMAGE_FIELD_NUMBER: _ClassVar[int]
     ENVIRONMENT_VARIABLES_FIELD_NUMBER: _ClassVar[int]
     PORTS_FIELD_NUMBER: _ClassVar[int]
