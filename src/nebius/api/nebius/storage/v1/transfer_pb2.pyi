@@ -21,7 +21,7 @@ class Transfer(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[TransferSpec, _Mapping]] = ..., status: _Optional[_Union[TransferStatus, _Mapping]] = ...) -> None: ...
 
 class TransferSpec(_message.Message):
-    __slots__ = ["source", "destination", "limiters", "after_one_iteration", "after_n_empty_iterations", "infinite", "inter_iteration_interval", "overwrite_strategy", "touch_unmanaged"]
+    __slots__ = ["source", "destination", "limiters", "after_one_iteration", "after_n_empty_iterations", "infinite", "inter_iteration_interval", "overwrite_strategy", "enable_deletes_in_destination", "touch_unmanaged"]
     class OverwriteStrategy(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         OVERWRITE_STRATEGY_UNSPECIFIED: _ClassVar[TransferSpec.OverwriteStrategy]
@@ -56,6 +56,7 @@ class TransferSpec(_message.Message):
     INFINITE_FIELD_NUMBER: _ClassVar[int]
     INTER_ITERATION_INTERVAL_FIELD_NUMBER: _ClassVar[int]
     OVERWRITE_STRATEGY_FIELD_NUMBER: _ClassVar[int]
+    ENABLE_DELETES_IN_DESTINATION_FIELD_NUMBER: _ClassVar[int]
     TOUCH_UNMANAGED_FIELD_NUMBER: _ClassVar[int]
     source: TransferSource
     destination: TransferDestination
@@ -65,8 +66,9 @@ class TransferSpec(_message.Message):
     infinite: TransferSpec.StopConditionInfinite
     inter_iteration_interval: _duration_pb2.Duration
     overwrite_strategy: TransferSpec.OverwriteStrategy
+    enable_deletes_in_destination: bool
     touch_unmanaged: bool
-    def __init__(self, source: _Optional[_Union[TransferSource, _Mapping]] = ..., destination: _Optional[_Union[TransferDestination, _Mapping]] = ..., limiters: _Optional[_Union[TransferSpec.Limiters, _Mapping]] = ..., after_one_iteration: _Optional[_Union[TransferSpec.StopConditionAfterOneIteration, _Mapping]] = ..., after_n_empty_iterations: _Optional[_Union[TransferSpec.StopConditionAfterNEmptyIterations, _Mapping]] = ..., infinite: _Optional[_Union[TransferSpec.StopConditionInfinite, _Mapping]] = ..., inter_iteration_interval: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., overwrite_strategy: _Optional[_Union[TransferSpec.OverwriteStrategy, str]] = ..., touch_unmanaged: bool = ...) -> None: ...
+    def __init__(self, source: _Optional[_Union[TransferSource, _Mapping]] = ..., destination: _Optional[_Union[TransferDestination, _Mapping]] = ..., limiters: _Optional[_Union[TransferSpec.Limiters, _Mapping]] = ..., after_one_iteration: _Optional[_Union[TransferSpec.StopConditionAfterOneIteration, _Mapping]] = ..., after_n_empty_iterations: _Optional[_Union[TransferSpec.StopConditionAfterNEmptyIterations, _Mapping]] = ..., infinite: _Optional[_Union[TransferSpec.StopConditionInfinite, _Mapping]] = ..., inter_iteration_interval: _Optional[_Union[_duration_pb2.Duration, _Mapping]] = ..., overwrite_strategy: _Optional[_Union[TransferSpec.OverwriteStrategy, str]] = ..., enable_deletes_in_destination: bool = ..., touch_unmanaged: bool = ...) -> None: ...
 
 class TransferSource(_message.Message):
     __slots__ = ["nebius", "s3_compatible", "azure_blob_storage", "prefix"]
@@ -204,7 +206,7 @@ class TransferStatus(_message.Message):
     def __init__(self, state: _Optional[_Union[TransferStatus.State, str]] = ..., error: _Optional[_Union[TransferError, _Mapping]] = ..., suspension_state: _Optional[_Union[TransferStatus.SuspensionState, str]] = ..., last_iteration: _Optional[_Union[TransferIteration, _Mapping]] = ...) -> None: ...
 
 class TransferIteration(_message.Message):
-    __slots__ = ["sequence_number", "state", "error", "start_time", "end_time", "objects_transferred_count", "objects_transferred_size", "average_throughput_bytes"]
+    __slots__ = ["sequence_number", "state", "error", "start_time", "end_time", "objects_transferred_count", "objects_deleted_count", "objects_transferred_size", "average_throughput_bytes"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[TransferIteration.State]
@@ -223,6 +225,7 @@ class TransferIteration(_message.Message):
     START_TIME_FIELD_NUMBER: _ClassVar[int]
     END_TIME_FIELD_NUMBER: _ClassVar[int]
     OBJECTS_TRANSFERRED_COUNT_FIELD_NUMBER: _ClassVar[int]
+    OBJECTS_DELETED_COUNT_FIELD_NUMBER: _ClassVar[int]
     OBJECTS_TRANSFERRED_SIZE_FIELD_NUMBER: _ClassVar[int]
     AVERAGE_THROUGHPUT_BYTES_FIELD_NUMBER: _ClassVar[int]
     sequence_number: int
@@ -231,9 +234,10 @@ class TransferIteration(_message.Message):
     start_time: _timestamp_pb2.Timestamp
     end_time: _timestamp_pb2.Timestamp
     objects_transferred_count: int
+    objects_deleted_count: int
     objects_transferred_size: int
     average_throughput_bytes: int
-    def __init__(self, sequence_number: _Optional[int] = ..., state: _Optional[_Union[TransferIteration.State, str]] = ..., error: _Optional[_Union[TransferError, _Mapping]] = ..., start_time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., end_time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., objects_transferred_count: _Optional[int] = ..., objects_transferred_size: _Optional[int] = ..., average_throughput_bytes: _Optional[int] = ...) -> None: ...
+    def __init__(self, sequence_number: _Optional[int] = ..., state: _Optional[_Union[TransferIteration.State, str]] = ..., error: _Optional[_Union[TransferError, _Mapping]] = ..., start_time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., end_time: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., objects_transferred_count: _Optional[int] = ..., objects_deleted_count: _Optional[int] = ..., objects_transferred_size: _Optional[int] = ..., average_throughput_bytes: _Optional[int] = ...) -> None: ...
 
 class TransferError(_message.Message):
     __slots__ = ["origin", "code", "message"]

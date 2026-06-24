@@ -3065,6 +3065,8 @@ class Transfer(pb_classes.Message):
     Transfer that migrates data from other providers or across different regions of Nebius Object Storage.
     Transfer consists of consecutive iterations where the service lists objects in the source bucket and
     moves those that need to be transferred according to the specified overwrite strategy and touch unmanaged flag value.
+    If the enable deletes in destination flag is set, the service also lists destination bucket and deletes
+    objects which do not exist in the source bucket according to the touch unmanaged flag value.
     After an iteration completes, the transfer will stop if its stop condition is met. Otherwise,
     it will wait for the defined inter-iteration interval before starting the next iteration.
     """
@@ -3360,6 +3362,7 @@ class TransferSpec(pb_classes.Message):
         infinite: "TransferSpec.StopConditionInfinite|transfer_pb2.TransferSpec.StopConditionInfinite|None|unset.UnsetType" = unset.Unset,
         inter_iteration_interval: "duration_pb2.Duration|datetime.timedelta|None|unset.UnsetType" = unset.Unset,
         overwrite_strategy: "TransferSpec.OverwriteStrategy|transfer_pb2.TransferSpec.OverwriteStrategy|None|unset.UnsetType" = unset.Unset,
+        enable_deletes_in_destination: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         touch_unmanaged: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
@@ -3379,6 +3382,8 @@ class TransferSpec(pb_classes.Message):
             self.inter_iteration_interval = inter_iteration_interval
         if not isinstance(overwrite_strategy, unset.UnsetType):
             self.overwrite_strategy = overwrite_strategy
+        if not isinstance(enable_deletes_in_destination, unset.UnsetType):
+            self.enable_deletes_in_destination = enable_deletes_in_destination
         if not isinstance(touch_unmanaged, unset.UnsetType):
             self.touch_unmanaged = touch_unmanaged
     
@@ -3392,6 +3397,7 @@ class TransferSpec(pb_classes.Message):
             "infinite",
             "inter_iteration_interval",
             "overwrite_strategy",
+            "enable_deletes_in_destination",
             "touch_unmanaged",
             "Limiters",
             "StopConditionAfterOneIteration",
@@ -3514,6 +3520,20 @@ class TransferSpec(pb_classes.Message):
         )
     
     @builtins.property
+    def enable_deletes_in_destination(self) -> "builtins.bool":
+        """
+        If enable_deletes_in_destination flag is set, service will delete objects that exist in destination, but don't exist in source.
+        If touch_unmanaged flag isn't set, we do not delete objects that haven't been created by Data Transfer service.
+        """
+        
+        return super()._get_field("enable_deletes_in_destination", explicit_presence=False,
+        )
+    @enable_deletes_in_destination.setter
+    def enable_deletes_in_destination(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("enable_deletes_in_destination",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def touch_unmanaged(self) -> "builtins.bool":
         """
         If touch_unmanaged flag is set, service will be allowed to overwrite and delete from destination objects that were not
@@ -3537,6 +3557,7 @@ class TransferSpec(pb_classes.Message):
         "infinite":"infinite",
         "inter_iteration_interval":"inter_iteration_interval",
         "overwrite_strategy":"overwrite_strategy",
+        "enable_deletes_in_destination":"enable_deletes_in_destination",
         "touch_unmanaged":"touch_unmanaged",
         "Limiters":"Limiters",
         "StopConditionAfterOneIteration":"StopConditionAfterOneIteration",
@@ -4141,7 +4162,7 @@ class TransferDestination(pb_classes.Message):
         def credentials(self) -> __OneOfClass_credentials_access_key__|None:
             """
             Credentials for accessing the destination bucket.
-            These credentials must have head, write permissions.
+            These credentials must have head, write and delete (if enable_deletes_in_destination flag is enabled) permissions.
             """
             
             field_name_1: str|None = super().which_field_in_oneof("credentials")
@@ -4256,7 +4277,7 @@ class TransferDestination(pb_classes.Message):
         def credentials(self) -> __OneOfClass_credentials_anonymous__|__OneOfClass_credentials_access_key__|None:
             """
             Credentials for accessing the destination bucket.
-            These credentials must have head, write permissions.
+            These credentials must have head, write and delete (if enable_deletes_in_destination flag is enabled) permissions.
             """
             
             field_name_1: str|None = super().which_field_in_oneof("credentials")
@@ -4774,6 +4795,7 @@ class TransferIteration(pb_classes.Message):
         start_time: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         end_time: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
         objects_transferred_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        objects_deleted_count: "builtins.int|None|unset.UnsetType" = unset.Unset,
         objects_transferred_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
         average_throughput_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -4790,6 +4812,8 @@ class TransferIteration(pb_classes.Message):
             self.end_time = end_time
         if not isinstance(objects_transferred_count, unset.UnsetType):
             self.objects_transferred_count = objects_transferred_count
+        if not isinstance(objects_deleted_count, unset.UnsetType):
+            self.objects_deleted_count = objects_deleted_count
         if not isinstance(objects_transferred_size, unset.UnsetType):
             self.objects_transferred_size = objects_transferred_size
         if not isinstance(average_throughput_bytes, unset.UnsetType):
@@ -4803,6 +4827,7 @@ class TransferIteration(pb_classes.Message):
             "start_time",
             "end_time",
             "objects_transferred_count",
+            "objects_deleted_count",
             "objects_transferred_size",
             "average_throughput_bytes",
             "State",
@@ -4893,6 +4918,19 @@ class TransferIteration(pb_classes.Message):
         )
     
     @builtins.property
+    def objects_deleted_count(self) -> "builtins.int":
+        """
+        Number of objects deleted from destination bucket during this iteration.
+        """
+        
+        return super()._get_field("objects_deleted_count", explicit_presence=False,
+        )
+    @objects_deleted_count.setter
+    def objects_deleted_count(self, value: "builtins.int|None") -> None:
+        return super()._set_field("objects_deleted_count",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def objects_transferred_size(self) -> "builtins.int":
         """
         Total size of objects transferred during this iteration.
@@ -4925,6 +4963,7 @@ class TransferIteration(pb_classes.Message):
         "start_time":"start_time",
         "end_time":"end_time",
         "objects_transferred_count":"objects_transferred_count",
+        "objects_deleted_count":"objects_deleted_count",
         "objects_transferred_size":"objects_transferred_size",
         "average_throughput_bytes":"average_throughput_bytes",
         "State":"State",
