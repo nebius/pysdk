@@ -65,7 +65,7 @@ class SubnetCidr(_message.Message):
     def __init__(self, cidr: _Optional[str] = ..., state: _Optional[_Union[_pool_pb2.AddressBlockState, str]] = ..., max_mask_length: _Optional[int] = ...) -> None: ...
 
 class SubnetStatus(_message.Message):
-    __slots__ = ["state", "ipv4_private_cidrs", "ipv4_public_cidrs", "route_table"]
+    __slots__ = ["state", "ipv4_private_cidrs", "ipv4_public_cidrs", "route_table", "ipv4_private_pools", "ipv4_public_pools"]
     class State(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         STATE_UNSPECIFIED: _ClassVar[SubnetStatus.State]
@@ -80,11 +80,23 @@ class SubnetStatus(_message.Message):
     IPV4_PRIVATE_CIDRS_FIELD_NUMBER: _ClassVar[int]
     IPV4_PUBLIC_CIDRS_FIELD_NUMBER: _ClassVar[int]
     ROUTE_TABLE_FIELD_NUMBER: _ClassVar[int]
+    IPV4_PRIVATE_POOLS_FIELD_NUMBER: _ClassVar[int]
+    IPV4_PUBLIC_POOLS_FIELD_NUMBER: _ClassVar[int]
     state: SubnetStatus.State
     ipv4_private_cidrs: _containers.RepeatedScalarFieldContainer[str]
     ipv4_public_cidrs: _containers.RepeatedScalarFieldContainer[str]
     route_table: SubnetAssociatedRouteTable
-    def __init__(self, state: _Optional[_Union[SubnetStatus.State, str]] = ..., ipv4_private_cidrs: _Optional[_Iterable[str]] = ..., ipv4_public_cidrs: _Optional[_Iterable[str]] = ..., route_table: _Optional[_Union[SubnetAssociatedRouteTable, _Mapping]] = ...) -> None: ...
+    ipv4_private_pools: _containers.RepeatedCompositeFieldContainer[SubnetStatusPool]
+    ipv4_public_pools: _containers.RepeatedCompositeFieldContainer[SubnetStatusPool]
+    def __init__(self, state: _Optional[_Union[SubnetStatus.State, str]] = ..., ipv4_private_cidrs: _Optional[_Iterable[str]] = ..., ipv4_public_cidrs: _Optional[_Iterable[str]] = ..., route_table: _Optional[_Union[SubnetAssociatedRouteTable, _Mapping]] = ..., ipv4_private_pools: _Optional[_Iterable[_Union[SubnetStatusPool, _Mapping]]] = ..., ipv4_public_pools: _Optional[_Iterable[_Union[SubnetStatusPool, _Mapping]]] = ...) -> None: ...
+
+class SubnetStatusPool(_message.Message):
+    __slots__ = ["pool_id", "cidrs"]
+    POOL_ID_FIELD_NUMBER: _ClassVar[int]
+    CIDRS_FIELD_NUMBER: _ClassVar[int]
+    pool_id: str
+    cidrs: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, pool_id: _Optional[str] = ..., cidrs: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class SubnetAssociatedRouteTable(_message.Message):
     __slots__ = ["id", "default"]

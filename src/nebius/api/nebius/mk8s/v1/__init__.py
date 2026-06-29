@@ -1949,6 +1949,7 @@ class NodeTemplate(pb_classes.Message):
         cloud_init_user_data: "builtins.str|None|unset.UnsetType" = unset.Unset,
         service_account_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         preemptible: "PreemptibleSpec|node_group_pb2.PreemptibleSpec|None|unset.UnsetType" = unset.Unset,
+        nvlink: "NVLinkSpec|node_group_pb2.NVLinkSpec|None|unset.UnsetType" = unset.Unset,
         reservation_policy: "ReservationPolicy|node_group_pb2.ReservationPolicy|None|unset.UnsetType" = unset.Unset,
         local_disks: "LocalDisksSpec|node_group_pb2.LocalDisksSpec|None|unset.UnsetType" = unset.Unset,
         max_pods: "builtins.int|None|unset.UnsetType" = unset.Unset,
@@ -1978,6 +1979,8 @@ class NodeTemplate(pb_classes.Message):
             self.service_account_id = service_account_id
         if not isinstance(preemptible, unset.UnsetType):
             self.preemptible = preemptible
+        if not isinstance(nvlink, unset.UnsetType):
+            self.nvlink = nvlink
         if not isinstance(reservation_policy, unset.UnsetType):
             self.reservation_policy = reservation_policy
         if not isinstance(local_disks, unset.UnsetType):
@@ -1999,6 +2002,7 @@ class NodeTemplate(pb_classes.Message):
             "cloud_init_user_data",
             "service_account_id",
             "preemptible",
+            "nvlink",
             "reservation_policy",
             "local_disks",
             "max_pods",
@@ -2221,6 +2225,20 @@ class NodeTemplate(pb_classes.Message):
         )
     
     @builtins.property
+    def nvlink(self) -> "NVLinkSpec":
+        """
+        NVLinkSpec configures NVLink settings for the NodeGroup.
+        """
+        
+        return super()._get_field("nvlink", explicit_presence=False,
+        wrap=NVLinkSpec,
+        )
+    @nvlink.setter
+    def nvlink(self, value: "NVLinkSpec|node_group_pb2.NVLinkSpec|None") -> None:
+        return super()._set_field("nvlink",value,explicit_presence=False,
+        )
+    
+    @builtins.property
     def reservation_policy(self) -> "ReservationPolicy":
         """
         reservation_policy is an interface of the "capacity block" (or "capacity block group") mechanism of Nebius Compute.
@@ -2278,9 +2296,77 @@ class NodeTemplate(pb_classes.Message):
         "cloud_init_user_data":"cloud_init_user_data",
         "service_account_id":"service_account_id",
         "preemptible":"preemptible",
+        "nvlink":"nvlink",
         "reservation_policy":"reservation_policy",
         "local_disks":"local_disks",
         "max_pods":"max_pods",
+    }
+    
+class NVLinkSpec(pb_classes.Message):
+    __PB2_CLASS__ = node_group_pb2.NVLinkSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.mk8s.v1.NVLinkSpec",node_group_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass_nvl_group__(pb_classes.OneOf):
+        name: builtins.str= "nvl_group"
+        
+        def __init__(self, msg: "NVLinkSpec") -> None:
+            super().__init__()
+            self._message: "NVLinkSpec" = msg
+    
+    class __OneOfClass_nvl_group_nvl_instance_group_id__(__OneOfClass_nvl_group__):
+        field: typing.Literal["nvl_instance_group_id"] = "nvl_instance_group_id"
+        
+        def __init__(self, msg: "NVLinkSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.nvl_instance_group_id
+    
+    @builtins.property
+    def nvl_group(self) -> __OneOfClass_nvl_group_nvl_instance_group_id__|None:
+        field_name_1: str|None = super().which_field_in_oneof("nvl_group")
+        match field_name_1:
+            case "nvl_instance_group_id":
+                return self.__OneOfClass_nvl_group_nvl_instance_group_id__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        nvl_instance_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(nvl_instance_group_id, unset.UnsetType):
+            self.nvl_instance_group_id = nvl_instance_group_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "nvl_instance_group_id",
+            "nvl_group",
+        ]
+    
+    @builtins.property
+    def nvl_instance_group_id(self) -> "builtins.str|None":
+        """
+        Existing NVLInstanceGroup ID to use.
+        """
+        
+        return super()._get_field("nvl_instance_group_id", explicit_presence=True,
+        )
+    @nvl_instance_group_id.setter
+    def nvl_instance_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("nvl_instance_group_id",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "nvl_instance_group_id":"nvl_instance_group_id",
+        "nvl_group":"nvl_group",
     }
     
 class NodeMetadataTemplate(pb_classes.Message):
@@ -4768,6 +4854,7 @@ __all__ = [
     "NodeGroup",
     "NodeGroupSpec",
     "NodeTemplate",
+    "NVLinkSpec",
     "NodeMetadataTemplate",
     "GpuSettings",
     "GpuClusterSpec",

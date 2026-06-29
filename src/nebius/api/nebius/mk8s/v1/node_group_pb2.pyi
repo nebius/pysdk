@@ -50,7 +50,7 @@ class NodeGroupSpec(_message.Message):
     def __init__(self, version: _Optional[str] = ..., fixed_node_count: _Optional[int] = ..., autoscaling: _Optional[_Union[NodeGroupAutoscalingSpec, _Mapping]] = ..., template: _Optional[_Union[NodeTemplate, _Mapping]] = ..., strategy: _Optional[_Union[NodeGroupDeploymentStrategy, _Mapping]] = ..., auto_repair: _Optional[_Union[NodeGroupAutoRepairSpec, _Mapping]] = ...) -> None: ...
 
 class NodeTemplate(_message.Message):
-    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_settings", "os", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id", "preemptible", "reservation_policy", "local_disks", "max_pods"]
+    __slots__ = ["metadata", "taints", "resources", "boot_disk", "gpu_settings", "os", "gpu_cluster", "network_interfaces", "filesystems", "cloud_init_user_data", "service_account_id", "preemptible", "nvlink", "reservation_policy", "local_disks", "max_pods"]
     METADATA_FIELD_NUMBER: _ClassVar[int]
     TAINTS_FIELD_NUMBER: _ClassVar[int]
     RESOURCES_FIELD_NUMBER: _ClassVar[int]
@@ -63,6 +63,7 @@ class NodeTemplate(_message.Message):
     CLOUD_INIT_USER_DATA_FIELD_NUMBER: _ClassVar[int]
     SERVICE_ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     PREEMPTIBLE_FIELD_NUMBER: _ClassVar[int]
+    NVLINK_FIELD_NUMBER: _ClassVar[int]
     RESERVATION_POLICY_FIELD_NUMBER: _ClassVar[int]
     LOCAL_DISKS_FIELD_NUMBER: _ClassVar[int]
     MAX_PODS_FIELD_NUMBER: _ClassVar[int]
@@ -78,10 +79,17 @@ class NodeTemplate(_message.Message):
     cloud_init_user_data: str
     service_account_id: str
     preemptible: PreemptibleSpec
+    nvlink: NVLinkSpec
     reservation_policy: ReservationPolicy
     local_disks: LocalDisksSpec
     max_pods: int
-    def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_settings: _Optional[_Union[GpuSettings, _Mapping]] = ..., os: _Optional[str] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ..., reservation_policy: _Optional[_Union[ReservationPolicy, _Mapping]] = ..., local_disks: _Optional[_Union[LocalDisksSpec, _Mapping]] = ..., max_pods: _Optional[int] = ...) -> None: ...
+    def __init__(self, metadata: _Optional[_Union[NodeMetadataTemplate, _Mapping]] = ..., taints: _Optional[_Iterable[_Union[NodeTaint, _Mapping]]] = ..., resources: _Optional[_Union[_instance_template_pb2.ResourcesSpec, _Mapping]] = ..., boot_disk: _Optional[_Union[_instance_template_pb2.DiskSpec, _Mapping]] = ..., gpu_settings: _Optional[_Union[GpuSettings, _Mapping]] = ..., os: _Optional[str] = ..., gpu_cluster: _Optional[_Union[GpuClusterSpec, _Mapping]] = ..., network_interfaces: _Optional[_Iterable[_Union[NetworkInterfaceTemplate, _Mapping]]] = ..., filesystems: _Optional[_Iterable[_Union[AttachedFilesystemSpec, _Mapping]]] = ..., cloud_init_user_data: _Optional[str] = ..., service_account_id: _Optional[str] = ..., preemptible: _Optional[_Union[PreemptibleSpec, _Mapping]] = ..., nvlink: _Optional[_Union[NVLinkSpec, _Mapping]] = ..., reservation_policy: _Optional[_Union[ReservationPolicy, _Mapping]] = ..., local_disks: _Optional[_Union[LocalDisksSpec, _Mapping]] = ..., max_pods: _Optional[int] = ...) -> None: ...
+
+class NVLinkSpec(_message.Message):
+    __slots__ = ["nvl_instance_group_id"]
+    NVL_INSTANCE_GROUP_ID_FIELD_NUMBER: _ClassVar[int]
+    nvl_instance_group_id: str
+    def __init__(self, nvl_instance_group_id: _Optional[str] = ...) -> None: ...
 
 class NodeMetadataTemplate(_message.Message):
     __slots__ = ["labels"]

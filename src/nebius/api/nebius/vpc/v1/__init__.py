@@ -8,6 +8,7 @@ import builtins as builtins
 import collections.abc as abc
 import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
+import logging as logging
 import nebius.aio.client as client
 import nebius.aio.operation as operation
 import nebius.aio.request as request_1
@@ -8169,6 +8170,8 @@ class SubnetStatus(pb_classes.Message):
         ipv4_private_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         ipv4_public_cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         route_table: "SubnetAssociatedRouteTable|subnet_pb2.SubnetAssociatedRouteTable|None|unset.UnsetType" = unset.Unset,
+        ipv4_private_pools: "abc.Iterable[SubnetStatusPool]|None|unset.UnsetType" = unset.Unset,
+        ipv4_public_pools: "abc.Iterable[SubnetStatusPool]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(state, unset.UnsetType):
@@ -8179,6 +8182,10 @@ class SubnetStatus(pb_classes.Message):
             self.ipv4_public_cidrs = ipv4_public_cidrs
         if not isinstance(route_table, unset.UnsetType):
             self.route_table = route_table
+        if not isinstance(ipv4_private_pools, unset.UnsetType):
+            self.ipv4_private_pools = ipv4_private_pools
+        if not isinstance(ipv4_public_pools, unset.UnsetType):
+            self.ipv4_public_pools = ipv4_public_pools
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -8186,6 +8193,8 @@ class SubnetStatus(pb_classes.Message):
             "ipv4_private_cidrs",
             "ipv4_public_cidrs",
             "route_table",
+            "ipv4_private_pools",
+            "ipv4_public_pools",
             "State",
         ]
     
@@ -8207,13 +8216,24 @@ class SubnetStatus(pb_classes.Message):
     def ipv4_private_cidrs(self) -> "abc.MutableSequence[builtins.str]":
         """
         CIDR blocks.
+        Deprecated: Use ``ipv4_private_pools.cidrs`` instead.
+        
+        Supported until 02/01/27. Use ``ipv4_private_pools.cidrs`` instead.
         """
+        
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.vpc.v1.SubnetStatus.ipv4_private_cidrs is deprecated. Supported until 02/01/27. Use `ipv4_private_pools.cidrs` instead."""
+        , stack_info=True, stacklevel=2)
         
         return super()._get_field("ipv4_private_cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
     @ipv4_private_cidrs.setter
     def ipv4_private_cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.vpc.v1.SubnetStatus.ipv4_private_cidrs is deprecated. Supported until 02/01/27. Use `ipv4_private_pools.cidrs` instead."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._set_field("ipv4_private_cidrs",value,explicit_presence=False,
         )
     
@@ -8221,13 +8241,24 @@ class SubnetStatus(pb_classes.Message):
     def ipv4_public_cidrs(self) -> "abc.MutableSequence[builtins.str]":
         """
         CIDR blocks.
+        Deprecated: Use ``ipv4_public_pools.cidrs`` instead.
+        
+        Supported until 02/01/27. Use ``ipv4_public_pools.cidrs`` instead.
         """
+        
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.vpc.v1.SubnetStatus.ipv4_public_cidrs is deprecated. Supported until 02/01/27. Use `ipv4_public_pools.cidrs` instead."""
+        , stack_info=True, stacklevel=2)
         
         return super()._get_field("ipv4_public_cidrs", explicit_presence=False,
         wrap=pb_classes.Repeated,
         )
     @ipv4_public_cidrs.setter
     def ipv4_public_cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        logging.getLogger("deprecation").warning(
+        """Field .nebius.vpc.v1.SubnetStatus.ipv4_public_cidrs is deprecated. Supported until 02/01/27. Use `ipv4_public_pools.cidrs` instead."""
+        , stack_info=True, stacklevel=2)
+        
         return super()._set_field("ipv4_public_cidrs",value,explicit_presence=False,
         )
     
@@ -8246,12 +8277,99 @@ class SubnetStatus(pb_classes.Message):
         return super()._set_field("route_table",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def ipv4_private_pools(self) -> "abc.MutableSequence[SubnetStatusPool]":
+        """
+        Private IPv4 pools available for allocations in this subnet.
+        """
+        
+        return super()._get_field("ipv4_private_pools", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(SubnetStatusPool,None,None),
+        )
+    @ipv4_private_pools.setter
+    def ipv4_private_pools(self, value: "abc.Iterable[SubnetStatusPool]|None") -> None:
+        return super()._set_field("ipv4_private_pools",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def ipv4_public_pools(self) -> "abc.MutableSequence[SubnetStatusPool]":
+        """
+        Public IPv4 pools available for allocations in this subnet.
+        """
+        
+        return super()._get_field("ipv4_public_pools", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(SubnetStatusPool,None,None),
+        )
+    @ipv4_public_pools.setter
+    def ipv4_public_pools(self, value: "abc.Iterable[SubnetStatusPool]|None") -> None:
+        return super()._set_field("ipv4_public_pools",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "state":"state",
         "ipv4_private_cidrs":"ipv4_private_cidrs",
         "ipv4_public_cidrs":"ipv4_public_cidrs",
         "route_table":"route_table",
+        "ipv4_private_pools":"ipv4_private_pools",
+        "ipv4_public_pools":"ipv4_public_pools",
         "State":"State",
+    }
+    
+class SubnetStatusPool(pb_classes.Message):
+    __PB2_CLASS__ = subnet_pb2.SubnetStatusPool
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.vpc.v1.SubnetStatusPool",subnet_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        pool_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        cidrs: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(pool_id, unset.UnsetType):
+            self.pool_id = pool_id
+        if not isinstance(cidrs, unset.UnsetType):
+            self.cidrs = cidrs
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "pool_id",
+            "cidrs",
+        ]
+    
+    @builtins.property
+    def pool_id(self) -> "builtins.str":
+        """
+        ID of the pool available for allocations in this subnet.
+        """
+        
+        return super()._get_field("pool_id", explicit_presence=False,
+        )
+    @pool_id.setter
+    def pool_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("pool_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def cidrs(self) -> "abc.MutableSequence[builtins.str]":
+        """
+        CIDR blocks sourced from this pool.
+        """
+        
+        return super()._get_field("cidrs", explicit_presence=False,
+        wrap=pb_classes.Repeated,
+        )
+    @cidrs.setter
+    def cidrs(self, value: "abc.Iterable[builtins.str]|None") -> None:
+        return super()._set_field("cidrs",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "pool_id":"pool_id",
+        "cidrs":"cidrs",
     }
     
 class SubnetAssociatedRouteTable(pb_classes.Message):
@@ -9592,6 +9710,7 @@ __all__ = [
     "SubnetPool",
     "SubnetCidr",
     "SubnetStatus",
+    "SubnetStatusPool",
     "SubnetAssociatedRouteTable",
     "GetSubnetRequest",
     "GetSubnetByNameRequest",
