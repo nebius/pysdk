@@ -8,7 +8,10 @@ from nebius.api.nebius.iam.v1 import federated_credentials_service_pb2 as nebius
 
 
 class FederatedCredentialsServiceStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """[PUBLIC PREVIEW]
+    This feature is currently available only for early adopters.
+    Contact the support team to check whether your tenant is eligible for it.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -49,7 +52,10 @@ class FederatedCredentialsServiceStub(object):
 
 
 class FederatedCredentialsServiceServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """[PUBLIC PREVIEW]
+    This feature is currently available only for early adopters.
+    Contact the support team to check whether your tenant is eligible for it.
+    """
 
     def Get(self, request, context):
         """Retrieves information about federated credentials by ID.
@@ -134,7 +140,10 @@ def add_FederatedCredentialsServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class FederatedCredentialsService(object):
-    """Missing associated documentation comment in .proto file."""
+    """[PUBLIC PREVIEW]
+    This feature is currently available only for early adopters.
+    Contact the support team to check whether your tenant is eligible for it.
+    """
 
     @staticmethod
     def Get(request,

@@ -3876,6 +3876,10 @@ class DeleteFederatedCredentialsRequest(pb_classes.Message):
 
 class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     """
+    [PUBLIC PREVIEW]
+    This feature is currently available only for early adopters.
+    Contact the support team to check whether your tenant is eligible for it.
+    
     This class provides the client methods for the ``.nebius.iam.v1.FederatedCredentialsService`` service.
     
     Each method constructs a :class:`nebius.aio.request.Request` object
