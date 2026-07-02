@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v1_dot_operation__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1enebius/ai/v1/job_service.proto\x12\x0cnebius.ai.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x16nebius/ai/v1/job.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\"1\n\rGetJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05\x61ijobR\x02id\"V\n\x13GetJobByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"r\n\x0fListJobsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\xa6\x01\n\x10\x43reateJobRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x15.nebius.ai.v1.JobSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x17\n\x07\x64ry_run\x18\x03 \x01(\x08R\x06\x64ryRun\"4\n\x10\x44\x65leteJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05\x61ijobR\x02id\"4\n\x10\x43\x61ncelJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05\x61ijobR\x02id\"c\n\x10ListJobsResponse\x12\'\n\x05items\x18\x01 \x03(\x0b\x32\x11.nebius.ai.v1.JobR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xaf\x03\n\nJobService\x12\x35\n\x03Get\x12\x1b.nebius.ai.v1.GetJobRequest\x1a\x11.nebius.ai.v1.Job\x12\x41\n\tGetByName\x12!.nebius.ai.v1.GetJobByNameRequest\x1a\x11.nebius.ai.v1.Job\x12\x45\n\x04List\x12\x1d.nebius.ai.v1.ListJobsRequest\x1a\x1e.nebius.ai.v1.ListJobsResponse\x12\x45\n\x06\x43reate\x12\x1e.nebius.ai.v1.CreateJobRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x06\x44\x65lete\x12\x1e.nebius.ai.v1.DeleteJobRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x06\x43\x61ncel\x12\x1e.nebius.ai.v1.CancelJobRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0b\xbaJ\x08\x61pps.mspBT\n\x13\x61i.nebius.pub.ai.v1B\x0fJobServiceProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1enebius/ai/v1/job_service.proto\x12\x0cnebius.ai.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x16nebius/ai/v1/job.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\"1\n\rGetJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05\x61ijobR\x02id\"b\n\x13GetJobByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"~\n\x0fListJobsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"\xb2\x01\n\x10\x43reateJobRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12\x31\n\x04spec\x18\x02 \x01(\x0b\x32\x15.nebius.ai.v1.JobSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\x12\x17\n\x07\x64ry_run\x18\x03 \x01(\x08R\x06\x64ryRun\"4\n\x10\x44\x65leteJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05\x61ijobR\x02id\"4\n\x10\x43\x61ncelJobRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05\x61ijobR\x02id\"c\n\x10ListJobsResponse\x12\'\n\x05items\x18\x01 \x03(\x0b\x32\x11.nebius.ai.v1.JobR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xaf\x03\n\nJobService\x12\x35\n\x03Get\x12\x1b.nebius.ai.v1.GetJobRequest\x1a\x11.nebius.ai.v1.Job\x12\x41\n\tGetByName\x12!.nebius.ai.v1.GetJobByNameRequest\x1a\x11.nebius.ai.v1.Job\x12\x45\n\x04List\x12\x1d.nebius.ai.v1.ListJobsRequest\x1a\x1e.nebius.ai.v1.ListJobsResponse\x12\x45\n\x06\x43reate\x12\x1e.nebius.ai.v1.CreateJobRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x06\x44\x65lete\x12\x1e.nebius.ai.v1.DeleteJobRequest\x1a\x1b.nebius.common.v1.Operation\x12\x45\n\x06\x43\x61ncel\x12\x1e.nebius.ai.v1.CancelJobRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x0b\xbaJ\x08\x61pps.mspBT\n\x13\x61i.nebius.pub.ai.v1B\x0fJobServiceProtoP\x01Z*github.com/nebius/gosdk/proto/nebius/ai/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -30,13 +30,13 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _GETJOBREQUEST.fields_by_name['id']._options = None
   _GETJOBREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\007\n\005aijob'
   _GETJOBBYNAMEREQUEST.fields_by_name['parent_id']._options = None
-  _GETJOBBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETJOBBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _GETJOBBYNAMEREQUEST.fields_by_name['name']._options = None
   _GETJOBBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTJOBSREQUEST.fields_by_name['parent_id']._options = None
-  _LISTJOBSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTJOBSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _CREATEJOBREQUEST.fields_by_name['metadata']._options = None
-  _CREATEJOBREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
+  _CREATEJOBREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001\342J\t\022\007project'
   _CREATEJOBREQUEST.fields_by_name['spec']._options = None
   _CREATEJOBREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _DELETEJOBREQUEST.fields_by_name['id']._options = None
@@ -48,17 +48,17 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_GETJOBREQUEST']._serialized_start=194
   _globals['_GETJOBREQUEST']._serialized_end=243
   _globals['_GETJOBBYNAMEREQUEST']._serialized_start=245
-  _globals['_GETJOBBYNAMEREQUEST']._serialized_end=331
-  _globals['_LISTJOBSREQUEST']._serialized_start=333
-  _globals['_LISTJOBSREQUEST']._serialized_end=447
-  _globals['_CREATEJOBREQUEST']._serialized_start=450
-  _globals['_CREATEJOBREQUEST']._serialized_end=616
-  _globals['_DELETEJOBREQUEST']._serialized_start=618
-  _globals['_DELETEJOBREQUEST']._serialized_end=670
-  _globals['_CANCELJOBREQUEST']._serialized_start=672
-  _globals['_CANCELJOBREQUEST']._serialized_end=724
-  _globals['_LISTJOBSRESPONSE']._serialized_start=726
-  _globals['_LISTJOBSRESPONSE']._serialized_end=825
-  _globals['_JOBSERVICE']._serialized_start=828
-  _globals['_JOBSERVICE']._serialized_end=1259
+  _globals['_GETJOBBYNAMEREQUEST']._serialized_end=343
+  _globals['_LISTJOBSREQUEST']._serialized_start=345
+  _globals['_LISTJOBSREQUEST']._serialized_end=471
+  _globals['_CREATEJOBREQUEST']._serialized_start=474
+  _globals['_CREATEJOBREQUEST']._serialized_end=652
+  _globals['_DELETEJOBREQUEST']._serialized_start=654
+  _globals['_DELETEJOBREQUEST']._serialized_end=706
+  _globals['_CANCELJOBREQUEST']._serialized_start=708
+  _globals['_CANCELJOBREQUEST']._serialized_end=760
+  _globals['_LISTJOBSRESPONSE']._serialized_start=762
+  _globals['_LISTJOBSRESPONSE']._serialized_end=861
+  _globals['_JOBSERVICE']._serialized_start=864
+  _globals['_JOBSERVICE']._serialized_end=1295
 # @@protoc_insertion_point(module_scope)
