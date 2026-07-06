@@ -65,10 +65,10 @@ class IdempotencyKeyInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[un
 
     async def intercept_unary_unary(
         self,
-        continuation: Callable[[ClientCallDetails, Req], UnaryUnaryCall | Res],
+        continuation: Callable[[ClientCallDetails, Req], UnaryUnaryCall | Res],  # type: ignore[type-arg,unused-ignore]
         client_call_details: ClientCallDetails,
         request: Req,
-    ) -> UnaryUnaryCall | Res:
+    ) -> UnaryUnaryCall | Res:  # type: ignore[type-arg,unused-ignore]
         """Intercept a unary-unary gRPC call and ensure idempotency key is present.
 
         :param continuation: The next interceptor in the chain or the actual call.

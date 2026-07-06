@@ -275,7 +275,7 @@ class Request(Generic[Req, Res]):
         )
         self._credentials = credentials
         self._compression = compression
-        self._call: UnaryUnaryCall | None = None
+        self._call: UnaryUnaryCall | None = None  # type: ignore[type-arg,unused-ignore]
         self._retries = retries
         self._cancelled: bool = False
         from .service_error import RequestError as RSError
