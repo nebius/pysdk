@@ -100,6 +100,11 @@ def to_str(err: ServiceError) -> str:
                 ret.write(err.details.value.resource_id)
                 ret.write(" aborted by newer operation ")
                 ret.write(err.details.value.aborted_by_operation_id)
+            case "operation_conflict":
+                ret.write(" operation conflict: resource: ")
+                ret.write(err.details.value.resource_id)
+                ret.write(", conflicting operation ID: ")
+                ret.write(err.details.value.conflicting_operation_id)
             case "too_many_requests":
                 ret.write(" too many requests: ")
                 ret.write(err.details.value.violation)
@@ -130,6 +135,14 @@ def to_str(err: ServiceError) -> str:
                 ret.write(err.details.value.request_id)
                 ret.write(" trace ID: ")
                 ret.write(err.details.value.trace_id)
+            case _:
+                # must not be used, but is added for forward compatibility with new
+                # error types, while the error type is not published in the API, but
+                # needs some representation.
+                ret.write(" ")
+                ret.write(err.details.field)
+                ret.write(": ")
+                ret.write(repr(err.details.value))
     return ret.getvalue()
 
 
