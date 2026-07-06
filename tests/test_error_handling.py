@@ -140,6 +140,48 @@ def _status_with_message(message: str, code=None):
     )
 
 
+def test_operation_conflict_service_error_rendering() -> None:
+    from nebius.aio.service_error import to_str
+    from nebius.api.nebius.common.v1 import OperationConflict, ServiceError
+
+    err = ServiceError(
+        service="compute",
+        code="OperationConflict",
+        operation_conflict=OperationConflict(
+            resource_id="instance-1",
+            conflicting_operation_id="operation-2",
+        ),
+    )
+
+    assert (
+        to_str(err)
+        == "OperationConflict in service compute operation conflict: resource: "
+        "instance-1, conflicting operation ID: operation-2"
+    )
+
+
+def test_unknown_service_error_detail_uses_raw_rendering() -> None:
+    from nebius.aio.service_error import to_str
+
+    class RawDetail:
+        def __repr__(self) -> str:
+            return "RawDetail(field='value')"
+
+    class UnknownDetails:
+        field = "new_detail"
+        value = RawDetail()
+
+    class UnknownServiceError:
+        code = "NewError"
+        service = "compute"
+        details = UnknownDetails()
+
+    assert (
+        to_str(UnknownServiceError())
+        == "NewError in service compute new_detail: RawDetail(field='value')"
+    )
+
+
 @pytest.mark.parametrize(
     "message",
     [
