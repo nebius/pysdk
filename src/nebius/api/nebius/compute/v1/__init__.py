@@ -23,6 +23,8 @@ import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
 import nebius.api.nebius.common.v1.operation_service_pb2 as operation_service_pb2_1
 import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
 import nebius.api.nebius.compute.v1.disk_service_pb2 as disk_service_pb2
+import nebius.api.nebius.compute.v1.disk_snapshot_pb2 as disk_snapshot_pb2
+import nebius.api.nebius.compute.v1.disk_snapshot_service_pb2 as disk_snapshot_service_pb2
 import nebius.api.nebius.compute.v1.filesystem_pb2 as filesystem_pb2
 import nebius.api.nebius.compute.v1.filesystem_service_pb2 as filesystem_service_pb2
 import nebius.api.nebius.compute.v1.gpu_cluster_pb2 as gpu_cluster_pb2
@@ -490,14 +492,18 @@ class DiskStatus(pb_classes.Message):
             initial_message: message_1.Message|None = None,
             *,
             images: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+            snapshots: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
         ) -> None:
             super().__init__(initial_message)
             if not isinstance(images, unset.UnsetType):
                 self.images = images
+            if not isinstance(snapshots, unset.UnsetType):
+                self.snapshots = snapshots
         
         def __dir__(self) ->abc.Iterable[builtins.str]:
             return [
                 "images",
+                "snapshots",
             ]
         
         @builtins.property
@@ -515,8 +521,24 @@ class DiskStatus(pb_classes.Message):
             return super()._set_field("images",value,explicit_presence=False,
             )
         
+        @builtins.property
+        def snapshots(self) -> "abc.MutableSequence[builtins.str]":
+            """
+            Disk is locked only for deletion while snapshot is being created.
+            Here is the list of these snapshots.
+            """
+            
+            return super()._get_field("snapshots", explicit_presence=False,
+            wrap=pb_classes.Repeated,
+            )
+        @snapshots.setter
+        def snapshots(self, value: "abc.Iterable[builtins.str]|None") -> None:
+            return super()._set_field("snapshots",value,explicit_presence=False,
+            )
+        
         __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
             "images":"images",
+            "snapshots":"snapshots",
         }
         
     
@@ -1405,6 +1427,941 @@ class DiskServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Operatio
             request=request,
             result_pb2_class=operation_service_pb2_1.ListOperationsResponse,
             result_wrapper=pb_classes.simple_wrapper(v1_1.ListOperationsResponse),
+            **kwargs,
+        )
+    
+
+# file: nebius/compute/v1/disk_snapshot.proto
+class DiskSnapshot(pb_classes.Message):
+    """
+    DiskSnapshot resource
+    """
+    
+    __PB2_CLASS__ = disk_snapshot_pb2.DiskSnapshot
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskSnapshot",disk_snapshot_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "DiskSnapshotSpec|disk_snapshot_pb2.DiskSnapshotSpec|None|unset.UnsetType" = unset.Unset,
+        status: "DiskSnapshotStatus|disk_snapshot_pb2.DiskSnapshotStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "DiskSnapshotSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=DiskSnapshotSpec,
+        )
+    @spec.setter
+    def spec(self, value: "DiskSnapshotSpec|disk_snapshot_pb2.DiskSnapshotSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "DiskSnapshotStatus":
+        return super()._get_field("status", explicit_presence=False,
+        wrap=DiskSnapshotStatus,
+        )
+    @status.setter
+    def status(self, value: "DiskSnapshotStatus|disk_snapshot_pb2.DiskSnapshotStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class DiskSnapshotSpec(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_pb2.DiskSnapshotSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskSnapshotSpec",disk_snapshot_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        source_disk_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        description: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(source_disk_id, unset.UnsetType):
+            self.source_disk_id = source_disk_id
+        if not isinstance(description, unset.UnsetType):
+            self.description = description
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "source_disk_id",
+            "description",
+        ]
+    
+    @builtins.property
+    def source_disk_id(self) -> "builtins.str":
+        """
+        Identifier of the source disk. May become stale if the disk is deleted.
+        """
+        
+        return super()._get_field("source_disk_id", explicit_presence=False,
+        )
+    @source_disk_id.setter
+    def source_disk_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_disk_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def description(self) -> "builtins.str":
+        """
+        Arbitrary information about this snapshot provided by user.
+        """
+        
+        return super()._get_field("description", explicit_presence=False,
+        )
+    @description.setter
+    def description(self, value: "builtins.str|None") -> None:
+        return super()._set_field("description",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "source_disk_id":"source_disk_id",
+        "description":"description",
+    }
+    
+class DiskSnapshotStatus(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_pb2.DiskSnapshotStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskSnapshotStatus",disk_snapshot_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class LockState(pb_classes.Message):
+        __PB2_CLASS__ = disk_snapshot_pb2.DiskSnapshotStatus.LockState
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DiskSnapshotStatus.LockState",disk_snapshot_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+        __mask_functions__ = {
+        }
+        
+        def __init__(
+            self,
+            initial_message: message_1.Message|None = None,
+            *,
+            disks: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
+        ) -> None:
+            super().__init__(initial_message)
+            if not isinstance(disks, unset.UnsetType):
+                self.disks = disks
+        
+        def __dir__(self) ->abc.Iterable[builtins.str]:
+            return [
+                "disks",
+            ]
+        
+        @builtins.property
+        def disks(self) -> "abc.MutableSequence[builtins.str]":
+            """
+            The snapshot is locked for deletion while disk is being created from this snapshot.
+            Here is the list of these disks.
+            """
+            
+            return super()._get_field("disks", explicit_presence=False,
+            wrap=pb_classes.Repeated,
+            )
+        @disks.setter
+        def disks(self, value: "abc.Iterable[builtins.str]|None") -> None:
+            return super()._set_field("disks",value,explicit_presence=False,
+            )
+        
+        __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+            "disks":"disks",
+        }
+        
+    
+    class State(pb_enum.Enum):
+        """
+        All possible states for DiskSnapshot resource
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskSnapshotStatus.State",disk_snapshot_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNSPECIFIED = 0
+        CREATING = 1
+        READY = 2
+        DELETING = 3
+        ERROR = 4
+    
+    class CPUArchitecture(pb_enum.Enum):
+        """
+        Right now UNDEFINED is an alias for AMD64, but that might change in the future
+        """
+        
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.DiskSnapshotStatus.CPUArchitecture",disk_snapshot_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        UNDEFINED = 0
+        AMD64 = 1
+        ARM64 = 2
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "DiskSnapshotStatus.State|disk_snapshot_pb2.DiskSnapshotStatus.State|None|unset.UnsetType" = unset.Unset,
+        content_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        storage_size_bytes: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        lock_state: "DiskSnapshotStatus.LockState|disk_snapshot_pb2.DiskSnapshotStatus.LockState|None|unset.UnsetType" = unset.Unset,
+        source_cpu_architecture: "DiskSnapshotStatus.CPUArchitecture|disk_snapshot_pb2.DiskSnapshotStatus.CPUArchitecture|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(content_size_bytes, unset.UnsetType):
+            self.content_size_bytes = content_size_bytes
+        if not isinstance(storage_size_bytes, unset.UnsetType):
+            self.storage_size_bytes = storage_size_bytes
+        if not isinstance(lock_state, unset.UnsetType):
+            self.lock_state = lock_state
+        if not isinstance(source_cpu_architecture, unset.UnsetType):
+            self.source_cpu_architecture = source_cpu_architecture
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "content_size_bytes",
+            "storage_size_bytes",
+            "lock_state",
+            "source_cpu_architecture",
+            "LockState",
+            "State",
+            "CPUArchitecture",
+        ]
+    
+    @builtins.property
+    def state(self) -> "DiskSnapshotStatus.State":
+        return super()._get_field("state", explicit_presence=False,
+        wrap=DiskSnapshotStatus.State,
+        )
+    @state.setter
+    def state(self, value: "DiskSnapshotStatus.State|disk_snapshot_pb2.DiskSnapshotStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def content_size_bytes(self) -> "builtins.int":
+        """
+        Logical size of the snapshot content.
+        This is the size of a disk that would be created from this snapshot.
+        """
+        
+        return super()._get_field("content_size_bytes", explicit_presence=False,
+        )
+    @content_size_bytes.setter
+    def content_size_bytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("content_size_bytes",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def storage_size_bytes(self) -> "builtins.int":
+        """
+        Physical storage used by this snapshot in the snapshot backend.
+        This value is used for billing and quota and may change over time as the snapshot chain evolves
+        (e.g., when earlier snapshots are deleted and data gets re-attributed).
+        Currently is equal to content_size_bytes, as incremental snapshots are not supported yet.
+        """
+        
+        return super()._get_field("storage_size_bytes", explicit_presence=False,
+        )
+    @storage_size_bytes.setter
+    def storage_size_bytes(self, value: "builtins.int|None") -> None:
+        return super()._set_field("storage_size_bytes",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def lock_state(self) -> "DiskSnapshotStatus.LockState":
+        """
+        Indicates which resources prevent the disk snapshot from being deleted.
+        """
+        
+        return super()._get_field("lock_state", explicit_presence=False,
+        wrap=DiskSnapshotStatus.LockState,
+        )
+    @lock_state.setter
+    def lock_state(self, value: "DiskSnapshotStatus.LockState|disk_snapshot_pb2.DiskSnapshotStatus.LockState|None") -> None:
+        return super()._set_field("lock_state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def source_cpu_architecture(self) -> "DiskSnapshotStatus.CPUArchitecture":
+        """
+        CPU architecture associated with the source disk.
+        Not set if the architecture is unknown.
+        """
+        
+        return super()._get_field("source_cpu_architecture", explicit_presence=False,
+        wrap=DiskSnapshotStatus.CPUArchitecture,
+        )
+    @source_cpu_architecture.setter
+    def source_cpu_architecture(self, value: "DiskSnapshotStatus.CPUArchitecture|disk_snapshot_pb2.DiskSnapshotStatus.CPUArchitecture|None") -> None:
+        return super()._set_field("source_cpu_architecture",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "content_size_bytes":"content_size_bytes",
+        "storage_size_bytes":"storage_size_bytes",
+        "lock_state":"lock_state",
+        "source_cpu_architecture":"source_cpu_architecture",
+        "LockState":"LockState",
+        "State":"State",
+        "CPUArchitecture":"CPUArchitecture",
+    }
+    
+# file: nebius/compute/v1/disk_snapshot_service.proto
+class GetDiskSnapshotRequest(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_service_pb2.GetDiskSnapshotRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.GetDiskSnapshotRequest",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class ListDiskSnapshotsRequest(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_service_pb2.ListDiskSnapshotsRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListDiskSnapshotsRequest",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListDiskSnapshotsResponse(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_service_pb2.ListDiskSnapshotsResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListDiskSnapshotsResponse",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[DiskSnapshot]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[DiskSnapshot]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(DiskSnapshot,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[DiskSnapshot]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class ListDiskSnapshotsByDiskRequest(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_service_pb2.ListDiskSnapshotsByDiskRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListDiskSnapshotsByDiskRequest",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        disk_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(disk_id, unset.UnsetType):
+            self.disk_id = disk_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "disk_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def disk_id(self) -> "builtins.str":
+        """
+        ID of computedisk resource
+        """
+        
+        return super()._get_field("disk_id", explicit_presence=False,
+        )
+    @disk_id.setter
+    def disk_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("disk_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "disk_id":"disk_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListDiskSnapshotsByDiskResponse(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_service_pb2.ListDiskSnapshotsByDiskResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListDiskSnapshotsByDiskResponse",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[DiskSnapshot]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[DiskSnapshot]":
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(DiskSnapshot,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[DiskSnapshot]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class CreateDiskSnapshotRequest(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_service_pb2.CreateDiskSnapshotRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.CreateDiskSnapshotRequest",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "DiskSnapshotSpec|disk_snapshot_pb2.DiskSnapshotSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "DiskSnapshotSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=DiskSnapshotSpec,
+        )
+    @spec.setter
+    def spec(self, value: "DiskSnapshotSpec|disk_snapshot_pb2.DiskSnapshotSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateDiskSnapshotRequest(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_service_pb2.UpdateDiskSnapshotRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.UpdateDiskSnapshotRequest",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "DiskSnapshotSpec|disk_snapshot_pb2.DiskSnapshotSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "DiskSnapshotSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=DiskSnapshotSpec,
+        )
+    @spec.setter
+    def spec(self, value: "DiskSnapshotSpec|disk_snapshot_pb2.DiskSnapshotSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteDiskSnapshotRequest(pb_classes.Message):
+    __PB2_CLASS__ = disk_snapshot_service_pb2.DeleteDiskSnapshotRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.DeleteDiskSnapshotRequest",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+
+class DiskSnapshotServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    Disk snapshot service specification
+    
+    This class provides the client methods for the ``.nebius.compute.v1.DiskSnapshotService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.compute.v1.DiskSnapshotService",disk_snapshot_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.compute.v1.DiskSnapshotService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def get(self,
+        request: "GetDiskSnapshotRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetDiskSnapshotRequest","DiskSnapshot"]:
+        """
+        Retrieves detailed information about a specific snapshot by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.GetDiskSnapshotRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.DiskSnapshot`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=disk_snapshot_pb2.DiskSnapshot,
+            result_wrapper=pb_classes.simple_wrapper(DiskSnapshot),
+            **kwargs,
+        )
+    
+    def get_by_name(self,
+        request: "v1_1.GetByNameRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["v1_1.GetByNameRequest","DiskSnapshot"]:
+        """
+        Retrieves information about a snapshot by its parent and name.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.common.v1.GetByNameRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.DiskSnapshot`.
+        """
+        
+        return super().request(
+            method="GetByName",
+            request=request,
+            result_pb2_class=disk_snapshot_pb2.DiskSnapshot,
+            result_wrapper=pb_classes.simple_wrapper(DiskSnapshot),
+            **kwargs,
+        )
+    
+    def list(self,
+        request: "ListDiskSnapshotsRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListDiskSnapshotsRequest","ListDiskSnapshotsResponse"]:
+        """
+        Lists all snapshots in a specific parent resource.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.ListDiskSnapshotsRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.ListDiskSnapshotsResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=disk_snapshot_service_pb2.ListDiskSnapshotsResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListDiskSnapshotsResponse),
+            **kwargs,
+        )
+    
+    def list_by_disk(self,
+        request: "ListDiskSnapshotsByDiskRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListDiskSnapshotsByDiskRequest","ListDiskSnapshotsByDiskResponse"]:
+        """
+        Lists all snapshots with a specific source disk.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.ListDiskSnapshotsByDiskRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.ListDiskSnapshotsByDiskResponse`.
+        """
+        
+        return super().request(
+            method="ListByDisk",
+            request=request,
+            result_pb2_class=disk_snapshot_service_pb2.ListDiskSnapshotsByDiskResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListDiskSnapshotsByDiskResponse),
+            **kwargs,
+        )
+    
+    def create(self,
+        request: "CreateDiskSnapshotRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateDiskSnapshotRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Creates a new snapshot resource of a disk.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.CreateDiskSnapshotRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateDiskSnapshotRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateDiskSnapshotRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Updates an existing snapshot with new configuration parameters.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.UpdateDiskSnapshotRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteDiskSnapshotRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteDiskSnapshotRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Deletes snapshot.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.DeleteDiskSnapshotRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
             **kwargs,
         )
     
@@ -9668,6 +10625,18 @@ __all__ = [
     "DeleteDiskRequest",
     "ListDisksResponse",
     "DiskServiceClient",
+    "DiskSnapshot",
+    "DiskSnapshotSpec",
+    "DiskSnapshotStatus",
+    "GetDiskSnapshotRequest",
+    "ListDiskSnapshotsRequest",
+    "ListDiskSnapshotsResponse",
+    "ListDiskSnapshotsByDiskRequest",
+    "ListDiskSnapshotsByDiskResponse",
+    "CreateDiskSnapshotRequest",
+    "UpdateDiskSnapshotRequest",
+    "DeleteDiskSnapshotRequest",
+    "DiskSnapshotServiceClient",
     "Filesystem",
     "FilesystemSpec",
     "FilesystemStatus",

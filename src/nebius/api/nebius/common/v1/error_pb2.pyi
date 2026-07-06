@@ -7,7 +7,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class ServiceError(_message.Message):
-    __slots__ = ["service", "code", "bad_request", "bad_resource_state", "resource_not_found", "resource_already_exists", "out_of_range", "permission_denied", "resource_conflict", "operation_aborted", "too_many_requests", "quota_failure", "not_enough_resources", "internal_error", "retry_type"]
+    __slots__ = ["service", "code", "bad_request", "bad_resource_state", "resource_not_found", "resource_already_exists", "out_of_range", "permission_denied", "resource_conflict", "operation_aborted", "operation_conflict", "too_many_requests", "quota_failure", "not_enough_resources", "internal_error", "retry_type"]
     class RetryType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[ServiceError.RetryType]
@@ -28,6 +28,7 @@ class ServiceError(_message.Message):
     PERMISSION_DENIED_FIELD_NUMBER: _ClassVar[int]
     RESOURCE_CONFLICT_FIELD_NUMBER: _ClassVar[int]
     OPERATION_ABORTED_FIELD_NUMBER: _ClassVar[int]
+    OPERATION_CONFLICT_FIELD_NUMBER: _ClassVar[int]
     TOO_MANY_REQUESTS_FIELD_NUMBER: _ClassVar[int]
     QUOTA_FAILURE_FIELD_NUMBER: _ClassVar[int]
     NOT_ENOUGH_RESOURCES_FIELD_NUMBER: _ClassVar[int]
@@ -43,12 +44,13 @@ class ServiceError(_message.Message):
     permission_denied: PermissionDenied
     resource_conflict: ResourceConflict
     operation_aborted: OperationAborted
+    operation_conflict: OperationConflict
     too_many_requests: TooManyRequests
     quota_failure: QuotaFailure
     not_enough_resources: NotEnoughResources
     internal_error: InternalError
     retry_type: ServiceError.RetryType
-    def __init__(self, service: _Optional[str] = ..., code: _Optional[str] = ..., bad_request: _Optional[_Union[BadRequest, _Mapping]] = ..., bad_resource_state: _Optional[_Union[BadResourceState, _Mapping]] = ..., resource_not_found: _Optional[_Union[ResourceNotFound, _Mapping]] = ..., resource_already_exists: _Optional[_Union[ResourceAlreadyExists, _Mapping]] = ..., out_of_range: _Optional[_Union[OutOfRange, _Mapping]] = ..., permission_denied: _Optional[_Union[PermissionDenied, _Mapping]] = ..., resource_conflict: _Optional[_Union[ResourceConflict, _Mapping]] = ..., operation_aborted: _Optional[_Union[OperationAborted, _Mapping]] = ..., too_many_requests: _Optional[_Union[TooManyRequests, _Mapping]] = ..., quota_failure: _Optional[_Union[QuotaFailure, _Mapping]] = ..., not_enough_resources: _Optional[_Union[NotEnoughResources, _Mapping]] = ..., internal_error: _Optional[_Union[InternalError, _Mapping]] = ..., retry_type: _Optional[_Union[ServiceError.RetryType, str]] = ...) -> None: ...
+    def __init__(self, service: _Optional[str] = ..., code: _Optional[str] = ..., bad_request: _Optional[_Union[BadRequest, _Mapping]] = ..., bad_resource_state: _Optional[_Union[BadResourceState, _Mapping]] = ..., resource_not_found: _Optional[_Union[ResourceNotFound, _Mapping]] = ..., resource_already_exists: _Optional[_Union[ResourceAlreadyExists, _Mapping]] = ..., out_of_range: _Optional[_Union[OutOfRange, _Mapping]] = ..., permission_denied: _Optional[_Union[PermissionDenied, _Mapping]] = ..., resource_conflict: _Optional[_Union[ResourceConflict, _Mapping]] = ..., operation_aborted: _Optional[_Union[OperationAborted, _Mapping]] = ..., operation_conflict: _Optional[_Union[OperationConflict, _Mapping]] = ..., too_many_requests: _Optional[_Union[TooManyRequests, _Mapping]] = ..., quota_failure: _Optional[_Union[QuotaFailure, _Mapping]] = ..., not_enough_resources: _Optional[_Union[NotEnoughResources, _Mapping]] = ..., internal_error: _Optional[_Union[InternalError, _Mapping]] = ..., retry_type: _Optional[_Union[ServiceError.RetryType, str]] = ...) -> None: ...
 
 class BadRequest(_message.Message):
     __slots__ = ["violations"]
@@ -100,6 +102,14 @@ class OperationAborted(_message.Message):
     aborted_by_operation_id: str
     resource_id: str
     def __init__(self, operation_id: _Optional[str] = ..., aborted_by_operation_id: _Optional[str] = ..., resource_id: _Optional[str] = ...) -> None: ...
+
+class OperationConflict(_message.Message):
+    __slots__ = ["conflicting_operation_id", "resource_id"]
+    CONFLICTING_OPERATION_ID_FIELD_NUMBER: _ClassVar[int]
+    RESOURCE_ID_FIELD_NUMBER: _ClassVar[int]
+    conflicting_operation_id: str
+    resource_id: str
+    def __init__(self, conflicting_operation_id: _Optional[str] = ..., resource_id: _Optional[str] = ...) -> None: ...
 
 class OutOfRange(_message.Message):
     __slots__ = ["requested", "limit"]

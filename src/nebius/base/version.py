@@ -1,4 +1,4 @@
 """Nebius SDK version information."""
 
-version = "0.3.89"
+version = "0.3.90"
 """Current Nebius SDK version string."""

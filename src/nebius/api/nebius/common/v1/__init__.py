@@ -138,6 +138,15 @@ class ServiceError(pb_classes.Message):
         def value(self) -> "OperationAborted":
             return self._message.operation_aborted
     
+    class __OneOfClass_details_operation_conflict__(__OneOfClass_details__):
+        field: typing.Literal["operation_conflict"] = "operation_conflict"
+        
+        def __init__(self, msg: "ServiceError") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "OperationConflict":
+            return self._message.operation_conflict
+    
     class __OneOfClass_details_too_many_requests__(__OneOfClass_details__):
         field: typing.Literal["too_many_requests"] = "too_many_requests"
         
@@ -175,7 +184,7 @@ class ServiceError(pb_classes.Message):
             return self._message.internal_error
     
     @builtins.property
-    def details(self) -> __OneOfClass_details_bad_request__|__OneOfClass_details_bad_resource_state__|__OneOfClass_details_resource_not_found__|__OneOfClass_details_resource_already_exists__|__OneOfClass_details_out_of_range__|__OneOfClass_details_permission_denied__|__OneOfClass_details_resource_conflict__|__OneOfClass_details_operation_aborted__|__OneOfClass_details_too_many_requests__|__OneOfClass_details_quota_failure__|__OneOfClass_details_not_enough_resources__|__OneOfClass_details_internal_error__|None:
+    def details(self) -> __OneOfClass_details_bad_request__|__OneOfClass_details_bad_resource_state__|__OneOfClass_details_resource_not_found__|__OneOfClass_details_resource_already_exists__|__OneOfClass_details_out_of_range__|__OneOfClass_details_permission_denied__|__OneOfClass_details_resource_conflict__|__OneOfClass_details_operation_aborted__|__OneOfClass_details_operation_conflict__|__OneOfClass_details_too_many_requests__|__OneOfClass_details_quota_failure__|__OneOfClass_details_not_enough_resources__|__OneOfClass_details_internal_error__|None:
         """
         Additional message describing the error, if any.
         """
@@ -198,6 +207,8 @@ class ServiceError(pb_classes.Message):
                 return self.__OneOfClass_details_resource_conflict__(self)
             case "operation_aborted":
                 return self.__OneOfClass_details_operation_aborted__(self)
+            case "operation_conflict":
+                return self.__OneOfClass_details_operation_conflict__(self)
             case "too_many_requests":
                 return self.__OneOfClass_details_too_many_requests__(self)
             case "quota_failure":
@@ -225,6 +236,7 @@ class ServiceError(pb_classes.Message):
         permission_denied: "PermissionDenied|error_pb2.PermissionDenied|None|unset.UnsetType" = unset.Unset,
         resource_conflict: "ResourceConflict|error_pb2.ResourceConflict|None|unset.UnsetType" = unset.Unset,
         operation_aborted: "OperationAborted|error_pb2.OperationAborted|None|unset.UnsetType" = unset.Unset,
+        operation_conflict: "OperationConflict|error_pb2.OperationConflict|None|unset.UnsetType" = unset.Unset,
         too_many_requests: "TooManyRequests|error_pb2.TooManyRequests|None|unset.UnsetType" = unset.Unset,
         quota_failure: "QuotaFailure|error_pb2.QuotaFailure|None|unset.UnsetType" = unset.Unset,
         not_enough_resources: "NotEnoughResources|error_pb2.NotEnoughResources|None|unset.UnsetType" = unset.Unset,
@@ -252,6 +264,8 @@ class ServiceError(pb_classes.Message):
             self.resource_conflict = resource_conflict
         if not isinstance(operation_aborted, unset.UnsetType):
             self.operation_aborted = operation_aborted
+        if not isinstance(operation_conflict, unset.UnsetType):
+            self.operation_conflict = operation_conflict
         if not isinstance(too_many_requests, unset.UnsetType):
             self.too_many_requests = too_many_requests
         if not isinstance(quota_failure, unset.UnsetType):
@@ -275,6 +289,7 @@ class ServiceError(pb_classes.Message):
             "permission_denied",
             "resource_conflict",
             "operation_aborted",
+            "operation_conflict",
             "too_many_requests",
             "quota_failure",
             "not_enough_resources",
@@ -393,6 +408,16 @@ class ServiceError(pb_classes.Message):
         )
     
     @builtins.property
+    def operation_conflict(self) -> "OperationConflict|None":
+        return super()._get_field("operation_conflict", explicit_presence=True,
+        wrap=OperationConflict,
+        )
+    @operation_conflict.setter
+    def operation_conflict(self, value: "OperationConflict|error_pb2.OperationConflict|None") -> None:
+        return super()._set_field("operation_conflict",value,explicit_presence=True,
+        )
+    
+    @builtins.property
     def too_many_requests(self) -> "TooManyRequests|None":
         return super()._get_field("too_many_requests", explicit_presence=True,
         wrap=TooManyRequests,
@@ -457,6 +482,7 @@ class ServiceError(pb_classes.Message):
         "permission_denied":"permission_denied",
         "resource_conflict":"resource_conflict",
         "operation_aborted":"operation_aborted",
+        "operation_conflict":"operation_conflict",
         "too_many_requests":"too_many_requests",
         "quota_failure":"quota_failure",
         "not_enough_resources":"not_enough_resources",
@@ -847,6 +873,67 @@ class OperationAborted(pb_classes.Message):
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "operation_id":"operation_id",
         "aborted_by_operation_id":"aborted_by_operation_id",
+        "resource_id":"resource_id",
+    }
+    
+class OperationConflict(pb_classes.Message):
+    """
+    Operation cannot be started because a conflicting operation is already running on the same resource.
+    Wait until the conflicting operation finishes, then you can retry starting your operation.
+    """
+    
+    __PB2_CLASS__ = error_pb2.OperationConflict
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.common.v1.OperationConflict",error_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        conflicting_operation_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        resource_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(conflicting_operation_id, unset.UnsetType):
+            self.conflicting_operation_id = conflicting_operation_id
+        if not isinstance(resource_id, unset.UnsetType):
+            self.resource_id = resource_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "conflicting_operation_id",
+            "resource_id",
+        ]
+    
+    @builtins.property
+    def conflicting_operation_id(self) -> "builtins.str":
+        """
+        ID of the conflicting operation (the one that's running).
+        """
+        
+        return super()._get_field("conflicting_operation_id", explicit_presence=False,
+        )
+    @conflicting_operation_id.setter
+    def conflicting_operation_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("conflicting_operation_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def resource_id(self) -> "builtins.str":
+        """
+        Resource ID corresponding to the conflicting operation.
+        """
+        
+        return super()._get_field("resource_id", explicit_presence=False,
+        )
+    @resource_id.setter
+    def resource_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("resource_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "conflicting_operation_id":"conflicting_operation_id",
         "resource_id":"resource_id",
     }
     
@@ -3036,6 +3123,7 @@ __all__ = [
     "ResourceAlreadyExists",
     "ResourceConflict",
     "OperationAborted",
+    "OperationConflict",
     "OutOfRange",
     "PermissionDenied",
     "InternalError",

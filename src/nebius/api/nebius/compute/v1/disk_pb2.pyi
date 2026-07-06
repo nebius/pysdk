@@ -90,10 +90,12 @@ class DiskStatus(_message.Message):
     AMD64: DiskStatus.SourceImageCPUArchitecture
     ARM64: DiskStatus.SourceImageCPUArchitecture
     class LockState(_message.Message):
-        __slots__ = ["images"]
+        __slots__ = ["images", "snapshots"]
         IMAGES_FIELD_NUMBER: _ClassVar[int]
+        SNAPSHOTS_FIELD_NUMBER: _ClassVar[int]
         images: _containers.RepeatedScalarFieldContainer[str]
-        def __init__(self, images: _Optional[_Iterable[str]] = ...) -> None: ...
+        snapshots: _containers.RepeatedScalarFieldContainer[str]
+        def __init__(self, images: _Optional[_Iterable[str]] = ..., snapshots: _Optional[_Iterable[str]] = ...) -> None: ...
     STATE_FIELD_NUMBER: _ClassVar[int]
     STATE_DESCRIPTION_FIELD_NUMBER: _ClassVar[int]
     READ_WRITE_ATTACHMENT_FIELD_NUMBER: _ClassVar[int]
