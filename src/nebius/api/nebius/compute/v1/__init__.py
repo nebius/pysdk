@@ -4344,14 +4344,25 @@ class ImageSpec(pb_classes.Message):
         def value(self) -> "ImageSpec.SourceStorage":
             return self._message.source_storage
     
+    class __OneOfClass_source_source_disk_snapshot_id__(__OneOfClass_source__):
+        field: typing.Literal["source_disk_snapshot_id"] = "source_disk_snapshot_id"
+        
+        def __init__(self, msg: "ImageSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.source_disk_snapshot_id
+    
     @builtins.property
-    def source(self) -> __OneOfClass_source_source_disk_id__|__OneOfClass_source_source_storage__|None:
+    def source(self) -> __OneOfClass_source_source_disk_id__|__OneOfClass_source_source_storage__|__OneOfClass_source_source_disk_snapshot_id__|None:
         field_name_1: str|None = super().which_field_in_oneof("source")
         match field_name_1:
             case "source_disk_id":
                 return self.__OneOfClass_source_source_disk_id__(self)
             case "source_storage":
                 return self.__OneOfClass_source_source_storage__(self)
+            case "source_disk_snapshot_id":
+                return self.__OneOfClass_source_source_disk_snapshot_id__(self)
             case None:
                 return None
             case _:
@@ -4366,6 +4377,7 @@ class ImageSpec(pb_classes.Message):
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_disk_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_storage: "ImageSpec.SourceStorage|image_pb2.ImageSpec.SourceStorage|None|unset.UnsetType" = unset.Unset,
+        source_disk_snapshot_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         cpu_architecture: "ImageSpec.CPUArchitecture|image_pb2.ImageSpec.CPUArchitecture|None|unset.UnsetType" = unset.Unset,
         image_family_human_readable: "builtins.str|None|unset.UnsetType" = unset.Unset,
         recommended_platforms: "abc.Iterable[builtins.str]|None|unset.UnsetType" = unset.Unset,
@@ -4382,6 +4394,8 @@ class ImageSpec(pb_classes.Message):
             self.source_disk_id = source_disk_id
         if not isinstance(source_storage, unset.UnsetType):
             self.source_storage = source_storage
+        if not isinstance(source_disk_snapshot_id, unset.UnsetType):
+            self.source_disk_snapshot_id = source_disk_snapshot_id
         if not isinstance(cpu_architecture, unset.UnsetType):
             self.cpu_architecture = cpu_architecture
         if not isinstance(image_family_human_readable, unset.UnsetType):
@@ -4398,6 +4412,7 @@ class ImageSpec(pb_classes.Message):
             "version",
             "source_disk_id",
             "source_storage",
+            "source_disk_snapshot_id",
             "cpu_architecture",
             "image_family_human_readable",
             "recommended_platforms",
@@ -4463,6 +4478,15 @@ class ImageSpec(pb_classes.Message):
         )
     
     @builtins.property
+    def source_disk_snapshot_id(self) -> "builtins.str|None":
+        return super()._get_field("source_disk_snapshot_id", explicit_presence=True,
+        )
+    @source_disk_snapshot_id.setter
+    def source_disk_snapshot_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_disk_snapshot_id",value,explicit_presence=True,
+        )
+    
+    @builtins.property
     def cpu_architecture(self) -> "ImageSpec.CPUArchitecture":
         """
         CPU architecture supported by the image
@@ -4523,6 +4547,7 @@ class ImageSpec(pb_classes.Message):
         "version":"version",
         "source_disk_id":"source_disk_id",
         "source_storage":"source_storage",
+        "source_disk_snapshot_id":"source_disk_snapshot_id",
         "cpu_architecture":"cpu_architecture",
         "image_family_human_readable":"image_family_human_readable",
         "recommended_platforms":"recommended_platforms",

@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.mk8s.v1alpha1 import instance_template_pb2 as nebius_dot_mk8s_dot_v1alpha1_dot_instance__template__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%nebius/mk8s/v1alpha1/node_group.proto\x12\x14nebius.mk8s.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a,nebius/mk8s/v1alpha1/instance_template.proto\"\xc3\x01\n\tNodeGroup\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x37\n\x04spec\x18\x02 \x01(\x0b\x32#.nebius.mk8s.v1alpha1.NodeGroupSpecR\x04spec\x12=\n\x06status\x18\x03 \x01(\x0b\x32%.nebius.mk8s.v1alpha1.NodeGroupStatusR\x06status\"\xaa\x03\n\rNodeGroupSpec\x12\x18\n\x07version\x18\x01 \x01(\tR\x07version\x12\x35\n\x10\x66ixed_node_count\x18\x02 \x01(\x03\x42\t\xbaH\x06\"\x04\x18\x64(\x00H\x00R\x0e\x66ixedNodeCount\x12R\n\x0b\x61utoscaling\x18\x05 \x01(\x0b\x32..nebius.mk8s.v1alpha1.NodeGroupAutoscalingSpecH\x00R\x0b\x61utoscaling\x12\x46\n\x08template\x18\x03 \x01(\x0b\x32\".nebius.mk8s.v1alpha1.NodeTemplateB\x06\xbaH\x03\xc8\x01\x01R\x08template\x12M\n\x08strategy\x18\x04 \x01(\x0b\x32\x31.nebius.mk8s.v1alpha1.NodeGroupDeploymentStrategyR\x08strategy\x12N\n\x0b\x61uto_repair\x18\x06 \x01(\x0b\x32-.nebius.mk8s.v1alpha1.NodeGroupAutoRepairSpecR\nautoRepairB\r\n\x04size\x12\x05\xbaH\x02\x08\x01\"\xaa\x06\n\x0cNodeTemplate\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32*.nebius.mk8s.v1alpha1.NodeMetadataTemplateR\x08metadata\x12\x37\n\x06taints\x18\x02 \x03(\x0b\x32\x1f.nebius.mk8s.v1alpha1.NodeTaintR\x06taints\x12I\n\tresources\x18\x03 \x01(\x0b\x32#.nebius.mk8s.v1alpha1.ResourcesSpecB\x06\xbaH\x03\xc8\x01\x01R\tresources\x12\x41\n\tboot_disk\x18\t \x01(\x0b\x32\x1e.nebius.mk8s.v1alpha1.DiskSpecB\x04\xbaJ\x01\x07R\x08\x62ootDisk\x12\x44\n\x0cgpu_settings\x18\r \x01(\x0b\x32!.nebius.mk8s.v1alpha1.GpuSettingsR\x0bgpuSettings\x12\x0e\n\x02os\x18\x10 \x01(\tR\x02os\x12\x45\n\x0bgpu_cluster\x18\x04 \x01(\x0b\x32$.nebius.mk8s.v1alpha1.GpuClusterSpecR\ngpuCluster\x12k\n\x12network_interfaces\x18\x05 \x03(\x0b\x32..nebius.mk8s.v1alpha1.NetworkInterfaceTemplateB\x0c\xbaH\x05\x92\x01\x02\x10\x01\xbaJ\x01\x07R\x11networkInterfaces\x12N\n\x0b\x66ilesystems\x18\x07 \x03(\x0b\x32,.nebius.mk8s.v1alpha1.AttachedFilesystemSpecR\x0b\x66ilesystems\x12\x34\n\x14\x63loud_init_user_data\x18\x06 \x01(\tB\x03\xc0J\x01R\x11\x63loudInitUserData\x12,\n\x12service_account_id\x18\n \x01(\tR\x10serviceAccountId\x12M\n\x0bpreemptible\x18\x0f \x01(\x0b\x32%.nebius.mk8s.v1alpha1.PreemptibleSpecB\x04\xbaJ\x01\x06R\x0bpreemptible\"\xa1\x01\n\x14NodeMetadataTemplate\x12N\n\x06labels\x18\x01 \x03(\x0b\x32\x36.nebius.mk8s.v1alpha1.NodeMetadataTemplate.LabelsEntryR\x06labels\x1a\x39\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\"<\n\x0bGpuSettings\x12-\n\x0e\x64rivers_preset\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\rdriversPreset\" \n\x0eGpuClusterSpec\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\"\x96\x01\n\x18NetworkInterfaceTemplate\x12W\n\x11public_ip_address\x18\x01 \x01(\x0b\x32%.nebius.mk8s.v1alpha1.PublicIPAddressB\x04\xbaJ\x01\x06R\x0fpublicIpAddress\x12!\n\tsubnet_id\x18\x03 \x01(\tB\x04\xbaJ\x01\x07R\x08subnetId\"\x11\n\x0fPublicIPAddress\"\xcd\x02\n\x16\x41ttachedFilesystemSpec\x12`\n\x0b\x61ttach_mode\x18\x01 \x01(\x0e\x32\x37.nebius.mk8s.v1alpha1.AttachedFilesystemSpec.AttachModeB\x06\xbaH\x03\xc8\x01\x01R\nattachMode\x12\'\n\x0b\x64\x65vice_name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\ndeviceName\x12[\n\x13\x65xisting_filesystem\x18\x03 \x01(\x0b\x32(.nebius.mk8s.v1alpha1.ExistingFilesystemH\x00R\x12\x65xistingFilesystem\"<\n\nAttachMode\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02\x42\r\n\x04type\x12\x05\xbaH\x02\x08\x01\",\n\x12\x45xistingFilesystem\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x8f\x02\n\x18NodeGroupAutoscalingSpec\x12/\n\x0emin_node_count\x18\x01 \x01(\x03\x42\t\xbaH\x06\"\x04\x18\x64(\x00R\x0cminNodeCount\x12/\n\x0emax_node_count\x18\x02 \x01(\x03\x42\t\xbaH\x06\"\x04\x18\x64(\x00R\x0cmaxNodeCount:\x90\x01\xbaH\x8c\x01\x1a\x89\x01\n!autoscaling.protovalidate.message\x12\x38min_node_count must be less or equal than max_node_count\x1a*this.min_node_count <= this.max_node_count\"\x11\n\x0fPreemptibleSpec\"\xe6\x01\n\tNodeTaint\x12\x18\n\x03key\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x03key\x12\x1c\n\x05value\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05value\x12\x46\n\x06\x65\x66\x66\x65\x63t\x18\x03 \x01(\x0e\x32&.nebius.mk8s.v1alpha1.NodeTaint.EffectB\x06\xbaH\x03\xc8\x01\x01R\x06\x65\x66\x66\x65\x63t\"Y\n\x06\x45\x66\x66\x65\x63t\x12\x16\n\x12\x45\x46\x46\x45\x43T_UNSPECIFIED\x10\x00\x12\x0e\n\nNO_EXECUTE\x10\x01\x12\x0f\n\x0bNO_SCHEDULE\x10\x02\x12\x16\n\x12PREFER_NO_SCHEDULE\x10\x03\"\xef\x01\n\x1bNodeGroupDeploymentStrategy\x12M\n\x0fmax_unavailable\x18\x01 \x01(\x0b\x32$.nebius.mk8s.v1alpha1.PercentOrCountR\x0emaxUnavailable\x12\x41\n\tmax_surge\x18\x02 \x01(\x0b\x32$.nebius.mk8s.v1alpha1.PercentOrCountR\x08maxSurge\x12>\n\rdrain_timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationR\x0c\x64rainTimeout\"T\n\x0ePercentOrCount\x12\x1a\n\x07percent\x18\x01 \x01(\x03H\x00R\x07percent\x12\x16\n\x05\x63ount\x18\x02 \x01(\x03H\x00R\x05\x63ountB\x0e\n\x05value\x12\x05\xbaH\x02\x08\x01\"h\n\x17NodeGroupAutoRepairSpec\x12M\n\nconditions\x18\x04 \x03(\x0b\x32-.nebius.mk8s.v1alpha1.NodeAutoRepairConditionR\nconditions\"\xdb\x01\n\x17NodeAutoRepairCondition\x12\x1a\n\x04type\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12=\n\x06status\x18\x02 \x01(\x0e\x32%.nebius.mk8s.v1alpha1.ConditionStatusR\x06status\x12\x35\n\x07timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationH\x00R\x07timeout\x12\x1c\n\x08\x64isabled\x18\x04 \x01(\x08H\x00R\x08\x64isabledB\x10\n\x07trigger\x12\x05\xbaH\x02\x08\x01\"\x82\x03\n\x0fNodeGroupStatus\x12\x41\n\x05state\x18\x01 \x01(\x0e\x32+.nebius.mk8s.v1alpha1.NodeGroupStatus.StateR\x05state\x12\x18\n\x07version\x18\x02 \x01(\tR\x07version\x12*\n\x11target_node_count\x18\x03 \x01(\x03R\x0ftargetNodeCount\x12\x1d\n\nnode_count\x18\x04 \x01(\x03R\tnodeCount\x12.\n\x13outdated_node_count\x18\x05 \x01(\x03R\x11outdatedNodeCount\x12(\n\x10ready_node_count\x18\x06 \x01(\x03R\x0ereadyNodeCount\x12 \n\x0breconciling\x18\x64 \x01(\x08R\x0breconciling\"K\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0b\n\x07RUNNING\x10\x02\x12\x0c\n\x08\x44\x45LETING\x10\x03*U\n\x0f\x43onditionStatus\x12 \n\x1c\x43ONDITION_STATUS_UNSPECIFIED\x10\x00\x12\x08\n\x04TRUE\x10\x01\x12\t\n\x05\x46\x41LSE\x10\x02\x12\x0b\n\x07UNKNOWN\x10\x03\x42x\n\x1b\x61i.nebius.pub.mk8s.v1alpha1B\x0eNodeGroupProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mk8s/v1alpha1\xb8\x01\x01\xd2J\x0f\x12\rmigrate to v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%nebius/mk8s/v1alpha1/node_group.proto\x12\x14nebius.mk8s.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a,nebius/mk8s/v1alpha1/instance_template.proto\"\xd5\x01\n\tNodeGroup\x12P\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x10\xe2J\r\x12\x0bmk8sclusterR\x08metadata\x12\x37\n\x04spec\x18\x02 \x01(\x0b\x32#.nebius.mk8s.v1alpha1.NodeGroupSpecR\x04spec\x12=\n\x06status\x18\x03 \x01(\x0b\x32%.nebius.mk8s.v1alpha1.NodeGroupStatusR\x06status\"\xaa\x03\n\rNodeGroupSpec\x12\x18\n\x07version\x18\x01 \x01(\tR\x07version\x12\x35\n\x10\x66ixed_node_count\x18\x02 \x01(\x03\x42\t\xbaH\x06\"\x04\x18\x64(\x00H\x00R\x0e\x66ixedNodeCount\x12R\n\x0b\x61utoscaling\x18\x05 \x01(\x0b\x32..nebius.mk8s.v1alpha1.NodeGroupAutoscalingSpecH\x00R\x0b\x61utoscaling\x12\x46\n\x08template\x18\x03 \x01(\x0b\x32\".nebius.mk8s.v1alpha1.NodeTemplateB\x06\xbaH\x03\xc8\x01\x01R\x08template\x12M\n\x08strategy\x18\x04 \x01(\x0b\x32\x31.nebius.mk8s.v1alpha1.NodeGroupDeploymentStrategyR\x08strategy\x12N\n\x0b\x61uto_repair\x18\x06 \x01(\x0b\x32-.nebius.mk8s.v1alpha1.NodeGroupAutoRepairSpecR\nautoRepairB\r\n\x04size\x12\x05\xbaH\x02\x08\x01\"\xbf\x06\n\x0cNodeTemplate\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32*.nebius.mk8s.v1alpha1.NodeMetadataTemplateR\x08metadata\x12\x37\n\x06taints\x18\x02 \x03(\x0b\x32\x1f.nebius.mk8s.v1alpha1.NodeTaintR\x06taints\x12I\n\tresources\x18\x03 \x01(\x0b\x32#.nebius.mk8s.v1alpha1.ResourcesSpecB\x06\xbaH\x03\xc8\x01\x01R\tresources\x12\x41\n\tboot_disk\x18\t \x01(\x0b\x32\x1e.nebius.mk8s.v1alpha1.DiskSpecB\x04\xbaJ\x01\x07R\x08\x62ootDisk\x12\x44\n\x0cgpu_settings\x18\r \x01(\x0b\x32!.nebius.mk8s.v1alpha1.GpuSettingsR\x0bgpuSettings\x12\x0e\n\x02os\x18\x10 \x01(\tR\x02os\x12\x45\n\x0bgpu_cluster\x18\x04 \x01(\x0b\x32$.nebius.mk8s.v1alpha1.GpuClusterSpecR\ngpuCluster\x12k\n\x12network_interfaces\x18\x05 \x03(\x0b\x32..nebius.mk8s.v1alpha1.NetworkInterfaceTemplateB\x0c\xbaH\x05\x92\x01\x02\x10\x01\xbaJ\x01\x07R\x11networkInterfaces\x12N\n\x0b\x66ilesystems\x18\x07 \x03(\x0b\x32,.nebius.mk8s.v1alpha1.AttachedFilesystemSpecR\x0b\x66ilesystems\x12\x34\n\x14\x63loud_init_user_data\x18\x06 \x01(\tB\x03\xc0J\x01R\x11\x63loudInitUserData\x12\x41\n\x12service_account_id\x18\n \x01(\tB\x13\xe2J\x10\n\x0eserviceaccountR\x10serviceAccountId\x12M\n\x0bpreemptible\x18\x0f \x01(\x0b\x32%.nebius.mk8s.v1alpha1.PreemptibleSpecB\x04\xbaJ\x01\x06R\x0bpreemptible\"\xa1\x01\n\x14NodeMetadataTemplate\x12N\n\x06labels\x18\x01 \x03(\x0b\x32\x36.nebius.mk8s.v1alpha1.NodeMetadataTemplate.LabelsEntryR\x06labels\x1a\x39\n\x0bLabelsEntry\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n\x05value\x18\x02 \x01(\tR\x05value:\x02\x38\x01\"<\n\x0bGpuSettings\x12-\n\x0e\x64rivers_preset\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\rdriversPreset\"8\n\x0eGpuClusterSpec\x12&\n\x02id\x18\x01 \x01(\tB\x16\xe2J\x13\n\x11\x63omputegpuclusterR\x02id\"\xa4\x01\n\x18NetworkInterfaceTemplate\x12W\n\x11public_ip_address\x18\x01 \x01(\x0b\x32%.nebius.mk8s.v1alpha1.PublicIPAddressB\x04\xbaJ\x01\x06R\x0fpublicIpAddress\x12/\n\tsubnet_id\x18\x03 \x01(\tB\x12\xbaJ\x01\x07\xe2J\x0b\n\tvpcsubnetR\x08subnetId\"\x11\n\x0fPublicIPAddress\"\xcd\x02\n\x16\x41ttachedFilesystemSpec\x12`\n\x0b\x61ttach_mode\x18\x01 \x01(\x0e\x32\x37.nebius.mk8s.v1alpha1.AttachedFilesystemSpec.AttachModeB\x06\xbaH\x03\xc8\x01\x01R\nattachMode\x12\'\n\x0b\x64\x65vice_name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\ndeviceName\x12[\n\x13\x65xisting_filesystem\x18\x03 \x01(\x0b\x32(.nebius.mk8s.v1alpha1.ExistingFilesystemH\x00R\x12\x65xistingFilesystem\"<\n\nAttachMode\x12\x0f\n\x0bUNSPECIFIED\x10\x00\x12\r\n\tREAD_ONLY\x10\x01\x12\x0e\n\nREAD_WRITE\x10\x02\x42\r\n\x04type\x12\x05\xbaH\x02\x08\x01\"B\n\x12\x45xistingFilesystem\x12,\n\x02id\x18\x01 \x01(\tB\x1c\xbaH\x03\xc8\x01\x01\xe2J\x13\n\x11\x63omputefilesystemR\x02id\"\x8f\x02\n\x18NodeGroupAutoscalingSpec\x12/\n\x0emin_node_count\x18\x01 \x01(\x03\x42\t\xbaH\x06\"\x04\x18\x64(\x00R\x0cminNodeCount\x12/\n\x0emax_node_count\x18\x02 \x01(\x03\x42\t\xbaH\x06\"\x04\x18\x64(\x00R\x0cmaxNodeCount:\x90\x01\xbaH\x8c\x01\x1a\x89\x01\n!autoscaling.protovalidate.message\x12\x38min_node_count must be less or equal than max_node_count\x1a*this.min_node_count <= this.max_node_count\"\x11\n\x0fPreemptibleSpec\"\xe6\x01\n\tNodeTaint\x12\x18\n\x03key\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x03key\x12\x1c\n\x05value\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x05value\x12\x46\n\x06\x65\x66\x66\x65\x63t\x18\x03 \x01(\x0e\x32&.nebius.mk8s.v1alpha1.NodeTaint.EffectB\x06\xbaH\x03\xc8\x01\x01R\x06\x65\x66\x66\x65\x63t\"Y\n\x06\x45\x66\x66\x65\x63t\x12\x16\n\x12\x45\x46\x46\x45\x43T_UNSPECIFIED\x10\x00\x12\x0e\n\nNO_EXECUTE\x10\x01\x12\x0f\n\x0bNO_SCHEDULE\x10\x02\x12\x16\n\x12PREFER_NO_SCHEDULE\x10\x03\"\xef\x01\n\x1bNodeGroupDeploymentStrategy\x12M\n\x0fmax_unavailable\x18\x01 \x01(\x0b\x32$.nebius.mk8s.v1alpha1.PercentOrCountR\x0emaxUnavailable\x12\x41\n\tmax_surge\x18\x02 \x01(\x0b\x32$.nebius.mk8s.v1alpha1.PercentOrCountR\x08maxSurge\x12>\n\rdrain_timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationR\x0c\x64rainTimeout\"T\n\x0ePercentOrCount\x12\x1a\n\x07percent\x18\x01 \x01(\x03H\x00R\x07percent\x12\x16\n\x05\x63ount\x18\x02 \x01(\x03H\x00R\x05\x63ountB\x0e\n\x05value\x12\x05\xbaH\x02\x08\x01\"h\n\x17NodeGroupAutoRepairSpec\x12M\n\nconditions\x18\x04 \x03(\x0b\x32-.nebius.mk8s.v1alpha1.NodeAutoRepairConditionR\nconditions\"\xdb\x01\n\x17NodeAutoRepairCondition\x12\x1a\n\x04type\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04type\x12=\n\x06status\x18\x02 \x01(\x0e\x32%.nebius.mk8s.v1alpha1.ConditionStatusR\x06status\x12\x35\n\x07timeout\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationH\x00R\x07timeout\x12\x1c\n\x08\x64isabled\x18\x04 \x01(\x08H\x00R\x08\x64isabledB\x10\n\x07trigger\x12\x05\xbaH\x02\x08\x01\"\x82\x03\n\x0fNodeGroupStatus\x12\x41\n\x05state\x18\x01 \x01(\x0e\x32+.nebius.mk8s.v1alpha1.NodeGroupStatus.StateR\x05state\x12\x18\n\x07version\x18\x02 \x01(\tR\x07version\x12*\n\x11target_node_count\x18\x03 \x01(\x03R\x0ftargetNodeCount\x12\x1d\n\nnode_count\x18\x04 \x01(\x03R\tnodeCount\x12.\n\x13outdated_node_count\x18\x05 \x01(\x03R\x11outdatedNodeCount\x12(\n\x10ready_node_count\x18\x06 \x01(\x03R\x0ereadyNodeCount\x12 \n\x0breconciling\x18\x64 \x01(\x08R\x0breconciling\"K\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0b\n\x07RUNNING\x10\x02\x12\x0c\n\x08\x44\x45LETING\x10\x03*U\n\x0f\x43onditionStatus\x12 \n\x1c\x43ONDITION_STATUS_UNSPECIFIED\x10\x00\x12\x08\n\x04TRUE\x10\x01\x12\t\n\x05\x46\x41LSE\x10\x02\x12\x0b\n\x07UNKNOWN\x10\x03\x42x\n\x1b\x61i.nebius.pub.mk8s.v1alpha1B\x0eNodeGroupProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mk8s/v1alpha1\xb8\x01\x01\xd2J\x0f\x12\rmigrate to v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -27,6 +27,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\033ai.nebius.pub.mk8s.v1alpha1B\016NodeGroupProtoP\001Z2github.com/nebius/gosdk/proto/nebius/mk8s/v1alpha1\270\001\001\322J\017\022\rmigrate to v1'
+  _NODEGROUP.fields_by_name['metadata']._options = None
+  _NODEGROUP.fields_by_name['metadata']._serialized_options = b'\342J\r\022\013mk8scluster'
   _NODEGROUPSPEC.oneofs_by_name['size']._options = None
   _NODEGROUPSPEC.oneofs_by_name['size']._serialized_options = b'\272H\002\010\001'
   _NODEGROUPSPEC.fields_by_name['fixed_node_count']._options = None
@@ -41,16 +43,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _NODETEMPLATE.fields_by_name['network_interfaces']._serialized_options = b'\272H\005\222\001\002\020\001\272J\001\007'
   _NODETEMPLATE.fields_by_name['cloud_init_user_data']._options = None
   _NODETEMPLATE.fields_by_name['cloud_init_user_data']._serialized_options = b'\300J\001'
+  _NODETEMPLATE.fields_by_name['service_account_id']._options = None
+  _NODETEMPLATE.fields_by_name['service_account_id']._serialized_options = b'\342J\020\n\016serviceaccount'
   _NODETEMPLATE.fields_by_name['preemptible']._options = None
   _NODETEMPLATE.fields_by_name['preemptible']._serialized_options = b'\272J\001\006'
   _NODEMETADATATEMPLATE_LABELSENTRY._options = None
   _NODEMETADATATEMPLATE_LABELSENTRY._serialized_options = b'8\001'
   _GPUSETTINGS.fields_by_name['drivers_preset']._options = None
   _GPUSETTINGS.fields_by_name['drivers_preset']._serialized_options = b'\272H\003\310\001\001'
+  _GPUCLUSTERSPEC.fields_by_name['id']._options = None
+  _GPUCLUSTERSPEC.fields_by_name['id']._serialized_options = b'\342J\023\n\021computegpucluster'
   _NETWORKINTERFACETEMPLATE.fields_by_name['public_ip_address']._options = None
   _NETWORKINTERFACETEMPLATE.fields_by_name['public_ip_address']._serialized_options = b'\272J\001\006'
   _NETWORKINTERFACETEMPLATE.fields_by_name['subnet_id']._options = None
-  _NETWORKINTERFACETEMPLATE.fields_by_name['subnet_id']._serialized_options = b'\272J\001\007'
+  _NETWORKINTERFACETEMPLATE.fields_by_name['subnet_id']._serialized_options = b'\272J\001\007\342J\013\n\tvpcsubnet'
   _ATTACHEDFILESYSTEMSPEC.oneofs_by_name['type']._options = None
   _ATTACHEDFILESYSTEMSPEC.oneofs_by_name['type']._serialized_options = b'\272H\002\010\001'
   _ATTACHEDFILESYSTEMSPEC.fields_by_name['attach_mode']._options = None
@@ -58,7 +64,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _ATTACHEDFILESYSTEMSPEC.fields_by_name['device_name']._options = None
   _ATTACHEDFILESYSTEMSPEC.fields_by_name['device_name']._serialized_options = b'\272H\003\310\001\001'
   _EXISTINGFILESYSTEM.fields_by_name['id']._options = None
-  _EXISTINGFILESYSTEM.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _EXISTINGFILESYSTEM.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\023\n\021computefilesystem'
   _NODEGROUPAUTOSCALINGSPEC.fields_by_name['min_node_count']._options = None
   _NODEGROUPAUTOSCALINGSPEC.fields_by_name['min_node_count']._serialized_options = b'\272H\006\"\004\030d(\000'
   _NODEGROUPAUTOSCALINGSPEC.fields_by_name['max_node_count']._options = None
@@ -77,50 +83,50 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _NODEAUTOREPAIRCONDITION.oneofs_by_name['trigger']._serialized_options = b'\272H\002\010\001'
   _NODEAUTOREPAIRCONDITION.fields_by_name['type']._options = None
   _NODEAUTOREPAIRCONDITION.fields_by_name['type']._serialized_options = b'\272H\003\310\001\001'
-  _globals['_CONDITIONSTATUS']._serialized_start=4054
-  _globals['_CONDITIONSTATUS']._serialized_end=4139
+  _globals['_CONDITIONSTATUS']._serialized_start=4153
+  _globals['_CONDITIONSTATUS']._serialized_end=4238
   _globals['_NODEGROUP']._serialized_start=230
-  _globals['_NODEGROUP']._serialized_end=425
-  _globals['_NODEGROUPSPEC']._serialized_start=428
-  _globals['_NODEGROUPSPEC']._serialized_end=854
-  _globals['_NODETEMPLATE']._serialized_start=857
-  _globals['_NODETEMPLATE']._serialized_end=1667
-  _globals['_NODEMETADATATEMPLATE']._serialized_start=1670
-  _globals['_NODEMETADATATEMPLATE']._serialized_end=1831
-  _globals['_NODEMETADATATEMPLATE_LABELSENTRY']._serialized_start=1774
-  _globals['_NODEMETADATATEMPLATE_LABELSENTRY']._serialized_end=1831
-  _globals['_GPUSETTINGS']._serialized_start=1833
-  _globals['_GPUSETTINGS']._serialized_end=1893
-  _globals['_GPUCLUSTERSPEC']._serialized_start=1895
-  _globals['_GPUCLUSTERSPEC']._serialized_end=1927
-  _globals['_NETWORKINTERFACETEMPLATE']._serialized_start=1930
-  _globals['_NETWORKINTERFACETEMPLATE']._serialized_end=2080
-  _globals['_PUBLICIPADDRESS']._serialized_start=2082
-  _globals['_PUBLICIPADDRESS']._serialized_end=2099
-  _globals['_ATTACHEDFILESYSTEMSPEC']._serialized_start=2102
-  _globals['_ATTACHEDFILESYSTEMSPEC']._serialized_end=2435
-  _globals['_ATTACHEDFILESYSTEMSPEC_ATTACHMODE']._serialized_start=2360
-  _globals['_ATTACHEDFILESYSTEMSPEC_ATTACHMODE']._serialized_end=2420
-  _globals['_EXISTINGFILESYSTEM']._serialized_start=2437
-  _globals['_EXISTINGFILESYSTEM']._serialized_end=2481
-  _globals['_NODEGROUPAUTOSCALINGSPEC']._serialized_start=2484
-  _globals['_NODEGROUPAUTOSCALINGSPEC']._serialized_end=2755
-  _globals['_PREEMPTIBLESPEC']._serialized_start=2757
-  _globals['_PREEMPTIBLESPEC']._serialized_end=2774
-  _globals['_NODETAINT']._serialized_start=2777
-  _globals['_NODETAINT']._serialized_end=3007
-  _globals['_NODETAINT_EFFECT']._serialized_start=2918
-  _globals['_NODETAINT_EFFECT']._serialized_end=3007
-  _globals['_NODEGROUPDEPLOYMENTSTRATEGY']._serialized_start=3010
-  _globals['_NODEGROUPDEPLOYMENTSTRATEGY']._serialized_end=3249
-  _globals['_PERCENTORCOUNT']._serialized_start=3251
-  _globals['_PERCENTORCOUNT']._serialized_end=3335
-  _globals['_NODEGROUPAUTOREPAIRSPEC']._serialized_start=3337
-  _globals['_NODEGROUPAUTOREPAIRSPEC']._serialized_end=3441
-  _globals['_NODEAUTOREPAIRCONDITION']._serialized_start=3444
-  _globals['_NODEAUTOREPAIRCONDITION']._serialized_end=3663
-  _globals['_NODEGROUPSTATUS']._serialized_start=3666
-  _globals['_NODEGROUPSTATUS']._serialized_end=4052
-  _globals['_NODEGROUPSTATUS_STATE']._serialized_start=3977
-  _globals['_NODEGROUPSTATUS_STATE']._serialized_end=4052
+  _globals['_NODEGROUP']._serialized_end=443
+  _globals['_NODEGROUPSPEC']._serialized_start=446
+  _globals['_NODEGROUPSPEC']._serialized_end=872
+  _globals['_NODETEMPLATE']._serialized_start=875
+  _globals['_NODETEMPLATE']._serialized_end=1706
+  _globals['_NODEMETADATATEMPLATE']._serialized_start=1709
+  _globals['_NODEMETADATATEMPLATE']._serialized_end=1870
+  _globals['_NODEMETADATATEMPLATE_LABELSENTRY']._serialized_start=1813
+  _globals['_NODEMETADATATEMPLATE_LABELSENTRY']._serialized_end=1870
+  _globals['_GPUSETTINGS']._serialized_start=1872
+  _globals['_GPUSETTINGS']._serialized_end=1932
+  _globals['_GPUCLUSTERSPEC']._serialized_start=1934
+  _globals['_GPUCLUSTERSPEC']._serialized_end=1990
+  _globals['_NETWORKINTERFACETEMPLATE']._serialized_start=1993
+  _globals['_NETWORKINTERFACETEMPLATE']._serialized_end=2157
+  _globals['_PUBLICIPADDRESS']._serialized_start=2159
+  _globals['_PUBLICIPADDRESS']._serialized_end=2176
+  _globals['_ATTACHEDFILESYSTEMSPEC']._serialized_start=2179
+  _globals['_ATTACHEDFILESYSTEMSPEC']._serialized_end=2512
+  _globals['_ATTACHEDFILESYSTEMSPEC_ATTACHMODE']._serialized_start=2437
+  _globals['_ATTACHEDFILESYSTEMSPEC_ATTACHMODE']._serialized_end=2497
+  _globals['_EXISTINGFILESYSTEM']._serialized_start=2514
+  _globals['_EXISTINGFILESYSTEM']._serialized_end=2580
+  _globals['_NODEGROUPAUTOSCALINGSPEC']._serialized_start=2583
+  _globals['_NODEGROUPAUTOSCALINGSPEC']._serialized_end=2854
+  _globals['_PREEMPTIBLESPEC']._serialized_start=2856
+  _globals['_PREEMPTIBLESPEC']._serialized_end=2873
+  _globals['_NODETAINT']._serialized_start=2876
+  _globals['_NODETAINT']._serialized_end=3106
+  _globals['_NODETAINT_EFFECT']._serialized_start=3017
+  _globals['_NODETAINT_EFFECT']._serialized_end=3106
+  _globals['_NODEGROUPDEPLOYMENTSTRATEGY']._serialized_start=3109
+  _globals['_NODEGROUPDEPLOYMENTSTRATEGY']._serialized_end=3348
+  _globals['_PERCENTORCOUNT']._serialized_start=3350
+  _globals['_PERCENTORCOUNT']._serialized_end=3434
+  _globals['_NODEGROUPAUTOREPAIRSPEC']._serialized_start=3436
+  _globals['_NODEGROUPAUTOREPAIRSPEC']._serialized_end=3540
+  _globals['_NODEAUTOREPAIRCONDITION']._serialized_start=3543
+  _globals['_NODEAUTOREPAIRCONDITION']._serialized_end=3762
+  _globals['_NODEGROUPSTATUS']._serialized_start=3765
+  _globals['_NODEGROUPSTATUS']._serialized_end=4151
+  _globals['_NODEGROUPSTATUS_STATE']._serialized_start=4076
+  _globals['_NODEGROUPSTATUS_STATE']._serialized_end=4151
 # @@protoc_insertion_point(module_scope)

@@ -17,7 +17,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.common.v1 import resource_event_pb2 as nebius_dot_common_dot_v1_dot_resource__event__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1cnebius/mk8s/v1/cluster.proto\x12\x0enebius.mk8s.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a%nebius/common/v1/resource_event.proto\"\xbe\x03\n\x07\x43luster\x12\xca\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x89\x02\xbaH\x85\x02\xba\x01\x81\x02\n\rmetadata_name\x12|\'name\' must be 1 to 63 characters long and use only letters, digits, \'-\', or \'_\', starting and ending with a letter or digit\x1arsize(this.name) >= 1 && size(this.name) <= 63 && this.name.matches(\'^(([A-Za-z0-9][-A-Za-z0-9_]*)?[A-Za-z0-9])?$\')R\x08metadata\x12/\n\x04spec\x18\x02 \x01(\x0b\x32\x1b.nebius.mk8s.v1.ClusterSpecR\x04spec\x12\x35\n\x06status\x18\x03 \x01(\x0b\x32\x1d.nebius.mk8s.v1.ClusterStatusR\x06status\"\xa0\x01\n\x0b\x43lusterSpec\x12M\n\rcontrol_plane\x18\x02 \x01(\x0b\x32 .nebius.mk8s.v1.ControlPlaneSpecB\x06\xbaH\x03\xc8\x01\x01R\x0c\x63ontrolPlane\x12\x42\n\x0ckube_network\x18\x03 \x01(\x0b\x32\x1f.nebius.mk8s.v1.KubeNetworkSpecR\x0bkubeNetwork\"\xee\x02\n\x10\x43ontrolPlaneSpec\x12,\n\x07version\x18\x01 \x01(\tB\x12\xbaH\x0fr\r2\x0b|^\\d\\.\\d\\d$R\x07version\x12\'\n\tsubnet_id\x18\x02 \x01(\tB\n\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02R\x08subnetId\x12G\n\tendpoints\x18\x03 \x01(\x0b\x32).nebius.mk8s.v1.ControlPlaneEndpointsSpecR\tendpoints\x12\x37\n\x11\x65tcd_cluster_size\x18\x04 \x01(\x03\x42\x0b\xbaH\x08\"\x06\x30\x00\x30\x01\x30\x03R\x0f\x65tcdClusterSize\x12\x42\n\naudit_logs\x18\x05 \x01(\x0b\x32\x1d.nebius.mk8s.v1.AuditLogsSpecB\x04\xbaJ\x01\x06R\tauditLogs\x12=\n\tkarpenter\x18\x06 \x01(\x0b\x32\x19.nebius.mk8s.v1.KarpenterB\x04\xbaJ\x01\x06R\tkarpenter\"n\n\x19\x43ontrolPlaneEndpointsSpec\x12Q\n\x0fpublic_endpoint\x18\x01 \x01(\x0b\x32\".nebius.mk8s.v1.PublicEndpointSpecB\x04\xbaJ\x01\x06R\x0epublicEndpoint\"\x8d\x02\n\x12PublicEndpointSpec\x12\xf6\x01\n\rallowed_cidrs\x18\x02 \x03(\tB\xd0\x01\xbaH\xcc\x01\x92\x01\xc8\x01\"\xc5\x01\xba\x01\xc1\x01\n\x16string.valid_ipv4_cidr\x12\x8c\x01Value must be a valid IPv4 CIDR, the prefix must have all zeros for the masked bits of the prefix (e.g. `127.0.0.0/16`, not `127.0.0.1/16`).\x1a\x18this.isIpPrefix(4, true)R\x0c\x61llowedCidrs\"\xd1\x01\n\x0fKubeNetworkSpec\x12\xbd\x01\n\rservice_cidrs\x18\x01 \x03(\tB\x97\x01\xbaH\x8f\x01\xba\x01\x86\x01\n\x11string.valid_cidr\x12?value must be a CIDR block or prefix length from \"/12\" to \"/28\"\x1a\x30this.all(x, x.matches(\'^(.*)/(1[2-9]|2[0-8])$\'))\x92\x01\x02\x10\x01\xbaJ\x01\x02R\x0cserviceCidrs\"\x0f\n\rAuditLogsSpec\"\x0b\n\tKarpenter\"\xc4\x02\n\rClusterStatus\x12\x39\n\x05state\x18\x01 \x01(\x0e\x32#.nebius.mk8s.v1.ClusterStatus.StateR\x05state\x12G\n\rcontrol_plane\x18\x02 \x01(\x0b\x32\".nebius.mk8s.v1.ControlPlaneStatusR\x0c\x63ontrolPlane\x12@\n\x06\x65vents\x18\x03 \x03(\x0b\x32(.nebius.common.v1.RecurrentResourceEventR\x06\x65vents\x12 \n\x0breconciling\x18\x64 \x01(\x08R\x0breconciling\"K\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0b\n\x07RUNNING\x10\x02\x12\x0c\n\x08\x44\x45LETING\x10\x03\"\xe1\x01\n\x12\x43ontrolPlaneStatus\x12\x18\n\x07version\x18\x01 \x01(\tR\x07version\x12I\n\tendpoints\x18\x02 \x01(\x0b\x32+.nebius.mk8s.v1.ControlPlaneStatusEndpointsR\tendpoints\x12*\n\x11\x65tcd_cluster_size\x18\x03 \x01(\x03R\x0f\x65tcdClusterSize\x12:\n\x04\x61uth\x18\x64 \x01(\x0b\x32&.nebius.mk8s.v1.ControlPlaneStatusAuthR\x04\x61uth\"q\n\x1b\x43ontrolPlaneStatusEndpoints\x12\'\n\x0fpublic_endpoint\x18\x01 \x01(\tR\x0epublicEndpoint\x12)\n\x10private_endpoint\x18\x02 \x01(\tR\x0fprivateEndpoint\"N\n\x16\x43ontrolPlaneStatusAuth\x12\x34\n\x16\x63luster_ca_certificate\x18\x01 \x01(\tR\x14\x63lusterCaCertificateBU\n\x15\x61i.nebius.pub.mk8s.v1B\x0c\x43lusterProtoP\x01Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1cnebius/mk8s/v1/cluster.proto\x12\x0enebius.mk8s.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a%nebius/common/v1/resource_event.proto\"\xca\x03\n\x07\x43luster\x12\xd6\x02\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x95\x02\xbaH\x85\x02\xba\x01\x81\x02\n\rmetadata_name\x12|\'name\' must be 1 to 63 characters long and use only letters, digits, \'-\', or \'_\', starting and ending with a letter or digit\x1arsize(this.name) >= 1 && size(this.name) <= 63 && this.name.matches(\'^(([A-Za-z0-9][-A-Za-z0-9_]*)?[A-Za-z0-9])?$\')\xe2J\t\x12\x07projectR\x08metadata\x12/\n\x04spec\x18\x02 \x01(\x0b\x32\x1b.nebius.mk8s.v1.ClusterSpecR\x04spec\x12\x35\n\x06status\x18\x03 \x01(\x0b\x32\x1d.nebius.mk8s.v1.ClusterStatusR\x06status\"\xa0\x01\n\x0b\x43lusterSpec\x12M\n\rcontrol_plane\x18\x02 \x01(\x0b\x32 .nebius.mk8s.v1.ControlPlaneSpecB\x06\xbaH\x03\xc8\x01\x01R\x0c\x63ontrolPlane\x12\x42\n\x0ckube_network\x18\x03 \x01(\x0b\x32\x1f.nebius.mk8s.v1.KubeNetworkSpecR\x0bkubeNetwork\"\xfc\x02\n\x10\x43ontrolPlaneSpec\x12,\n\x07version\x18\x01 \x01(\tB\x12\xbaH\x0fr\r2\x0b|^\\d\\.\\d\\d$R\x07version\x12\x35\n\tsubnet_id\x18\x02 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xbaJ\x01\x02\xe2J\x0b\n\tvpcsubnetR\x08subnetId\x12G\n\tendpoints\x18\x03 \x01(\x0b\x32).nebius.mk8s.v1.ControlPlaneEndpointsSpecR\tendpoints\x12\x37\n\x11\x65tcd_cluster_size\x18\x04 \x01(\x03\x42\x0b\xbaH\x08\"\x06\x30\x00\x30\x01\x30\x03R\x0f\x65tcdClusterSize\x12\x42\n\naudit_logs\x18\x05 \x01(\x0b\x32\x1d.nebius.mk8s.v1.AuditLogsSpecB\x04\xbaJ\x01\x06R\tauditLogs\x12=\n\tkarpenter\x18\x06 \x01(\x0b\x32\x19.nebius.mk8s.v1.KarpenterB\x04\xbaJ\x01\x06R\tkarpenter\"n\n\x19\x43ontrolPlaneEndpointsSpec\x12Q\n\x0fpublic_endpoint\x18\x01 \x01(\x0b\x32\".nebius.mk8s.v1.PublicEndpointSpecB\x04\xbaJ\x01\x06R\x0epublicEndpoint\"\x8d\x02\n\x12PublicEndpointSpec\x12\xf6\x01\n\rallowed_cidrs\x18\x02 \x03(\tB\xd0\x01\xbaH\xcc\x01\x92\x01\xc8\x01\"\xc5\x01\xba\x01\xc1\x01\n\x16string.valid_ipv4_cidr\x12\x8c\x01Value must be a valid IPv4 CIDR, the prefix must have all zeros for the masked bits of the prefix (e.g. `127.0.0.0/16`, not `127.0.0.1/16`).\x1a\x18this.isIpPrefix(4, true)R\x0c\x61llowedCidrs\"\xd1\x01\n\x0fKubeNetworkSpec\x12\xbd\x01\n\rservice_cidrs\x18\x01 \x03(\tB\x97\x01\xbaH\x8f\x01\xba\x01\x86\x01\n\x11string.valid_cidr\x12?value must be a CIDR block or prefix length from \"/12\" to \"/28\"\x1a\x30this.all(x, x.matches(\'^(.*)/(1[2-9]|2[0-8])$\'))\x92\x01\x02\x10\x01\xbaJ\x01\x02R\x0cserviceCidrs\"\x0f\n\rAuditLogsSpec\"\x0b\n\tKarpenter\"\xc4\x02\n\rClusterStatus\x12\x39\n\x05state\x18\x01 \x01(\x0e\x32#.nebius.mk8s.v1.ClusterStatus.StateR\x05state\x12G\n\rcontrol_plane\x18\x02 \x01(\x0b\x32\".nebius.mk8s.v1.ControlPlaneStatusR\x0c\x63ontrolPlane\x12@\n\x06\x65vents\x18\x03 \x03(\x0b\x32(.nebius.common.v1.RecurrentResourceEventR\x06\x65vents\x12 \n\x0breconciling\x18\x64 \x01(\x08R\x0breconciling\"K\n\x05State\x12\x15\n\x11STATE_UNSPECIFIED\x10\x00\x12\x10\n\x0cPROVISIONING\x10\x01\x12\x0b\n\x07RUNNING\x10\x02\x12\x0c\n\x08\x44\x45LETING\x10\x03\"\xe1\x01\n\x12\x43ontrolPlaneStatus\x12\x18\n\x07version\x18\x01 \x01(\tR\x07version\x12I\n\tendpoints\x18\x02 \x01(\x0b\x32+.nebius.mk8s.v1.ControlPlaneStatusEndpointsR\tendpoints\x12*\n\x11\x65tcd_cluster_size\x18\x03 \x01(\x03R\x0f\x65tcdClusterSize\x12:\n\x04\x61uth\x18\x64 \x01(\x0b\x32&.nebius.mk8s.v1.ControlPlaneStatusAuthR\x04\x61uth\"q\n\x1b\x43ontrolPlaneStatusEndpoints\x12\'\n\x0fpublic_endpoint\x18\x01 \x01(\tR\x0epublicEndpoint\x12)\n\x10private_endpoint\x18\x02 \x01(\tR\x0fprivateEndpoint\"N\n\x16\x43ontrolPlaneStatusAuth\x12\x34\n\x16\x63luster_ca_certificate\x18\x01 \x01(\tR\x14\x63lusterCaCertificateBU\n\x15\x61i.nebius.pub.mk8s.v1B\x0c\x43lusterProtoP\x01Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -27,13 +27,13 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\025ai.nebius.pub.mk8s.v1B\014ClusterProtoP\001Z,github.com/nebius/gosdk/proto/nebius/mk8s/v1'
   _CLUSTER.fields_by_name['metadata']._options = None
-  _CLUSTER.fields_by_name['metadata']._serialized_options = b'\272H\205\002\272\001\201\002\n\rmetadata_name\022|\'name\' must be 1 to 63 characters long and use only letters, digits, \'-\', or \'_\', starting and ending with a letter or digit\032rsize(this.name) >= 1 && size(this.name) <= 63 && this.name.matches(\'^(([A-Za-z0-9][-A-Za-z0-9_]*)?[A-Za-z0-9])?$\')'
+  _CLUSTER.fields_by_name['metadata']._serialized_options = b'\272H\205\002\272\001\201\002\n\rmetadata_name\022|\'name\' must be 1 to 63 characters long and use only letters, digits, \'-\', or \'_\', starting and ending with a letter or digit\032rsize(this.name) >= 1 && size(this.name) <= 63 && this.name.matches(\'^(([A-Za-z0-9][-A-Za-z0-9_]*)?[A-Za-z0-9])?$\')\342J\t\022\007project'
   _CLUSTERSPEC.fields_by_name['control_plane']._options = None
   _CLUSTERSPEC.fields_by_name['control_plane']._serialized_options = b'\272H\003\310\001\001'
   _CONTROLPLANESPEC.fields_by_name['version']._options = None
   _CONTROLPLANESPEC.fields_by_name['version']._serialized_options = b'\272H\017r\r2\013|^\\d\\.\\d\\d$'
   _CONTROLPLANESPEC.fields_by_name['subnet_id']._options = None
-  _CONTROLPLANESPEC.fields_by_name['subnet_id']._serialized_options = b'\272H\003\310\001\001\272J\001\002'
+  _CONTROLPLANESPEC.fields_by_name['subnet_id']._serialized_options = b'\272H\003\310\001\001\272J\001\002\342J\013\n\tvpcsubnet'
   _CONTROLPLANESPEC.fields_by_name['etcd_cluster_size']._options = None
   _CONTROLPLANESPEC.fields_by_name['etcd_cluster_size']._serialized_options = b'\272H\010\"\0060\0000\0010\003'
   _CONTROLPLANESPEC.fields_by_name['audit_logs']._options = None
@@ -47,29 +47,29 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _KUBENETWORKSPEC.fields_by_name['service_cidrs']._options = None
   _KUBENETWORKSPEC.fields_by_name['service_cidrs']._serialized_options = b'\272H\217\001\272\001\206\001\n\021string.valid_cidr\022?value must be a CIDR block or prefix length from \"/12\" to \"/28\"\0320this.all(x, x.matches(\'^(.*)/(1[2-9]|2[0-8])$\'))\222\001\002\020\001\272J\001\002'
   _globals['_CLUSTER']._serialized_start=176
-  _globals['_CLUSTER']._serialized_end=622
-  _globals['_CLUSTERSPEC']._serialized_start=625
-  _globals['_CLUSTERSPEC']._serialized_end=785
-  _globals['_CONTROLPLANESPEC']._serialized_start=788
-  _globals['_CONTROLPLANESPEC']._serialized_end=1154
-  _globals['_CONTROLPLANEENDPOINTSSPEC']._serialized_start=1156
-  _globals['_CONTROLPLANEENDPOINTSSPEC']._serialized_end=1266
-  _globals['_PUBLICENDPOINTSPEC']._serialized_start=1269
-  _globals['_PUBLICENDPOINTSPEC']._serialized_end=1538
-  _globals['_KUBENETWORKSPEC']._serialized_start=1541
-  _globals['_KUBENETWORKSPEC']._serialized_end=1750
-  _globals['_AUDITLOGSSPEC']._serialized_start=1752
-  _globals['_AUDITLOGSSPEC']._serialized_end=1767
-  _globals['_KARPENTER']._serialized_start=1769
-  _globals['_KARPENTER']._serialized_end=1780
-  _globals['_CLUSTERSTATUS']._serialized_start=1783
-  _globals['_CLUSTERSTATUS']._serialized_end=2107
-  _globals['_CLUSTERSTATUS_STATE']._serialized_start=2032
-  _globals['_CLUSTERSTATUS_STATE']._serialized_end=2107
-  _globals['_CONTROLPLANESTATUS']._serialized_start=2110
-  _globals['_CONTROLPLANESTATUS']._serialized_end=2335
-  _globals['_CONTROLPLANESTATUSENDPOINTS']._serialized_start=2337
-  _globals['_CONTROLPLANESTATUSENDPOINTS']._serialized_end=2450
-  _globals['_CONTROLPLANESTATUSAUTH']._serialized_start=2452
-  _globals['_CONTROLPLANESTATUSAUTH']._serialized_end=2530
+  _globals['_CLUSTER']._serialized_end=634
+  _globals['_CLUSTERSPEC']._serialized_start=637
+  _globals['_CLUSTERSPEC']._serialized_end=797
+  _globals['_CONTROLPLANESPEC']._serialized_start=800
+  _globals['_CONTROLPLANESPEC']._serialized_end=1180
+  _globals['_CONTROLPLANEENDPOINTSSPEC']._serialized_start=1182
+  _globals['_CONTROLPLANEENDPOINTSSPEC']._serialized_end=1292
+  _globals['_PUBLICENDPOINTSPEC']._serialized_start=1295
+  _globals['_PUBLICENDPOINTSPEC']._serialized_end=1564
+  _globals['_KUBENETWORKSPEC']._serialized_start=1567
+  _globals['_KUBENETWORKSPEC']._serialized_end=1776
+  _globals['_AUDITLOGSSPEC']._serialized_start=1778
+  _globals['_AUDITLOGSSPEC']._serialized_end=1793
+  _globals['_KARPENTER']._serialized_start=1795
+  _globals['_KARPENTER']._serialized_end=1806
+  _globals['_CLUSTERSTATUS']._serialized_start=1809
+  _globals['_CLUSTERSTATUS']._serialized_end=2133
+  _globals['_CLUSTERSTATUS_STATE']._serialized_start=2058
+  _globals['_CLUSTERSTATUS_STATE']._serialized_end=2133
+  _globals['_CONTROLPLANESTATUS']._serialized_start=2136
+  _globals['_CONTROLPLANESTATUS']._serialized_end=2361
+  _globals['_CONTROLPLANESTATUSENDPOINTS']._serialized_start=2363
+  _globals['_CONTROLPLANESTATUSENDPOINTS']._serialized_end=2476
+  _globals['_CONTROLPLANESTATUSAUTH']._serialized_start=2478
+  _globals['_CONTROLPLANESTATUSAUTH']._serialized_end=2556
 # @@protoc_insertion_point(module_scope)

@@ -19,7 +19,7 @@ from nebius.api.nebius.common.v1alpha1 import operation_pb2 as nebius_dot_common
 from nebius.api.nebius.mk8s.v1alpha1 import node_group_pb2 as nebius_dot_mk8s_dot_v1alpha1_dot_node__group__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n-nebius/mk8s/v1alpha1/node_group_service.proto\x12\x14nebius.mk8s.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a%nebius/mk8s/v1alpha1/node_group.proto\"\xa1\x01\n\x16\x43reateNodeGroupRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12?\n\x04spec\x18\x02 \x01(\x0b\x32#.nebius.mk8s.v1alpha1.NodeGroupSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"X\n\x13GetNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12)\n\x10resource_version\x18\x02 \x01(\tR\x0fresourceVersion\"\\\n\x19GetNodeGroupByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"x\n\x15ListNodeGroupsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"w\n\x16ListNodeGroupsResponse\x12\x35\n\x05items\x18\x01 \x03(\x0b\x32\x1f.nebius.mk8s.v1alpha1.NodeGroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x99\x01\n\x16UpdateNodeGroupRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x37\n\x04spec\x18\x02 \x01(\x0b\x32#.nebius.mk8s.v1alpha1.NodeGroupSpecR\x04spec\"0\n\x16\x44\x65leteNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x9a\x01\n\x17UpgradeNodeGroupRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12P\n\x14latest_infra_version\x18\x02 \x01(\x0b\x32\x16.google.protobuf.EmptyB\x04\xbaJ\x01\x06H\x00R\x12latestInfraVersionB\x15\n\x0cupgrade_type\x12\x05\xbaH\x02\x08\x01\x32\xe1\x05\n\x10NodeGroupService\x12Q\n\x03Get\x12).nebius.mk8s.v1alpha1.GetNodeGroupRequest\x1a\x1f.nebius.mk8s.v1alpha1.NodeGroup\x12]\n\tGetByName\x12/.nebius.mk8s.v1alpha1.GetNodeGroupByNameRequest\x1a\x1f.nebius.mk8s.v1alpha1.NodeGroup\x12\x61\n\x04List\x12+.nebius.mk8s.v1alpha1.ListNodeGroupsRequest\x1a,.nebius.mk8s.v1alpha1.ListNodeGroupsResponse\x12Y\n\x06\x43reate\x12,.nebius.mk8s.v1alpha1.CreateNodeGroupRequest\x1a!.nebius.common.v1alpha1.Operation\x12Y\n\x06Update\x12,.nebius.mk8s.v1alpha1.UpdateNodeGroupRequest\x1a!.nebius.common.v1alpha1.Operation\x12Y\n\x06\x44\x65lete\x12,.nebius.mk8s.v1alpha1.DeleteNodeGroupRequest\x1a!.nebius.common.v1alpha1.Operation\x12[\n\x07Upgrade\x12-.nebius.mk8s.v1alpha1.UpgradeNodeGroupRequest\x1a!.nebius.common.v1alpha1.Operation\x1aJ\x88\x02\x01\xbaJ\x04mk8s\xd2J=\x12;NodeGroup v1alpha1 API is deprecated, please migrate to v1.B\x7f\n\x1b\x61i.nebius.pub.mk8s.v1alpha1B\x15NodeGroupServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mk8s/v1alpha1\xb8\x01\x01\xd2J\x0f\x12\rmigrate to v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n-nebius/mk8s/v1alpha1/node_group_service.proto\x12\x14nebius.mk8s.v1alpha1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a&nebius/common/v1alpha1/operation.proto\x1a%nebius/mk8s/v1alpha1/node_group.proto\"\xb1\x01\n\x16\x43reateNodeGroupRequest\x12V\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x16\xbaH\x03\xc8\x01\x01\xe2J\r\x12\x0bmk8sclusterR\x08metadata\x12?\n\x04spec\x18\x02 \x01(\x0b\x32#.nebius.mk8s.v1alpha1.NodeGroupSpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"j\n\x13GetNodeGroupRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rmk8snodegroupR\x02id\x12)\n\x10resource_version\x18\x02 \x01(\tR\x0fresourceVersion\"l\n\x19GetNodeGroupByNameRequest\x12\x33\n\tparent_id\x18\x01 \x01(\tB\x16\xbaH\x03\xc8\x01\x01\xe2J\r\n\x0bmk8sclusterR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\x88\x01\n\x15ListNodeGroupsRequest\x12\x33\n\tparent_id\x18\x01 \x01(\tB\x16\xbaH\x03\xc8\x01\x01\xe2J\r\n\x0bmk8sclusterR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\"w\n\x16ListNodeGroupsResponse\x12\x35\n\x05items\x18\x01 \x03(\x0b\x32\x1f.nebius.mk8s.v1alpha1.NodeGroupR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa9\x01\n\x16UpdateNodeGroupRequest\x12V\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x16\xbaH\x03\xc8\x01\x01\xe2J\r\x12\x0bmk8sclusterR\x08metadata\x12\x37\n\x04spec\x18\x02 \x01(\x0b\x32#.nebius.mk8s.v1alpha1.NodeGroupSpecR\x04spec\"B\n\x16\x44\x65leteNodeGroupRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rmk8snodegroupR\x02id\"\xac\x01\n\x17UpgradeNodeGroupRequest\x12(\n\x02id\x18\x01 \x01(\tB\x18\xbaH\x03\xc8\x01\x01\xe2J\x0f\n\rmk8snodegroupR\x02id\x12P\n\x14latest_infra_version\x18\x02 \x01(\x0b\x32\x16.google.protobuf.EmptyB\x04\xbaJ\x01\x06H\x00R\x12latestInfraVersionB\x15\n\x0cupgrade_type\x12\x05\xbaH\x02\x08\x01\x32\xe1\x05\n\x10NodeGroupService\x12Q\n\x03Get\x12).nebius.mk8s.v1alpha1.GetNodeGroupRequest\x1a\x1f.nebius.mk8s.v1alpha1.NodeGroup\x12]\n\tGetByName\x12/.nebius.mk8s.v1alpha1.GetNodeGroupByNameRequest\x1a\x1f.nebius.mk8s.v1alpha1.NodeGroup\x12\x61\n\x04List\x12+.nebius.mk8s.v1alpha1.ListNodeGroupsRequest\x1a,.nebius.mk8s.v1alpha1.ListNodeGroupsResponse\x12Y\n\x06\x43reate\x12,.nebius.mk8s.v1alpha1.CreateNodeGroupRequest\x1a!.nebius.common.v1alpha1.Operation\x12Y\n\x06Update\x12,.nebius.mk8s.v1alpha1.UpdateNodeGroupRequest\x1a!.nebius.common.v1alpha1.Operation\x12Y\n\x06\x44\x65lete\x12,.nebius.mk8s.v1alpha1.DeleteNodeGroupRequest\x1a!.nebius.common.v1alpha1.Operation\x12[\n\x07Upgrade\x12-.nebius.mk8s.v1alpha1.UpgradeNodeGroupRequest\x1a!.nebius.common.v1alpha1.Operation\x1aJ\x88\x02\x01\xbaJ\x04mk8s\xd2J=\x12;NodeGroup v1alpha1 API is deprecated, please migrate to v1.B\x7f\n\x1b\x61i.nebius.pub.mk8s.v1alpha1B\x15NodeGroupServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mk8s/v1alpha1\xb8\x01\x01\xd2J\x0f\x12\rmigrate to v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -29,45 +29,45 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\033ai.nebius.pub.mk8s.v1alpha1B\025NodeGroupServiceProtoP\001Z2github.com/nebius/gosdk/proto/nebius/mk8s/v1alpha1\270\001\001\322J\017\022\rmigrate to v1'
   _CREATENODEGROUPREQUEST.fields_by_name['metadata']._options = None
-  _CREATENODEGROUPREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
+  _CREATENODEGROUPREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001\342J\r\022\013mk8scluster'
   _CREATENODEGROUPREQUEST.fields_by_name['spec']._options = None
   _CREATENODEGROUPREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _GETNODEGROUPREQUEST.fields_by_name['id']._options = None
-  _GETNODEGROUPREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETNODEGROUPREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\017\n\rmk8snodegroup'
   _GETNODEGROUPBYNAMEREQUEST.fields_by_name['parent_id']._options = None
-  _GETNODEGROUPBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETNODEGROUPBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\r\n\013mk8scluster'
   _GETNODEGROUPBYNAMEREQUEST.fields_by_name['name']._options = None
   _GETNODEGROUPBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTNODEGROUPSREQUEST.fields_by_name['parent_id']._options = None
-  _LISTNODEGROUPSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTNODEGROUPSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\r\n\013mk8scluster'
   _UPDATENODEGROUPREQUEST.fields_by_name['metadata']._options = None
-  _UPDATENODEGROUPREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
+  _UPDATENODEGROUPREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001\342J\r\022\013mk8scluster'
   _DELETENODEGROUPREQUEST.fields_by_name['id']._options = None
-  _DELETENODEGROUPREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETENODEGROUPREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\017\n\rmk8snodegroup'
   _UPGRADENODEGROUPREQUEST.oneofs_by_name['upgrade_type']._options = None
   _UPGRADENODEGROUPREQUEST.oneofs_by_name['upgrade_type']._serialized_options = b'\272H\002\010\001'
   _UPGRADENODEGROUPREQUEST.fields_by_name['id']._options = None
-  _UPGRADENODEGROUPREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _UPGRADENODEGROUPREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\017\n\rmk8snodegroup'
   _UPGRADENODEGROUPREQUEST.fields_by_name['latest_infra_version']._options = None
   _UPGRADENODEGROUPREQUEST.fields_by_name['latest_infra_version']._serialized_options = b'\272J\001\006'
   _NODEGROUPSERVICE._options = None
   _NODEGROUPSERVICE._serialized_options = b'\210\002\001\272J\004mk8s\322J=\022;NodeGroup v1alpha1 API is deprecated, please migrate to v1.'
   _globals['_CREATENODEGROUPREQUEST']._serialized_start=268
-  _globals['_CREATENODEGROUPREQUEST']._serialized_end=429
-  _globals['_GETNODEGROUPREQUEST']._serialized_start=431
-  _globals['_GETNODEGROUPREQUEST']._serialized_end=519
-  _globals['_GETNODEGROUPBYNAMEREQUEST']._serialized_start=521
-  _globals['_GETNODEGROUPBYNAMEREQUEST']._serialized_end=613
-  _globals['_LISTNODEGROUPSREQUEST']._serialized_start=615
-  _globals['_LISTNODEGROUPSREQUEST']._serialized_end=735
-  _globals['_LISTNODEGROUPSRESPONSE']._serialized_start=737
-  _globals['_LISTNODEGROUPSRESPONSE']._serialized_end=856
-  _globals['_UPDATENODEGROUPREQUEST']._serialized_start=859
-  _globals['_UPDATENODEGROUPREQUEST']._serialized_end=1012
-  _globals['_DELETENODEGROUPREQUEST']._serialized_start=1014
-  _globals['_DELETENODEGROUPREQUEST']._serialized_end=1062
-  _globals['_UPGRADENODEGROUPREQUEST']._serialized_start=1065
-  _globals['_UPGRADENODEGROUPREQUEST']._serialized_end=1219
-  _globals['_NODEGROUPSERVICE']._serialized_start=1222
-  _globals['_NODEGROUPSERVICE']._serialized_end=1959
+  _globals['_CREATENODEGROUPREQUEST']._serialized_end=445
+  _globals['_GETNODEGROUPREQUEST']._serialized_start=447
+  _globals['_GETNODEGROUPREQUEST']._serialized_end=553
+  _globals['_GETNODEGROUPBYNAMEREQUEST']._serialized_start=555
+  _globals['_GETNODEGROUPBYNAMEREQUEST']._serialized_end=663
+  _globals['_LISTNODEGROUPSREQUEST']._serialized_start=666
+  _globals['_LISTNODEGROUPSREQUEST']._serialized_end=802
+  _globals['_LISTNODEGROUPSRESPONSE']._serialized_start=804
+  _globals['_LISTNODEGROUPSRESPONSE']._serialized_end=923
+  _globals['_UPDATENODEGROUPREQUEST']._serialized_start=926
+  _globals['_UPDATENODEGROUPREQUEST']._serialized_end=1095
+  _globals['_DELETENODEGROUPREQUEST']._serialized_start=1097
+  _globals['_DELETENODEGROUPREQUEST']._serialized_end=1163
+  _globals['_UPGRADENODEGROUPREQUEST']._serialized_start=1166
+  _globals['_UPGRADENODEGROUPREQUEST']._serialized_end=1338
+  _globals['_NODEGROUPSERVICE']._serialized_start=1341
+  _globals['_NODEGROUPSERVICE']._serialized_end=2078
 # @@protoc_insertion_point(module_scope)
