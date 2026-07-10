@@ -14,7 +14,6 @@ from collections.abc import Callable
 from logging import getLogger
 from typing import Any, Generic, TypeVar
 
-from google.protobuf.message import Message as PMessage
 from typing_extensions import Unpack
 
 from nebius.aio.abc import ClientChannelInterface as Channel
@@ -23,6 +22,7 @@ from nebius.aio.request import Request
 
 # from nebius.api.nebius.common.v1 import Operation
 from nebius.aio.request_kwargs import RequestKwargs
+from nebius.base.resolver import register_service_name
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
@@ -46,11 +46,17 @@ class Client:
 
     # __operation_type__: Message = Operation
     __service_name__: str
+    __service_name_override__: str = ""
     __service_deprecation_details__: str | None = None
 
     def __init__(self, channel: Channel) -> None:
         """Create a client bound to a channel."""
         self._channel = channel
+        if self.__service_name_override__:
+            register_service_name(
+                self.__service_name__,
+                self.__service_name_override__,
+            )
 
         if self.__service_deprecation_details__ is not None:
             getLogger("deprecation").warning(
@@ -64,7 +70,7 @@ class Client:
         self,
         method: str,
         request: Req,
-        result_pb2_class: type[PMessage],
+        result_class: type[Any],
         result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
         **kwargs: Unpack[RequestKwargs],
     ) -> Request[Req, Res]:
@@ -76,8 +82,8 @@ class Client:
         :param method: RPC method name (bare, without service prefix)
         :type method: `str`
         :param request: protobuf message or request payload accepted by the RPC
-        :param result_pb2_class: protobuf class of the RPC response message
-        :type result_pb2_class: type of the protobuf result message
+        :param result_class: direct or protobuf response message class
+        :type result_class: type exposing a ``FromString`` class method
         :param result_wrapper: optional callable to post-process the RPC result
 
         Other keyword arguments are passed through to the
@@ -93,7 +99,7 @@ class Client:
             service=self.__service_name__,
             method=method,
             request=request,
-            result_pb2_class=result_pb2_class,
+            result_class=result_class,
             result_wrapper=result_wrapper,
             **kwargs,
         )

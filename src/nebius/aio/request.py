@@ -122,10 +122,9 @@ class Request(Generic[Req, Res]):
     :param request: The request payload. Typically a protobuf wrapper or a
         domain object that can be serialised by the generated client.
 
-    :param result_pb2_class: Protobuf class used to deserialize the RPC
+    :param result_class: Direct or protobuf class used to deserialize the RPC
         response bytes into a message instance.
-    :type result_pb2_class: type of specific message subclass of
-        ``google.protobuf.Message``
+    :type result_class: type exposing a ``FromString`` class method
 
     :param metadata: Optional initial gRPC metadata to attach to the call.
     :type metadata: either :class:`nebius.base.metadata.Metadata`
@@ -233,7 +232,7 @@ class Request(Generic[Req, Res]):
         service: str,
         method: str,
         request: Req,
-        result_pb2_class: type[PMessage],
+        result_class: type[Any],
         metadata: Metadata | Iterable[tuple[str, str]] | None = None,
         timeout: float | None | UnsetType = Unset,
         auth_timeout: float | None | UnsetType = Unset,
@@ -256,7 +255,7 @@ class Request(Generic[Req, Res]):
         self._service = service
         self._method = method
         self._auth_options = auth_options if auth_options is not None else {}
-        self._result_pb2_class = result_pb2_class
+        self._result_class = result_class
         self._input_metadata = Metadata(metadata)
         self._result_wrapper = result_wrapper
         self._grpc_channel = grpc_channel_override
@@ -404,9 +403,7 @@ class Request(Generic[Req, Res]):
         self._trailing_metadata = None
         self._status = None
         req = self._input
-        if isinstance(req, Message):
-            req = req.__pb2_message__  # type: ignore[assignment]
-        if isinstance(req, PMessage):
+        if isinstance(req, (Message, PMessage)):
             serializer = req.__class__.SerializeToString
         else:
             raise RequestError(f"Unsupported request type {type(req)}")
@@ -432,7 +429,7 @@ class Request(Generic[Req, Res]):
         self._call = self._grpc_channel.channel.unary_unary(  # type: ignore
             "/" + s_name + "/" + self._method,
             serializer,
-            self._result_pb2_class.FromString,
+            self._result_class.FromString,
         )(
             req,
             timeout=timeout,

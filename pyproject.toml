@@ -24,6 +24,7 @@ dependencies = [
     "grpcio-status>=1.56.2",
     "portalocker>=2.8.1",
     "aiohttp>=3.8.5",
+    "typing-extensions>=4.12",
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -62,15 +63,19 @@ package-dir = { "" = "src" }
 where = ["src"]
 include = ["nebius*"]
 
+[tool.setuptools.package-data]
+nebius = ["py.typed"]
+
 [tool.black]
 line-length = 88
 target-version = ["py310"]
-exclude = "(docs/generated|src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
+exclude = "(docs/generated|src/nebius/api|nebius_generator/_bootstrap|.direnv|.eggs|.git|.hg|.ipynb_checkpoints|.mypy_cache|.nox|.pytest_cache|.ruff_cache|.tox|.svn|.venv|.vscode|pypackages|_build|buck-out|build|dist|venv)"
 
 [tool.mypy]
 strict = true
+mypy_path = "src"
+explicit_package_bases = true
 exclude = "^src/nebius/api/.*"
-files = ["!src/nebius/api/buf/validate/validate_pb2.pyi"]
 
 [[tool.mypy.overrides]]
 module = "nebius.api.*"
@@ -107,6 +112,7 @@ exclude = [
     "site-packages",
     "venv",
     "src/nebius/api",
+    "nebius_generator/_bootstrap",
 ]
 line-length = 88
 indent-width = 4
@@ -123,6 +129,9 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 [tool.ruff.lint.per-file-ignores]
 "tests/**.py" = ["S"]
 "src/nebius/api/**" = ["ALL"]
+"nebius_generator/_bootstrap/**" = ["ALL"]
+"scripts/**.py" = ["S603", "S607"]
+"src/nebius/base/protos/pb_classes.py" = ["N802"]
 
 [tool.ruff.format]
 exclude = ["src/nebius/api/**", "*.pyi"]
@@ -160,7 +169,7 @@ deps = [
     "portalocker",
     "aiohttp",
 ]
-commands = [["pytest","-vv","--full-trace"]]
+commands = [["python","-m","pytest","-vv","--full-trace","--ignore=tests/generator"]]
 passenv = [
     "NEBIUS_E2E_CONFIG_FILE",
     "NEBIUS_E2E_CONFIG_B64",
@@ -177,17 +186,18 @@ deps = [
     "pytest-subtests",
     "pyyaml==5.1.1",
     "grpcio==1.56.2",
-    "protobuf<=5.26.1",
+    "protobuf==5.29.1",
     "types-PyYAML>=5.1.1",
-    "types-protobuf<=5.26.1",
+    "types-protobuf==5.29.1.20241207",
     "cryptography==40.0.0",
     "portalocker==2.8.1",
     "aiohttp==3.8.5",
     "PyJWT==2.0.0",
     "certifi==2022.6.15",
     "grpcio-status==1.56.2",
+    "typing-extensions==4.12.0",
 ]
-commands = [["pytest","-vv"]]
+commands = [["python","-m","pytest","-vv","--ignore=tests/generator"]]
 passenv = [
     "NEBIUS_E2E_CONFIG_FILE",
     "NEBIUS_E2E_CONFIG_B64",
@@ -198,13 +208,13 @@ passenv = [
 description = "Run linter checks"
 package = "skip"  # Skip installing the package
 deps = ["ruff"]
-commands = [["ruff","check","src/","tests/"]]
+commands = [["ruff","check","src/","nebius_generator/","scripts/","tests/"]]
 
 [tool.tox.env.format]
 description = "Run code formatting checks"
 package = "skip"
 deps = ["black"]
-commands = [["black","--check","src/"]]
+commands = [["black","--check","src/","nebius_generator/","scripts/","tests/"]]
 
 [tool.tox.env.type]
 description = "Run type-checking"
@@ -228,8 +238,24 @@ deps = [
     "types-protobuf>=5.29.1",
     "types-beautifulsoup4>=4.12.0",
     "types-PyYAML>=5",
+    "typing-extensions>=4.12",
 ]
 commands = [["mypy","src/"]]
+
+[tool.tox.env.generator]
+description = "Run the standalone generator tests"
+deps = [
+    "pytest",
+    "m2r2>=0.3",
+    "protobuf>=5.29.1",
+    "mypy",
+    "grpc-stubs>=1.53",
+    "types-protobuf>=5.29.1",
+]
+commands = [
+    ["python", "-m", "pytest", "-q", "tests/generator"],
+    ["python", "scripts/generate_api.py", "--check"],
+]
 
 [tool.pydoctor]
 add-package = ["src/nebius"]

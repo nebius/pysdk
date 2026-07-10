@@ -319,6 +319,9 @@ class ServiceStub(Protocol):
     that can be instantiated with a channel.
     """
 
+    __service_name__: str
+    __service_name_override__: str
+
     def __init__(self, channel: GRPCChannel) -> None: ...
 
 
@@ -333,10 +336,18 @@ def from_stub_class(stub: type[ServiceStub]) -> str:
     :return: The service name.
     :rtype: str
     """
-    if hasattr(stub, "__PB2_NAME__"):
-        return getattr(stub, "__PB2_NAME__")  # type: ignore[no-any-return]
-    extractor = ExtractorChannel()
-    _ = stub(extractor)
-    ret = extractor.get_service_name()
-    setattr(stub, "__PB2_NAME__", ret)
+    if hasattr(stub, "__service_name__"):
+        ret = stub.__service_name__
+    elif hasattr(stub, "__PB2_NAME__"):
+        ret = str(getattr(stub, "__PB2_NAME__"))
+    else:
+        extractor = ExtractorChannel()
+        _ = stub(extractor)
+        ret = extractor.get_service_name()
+        setattr(stub, "__PB2_NAME__", ret)
+    override = getattr(stub, "__service_name_override__", "")
+    if override:
+        from nebius.base.resolver import register_service_name
+
+        register_service_name(ret, override)
     return ret

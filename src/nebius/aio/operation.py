@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 from time import time
 from typing import TYPE_CHECKING, Generic, Protocol, TypeVar, cast
 
+from google.protobuf.message import Message as PMessage
 from grpc import StatusCode
 from typing_extensions import Unpack
 
@@ -270,10 +271,12 @@ class Operation(Generic[OperationPb]):
 
         self._channel = channel
         _operation: OperationPb | Operation | Old = operation
-        if isinstance(_operation, Operation.__PB2_CLASS__):
-            _operation = Operation(_operation)
-        if isinstance(_operation, Old.__PB2_CLASS__):
-            _operation = Old(_operation)
+        if isinstance(_operation, PMessage):
+            full_name = _operation.DESCRIPTOR.full_name
+            if full_name == Operation.get_descriptor().full_name:
+                _operation = Operation(_operation)
+            elif full_name == Old.get_descriptor().full_name:
+                _operation = Old(_operation)
 
         if isinstance(_operation, Operation):
             self._service: OperationServiceClient | OldClient = OperationServiceClient(

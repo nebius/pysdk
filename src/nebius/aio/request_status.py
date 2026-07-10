@@ -10,8 +10,10 @@ aware of service-level errors the richer :class:`RequestStatusExtended` from
 
 from dataclasses import dataclass
 from enum import Enum
+from typing import cast
 
 from google.protobuf.any_pb2 import Any as AnyPb
+from google.protobuf.message import Message as PMessage
 from google.rpc.status_pb2 import Status as StatusPb  # type: ignore
 from grpc import StatusCode
 
@@ -90,6 +92,17 @@ def request_status_from_rpc_status(status: StatusPb) -> RequestStatus:  # type: 
     return RequestStatusExtended.from_rpc_status(status, request_id="", trace_id="")  # type: ignore[unused-ignore]
 
 
-def request_status_to_rpc_status(status: RequestStatus) -> StatusPb:  # type: ignore[unused-ignore]
+def request_status_to_rpc_status(
+    status: RequestStatus | PMessage,
+) -> StatusPb:  # type: ignore[unused-ignore]
     """Convert an SDK :class:`RequestStatus` back into a protobuf Status."""
-    return status.to_rpc_status()  # type: ignore[unused-ignore]
+    if (
+        isinstance(status, PMessage)
+        and status.DESCRIPTOR.full_name == "google.rpc.Status"
+    ):
+        return cast(StatusPb, status)
+    if isinstance(status, RequestStatus):
+        return status.to_rpc_status()  # type: ignore[unused-ignore]
+    raise TypeError(
+        f"Expected a google.rpc.Status, received {status.DESCRIPTOR.full_name}"
+    )

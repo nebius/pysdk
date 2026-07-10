@@ -34,6 +34,10 @@ This project uses third-party libraries under the following licenses:
   Licensed under the Apache License, Version 2.0.
   https://github.com/grpc/grpc
 
+- **typing-extensions** (>=4.12)
+  Licensed under the Python Software Foundation License Version 2.
+  https://github.com/python/typing_extensions
+
 - **certifi-win32** (Windows only)
   Licensed under the BSD-2-Clause Simplified License.
   https://gitlab.com/alelec/python-certifi-win32

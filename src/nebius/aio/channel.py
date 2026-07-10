@@ -1060,7 +1060,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         addr = self.get_addr_from_stub(service_stub_class)
         chan = self.get_channel_by_addr(addr)
-        return OperationServiceStub(chan)  # type: ignore[no-untyped-call]
+        return OperationServiceStub(chan)
 
     def get_corresponding_operation_service_alpha(
         self,
@@ -1076,7 +1076,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         addr = self.get_addr_from_stub(service_stub_class)
         chan = self.get_channel_by_addr(addr)
-        return OperationServiceStubDeprecated(chan)  # type: ignore[no-untyped-call]
+        return OperationServiceStubDeprecated(chan)
 
     def get_addr_from_stub(self, service_stub_class: type[ServiceStub]) -> str:
         """Resolve the concrete address for a generated service stub class.

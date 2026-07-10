@@ -32,6 +32,13 @@ from .error import SDKError
 
 log = getLogger(__name__)
 
+_service_names: dict[str, str] = {}
+
+
+def register_service_name(service_id: str, service_name: str) -> None:
+    """Register a generated service's endpoint annotation."""
+    _service_names[service_id.lstrip(".")] = service_name
+
 
 class UnknownServiceError(SDKError):
     """Raised when a resolver cannot map a service id to an address.
@@ -219,23 +226,7 @@ class Conventional(Resolver):
         if len(parts) < 3 or parts[0] != "nebius" or not parts[-1].endswith("Service"):
             raise UnknownServiceError(service_id)
         service_name = parts[1]
-        try:
-            from google.protobuf.descriptor import ServiceDescriptor
-            from google.protobuf.descriptor_pb2 import ServiceOptions
-            from google.protobuf.descriptor_pool import (
-                Default,  # type: ignore[unused-ignore]
-                DescriptorPool,
-            )
-
-            from nebius.api.nebius.annotations_pb2 import api_service_name
-
-            pool: DescriptorPool = Default()  # type: ignore[unused-ignore,no-untyped-call]
-            service_descriptor: ServiceDescriptor = pool.FindServiceByName(service_id)  # type: ignore[unused-ignore,no-untyped-call]
-            opts: ServiceOptions = service_descriptor.GetOptions()  # type: ignore[unused-ignore]
-            if opts.Extensions[api_service_name] != "":  # type: ignore[unused-ignore,index]
-                service_name = opts.Extensions[api_service_name]  # type: ignore[unused-ignore,index]
-        except KeyError:
-            pass
+        service_name = _service_names.get(service_id, service_name)
         ret = service_name + ".{domain}"  # type: ignore[unused-ignore]
         log.debug(f"conventional resolver {service_id} resolved to {ret}")
 

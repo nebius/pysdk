@@ -27,9 +27,10 @@ def to_anypb(err: ServiceError) -> AnyPb:
     This helper is used when converting SDK-level error representations back
     into gRPC status details.
     """
-    ret = AnyPb()
-    ret.Pack(err.__pb2_message__)  # type: ignore[unused-ignore]
-    return ret
+    return AnyPb(
+        type_url=f"type.googleapis.com/{err.get_descriptor().full_name}",
+        value=err.SerializeToString(),
+    )
 
 
 class RequestError(BaseError):
@@ -335,7 +336,7 @@ class RequestStatusExtended(RequestStatus):
             code=int_to_status_code(status.code),  # type: ignore[unused-ignore]
             message=status.message,  # type: ignore[unused-ignore]
             details=[d for d in status.details],  # type: ignore[unused-ignore]
-            service_errors=[ServiceError(err) for err in errors],
+            service_errors=[ServiceError.FromString(err) for err in errors],
             request_id=request_id,
             trace_id=trace_id,
         )
