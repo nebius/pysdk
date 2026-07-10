@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 
 from scripts.bootstrap_generator import promote_candidate
-from scripts.generate_api import recover_interrupted_promotion
+from scripts.generate_api import recover_interrupted_promotion, same_tree
 
 
 def test_failed_bootstrap_validation_keeps_live_file(tmp_path: Path) -> None:
@@ -51,3 +51,20 @@ def test_completed_api_promotion_discards_stale_backup(tmp_path: Path) -> None:
     assert not recover_interrupted_promotion(target, backup)
     assert target.is_dir()
     assert not backup.exists()
+
+
+def test_generated_tree_comparison_ignores_bytecode_caches(tmp_path: Path) -> None:
+    left = tmp_path / "left"
+    right = tmp_path / "right"
+    left.mkdir()
+    right.mkdir()
+    (left / "module.py").write_text("value = 1\n")
+    (right / "module.py").write_text("value = 1\n")
+    cache = left / "__pycache__"
+    cache.mkdir()
+    (cache / "module.cpython-310.pyc").write_bytes(b"transient")
+
+    assert same_tree(left, right)
+
+    (right / "module.py").write_text("value = 2\n")
+    assert not same_tree(left, right)

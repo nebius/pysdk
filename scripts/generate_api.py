@@ -18,17 +18,18 @@ STAGED_API = STAGE_ROOT / "nebius" / "api" / "nebius"
 TARGET_API = ROOT / "src" / "nebius" / "api" / "nebius"
 BACKUP_API = ROOT / "build" / "generated-api-backup"
 LOCK_FILE = ROOT / "build" / ".generate-api.lock"
+IGNORED_TREE_NAMES = {"__pycache__"}
 
 
 def same_tree(left: Path, right: Path) -> bool:
     """Return whether two directory trees contain identical files."""
     if not left.is_dir() or not right.is_dir():
         return False
-    comparison = filecmp.dircmp(left, right)
+    comparison = filecmp.dircmp(left, right, ignore=list(IGNORED_TREE_NAMES))
     if comparison.left_only or comparison.right_only or comparison.funny_files:
         return False
     if any(
-        not filecmp.cmp(left / name, right / name, shallow=False)
+        (left / name).read_bytes() != (right / name).read_bytes()
         for name in comparison.common_files
     ):
         return False
@@ -61,7 +62,9 @@ assert decoded.size_gibibytes == 8
 assert decoded.type is DiskSpec.DiskType.NETWORK_SSD
 assert not hasattr(message, '__pb2_message__')
 """
-    subprocess.run([sys.executable, "-c", code], cwd=ROOT, check=True)
+    env = os.environ.copy()
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    subprocess.run([sys.executable, "-c", code], cwd=ROOT, env=env, check=True)
 
 
 def generate() -> None:
