@@ -8,6 +8,8 @@ from pathlib import Path
 from google.protobuf import descriptor_pb2
 from google.protobuf.compiler import plugin_pb2
 
+from nebius_generator.main import generate_registry
+
 
 def field(
     message: descriptor_pb2.DescriptorProto,
@@ -168,3 +170,40 @@ def test_direct_classes_coexist_in_two_namespaces(tmp_path: Path) -> None:
         assert type(original) is not type(decoded)
     finally:
         sys.path.remove(str(tmp_path))
+
+
+def test_registry_ignores_source_metadata_and_uses_runtime_well_known_types() -> None:
+    descriptor = descriptor_pb2.FileDescriptorProto.FromString(
+        descriptor_pb2.DESCRIPTOR.serialized_pb
+    )
+    embedded = descriptor_pb2.FileDescriptorProto(
+        name="acme/embedded.proto",
+        package="acme",
+        syntax="proto3",
+    )
+    embedded_with_source_info = descriptor_pb2.FileDescriptorProto()
+    embedded_with_source_info.CopyFrom(embedded)
+    embedded_with_source_info.source_code_info.location.add(
+        path=[4, 0],
+        span=[1, 0, 1, 10],
+        leading_comments="compiler-specific metadata",
+    )
+
+    source = generate_registry([descriptor, embedded])
+
+    assert source == generate_registry(
+        [
+            descriptor_pb2.FileDescriptorProto(name=descriptor.name),
+            embedded_with_source_info,
+        ]
+    )
+    assert "'google/protobuf/descriptor.proto'" in source
+    assert repr(descriptor.SerializeToString()) not in source
+
+    namespace: dict[str, object] = {}
+    exec(source, namespace)
+    message_descriptor = namespace["message_descriptor"]
+    assert callable(message_descriptor)
+    assert message_descriptor("google.protobuf.FileDescriptorProto").full_name == (
+        "google.protobuf.FileDescriptorProto"
+    )
