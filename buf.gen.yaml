@@ -1,25 +1,10 @@
 version: v2
 plugins:
-  - remote: buf.build/protocolbuffers/python:v22.4
-    out: src/nebius/api-new
-  - remote: buf.build/grpc/python:v1.56.2
-    out: src/nebius/api-new
-  - remote: buf.build/protocolbuffers/pyi:v22.4
-    out: src/nebius/api-new
-  - local: ["python", "-m", "nebius.base.protos.compiler.main"]
+  - local: [python, -m, nebius_generator.main]
+    out: build/generated/src
     opt:
-    - log_level=DEBUG
-    - import_substitution=nebius=nebius.api.nebius
-    - import_substitution=buf=nebius.api.buf
-    - skip=google
-    - skip=buf
-    # - debugger_connect=localhost:56792
-    out: src/nebius/api-new
-    strategy: directory
-  # - plugin: python_betterproto
-  #   opt:
-  #   - INCLUDE_GOOGLE
-  #   - typing.root
-  #   - pydantic_dataclasses
-  #   out: src/nebius/better_api
-  #   strategy: directory
+      - package_prefix=nebius.api
+      - runtime_package=nebius
+      - partition=all
+      - jobs=1
+    strategy: all

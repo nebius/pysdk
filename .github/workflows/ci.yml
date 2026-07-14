@@ -9,6 +9,96 @@ on:
       - api-auto-update
 
 jobs:
+  generated-api-consistency:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code with API sources
+      uses: actions/checkout@v7
+      with:
+        submodules: recursive
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.10"
+
+    - name: Install project and generator
+      run: python -m pip install '.[generators]'
+
+    - uses: bufbuild/buf-action@v1
+      with:
+        setup_only: true
+
+    - name: Check generated API
+      run: make check-generated
+
+    - name: Smoke update mode without publishing
+      run: |
+        make generate
+        make check-generated
+
+  partition-equivalence:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code with API sources
+      uses: actions/checkout@v7
+      with:
+        submodules: recursive
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.10"
+
+    - name: Install project and generator
+      run: python -m pip install '.[generators]'
+
+    - uses: bufbuild/buf-action@v1
+      with:
+        setup_only: true
+
+    - name: Verify partition equivalence
+      run: make verify-generated
+
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.10"
+
+    - name: Install project and documentation dependencies
+      run: python -m pip install '.[generators]'
+
+    - name: Build API documentation
+      run: make gen-doc
+
+  generated-api:
+    if: ${{ always() }}
+    needs:
+      - generated-api-consistency
+      - partition-equivalence
+      - docs
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Require all generated API checks
+      env:
+        CONSISTENCY_RESULT: ${{ needs.generated-api-consistency.result }}
+        EQUIVALENCE_RESULT: ${{ needs.partition-equivalence.result }}
+        DOCS_RESULT: ${{ needs.docs.result }}
+      run: |
+        test "$CONSISTENCY_RESULT" = success
+        test "$EQUIVALENCE_RESULT" = success
+        test "$DOCS_RESULT" = success
+
   test:
     runs-on: ubuntu-latest
 
@@ -35,6 +125,7 @@ jobs:
         NEBIUS_E2E_CONFIG_B64: ${{ secrets.NEBIUS_E2E_CONFIG_B64 }}
       run: |
         if [[ "${{ matrix.python-version }}" == "3.10" ]]; then
-          tox -e test_earliest
+          tox -e test_earliest,test,lint,type,type_consumer,format
+        else
+          tox -e test
         fi
-        tox

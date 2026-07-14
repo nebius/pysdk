@@ -41,7 +41,10 @@ jobs:
 
       - name: Run generation script
         run: |
-          make
+          make update-submodule
+          make generate
+          make check-generated
+          make verify-generated
 
       - name: Check for Changes
         id: check_changes

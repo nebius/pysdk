@@ -15,27 +15,20 @@ async def test_credentials_updater() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
-        GetDiskRequest,
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+    from nebius.api.nebius.compute.v1 import (
+        DiskServiceClient,
         UpdateDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
-    from nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc import (
-        TokenExchangeService,
-        add_TokenExchangeServiceServicer_to_server,
-    )
-    from nebius.api.nebius.iam.v1.token_service_pb2 import (
+    from nebius.api.nebius.iam.v1 import (
         CreateTokenResponse,
         ExchangeTokenRequest,
+        TokenExchangeServiceClient,
     )
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
+    from tests.grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -47,11 +40,13 @@ async def test_credentials_updater() -> None:
 
     call = 0
 
-    class MockTokenExchangeService(TokenExchangeService):
+    class MockTokenExchangeService:
         async def Exchange(  # noqa: N802 — GRPC method
             self,
             request: ExchangeTokenRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
+            context: grpc.aio.ServicerContext[
+                ExchangeTokenRequest, CreateTokenResponse
+            ],
         ) -> CreateTokenResponse:
             nonlocal call
             if call == 0:
@@ -66,12 +61,12 @@ async def test_credentials_updater() -> None:
             return ret
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Update(  # noqa: N802 — GRPC method
             self,
             request: UpdateDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> operation_pb2.Operation:
+            context: grpc.aio.ServicerContext[UpdateDiskRequest, OperationMessage],
+        ) -> OperationMessage:
             assert request.metadata.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -86,15 +81,15 @@ async def test_credentials_updater() -> None:
                 )
             )
 
-            ret = operation_pb2.Operation()
+            ret = OperationMessage()
             return ret
 
     # Randomly assign an IPv6 address and port for the server
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
-    add_TokenExchangeServiceServicer_to_server(MockTokenExchangeService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
+    add_service(srv, TokenExchangeServiceClient, MockTokenExchangeService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -115,7 +110,6 @@ async def test_credentials_updater() -> None:
         from nebius.aio.operation import Operation
         from nebius.api.nebius.compute.v1 import (
             DiskServiceClient,
-            GetDiskRequest,
             UpdateDiskRequest,
         )
 
@@ -145,27 +139,20 @@ async def test_credentials_updater_sync() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
-        GetDiskRequest,
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+    from nebius.api.nebius.compute.v1 import (
+        DiskServiceClient,
         UpdateDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
-    from nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc import (
-        TokenExchangeService,
-        add_TokenExchangeServiceServicer_to_server,
-    )
-    from nebius.api.nebius.iam.v1.token_service_pb2 import (
+    from nebius.api.nebius.iam.v1 import (
         CreateTokenResponse,
         ExchangeTokenRequest,
+        TokenExchangeServiceClient,
     )
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
+    from tests.grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -177,11 +164,13 @@ async def test_credentials_updater_sync() -> None:
 
     call = 0
 
-    class MockTokenExchangeService(TokenExchangeService):
+    class MockTokenExchangeService:
         async def Exchange(  # noqa: N802 — GRPC method
             self,
             request: ExchangeTokenRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
+            context: grpc.aio.ServicerContext[
+                ExchangeTokenRequest, CreateTokenResponse
+            ],
         ) -> CreateTokenResponse:
             nonlocal call
             if call == 0:
@@ -196,12 +185,12 @@ async def test_credentials_updater_sync() -> None:
             return ret
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Update(  # noqa: N802 — GRPC method
             self,
             request: UpdateDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> operation_pb2.Operation:
+            context: grpc.aio.ServicerContext[UpdateDiskRequest, OperationMessage],
+        ) -> OperationMessage:
             assert request.metadata.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -216,15 +205,15 @@ async def test_credentials_updater_sync() -> None:
                 )
             )
 
-            ret = operation_pb2.Operation()
+            ret = OperationMessage()
             return ret
 
     # Randomly assign an IPv6 address and port for the server
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
-    add_TokenExchangeServiceServicer_to_server(MockTokenExchangeService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
+    add_service(srv, TokenExchangeServiceClient, MockTokenExchangeService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -250,7 +239,6 @@ async def test_credentials_updater_sync() -> None:
         )
         from nebius.api.nebius.compute.v1 import (
             DiskServiceClient,
-            GetDiskRequest,
             UpdateDiskRequest,
         )
 
@@ -286,28 +274,27 @@ async def test_credentials_updater_sync_error() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel
     from nebius.aio.service_error import RequestError, RequestStatusExtended
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
-        GetDiskRequest,
+    from nebius.api.nebius.common.v1 import (
+        Operation as OperationMessage,
+    )
+    from nebius.api.nebius.common.v1 import (
+        QuotaFailure,
+        ServiceError,
+    )
+    from nebius.api.nebius.compute.v1 import (
+        DiskServiceClient,
         UpdateDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
-    from nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc import (
-        TokenExchangeService,
-        add_TokenExchangeServiceServicer_to_server,
-    )
-    from nebius.api.nebius.iam.v1.token_service_pb2 import (
+    from nebius.api.nebius.iam.v1 import (
         CreateTokenResponse,
         ExchangeTokenRequest,
+        TokenExchangeServiceClient,
     )
     from nebius.base.options import INSECURE
     from nebius.base.service_account.service_account import ServiceAccount
+    from tests.grpc_service import add_service
 
     stub_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -317,11 +304,13 @@ async def test_credentials_updater_sync_error() -> None:
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
-    class MockTokenExchangeService(TokenExchangeService):
+    class MockTokenExchangeService:
         async def Exchange(  # noqa: N802 — GRPC method
             self,
             request: ExchangeTokenRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
+            context: grpc.aio.ServicerContext[
+                ExchangeTokenRequest, CreateTokenResponse
+            ],
         ) -> CreateTokenResponse:
             await context.send_initial_metadata(
                 (
@@ -330,17 +319,16 @@ async def test_credentials_updater_sync_error() -> None:
                 )
             )
 
-            import nebius.api.nebius.common.v1.error_pb2 as error_pb2
             from nebius.base._service_error import trailing_metadata_of_errors
 
-            quota_violation = error_pb2.QuotaFailure.Violation(
+            quota_violation = QuotaFailure.Violation(
                 quota="test_quota",
                 message="testing quota failure",
                 limit="42",
                 requested="69",
             )
-            quota_failure = error_pb2.QuotaFailure(violations=[quota_violation])
-            service_error = error_pb2.ServiceError(
+            quota_failure = QuotaFailure(violations=[quota_violation])
+            service_error = ServiceError(
                 service="example.service",
                 code="test failure",
                 quota_failure=quota_failure,
@@ -357,12 +345,12 @@ async def test_credentials_updater_sync_error() -> None:
             )
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Update(  # noqa: N802 — GRPC method
             self,
             request: UpdateDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> operation_pb2.Operation:
+            context: grpc.aio.ServicerContext[UpdateDiskRequest, OperationMessage],
+        ) -> OperationMessage:
             assert request.metadata.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -377,15 +365,15 @@ async def test_credentials_updater_sync_error() -> None:
                 )
             )
 
-            ret = operation_pb2.Operation()
+            ret = OperationMessage()
             return ret
 
     # Randomly assign an IPv6 address and port for the server
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
-    add_TokenExchangeServiceServicer_to_server(MockTokenExchangeService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
+    add_service(srv, TokenExchangeServiceClient, MockTokenExchangeService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -410,7 +398,6 @@ async def test_credentials_updater_sync_error() -> None:
         )
         from nebius.api.nebius.compute.v1 import (
             DiskServiceClient,
-            GetDiskRequest,
             UpdateDiskRequest,
         )
 

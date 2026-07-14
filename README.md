@@ -22,6 +22,23 @@ If you've received this module in a zip archive or checked out from git, install
 pip install ./path/to/your/pysdk
 ```
 
+### Migration from 0.3.x to 0.4.x
+
+Version 0.4.0 replaces the provider-backed generated API layer with direct,
+SDK-owned message, enum, reflection, and service-client implementations. Normal
+imports from public package facades and client calls remain supported:
+
+```python
+from nebius.api.nebius.compute.v1 import Instance, InstanceServiceClient
+```
+
+Generated `*_pb2.py`, `*_pb2.pyi`, and `*_pb2_grpc.py` modules are no longer
+part of the SDK. Code that imported them directly, depended on
+`google.protobuf.message.Message`, or used the global protobuf descriptor pool
+must move to the package-facade exports and the SDK registry/reflection APIs.
+The SDK now also ships the Google protobuf and RPC types it needs under
+`nebius.api.google.protobuf` and `nebius.api.google.rpc`.
+
 ### Migration from 0.2.x to 0.3.x
 
 In version 0.3.0, we introduced a small breaking change aimed at improving the authorization process:

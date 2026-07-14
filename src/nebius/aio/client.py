@@ -10,11 +10,10 @@ be instantiated directly by application code; instead they provide a common
 shaping layer for code generated from service definitions.
 """
 
-from collections.abc import Callable
+from collections.abc import AsyncIterable, Callable, Iterable
 from logging import getLogger
 from typing import Any, Generic, TypeVar
 
-from google.protobuf.message import Message as PMessage
 from typing_extensions import Unpack
 
 from nebius.aio.abc import ClientChannelInterface as Channel
@@ -23,6 +22,8 @@ from nebius.aio.request import Request
 
 # from nebius.api.nebius.common.v1 import Operation
 from nebius.aio.request_kwargs import RequestKwargs
+from nebius.aio.route import Route
+from nebius.aio.stream import StreamRequest
 
 Req = TypeVar("Req")
 Res = TypeVar("Res")
@@ -46,6 +47,8 @@ class Client:
 
     # __operation_type__: Message = Operation
     __service_name__: str
+    __api_service_name__: str = ""
+    __registry__: object | None = None
     __service_deprecation_details__: str | None = None
 
     def __init__(self, channel: Channel) -> None:
@@ -64,7 +67,7 @@ class Client:
         self,
         method: str,
         request: Req,
-        result_pb2_class: type[PMessage],
+        result_pb2_class: type[Any],
         result_wrapper: Callable[[str, Channel, Any], Res] | None = None,
         **kwargs: Unpack[RequestKwargs],
     ) -> Request[Req, Res]:
@@ -95,6 +98,38 @@ class Client:
             request=request,
             result_pb2_class=result_pb2_class,
             result_wrapper=result_wrapper,
+            route=Route(
+                service=self.__service_name__,
+                method=method,
+                api_service_name=self.__api_service_name__,
+                registry=self.__registry__,
+            ),
+            **kwargs,
+        )
+
+    def stream_request(
+        self,
+        method: str,
+        request: Req | AsyncIterable[Req] | Iterable[Req] | None,
+        result_class: type[Res],
+        *,
+        client_streaming: bool,
+        server_streaming: bool,
+        **kwargs: Any,
+    ) -> StreamRequest[Req, Res]:
+        """Construct a native async request for a streaming RPC shape."""
+        return StreamRequest(
+            channel=self._channel,
+            route=Route(
+                service=self.__service_name__,
+                method=method,
+                api_service_name=self.__api_service_name__,
+                registry=self.__registry__,
+            ),
+            request=request,
+            result_class=result_class,
+            client_streaming=client_streaming,
+            server_streaming=server_streaming,
             **kwargs,
         )
 

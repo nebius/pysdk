@@ -5,31 +5,29 @@ errors (``ServiceError`` PBs) and to decide retriability based on service
 semantics and gRPC status codes.
 """
 
+from __future__ import annotations
+
 import re
 from collections.abc import Callable, Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from io import StringIO
-from typing import cast
+from typing import TYPE_CHECKING, Any, cast
 
-from google.protobuf.any_pb2 import Any as AnyPb
-from google.rpc.status_pb2 import Status as StatusPb  # type: ignore
 from grpc import StatusCode
 
 from nebius.aio.request import RequestError as BaseError
 from nebius.aio.request_status import RequestStatus
-from nebius.api.nebius.common.v1 import ServiceError
-from nebius.base._service_error import pb2_from_status  # type: ignore[unused-ignore]
 
+if TYPE_CHECKING:
+    from nebius.base.protos.direct import Message
+    from nebius.base.protos.registry import Registry
 
-def to_anypb(err: ServiceError) -> AnyPb:
-    """Pack a :class:`ServiceError` protobuf into a ``google.protobuf.Any`` message.
-
-    This helper is used when converting SDK-level error representations back
-    into gRPC status details.
-    """
-    ret = AnyPb()
-    ret.Pack(err.__pb2_message__)  # type: ignore[unused-ignore]
-    return ret
+_SERVICE_ERROR_NAMES = frozenset(
+    {
+        "nebius.common.v1.ServiceError",
+        "nebius.common.error.v1alpha1.ServiceError",
+    }
+)
 
 
 class RequestError(BaseError):
@@ -47,7 +45,7 @@ class RequestError(BaseError):
         super().__init__(f"Request error {str(status)}")
 
 
-def to_str(err: ServiceError) -> str:
+def to_str(err: Any) -> str:
     """Render a :class:`ServiceError` into a concise human readable string.
 
     The function inspects typed details attached to the service error and
@@ -269,10 +267,22 @@ class RequestStatusExtended(RequestStatus):
 
     code: StatusCode
     message: str | None
-    details: list[AnyPb]
-    service_errors: list[ServiceError]
+    details: list[Any]
+    service_errors: list[Any]
     request_id: str
     trace_id: str
+    _original_extended_state: (
+        tuple[tuple[StatusCode, str | None, tuple[bytes, ...]], tuple[bytes, ...]]
+        | None
+    ) = field(default=None, init=False, repr=False, compare=False)
+
+    def _extended_state(
+        self,
+    ) -> tuple[tuple[StatusCode, str | None, tuple[bytes, ...]], tuple[bytes, ...]]:
+        return (
+            self._state(),
+            tuple(error.SerializeToString() for error in self.service_errors),
+        )
 
     def __str__(self) -> str:
         """Render a compact human-readable representation of the status.
@@ -304,25 +314,56 @@ class RequestStatusExtended(RequestStatus):
             ret.write(" (additional details not shown)")
         return ret.getvalue()
 
-    def to_rpc_status(self) -> StatusPb:  # type: ignore[unused-ignore]
+    def to_rpc_status(self, *, registry: Registry | None = None) -> Any:
         """Convert this extended status back into a protobuf Status.
 
         Service errors are packed into Any messages and included in the
         returned Status details.
         """
-        ret = StatusPb()  # type: ignore[unused-ignore]
-        ret.code = self.code
-        ret.message = self.message
-        ret.details.extend(self.details)  # type: ignore[unused-ignore]
-        ret.details.extend([to_anypb(err) for err in self.service_errors])  # type: ignore[unused-ignore]
-        return ret  # type: ignore[unused-ignore]
+        selected = registry or self.registry
+        if selected is None:
+            raise ValueError(
+                "RPC status conversion requires an explicit or retained direct registry"
+            )
+        current_state = self._extended_state()
+        if self._raw_status is not None and self._original_extended_state is not None:
+            from nebius.aio.request_status import _localized_status
+
+            ret = _localized_status(self._raw_status, selected)
+            original_base = self._original_extended_state[0]
+            if current_state[0][0] != original_base[0]:
+                ret.code = self.code.value[0]
+            if current_state[0][1] != original_base[1]:
+                ret.message = self.message or ""
+            if current_state == self._original_extended_state:
+                return ret
+        else:
+            ret = super().to_rpc_status(registry=selected)
+        localized_errors: list[Message] = []
+        for error in self.service_errors:
+            full_name = getattr(type(error), "__PROTO_FULL_NAME__", None)
+            if full_name not in _SERVICE_ERROR_NAMES:
+                raise TypeError("service error has an unexpected protobuf type")
+            error_type = selected.message_class(full_name)
+            if type(error) is error_type:
+                localized_errors.append(error)
+                continue
+            localized_errors.append(error_type._from_string(error.SerializeToString()))
+        packed_errors = [selected.pack_any(error) for error in localized_errors]
+        if self._raw_status is not None:
+            ret.details = [*self._localized_details(selected), *packed_errors]
+        else:
+            ret.details.extend(packed_errors)
+        return ret
 
     @classmethod
     def from_rpc_status(
         cls,
-        status: StatusPb,  # type: ignore[unused-ignore]
+        status: object,
         request_id: str,
         trace_id: str,
+        *,
+        registry: Registry | None = None,
     ) -> "RequestStatusExtended":
         """Construct an extended status by extracting ServiceError protos.
 
@@ -330,15 +371,41 @@ class RequestStatusExtended(RequestStatus):
         service error protos from the details and returns them as
         :class:`ServiceError` wrappers.
         """
-        errors = pb2_from_status(status, remove_from_details=True)  # type: ignore[unused-ignore]
-        return cls(
-            code=int_to_status_code(status.code),  # type: ignore[unused-ignore]
-            message=status.message,  # type: ignore[unused-ignore]
-            details=[d for d in status.details],  # type: ignore[unused-ignore]
-            service_errors=[ServiceError(err) for err in errors],
+        base = RequestStatus.from_rpc_status(
+            status,
             request_id=request_id,
             trace_id=trace_id,
+            registry=registry,
         )
+        if base.registry is None:
+            raise ValueError("direct RPC status conversion lost its registry")
+        errors: list[Any] = []
+        rest: list[Any] = []
+        for detail in base.details:
+            try:
+                full_name = base.registry.type_name(detail.type_url)
+            except ValueError:
+                rest.append(detail)
+                continue
+            if full_name not in _SERVICE_ERROR_NAMES:
+                rest.append(detail)
+                continue
+            try:
+                errors.append(base.registry.unpack_any(detail))
+            except LookupError:
+                rest.append(detail)
+        result = cls(
+            code=base.code,
+            message=base.message,
+            details=rest,
+            service_errors=errors,
+            request_id=request_id,
+            trace_id=trace_id,
+            registry=base.registry,
+            _raw_status=base._raw_status,
+        )
+        result._original_extended_state = result._extended_state()
+        return result
 
     def is_retriable(self, deadline_retriable: bool = False) -> bool:
         """Return True when the status is considered retriable.
@@ -351,12 +418,10 @@ class RequestStatusExtended(RequestStatus):
         for service_error in self.service_errors:
             if hasattr(service_error, "retry_type"):
                 retry_type = service_error.retry_type
-                if retry_type == ServiceError.RetryType.CALL:
+                retry_name = getattr(retry_type, "name", None)
+                if retry_name == "CALL":
                     return True
-                if retry_type in [
-                    ServiceError.RetryType.NOTHING,
-                    ServiceError.RetryType.UNIT_OF_WORK,
-                ]:
+                if retry_name in {"NOTHING", "UNIT_OF_WORK"}:
                     return False
 
         # Check gRPC error codes
