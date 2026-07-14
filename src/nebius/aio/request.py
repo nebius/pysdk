@@ -25,14 +25,12 @@ from collections.abc import Awaitable, Callable, Generator, Iterable
 from logging import getLogger
 from sys import exc_info
 from time import time
-from typing import Any, Generic, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, TypeVar, cast
 
-from google.protobuf.message import Message as PMessage
 from grpc import CallCredentials, Compression, StatusCode
 from grpc.aio import AioRpcError
 from grpc.aio import Metadata as GrpcMetadata
 from grpc.aio._call import UnaryUnaryCall  # type: ignore[unused-ignore]
-from grpc_status import rpc_status
 
 from nebius.aio.abc import ClientChannelInterface as Channel
 from nebius.aio.authorization.options import OPTION_TYPE, Types
@@ -43,6 +41,10 @@ from nebius.base.metadata import Metadata
 from nebius.base.protos.unset import Unset, UnsetType
 
 from .request_status import RequestStatus, UnfinishedRequestStatus
+from .route import Route
+
+if TYPE_CHECKING:
+    from nebius.base.protos.registry import Registry
 
 Req = TypeVar("Req")
 """Request type variable. Either a protobuf/message or a serializable payload."""
@@ -233,7 +235,7 @@ class Request(Generic[Req, Res]):
         service: str,
         method: str,
         request: Req,
-        result_pb2_class: type[PMessage],
+        result_pb2_class: type[Any],
         metadata: Metadata | Iterable[tuple[str, str]] | None = None,
         timeout: float | None | UnsetType = Unset,
         auth_timeout: float | None | UnsetType = Unset,
@@ -245,6 +247,7 @@ class Request(Generic[Req, Res]):
         error_wrapper: Callable[[RequestStatus], RequestError] | None = None,
         retries: int | None = 3,
         per_retry_timeout: float | None | UnsetType = Unset,
+        route: Route | None = None,
         # When adding new parameters, don't forget to add them to RequestKwargs as well,
         # if applicable.
     ) -> None:
@@ -255,6 +258,11 @@ class Request(Generic[Req, Res]):
         self._input = request
         self._service = service
         self._method = method
+        self._route = route or Route(service=service, method=method)
+        self._registry = cast(
+            "Registry | None",
+            self._route.registry or getattr(type(request), "__REGISTRY__", None),
+        )
         self._auth_options = auth_options if auth_options is not None else {}
         self._result_pb2_class = result_pb2_class
         self._input_metadata = Metadata(metadata)
@@ -398,17 +406,16 @@ class Request(Generic[Req, Res]):
         :raises RequestError: when the request payload cannot be serialized or
             the request has been cancelled.
         """
-        from nebius.base.protos.pb_classes import Message
-
         self._initial_metadata = None
         self._trailing_metadata = None
         self._status = None
         req = self._input
-        if isinstance(req, Message):
+        from nebius.base.protos.pb_classes import Message as LegacyMessage
+
+        if isinstance(req, LegacyMessage):
             req = req.__pb2_message__  # type: ignore[assignment]
-        if isinstance(req, PMessage):
-            serializer = req.__class__.SerializeToString
-        else:
+        serializer = getattr(req.__class__, "SerializeToString", None)
+        if not callable(serializer):
             raise RequestError(f"Unsupported request type {type(req)}")
         if self._cancelled:
             raise RequestIsCancelledError()
@@ -423,9 +430,13 @@ class Request(Generic[Req, Res]):
                         req.metadata.parent_id = channel_parent_id  # type: ignore[unused-ignore]
         self._sent = True
         if self._grpc_channel is None:
-            self._grpc_channel = self._channel.get_channel_by_method(
-                self._service + "." + self._method
-            )
+            routed = getattr(self._channel, "get_channel_by_route", None)
+            if callable(routed):
+                self._grpc_channel = routed(self._route)
+            else:
+                self._grpc_channel = self._channel.get_channel_by_method(
+                    self._service + "." + self._method
+                )
         s_name = self._service
         if s_name[0] == ".":
             s_name = s_name[1:]
@@ -471,6 +482,7 @@ class Request(Generic[Req, Res]):
                 service_errors=[],
                 request_id=self._request_id if self._request_id is not None else "",
                 trace_id=self._trace_id if self._trace_id is not None else "",
+                registry=self._registry,
             )
             raise RequestError(self._status) from e
 
@@ -645,7 +657,9 @@ class Request(Generic[Req, Res]):
         self._initial_metadata = Metadata(err.initial_metadata())
         self._trailing_metadata = Metadata(err.trailing_metadata())  # type: ignore
         self._parse_request_id()
-        status = rpc_status.from_call(err)  # type: ignore
+        from .request_status import rpc_status_from_call
+
+        status = rpc_status_from_call(err, registry=self._registry)
         from .service_error import RequestError, RequestStatusExtended
 
         debug_info = err.debug_error_string()
@@ -660,6 +674,7 @@ class Request(Generic[Req, Res]):
                 service_errors=[],
                 request_id=self._request_id,  # type: ignore[arg-type] # should be strings by now
                 trace_id=self._trace_id,  # type: ignore[arg-type] # should be strings by now
+                registry=self._registry,
             )
             raise RequestError(self._status) from None
 
@@ -667,6 +682,7 @@ class Request(Generic[Req, Res]):
             status,
             trace_id=self._trace_id,  # type: ignore[arg-type] # should be strings by now
             request_id=self._request_id,  # type: ignore[arg-type] # should be known by now
+            registry=self._registry,
         )
         raise RequestError(self._status) from None
 

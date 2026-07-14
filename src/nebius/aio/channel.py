@@ -70,23 +70,26 @@ from nebius.aio.metrics import (
     metric_start,
     record_config_metric,
 )
+from nebius.aio.operation_service import OperationServiceTransportStub
+from nebius.aio.route import Route
 from nebius.aio.service_descriptor import ServiceStub, from_stub_class
 from nebius.aio.token import exchangeable, renewable
 from nebius.aio.token.static import Bearer as StaticTokenBearer
 from nebius.aio.token.static import EnvBearer
 from nebius.aio.token.token import Bearer as TokenBearer
 from nebius.aio.token.token import Token
-from nebius.api.nebius.common.v1.operation_service_pb2_grpc import (
-    OperationServiceStub,
-)
-from nebius.api.nebius.common.v1alpha1.operation_service_pb2_grpc import (
-    OperationServiceStub as OperationServiceStubDeprecated,
-)
 from nebius.base.constants import DOMAIN
 from nebius.base.error import SDKError
 from nebius.base.methods import service_from_method_name
 from nebius.base.options import COMPRESSION, INSECURE, pop_option
-from nebius.base.resolver import Chain, Conventional, Resolver, TemplateExpander
+from nebius.base.protos.registry import Registry
+from nebius.base.resolver import (
+    Chain,
+    Conventional,
+    Resolver,
+    TemplateExpander,
+    UnknownServiceError,
+)
 from nebius.base.service_account.service_account import (
     Reader as ServiceAccountReader,
 )
@@ -645,9 +648,6 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         """
 
-        import nebius.api.nebius.iam.v1.token_exchange_service_pb2  # type: ignore[unused-ignore] # noqa: F401 - load for registration
-        import nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc  # type: ignore[unused-ignore] # noqa: F401 - load for registration
-
         self._metrics = metrics
         self._auth_metrics = metrics if metrics is not None else auth_metrics
         if metrics is not None and auth_metrics is not None:
@@ -670,6 +670,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         substitutions_full["{domain}"] = domain
         if substitutions is not None:
             substitutions_full.update(substitutions)
+        self._route_substitutions = substitutions_full
 
         self._max_free_channels_per_address = max_free_channels_per_address
 
@@ -677,7 +678,12 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
         self._tasks = set[Task[Any]]()
 
         self._resolver: Resolver = Conventional()
+        self._route_custom_resolver: Resolver | None = None
         if resolver is not None:
+            self._route_custom_resolver = TemplateExpander(
+                substitutions_full,
+                resolver,
+            )
             self._resolver = Chain(resolver, self._resolver)
         self._resolver = TemplateExpander(substitutions_full, self._resolver)
         if tls_credentials is None:
@@ -689,6 +695,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         self._free_channels = dict[str, list[GRPCChannel]]()
         self._methods = dict[str, str]()
+        self._routes = dict[tuple[int, str, str, str], str]()
         self.user_agent = "nebius-python-sdk/" + version
         self.user_agent += f" (python/{sys.version_info.major}.{sys.version_info.minor}"
         self.user_agent += f".{sys.version_info.micro})"
@@ -1042,7 +1049,7 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
     def get_corresponding_operation_service(
         self,
         service_stub_class: type[ServiceStub],
-    ) -> OperationServiceStub:
+    ) -> OperationServiceTransportStub:
         """Return an operations service stub for the same address as a
         generated service stub.
 
@@ -1060,12 +1067,13 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         addr = self.get_addr_from_stub(service_stub_class)
         chan = self.get_channel_by_addr(addr)
-        return OperationServiceStub(chan)  # type: ignore[no-untyped-call]
+        registry = self._registry_for_service(service_stub_class)
+        return OperationServiceTransportStub(chan.channel, registry)
 
     def get_corresponding_operation_service_alpha(
         self,
         service_stub_class: type[ServiceStub],
-    ) -> OperationServiceStubDeprecated:
+    ) -> OperationServiceTransportStub:
         """Compatibility helper returning the alpha-version operations
         service stub for the same address as a generated service stub.
 
@@ -1076,7 +1084,21 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
 
         addr = self.get_addr_from_stub(service_stub_class)
         chan = self.get_channel_by_addr(addr)
-        return OperationServiceStubDeprecated(chan)  # type: ignore[no-untyped-call]
+        registry = self._registry_for_service(service_stub_class)
+        return OperationServiceTransportStub(chan.channel, registry, alpha=True)
+
+    @staticmethod
+    def _registry_for_service(
+        service_stub_class: type[ServiceStub],
+    ) -> Registry:
+        registry: Registry | None = getattr(service_stub_class, "__registry__", None)
+        if registry is not None:
+            return registry
+        try:
+            from nebius.api._registry import REGISTRY
+        except ImportError as error:
+            raise SDKError("service stub has no direct-message registry") from error
+        return REGISTRY
 
     def get_addr_from_stub(self, service_stub_class: type[ServiceStub]) -> str:
         """Resolve the concrete address for a generated service stub class.
@@ -1125,6 +1147,35 @@ class Channel(ChannelBase):  # type: ignore[unused-ignore,misc]
             service_name = service_from_method_name(method_name)
             self._methods[method_name] = self.get_addr_from_service_name(service_name)
         return self._methods[method_name]
+
+    def get_addr_by_route(self, route: Route) -> str:
+        """Resolve immutable generated route metadata without global descriptors."""
+        key = (
+            id(route.registry),
+            route.service,
+            route.method,
+            route.api_service_name,
+        )
+        if key in self._routes:
+            return self._routes[key]
+        address: str | None = None
+        if self._route_custom_resolver is not None:
+            try:
+                address = self._route_custom_resolver.resolve(route.service)
+            except UnknownServiceError:
+                pass
+        if address is None and route.api_service_name:
+            address = route.api_service_name + ".{domain}"
+            for find, replace in self._route_substitutions.items():
+                address = address.replace(find, replace)
+        if address is None:
+            address = self.get_addr_from_service_name(route.service)
+        self._routes[key] = address
+        return address
+
+    def get_channel_by_route(self, route: Route) -> AddressChannel:
+        """Return a pooled channel selected from generated route metadata."""
+        return self.get_channel_by_addr(self.get_addr_by_route(route))
 
     def get_channel_by_addr(self, addr: str) -> AddressChannel:
         """Request an :class:`AddressChannel` for the given resolved address.

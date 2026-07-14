@@ -16,29 +16,28 @@ async def test_get_instance_error() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.request_status import UnfinishedRequestStatus
     from nebius.aio.service_error import RequestError, RequestStatusExtended
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
+    from tests.grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -53,17 +52,16 @@ async def test_get_instance_error() -> None:
                 )
             )
 
-            import nebius.api.nebius.common.v1.error_pb2 as error_pb2
             from nebius.base._service_error import trailing_metadata_of_errors
 
-            quota_violation = error_pb2.QuotaFailure.Violation(
+            quota_violation = QuotaFailure.Violation(
                 quota="test_quota",
                 message="testing quota failure",
                 limit="42",
                 requested="69",
             )
-            quota_failure = error_pb2.QuotaFailure(violations=[quota_violation])
-            service_error = error_pb2.ServiceError(
+            quota_failure = QuotaFailure(violations=[quota_violation])
+            service_error = ServiceError(
                 service="example.service",
                 code="test failure",
                 quota_failure=quota_failure,
@@ -83,7 +81,7 @@ async def test_get_instance_error() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -366,16 +364,15 @@ async def test_get_instance_retry() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
+    from tests.grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
@@ -383,12 +380,12 @@ async def test_get_instance_retry() -> None:
     counter = 0
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             nonlocal counter
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
@@ -404,24 +401,23 @@ async def test_get_instance_retry() -> None:
                 )
             )
 
-            import nebius.api.nebius.common.v1.error_pb2 as error_pb2
             from nebius.base._service_error import trailing_metadata_of_errors
 
             if counter == 0:
                 counter = 1
 
-                quota_violation = error_pb2.QuotaFailure.Violation(
+                quota_violation = QuotaFailure.Violation(
                     quota="test_quota",
                     message="testing quota failure",
                     limit="42",
                     requested="69",
                 )
-                quota_failure = error_pb2.QuotaFailure(violations=[quota_violation])
-                service_error = error_pb2.ServiceError(
+                quota_failure = QuotaFailure(violations=[quota_violation])
+                service_error = ServiceError(
                     service="example.service",
                     code="test failure",
                     quota_failure=quota_failure,
-                    retry_type=error_pb2.ServiceError.RetryType.CALL,
+                    retry_type=ServiceError.RetryType.CALL,
                 )
 
                 await context.abort(
@@ -435,7 +431,7 @@ async def test_get_instance_retry() -> None:
                 )
             else:
                 # Return an Instance object as expected by the client
-                ret = disk_pb2.Disk()
+                ret = Disk()
                 ret.metadata.id = request.id
                 ret.metadata.name = "MockDisk"
                 return ret
@@ -444,7 +440,7 @@ async def test_get_instance_retry() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -479,28 +475,27 @@ async def test_metadata_at_error() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.request_status import UnfinishedRequestStatus
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
+    from tests.grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -515,17 +510,16 @@ async def test_metadata_at_error() -> None:
                 )
             )
 
-            import nebius.api.nebius.common.v1.error_pb2 as error_pb2
             from nebius.base._service_error import trailing_metadata_of_errors
 
-            quota_violation = error_pb2.QuotaFailure.Violation(
+            quota_violation = QuotaFailure.Violation(
                 quota="test_quota",
                 message="testing quota failure",
                 limit="42",
                 requested="69",
             )
-            quota_failure = error_pb2.QuotaFailure(violations=[quota_violation])
-            service_error = error_pb2.ServiceError(
+            quota_failure = QuotaFailure(violations=[quota_violation])
+            service_error = ServiceError(
                 service="example.service",
                 code="test failure",
                 quota_failure=quota_failure,
@@ -545,7 +539,7 @@ async def test_metadata_at_error() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -585,29 +579,28 @@ async def test_status_at_error() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.request_status import UnfinishedRequestStatus
     from nebius.aio.service_error import RequestStatusExtended
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
+    from tests.grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -622,17 +615,16 @@ async def test_status_at_error() -> None:
                 )
             )
 
-            import nebius.api.nebius.common.v1.error_pb2 as error_pb2
             from nebius.base._service_error import trailing_metadata_of_errors
 
-            quota_violation = error_pb2.QuotaFailure.Violation(
+            quota_violation = QuotaFailure.Violation(
                 quota="test_quota",
                 message="testing quota failure",
                 limit="42",
                 requested="69",
             )
-            quota_failure = error_pb2.QuotaFailure(violations=[quota_violation])
-            service_error = error_pb2.ServiceError(
+            quota_failure = QuotaFailure(violations=[quota_violation])
+            service_error = ServiceError(
                 service="example.service",
                 code="test failure",
                 quota_failure=quota_failure,
@@ -652,7 +644,7 @@ async def test_status_at_error() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -693,28 +685,27 @@ async def test_status_does_not_block_failed_call() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.service_error import RequestStatusExtended
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
+    from tests.grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -729,17 +720,16 @@ async def test_status_does_not_block_failed_call() -> None:
                 )
             )
 
-            import nebius.api.nebius.common.v1.error_pb2 as error_pb2
             from nebius.base._service_error import trailing_metadata_of_errors
 
-            quota_violation = error_pb2.QuotaFailure.Violation(
+            quota_violation = QuotaFailure.Violation(
                 quota="test_quota",
                 message="testing quota failure",
                 limit="42",
                 requested="69",
             )
-            quota_failure = error_pb2.QuotaFailure(violations=[quota_violation])
-            service_error = error_pb2.ServiceError(
+            quota_failure = QuotaFailure(violations=[quota_violation])
+            service_error = ServiceError(
                 service="example.service",
                 code="test failure",
                 quota_failure=quota_failure,
@@ -759,7 +749,7 @@ async def test_status_does_not_block_failed_call() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -804,28 +794,27 @@ async def test_request_id_at_error() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.request_status import UnfinishedRequestStatus
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
+    from tests.grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -840,17 +829,16 @@ async def test_request_id_at_error() -> None:
                 )
             )
 
-            import nebius.api.nebius.common.v1.error_pb2 as error_pb2
             from nebius.base._service_error import trailing_metadata_of_errors
 
-            quota_violation = error_pb2.QuotaFailure.Violation(
+            quota_violation = QuotaFailure.Violation(
                 quota="test_quota",
                 message="testing quota failure",
                 limit="42",
                 requested="69",
             )
-            quota_failure = error_pb2.QuotaFailure(violations=[quota_violation])
-            service_error = error_pb2.ServiceError(
+            quota_failure = QuotaFailure(violations=[quota_violation])
+            service_error = ServiceError(
                 service="example.service",
                 code="test failure",
                 quota_failure=quota_failure,
@@ -870,7 +858,7 @@ async def test_request_id_at_error() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server

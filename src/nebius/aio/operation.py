@@ -11,6 +11,7 @@ service client.
 
 from __future__ import annotations
 
+import importlib
 from asyncio import sleep
 from collections.abc import Sequence
 from datetime import datetime, timedelta
@@ -25,7 +26,7 @@ from nebius.aio.request import DEFAULT_TIMEOUT
 from nebius.aio.request_kwargs import RequestKwargs, RequestKwargsForOperation
 from nebius.base.error import SDKError
 from nebius.base.protos.unset import Unset, UnsetType
-from nebius.base.protos.well_known import local_timezone
+from nebius.base.protos.well_known_direct import local_timezone
 
 from .constant_channel import Constant
 from .request_status import RequestStatus
@@ -33,7 +34,20 @@ from .request_status import RequestStatus
 if TYPE_CHECKING:
     from nebius.api.nebius.common.v1 import ProgressTracker
 
-OperationPb = TypeVar("OperationPb")
+
+class OperationMessage(Protocol):
+    """Structural fields shared by current and alpha direct operations."""
+
+    id: str
+    description: str
+    created_at: datetime | None
+    created_by: str
+    finished_at: datetime | None
+    resource_id: str
+    status: RequestStatus | None
+
+
+OperationPb = TypeVar("OperationPb", bound=OperationMessage)
 """
 A convenience wrapper around operation protobufs.
 Either :class:`nebius.api.nebius.common.v1.Operation` or
@@ -253,42 +267,26 @@ class Operation(Generic[OperationPb]):
         operation: OperationPb,
     ) -> None:
         """Create an operation wrapper from the operation protobuf."""
-        from nebius.api.nebius.common.v1 import (
-            GetOperationRequest,
-            Operation,
-            OperationServiceClient,
-        )
-        from nebius.api.nebius.common.v1alpha1 import (
-            GetOperationRequest as OldGet,
-        )
-        from nebius.api.nebius.common.v1alpha1 import (
-            Operation as Old,
-        )
-        from nebius.api.nebius.common.v1alpha1 import (
-            OperationServiceClient as OldClient,
-        )
-
         self._channel = channel
-        _operation: OperationPb | Operation | Old = operation
-        if isinstance(_operation, Operation.__PB2_CLASS__):
-            _operation = Operation(_operation)
-        if isinstance(_operation, Old.__PB2_CLASS__):
-            _operation = Old(_operation)
-
-        if isinstance(_operation, Operation):
-            self._service: OperationServiceClient | OldClient = OperationServiceClient(
-                Constant(source_method, channel)
-            )
-            self._get_request_obj: type[GetOperationRequest | OldGet] = (
-                GetOperationRequest
-            )
-        elif isinstance(_operation, Old):
-            self._service = OldClient(Constant(source_method, channel))
-            self._get_request_obj = OldGet
-        else:
-            raise SDKError(f"Operation type {type(_operation)} not supported.")
-
-        self._operation: Operation | Old = _operation
+        operation_type = type(operation)
+        full_name = getattr(operation_type, "__PROTO_FULL_NAME__", None)
+        if full_name not in {
+            "nebius.common.v1.Operation",
+            "nebius.common.v1alpha1.Operation",
+        }:
+            raise SDKError(f"Operation type {operation_type} not supported.")
+        registry = getattr(operation_type, "__REGISTRY__", None)
+        if registry is None:
+            raise SDKError("Operation type has no direct-message registry.")
+        package = full_name.rsplit(".", 1)[0]
+        get_type = registry.message_class(f"{package}.GetOperationRequest")
+        module = importlib.import_module(operation_type.__module__)
+        service_type = getattr(module, "OperationServiceClient", None)
+        if service_type is None:
+            raise SDKError(f"Operation service for {full_name} is not generated.")
+        self._service = service_type(Constant(source_method, channel))
+        self._get_request_obj = get_type
+        self._operation = operation
 
     def __repr__(self) -> str:
         """Return a compact string representation useful for debugging."""
@@ -383,11 +381,11 @@ class Operation(Generic[OperationPb]):
             return
 
         req = self._service.get(
-            self._get_request_obj(id=self.id),  # type: ignore
+            self._get_request_obj(id=self.id),
             **kwargs,
         )
         new_op = await req
-        self._set_new_operation(new_op._operation)  # type: ignore
+        self._set_new_operation(cast(OperationPb, new_op._operation))
 
     def sync_wait(
         self,
@@ -530,7 +528,7 @@ class Operation(Generic[OperationPb]):
         :class:`SDKError` is raised.
         """
         if isinstance(operation, self._operation.__class__):
-            self._operation = operation  # type: ignore[unused-ignore,assignment]
+            self._operation = operation
         else:
             raise SDKError(f"Operation type {type(operation)} not supported.")
 
@@ -553,7 +551,7 @@ class Operation(Generic[OperationPb]):
         :rtype: datetime
         """
         ca = self._operation.created_at
-        if ca is None:  # type: ignore[unused-ignore]
+        if ca is None:
             return datetime.now(local_timezone)
         return ca
 
@@ -585,7 +583,7 @@ class Operation(Generic[OperationPb]):
         Use this to access version-specific fields that are not exposed by the
         normalized wrapper.
         """
-        return self._operation  # type: ignore
+        return self._operation
 
 
 def _check_presence(message: object, field: str) -> bool:

@@ -1,6 +1,8 @@
 # type: ignore
 import logging
 
+from grpc_service import add_service
+
 from nebius.aio import request
 
 request.DEFAULT_AUTH_TIMEOUT = 5.0
@@ -21,14 +23,11 @@ def test_get_instance_sync() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
-    )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -36,12 +35,12 @@ def test_get_instance_sync() -> None:
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -50,7 +49,7 @@ def test_get_instance_sync() -> None:
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
-            ret = disk_pb2.Disk()
+            ret = Disk()
             ret.metadata.id = request.id
             ret.metadata.name = "MockDisk"
             return ret
@@ -63,7 +62,7 @@ def test_get_instance_sync() -> None:
         async def start_server():
             # Create the gRPC server
             srv = grpc.aio.server()
-            add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+            add_service(srv, DiskServiceClient, MockInstanceService())
 
             # Bind to a random available port
             port = srv.add_insecure_port("[::]:0")
@@ -109,8 +108,6 @@ def test_get_instance_sync() -> None:
             options=[(INSECURE, True)],
             credentials=NoCredentials(),
         )
-        from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
-
         client = DiskServiceClient(channel)
         req = client.get(GetDiskRequest(id="foo-bar"))
 
@@ -143,15 +140,12 @@ def test_get_instance_timeout_sync() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
     from nebius.aio.service_error import RequestError
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
-    )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -159,12 +153,12 @@ def test_get_instance_timeout_sync() -> None:
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -176,7 +170,7 @@ def test_get_instance_timeout_sync() -> None:
             await sleep(2)
 
             # Return an Instance object as expected by the client
-            ret = disk_pb2.Disk()
+            ret = Disk()
             ret.metadata.id = request.id
             ret.metadata.name = "MockDisk"
             return ret
@@ -189,7 +183,7 @@ def test_get_instance_timeout_sync() -> None:
         async def start_server():
             # Create the gRPC server
             srv = grpc.aio.server()
-            add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+            add_service(srv, DiskServiceClient, MockInstanceService())
 
             # Bind to a random available port
             port = srv.add_insecure_port("[::]:0")
@@ -235,8 +229,6 @@ def test_get_instance_timeout_sync() -> None:
             options=[(INSECURE, True)],
             credentials=NoCredentials(),
         )
-        from nebius.api.nebius.compute.v1 import DiskServiceClient, GetDiskRequest
-
         client = DiskServiceClient(channel)
         req = client.get(GetDiskRequest(id="foo-bar"), timeout=0.1)
 
