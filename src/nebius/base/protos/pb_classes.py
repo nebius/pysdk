@@ -1,5 +1,7 @@
 """Runtime wrappers for protobuf messages, maps, and repeated fields."""
 
+from __future__ import annotations
+
 from collections.abc import (
     Callable,
     Iterable,
@@ -11,26 +13,32 @@ from collections.abc import (
 from typing import (
     Any,
     TypeVar,
+    cast,
     overload,
 )
 
-from google.protobuf.descriptor import Descriptor
-from google.protobuf.duration_pb2 import Duration
+from google.protobuf.descriptor import Descriptor, FieldDescriptor
 from google.protobuf.message import Message as PMessage
-from google.protobuf.timestamp_pb2 import Timestamp
 
 from nebius.aio.abc import ClientChannelInterface
 from nebius.base.error import SDKError
 from nebius.base.fieldmask import FieldKey, Mask
 from nebius.base.token_sanitizer import TokenSanitizer
 
-from .descriptor import DescriptorWrap
 from .pb_enum import Enum
 
 T = TypeVar("T")
 """Type placeholder for generic wrappers"""
 R = TypeVar("R")
 """Return type placeholder for generic wrappers"""
+
+
+def is_repeated_field(field: FieldDescriptor) -> bool:
+    """Return whether a field is repeated across supported protobuf releases."""
+    repeated = getattr(field, "is_repeated", None)
+    if repeated is not None:
+        return bool(repeated)
+    return cast(int, getattr(field, "label")) == FieldDescriptor.LABEL_REPEATED
 
 
 def simple_wrapper(
@@ -70,7 +78,7 @@ def unwrap_type(obj: Any, unwrap: Callable[[Any], Any] | None = None) -> Any:
     :returns: Unwrapped value suitable for protobuf assignment.
     """
     if isinstance(obj, Message):
-        return obj.__pb2_message__  # type: ignore[unused-ignore]
+        return obj.to_proto()
     if isinstance(obj, Mapping):
         return {k: unwrap_type(v, unwrap) for k, v in obj.items()}  # type: ignore[unused-ignore]
     if (
@@ -140,47 +148,203 @@ MaskFunction = Callable[[Any], Mask]
 
 
 class Message:
-    """Base wrapper for protobuf message instances.
+    """Base class for generated messages that own their Python field state.
 
-    Provides Pythonic accessors, reset-mask tracking, and sensitive-field
-    handling around a generated protobuf message object.
-
-    :param initial_message: Optional protobuf message to wrap.
-    :ivar __pb2_message__: Underlying protobuf message instance.
-    :ivar __recorded_reset_mask: Mask tracking fields cleared or set to default.
-    :ivar __PB2_CLASS__: Protobuf message class associated with this wrapper.
-    :ivar __PB2_DESCRIPTOR__: Protobuf descriptor or descriptor wrapper for this
-        message.
-    :ivar __PY_TO_PB2__: Mapping of Pythonic field names to protobuf field names.
+    Protobuf objects are created only while encoding or decoding.  Keeping the
+    public representation independent from generated ``*_pb2`` modules allows
+    two API revisions to coexist in one interpreter without sharing protobuf's
+    process-global descriptor pool.
     """
 
-    __PB2_CLASS__: type[PMessage]
-    __PB2_DESCRIPTOR__: DescriptorWrap[Descriptor] | Descriptor
+    __PROTO_CLASS__: type[PMessage]
+    __PROTO_DESCRIPTOR__: Descriptor
     __PY_TO_PB2__: dict[str, str]
     __default: "Message|None" = None
-    __sensitive_fields = dict[str, bool]()
-    __credentials_fields = dict[str, bool]()
+    __sensitive_fields__: set[str] = set()
+    __credentials_fields__: set[str] = set()
     __mask_functions__: dict[str, MaskFunction]
 
-    def __init__(self, initial_message: PMessage | None):
-        """Create a wrapper around a protobuf message instance.
-
-        :raises AttributeError: If the wrapper is missing required class metadata.
-        """
+    def __init__(self, initial_message: PMessage | bytes | "Message" | None):
+        """Create a direct message, optionally decoding compatible wire data."""
         self.__recorded_reset_mask = Mask()
-        if not hasattr(self, "__PB2_CLASS__"):
+        self.__values: dict[str, Any] = {}
+        self.__present_fields: set[str] = set()
+        self.__source_bytes: bytes | None = None
+        self.__present = initial_message is not None
+        if not hasattr(self, "__PROTO_CLASS__"):
             raise AttributeError(
                 f"Proto Class not set for message {self.__class__.__name__}"
             )
-        if isinstance(initial_message, self.__PB2_CLASS__):  # type: ignore[unused-ignore]
-            self.__pb2_message__ = initial_message
-        elif initial_message is not None:
-            AttributeError(
-                f"Wrong initial message type: expected {self.__PB2_CLASS__},"  # type: ignore[unused-ignore]
-                f" received {type(initial_message)}."
-            )
+        if initial_message is None:
+            return
+        if isinstance(initial_message, Message):
+            self._ensure_message_type(self.get_descriptor().full_name, initial_message)
+            wire = initial_message.SerializeToString()
+        elif isinstance(initial_message, bytes):
+            wire = initial_message
+        elif isinstance(initial_message, PMessage):
+            expected = self.get_descriptor().full_name
+            if initial_message.DESCRIPTOR.full_name != expected:
+                raise TypeError(
+                    f"Wrong initial message type: expected {expected}, received "
+                    f"{initial_message.DESCRIPTOR.full_name}."
+                )
+            wire = initial_message.SerializeToString()
         else:
-            self.__pb2_message__ = self.__PB2_CLASS__()  # type: ignore[unused-ignore]
+            raise TypeError(
+                f"Unsupported initial message type {type(initial_message)!r}."
+            )
+        self._load_wire(wire)
+
+    @staticmethod
+    def _message_full_name(value: Any) -> str | None:
+        if isinstance(value, Message):
+            return value.get_descriptor().full_name
+        if isinstance(value, PMessage):
+            return value.DESCRIPTOR.full_name
+        return None
+
+    @classmethod
+    def _ensure_message_type(cls, expected: str, value: Any) -> None:
+        actual = cls._message_full_name(value)
+        if actual is not None and actual != expected.lstrip("."):
+            raise TypeError(
+                f"Wrong message type: expected {expected}, received {actual}"
+            )
+
+    @staticmethod
+    def _copy_proto(value: PMessage) -> PMessage:
+        return value.__class__.FromString(value.SerializeToString())
+
+    def _load_wire(self, wire: bytes) -> None:
+        proto = self.__PROTO_CLASS__.FromString(wire)
+        self.__values.clear()
+        self.__present_fields.clear()
+        for field, value in proto.ListFields():
+            self.__present_fields.add(field.name)
+            if is_repeated_field(field):
+                if (
+                    field.message_type is not None
+                    and field.message_type.GetOptions().map_entry
+                ):
+                    copied: dict[Any, Any] = {}
+                    for key, item in value.items():
+                        copied[key] = (
+                            self._copy_proto(item)
+                            if isinstance(item, PMessage)
+                            else item
+                        )
+                    self.__values[field.name] = copied
+                else:
+                    self.__values[field.name] = [
+                        self._copy_proto(item) if isinstance(item, PMessage) else item
+                        for item in value
+                    ]
+            elif isinstance(value, PMessage):
+                self.__values[field.name] = self._copy_proto(value)
+            else:
+                self.__values[field.name] = value
+        self.__source_bytes = wire
+        self.__present = True
+
+    def _mark_present(self) -> None:
+        self.__present = True
+
+    def _is_present(self) -> bool:
+        return self.__present
+
+    @classmethod
+    def FromString(cls: type[T], wire: bytes) -> T:
+        """Decode wire bytes into a new direct message."""
+        return cls(wire)  # type: ignore[call-arg]
+
+    def ParseFromString(self, wire: bytes) -> int:
+        """Replace this message with decoded wire data."""
+        self._load_wire(wire)
+        return len(wire)
+
+    def CopyFrom(self, other: PMessage | "Message") -> None:
+        """Replace this message with a compatible message."""
+        self._ensure_message_type(self.get_descriptor().full_name, other)
+        self._load_wire(other.SerializeToString())
+
+    def MergeFrom(self, other: PMessage | "Message") -> None:
+        """Merge compatible wire data using protobuf merge semantics."""
+        self._ensure_message_type(self.get_descriptor().full_name, other)
+        proto = self.to_proto()
+        incoming = self.__PROTO_CLASS__.FromString(other.SerializeToString())
+        proto.MergeFrom(incoming)
+        self._load_wire(proto.SerializeToString())
+
+    def SerializeToString(self, **kwargs: Any) -> bytes:
+        """Encode this message with the namespace-local protobuf class."""
+        return self.to_proto().SerializeToString(**kwargs)
+
+    @staticmethod
+    def _wire_message(type_name: str, value: Any) -> PMessage:
+        value = unwrap_type(value)
+        if isinstance(value, PMessage):
+            Message._ensure_message_type(type_name, value)
+            return value
+        if type_name == "google.protobuf.Timestamp":
+            from .well_known import to_timestamp
+
+            return to_timestamp(value)
+        if type_name == "google.protobuf.Duration":
+            from .well_known import to_duration
+
+            return to_duration(value)
+        if type_name == "google.rpc.Status":
+            from nebius.aio.request_status import request_status_to_rpc_status
+
+            return cast(PMessage, request_status_to_rpc_status(value))
+        raise TypeError(f"Message field {type_name} cannot encode {type(value)!r}")
+
+    def to_proto(self) -> PMessage:
+        """Build a transient private protobuf object for transport interop."""
+        proto = self.__PROTO_CLASS__()
+        if self.__source_bytes is not None:
+            proto.ParseFromString(self.__source_bytes)
+        descriptor = self.get_descriptor()
+        for field in descriptor.fields:
+            proto.ClearField(field.name)
+        for field in descriptor.fields:
+            name = field.name
+            if name not in self.__values:
+                continue
+            value = self.__values[name]
+            if isinstance(value, Message) and not (
+                name in self.__present_fields or value._is_present()
+            ):
+                continue
+            target = getattr(proto, name)
+            if is_repeated_field(field):
+                if (
+                    field.message_type is not None
+                    and field.message_type.GetOptions().map_entry
+                ):
+                    for key, item in value.items():
+                        value_field = field.message_type.fields_by_name["value"]
+                        if value_field.message_type is not None:
+                            item = self._wire_message(
+                                value_field.message_type.full_name,
+                                item,
+                            )
+                            target[key].ParseFromString(item.SerializeToString())
+                        else:
+                            target[key] = unwrap_type(item)
+                elif field.message_type is not None:
+                    for item in value:
+                        item = self._wire_message(field.message_type.full_name, item)
+                        target.add().ParseFromString(item.SerializeToString())
+                else:
+                    target.extend(unwrap_type(item) for item in value)
+            elif field.message_type is not None:
+                value = self._wire_message(field.message_type.full_name, value)
+                target.ParseFromString(value.SerializeToString())
+            else:
+                setattr(proto, name, unwrap_type(value))
+        return proto
 
     def get_full_update_reset_mask(self) -> Mask:
         """Build a reset mask for a full update of this message.
@@ -234,21 +398,7 @@ class Message:
         :param field_name: Pythonic field name.
         :returns: ``True`` if the field is sensitive.
         """
-        if field_name in cls.__sensitive_fields:
-            return cls.__sensitive_fields[field_name]
-        from google.protobuf.descriptor import FieldDescriptor
-
-        from nebius.api.nebius import sensitive
-
-        fn_pb2 = cls.__PY_TO_PB2__[field_name]
-        desc = cls.get_descriptor()
-        field_desc: FieldDescriptor = desc.fields_by_name[fn_pb2]
-        try:
-            is_sensitive = bool(field_desc.GetOptions().Extensions[sensitive])  # type: ignore
-        except AttributeError:
-            is_sensitive = False
-        cls.__sensitive_fields[field_name] = is_sensitive
-        return is_sensitive
+        return field_name in cls.__sensitive_fields__
 
     @classmethod
     def is_credentials(cls, field_name: str) -> bool:
@@ -257,21 +407,7 @@ class Message:
         :param field_name: Pythonic field name.
         :returns: ``True`` if the field should be sanitized.
         """
-        if field_name in cls.__credentials_fields:
-            return cls.__credentials_fields[field_name]
-        from google.protobuf.descriptor import FieldDescriptor
-
-        from nebius.api.nebius import credentials
-
-        fn_pb2 = cls.__PY_TO_PB2__[field_name]
-        desc = cls.get_descriptor()
-        field_desc: FieldDescriptor = desc.fields_by_name[fn_pb2]
-        try:
-            is_creds = bool(field_desc.GetOptions().Extensions[credentials])  # type: ignore
-        except AttributeError:
-            is_creds = False
-        cls.__credentials_fields[field_name] = is_creds
-        return is_creds
+        return field_name in cls.__credentials_fields__
 
     def __repr__(self) -> str:
         """Return a human-readable representation of the message, sanitizing sensitive
@@ -318,12 +454,10 @@ class Message:
         :returns: Protobuf :class:`Descriptor`.
         :raises ValueError: If the descriptor is not configured.
         """
-        if not hasattr(cls, "__PB2_DESCRIPTOR__") or cls.__PB2_DESCRIPTOR__ is None:  # type: ignore[unused-ignore]
+        if not hasattr(cls, "__PROTO_DESCRIPTOR__") or cls.__PROTO_DESCRIPTOR__ is None:  # type: ignore[unused-ignore]
             raise ValueError(f"Descriptor not set for message {cls.__name__}.")
-        if isinstance(cls.__PB2_DESCRIPTOR__, DescriptorWrap):  # type: ignore[unused-ignore]
-            cls.__PB2_DESCRIPTOR__ = cls.__PB2_DESCRIPTOR__()
-        if isinstance(cls.__PB2_DESCRIPTOR__, Descriptor):  # type: ignore[unused-ignore]
-            return cls.__PB2_DESCRIPTOR__
+        if isinstance(cls.__PROTO_DESCRIPTOR__, Descriptor):
+            return cls.__PROTO_DESCRIPTOR__
         raise ValueError(f"Descriptor not found for message {cls.__name__}.")
 
     def check_presence(self, name: str) -> bool:
@@ -333,7 +467,33 @@ class Message:
         :returns: ``True`` if the field is present.
         """
         el_pb2 = self.__class__.__PY_TO_PB2__[name]
-        return self.__pb2_message__.HasField(el_pb2)  # type: ignore[unused-ignore,no-any-return]
+        return el_pb2 in self.__present_fields
+
+    def HasField(self, name: str) -> bool:
+        """Provide protobuf-compatible presence checks for compatibility facades."""
+        descriptor = self.get_descriptor()
+        if name in descriptor.oneofs_by_name:
+            return self.which_field_in_oneof(name) is not None
+        if name not in descriptor.fields_by_name:
+            raise ValueError(f"Unknown field {name!r}")
+        return name in self.__present_fields
+
+    def WhichOneof(self, name: str) -> str | None:
+        """Provide the protobuf spelling of ``which_field_in_oneof``."""
+        return self.which_field_in_oneof(name)
+
+    def ClearField(self, name: str) -> None:
+        """Clear a protobuf-named field without recording a reset mask."""
+        descriptor = self.get_descriptor()
+        if name in descriptor.oneofs_by_name:
+            for field in descriptor.oneofs_by_name[name].fields:
+                self.__values.pop(field.name, None)
+                self.__present_fields.discard(field.name)
+            return
+        if name not in descriptor.fields_by_name:
+            raise ValueError(f"Unknown field {name!r}")
+        self.__values.pop(name, None)
+        self.__present_fields.discard(name)
 
     def which_field_in_oneof(self, pb2_name: str) -> str | None:
         """Return the set field name for a given oneof.
@@ -341,7 +501,11 @@ class Message:
         :param pb2_name: Protobuf oneof name.
         :returns: Name of the set field or ``None``.
         """
-        return self.__pb2_message__.WhichOneof(pb2_name)  # type: ignore[no-any-return]
+        oneof = self.get_descriptor().oneofs_by_name[pb2_name]
+        for field in oneof.fields:
+            if field.name in self.__present_fields:
+                return field.name
+        return None
 
     def _clear_field(
         self,
@@ -355,7 +519,8 @@ class Message:
         fk = FieldKey(el_pb2)
         if fk not in self.__recorded_reset_mask.field_parts:
             self.__recorded_reset_mask.field_parts[fk] = Mask()
-        return self.__pb2_message__.ClearField(el_pb2)  # type: ignore[unused-ignore]
+        self.__values.pop(el_pb2, None)
+        self.__present_fields.discard(el_pb2)
 
     def _get_field(
         self,
@@ -371,24 +536,53 @@ class Message:
         :returns: Field value or ``None`` when not present.
         """
         el_pb2 = self.__class__.__PY_TO_PB2__[name]
-        if explicit_presence and not self.__pb2_message__.HasField(el_pb2):  # type: ignore[unused-ignore]
+        field = self.get_descriptor().fields_by_name[el_pb2]
+        if explicit_presence and el_pb2 not in self.__present_fields:
             return None
-        ret = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
+        cached = el_pb2 in self.__values
+        if cached:
+            ret = self.__values[el_pb2]
+        elif is_repeated_field(field):
+            ret = (
+                {}
+                if field.message_type is not None
+                and field.message_type.GetOptions().map_entry
+                else []
+            )
+        elif field.message_type is not None:
+            ret = getattr(self.__PROTO_CLASS__(), el_pb2)
+        else:
+            ret = field.default_value
         if (
             not explicit_presence
-            and isinstance(ret, (Timestamp, Duration))
-            and not self.__pb2_message__.HasField(el_pb2)  # type: ignore[unused-ignore]
+            and field.message_type is not None
+            and field.message_type.full_name
+            in {"google.protobuf.Timestamp", "google.protobuf.Duration"}
+            and el_pb2 not in self.__present_fields
         ):
             return None
-        ret = wrap_type(ret, wrap)
-        if has_method(ret, "set_mask"):
+        if cached and isinstance(ret, (Message, Map, Repeated)):
+            wrapped = ret
+        else:
+            wrapped = wrap_type(ret, wrap)
+        ret = wrapped
+        if isinstance(ret, (Message, Map, Repeated)):
+            if (
+                isinstance(ret, Message)
+                and not cached
+                and el_pb2 not in self.__present_fields
+            ):
+                ret.__present = False
+            self.__values[el_pb2] = ret
+        set_mask = getattr(ret, "set_mask", None)
+        if callable(set_mask):
             el_key = FieldKey(el_pb2)
             if el_key not in self.__recorded_reset_mask.field_parts:
                 self.__recorded_reset_mask.field_parts[el_key] = Mask()
             if isinstance(ret, Message):  # may be overwritten
                 Message.set_mask(ret, self.__recorded_reset_mask.field_parts[el_key])
             else:
-                ret.set_mask(self.__recorded_reset_mask.field_parts[el_key])
+                set_mask(self.__recorded_reset_mask.field_parts[el_key])
         return ret
 
     def _set_field(
@@ -406,50 +600,51 @@ class Message:
         :param explicit_presence: When true, do not treat defaults as clears.
         """
         el_pb2 = self.__class__.__PY_TO_PB2__[name]
-        self.__pb2_message__.ClearField(el_pb2)  # type: ignore[unused-ignore]
+        field = self.get_descriptor().fields_by_name[el_pb2]
+        if field.message_type is not None:
+            if field.message_type.GetOptions().map_entry and isinstance(value, Mapping):
+                value_descriptor = field.message_type.fields_by_name["value"]
+                if value_descriptor.message_type is not None:
+                    for item in value.values():
+                        self._ensure_message_type(
+                            value_descriptor.message_type.full_name,
+                            item,
+                        )
+            elif is_repeated_field(field) and isinstance(value, Iterable):
+                for item in value:
+                    self._ensure_message_type(field.message_type.full_name, item)
+            else:
+                self._ensure_message_type(field.message_type.full_name, value)
+        self.__values.pop(el_pb2, None)
+        self.__present_fields.discard(el_pb2)
         fk = FieldKey(el_pb2)
         if value is None:
             if fk not in self.__recorded_reset_mask.field_parts:
                 self.__recorded_reset_mask.field_parts[fk] = Mask()
             return
 
-        value = unwrap_type(value, unwrap)
+        if unwrap is not None:
+            value = unwrap(value)
+
+        if field.containing_oneof is not None:
+            for sibling in field.containing_oneof.fields:
+                self.__values.pop(sibling.name, None)
+                self.__present_fields.discard(sibling.name)
+
+        if isinstance(value, Mapping):
+            value = dict(value)
+        elif isinstance(value, Iterable) and not isinstance(value, (str, bytes)):
+            value = list(value)
 
         if self.__class__.__default is None:
             self.__class__.__default = self.__class__(None)
-        if (
-            not explicit_presence
-            and getattr(self.__class__.__default.__pb2_message__, el_pb2) == value
-        ):
+        if not explicit_presence and getattr(self.__class__.__default, name) == value:
             if fk not in self.__recorded_reset_mask.field_parts:
                 self.__recorded_reset_mask.field_parts[fk] = Mask()
 
-        if isinstance(value, Mapping):  # type: ignore[unused-ignore]
-            pb_arr = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
-            for k, v in value.items():  # type: ignore[unused-ignore]
-                if isinstance(v, PMessage):  # type: ignore[unused-ignore]
-                    pb_arr[k].MergeFrom(v)
-                else:
-                    pb_arr[k] = v
-            return
-        elif (
-            isinstance(value, Iterable)
-            and not isinstance(value, str)
-            and not isinstance(value, bytes)
-        ):
-            pb_arr = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
-            pb_arr.extend(value)
-            return
-        elif isinstance(value, PMessage):
-            sub_msg = getattr(self.__pb2_message__, el_pb2)  # type: ignore[unused-ignore]
-            if not isinstance(sub_msg, PMessage):
-                raise AttributeError(
-                    f"Attribute {name} of message {self.__class__.__name__} is not "
-                    "a message."
-                )
-            sub_msg.MergeFrom(value)
-            return
-        return setattr(self.__pb2_message__, el_pb2, value)  # type: ignore[unused-ignore]
+        self.__values[el_pb2] = value
+        self.__present_fields.add(el_pb2)
+        self._mark_present()
 
 
 MapKey = TypeVar("MapKey", int, str, bool)
@@ -504,10 +699,15 @@ class Repeated(MutableSequence[CollectibleOuter]):
         mask_function: MaskFunction | None = None,
     ):
         """Wrap a protobuf repeated field."""
-        self._source = source  # type: ignore
+        self._source: MutableSequence[Any] = list(source)
         self._wrap = wrap  # type: ignore
         self._unwrap = unwrap  # type: ignore
         self._mask_function = mask_function
+
+    def _stored_value(self, value: CollectibleOuter) -> Any:
+        if isinstance(value, Message):
+            return value
+        return unwrap_type(value, self._unwrap)
 
     def insert(self, index: int, value: CollectibleOuter) -> None:
         """Insert a value into the repeated field.
@@ -515,9 +715,7 @@ class Repeated(MutableSequence[CollectibleOuter]):
         :param index: Insert position.
         :param value: Value to insert.
         """
-        if isinstance(value, Message):
-            value = value.__pb2_message__  # type: ignore
-        self._source.insert(index, value)  # type: ignore[unused-ignore]
+        self._source.insert(index, self._stored_value(value))
 
     def __repr__(self) -> str:
         """Return a multi-line representation of the sequence."""
@@ -573,9 +771,14 @@ class Repeated(MutableSequence[CollectibleOuter]):
         """
         if isinstance(index, int):
             ret = self._source[index]
-            return wrap_type(ret, self._wrap)  # type: ignore [unused-ignore,no-any-return]
+            if isinstance(ret, Message):
+                return ret  # type: ignore[return-value]
+            wrapped = wrap_type(ret, self._wrap)
+            if isinstance(wrapped, Message):
+                self._source[index] = wrapped
+            return cast(CollectibleOuter, wrapped)
         elif isinstance(index, slice):  # type: ignore [unused-ignore]
-            return [wrap_type(ret, self._wrap) for ret in self._source[index]]  # type: ignore [unused-ignore]
+            return [self[i] for i in range(*index.indices(len(self)))]
         else:
             raise TypeError("Index must be int or slice")
 
@@ -590,18 +793,16 @@ class Repeated(MutableSequence[CollectibleOuter]):
         :param value: Value or iterable of values.
         """
         if isinstance(index, int):
-            value = unwrap_type(value, self._unwrap)
             if len(self._source) == index:
-                self._source.append(value)  # type: ignore [unused-ignore]
+                self._source.append(self._stored_value(value))  # type: ignore[arg-type]
                 return
-            if isinstance(value, PMessage):
-                self._source[index].Clear()  # type: ignore [unused-ignore]
-                self._source[index].MergeFrom(value)  # type: ignore [unused-ignore]
-            else:
-                self._source[index] = value  # type: ignore [unused-ignore]
+            self._source[index] = self._stored_value(value)  # type: ignore[arg-type]
         elif isinstance(index, slice):  # type: ignore [unused-ignore]
-            for i, v in zip(range(len(self))[index], value):  # type: ignore[arg-type]
-                self[i] = v  # type: ignore[assignment]
+            if not isinstance(value, Iterable):
+                raise TypeError("Slice value must be iterable")
+            self._source[index] = [
+                self._stored_value(item) for item in value  # type: ignore[arg-type]
+            ]
 
     def __delitem__(self, index: int | slice) -> None:
         """Delete an item or slice from the sequence."""
@@ -675,10 +876,15 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
         mask_function: MaskFunction | None = None,
     ):
         """Wrap a protobuf map field."""
-        self._source: MutableMapping[MapKey, CollectibleInner] = source  # type: ignore[assignment]
+        self._source: MutableMapping[MapKey, Any] = dict(source)
         self._wrap: Callable[[CollectibleInner], CollectibleOuter] = wrap  # type: ignore[assignment]
         self._unwrap: Callable[[CollectibleOuter], CollectibleInner] = unwrap  # type: ignore[assignment]
         self._mask_function = mask_function
+
+    def _stored_value(self, value: CollectibleOuter) -> Any:
+        if isinstance(value, Message):
+            return value
+        return unwrap_type(value, self._unwrap)
 
     def __repr__(self) -> str:
         """Return a multi-line representation of the map."""
@@ -696,7 +902,12 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
         :returns: Wrapped map value.
         """
         ret = self._source[key]  # type: ignore[assignment,unused-ignore]
-        return wrap_type(ret, self._wrap)  # type: ignore[unused-ignore,arg-type,return-value]
+        if isinstance(ret, Message):
+            return ret  # type: ignore[return-value]
+        wrapped = wrap_type(ret, self._wrap)
+        if isinstance(wrapped, Message):
+            self._source[key] = wrapped
+        return cast(CollectibleOuter, wrapped)
 
     def __setitem__(self, key: MapKey, value: CollectibleOuter) -> None:
         """Set a map entry.
@@ -704,12 +915,7 @@ class Map(MutableMapping[MapKey, CollectibleOuter]):
         :param key: Map key.
         :param value: Value to store.
         """
-        value = unwrap_type(value, self._unwrap)  # type: ignore[unused-ignore]
-        if isinstance(value, PMessage):
-            self._source[key].Clear()  # type: ignore[unused-ignore]
-            self._source[key].MergeFrom(value)  # type: ignore[unused-ignore]
-        else:
-            self._source[key] = value  # type: ignore
+        self._source[key] = self._stored_value(value)
 
     def __delitem__(self, key: MapKey) -> None:
         """Delete a map entry."""

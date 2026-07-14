@@ -20,7 +20,7 @@ def test_unset_metadata_timestamp_returns_none() -> None:
     created_at_pb.FromDatetime(created_at)
 
     metadata_pb = metadata_pb2.ResourceMetadata()
-    metadata_pb.created_at.CopyFrom(created_at_pb)
+    metadata_pb.created_at = created_at_pb
     assert metadata_pb.HasField("created_at")
     assert not metadata_pb.HasField("updated_at")
 

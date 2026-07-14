@@ -36,6 +36,7 @@ jobs:
 
       - uses: bufbuild/buf-action@v1
         with:
+          version: 1.71.0
           token: ${{ secrets.BUF_TOKEN }}
           setup_only: true
 

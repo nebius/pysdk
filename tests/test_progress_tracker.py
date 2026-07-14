@@ -41,9 +41,9 @@ async def test_operation_progress_tracker_updates() -> None:
         if tracker is not None:
             op.progress_tracker.CopyFrom(tracker)
         if status is not None:
-            op.status.CopyFrom(status)
+            op.status = status
         if finished_at is not None:
-            op.finished_at.CopyFrom(ts(finished_at))
+            op.finished_at = ts(finished_at)
         return op
 
     base_now = datetime.now(timezone.utc)
