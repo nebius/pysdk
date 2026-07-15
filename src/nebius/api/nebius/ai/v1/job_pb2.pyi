@@ -185,6 +185,7 @@ class JobStatus(_message.Message):
         FAILED: _ClassVar[JobStatus.State]
         CANCELLED: _ClassVar[JobStatus.State]
         ERROR: _ClassVar[JobStatus.State]
+        IMAGE_PULLING: _ClassVar[JobStatus.State]
     STATE_UNSPECIFIED: JobStatus.State
     PROVISIONING: JobStatus.State
     STARTING: JobStatus.State
@@ -195,6 +196,7 @@ class JobStatus(_message.Message):
     FAILED: JobStatus.State
     CANCELLED: JobStatus.State
     ERROR: JobStatus.State
+    IMAGE_PULLING: JobStatus.State
     PRIVATE_ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     INSTANCES_FIELD_NUMBER: _ClassVar[int]
@@ -234,6 +236,7 @@ class JobInstanceStatus(_message.Message):
         FAILED: _ClassVar[JobInstanceStatus.State]
         CANCELLED: _ClassVar[JobInstanceStatus.State]
         ERROR: _ClassVar[JobInstanceStatus.State]
+        IMAGE_PULLING: _ClassVar[JobInstanceStatus.State]
     STATE_UNSPECIFIED: JobInstanceStatus.State
     PROVISIONING: JobInstanceStatus.State
     STARTING: JobInstanceStatus.State
@@ -245,6 +248,7 @@ class JobInstanceStatus(_message.Message):
     FAILED: JobInstanceStatus.State
     CANCELLED: JobInstanceStatus.State
     ERROR: JobInstanceStatus.State
+    IMAGE_PULLING: JobInstanceStatus.State
     STATE_FIELD_NUMBER: _ClassVar[int]
     COMPUTE_INSTANCE_ID_FIELD_NUMBER: _ClassVar[int]
     COMPUTE_INSTANCE_STATE_FIELD_NUMBER: _ClassVar[int]

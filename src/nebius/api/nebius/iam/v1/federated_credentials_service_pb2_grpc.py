@@ -9,8 +9,10 @@ from nebius.api.nebius.iam.v1 import federated_credentials_service_pb2 as nebius
 
 class FederatedCredentialsServiceStub(object):
     """[PUBLIC PREVIEW]
-    This feature is currently available only for early adopters.
-    Contact the support team to check whether your tenant is eligible for it.
+    The federated credentials feature is currently fully available with Nebius Managed Kubernetes issuers.
+    Custom external credentials providers are available only for early adopters.
+    Contact the support team to check whether this feature is available for your tenant.
+    Alternatively, you can use them in conjunction with local JWK set storage without limitations.
     """
 
     def __init__(self, channel):
@@ -53,8 +55,10 @@ class FederatedCredentialsServiceStub(object):
 
 class FederatedCredentialsServiceServicer(object):
     """[PUBLIC PREVIEW]
-    This feature is currently available only for early adopters.
-    Contact the support team to check whether your tenant is eligible for it.
+    The federated credentials feature is currently fully available with Nebius Managed Kubernetes issuers.
+    Custom external credentials providers are available only for early adopters.
+    Contact the support team to check whether this feature is available for your tenant.
+    Alternatively, you can use them in conjunction with local JWK set storage without limitations.
     """
 
     def Get(self, request, context):
@@ -141,8 +145,10 @@ def add_FederatedCredentialsServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class FederatedCredentialsService(object):
     """[PUBLIC PREVIEW]
-    This feature is currently available only for early adopters.
-    Contact the support team to check whether your tenant is eligible for it.
+    The federated credentials feature is currently fully available with Nebius Managed Kubernetes issuers.
+    Custom external credentials providers are available only for early adopters.
+    Contact the support team to check whether this feature is available for your tenant.
+    Alternatively, you can use them in conjunction with local JWK set storage without limitations.
     """
 
     @staticmethod

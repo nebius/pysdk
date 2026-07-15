@@ -181,6 +181,7 @@ class EndpointStatus(_message.Message):
         DELETING: _ClassVar[EndpointStatus.State]
         STOPPED: _ClassVar[EndpointStatus.State]
         ERROR: _ClassVar[EndpointStatus.State]
+        IMAGE_PULLING: _ClassVar[EndpointStatus.State]
     STATE_UNSPECIFIED: EndpointStatus.State
     PROVISIONING: EndpointStatus.State
     STARTING: EndpointStatus.State
@@ -189,6 +190,7 @@ class EndpointStatus(_message.Message):
     DELETING: EndpointStatus.State
     STOPPED: EndpointStatus.State
     ERROR: EndpointStatus.State
+    IMAGE_PULLING: EndpointStatus.State
     PRIVATE_ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     PUBLIC_ENDPOINTS_FIELD_NUMBER: _ClassVar[int]
     INSTANCES_FIELD_NUMBER: _ClassVar[int]
@@ -222,6 +224,7 @@ class EndpointInstanceStatus(_message.Message):
         STOPPED: _ClassVar[EndpointInstanceStatus.State]
         FAILED: _ClassVar[EndpointInstanceStatus.State]
         ERROR: _ClassVar[EndpointInstanceStatus.State]
+        IMAGE_PULLING: _ClassVar[EndpointInstanceStatus.State]
     STATE_UNSPECIFIED: EndpointInstanceStatus.State
     PROVISIONING: EndpointInstanceStatus.State
     STARTING: EndpointInstanceStatus.State
@@ -231,6 +234,7 @@ class EndpointInstanceStatus(_message.Message):
     STOPPED: EndpointInstanceStatus.State
     FAILED: EndpointInstanceStatus.State
     ERROR: EndpointInstanceStatus.State
+    IMAGE_PULLING: EndpointInstanceStatus.State
     STATE_FIELD_NUMBER: _ClassVar[int]
     COMPUTE_INSTANCE_ID_FIELD_NUMBER: _ClassVar[int]
     COMPUTE_INSTANCE_STATE_FIELD_NUMBER: _ClassVar[int]

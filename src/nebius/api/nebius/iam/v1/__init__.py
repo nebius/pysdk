@@ -3877,8 +3877,10 @@ class DeleteFederatedCredentialsRequest(pb_classes.Message):
 class FederatedCredentialsServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
     """
     [PUBLIC PREVIEW]
-    This feature is currently available only for early adopters.
-    Contact the support team to check whether your tenant is eligible for it.
+    The federated credentials feature is currently fully available with Nebius Managed Kubernetes issuers.
+    Custom external credentials providers are available only for early adopters.
+    Contact the support team to check whether this feature is available for your tenant.
+    Alternatively, you can use them in conjunction with local JWK set storage without limitations.
     
     This class provides the client methods for the ``.nebius.iam.v1.FederatedCredentialsService`` service.
     

@@ -226,8 +226,17 @@ class DiskSpec(pb_classes.Message):
         def value(self) -> "SourceImageFamily":
             return self._message.source_image_family
     
+    class __OneOfClass_source_source_snapshot_id__(__OneOfClass_source__):
+        field: typing.Literal["source_snapshot_id"] = "source_snapshot_id"
+        
+        def __init__(self, msg: "DiskSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.str":
+            return self._message.source_snapshot_id
+    
     @builtins.property
-    def source(self) -> __OneOfClass_source_source_image_id__|__OneOfClass_source_source_image_family__|None:
+    def source(self) -> __OneOfClass_source_source_image_id__|__OneOfClass_source_source_image_family__|__OneOfClass_source_source_snapshot_id__|None:
         """
         Source for disk creation.
         Boot disk must be created from an image https://docs.nebius.com/compute/storage/manage#boot
@@ -240,6 +249,8 @@ class DiskSpec(pb_classes.Message):
                 return self.__OneOfClass_source_source_image_id__(self)
             case "source_image_family":
                 return self.__OneOfClass_source_source_image_family__(self)
+            case "source_snapshot_id":
+                return self.__OneOfClass_source_source_snapshot_id__(self)
             case None:
                 return None
             case _:
@@ -257,6 +268,7 @@ class DiskSpec(pb_classes.Message):
         type: "DiskSpec.DiskType|disk_pb2.DiskSpec.DiskType|None|unset.UnsetType" = unset.Unset,
         source_image_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         source_image_family: "SourceImageFamily|disk_pb2.SourceImageFamily|None|unset.UnsetType" = unset.Unset,
+        source_snapshot_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
         disk_encryption: "DiskEncryption|disk_pb2.DiskEncryption|None|unset.UnsetType" = unset.Unset,
         forbid_deletion: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
@@ -277,6 +289,8 @@ class DiskSpec(pb_classes.Message):
             self.source_image_id = source_image_id
         if not isinstance(source_image_family, unset.UnsetType):
             self.source_image_family = source_image_family
+        if not isinstance(source_snapshot_id, unset.UnsetType):
+            self.source_snapshot_id = source_snapshot_id
         if not isinstance(disk_encryption, unset.UnsetType):
             self.disk_encryption = disk_encryption
         if not isinstance(forbid_deletion, unset.UnsetType):
@@ -292,6 +306,7 @@ class DiskSpec(pb_classes.Message):
             "type",
             "source_image_id",
             "source_image_family",
+            "source_snapshot_id",
             "disk_encryption",
             "forbid_deletion",
             "size",
@@ -385,6 +400,15 @@ class DiskSpec(pb_classes.Message):
         )
     
     @builtins.property
+    def source_snapshot_id(self) -> "builtins.str|None":
+        return super()._get_field("source_snapshot_id", explicit_presence=True,
+        )
+    @source_snapshot_id.setter
+    def source_snapshot_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("source_snapshot_id",value,explicit_presence=True,
+        )
+    
+    @builtins.property
     def disk_encryption(self) -> "DiskEncryption":
         """
         Defines how data on the disk is encrypted. By default, no encryption is applied.
@@ -420,6 +444,7 @@ class DiskSpec(pb_classes.Message):
         "type":"type",
         "source_image_id":"source_image_id",
         "source_image_family":"source_image_family",
+        "source_snapshot_id":"source_snapshot_id",
         "disk_encryption":"disk_encryption",
         "forbid_deletion":"forbid_deletion",
         "size":"size",

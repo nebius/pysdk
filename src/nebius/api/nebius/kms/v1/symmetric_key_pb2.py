@@ -19,7 +19,7 @@ from nebius.api.nebius.common.v1 import metadata_pb2 as nebius_dot_common_dot_v1
 from nebius.api.nebius.kms.v1 import key_state_pb2 as nebius_dot_kms_dot_v1_dot_key__state__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/kms/v1/symmetric_key.proto\x12\rnebius.kms.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1dnebius/kms/v1/key_state.proto\"\xbe\x01\n\x0cSymmetricKey\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.kms.v1.SymmetricKeySpecR\x04spec\x12\x39\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.kms.v1.SymmetricKeyStatusR\x06status\"\xee\x01\n\x10SymmetricKeySpec\x12*\n\x0b\x64\x65scription\x18\x01 \x01(\tB\x08\xbaH\x05r\x03(\x80\x08R\x0b\x64\x65scription\x12P\n\talgorithm\x18\x02 \x01(\x0e\x32!.nebius.kms.v1.SymmetricAlgorithmB\x0f\xbaH\x08\xc8\x01\x01\x82\x01\x02\x10\x01\xbaJ\x01\x02R\talgorithm\x12\\\n\x0frotation_period\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x18\xbaH\x11\xaa\x01\x0e\"\x06\x08\x80\x86\xb0\x96\x01\x32\x04\x08\x80\xa3\x05\xbaJ\x01\x07R\x0erotationPeriod\"\xb5\x01\n\x12SymmetricKeyStatus\x12-\n\x05state\x18\x01 \x01(\x0e\x32\x17.nebius.kms.v1.KeyStateR\x05state\x12\x39\n\ndeleted_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tdeletedAt\x12\x35\n\x08purge_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07purgeAt*Y\n\x12SymmetricAlgorithm\x12#\n\x1fSYMMETRIC_ALGORITHM_UNSPECIFIED\x10\x00\x12\x0b\n\x07\x41\x45S_128\x10\x01\x12\x0b\n\x07\x41\x45S_256\x10\x03\"\x04\x08\x02\x10\x02\x42X\n\x14\x61i.nebius.pub.kms.v1B\x11SymmetricKeyProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/kms/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!nebius/kms/v1/symmetric_key.proto\x12\rnebius.kms.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a\x1dnebius/kms/v1/key_state.proto\"\xcc\x01\n\x0cSymmetricKey\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.kms.v1.SymmetricKeySpecR\x04spec\x12\x39\n\x06status\x18\x03 \x01(\x0b\x32!.nebius.kms.v1.SymmetricKeyStatusR\x06status\"\xee\x01\n\x10SymmetricKeySpec\x12*\n\x0b\x64\x65scription\x18\x01 \x01(\tB\x08\xbaH\x05r\x03(\x80\x08R\x0b\x64\x65scription\x12P\n\talgorithm\x18\x02 \x01(\x0e\x32!.nebius.kms.v1.SymmetricAlgorithmB\x0f\xbaH\x08\xc8\x01\x01\x82\x01\x02\x10\x01\xbaJ\x01\x02R\talgorithm\x12\\\n\x0frotation_period\x18\x03 \x01(\x0b\x32\x19.google.protobuf.DurationB\x18\xbaH\x11\xaa\x01\x0e\"\x06\x08\x80\x86\xb0\x96\x01\x32\x04\x08\x80\xa3\x05\xbaJ\x01\x07R\x0erotationPeriod\"\xb5\x01\n\x12SymmetricKeyStatus\x12-\n\x05state\x18\x01 \x01(\x0e\x32\x17.nebius.kms.v1.KeyStateR\x05state\x12\x39\n\ndeleted_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tdeletedAt\x12\x35\n\x08purge_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07purgeAt*Y\n\x12SymmetricAlgorithm\x12#\n\x1fSYMMETRIC_ALGORITHM_UNSPECIFIED\x10\x00\x12\x0b\n\x07\x41\x45S_128\x10\x01\x12\x0b\n\x07\x41\x45S_256\x10\x03\"\x04\x08\x02\x10\x02\x42X\n\x14\x61i.nebius.pub.kms.v1B\x11SymmetricKeyProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/kms/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -28,18 +28,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.kms.v1B\021SymmetricKeyProtoP\001Z+github.com/nebius/gosdk/proto/nebius/kms/v1'
+  _SYMMETRICKEY.fields_by_name['metadata']._options = None
+  _SYMMETRICKEY.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007project'
   _SYMMETRICKEYSPEC.fields_by_name['description']._options = None
   _SYMMETRICKEYSPEC.fields_by_name['description']._serialized_options = b'\272H\005r\003(\200\010'
   _SYMMETRICKEYSPEC.fields_by_name['algorithm']._options = None
   _SYMMETRICKEYSPEC.fields_by_name['algorithm']._serialized_options = b'\272H\010\310\001\001\202\001\002\020\001\272J\001\002'
   _SYMMETRICKEYSPEC.fields_by_name['rotation_period']._options = None
   _SYMMETRICKEYSPEC.fields_by_name['rotation_period']._serialized_options = b'\272H\021\252\001\016\"\006\010\200\206\260\226\0012\004\010\200\243\005\272J\001\007'
-  _globals['_SYMMETRICALGORITHM']._serialized_start=854
-  _globals['_SYMMETRICALGORITHM']._serialized_end=943
+  _globals['_SYMMETRICALGORITHM']._serialized_start=868
+  _globals['_SYMMETRICALGORITHM']._serialized_end=957
   _globals['_SYMMETRICKEY']._serialized_start=237
-  _globals['_SYMMETRICKEY']._serialized_end=427
-  _globals['_SYMMETRICKEYSPEC']._serialized_start=430
-  _globals['_SYMMETRICKEYSPEC']._serialized_end=668
-  _globals['_SYMMETRICKEYSTATUS']._serialized_start=671
-  _globals['_SYMMETRICKEYSTATUS']._serialized_end=852
+  _globals['_SYMMETRICKEY']._serialized_end=441
+  _globals['_SYMMETRICKEYSPEC']._serialized_start=444
+  _globals['_SYMMETRICKEYSPEC']._serialized_end=682
+  _globals['_SYMMETRICKEYSTATUS']._serialized_start=685
+  _globals['_SYMMETRICKEYSTATUS']._serialized_end=866
 # @@protoc_insertion_point(module_scope)

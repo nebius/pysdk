@@ -18,7 +18,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.mysterybox.v1 import secret_pb2 as nebius_dot_mysterybox_dot_v1_dot_secret__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/mysterybox/v1/secret_service.proto\x12\x14nebius.mysterybox.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a!nebius/mysterybox/v1/secret.proto\"\x8b\x01\n\x13\x43reateSecretRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x34\n\x04spec\x18\x02 \x01(\x0b\x32 .nebius.mysterybox.v1.SecretSpecR\x04spec\"\x8b\x01\n\x13UpdateSecretRequest\x12>\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataR\x08metadata\x12\x34\n\x04spec\x18\x02 \x01(\x0b\x32 .nebius.mysterybox.v1.SecretSpecR\x04spec\"i\n\x10GetSecretRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12=\n\x1bshow_scheduled_for_deletion\x18\x02 \x01(\x08R\x18showScheduledForDeletion\"_\n\x16GetSecretByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04nameJ\x04\x08\x03\x10\x04\"\xc3\x01\n\x12ListSecretsRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12*\n\tpage_size\x18\x02 \x01(\x03\x42\r\xbaH\n\xd8\x01\x01\"\x05\x18\xe8\x07(\x00R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12=\n\x1bshow_scheduled_for_deletion\x18\x04 \x01(\x08R\x18showScheduledForDeletion\"q\n\x13ListSecretsResponse\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x32\n\x05items\x18\x03 \x03(\x0b\x32\x1c.nebius.mysterybox.v1.SecretR\x05items\"-\n\x13\x44\x65leteSecretRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"C\n\x15UndeleteSecretRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name2\xf1\x04\n\rSecretService\x12P\n\x06\x43reate\x12).nebius.mysterybox.v1.CreateSecretRequest\x1a\x1b.nebius.common.v1.Operation\x12P\n\x06Update\x12).nebius.mysterybox.v1.UpdateSecretRequest\x1a\x1b.nebius.common.v1.Operation\x12K\n\x03Get\x12&.nebius.mysterybox.v1.GetSecretRequest\x1a\x1c.nebius.mysterybox.v1.Secret\x12W\n\tGetByName\x12,.nebius.mysterybox.v1.GetSecretByNameRequest\x1a\x1c.nebius.mysterybox.v1.Secret\x12[\n\x04List\x12(.nebius.mysterybox.v1.ListSecretsRequest\x1a).nebius.mysterybox.v1.ListSecretsResponse\x12P\n\x06\x44\x65lete\x12).nebius.mysterybox.v1.DeleteSecretRequest\x1a\x1b.nebius.common.v1.Operation\x12T\n\x08Undelete\x12+.nebius.mysterybox.v1.UndeleteSecretRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x11\xbaJ\x0e\x63pl.mysteryboxBg\n\x1b\x61i.nebius.pub.mysterybox.v1B\x12SecretServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mysterybox/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/mysterybox/v1/secret_service.proto\x12\x14nebius.mysterybox.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a!nebius/mysterybox/v1/secret.proto\"\x99\x01\n\x13\x43reateSecretRequest\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12\x34\n\x04spec\x18\x02 \x01(\x0b\x32 .nebius.mysterybox.v1.SecretSpecR\x04spec\"\x99\x01\n\x13UpdateSecretRequest\x12L\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x0c\xe2J\t\x12\x07projectR\x08metadata\x12\x34\n\x04spec\x18\x02 \x01(\x0b\x32 .nebius.mysterybox.v1.SecretSpecR\x04spec\"s\n\x10GetSecretRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05mbsecR\x02id\x12=\n\x1bshow_scheduled_for_deletion\x18\x02 \x01(\x08R\x18showScheduledForDeletion\"k\n\x16GetSecretByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04nameJ\x04\x08\x03\x10\x04\"\xcf\x01\n\x12ListSecretsRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12*\n\tpage_size\x18\x02 \x01(\x03\x42\r\xbaH\n\xd8\x01\x01\"\x05\x18\xe8\x07(\x00R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12=\n\x1bshow_scheduled_for_deletion\x18\x04 \x01(\x08R\x18showScheduledForDeletion\"q\n\x13ListSecretsResponse\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\x12\x32\n\x05items\x18\x03 \x03(\x0b\x32\x1c.nebius.mysterybox.v1.SecretR\x05items\"7\n\x13\x44\x65leteSecretRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05mbsecR\x02id\"M\n\x15UndeleteSecretRequest\x12 \n\x02id\x18\x01 \x01(\tB\x10\xbaH\x03\xc8\x01\x01\xe2J\x07\n\x05mbsecR\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name2\xf1\x04\n\rSecretService\x12P\n\x06\x43reate\x12).nebius.mysterybox.v1.CreateSecretRequest\x1a\x1b.nebius.common.v1.Operation\x12P\n\x06Update\x12).nebius.mysterybox.v1.UpdateSecretRequest\x1a\x1b.nebius.common.v1.Operation\x12K\n\x03Get\x12&.nebius.mysterybox.v1.GetSecretRequest\x1a\x1c.nebius.mysterybox.v1.Secret\x12W\n\tGetByName\x12,.nebius.mysterybox.v1.GetSecretByNameRequest\x1a\x1c.nebius.mysterybox.v1.Secret\x12[\n\x04List\x12(.nebius.mysterybox.v1.ListSecretsRequest\x1a).nebius.mysterybox.v1.ListSecretsResponse\x12P\n\x06\x44\x65lete\x12).nebius.mysterybox.v1.DeleteSecretRequest\x1a\x1b.nebius.common.v1.Operation\x12T\n\x08Undelete\x12+.nebius.mysterybox.v1.UndeleteSecretRequest\x1a\x1b.nebius.common.v1.Operation\x1a\x11\xbaJ\x0e\x63pl.mysteryboxBg\n\x1b\x61i.nebius.pub.mysterybox.v1B\x12SecretServiceProtoP\x01Z2github.com/nebius/gosdk/proto/nebius/mysterybox/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -27,38 +27,42 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\033ai.nebius.pub.mysterybox.v1B\022SecretServiceProtoP\001Z2github.com/nebius/gosdk/proto/nebius/mysterybox/v1'
+  _CREATESECRETREQUEST.fields_by_name['metadata']._options = None
+  _CREATESECRETREQUEST.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007project'
+  _UPDATESECRETREQUEST.fields_by_name['metadata']._options = None
+  _UPDATESECRETREQUEST.fields_by_name['metadata']._serialized_options = b'\342J\t\022\007project'
   _GETSECRETREQUEST.fields_by_name['id']._options = None
-  _GETSECRETREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETSECRETREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\007\n\005mbsec'
   _GETSECRETBYNAMEREQUEST.fields_by_name['parent_id']._options = None
-  _GETSECRETBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETSECRETBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _GETSECRETBYNAMEREQUEST.fields_by_name['name']._options = None
   _GETSECRETBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTSECRETSREQUEST.fields_by_name['parent_id']._options = None
-  _LISTSECRETSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTSECRETSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _LISTSECRETSREQUEST.fields_by_name['page_size']._options = None
   _LISTSECRETSREQUEST.fields_by_name['page_size']._serialized_options = b'\272H\n\330\001\001\"\005\030\350\007(\000'
   _DELETESECRETREQUEST.fields_by_name['id']._options = None
-  _DELETESECRETREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETESECRETREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\007\n\005mbsec'
   _UNDELETESECRETREQUEST.fields_by_name['id']._options = None
-  _UNDELETESECRETREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _UNDELETESECRETREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\007\n\005mbsec'
   _SECRETSERVICE._options = None
   _SECRETSERVICE._serialized_options = b'\272J\016cpl.mysterybox'
   _globals['_CREATESECRETREQUEST']._serialized_start=225
-  _globals['_CREATESECRETREQUEST']._serialized_end=364
-  _globals['_UPDATESECRETREQUEST']._serialized_start=367
-  _globals['_UPDATESECRETREQUEST']._serialized_end=506
-  _globals['_GETSECRETREQUEST']._serialized_start=508
-  _globals['_GETSECRETREQUEST']._serialized_end=613
-  _globals['_GETSECRETBYNAMEREQUEST']._serialized_start=615
-  _globals['_GETSECRETBYNAMEREQUEST']._serialized_end=710
-  _globals['_LISTSECRETSREQUEST']._serialized_start=713
-  _globals['_LISTSECRETSREQUEST']._serialized_end=908
-  _globals['_LISTSECRETSRESPONSE']._serialized_start=910
-  _globals['_LISTSECRETSRESPONSE']._serialized_end=1023
-  _globals['_DELETESECRETREQUEST']._serialized_start=1025
-  _globals['_DELETESECRETREQUEST']._serialized_end=1070
-  _globals['_UNDELETESECRETREQUEST']._serialized_start=1072
-  _globals['_UNDELETESECRETREQUEST']._serialized_end=1139
-  _globals['_SECRETSERVICE']._serialized_start=1142
-  _globals['_SECRETSERVICE']._serialized_end=1767
+  _globals['_CREATESECRETREQUEST']._serialized_end=378
+  _globals['_UPDATESECRETREQUEST']._serialized_start=381
+  _globals['_UPDATESECRETREQUEST']._serialized_end=534
+  _globals['_GETSECRETREQUEST']._serialized_start=536
+  _globals['_GETSECRETREQUEST']._serialized_end=651
+  _globals['_GETSECRETBYNAMEREQUEST']._serialized_start=653
+  _globals['_GETSECRETBYNAMEREQUEST']._serialized_end=760
+  _globals['_LISTSECRETSREQUEST']._serialized_start=763
+  _globals['_LISTSECRETSREQUEST']._serialized_end=970
+  _globals['_LISTSECRETSRESPONSE']._serialized_start=972
+  _globals['_LISTSECRETSRESPONSE']._serialized_end=1085
+  _globals['_DELETESECRETREQUEST']._serialized_start=1087
+  _globals['_DELETESECRETREQUEST']._serialized_end=1142
+  _globals['_UNDELETESECRETREQUEST']._serialized_start=1144
+  _globals['_UNDELETESECRETREQUEST']._serialized_end=1221
+  _globals['_SECRETSERVICE']._serialized_start=1224
+  _globals['_SECRETSERVICE']._serialized_end=1849
 # @@protoc_insertion_point(module_scope)

@@ -1465,6 +1465,11 @@ class EndpointStatus(pb_classes.Message):
         The endpoint encountered an error.
         """
         
+        IMAGE_PULLING = 9
+        """
+        The endpoint is pulling an image (STARTING -> IMAGE_PULLING -> RUNNING).
+        """
+        
     
     def __init__(
         self,
@@ -1692,6 +1697,11 @@ class EndpointInstanceStatus(pb_classes.Message):
         ERROR = 8
         """
         The endpoint encountered an error.
+        """
+        
+        IMAGE_PULLING = 9
+        """
+        The endpoint is pulling an image (STARTING -> IMAGE_PULLING -> RUNNING).
         """
         
     
@@ -3835,6 +3845,11 @@ class JobStatus(pb_classes.Message):
         The job encountered an internal error.
         """
         
+        IMAGE_PULLING = 10
+        """
+        The job is pulling an image (STARTING -> IMAGE_PULLING -> RUNNING).
+        """
+        
     
     def __init__(
         self,
@@ -4112,6 +4127,11 @@ class JobInstanceStatus(pb_classes.Message):
         ERROR = 10
         """
         The job encountered an internal error.
+        """
+        
+        IMAGE_PULLING = 11
+        """
+        The job is pulling an image (STARTING -> IMAGE_PULLING -> RUNNING).
         """
         
     

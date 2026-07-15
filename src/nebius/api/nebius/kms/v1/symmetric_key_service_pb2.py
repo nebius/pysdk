@@ -19,7 +19,7 @@ from nebius.api.nebius.common.v1 import operation_pb2 as nebius_dot_common_dot_v
 from nebius.api.nebius.kms.v1 import symmetric_key_pb2 as nebius_dot_kms_dot_v1_dot_symmetric__key__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/kms/v1/symmetric_key_service.proto\x12\rnebius.kms.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a!nebius/kms/v1/symmetric_key.proto\"\xa0\x01\n\x19\x43reateSymmetricKeyRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.kms.v1.SymmetricKeySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\x98\x01\n\x19UpdateSymmetricKeyRequest\x12\x46\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x06\xbaH\x03\xc8\x01\x01R\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.kms.v1.SymmetricKeySpecR\x04spec\"o\n\x16GetSymmetricKeyRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12=\n\x1bshow_scheduled_for_deletion\x18\x02 \x01(\x08R\x18showScheduledForDeletion\"_\n\x1cGetSymmetricKeyByNameRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\xba\x01\n\x18ListSymmetricKeysRequest\x12#\n\tparent_id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12=\n\x1bshow_scheduled_for_deletion\x18\x04 \x01(\x08R\x18showScheduledForDeletion\"v\n\x19ListSymmetricKeysResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.kms.v1.SymmetricKeyR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"3\n\x19RotateSymmetricKeyRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"3\n\x19\x44\x65leteSymmetricKeyRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\"\x9a\x01\n&UpdateSymmetricKeyDeletionDelayRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12X\n\x0e\x64\x65letion_delay\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationB\x16\xbaH\x13\xc8\x01\x01\xaa\x01\r\"\x05\x08\x80\x9a\x9e\x01\x32\x04\x08\x80\xa3\x05R\rdeletionDelay\"I\n\x1bUndeleteSymmetricKeyRequest\x12\x16\n\x02id\x18\x01 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name2\xa2\x06\n\x13SymmetricKeyService\x12O\n\x06\x43reate\x12(.nebius.kms.v1.CreateSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06Update\x12(.nebius.kms.v1.UpdateSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06Rotate\x12(.nebius.kms.v1.RotateSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x03Get\x12%.nebius.kms.v1.GetSymmetricKeyRequest\x1a\x1b.nebius.kms.v1.SymmetricKey\x12U\n\tGetByName\x12+.nebius.kms.v1.GetSymmetricKeyByNameRequest\x1a\x1b.nebius.kms.v1.SymmetricKey\x12Y\n\x04List\x12\'.nebius.kms.v1.ListSymmetricKeysRequest\x1a(.nebius.kms.v1.ListSymmetricKeysResponse\x12O\n\x06\x44\x65lete\x12(.nebius.kms.v1.DeleteSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x12i\n\x13UpdateDeletionDelay\x12\x35.nebius.kms.v1.UpdateSymmetricKeyDeletionDelayRequest\x1a\x1b.nebius.common.v1.Operation\x12S\n\x08Undelete\x12*.nebius.kms.v1.UndeleteSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07\x63pl.kmsB_\n\x14\x61i.nebius.pub.kms.v1B\x18SymmetricKeyServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/kms/v1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n)nebius/kms/v1/symmetric_key_service.proto\x12\rnebius.kms.v1\x1a\x1b\x62uf/validate/validate.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x18nebius/annotations.proto\x1a\x1fnebius/common/v1/metadata.proto\x1a nebius/common/v1/operation.proto\x1a!nebius/kms/v1/symmetric_key.proto\"\xac\x01\n\x19\x43reateSymmetricKeyRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12;\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.kms.v1.SymmetricKeySpecB\x06\xbaH\x03\xc8\x01\x01R\x04spec\"\xa4\x01\n\x19UpdateSymmetricKeyRequest\x12R\n\x08metadata\x18\x01 \x01(\x0b\x32\".nebius.common.v1.ResourceMetadataB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\x12\x07projectR\x08metadata\x12\x33\n\x04spec\x18\x02 \x01(\x0b\x32\x1f.nebius.kms.v1.SymmetricKeySpecR\x04spec\"}\n\x16GetSymmetricKeyRequest\x12$\n\x02id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tkmssymkeyR\x02id\x12=\n\x1bshow_scheduled_for_deletion\x18\x02 \x01(\x08R\x18showScheduledForDeletion\"k\n\x1cGetSymmetricKeyByNameRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1a\n\x04name\x18\x02 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04name\"\xc6\x01\n\x18ListSymmetricKeysRequest\x12/\n\tparent_id\x18\x01 \x01(\tB\x12\xbaH\x03\xc8\x01\x01\xe2J\t\n\x07projectR\x08parentId\x12\x1b\n\tpage_size\x18\x02 \x01(\x03R\x08pageSize\x12\x1d\n\npage_token\x18\x03 \x01(\tR\tpageToken\x12=\n\x1bshow_scheduled_for_deletion\x18\x04 \x01(\x08R\x18showScheduledForDeletion\"v\n\x19ListSymmetricKeysResponse\x12\x31\n\x05items\x18\x01 \x03(\x0b\x32\x1b.nebius.kms.v1.SymmetricKeyR\x05items\x12&\n\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"A\n\x19RotateSymmetricKeyRequest\x12$\n\x02id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tkmssymkeyR\x02id\"A\n\x19\x44\x65leteSymmetricKeyRequest\x12$\n\x02id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tkmssymkeyR\x02id\"\xa8\x01\n&UpdateSymmetricKeyDeletionDelayRequest\x12$\n\x02id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tkmssymkeyR\x02id\x12X\n\x0e\x64\x65letion_delay\x18\x02 \x01(\x0b\x32\x19.google.protobuf.DurationB\x16\xbaH\x13\xc8\x01\x01\xaa\x01\r\"\x05\x08\x80\x9a\x9e\x01\x32\x04\x08\x80\xa3\x05R\rdeletionDelay\"W\n\x1bUndeleteSymmetricKeyRequest\x12$\n\x02id\x18\x01 \x01(\tB\x14\xbaH\x03\xc8\x01\x01\xe2J\x0b\n\tkmssymkeyR\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name2\xa2\x06\n\x13SymmetricKeyService\x12O\n\x06\x43reate\x12(.nebius.kms.v1.CreateSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06Update\x12(.nebius.kms.v1.UpdateSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x12O\n\x06Rotate\x12(.nebius.kms.v1.RotateSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x12I\n\x03Get\x12%.nebius.kms.v1.GetSymmetricKeyRequest\x1a\x1b.nebius.kms.v1.SymmetricKey\x12U\n\tGetByName\x12+.nebius.kms.v1.GetSymmetricKeyByNameRequest\x1a\x1b.nebius.kms.v1.SymmetricKey\x12Y\n\x04List\x12\'.nebius.kms.v1.ListSymmetricKeysRequest\x1a(.nebius.kms.v1.ListSymmetricKeysResponse\x12O\n\x06\x44\x65lete\x12(.nebius.kms.v1.DeleteSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x12i\n\x13UpdateDeletionDelay\x12\x35.nebius.kms.v1.UpdateSymmetricKeyDeletionDelayRequest\x1a\x1b.nebius.common.v1.Operation\x12S\n\x08Undelete\x12*.nebius.kms.v1.UndeleteSymmetricKeyRequest\x1a\x1b.nebius.common.v1.Operation\x1a\n\xbaJ\x07\x63pl.kmsB_\n\x14\x61i.nebius.pub.kms.v1B\x18SymmetricKeyServiceProtoP\x01Z+github.com/nebius/gosdk/proto/nebius/kms/v1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -29,51 +29,51 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\024ai.nebius.pub.kms.v1B\030SymmetricKeyServiceProtoP\001Z+github.com/nebius/gosdk/proto/nebius/kms/v1'
   _CREATESYMMETRICKEYREQUEST.fields_by_name['metadata']._options = None
-  _CREATESYMMETRICKEYREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
+  _CREATESYMMETRICKEYREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001\342J\t\022\007project'
   _CREATESYMMETRICKEYREQUEST.fields_by_name['spec']._options = None
   _CREATESYMMETRICKEYREQUEST.fields_by_name['spec']._serialized_options = b'\272H\003\310\001\001'
   _UPDATESYMMETRICKEYREQUEST.fields_by_name['metadata']._options = None
-  _UPDATESYMMETRICKEYREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001'
+  _UPDATESYMMETRICKEYREQUEST.fields_by_name['metadata']._serialized_options = b'\272H\003\310\001\001\342J\t\022\007project'
   _GETSYMMETRICKEYREQUEST.fields_by_name['id']._options = None
-  _GETSYMMETRICKEYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _GETSYMMETRICKEYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\013\n\tkmssymkey'
   _GETSYMMETRICKEYBYNAMEREQUEST.fields_by_name['parent_id']._options = None
-  _GETSYMMETRICKEYBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _GETSYMMETRICKEYBYNAMEREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _GETSYMMETRICKEYBYNAMEREQUEST.fields_by_name['name']._options = None
   _GETSYMMETRICKEYBYNAMEREQUEST.fields_by_name['name']._serialized_options = b'\272H\003\310\001\001'
   _LISTSYMMETRICKEYSREQUEST.fields_by_name['parent_id']._options = None
-  _LISTSYMMETRICKEYSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001'
+  _LISTSYMMETRICKEYSREQUEST.fields_by_name['parent_id']._serialized_options = b'\272H\003\310\001\001\342J\t\n\007project'
   _ROTATESYMMETRICKEYREQUEST.fields_by_name['id']._options = None
-  _ROTATESYMMETRICKEYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _ROTATESYMMETRICKEYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\013\n\tkmssymkey'
   _DELETESYMMETRICKEYREQUEST.fields_by_name['id']._options = None
-  _DELETESYMMETRICKEYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _DELETESYMMETRICKEYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\013\n\tkmssymkey'
   _UPDATESYMMETRICKEYDELETIONDELAYREQUEST.fields_by_name['id']._options = None
-  _UPDATESYMMETRICKEYDELETIONDELAYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _UPDATESYMMETRICKEYDELETIONDELAYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\013\n\tkmssymkey'
   _UPDATESYMMETRICKEYDELETIONDELAYREQUEST.fields_by_name['deletion_delay']._options = None
   _UPDATESYMMETRICKEYDELETIONDELAYREQUEST.fields_by_name['deletion_delay']._serialized_options = b'\272H\023\310\001\001\252\001\r\"\005\010\200\232\236\0012\004\010\200\243\005'
   _UNDELETESYMMETRICKEYREQUEST.fields_by_name['id']._options = None
-  _UNDELETESYMMETRICKEYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001'
+  _UNDELETESYMMETRICKEYREQUEST.fields_by_name['id']._serialized_options = b'\272H\003\310\001\001\342J\013\n\tkmssymkey'
   _SYMMETRICKEYSERVICE._options = None
   _SYMMETRICKEYSERVICE._serialized_options = b'\272J\007cpl.kms'
   _globals['_CREATESYMMETRICKEYREQUEST']._serialized_start=250
-  _globals['_CREATESYMMETRICKEYREQUEST']._serialized_end=410
-  _globals['_UPDATESYMMETRICKEYREQUEST']._serialized_start=413
-  _globals['_UPDATESYMMETRICKEYREQUEST']._serialized_end=565
-  _globals['_GETSYMMETRICKEYREQUEST']._serialized_start=567
-  _globals['_GETSYMMETRICKEYREQUEST']._serialized_end=678
-  _globals['_GETSYMMETRICKEYBYNAMEREQUEST']._serialized_start=680
-  _globals['_GETSYMMETRICKEYBYNAMEREQUEST']._serialized_end=775
-  _globals['_LISTSYMMETRICKEYSREQUEST']._serialized_start=778
-  _globals['_LISTSYMMETRICKEYSREQUEST']._serialized_end=964
-  _globals['_LISTSYMMETRICKEYSRESPONSE']._serialized_start=966
-  _globals['_LISTSYMMETRICKEYSRESPONSE']._serialized_end=1084
-  _globals['_ROTATESYMMETRICKEYREQUEST']._serialized_start=1086
-  _globals['_ROTATESYMMETRICKEYREQUEST']._serialized_end=1137
-  _globals['_DELETESYMMETRICKEYREQUEST']._serialized_start=1139
-  _globals['_DELETESYMMETRICKEYREQUEST']._serialized_end=1190
-  _globals['_UPDATESYMMETRICKEYDELETIONDELAYREQUEST']._serialized_start=1193
-  _globals['_UPDATESYMMETRICKEYDELETIONDELAYREQUEST']._serialized_end=1347
-  _globals['_UNDELETESYMMETRICKEYREQUEST']._serialized_start=1349
-  _globals['_UNDELETESYMMETRICKEYREQUEST']._serialized_end=1422
-  _globals['_SYMMETRICKEYSERVICE']._serialized_start=1425
-  _globals['_SYMMETRICKEYSERVICE']._serialized_end=2227
+  _globals['_CREATESYMMETRICKEYREQUEST']._serialized_end=422
+  _globals['_UPDATESYMMETRICKEYREQUEST']._serialized_start=425
+  _globals['_UPDATESYMMETRICKEYREQUEST']._serialized_end=589
+  _globals['_GETSYMMETRICKEYREQUEST']._serialized_start=591
+  _globals['_GETSYMMETRICKEYREQUEST']._serialized_end=716
+  _globals['_GETSYMMETRICKEYBYNAMEREQUEST']._serialized_start=718
+  _globals['_GETSYMMETRICKEYBYNAMEREQUEST']._serialized_end=825
+  _globals['_LISTSYMMETRICKEYSREQUEST']._serialized_start=828
+  _globals['_LISTSYMMETRICKEYSREQUEST']._serialized_end=1026
+  _globals['_LISTSYMMETRICKEYSRESPONSE']._serialized_start=1028
+  _globals['_LISTSYMMETRICKEYSRESPONSE']._serialized_end=1146
+  _globals['_ROTATESYMMETRICKEYREQUEST']._serialized_start=1148
+  _globals['_ROTATESYMMETRICKEYREQUEST']._serialized_end=1213
+  _globals['_DELETESYMMETRICKEYREQUEST']._serialized_start=1215
+  _globals['_DELETESYMMETRICKEYREQUEST']._serialized_end=1280
+  _globals['_UPDATESYMMETRICKEYDELETIONDELAYREQUEST']._serialized_start=1283
+  _globals['_UPDATESYMMETRICKEYDELETIONDELAYREQUEST']._serialized_end=1451
+  _globals['_UNDELETESYMMETRICKEYREQUEST']._serialized_start=1453
+  _globals['_UNDELETESYMMETRICKEYREQUEST']._serialized_end=1540
+  _globals['_SYMMETRICKEYSERVICE']._serialized_start=1543
+  _globals['_SYMMETRICKEYSERVICE']._serialized_end=2345
 # @@protoc_insertion_point(module_scope)

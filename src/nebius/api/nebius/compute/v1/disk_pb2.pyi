@@ -20,7 +20,7 @@ class Disk(_message.Message):
     def __init__(self, metadata: _Optional[_Union[_metadata_pb2.ResourceMetadata, _Mapping]] = ..., spec: _Optional[_Union[DiskSpec, _Mapping]] = ..., status: _Optional[_Union[DiskStatus, _Mapping]] = ...) -> None: ...
 
 class DiskSpec(_message.Message):
-    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type", "source_image_id", "source_image_family", "disk_encryption", "forbid_deletion"]
+    __slots__ = ["size_bytes", "size_kibibytes", "size_mebibytes", "size_gibibytes", "block_size_bytes", "type", "source_image_id", "source_image_family", "source_snapshot_id", "disk_encryption", "forbid_deletion"]
     class DiskType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         UNSPECIFIED: _ClassVar[DiskSpec.DiskType]
@@ -41,6 +41,7 @@ class DiskSpec(_message.Message):
     TYPE_FIELD_NUMBER: _ClassVar[int]
     SOURCE_IMAGE_ID_FIELD_NUMBER: _ClassVar[int]
     SOURCE_IMAGE_FAMILY_FIELD_NUMBER: _ClassVar[int]
+    SOURCE_SNAPSHOT_ID_FIELD_NUMBER: _ClassVar[int]
     DISK_ENCRYPTION_FIELD_NUMBER: _ClassVar[int]
     FORBID_DELETION_FIELD_NUMBER: _ClassVar[int]
     size_bytes: int
@@ -51,9 +52,10 @@ class DiskSpec(_message.Message):
     type: DiskSpec.DiskType
     source_image_id: str
     source_image_family: SourceImageFamily
+    source_snapshot_id: str
     disk_encryption: DiskEncryption
     forbid_deletion: bool
-    def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[DiskSpec.DiskType, str]] = ..., source_image_id: _Optional[str] = ..., source_image_family: _Optional[_Union[SourceImageFamily, _Mapping]] = ..., disk_encryption: _Optional[_Union[DiskEncryption, _Mapping]] = ..., forbid_deletion: bool = ...) -> None: ...
+    def __init__(self, size_bytes: _Optional[int] = ..., size_kibibytes: _Optional[int] = ..., size_mebibytes: _Optional[int] = ..., size_gibibytes: _Optional[int] = ..., block_size_bytes: _Optional[int] = ..., type: _Optional[_Union[DiskSpec.DiskType, str]] = ..., source_image_id: _Optional[str] = ..., source_image_family: _Optional[_Union[SourceImageFamily, _Mapping]] = ..., source_snapshot_id: _Optional[str] = ..., disk_encryption: _Optional[_Union[DiskEncryption, _Mapping]] = ..., forbid_deletion: bool = ...) -> None: ...
 
 class SourceImageFamily(_message.Message):
     __slots__ = ["image_family", "parent_id"]
