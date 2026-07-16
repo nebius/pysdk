@@ -11,8 +11,11 @@ import google.protobuf.descriptor as descriptor_1
 import google.protobuf.message as message_1
 import google.protobuf.timestamp_pb2 as timestamp_pb2
 import nebius.aio.client as client
-import nebius.aio.request as request
+import nebius.aio.operation as operation
+import nebius.aio.request as request_1
 import nebius.aio.request_kwargs as request_kwargs
+import nebius.api.nebius.capacity.v1.capacity_allowance_pb2 as capacity_allowance_pb2
+import nebius.api.nebius.capacity.v1.capacity_allowance_service_pb2 as capacity_allowance_service_pb2
 import nebius.api.nebius.capacity.v1.capacity_block_group_pb2 as capacity_block_group_pb2
 import nebius.api.nebius.capacity.v1.capacity_block_group_service_pb2 as capacity_block_group_service_pb2
 import nebius.api.nebius.capacity.v1.capacity_interval_pb2 as capacity_interval_pb2
@@ -22,6 +25,8 @@ import nebius.api.nebius.capacity.v1.resource_advice_service_pb2 as resource_adv
 import nebius.api.nebius.capacity.v1.resource_affinity_pb2 as resource_affinity_pb2
 import nebius.api.nebius.common.v1 as v1_1
 import nebius.api.nebius.common.v1.metadata_pb2 as metadata_pb2
+import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
+import nebius.base.fieldmask_protobuf as fieldmask_protobuf
 import nebius.base.protos.descriptor as descriptor
 import nebius.base.protos.pb_classes as pb_classes
 import nebius.base.protos.pb_enum as pb_enum
@@ -30,6 +35,1029 @@ import nebius.base.protos.well_known as well_known_1
 import typing as typing
 import typing_extensions as typing_extensions
 #@ local imports here @#
+
+# file: nebius/capacity/v1/capacity_allowance.proto
+class CapacityAllowance(pb_classes.Message):
+    """
+    Resource that restricts Capacity Block Group quota by project.
+    """
+    
+    __PB2_CLASS__ = capacity_allowance_pb2.CapacityAllowance
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.CapacityAllowance",capacity_allowance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "CapacityAllowanceSpec|capacity_allowance_pb2.CapacityAllowanceSpec|None|unset.UnsetType" = unset.Unset,
+        status: "CapacityAllowanceStatus|capacity_allowance_pb2.CapacityAllowanceStatus|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+        if not isinstance(status, unset.UnsetType):
+            self.status = status
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+            "status",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        """
+        Standard metadata. parent_id is the User's Project NID.
+        """
+        
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "CapacityAllowanceSpec":
+        """
+        Identifiers for the limit and technical configuration.
+        """
+        
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=CapacityAllowanceSpec,
+        )
+    @spec.setter
+    def spec(self, value: "CapacityAllowanceSpec|capacity_allowance_pb2.CapacityAllowanceSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def status(self) -> "CapacityAllowanceStatus":
+        """
+        Current status of the Capacity Allowance.
+        """
+        
+        return super()._get_field("status", explicit_presence=False,
+        wrap=CapacityAllowanceStatus,
+        )
+    @status.setter
+    def status(self, value: "CapacityAllowanceStatus|capacity_allowance_pb2.CapacityAllowanceStatus|None") -> None:
+        return super()._set_field("status",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+        "status":"status",
+    }
+    
+class CapacityAllowanceSpec(pb_classes.Message):
+    """
+    Capacity Allowance specification.
+    """
+    
+    __PB2_CLASS__ = capacity_allowance_pb2.CapacityAllowanceSpec
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.CapacityAllowanceSpec",capacity_allowance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class __OneOfClass__limit__(pb_classes.OneOf):
+        name: builtins.str= "_limit"
+        
+        def __init__(self, msg: "CapacityAllowanceSpec") -> None:
+            super().__init__()
+            self._message: "CapacityAllowanceSpec" = msg
+    
+    class __OneOfClass__limit_limit__(__OneOfClass__limit__):
+        field: typing.Literal["limit"] = "limit"
+        
+        def __init__(self, msg: "CapacityAllowanceSpec") -> None:
+            super().__init__(msg)
+        @builtins.property
+        def value(self) -> "builtins.int":
+            return self._message.limit
+    
+    @builtins.property
+    def _limit(self) -> __OneOfClass__limit_limit__|None:
+        field_name_1: str|None = super().which_field_in_oneof("_limit")
+        match field_name_1:
+            case "limit":
+                return self.__OneOfClass__limit_limit__(self)
+            case None:
+                return None
+            case _:
+                raise pb_classes.OneOfMatchError(field_name_1)
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        capacity_block_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        limit: "builtins.int|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(capacity_block_group_id, unset.UnsetType):
+            self.capacity_block_group_id = capacity_block_group_id
+        if not isinstance(limit, unset.UnsetType):
+            self.limit = limit
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "capacity_block_group_id",
+            "limit",
+            "_limit",
+        ]
+    
+    @builtins.property
+    def capacity_block_group_id(self) -> "builtins.str":
+        """
+        Capacity Block Group NID.
+        """
+        
+        return super()._get_field("capacity_block_group_id", explicit_presence=False,
+        )
+    @capacity_block_group_id.setter
+    def capacity_block_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("capacity_block_group_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def limit(self) -> "builtins.int|None":
+        """
+        Total amount of resources allocated.
+        Optional is used to define an unlimited Capacity Allowance.
+        """
+        
+        return super()._get_field("limit", explicit_presence=True,
+        )
+    @limit.setter
+    def limit(self, value: "builtins.int|None") -> None:
+        return super()._set_field("limit",value,explicit_presence=True,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "capacity_block_group_id":"capacity_block_group_id",
+        "limit":"limit",
+        "_limit":"_limit",
+    }
+    
+class CapacityAllowanceStatus(pb_classes.Message):
+    """
+    Capacity Allowance status.
+    """
+    
+    __PB2_CLASS__ = capacity_allowance_pb2.CapacityAllowanceStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.CapacityAllowanceStatus",capacity_allowance_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    class State(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.capacity.v1.CapacityAllowanceStatus.State",capacity_allowance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        STATE_UNSPECIFIED = 0
+        STATE_PROVISIONING = 1
+        """
+        Capacity Allowance is being allocated; the process can take up to several minutes.
+        """
+        
+        STATE_ACTIVE = 2
+        """
+        Capacity Allowance is allocated and can be used.
+        """
+        
+        STATE_CONTAINER_DELETED = 100
+        """
+        The container of the Capacity Allowance is deleted. Capacity Allowance cannot be changed.
+        """
+        
+    
+    class UsageState(pb_enum.Enum):
+        __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.capacity.v1.CapacityAllowanceStatus.UsageState",capacity_allowance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
+        USAGE_STATE_UNSPECIFIED = 0
+        USAGE_STATE_USED = 1
+        """
+        Capacity allowance is actively in use.
+        """
+        
+        USAGE_STATE_NOT_USED = 2
+        """
+        Capacity allowance is not currently in use.
+        """
+        
+        USAGE_STATE_UNKNOWN = 3
+        """
+        Capacity allowance region is unreachable, the current usage is therefore unknown.
+        Please, retry the request later.
+        """
+        
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        state: "CapacityAllowanceStatus.State|capacity_allowance_pb2.CapacityAllowanceStatus.State|None|unset.UnsetType" = unset.Unset,
+        usage: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        usage_percentage: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        usage_state: "CapacityAllowanceStatus.UsageState|capacity_allowance_pb2.CapacityAllowanceStatus.UsageState|None|unset.UnsetType" = unset.Unset,
+        unit: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        reconciling: "builtins.bool|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(state, unset.UnsetType):
+            self.state = state
+        if not isinstance(usage, unset.UnsetType):
+            self.usage = usage
+        if not isinstance(usage_percentage, unset.UnsetType):
+            self.usage_percentage = usage_percentage
+        if not isinstance(usage_state, unset.UnsetType):
+            self.usage_state = usage_state
+        if not isinstance(unit, unset.UnsetType):
+            self.unit = unit
+        if not isinstance(reconciling, unset.UnsetType):
+            self.reconciling = reconciling
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "state",
+            "usage",
+            "usage_percentage",
+            "usage_state",
+            "unit",
+            "reconciling",
+            "State",
+            "UsageState",
+        ]
+    
+    @builtins.property
+    def state(self) -> "CapacityAllowanceStatus.State":
+        """
+        Current state of the capacity allowance.
+        """
+        
+        return super()._get_field("state", explicit_presence=False,
+        wrap=CapacityAllowanceStatus.State,
+        )
+    @state.setter
+    def state(self, value: "CapacityAllowanceStatus.State|capacity_allowance_pb2.CapacityAllowanceStatus.State|None") -> None:
+        return super()._set_field("state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def usage(self) -> "builtins.int":
+        """
+        Current capacity allowance usage.
+        """
+        
+        return super()._get_field("usage", explicit_presence=False,
+        )
+    @usage.setter
+    def usage(self, value: "builtins.int|None") -> None:
+        return super()._set_field("usage",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def usage_percentage(self) -> "builtins.str":
+        """
+        Capacity allowance usage percentage.
+        """
+        
+        return super()._get_field("usage_percentage", explicit_presence=False,
+        )
+    @usage_percentage.setter
+    def usage_percentage(self, value: "builtins.str|None") -> None:
+        return super()._set_field("usage_percentage",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def usage_state(self) -> "CapacityAllowanceStatus.UsageState":
+        """
+        Current state of the capacity allowance usage.
+        """
+        
+        return super()._get_field("usage_state", explicit_presence=False,
+        wrap=CapacityAllowanceStatus.UsageState,
+        )
+    @usage_state.setter
+    def usage_state(self, value: "CapacityAllowanceStatus.UsageState|capacity_allowance_pb2.CapacityAllowanceStatus.UsageState|None") -> None:
+        return super()._set_field("usage_state",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def unit(self) -> "builtins.str":
+        """
+        Capacity Allowance unit.
+        Example: "GPU".
+        """
+        
+        return super()._get_field("unit", explicit_presence=False,
+        )
+    @unit.setter
+    def unit(self, value: "builtins.str|None") -> None:
+        return super()._set_field("unit",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def reconciling(self) -> "builtins.bool":
+        """
+        Shows that changes are in flight.
+        """
+        
+        return super()._get_field("reconciling", explicit_presence=False,
+        )
+    @reconciling.setter
+    def reconciling(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("reconciling",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "state":"state",
+        "usage":"usage",
+        "usage_percentage":"usage_percentage",
+        "usage_state":"usage_state",
+        "unit":"unit",
+        "reconciling":"reconciling",
+        "State":"State",
+        "UsageState":"UsageState",
+    }
+    
+# file: nebius/capacity/v1/capacity_allowance_service.proto
+class ListCapacityAllowancesRequest(pb_classes.Message):
+    __PB2_CLASS__ = capacity_allowance_service_pb2.ListCapacityAllowancesRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ListCapacityAllowancesRequest",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the Project to list capacity allowances for.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Page size. Must be between [1...1000].
+        Optional; if not specified, a reasonable default will be chosen by the service.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Listing continuation token. Pass an empty string to start listing from the first page.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class ListCapacityAllowancesResponse(pb_classes.Message):
+    __PB2_CLASS__ = capacity_allowance_service_pb2.ListCapacityAllowancesResponse
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ListCapacityAllowancesResponse",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        items: "abc.Iterable[CapacityAllowance]|None|unset.UnsetType" = unset.Unset,
+        next_page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(items, unset.UnsetType):
+            self.items = items
+        if not isinstance(next_page_token, unset.UnsetType):
+            self.next_page_token = next_page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "items",
+            "next_page_token",
+        ]
+    
+    @builtins.property
+    def items(self) -> "abc.MutableSequence[CapacityAllowance]":
+        """
+        List of Capacity Allowances on this result page.
+        """
+        
+        return super()._get_field("items", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(CapacityAllowance,None,None),
+        )
+    @items.setter
+    def items(self, value: "abc.Iterable[CapacityAllowance]|None") -> None:
+        return super()._set_field("items",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def next_page_token(self) -> "builtins.str":
+        """
+        Listing continuation token for the next page of results.
+        """
+        
+        return super()._get_field("next_page_token", explicit_presence=False,
+        )
+    @next_page_token.setter
+    def next_page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("next_page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "items":"items",
+        "next_page_token":"next_page_token",
+    }
+    
+class ListCapacityAllowancesByCapacityBlockGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = capacity_allowance_service_pb2.ListCapacityAllowancesByCapacityBlockGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.ListCapacityAllowancesByCapacityBlockGroupRequest",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        capacity_block_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(capacity_block_group_id, unset.UnsetType):
+            self.capacity_block_group_id = capacity_block_group_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "capacity_block_group_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def capacity_block_group_id(self) -> "builtins.str":
+        """
+        ID of a Capacity Block Group to list capacity allowances for.
+        """
+        
+        return super()._get_field("capacity_block_group_id", explicit_presence=False,
+        )
+    @capacity_block_group_id.setter
+    def capacity_block_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("capacity_block_group_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Page size. Must be between [1...1000].
+        Optional; if not specified, a reasonable default will be chosen by the service.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Listing continuation token. Pass an empty string to start listing from the first page.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "capacity_block_group_id":"capacity_block_group_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
+class GetCapacityAllowanceRequest(pb_classes.Message):
+    __PB2_CLASS__ = capacity_allowance_service_pb2.GetCapacityAllowanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.GetCapacityAllowanceRequest",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of the Capacity Allowance.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class GetCapacityAllowanceByParentAndCapacityBlockGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = capacity_allowance_service_pb2.GetCapacityAllowanceByParentAndCapacityBlockGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.GetCapacityAllowanceByParentAndCapacityBlockGroupRequest",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        parent_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        capacity_block_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(parent_id, unset.UnsetType):
+            self.parent_id = parent_id
+        if not isinstance(capacity_block_group_id, unset.UnsetType):
+            self.capacity_block_group_id = capacity_block_group_id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "parent_id",
+            "capacity_block_group_id",
+        ]
+    
+    @builtins.property
+    def parent_id(self) -> "builtins.str":
+        """
+        ID of the Project to get capacity allowance for.
+        """
+        
+        return super()._get_field("parent_id", explicit_presence=False,
+        )
+    @parent_id.setter
+    def parent_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("parent_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def capacity_block_group_id(self) -> "builtins.str":
+        """
+        ID of a Capacity Block Group to get capacity allowance for.
+        """
+        
+        return super()._get_field("capacity_block_group_id", explicit_presence=False,
+        )
+    @capacity_block_group_id.setter
+    def capacity_block_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("capacity_block_group_id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "parent_id":"parent_id",
+        "capacity_block_group_id":"capacity_block_group_id",
+    }
+    
+class CreateCapacityAllowanceRequest(pb_classes.Message):
+    __PB2_CLASS__ = capacity_allowance_service_pb2.CreateCapacityAllowanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.CreateCapacityAllowanceRequest",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "CapacityAllowanceSpec|capacity_allowance_pb2.CapacityAllowanceSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "CapacityAllowanceSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=CapacityAllowanceSpec,
+        )
+    @spec.setter
+    def spec(self, value: "CapacityAllowanceSpec|capacity_allowance_pb2.CapacityAllowanceSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class UpdateCapacityAllowanceRequest(pb_classes.Message):
+    __PB2_CLASS__ = capacity_allowance_service_pb2.UpdateCapacityAllowanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.UpdateCapacityAllowanceRequest",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        metadata: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None|unset.UnsetType" = unset.Unset,
+        spec: "CapacityAllowanceSpec|capacity_allowance_pb2.CapacityAllowanceSpec|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(metadata, unset.UnsetType):
+            self.metadata = metadata
+        if not isinstance(spec, unset.UnsetType):
+            self.spec = spec
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "metadata",
+            "spec",
+        ]
+    
+    @builtins.property
+    def metadata(self) -> "v1_1.ResourceMetadata":
+        return super()._get_field("metadata", explicit_presence=False,
+        wrap=v1_1.ResourceMetadata,
+        )
+    @metadata.setter
+    def metadata(self, value: "v1_1.ResourceMetadata|metadata_pb2.ResourceMetadata|None") -> None:
+        return super()._set_field("metadata",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def spec(self) -> "CapacityAllowanceSpec":
+        return super()._get_field("spec", explicit_presence=False,
+        wrap=CapacityAllowanceSpec,
+        )
+    @spec.setter
+    def spec(self, value: "CapacityAllowanceSpec|capacity_allowance_pb2.CapacityAllowanceSpec|None") -> None:
+        return super()._set_field("spec",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "metadata":"metadata",
+        "spec":"spec",
+    }
+    
+class DeleteCapacityAllowanceRequest(pb_classes.Message):
+    __PB2_CLASS__ = capacity_allowance_service_pb2.DeleteCapacityAllowanceRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.capacity.v1.DeleteCapacityAllowanceRequest",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        ID of the Capacity Allowance.
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+
+class CapacityAllowanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.OperationServiceClient]):
+    """
+    Capacity Allowance service manages project limits for Capacity Block Groups.
+    
+    This class provides the client methods for the ``.nebius.capacity.v1.CapacityAllowanceService`` service.
+    
+    Each method constructs a :class:`nebius.aio.request.Request` object
+    that represents the in-flight RPC. The request can be awaited (async)
+    or waited synchronously using its ``.wait()`` helpers.
+    
+    The request methods accept various parameters to configure metadata,
+    timeouts, authorization, and retries. See individual method docstrings
+    for details.
+    
+    :cvar __service_name__: The full protobuf service name.
+    """
+    
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.ServiceDescriptor](".nebius.capacity.v1.CapacityAllowanceService",capacity_allowance_service_pb2.DESCRIPTOR,descriptor_1.ServiceDescriptor)
+    """The protobuf service descriptor extraction function."""
+    __service_name__ = ".nebius.capacity.v1.CapacityAllowanceService"
+    __operation_type__ = v1_1.Operation
+    __operation_service_class__ = v1_1.OperationServiceClient
+    __operation_source_method__ = "Create"
+    """The method name that can be used to fetch the address channel for the operation."""
+    
+    def list(self,
+        request: "ListCapacityAllowancesRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListCapacityAllowancesRequest","ListCapacityAllowancesResponse"]:
+        """
+        Lists project limits.
+        Lists non-created Capacity Allowances as well for clarity, showing the default limit.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.ListCapacityAllowancesRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.capacity.v1.ListCapacityAllowancesResponse`.
+        """
+        
+        return super().request(
+            method="List",
+            request=request,
+            result_pb2_class=capacity_allowance_service_pb2.ListCapacityAllowancesResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListCapacityAllowancesResponse),
+            **kwargs,
+        )
+    
+    def list_by_capacity_block_group(self,
+        request: "ListCapacityAllowancesByCapacityBlockGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListCapacityAllowancesByCapacityBlockGroupRequest","ListCapacityAllowancesResponse"]:
+        """
+        Lists project limits for a Capacity Block Group.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.ListCapacityAllowancesByCapacityBlockGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.capacity.v1.ListCapacityAllowancesResponse`.
+        """
+        
+        return super().request(
+            method="ListByCapacityBlockGroup",
+            request=request,
+            result_pb2_class=capacity_allowance_service_pb2.ListCapacityAllowancesResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListCapacityAllowancesResponse),
+            **kwargs,
+        )
+    
+    def get(self,
+        request: "GetCapacityAllowanceRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetCapacityAllowanceRequest","CapacityAllowance"]:
+        """
+        Gets a Capacity Allowance by its ID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.GetCapacityAllowanceRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.capacity.v1.CapacityAllowance`.
+        """
+        
+        return super().request(
+            method="Get",
+            request=request,
+            result_pb2_class=capacity_allowance_pb2.CapacityAllowance,
+            result_wrapper=pb_classes.simple_wrapper(CapacityAllowance),
+            **kwargs,
+        )
+    
+    def get_by_parent_and_capacity_block_group(self,
+        request: "GetCapacityAllowanceByParentAndCapacityBlockGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["GetCapacityAllowanceByParentAndCapacityBlockGroupRequest","CapacityAllowance"]:
+        """
+        Gets a Capacity Allowance by a project and a Capacity Block Group NID.
+        Returns non-created Capacity Allowances as well for clarity, showing the default limit.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.GetCapacityAllowanceByParentAndCapacityBlockGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.capacity.v1.CapacityAllowance`.
+        """
+        
+        return super().request(
+            method="GetByParentAndCapacityBlockGroup",
+            request=request,
+            result_pb2_class=capacity_allowance_pb2.CapacityAllowance,
+            result_wrapper=pb_classes.simple_wrapper(CapacityAllowance),
+            **kwargs,
+        )
+    
+    def create(self,
+        request: "CreateCapacityAllowanceRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["CreateCapacityAllowanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Creates a Capacity Allowance by project ID and Capacity Block Group NID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.CreateCapacityAllowanceRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Create",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def update(self,
+        request: "UpdateCapacityAllowanceRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["UpdateCapacityAllowanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Updates a Capacity Allowance by project ID and Capacity Block Group NID.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.UpdateCapacityAllowanceRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        kwargs['metadata'] = fieldmask_protobuf.ensure_reset_mask_in_metadata(request, kwargs.get('metadata', None))
+        return super().request(
+            method="Update",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
+    def delete(self,
+        request: "DeleteCapacityAllowanceRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["DeleteCapacityAllowanceRequest","operation.Operation[v1_1.Operation]"]:
+        """
+        Resets Capacity Allowance limit to the default value.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.capacity.v1.DeleteCapacityAllowanceRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.common.v1.Operation`.
+        """
+        
+        return super().request(
+            method="Delete",
+            request=request,
+            result_pb2_class=operation_pb2.Operation,
+            result_wrapper=operation.Operation,
+            **kwargs,
+        )
+    
 
 # file: nebius/capacity/v1/resource_affinity.proto
 class ResourceAffinityComputeV1(pb_classes.Message):
@@ -519,6 +1547,7 @@ class CapacityBlockGroupStatus(pb_classes.Message):
     def service(self) -> "builtins.str":
         """
         Service for which the Capacity Block Group is allocated.
+        Derived from the resource_affinity variant (compute_v1 -> "compute", tokenfactory_v1 -> "tokenfactory").
         """
         
         return super()._get_field("service", explicit_presence=False,
@@ -1113,7 +2142,7 @@ class CapacityBlockGroupServiceClient(client.Client):
     def get(self,
         request: "GetCapacityBlockGroupRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["GetCapacityBlockGroupRequest","CapacityBlockGroup"]:
+    ) -> request_1.Request["GetCapacityBlockGroupRequest","CapacityBlockGroup"]:
         """
         Get Capacity Block Group by its ID.
         
@@ -1142,7 +2171,7 @@ class CapacityBlockGroupServiceClient(client.Client):
     def get_by_resource_affinity(self,
         request: "GetCapacityBlockGroupByResourceAffinityRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["GetCapacityBlockGroupByResourceAffinityRequest","CapacityBlockGroup"]:
+    ) -> request_1.Request["GetCapacityBlockGroupByResourceAffinityRequest","CapacityBlockGroup"]:
         """
         Get Capacity Block Group by its specification.
         
@@ -1171,7 +2200,7 @@ class CapacityBlockGroupServiceClient(client.Client):
     def list(self,
         request: "ListCapacityBlockGroupsRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["ListCapacityBlockGroupsRequest","ListCapacityBlockGroupsResponse"]:
+    ) -> request_1.Request["ListCapacityBlockGroupsRequest","ListCapacityBlockGroupsResponse"]:
         """
         List all Capacity Block Groups for the specified Tenant.
         
@@ -1200,7 +2229,7 @@ class CapacityBlockGroupServiceClient(client.Client):
     def list_resources(self,
         request: "ListCapacityBlockGroupResourcesRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["ListCapacityBlockGroupResourcesRequest","ListCapacityBlockGroupResourcesResponse"]:
+    ) -> request_1.Request["ListCapacityBlockGroupResourcesRequest","ListCapacityBlockGroupResourcesResponse"]:
         """
         List virtual machines instances' IDs that occupy a Capacity Block Group by its ID.
         
@@ -1744,7 +2773,7 @@ class CapacityIntervalServiceClient(client.Client):
     def get(self,
         request: "GetCapacityIntervalRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["GetCapacityIntervalRequest","CapacityInterval"]:
+    ) -> request_1.Request["GetCapacityIntervalRequest","CapacityInterval"]:
         """
         Get Capacity Interval by its ID.
         
@@ -1773,7 +2802,7 @@ class CapacityIntervalServiceClient(client.Client):
     def list(self,
         request: "ListCapacityIntervalsRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["ListCapacityIntervalsRequest","ListCapacityIntervalsResponse"]:
+    ) -> request_1.Request["ListCapacityIntervalsRequest","ListCapacityIntervalsResponse"]:
         """
         List all capacity intervals in a Capacity Block Group.
         
@@ -2647,7 +3676,7 @@ class ResourceAdviceServiceClient(client.Client):
     def list(self,
         request: "ListResourceAdviceRequest",
         **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
-    ) -> request.Request["ListResourceAdviceRequest","ListResourceAdviceResponse"]:
+    ) -> request_1.Request["ListResourceAdviceRequest","ListResourceAdviceResponse"]:
         """
         Returns a list of resource advice entries for the caller's tenant.
         Each entry represents a unique combination of region, fabric, platform, and preset
@@ -2682,6 +3711,18 @@ class ResourceAdviceServiceClient(client.Client):
 
 __all__ = [
     #@ local import names here @#
+    "CapacityAllowance",
+    "CapacityAllowanceSpec",
+    "CapacityAllowanceStatus",
+    "ListCapacityAllowancesRequest",
+    "ListCapacityAllowancesResponse",
+    "ListCapacityAllowancesByCapacityBlockGroupRequest",
+    "GetCapacityAllowanceRequest",
+    "GetCapacityAllowanceByParentAndCapacityBlockGroupRequest",
+    "CreateCapacityAllowanceRequest",
+    "UpdateCapacityAllowanceRequest",
+    "DeleteCapacityAllowanceRequest",
+    "CapacityAllowanceServiceClient",
     "ResourceAffinityComputeV1",
     "ResourceAffinity",
     "CapacityBlockGroupSpec",
