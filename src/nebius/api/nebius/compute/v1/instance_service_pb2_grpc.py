@@ -39,6 +39,11 @@ class InstanceServiceStub(object):
                 request_serializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesRequest.SerializeToString,
                 response_deserializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesResponse.FromString,
                 )
+        self.ListInstancesByNVLInstanceGroup = channel.unary_unary(
+                '/nebius.compute.v1.InstanceService/ListInstancesByNVLInstanceGroup',
+                request_serializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesByNVLInstanceGroupRequest.SerializeToString,
+                response_deserializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesResponse.FromString,
+                )
         self.Create = channel.unary_unary(
                 '/nebius.compute.v1.InstanceService/Create',
                 request_serializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.CreateInstanceRequest.SerializeToString,
@@ -98,6 +103,13 @@ class InstanceServiceServicer(object):
 
     def List(self, request, context):
         """Lists all VM instances within a specified parent.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListInstancesByNVLInstanceGroup(self, request, context):
+        """Lists all VM instances that belong to the specified NVL instance group.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -168,6 +180,11 @@ def add_InstanceServiceServicer_to_server(servicer, server):
             'List': grpc.unary_unary_rpc_method_handler(
                     servicer.List,
                     request_deserializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesRequest.FromString,
+                    response_serializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesResponse.SerializeToString,
+            ),
+            'ListInstancesByNVLInstanceGroup': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListInstancesByNVLInstanceGroup,
+                    request_deserializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesByNVLInstanceGroupRequest.FromString,
                     response_serializer=nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesResponse.SerializeToString,
             ),
             'Create': grpc.unary_unary_rpc_method_handler(
@@ -274,6 +291,23 @@ class InstanceService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.InstanceService/List',
             nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesRequest.SerializeToString,
+            nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListInstancesByNVLInstanceGroup(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/nebius.compute.v1.InstanceService/ListInstancesByNVLInstanceGroup',
+            nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesByNVLInstanceGroupRequest.SerializeToString,
             nebius_dot_compute_dot_v1_dot_instance__service__pb2.ListInstancesResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

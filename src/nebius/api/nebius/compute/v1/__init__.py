@@ -8075,6 +8075,80 @@ class StopInstanceRequest(pb_classes.Message):
         "id":"id",
     }
     
+class ListInstancesByNVLInstanceGroupRequest(pb_classes.Message):
+    __PB2_CLASS__ = instance_service_pb2.ListInstancesByNVLInstanceGroupRequest
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.ListInstancesByNVLInstanceGroupRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        nvl_instance_group_id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        page_size: "builtins.int|None|unset.UnsetType" = unset.Unset,
+        page_token: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(nvl_instance_group_id, unset.UnsetType):
+            self.nvl_instance_group_id = nvl_instance_group_id
+        if not isinstance(page_size, unset.UnsetType):
+            self.page_size = page_size
+        if not isinstance(page_token, unset.UnsetType):
+            self.page_token = page_token
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "nvl_instance_group_id",
+            "page_size",
+            "page_token",
+        ]
+    
+    @builtins.property
+    def nvl_instance_group_id(self) -> "builtins.str":
+        """
+        ID of the NVL instance group whose instances will be listed.
+        """
+        
+        return super()._get_field("nvl_instance_group_id", explicit_presence=False,
+        )
+    @nvl_instance_group_id.setter
+    def nvl_instance_group_id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("nvl_instance_group_id",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_size(self) -> "builtins.int":
+        """
+        Maximum number of instances to return in a single page.
+        """
+        
+        return super()._get_field("page_size", explicit_presence=False,
+        )
+    @page_size.setter
+    def page_size(self, value: "builtins.int|None") -> None:
+        return super()._set_field("page_size",value,explicit_presence=False,
+        )
+    
+    @builtins.property
+    def page_token(self) -> "builtins.str":
+        """
+        Page token returned by a previous call, used to fetch the next page.
+        """
+        
+        return super()._get_field("page_token", explicit_presence=False,
+        )
+    @page_token.setter
+    def page_token(self, value: "builtins.str|None") -> None:
+        return super()._set_field("page_token",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "nvl_instance_group_id":"nvl_instance_group_id",
+        "page_size":"page_size",
+        "page_token":"page_token",
+    }
+    
 class BatchGetRequest(pb_classes.Message):
     __PB2_CLASS__ = instance_service_pb2.BatchGetRequest
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.BatchGetRequest",instance_service_pb2.DESCRIPTOR,descriptor_1.Descriptor)
@@ -8443,6 +8517,35 @@ class InstanceServiceClient(client.ClientWithOperations[v1_1.Operation,v1_1.Oper
         
         return super().request(
             method="List",
+            request=request,
+            result_pb2_class=instance_service_pb2.ListInstancesResponse,
+            result_wrapper=pb_classes.simple_wrapper(ListInstancesResponse),
+            **kwargs,
+        )
+    
+    def list_instances_by_nvl_instance_group(self,
+        request: "ListInstancesByNVLInstanceGroupRequest",
+        **kwargs: typing_extensions.Unpack[request_kwargs.RequestKwargs]
+    ) -> request_1.Request["ListInstancesByNVLInstanceGroupRequest","ListInstancesResponse"]:
+        """
+        Lists all VM instances that belong to the specified NVL instance group.
+        
+        :param request: The request object to send.
+        :type request: :class:`nebius.api.nebius.compute.v1.ListInstancesByNVLInstanceGroupRequest`
+        
+        Other parameters can be provided as keyword arguments in the
+        ``**kwargs`` dictionary, including metadata, timeouts, and retries.
+        See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
+        
+        :return: A :class:`nebius.aio.request.Request` object representing the
+            in-flight RPC. It can be awaited (async) or waited
+            synchronously using its ``.wait()`` helpers.
+        :rtype: :class:`nebius.aio.request.Request` of
+            :class:`nebius.api.nebius.compute.v1.ListInstancesResponse`.
+        """
+        
+        return super().request(
+            method="ListInstancesByNVLInstanceGroup",
             request=request,
             result_pb2_class=instance_service_pb2.ListInstancesResponse,
             result_wrapper=pb_classes.simple_wrapper(ListInstancesResponse),
@@ -10755,6 +10858,7 @@ __all__ = [
     "ListInstancesResponse",
     "StartInstanceRequest",
     "StopInstanceRequest",
+    "ListInstancesByNVLInstanceGroupRequest",
     "BatchGetRequest",
     "BatchGetResponse",
     "InstanceServiceClient",

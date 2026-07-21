@@ -1123,6 +1123,7 @@ class ClusterControlPlaneVersion(pb_classes.Message):
         version: "builtins.str|None|unset.UnsetType" = unset.Unset,
         restricted: "builtins.bool|None|unset.UnsetType" = unset.Unset,
         end_of_life: "timestamp_pb2.Timestamp|datetime.datetime|None|unset.UnsetType" = unset.Unset,
+        deprecated: "builtins.bool|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(version, unset.UnsetType):
@@ -1131,12 +1132,15 @@ class ClusterControlPlaneVersion(pb_classes.Message):
             self.restricted = restricted
         if not isinstance(end_of_life, unset.UnsetType):
             self.end_of_life = end_of_life
+        if not isinstance(deprecated, unset.UnsetType):
+            self.deprecated = deprecated
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
             "version",
             "restricted",
             "end_of_life",
+            "deprecated",
         ]
     
     @builtins.property
@@ -1181,10 +1185,25 @@ class ClusterControlPlaneVersion(pb_classes.Message):
         unwrap=well_known_1.to_timestamp
         )
     
+    @builtins.property
+    def deprecated(self) -> "builtins.bool":
+        """
+        Deprecated marks version to be soon deleted from API.
+        Creation of clusters with this version is forbidden.
+        """
+        
+        return super()._get_field("deprecated", explicit_presence=False,
+        )
+    @deprecated.setter
+    def deprecated(self, value: "builtins.bool|None") -> None:
+        return super()._set_field("deprecated",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "version":"version",
         "restricted":"restricted",
         "end_of_life":"end_of_life",
+        "deprecated":"deprecated",
     }
     
 

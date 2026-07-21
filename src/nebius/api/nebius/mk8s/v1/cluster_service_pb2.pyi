@@ -70,11 +70,13 @@ class ListClusterControlPlaneVersionsResponse(_message.Message):
     def __init__(self, items: _Optional[_Iterable[_Union[ClusterControlPlaneVersion, _Mapping]]] = ...) -> None: ...
 
 class ClusterControlPlaneVersion(_message.Message):
-    __slots__ = ["version", "restricted", "end_of_life"]
+    __slots__ = ["version", "restricted", "end_of_life", "deprecated"]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     RESTRICTED_FIELD_NUMBER: _ClassVar[int]
     END_OF_LIFE_FIELD_NUMBER: _ClassVar[int]
+    DEPRECATED_FIELD_NUMBER: _ClassVar[int]
     version: str
     restricted: bool
     end_of_life: _timestamp_pb2.Timestamp
-    def __init__(self, version: _Optional[str] = ..., restricted: bool = ..., end_of_life: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    deprecated: bool
+    def __init__(self, version: _Optional[str] = ..., restricted: bool = ..., end_of_life: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., deprecated: bool = ...) -> None: ...

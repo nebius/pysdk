@@ -71,6 +71,16 @@ class StopInstanceRequest(_message.Message):
     id: str
     def __init__(self, id: _Optional[str] = ...) -> None: ...
 
+class ListInstancesByNVLInstanceGroupRequest(_message.Message):
+    __slots__ = ["nvl_instance_group_id", "page_size", "page_token"]
+    NVL_INSTANCE_GROUP_ID_FIELD_NUMBER: _ClassVar[int]
+    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    nvl_instance_group_id: str
+    page_size: int
+    page_token: str
+    def __init__(self, nvl_instance_group_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
+
 class BatchGetRequest(_message.Message):
     __slots__ = ["instance_ids"]
     INSTANCE_IDS_FIELD_NUMBER: _ClassVar[int]

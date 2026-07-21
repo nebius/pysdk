@@ -280,7 +280,7 @@ class GetTunnelRequest(pb_classes.Message):
     
 class ListTunnelRequest(pb_classes.Message):
     """
-    Request to list tunnels within a project.
+    Request to list tunnels within a parent resource.
     """
     
     __PB2_CLASS__ = tunnel_service_pb2.ListTunnelRequest
@@ -318,7 +318,7 @@ class ListTunnelRequest(pb_classes.Message):
     @builtins.property
     def parent_id(self) -> "builtins.str":
         """
-        Identifier of the parent project.
+        Identifier of the parent resource.
         """
         
         return super()._get_field("parent_id", explicit_presence=False,
