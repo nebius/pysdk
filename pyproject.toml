@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nebius"
-version = "0.3.98"
+version = "0.4.0"
 description = "Nebius Python SDK"
 authors = [
     { name = "Daniil Drizhuk", email = "complynx@nebius.com" },
@@ -21,9 +21,9 @@ dependencies = [
     "PyJWT>=2.0.0",
     "certifi>=2022.6.15",
     "protobuf>=5.29.1",
-    "grpcio-status>=1.56.2",
     "portalocker>=2.8.1",
     "aiohttp>=3.8.5",
+    "typing-extensions>=4.12.2",
 ]
 readme = "README.md"
 requires-python = ">=3.10"
@@ -38,15 +38,17 @@ dev = [
     "pytest-subtests>=0.3.0",  # For subtests in pytest
     "tox>=4.0",     # For testing automation
     "mypy>=1.13",    # For type checking
+    "pyright[nodejs]>=1.1.390",  # For installed-wheel type checking
     "black>=24.10",  # For code formatting
     "ruff>=0.7",   # For linting
     "grpc-stubs>=1.53",  # For mypy
     "types-protobuf>=5.29.1", # for mypy
     "types-PyYAML>=5.0",  # for mypy
+    "grpcio-status>=1.56.2",  # interoperability tests only
 ]
 generators = [
     # added a dep, add to the NOTICE.md!
-    "m2r2>=0.3",
+    "m2r2>=0.3.4",
     "grpcio-tools>=1.56.2",
     "mypy-protobuf>=3.6",
     "protovalidate>=0.5",
@@ -57,6 +59,9 @@ generators = [
 
 [tool.setuptools]
 package-dir = { "" = "src" }
+
+[tool.setuptools.package-data]
+nebius = ["py.typed"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -69,12 +74,6 @@ exclude = "(docs/generated|src/nebius/api|.direnv|.eggs|.git|.hg|.ipynb_checkpoi
 
 [tool.mypy]
 strict = true
-exclude = "^src/nebius/api/.*"
-files = ["!src/nebius/api/buf/validate/validate_pb2.pyi"]
-
-[[tool.mypy.overrides]]
-module = "nebius.api.*"
-ignore_errors = true
 
 [tool.ruff]
 exclude = [
@@ -142,18 +141,22 @@ log_cli_date_format = "%H:%M:%S"
 
 [tool.tox]
 requires = ["tox>=4.23"]
-env_list = ["test", "lint", "type", "format"]
+env_list = ["test", "lint", "type", "type_consumer", "format"]
 isolated_build = true
 
 [tool.tox.env]
 [tool.tox.env.test]
 description = "Run tests with pytest"
+set_env = { PYTHONPATH = "{tox_root}" }
 deps = [
     "pytest",
     "pytest-cov",
     "pytest-asyncio",
     "pytest-subtests",
     "grpcio",
+    "grpcio-status",
+    "m2r2",
+    "mypy>=1.13",
     "protobuf",
     "types-protobuf",
     "types-PyYAML",
@@ -170,6 +173,7 @@ passenv = [
 [tool.tox.env.test_earliest]
 description = "Run tests with pytest and the earliest possible lib versions"
 basepython = ["python3.10"]
+set_env = { PYTHONPATH = "{tox_root}" }
 deps = [
     "pytest",
     "pytest-cov",
@@ -177,15 +181,18 @@ deps = [
     "pytest-subtests",
     "pyyaml==5.1.1",
     "grpcio==1.56.2",
-    "protobuf<=5.26.1",
+    "protobuf==5.29.1",
     "types-PyYAML>=5.1.1",
-    "types-protobuf<=5.26.1",
+    "types-protobuf>=5.29.1,<5.30",
     "cryptography==40.0.0",
     "portalocker==2.8.1",
     "aiohttp==3.8.5",
+    "typing-extensions==4.12.2",
     "PyJWT==2.0.0",
     "certifi==2022.6.15",
     "grpcio-status==1.56.2",
+    "m2r2==0.3.4",
+    "mypy>=1.13",
 ]
 commands = [["pytest","-vv"]]
 passenv = [
@@ -198,13 +205,13 @@ passenv = [
 description = "Run linter checks"
 package = "skip"  # Skip installing the package
 deps = ["ruff"]
-commands = [["ruff","check","src/","tests/"]]
+commands = [["ruff","check","src/","tests/","nebius_generator/","scripts/"]]
 
 [tool.tox.env.format]
 description = "Run code formatting checks"
 package = "skip"
 deps = ["black"]
-commands = [["black","--check","src/"]]
+commands = [["black","--check","src/","tests/","nebius_generator/","scripts/"]]
 
 [tool.tox.env.type]
 description = "Run type-checking"
@@ -216,7 +223,6 @@ deps = [
     "PyJWT>=2.9.0",
     "certifi>=2024.8.30",
     "protobuf>=5.29.1",
-    "grpcio-status>=1.56.2",
     "pydoctor>=24.11.2,<25.0",  # For generating docs
     "beautifulsoup4>=4.12.3",
     "aiohttp>=3.8.5",
@@ -230,6 +236,18 @@ deps = [
     "types-PyYAML>=5",
 ]
 commands = [["mypy","src/"]]
+
+[tool.tox.env.type_consumer]
+description = "Type-check consumers against the installed wheel"
+package = "wheel"
+deps = [
+    "mypy>=1.13",
+    "pyright[nodejs]>=1.1.390",
+    "grpc-stubs>=1.53",
+    "types-protobuf>=5.29.1",
+    "types-PyYAML>=5",
+]
+commands = [["python", "scripts/check_installed_typing.py"]]
 
 [tool.pydoctor]
 add-package = ["src/nebius"]

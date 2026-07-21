@@ -517,25 +517,45 @@ class Mask:
         :returns: ``(count, serialized)`` where ``count`` is the number of
             top-level segments.
         """
-        if self.is_empty():
-            return 0, ""
-        ret = list[str]()
+        results = dict[int, tuple[int, str]]()
+        visiting = set[int]()
+        pending: list[tuple[Mask, bool]] = [(self, False)]
+        while pending:
+            mask, expanded = pending.pop()
+            identity = id(mask)
+            if expanded:
+                children = list[tuple[str, Mask]]()
+                if mask.any is not None:
+                    children.append(("*", mask.any))
+                children.extend(
+                    (key.marshal(), value) for key, value in mask.field_parts.items()
+                )
+                ret = list[str]()
+                for key, child in children:
+                    counter, mask_str = results[id(child)]
+                    if mask_str == "":
+                        ret.append(key)
+                    elif counter == 1:
+                        ret.append(key + "." + mask_str)
+                    else:
+                        ret.append(key + ".(" + mask_str + ")")
+                ret.sort()
+                results[identity] = (len(ret), ",".join(ret))
+                visiting.remove(identity)
+                continue
 
-        def append_to_ret(key: str, mask: "Mask") -> None:
-            counter, mask_str = mask._marshal()
-            if mask_str == "":
-                ret.append(key)
-            elif counter == 1:
-                ret.append(key + "." + mask_str)
-            else:
-                ret.append(key + ".(" + mask_str + ")")
-
-        if self.any is not None:
-            append_to_ret("*", self.any)
-        for k, v in self.field_parts.items():
-            append_to_ret(k.marshal(), v)
-        ret = sorted(ret)
-        return len(ret), ",".join(ret)
+            if identity in results:
+                continue
+            if identity in visiting:
+                raise RecursionError("recursive field mask")
+            visiting.add(identity)
+            pending.append((mask, True))
+            if mask.any is not None and id(mask.any) not in results:
+                pending.append((mask.any, False))
+            for child in mask.field_parts.values():
+                if id(child) not in results:
+                    pending.append((child, False))
+        return results[id(self)]
 
     def marshal(self) -> str:
         """Serialize the mask to a string.

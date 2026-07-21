@@ -335,6 +335,9 @@ def from_stub_class(stub: type[ServiceStub]) -> str:
     """
     if hasattr(stub, "__PB2_NAME__"):
         return getattr(stub, "__PB2_NAME__")  # type: ignore[no-any-return]
+    service_name = getattr(stub, "__service_name__", None)
+    if isinstance(service_name, str):
+        return service_name.lstrip(".")
     extractor = ExtractorChannel()
     _ = stub(extractor)
     ret = extractor.get_service_name()

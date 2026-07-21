@@ -26,7 +26,21 @@ from typing import TypedDict
 
 from grpc import CallCredentials, Compression
 
+from nebius.aio.base import AddressChannel
 from nebius.base.protos.unset import UnsetType
+
+
+class StreamRequestKwargs(TypedDict, total=False):
+    """Keyword arguments accepted by native streaming RPC requests."""
+
+    metadata: Iterable[tuple[str, str]] | None
+    timeout: float | None
+    auth_timeout: float | None
+    auth_options: dict[str, str] | None
+    credentials: CallCredentials | None
+    compression: Compression | None
+    wait_for_ready: bool | None
+    grpc_channel_override: AddressChannel | None
 
 
 class RequestKwargsForOperation(TypedDict, total=False):

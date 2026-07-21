@@ -15,19 +15,16 @@ async def test_env_and_token_file_auth(monkeypatch, tmp_path) -> None:
     from nebius.aio.cli_config import Config
     from nebius.api.nebius.compute.v1 import (
         DiskServiceClient,
+        ListDisksResponse,
     )
     from nebius.api.nebius.compute.v1 import (
         ListDisksRequest as V1List,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import ListDisksResponse
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
+    from tests.grpc_service import add_service
 
-    class Compute(DiskServiceServicer):
+    class Compute:
         def __init__(self, expected_token: str) -> None:
             self.expected_token = expected_token
 
@@ -40,7 +37,7 @@ async def test_env_and_token_file_auth(monkeypatch, tmp_path) -> None:
     async def run_case(expected_token: str, cfg_yaml: str) -> None:
         srv = grpc.aio.server()
         port = srv.add_insecure_port("[::]:0")
-        add_DiskServiceServicer_to_server(Compute(expected_token), srv)
+        add_service(srv, DiskServiceClient, Compute(expected_token))
         await srv.start()
         try:
             home = (tmp_path / "home_env").resolve()
@@ -123,30 +120,26 @@ async def test_service_account_variants(monkeypatch, tmp_path) -> None:
     from nebius.aio.cli_config import Config
     from nebius.api.nebius.compute.v1 import (
         DiskServiceClient,
+        ListDisksResponse,
     )
     from nebius.api.nebius.compute.v1 import (
         ListDisksRequest as V1List,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import ListDisksResponse
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
+    from nebius.api.nebius.iam.v1 import (
+        CreateTokenResponse,
+        TokenExchangeServiceClient,
     )
-    from nebius.api.nebius.iam.v1.token_exchange_service_pb2_grpc import (
-        TokenExchangeService,
-        add_TokenExchangeServiceServicer_to_server,
-    )
-    from nebius.api.nebius.iam.v1.token_service_pb2 import CreateTokenResponse
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
+    from tests.grpc_service import add_service
 
-    class Compute(DiskServiceServicer):
+    class Compute:
         async def List(self, request, context):  # noqa: N802 — GRPC method
             headers = dict(context.invocation_metadata() or [])
             assert "satok" in headers.get("authorization", "")
             return ListDisksResponse(items=[])
 
-    class TokenExchange(TokenExchangeService):
+    class TokenExchange:
         async def Exchange(self, request, context):  # noqa: N802 — GRPC method
             return CreateTokenResponse(
                 access_token="satok", token_type="Bearer", expires_in=3600
@@ -154,8 +147,8 @@ async def test_service_account_variants(monkeypatch, tmp_path) -> None:
 
     srv = grpc.aio.server()
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(Compute(), srv)
-    add_TokenExchangeServiceServicer_to_server(TokenExchange(), srv)
+    add_service(srv, DiskServiceClient, Compute())
+    add_service(srv, TokenExchangeServiceClient, TokenExchange())
     await srv.start()
     try:
         home = (tmp_path / "sa_home").resolve()
@@ -286,17 +279,14 @@ async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
     from nebius.aio.cli_config import Config
     from nebius.api.nebius.compute.v1 import (
         DiskServiceClient,
+        ListDisksResponse,
     )
     from nebius.api.nebius.compute.v1 import (
         ListDisksRequest as V1List,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import ListDisksResponse
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
     from nebius.sdk import SDK
+    from tests.grpc_service import add_service
 
     code_value = "authcode"
     token_value = "tok123"
@@ -329,7 +319,7 @@ async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
     try:
         fed_url = f"http://127.0.0.1:{http_port}"
 
-        class Compute(DiskServiceServicer):
+        class Compute:
             async def List(self, request, context):  # noqa: N802 — GRPC method
                 headers = dict(context.invocation_metadata() or [])
                 assert token_value in headers.get("authorization", "")
@@ -337,7 +327,7 @@ async def test_federation_auth_flow(monkeypatch, tmp_path) -> None:
 
         srv = grpc.aio.server()
         port = srv.add_insecure_port("[::]:0")
-        add_DiskServiceServicer_to_server(Compute(), srv)
+        add_service(srv, DiskServiceClient, Compute())
         await srv.start()
         try:
             home = (tmp_path / "fed_home").resolve()

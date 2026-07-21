@@ -1164,6 +1164,16 @@ def test_mask_marshal(subtests: SubTests) -> None:
                 assert result == expected_result, f"Failed on case {i}"
 
 
+def test_mask_marshal_deep_path_without_python_recursion() -> None:
+    from nebius.base.fieldmask import Mask
+
+    mask = Mask()
+    for _ in range(600):
+        mask = Mask(field_parts={"field": mask})
+
+    assert mask.marshal() == ".".join(["field"] * 600)
+
+
 def test_mask_unmarshal_text(subtests: SubTests) -> None:
     from nebius.base.fieldmask import Error, Mask
 
