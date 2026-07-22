@@ -15,8 +15,10 @@ class InstanceRecoveryPolicy(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = []
     RECOVER: _ClassVar[InstanceRecoveryPolicy]
     FAIL: _ClassVar[InstanceRecoveryPolicy]
+    ALWAYS: _ClassVar[InstanceRecoveryPolicy]
 RECOVER: InstanceRecoveryPolicy
 FAIL: InstanceRecoveryPolicy
+ALWAYS: InstanceRecoveryPolicy
 
 class Instance(_message.Message):
     __slots__ = ["metadata", "spec", "status"]

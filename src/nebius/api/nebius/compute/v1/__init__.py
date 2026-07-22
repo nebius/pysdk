@@ -6158,6 +6158,7 @@ class InstanceRecoveryPolicy(pb_enum.Enum):
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.EnumDescriptor](".nebius.compute.v1.InstanceRecoveryPolicy",instance_pb2.DESCRIPTOR,descriptor_1.EnumDescriptor)
     RECOVER = 0
     FAIL = 1
+    ALWAYS = 2
 
 class Instance(pb_classes.Message):
     __PB2_CLASS__ = instance_pb2.Instance
@@ -6441,6 +6442,8 @@ class InstanceSpec(pb_classes.Message):
         
         * If set to RECOVER, instance will be restarted, if possible. It could be restarted on the same host or on another host.
         * If set to FAIL, instance will be stopped and not restarted.
+        * If set to ALWAYS, keep retrying recovery indefinitely until the instance is recovered. Available only for instances in
+          nvlinstancegroup
         """
         
         return super()._get_field("recovery_policy", explicit_presence=False,
