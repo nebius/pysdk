@@ -5815,6 +5815,7 @@ class NetworkInterfaceStatus(pb_classes.Message):
         aliases: "IPAliasesStatus|network_interface_pb2.IPAliasesStatus|None|unset.UnsetType" = unset.Unset,
         mac_address: "builtins.str|None|unset.UnsetType" = unset.Unset,
         fqdn: "builtins.str|None|unset.UnsetType" = unset.Unset,
+        security_groups: "abc.Iterable[SecurityGroupStatus]|None|unset.UnsetType" = unset.Unset,
     ) -> None:
         super().__init__(initial_message)
         if not isinstance(index, unset.UnsetType):
@@ -5831,6 +5832,8 @@ class NetworkInterfaceStatus(pb_classes.Message):
             self.mac_address = mac_address
         if not isinstance(fqdn, unset.UnsetType):
             self.fqdn = fqdn
+        if not isinstance(security_groups, unset.UnsetType):
+            self.security_groups = security_groups
     
     def __dir__(self) ->abc.Iterable[builtins.str]:
         return [
@@ -5841,6 +5844,7 @@ class NetworkInterfaceStatus(pb_classes.Message):
             "aliases",
             "mac_address",
             "fqdn",
+            "security_groups",
         ]
     
     @builtins.property
@@ -5938,6 +5942,20 @@ class NetworkInterfaceStatus(pb_classes.Message):
         return super()._set_field("fqdn",value,explicit_presence=False,
         )
     
+    @builtins.property
+    def security_groups(self) -> "abc.MutableSequence[SecurityGroupStatus]":
+        """
+        Effective security groups associated with the network interface.
+        """
+        
+        return super()._get_field("security_groups", explicit_presence=False,
+        wrap=pb_classes.Repeated.with_wrap(SecurityGroupStatus,None,None),
+        )
+    @security_groups.setter
+    def security_groups(self, value: "abc.Iterable[SecurityGroupStatus]|None") -> None:
+        return super()._set_field("security_groups",value,explicit_presence=False,
+        )
+    
     __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
         "index":"index",
         "name":"name",
@@ -5946,6 +5964,7 @@ class NetworkInterfaceStatus(pb_classes.Message):
         "aliases":"aliases",
         "mac_address":"mac_address",
         "fqdn":"fqdn",
+        "security_groups":"security_groups",
     }
     
 class IPAddressStatus(pb_classes.Message):
@@ -6118,6 +6137,44 @@ class IPAliasesStatus(pb_classes.Message):
 class SecurityGroup(pb_classes.Message):
     __PB2_CLASS__ = network_interface_pb2.SecurityGroup
     __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.SecurityGroup",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
+    __mask_functions__ = {
+    }
+    
+    def __init__(
+        self,
+        initial_message: message_1.Message|None = None,
+        *,
+        id: "builtins.str|None|unset.UnsetType" = unset.Unset,
+    ) -> None:
+        super().__init__(initial_message)
+        if not isinstance(id, unset.UnsetType):
+            self.id = id
+    
+    def __dir__(self) ->abc.Iterable[builtins.str]:
+        return [
+            "id",
+        ]
+    
+    @builtins.property
+    def id(self) -> "builtins.str":
+        """
+        Security group identifier
+        """
+        
+        return super()._get_field("id", explicit_presence=False,
+        )
+    @id.setter
+    def id(self, value: "builtins.str|None") -> None:
+        return super()._set_field("id",value,explicit_presence=False,
+        )
+    
+    __PY_TO_PB2__: builtins.dict[builtins.str,builtins.str] = {
+        "id":"id",
+    }
+    
+class SecurityGroupStatus(pb_classes.Message):
+    __PB2_CLASS__ = network_interface_pb2.SecurityGroupStatus
+    __PB2_DESCRIPTOR__ = descriptor.DescriptorWrap[descriptor_1.Descriptor](".nebius.compute.v1.SecurityGroupStatus",network_interface_pb2.DESCRIPTOR,descriptor_1.Descriptor)
     __mask_functions__ = {
     }
     
@@ -10836,6 +10893,7 @@ __all__ = [
     "PublicIPAddressStatus",
     "IPAliasesStatus",
     "SecurityGroup",
+    "SecurityGroupStatus",
     "InstanceRecoveryPolicy",
     "Instance",
     "InstanceSpec",

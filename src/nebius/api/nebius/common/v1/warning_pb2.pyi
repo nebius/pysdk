@@ -34,6 +34,8 @@ class Warning(_message.Message):
         CODE_DEPRECATED_SPEC_VALUE_REQUEST: _ClassVar[Warning.Code]
         CODE_DEPRECATED_SPEC_VALUE_RESPONSE: _ClassVar[Warning.Code]
         CODE_NOT_RECOMMENDED_SPEC_VALUE_REQUEST: _ClassVar[Warning.Code]
+        CODE_INVALID_NEBIUS_ID_REQUEST: _ClassVar[Warning.Code]
+        CODE_INVALID_NEBIUS_ID_FORMAT_REQUEST: _ClassVar[Warning.Code]
     CODE_UNSPECIFIED: Warning.Code
     CODE_REGION_ROUTING_FAILOVER: Warning.Code
     CODE_DEPRECATED_TOOL_VERSION: Warning.Code
@@ -42,6 +44,8 @@ class Warning(_message.Message):
     CODE_DEPRECATED_SPEC_VALUE_REQUEST: Warning.Code
     CODE_DEPRECATED_SPEC_VALUE_RESPONSE: Warning.Code
     CODE_NOT_RECOMMENDED_SPEC_VALUE_REQUEST: Warning.Code
+    CODE_INVALID_NEBIUS_ID_REQUEST: Warning.Code
+    CODE_INVALID_NEBIUS_ID_FORMAT_REQUEST: Warning.Code
     TARGET_FIELD_NUMBER: _ClassVar[int]
     CODE_FIELD_NUMBER: _ClassVar[int]
     SUMMARY_FIELD_NUMBER: _ClassVar[int]

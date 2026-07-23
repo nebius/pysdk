@@ -44,7 +44,7 @@ class IPAlias(_message.Message):
     def __init__(self, allocation_id: _Optional[str] = ...) -> None: ...
 
 class NetworkInterfaceStatus(_message.Message):
-    __slots__ = ["index", "name", "ip_address", "public_ip_address", "aliases", "mac_address", "fqdn"]
+    __slots__ = ["index", "name", "ip_address", "public_ip_address", "aliases", "mac_address", "fqdn", "security_groups"]
     INDEX_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     IP_ADDRESS_FIELD_NUMBER: _ClassVar[int]
@@ -52,6 +52,7 @@ class NetworkInterfaceStatus(_message.Message):
     ALIASES_FIELD_NUMBER: _ClassVar[int]
     MAC_ADDRESS_FIELD_NUMBER: _ClassVar[int]
     FQDN_FIELD_NUMBER: _ClassVar[int]
+    SECURITY_GROUPS_FIELD_NUMBER: _ClassVar[int]
     index: int
     name: str
     ip_address: IPAddressStatus
@@ -59,7 +60,8 @@ class NetworkInterfaceStatus(_message.Message):
     aliases: IPAliasesStatus
     mac_address: str
     fqdn: str
-    def __init__(self, index: _Optional[int] = ..., name: _Optional[str] = ..., ip_address: _Optional[_Union[IPAddressStatus, _Mapping]] = ..., public_ip_address: _Optional[_Union[PublicIPAddressStatus, _Mapping]] = ..., aliases: _Optional[_Union[IPAliasesStatus, _Mapping]] = ..., mac_address: _Optional[str] = ..., fqdn: _Optional[str] = ...) -> None: ...
+    security_groups: _containers.RepeatedCompositeFieldContainer[SecurityGroupStatus]
+    def __init__(self, index: _Optional[int] = ..., name: _Optional[str] = ..., ip_address: _Optional[_Union[IPAddressStatus, _Mapping]] = ..., public_ip_address: _Optional[_Union[PublicIPAddressStatus, _Mapping]] = ..., aliases: _Optional[_Union[IPAliasesStatus, _Mapping]] = ..., mac_address: _Optional[str] = ..., fqdn: _Optional[str] = ..., security_groups: _Optional[_Iterable[_Union[SecurityGroupStatus, _Mapping]]] = ...) -> None: ...
 
 class IPAddressStatus(_message.Message):
     __slots__ = ["address", "allocation_id"]
@@ -86,6 +88,12 @@ class IPAliasesStatus(_message.Message):
     def __init__(self, cidrs: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class SecurityGroup(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: str
+    def __init__(self, id: _Optional[str] = ...) -> None: ...
+
+class SecurityGroupStatus(_message.Message):
     __slots__ = ["id"]
     ID_FIELD_NUMBER: _ClassVar[int]
     id: str

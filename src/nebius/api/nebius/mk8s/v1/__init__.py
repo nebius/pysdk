@@ -1867,7 +1867,7 @@ class NodeGroupSpec(pb_classes.Message):
     @builtins.property
     def fixed_node_count(self) -> "builtins.int|None":
         """
-        Number of nodes in the group. Can be changed manually at any time.
+        Number of nodes in the group. Can be changed manually at any time, except for a node group with NVLink.
         """
         
         return super()._get_field("fixed_node_count", explicit_presence=True,

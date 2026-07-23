@@ -2954,6 +2954,16 @@ class Warning(pb_classes.Message):
         Not-recommended value was used in the request.
         """
         
+        CODE_INVALID_NEBIUS_ID_REQUEST = 8
+        """
+        Nebius ID in the request has an invalid resource type.
+        """
+        
+        CODE_INVALID_NEBIUS_ID_FORMAT_REQUEST = 9
+        """
+        Nebius ID in the request has an invalid format.
+        """
+        
     
     def __init__(
         self,
