@@ -30,10 +30,6 @@ This project uses third-party libraries under the following licenses:
   Licensed under the BSD-3-Clause License.
   https://github.com/protocolbuffers/protobuf
 
-- **grpcio-status** (>=1.68.1)
-  Licensed under the Apache License, Version 2.0.
-  https://github.com/grpc/grpc
-
 - **certifi-win32** (Windows only)
   Licensed under the BSD-2-Clause Simplified License.
   https://gitlab.com/alelec/python-certifi-win32
@@ -54,6 +50,17 @@ This project uses third-party libraries under the following licenses:
   Licensed under the MIT License.
   https://github.com/python/mypy
 
+- **pyright-python** / **Pyright** (>=1.1.390)
+  Python wrapper and bundled Microsoft type checker, both licensed under the MIT
+  License.
+  https://github.com/RobertCraigie/pyright-python
+  https://github.com/microsoft/pyright
+
+- **nodejs-wheel-binaries** (installed by the `pyright[nodejs]` extra)
+  Unofficial Node.js binary wheels, licensed under the MIT License used by
+  Node.js.
+  https://github.com/njzjz/nodejs-wheel
+
 - **black** (>=24.10)
   Licensed under the MIT License.
   https://github.com/psf/black
@@ -69,6 +76,10 @@ This project uses third-party libraries under the following licenses:
 - **types-protobuf** (>=5.28.3)
   Licensed under the Apache License, Version 2.0.
   https://github.com/python/typeshed
+
+- **typing-extensions** (>=4.12.2)
+  Licensed under the Python Software Foundation License, Version 2.0.
+  https://github.com/python/typing_extensions
 
 - **grpcio-tools** (>=1.68.1)
   Licensed under the Apache License, Version 2.0.
@@ -90,7 +101,7 @@ This project uses third-party libraries under the following licenses:
   Licensed under the MIT License.
   https://www.crummy.com/software/BeautifulSoup/
 
-- **m2r2** (>=0.3)
+- **m2r2** (>=0.3.4)
   Licensed under the MIT License.
   https://github.com/crossnox/m2r2
 

@@ -1,16 +1,21 @@
 """Helpers for injecting protobuf-derived reset masks into metadata."""
 
 from collections.abc import Iterable
+from typing import Protocol
 
+from nebius.base.fieldmask import Mask
 from nebius.base.metadata import Metadata
-from nebius.base.protos.pb_classes import Message
 
 RESET_MASK_HEADER = "X-ResetMask"
 """Metadata header name used for reset masks."""
 
 
+class ResetMaskMessage(Protocol):
+    def get_full_update_reset_mask(self) -> Mask: ...
+
+
 def ensure_reset_mask_in_metadata(
-    msg: Message,
+    msg: ResetMaskMessage,
     metadata: Iterable[tuple[str, str]] | None,
 ) -> Metadata:
     """Ensure the reset mask header is present in request metadata.
@@ -18,7 +23,7 @@ def ensure_reset_mask_in_metadata(
     This helper builds a :class:`nebius.base.metadata.Metadata` instance from
     the provided iterable and populates the ``X-ResetMask`` header when it is
     missing. The mask is derived from the protobuf message by calling
-    :meth:`nebius.base.protos.pb_classes.Message.get_full_update_reset_mask`.
+    the message's ``get_full_update_reset_mask`` method.
 
     Example
     -------
@@ -37,5 +42,5 @@ def ensure_reset_mask_in_metadata(
     metadata = Metadata(metadata)
 
     if RESET_MASK_HEADER not in metadata:  # type: ignore[comparison-overlap]
-        metadata[RESET_MASK_HEADER] = Message.get_full_update_reset_mask(msg).marshal()
+        metadata[RESET_MASK_HEADER] = msg.get_full_update_reset_mask().marshal()
     return metadata

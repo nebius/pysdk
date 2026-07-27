@@ -1,8 +1,9 @@
 from time import time
 
-from bs4 import BeautifulSoup, CData, NavigableString, PageElement
+from bs4 import BeautifulSoup
 from bs4 import Comment as BSComment
 from bs4 import Tag as BSTag
+from bs4.element import CData, NavigableString, PageElement
 from pydoctor.model import System  # type: ignore
 from pydoctor.templatewriter import TemplateLookup  # type: ignore
 from pydoctor.templatewriter import (  # type: ignore[unused-ignore]
@@ -26,7 +27,7 @@ def bs4_to_tag(element: PageElement) -> Tag | CDATA | Comment | str:
     if isinstance(element, BSComment):
         return Comment(element.text)
     if isinstance(element, NavigableString):
-        return element.text
+        return str(element)
     raise ValueError(f"Unsupported element type: {type(element)}")
 
 

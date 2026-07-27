@@ -27,8 +27,10 @@ when a service id cannot be resolved.
 
 from abc import ABC, abstractmethod
 from logging import getLogger
+from typing import cast
 
 from .error import SDKError
+from .protos.direct import Message
 
 log = getLogger(__name__)
 
@@ -220,26 +222,19 @@ class Conventional(Resolver):
             raise UnknownServiceError(service_id)
         service_name = parts[1]
         try:
-            from google.protobuf.descriptor import ServiceDescriptor
-            from google.protobuf.descriptor_pb2 import ServiceOptions
-            from google.protobuf.descriptor_pool import (
-                Default,  # type: ignore[unused-ignore]
-                DescriptorPool,
-            )
+            from nebius.api._registry import REGISTRY
+            from nebius.api.nebius import api_service_name
 
-            from nebius.api.nebius.annotations_pb2 import api_service_name
-
-            pool: DescriptorPool = Default()  # type: ignore[unused-ignore,no-untyped-call]
-            service_descriptor: ServiceDescriptor = pool.FindServiceByName(service_id)  # type: ignore[unused-ignore,no-untyped-call]
-            opts: ServiceOptions = service_descriptor.GetOptions()  # type: ignore[unused-ignore]
-            if opts.Extensions[api_service_name] != "":  # type: ignore[unused-ignore,index]
-                service_name = opts.Extensions[api_service_name]  # type: ignore[unused-ignore,index]
-        except KeyError:
+            opts = cast(Message, REGISTRY.service_descriptor(service_id).GetOptions())
+            annotated = opts.get_extension(api_service_name)
+            if annotated:
+                service_name = annotated
+        except (KeyError, LookupError):
             pass
-        ret = service_name + ".{domain}"  # type: ignore[unused-ignore]
+        ret = service_name + ".{domain}"
         log.debug(f"conventional resolver {service_id} resolved to {ret}")
 
-        return ret  # type: ignore[unused-ignore]
+        return ret
 
 
 class Chain(Resolver):

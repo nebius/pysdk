@@ -12,30 +12,28 @@ async def test_update_instance_v2() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
         UpdateDiskRequest,
     )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        add_DiskServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
     from nebius.base.version import version as sdk_version
+    from tests.grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Update(  # noqa: N802 — GRPC method
             self,
             request: UpdateDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> operation_pb2.Operation:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> OperationMessage:
             assert request.metadata.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -43,10 +41,9 @@ async def test_update_instance_v2() -> None:
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
             got_mask = md.get("x-resetmask", "")
-            assert (
-                "metadata.(created_at.(nanos,seconds),labels.*,name,parent_id,"
-                + "resource_version,updated_at.(nanos,seconds)),spec.("
-                in got_mask
+            assert got_mask == (
+                "metadata.(created_at,labels,name,parent_id,resource_version,updated_at),"
+                "spec"
             )
             ua = md.get("user-agent", "")
             assert ua.startswith(
@@ -61,14 +58,14 @@ async def test_update_instance_v2() -> None:
                 )
             )
 
-            ret = operation_pb2.Operation()
+            ret = OperationMessage()
             return ret
 
     # Randomly assign an IPv6 address and port for the server
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -96,11 +93,6 @@ async def test_update_instance_v2() -> None:
             user_agent_prefix="test",
         )
         from nebius.aio.operation import Operation
-        from nebius.api.nebius.compute.v1 import (
-            DiskServiceClient,
-            GetDiskRequest,
-            UpdateDiskRequest,
-        )
 
         client = DiskServiceClient(channel)
         upd = UpdateDiskRequest()
@@ -125,31 +117,27 @@ async def test_update_list() -> None:
     # Imports needed inside the test function
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.common.v1.operation_pb2 as operation_pb2
-    import nebius.api.nebius.compute.v1.instance_pb2 as instance_pb2
     from nebius.aio.channel import Channel, NoCredentials
-    from nebius.api.nebius.compute.v1.instance_service_pb2 import (
+    from nebius.api.nebius.common.v1 import Operation as OperationMessage
+    from nebius.api.nebius.compute.v1 import (
         GetInstanceRequest,
+        Instance,
+        InstanceServiceClient,
         UpdateInstanceRequest,
     )
-    from nebius.api.nebius.compute.v1.instance_service_pb2_grpc import (
-        InstanceServiceServicer,
-        add_InstanceServiceServicer_to_server,
-    )
     from nebius.base.options import INSECURE
+    from tests.grpc_service import add_service
 
     # Set up logging
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(InstanceServiceServicer):
+    class MockInstanceService:
         async def Update(  # noqa: N802 — GRPC method
             self,
             request: UpdateInstanceRequest,
-            context: grpc.aio.ServicerContext[
-                GetInstanceRequest, instance_pb2.Instance
-            ],
-        ) -> operation_pb2.Operation:
+            context: grpc.aio.ServicerContext[GetInstanceRequest, Instance],
+        ) -> OperationMessage:
             assert request.metadata.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -157,12 +145,12 @@ async def test_update_list() -> None:
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
             mask = md.get("x-resetmask", "")
-            assert (
-                "metadata.("
-                "created_at.(nanos,seconds),labels.*,name,parent_id,resource_version,"
-                "updated_at.(nanos,seconds)"
-                "),"
-                "spec.(" in mask
+            assert mask == (
+                "metadata.(created_at,labels,name,parent_id,resource_version,updated_at),"
+                "spec.(boot_disk,cloud_init_user_data,filesystems,gpu_cluster,hostname,"
+                "local_disks,network_interfaces,nvl_instance_group_id,preemptible,"
+                "recovery_policy,reservation_policy,resources,secondary_disks,"
+                "service_account_id,stopped)"
             )
 
             await context.send_initial_metadata(
@@ -172,14 +160,14 @@ async def test_update_list() -> None:
                 )
             )
 
-            ret = operation_pb2.Operation()
+            ret = OperationMessage()
             return ret
 
     # Randomly assign an IPv6 address and port for the server
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_InstanceServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, InstanceServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -195,8 +183,6 @@ async def test_update_list() -> None:
         from nebius.api.nebius.compute.v1 import (
             AttachedFilesystemSpec,
             ExistingFilesystem,
-            InstanceServiceClient,
-            UpdateInstanceRequest,
         )
 
         client = InstanceServiceClient(channel)

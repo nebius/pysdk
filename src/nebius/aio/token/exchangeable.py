@@ -29,7 +29,6 @@ from logging import getLogger
 from typing import Any
 
 from grpc.aio import AioRpcError
-from grpc_status import rpc_status
 
 from nebius.aio.abc import ClientChannelInterface
 from nebius.aio.authorization.options import OPTION_TYPE, Types
@@ -134,7 +133,10 @@ class Receiver(ParentReceiver):
         initial_metadata = NebiusMetadata(err.initial_metadata())
         request_id = initial_metadata.get_one("x-request-id", "")
         trace_id = initial_metadata.get_one("x-trace-id", "")
-        status = rpc_status.from_call(err)  # type: ignore
+        from nebius.aio.request_status import rpc_status_from_call
+
+        registry = getattr(type(self._svc), "__registry__", None)
+        status = rpc_status_from_call(err, registry=registry)
         from nebius.aio.service_error import RequestError, RequestStatusExtended
 
         if status is None:
@@ -145,6 +147,7 @@ class Receiver(ParentReceiver):
                 service_errors=[],
                 request_id=request_id,
                 trace_id=trace_id,
+                registry=registry,
             )
             raise RequestError(self._status) from None
 
@@ -152,6 +155,7 @@ class Receiver(ParentReceiver):
             status,
             trace_id=trace_id,
             request_id=request_id,
+            registry=registry,
         )
         raise RequestError(self._status) from None
 

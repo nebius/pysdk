@@ -2,6 +2,7 @@
 import logging
 
 import pytest
+from grpc_service import add_service
 
 from nebius.aio import request
 
@@ -14,18 +15,13 @@ async def test_get_instance() -> None:
     import grpc.aio
 
     # Imports needed inside the test function
-    from grpc.aio._interceptor import InterceptedUnaryUnaryCall as UnaryUnaryCall
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
-    )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        DiskServiceStub,
-        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -33,12 +29,12 @@ async def test_get_instance() -> None:
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -47,7 +43,7 @@ async def test_get_instance() -> None:
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
-            ret = disk_pb2.Disk()
+            ret = Disk()
             ret.metadata.id = request.id
             ret.metadata.name = "MockDisk"
             return ret
@@ -56,7 +52,7 @@ async def test_get_instance() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -68,27 +64,25 @@ async def test_get_instance() -> None:
         channel = Channel(
             domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
         )
-        stub = DiskServiceStub(channel)
+        client = DiskServiceClient(channel)
 
         # Make a request
         req = GetDiskRequest(id="foo-bar")
-        call = stub.Get(req)
-        assert isinstance(call, UnaryUnaryCall)
+        call = client.get(req)
 
         # Await response and metadata
         ret = await call
-        assert isinstance(ret, disk_pb2.Disk)
+        assert isinstance(ret, Disk)
         mdi = await call.initial_metadata()
         mdt = await call.trailing_metadata()
-        code = await call.code()
-        details = await call.details()
+        status = await call.status()
 
         # Assertions to validate behavior
         assert ret.HasField("metadata")
         assert ret.metadata.id == "foo-bar"
         assert ret.metadata.name == "MockDisk"
-        assert code == grpc.StatusCode.OK
-        assert details == ""
+        assert status.code == grpc.StatusCode.OK
+        assert status.message == ""
         assert mdi is not None and len(mdi) == 0
         assert mdt is not None and len(mdt) == 0
 
@@ -105,19 +99,14 @@ async def test_get_instance_timeout_change() -> None:
     import grpc.aio
 
     # Imports needed inside the test function
-    from grpc.aio._interceptor import InterceptedUnaryUnaryCall as UnaryUnaryCall
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel
     from nebius.aio.token.static import Bearer
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
-    )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        DiskServiceStub,
-        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
 
@@ -125,12 +114,12 @@ async def test_get_instance_timeout_change() -> None:
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -139,7 +128,7 @@ async def test_get_instance_timeout_change() -> None:
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
-            ret = disk_pb2.Disk()
+            ret = Disk()
             ret.metadata.id = request.id
             ret.metadata.name = "MockDisk"
             return ret
@@ -148,7 +137,7 @@ async def test_get_instance_timeout_change() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -160,27 +149,25 @@ async def test_get_instance_timeout_change() -> None:
         channel = Channel(
             domain=address, options=[(INSECURE, True)], credentials=Bearer("abc")
         )
-        stub = DiskServiceStub(channel)
+        client = DiskServiceClient(channel)
 
         # Make a request
         req = GetDiskRequest(id="foo-bar")
-        call = stub.Get(req, timeout=1)
-        assert isinstance(call, UnaryUnaryCall)
+        call = client.get(req, timeout=1)
 
         # Await response and metadata
         ret = await call
-        assert isinstance(ret, disk_pb2.Disk)
+        assert isinstance(ret, Disk)
         mdi = await call.initial_metadata()
         mdt = await call.trailing_metadata()
-        code = await call.code()
-        details = await call.details()
+        status = await call.status()
 
         # Assertions to validate behavior
         assert ret.HasField("metadata")
         assert ret.metadata.id == "foo-bar"
         assert ret.metadata.name == "MockDisk"
-        assert code == grpc.StatusCode.OK
-        assert details == ""
+        assert status.code == grpc.StatusCode.OK
+        assert status.message == ""
         assert mdi is not None and len(mdi) == 0
         assert mdt is not None and len(mdt) == 0
 
@@ -197,19 +184,14 @@ async def test_get_error() -> None:
     import grpc.aio
 
     # Imports needed inside the test function
-    from grpc.aio._interceptor import InterceptedUnaryUnaryCall as UnaryUnaryCall
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.common.v1.error_pb2 as error_pb2
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.common.v1 import QuotaFailure, ServiceError
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
-    )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        DiskServiceStub,
-        add_DiskServiceServicer_to_server,
     )
     from nebius.base._service_error import trailing_metadata_of_errors
     from nebius.base.options import INSECURE
@@ -218,12 +200,12 @@ async def test_get_error() -> None:
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -231,14 +213,14 @@ async def test_get_error() -> None:
             md = Metadata(*[v for v in md])
             assert md.get("x-idempotency-key", "") != ""
 
-            quota_violation = error_pb2.QuotaFailure.Violation(
+            quota_violation = QuotaFailure.Violation(
                 quota="test_quota",
                 message="testing quota failure",
                 limit="42",
                 requested="69",
             )
-            quota_failure = error_pb2.QuotaFailure(violations=[quota_violation])
-            service_error = error_pb2.ServiceError(
+            quota_failure = QuotaFailure(violations=[quota_violation])
+            service_error = ServiceError(
                 service="example.service",
                 code="test failure",
                 quota_failure=quota_failure,
@@ -254,7 +236,7 @@ async def test_get_error() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -266,27 +248,25 @@ async def test_get_error() -> None:
         channel = Channel(
             domain=address, options=[(INSECURE, True)], credentials=NoCredentials()
         )
-        stub = DiskServiceStub(channel)
+        client = DiskServiceClient(channel)
 
         # Make a request
         req = GetDiskRequest(id="foo-bar")
-        call = stub.Get(req)
-        assert isinstance(call, UnaryUnaryCall)
+        call = client.get(req)
 
         # Await response and metadata
         try:
             mdi = await call.initial_metadata()
             mdt = await call.trailing_metadata()
-            code = await call.code()
-            details = await call.details()
+            status = await call.status()
             ret = await call
-            assert isinstance(ret, disk_pb2.Disk)
+            assert isinstance(ret, Disk)
 
             # Assertions to validate behavior
             assert ret.metadata.id == "foo-bar"
             assert ret.metadata.name == "MockDisk"
-            assert code == grpc.StatusCode.OK
-            assert details == ""
+            assert status.code == grpc.StatusCode.OK
+            assert status.message == ""
             assert mdi is not None and len(mdi) == 0
             assert mdt is not None and len(mdt) == 0
         except Exception as e:
@@ -305,18 +285,13 @@ async def test_custom_resolver() -> None:
     import grpc.aio
 
     # Imports needed inside the test function
-    from grpc.aio._interceptor import InterceptedUnaryUnaryCall as UnaryUnaryCall
     from grpc.aio._metadata import Metadata
 
-    import nebius.api.nebius.compute.v1.disk_pb2 as disk_pb2
     from nebius.aio.channel import Channel, NoCredentials
-    from nebius.api.nebius.compute.v1.disk_service_pb2 import (
+    from nebius.api.nebius.compute.v1 import (
+        Disk,
+        DiskServiceClient,
         GetDiskRequest,
-    )
-    from nebius.api.nebius.compute.v1.disk_service_pb2_grpc import (
-        DiskServiceServicer,
-        DiskServiceStub,
-        add_DiskServiceServicer_to_server,
     )
     from nebius.base.options import INSECURE
     from nebius.base.resolver import Single
@@ -325,12 +300,12 @@ async def test_custom_resolver() -> None:
     logging.basicConfig(level=logging.DEBUG)
 
     # Define a mock server class
-    class MockInstanceService(DiskServiceServicer):
+    class MockInstanceService:
         async def Get(  # noqa: N802 — GRPC method
             self,
             request: GetDiskRequest,
-            context: grpc.aio.ServicerContext[GetDiskRequest, disk_pb2.Disk],
-        ) -> disk_pb2.Disk:
+            context: grpc.aio.ServicerContext[GetDiskRequest, Disk],
+        ) -> Disk:
             assert request.id == "foo-bar"
             md = context.invocation_metadata()
             assert md is not None
@@ -339,7 +314,7 @@ async def test_custom_resolver() -> None:
             assert md.get("x-idempotency-key", "") != ""
 
             # Return an Instance object as expected by the client
-            ret = disk_pb2.Disk()
+            ret = Disk()
             ret.metadata.id = request.id
             ret.metadata.name = "MockDisk"
             return ret
@@ -348,7 +323,7 @@ async def test_custom_resolver() -> None:
     srv = grpc.aio.server()
     assert isinstance(srv, grpc.aio.Server)
     port = srv.add_insecure_port("[::]:0")
-    add_DiskServiceServicer_to_server(MockInstanceService(), srv)
+    add_service(srv, DiskServiceClient, MockInstanceService())
     await srv.start()
 
     # Use the actual port assigned by the server
@@ -362,26 +337,24 @@ async def test_custom_resolver() -> None:
             resolver=Single("nebius.compute.v1.DiskService", address),
             options=[(INSECURE, True)],
         )
-        stub = DiskServiceStub(channel)
+        client = DiskServiceClient(channel)
 
         # Make a request
         req = GetDiskRequest(id="foo-bar")
-        call = stub.Get(req)
-        assert isinstance(call, UnaryUnaryCall)
+        call = client.get(req)
 
         # Await response and metadata
         ret = await call
-        assert isinstance(ret, disk_pb2.Disk)
+        assert isinstance(ret, Disk)
         mdi = await call.initial_metadata()
         mdt = await call.trailing_metadata()
-        code = await call.code()
-        details = await call.details()
+        status = await call.status()
 
         # Assertions to validate behavior
         assert ret.metadata.id == "foo-bar"
         assert ret.metadata.name == "MockDisk"
-        assert code == grpc.StatusCode.OK
-        assert details == ""
+        assert status.code == grpc.StatusCode.OK
+        assert status.message == ""
         assert mdi is not None and len(mdi) == 0
         assert mdt is not None and len(mdt) == 0
 
