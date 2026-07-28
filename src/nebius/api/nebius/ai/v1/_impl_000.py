@@ -1285,12 +1285,15 @@ class EndpointStateDetails(Message):
         *,
         code: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        service_error: _type_nebius_common_v1_e3b886bd.ServiceError | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if code is not _NEBIUS_UNSET:
             values['code'] = code
         if message is not _NEBIUS_UNSET:
             values['message'] = message
+        if service_error is not _NEBIUS_UNSET:
+            values['service_error'] = service_error
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -1313,7 +1316,17 @@ class EndpointStateDetails(Message):
     def message(self, value: _NebiusStr | None) -> None:
         self._set_field(_NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_MESSAGE, value)
 
-    __PY_TO_PB2__ = {'code': 'code', 'message': 'message'}
+    @_NebiusProperty
+    def service_error(self) -> _type_nebius_common_v1_e3b886bd.ServiceError:
+        'Structured error details for the failure, if available.\nFor quota-related failures, ``service_error.details.quota_failure``\nis populated with the quota violations.'
+        value = self._get_field(_NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_SERVICE_ERROR, absent_is_none=False)
+        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ServiceError', value)
+
+    @service_error.setter
+    def service_error(self, value: _type_nebius_common_v1_e3b886bd.ServiceError | None) -> None:
+        self._set_field(_NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_SERVICE_ERROR, value)
+
+    __PY_TO_PB2__ = {'code': 'code', 'message': 'message', 'service_error': 'service_error'}
 _NebiusType_nebius_ai_v1_EndpointStateDetails_2efa10af = EndpointStateDetails
 
 
@@ -1659,6 +1672,37 @@ class ListEndpointsResponse(Message):
 
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
 _NebiusType_nebius_ai_v1_ListEndpointsResponse_51332ffd = ListEndpointsResponse
+
+
+class RestartEndpointRequest(Message):
+    __PROTO_FULL_NAME__ = 'nebius.ai.v1.RestartEndpointRequest'
+    __REGISTRY__ = REGISTRY
+    __EXTENSION_REGISTRY__ = EXTENSIONS
+    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.ai.v1.RestartEndpointRequest')
+    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+
+    def __init__(
+        self,
+        initial_message: _NebiusSerializableMessage | None = None,
+        *,
+        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+    ) -> None:
+        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
+        if id is not _NEBIUS_UNSET:
+            values['id'] = id
+        super().__init__(initial_message, **values)
+
+    @_NebiusProperty
+    def id(self) -> _NebiusStr:
+        value = self._get_field(_NEBIUS_AI_V1_RESTARTENDPOINTREQUEST_ID, absent_is_none=False)
+        return _nebius_cast('_NebiusStr', value)
+
+    @id.setter
+    def id(self, value: _NebiusStr | None) -> None:
+        self._set_field(_NEBIUS_AI_V1_RESTARTENDPOINTREQUEST_ID, value)
+
+    __PY_TO_PB2__ = {'id': 'id'}
+_NebiusType_nebius_ai_v1_RestartEndpointRequest_d09e2191 = RestartEndpointRequest
 
 
 class StartEndpointRequest(Message):
@@ -2781,12 +2825,15 @@ class JobStateDetails(Message):
         *,
         code: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
         message: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        service_error: _type_nebius_common_v1_e3b886bd.ServiceError | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if code is not _NEBIUS_UNSET:
             values['code'] = code
         if message is not _NEBIUS_UNSET:
             values['message'] = message
+        if service_error is not _NEBIUS_UNSET:
+            values['service_error'] = service_error
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -2809,7 +2856,17 @@ class JobStateDetails(Message):
     def message(self, value: _NebiusStr | None) -> None:
         self._set_field(_NEBIUS_AI_V1_JOBSTATEDETAILS_MESSAGE, value)
 
-    __PY_TO_PB2__ = {'code': 'code', 'message': 'message'}
+    @_NebiusProperty
+    def service_error(self) -> _type_nebius_common_v1_e3b886bd.ServiceError:
+        'Structured error details for the failure, if available.\nFor quota-related failures, ``service_error.details.quota_failure``\nis populated with the quota violations.'
+        value = self._get_field(_NEBIUS_AI_V1_JOBSTATEDETAILS_SERVICE_ERROR, absent_is_none=False)
+        return _nebius_cast('_type_nebius_common_v1_e3b886bd.ServiceError', value)
+
+    @service_error.setter
+    def service_error(self, value: _type_nebius_common_v1_e3b886bd.ServiceError | None) -> None:
+        self._set_field(_NEBIUS_AI_V1_JOBSTATEDETAILS_SERVICE_ERROR, value)
+
+    __PY_TO_PB2__ = {'code': 'code', 'message': 'message', 'service_error': 'service_error'}
 _NebiusType_nebius_ai_v1_JobStateDetails_7043cdc4 = JobStateDetails
 
 
@@ -3213,6 +3270,37 @@ class ListJobsResponse(Message):
     __PY_TO_PB2__ = {'items': 'items', 'next_page_token': 'next_page_token'}
 _NebiusType_nebius_ai_v1_ListJobsResponse_1d45f9d8 = ListJobsResponse
 
+
+class RestartJobRequest(Message):
+    __PROTO_FULL_NAME__ = 'nebius.ai.v1.RestartJobRequest'
+    __REGISTRY__ = REGISTRY
+    __EXTENSION_REGISTRY__ = EXTENSIONS
+    __PROTO_DESCRIPTOR__ = REGISTRY.message_descriptor('nebius.ai.v1.RestartJobRequest')
+    __PB2_DESCRIPTOR__ = __PROTO_DESCRIPTOR__
+
+    def __init__(
+        self,
+        initial_message: _NebiusSerializableMessage | None = None,
+        *,
+        id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+    ) -> None:
+        values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
+        if id is not _NEBIUS_UNSET:
+            values['id'] = id
+        super().__init__(initial_message, **values)
+
+    @_NebiusProperty
+    def id(self) -> _NebiusStr:
+        value = self._get_field(_NEBIUS_AI_V1_RESTARTJOBREQUEST_ID, absent_is_none=False)
+        return _nebius_cast('_NebiusStr', value)
+
+    @id.setter
+    def id(self, value: _NebiusStr | None) -> None:
+        self._set_field(_NEBIUS_AI_V1_RESTARTJOBREQUEST_ID, value)
+
+    __PY_TO_PB2__ = {'id': 'id'}
+_NebiusType_nebius_ai_v1_RestartJobRequest_ee28d50c = RestartJobRequest
+
 # @@nebius-section:fields@@
 _NEBIUS_AI_V1_ENDPOINTSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF_SECRET_ID = Field('secret_id', 'secret_id', 1, STRING, json_name='secretId')
 _NEBIUS_AI_V1_ENDPOINTSPEC_VOLUMEMOUNT_S3CONFIG_MYSTERYBOXSECRETREF_VERSION_ID = Field('version_id', 'version_id', 2, STRING, json_name='versionId')
@@ -3298,7 +3386,8 @@ EndpointSpec.__FIELDS__ = (_NEBIUS_AI_V1_ENDPOINTSPEC_IMAGE, _NEBIUS_AI_V1_ENDPO
 
 _NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_CODE = Field('code', 'code', 1, STRING, json_name='code')
 _NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_MESSAGE = Field('message', 'message', 2, STRING, json_name='message')
-EndpointStateDetails.__FIELDS__ = (_NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_CODE, _NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_MESSAGE)
+_NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_SERVICE_ERROR = Field('service_error', 'service_error', 3, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ServiceError')), json_name='serviceError')
+EndpointStateDetails.__FIELDS__ = (_NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_CODE, _NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_MESSAGE, _NEBIUS_AI_V1_ENDPOINTSTATEDETAILS_SERVICE_ERROR)
 
 _NEBIUS_AI_V1_ENDPOINTSTATUS_PRIVATE_ENDPOINTS = Field('private_endpoints', 'private_endpoints', 1, STRING, repeated=True, json_name='privateEndpoints')
 _NEBIUS_AI_V1_ENDPOINTSTATUS_PUBLIC_ENDPOINTS = Field('public_endpoints', 'public_endpoints', 2, STRING, repeated=True, json_name='publicEndpoints')
@@ -3330,6 +3419,9 @@ ListEndpointsRequest.__FIELDS__ = (_NEBIUS_AI_V1_LISTENDPOINTSREQUEST_PARENT_ID,
 _NEBIUS_AI_V1_LISTENDPOINTSRESPONSE_ITEMS = Field('items', 'items', 1, message_codec(lambda: REGISTRY.message_class('nebius.ai.v1.Endpoint')), repeated=True, json_name='items')
 _NEBIUS_AI_V1_LISTENDPOINTSRESPONSE_NEXT_PAGE_TOKEN = Field('next_page_token', 'next_page_token', 2, STRING, json_name='nextPageToken')
 ListEndpointsResponse.__FIELDS__ = (_NEBIUS_AI_V1_LISTENDPOINTSRESPONSE_ITEMS, _NEBIUS_AI_V1_LISTENDPOINTSRESPONSE_NEXT_PAGE_TOKEN)
+
+_NEBIUS_AI_V1_RESTARTENDPOINTREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
+RestartEndpointRequest.__FIELDS__ = (_NEBIUS_AI_V1_RESTARTENDPOINTREQUEST_ID,)
 
 _NEBIUS_AI_V1_STARTENDPOINTREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
 StartEndpointRequest.__FIELDS__ = (_NEBIUS_AI_V1_STARTENDPOINTREQUEST_ID,)
@@ -3421,7 +3513,8 @@ JobSpec.__FIELDS__ = (_NEBIUS_AI_V1_JOBSPEC_IMAGE, _NEBIUS_AI_V1_JOBSPEC_ENVIRON
 
 _NEBIUS_AI_V1_JOBSTATEDETAILS_CODE = Field('code', 'code', 1, STRING, json_name='code')
 _NEBIUS_AI_V1_JOBSTATEDETAILS_MESSAGE = Field('message', 'message', 2, STRING, json_name='message')
-JobStateDetails.__FIELDS__ = (_NEBIUS_AI_V1_JOBSTATEDETAILS_CODE, _NEBIUS_AI_V1_JOBSTATEDETAILS_MESSAGE)
+_NEBIUS_AI_V1_JOBSTATEDETAILS_SERVICE_ERROR = Field('service_error', 'service_error', 3, message_codec(lambda: REGISTRY.message_class('nebius.common.v1.ServiceError')), json_name='serviceError')
+JobStateDetails.__FIELDS__ = (_NEBIUS_AI_V1_JOBSTATEDETAILS_CODE, _NEBIUS_AI_V1_JOBSTATEDETAILS_MESSAGE, _NEBIUS_AI_V1_JOBSTATEDETAILS_SERVICE_ERROR)
 
 _NEBIUS_AI_V1_JOBSTATUS_PRIVATE_ENDPOINTS = Field('private_endpoints', 'private_endpoints', 1, STRING, repeated=True, json_name='privateEndpoints')
 _NEBIUS_AI_V1_JOBSTATUS_PUBLIC_ENDPOINTS = Field('public_endpoints', 'public_endpoints', 2, STRING, repeated=True, json_name='publicEndpoints')
@@ -3458,6 +3551,9 @@ ListJobsRequest.__FIELDS__ = (_NEBIUS_AI_V1_LISTJOBSREQUEST_PARENT_ID, _NEBIUS_A
 _NEBIUS_AI_V1_LISTJOBSRESPONSE_ITEMS = Field('items', 'items', 1, message_codec(lambda: REGISTRY.message_class('nebius.ai.v1.Job')), repeated=True, json_name='items')
 _NEBIUS_AI_V1_LISTJOBSRESPONSE_NEXT_PAGE_TOKEN = Field('next_page_token', 'next_page_token', 2, STRING, json_name='nextPageToken')
 ListJobsResponse.__FIELDS__ = (_NEBIUS_AI_V1_LISTJOBSRESPONSE_ITEMS, _NEBIUS_AI_V1_LISTJOBSRESPONSE_NEXT_PAGE_TOKEN)
+
+_NEBIUS_AI_V1_RESTARTJOBREQUEST_ID = Field('id', 'id', 1, STRING, json_name='id')
+RestartJobRequest.__FIELDS__ = (_NEBIUS_AI_V1_RESTARTJOBREQUEST_ID,)
 
 # @@nebius-section:attachments@@
 EndpointInstanceStatus__State.__name__ = 'State'
@@ -3616,6 +3712,20 @@ class EndpointServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e
             **kwargs,
         )
 
+    def restart(
+        self,
+        request: _NebiusType_nebius_ai_v1_RestartEndpointRequest_d09e2191,
+        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
+    ) -> _NebiusRequest[_NebiusType_nebius_ai_v1_RestartEndpointRequest_d09e2191, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
+        'Restarts an endpoint.\n\nThe request object is returned without starting the RPC.'
+        return super().request(
+            method='Restart',
+            request=request,
+            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
+            result_wrapper=_NebiusOperation,
+            **kwargs,
+        )
+
     def stop(
         self,
         request: _NebiusType_nebius_ai_v1_StopEndpointRequest_d7e33570,
@@ -3726,5 +3836,19 @@ class JobServiceClient(_NebiusClientWithOperations[_type_nebius_common_v1_e3b886
             **kwargs,
         )
 
+    def restart(
+        self,
+        request: _NebiusType_nebius_ai_v1_RestartJobRequest_ee28d50c,
+        **kwargs: _NebiusUnpack[_NebiusRequestKwargs],
+    ) -> _NebiusRequest[_NebiusType_nebius_ai_v1_RestartJobRequest_ee28d50c, _NebiusOperation[_type_nebius_common_v1_e3b886bd.Operation]]:
+        'Restarts a job.\n\nThe request object is returned without starting the RPC.'
+        return super().request(
+            method='Restart',
+            request=request,
+            result_pb2_class=REGISTRY.message_class('nebius.common.v1.Operation'),
+            result_wrapper=_NebiusOperation,
+            **kwargs,
+        )
+
 # @@nebius-section:exports@@
-__all__ = ['CancelJobRequest', 'CreateEndpointRequest', 'CreateJobRequest', 'DeleteEndpointRequest', 'DeleteJobRequest', 'Endpoint', 'EndpointInstanceStatus', 'EndpointServiceClient', 'EndpointSpec', 'EndpointStateDetails', 'EndpointStatus', 'GetEndpointByNameRequest', 'GetEndpointRequest', 'GetJobByNameRequest', 'GetJobRequest', 'Job', 'JobInstanceStatus', 'JobServiceClient', 'JobSpec', 'JobStateDetails', 'JobStatus', 'ListEndpointsRequest', 'ListEndpointsResponse', 'ListJobsRequest', 'ListJobsResponse', 'StartEndpointRequest', 'StopEndpointRequest']
+__all__ = ['CancelJobRequest', 'CreateEndpointRequest', 'CreateJobRequest', 'DeleteEndpointRequest', 'DeleteJobRequest', 'Endpoint', 'EndpointInstanceStatus', 'EndpointServiceClient', 'EndpointSpec', 'EndpointStateDetails', 'EndpointStatus', 'GetEndpointByNameRequest', 'GetEndpointRequest', 'GetJobByNameRequest', 'GetJobRequest', 'Job', 'JobInstanceStatus', 'JobServiceClient', 'JobSpec', 'JobStateDetails', 'JobStatus', 'ListEndpointsRequest', 'ListEndpointsResponse', 'ListJobsRequest', 'ListJobsResponse', 'RestartEndpointRequest', 'RestartJobRequest', 'StartEndpointRequest', 'StopEndpointRequest']

@@ -1458,6 +1458,7 @@ class NetworkInterfaceStatus(Message):
         public_ip_address: _NebiusType_nebius_vpc_v1alpha1_PublicIPAddressStatus_fcea9f43 | None | _NebiusUnsetType = _NEBIUS_UNSET,
         aliases: _NebiusType_nebius_vpc_v1alpha1_IPAliasesStatus_e63dbf4b | None | _NebiusUnsetType = _NEBIUS_UNSET,
         mac_address: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
+        subnet_id: _NebiusStr | None | _NebiusUnsetType = _NEBIUS_UNSET,
     ) -> None:
         values: _NebiusDict[_NebiusStr, _NebiusObject] = {}
         if index is not _NEBIUS_UNSET:
@@ -1472,6 +1473,8 @@ class NetworkInterfaceStatus(Message):
             values['aliases'] = aliases
         if mac_address is not _NEBIUS_UNSET:
             values['mac_address'] = mac_address
+        if subnet_id is not _NEBIUS_UNSET:
+            values['subnet_id'] = subnet_id
         super().__init__(initial_message, **values)
 
     @_NebiusProperty
@@ -1534,7 +1537,17 @@ class NetworkInterfaceStatus(Message):
     def mac_address(self, value: _NebiusStr | None) -> None:
         self._set_field(_NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_MAC_ADDRESS, value)
 
-    __PY_TO_PB2__ = {'index': 'index', 'name': 'name', 'ip_address': 'ip_address', 'public_ip_address': 'public_ip_address', 'aliases': 'aliases', 'mac_address': 'mac_address'}
+    @_NebiusProperty
+    def subnet_id(self) -> _NebiusStr:
+        'Subnet ID actually used by the network interface.\nEquals spec.subnet_id when it is provided; otherwise contains the resolved default subnet ID.'
+        value = self._get_field(_NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_SUBNET_ID, absent_is_none=False)
+        return _nebius_cast('_NebiusStr', value)
+
+    @subnet_id.setter
+    def subnet_id(self, value: _NebiusStr | None) -> None:
+        self._set_field(_NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_SUBNET_ID, value)
+
+    __PY_TO_PB2__ = {'index': 'index', 'name': 'name', 'ip_address': 'ip_address', 'public_ip_address': 'public_ip_address', 'aliases': 'aliases', 'mac_address': 'mac_address', 'subnet_id': 'subnet_id'}
 _NebiusType_nebius_vpc_v1alpha1_NetworkInterfaceStatus_210b6377 = NetworkInterfaceStatus
 
 
@@ -3293,7 +3306,8 @@ _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_IP_ADDRESS = Field('ip_address', 'ip
 _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_PUBLIC_IP_ADDRESS = Field('public_ip_address', 'public_ip_address', 4, message_codec(lambda: REGISTRY.message_class('nebius.vpc.v1alpha1.PublicIPAddressStatus')), json_name='publicIpAddress')
 _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_ALIASES = Field('aliases', 'aliases', 6, message_codec(lambda: REGISTRY.message_class('nebius.vpc.v1alpha1.IPAliasesStatus')), json_name='aliases')
 _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_MAC_ADDRESS = Field('mac_address', 'mac_address', 7, STRING, json_name='macAddress')
-NetworkInterfaceStatus.__FIELDS__ = (_NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_INDEX, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_NAME, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_IP_ADDRESS, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_PUBLIC_IP_ADDRESS, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_ALIASES, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_MAC_ADDRESS)
+_NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_SUBNET_ID = Field('subnet_id', 'subnet_id', 10, STRING, json_name='subnetId')
+NetworkInterfaceStatus.__FIELDS__ = (_NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_INDEX, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_NAME, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_IP_ADDRESS, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_PUBLIC_IP_ADDRESS, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_ALIASES, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_MAC_ADDRESS, _NEBIUS_VPC_V1ALPHA1_NETWORKINTERFACESTATUS_SUBNET_ID)
 
 _NEBIUS_VPC_V1ALPHA1_PUBLICIPADDRESS_ALLOCATION_ID = Field('allocation_id', 'allocation_id', 1, STRING, oneof='allocation', json_name='allocationId')
 _NEBIUS_VPC_V1ALPHA1_PUBLICIPADDRESS_STATIC = Field('static', 'static', 3, BOOL, json_name='static')
