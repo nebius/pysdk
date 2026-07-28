@@ -1,13 +1,11 @@
-"""Base client classes used by generated SDK clients.
+"""Define base classes for generated SDK clients.
 
-This module contains small, reusable base classes that concrete generated
-clients inherit from. The classes provide a thin wrapper around a
-``ClientChannelInterface`` and a convenience ``request`` factory used by the
-generated RPC methods.
+Generated clients inherit these small base classes. The classes wrap a
+``ClientChannelInterface`` and supply a ``request`` factory for generated RPC
+methods.
 
-The types in this module are intentionally lightweight and are not meant to
-be instantiated directly by application code; instead they provide a common
-shaping layer for code generated from service definitions.
+Application code must not create these types directly. They supply a common
+structure for code generated from service definitions.
 """
 
 from collections.abc import AsyncIterable, Callable, Iterable
@@ -32,9 +30,9 @@ Res = TypeVar("Res")
 class Client:
     """Lightweight base class for generated service clients.
 
-    Subclasses generated for each service should set the ``__service_name__``
-    class attribute and expose RPC methods that in turn call
-    :meth:`request` to construct a :class:`nebius.aio.request.Request`.
+    Each generated service subclass must set ``__service_name__``. Its RPC
+    methods call :meth:`request` to construct a
+    :class:`nebius.aio.request.Request`.
 
     :cvar __service_name__: Fully qualified service name for RPC routes.
     :cvar __api_service_name__: Optional API gateway name for service routes.
@@ -143,9 +141,9 @@ class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
     """Extension of :class:`Client` for services that manage long-running
     operations.
 
-    This helper provides an :meth:`operation_service` accessor that lazily creates
-    and caches a small helper client bound to a synthetic constant channel
-    that targets the service's operation methods.
+    :meth:`operation_service` creates an operation client when first called.
+    It caches this client. A constant channel routes the client to the
+    service's operation methods.
 
     :cvar __operation_type__: the protobuf message class used to represent
         long-running operations.
@@ -172,11 +170,10 @@ class ClientWithOperations(Client, Generic[OperationPb, OperationService]):
     def operation_service(self) -> OperationService:
         """Return a cached operation-service client instance.
 
-        The operation-service client is created on first access and cached on
-        the instance. The created client is an instance of the
-        ``__operation_service_class__`` and is bound to a
-        :class:`nebius.aio.constant_channel.Constant` that routes calls to the
-        service's operation endpoint.
+        The first call creates and caches the operation-service client. Its
+        type is ``__operation_service_class__``. A
+        :class:`nebius.aio.constant_channel.Constant` routes calls to the
+        operation endpoint.
 
         :returns: an instance of the operation service client
         :rtype: OperationService

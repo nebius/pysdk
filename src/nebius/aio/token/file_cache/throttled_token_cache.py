@@ -1,8 +1,7 @@
 """Throttled token cache helper.
 
-This module provides :class:`ThrottledTokenCache`, a thin wrapper around
-:class:`TokenCache` which prevents frequent disk reads by caching the
-value in-memory for a configurable throttle period.
+:class:`ThrottledTokenCache` wraps :class:`TokenCache`. It prevents frequent
+disk reads by keeping the value in memory for a configurable period.
 
 The class is useful when many coroutines may request the same token
 frequently and you want to reduce filesystem and YAML parsing overhead.

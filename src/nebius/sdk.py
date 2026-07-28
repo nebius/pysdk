@@ -1,4 +1,4 @@
-"""High-level SDK facade providing convenience helpers for Nebius services."""
+"""High-level interface for Nebius services."""
 
 from typing_extensions import Unpack
 
@@ -13,151 +13,169 @@ from nebius.api.nebius.iam.v1 import (
 
 
 class SDK(Channel):
-    """High-level SDK facade providing convenience helpers for Nebius services.
+    """Provide a high-level interface for Nebius services.
 
-    The SDK class is a thin convenience wrapper around a gRPC channel that
-    exposes higher-level helpers for common operations such as retrieving the
-    current authenticated profile. It inherits from :class:`Channel`
-    and therefore also exposes the channel-level behaviors and helpers
-    (resolution, pooling, credential wiring, sync/async helpers).
+    The SDK is a small wrapper for a gRPC channel. It supplies high-level
+    methods, such as a method to get the authenticated profile. It inherits
+    channel functions such as resolution, pooling, credential configuration,
+    and synchronous and asynchronous calls.
 
     Quick start -- initialization
     =============================
 
-    Common ways to construct the SDK:
+    These examples show common SDK configurations. Replace
+    ``example-application/1.0`` with your application name and version.
 
     - From an IAM token in the environment (default behavior)::
 
-        sdk = SDK()
+        sdk = SDK(user_agent_prefix="example-application/1.0")
 
     - With an explicit token string or static bearer::
 
-        sdk = SDK(credentials="MY_IAM_TOKEN")
+        sdk = SDK(
+            credentials="MY_IAM_TOKEN",
+            user_agent_prefix="example-application/1.0",
+        )
         # or
-        sdk = SDK(credentials=Bearer("MY_IAM_TOKEN"))
+        sdk = SDK(
+            credentials=Bearer("MY_IAM_TOKEN"),
+            user_agent_prefix="example-application/1.0",
+        )
 
     - From an env-backed token provider::
 
         from nebius.aio.token.static import EnvBearer
-        sdk = SDK(credentials=EnvBearer("NEBIUS_IAM_TOKEN"))
+        sdk = SDK(
+            credentials=EnvBearer("NEBIUS_IAM_TOKEN"),
+            user_agent_prefix="example-application/1.0",
+        )
 
     - From the CLI config reader (reads endpoints/profile like the CLI)::
 
         from nebius.aio.cli_config import Config
-        sdk = SDK(config_reader=Config())
+        sdk = SDK(
+            config_reader=Config(),
+            user_agent_prefix="example-application/1.0",
+        )
 
     - Service account private key or credentials file::
 
-        sdk = SDK(service_account_private_key_file_name="private.pem",
-                service_account_public_key_id="pub-id",
-                service_account_id="service-account-id")
+        sdk = SDK(
+            service_account_private_key_file_name="private.pem",
+            service_account_public_key_id="pub-id",
+            service_account_id="service-account-id",
+            user_agent_prefix="example-application/1.0",
+        )
         # or
-        sdk = SDK(credentials_file_name="path/to/credentials.json")
+        sdk = SDK(
+            credentials_file_name="path/to/credentials.json",
+            user_agent_prefix="example-application/1.0",
+        )
 
     Async vs sync usage and lifecycle
     ---------------------------------
 
-    The SDK is designed for asyncio. Prefer the async context manager which
-    ensures graceful shutdown of background tasks::
+    The SDK is designed for asyncio. The asynchronous context manager stops
+    background tasks correctly::
 
-        async with SDK(...) as sdk:
+        async with SDK(
+            ...,
+            user_agent_prefix="example-application/1.0",
+        ) as sdk:
             resp = await sdk.whoami()
 
-    Synchronous usage is supported but riskier. It may raise
-    :class:`nebius.aio.channel.LoopError` if used inside an active loop. For
-    sync use::
+    Synchronous use has more risk. It can raise
+    :class:`nebius.aio.channel.LoopError` in an active loop. Use this form::
 
-          sdk = SDK(...)
+          sdk = SDK(
+              ...,
+              user_agent_prefix="example-application/1.0",
+          )
           try:
               resp = sdk.whoami().wait()
           finally:
               sdk.sync_close()
 
-    If you provide a separate event loop at construction you can safely call
-    synchronous helpers from threads; otherwise avoid mixing sync calls with
-    a running event loop.
+    A separate event loop lets threads call synchronous methods safely. Do not
+    mix synchronous calls with a running event loop if you do not supply a
+    separate loop.
 
     Authentication and ``auth_timeout``
     -----------------------------------
 
-    - Many calls accept an ``auth_timeout`` parameter which bounds the total
-      time spent acquiring or renewing credentials plus the enclosed request.
-    - Default: 15 minutes (900 seconds). Pass ``auth_timeout=None`` to disable
-      the bound (be cautious -- this can hang indefinitely if auth cannot
-      complete).
-    - ``auth_options`` may be provided to control renewal behavior (for example
-      to make token renewal synchronous or to surface renewal errors as request
-      errors).
+    - ``auth_timeout`` limits credential acquisition, credential renewal, and
+      the request. Many calls accept this parameter.
+    - The default is 15 minutes (900 seconds). Set ``auth_timeout=None`` to
+      remove the limit. Authentication can then wait indefinitely.
+    - Use ``auth_options`` to control renewal. For example, make renewal
+      synchronous or return renewal errors as request errors.
 
     Timeouts and retries (summary)
     ------------------------------
 
-    - The SDK uses two timeout levels:
-        * overall request timeout (deadline for entire request including retries),
-        * per-retry timeout (deadline for each individual retry attempt).
-    - Defaults used by the SDK (unless overridden by a call):
-        * overall request timeout: 60s
-        * per-retry timeout: 20s (derived from 60s / 3 retries)
+    - The overall timeout limits the request and all retries.
+    - The per-retry timeout limits each retry attempt.
+    - The default overall timeout is 60 seconds.
+    - The default per-retry timeout is 20 seconds (60 seconds / 3 retries).
     - Set ``timeout=None`` to disable the request deadline.
-    - Configure ``retries`` and ``per_retry_timeout`` per-call when needed.
+    - Set ``retries`` and ``per_retry_timeout`` for each call as necessary.
 
     Keepalive
     ---------
 
-    - By default, SDK channels enable GoSDK-compatible gRPC keepalive settings
-      and read ``NEBIUS_GRPC_KEEPALIVE_*`` environment variables.
-    - Pass ``keepalive=False`` to disable SDK keepalive.
-    - Pass :class:`nebius.aio.keepalive.KeepaliveOptions` or a mapping with
-      ``time_ms``, ``timeout_ms`` and ``permit_without_stream`` to provide
-      explicit overrides.
-    - User-provided gRPC options in ``options`` or ``address_options`` are
-      still applied later and may override individual keepalive channel
-      arguments.
+    - By default, SDK channels use gRPC keepalive settings that are compatible
+      with the Nebius SDK for Go.
+    - The SDK reads the ``NEBIUS_GRPC_KEEPALIVE_*`` environment variables.
+    - Set ``keepalive=False`` to disable SDK keepalive.
+    - To change the settings, give
+      :class:`nebius.aio.keepalive.KeepaliveOptions` or a mapping. The mapping
+      can contain ``time_ms``, ``timeout_ms``, and ``permit_without_stream``.
+    - gRPC options in ``options`` or ``address_options`` apply later. These
+      options can replace individual keepalive arguments.
 
     Metrics
     -------
 
-    - Pass ``metrics`` to receive both config-reader and auth events, including
-      token acquisition, refresh, cache, config load, and credentials resolution.
-    - Pass ``auth_metrics`` to receive only auth events. If ``metrics`` is
-      provided, it is reused for auth callbacks and ``auth_metrics`` is ignored.
-    - Metric sinks may be objects with callback methods or mappings of callback
-      names to functions. Python snake_case and TypeScript-style camelCase names
-      are accepted.
-    - Awaitable callback results are capped by ``callback_timeout_seconds`` on
-      the metric sink. Invalid or too-large values are sanitized to SDK limits.
-    - Callback failures are ignored so metrics collection does not affect SDK
-      requests.
+    - Give ``metrics`` to receive configuration-reader and authentication
+      events.
+    - Give ``auth_metrics`` to receive only authentication events.
+    - If you give ``metrics``, the SDK uses it for authentication callbacks
+      and ignores ``auth_metrics``.
+    - A metric sink can be an object with callback methods. It can also be a
+      mapping of callback names to functions.
+    - Callback names can use Python snake_case or TypeScript-style camelCase.
+    - ``callback_timeout_seconds`` limits awaitable callback results. The SDK
+      adjusts invalid or too-large values to its limits.
+    - The SDK ignores callback failures. Metrics do not affect SDK requests.
 
     Parent ID auto-population
     -------------------------
 
-    - Some methods (``list``, ``get_by_name``, ``get``, many others) may have
-      a ``parent_id`` automatically populated from CLI
-      :class:`nebius.aio.cli_config.Config` or the SDK ``parent_id`` provided at
-      initialization.
-    - To disable automatic parent population while retaining CLI config use the
-      Config option ``no_parent_id=True``.
+    - The SDK can set ``parent_id`` automatically for applicable methods. It
+      gets the value from :class:`nebius.aio.cli_config.Config` or the SDK
+      ``parent_id`` initialization parameter.
+    - To use the CLI configuration without its parent ID, set
+      ``no_parent_id=True``.
 
     Operations
     ----------
 
-    - Long-running operations returned by service ``create``/``update`` or other calls
-      are represented by an :class:`nebius.aio.operation.Operation` wrapper that can be
-      awaited until completion. You can also list operations via the source service's
-      ``operation_service()`` helper.
-    - The ``Operation`` wrapper provides convenience helpers like ``.wait()`` and
-      ``.resource_id``.
+    - Long-running service calls return an
+      :class:`nebius.aio.operation.Operation` wrapper. You can await this
+      wrapper until the operation is complete.
+    - Use the source service's ``operation_service()`` method to list
+      operations.
+    - The ``Operation`` wrapper supplies ``.wait()`` and ``.resource_id``.
 
     Request metadata and debugging
     ------------------------------
 
-    - Service methods return :class:`Request` objects. These provide access to
-      additional metadata (request id, trace id) and can be awaited or waited on
-      synchronously.
+    - Service methods return :class:`Request` objects. These objects supply
+      metadata such as the request ID and trace ID.
+    - You can await a request or wait for it synchronously.
     - Example::
 
-        request = sdk.whoami()   # does not await immediately
+        request = sdk.whoami()  # Do not await the request yet.
         resp = await request
         request_id = await request.request_id()
         trace_id = await request.trace_id()
@@ -165,40 +183,38 @@ class SDK(Channel):
     Error handling and :class:`nebius.aio.service_error.RequestError`
     -----------------------------------------------------------------
 
-    - Server-created errors derive from :class:`nebius.aio.service_error.RequestError`
-      and include structured information. Catch and inspect ``err.status`` for
-      the server-provided details.
+    - Server errors derive from
+      :class:`nebius.aio.service_error.RequestError`.
+    - Catch the error and read ``err.status`` for structured server details.
 
     User-agent customization
     ------------------------
 
-    - Add custom user-agent parts via ``options`` (``grpc.primary_user_agent``)
-      or the ``user_agent_prefix`` parameter when constructing the SDK. The SDK
-      composes the final user-agent from these pieces and the internal SDK
-      version string.
+    - Set ``user_agent_prefix`` when you construct the SDK.
+    - You can also set ``grpc.primary_user_agent`` in ``options``.
+    - The SDK combines these values with its internal version string.
 
     See also
     --------
 
-    - Full usage examples and deeper explanations are available in the
-      project README and the API reference documentation.
+    - See the project README and API reference for more examples and
+      explanations.
     """
 
     def whoami(
         self,
         **kwargs: Unpack[RequestKwargs],
     ) -> Request[GetProfileRequest, GetProfileResponse]:
-        """Return a request that fetches the profile for the current credentials.
+        """Return a request to get the profile for the current credentials.
 
-        This is a convenience wrapper around the generated
-        :class:`ProfileServiceClient.get` method.
+        This method wraps the generated :class:`ProfileServiceClient.get`
+        method.
 
-        Request arguments may be provided as keyword arguments.
+        Give request arguments as keyword arguments.
         See :class:`nebius.aio.request_kwargs.RequestKwargs` for details.
 
-        :return: A :class:`Request` object representing the
-            in-flight RPC. It can be awaited (async) or waited
-            synchronously using its ``.wait()`` helpers.
+        :return: A :class:`Request` for the active RPC. Await it or use its
+            ``.wait()`` methods.
         :rtype: :class:`Request` of
             :class:`GetProfileResponse`
         """

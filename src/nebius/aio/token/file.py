@@ -5,11 +5,11 @@ access token from a filesystem path. It is useful for local testing,
 scripting or environments where a short-lived token is written to a
 file by an external process or host system.
 
-Fetched tokens are cached for a short refresh period to avoid reading
-the file for every request. If a request fails with an authentication
-error, :meth:`Receiver.can_retry` checks whether the file now contains a
-different token and invalidates the cache so the retry re-reads the file.
-Empty file contents raise an :class:`nebius.base.error.SDKError`.
+The bearer caches tokens for a short refresh period. Thus, it does not read
+the file for each request. After an authentication error,
+:meth:`Receiver.can_retry` checks for a different token in the file. If the
+token changed, it invalidates the cache before a retry. Empty file contents
+raise :class:`nebius.base.error.SDKError`.
 
 Examples
 --------
@@ -22,7 +22,10 @@ Create a bearer that reads from ``~/.nebius/token``::
 
 Use in code that expects a :class:`nebius.aio.token.token.Bearer`::
 
-    sdk = SDK(credentials=bearer)
+    sdk = SDK(
+        credentials=bearer,
+        user_agent_prefix="example-application/1.0",
+    )
 
 """
 
@@ -54,9 +57,8 @@ class Receiver(ParentReceiver):
     authentication fails, :meth:`can_retry` invalidates the cache and
     retries only if the token file changed.
 
-    :param file: :class:`pathlib.Path` pointing to a file containing a
-        raw access token (UTF-8 text). The file is read on each fetch
-        and must contain a non-empty token string.
+    :param bearer: Bearer that supplies the token file and cache settings.
+    :type bearer: :class:`Bearer`
     """
 
     def __init__(self, bearer: "Bearer") -> None:
@@ -120,7 +122,10 @@ class Bearer(ParentBearer):
         from nebius.sdk import SDK
         from nebius.aio.token.file import Bearer
 
-        sdk = SDK(credentials=Bearer("~/nebius.token"))
+        sdk = SDK(
+            credentials=Bearer("~/nebius.token"),
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(

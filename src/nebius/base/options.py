@@ -1,10 +1,9 @@
-"""Utilities for handling gRPC channel options specific to Nebius SDK.
+"""Handle Nebius SDK options for gRPC channels.
 
-This module provides functions to extract and validate options from gRPC
-channel arguments, as well as constants for common Nebius-specific options.
+This module supplies functions that extract and validate options from gRPC
+channel arguments. It also supplies constants for common Nebius options.
 
-The options are used to configure various aspects of the gRPC channels,
-such as security settings and compression.
+The options configure channel security and compression.
 """
 
 from collections.abc import Sequence
@@ -40,9 +39,9 @@ def pop_option(
 ) -> tuple[ChannelArgumentType, T | None]:
     """Extract the last occurrence of a named option from channel arguments.
 
-    This function searches for options with the given name in the channel
-    arguments, validates their type, and returns the remaining arguments
-    along with the last matching option value (or None if not found).
+    Search the channel arguments for the name and validate matching values.
+    Return the remaining arguments and the last match. Return ``None`` if
+    there is no match.
 
     :param args: The channel arguments to search.
     :param name: The name of the option to extract.
@@ -62,9 +61,8 @@ def pop_options(
 ) -> tuple[ChannelArgumentType, Sequence[T]]:
     """Extract all occurrences of a named option from channel arguments.
 
-    This function searches for all options with the given name in the channel
-    arguments, validates their types, and returns the remaining arguments
-    along with a sequence of matching option values.
+    Search the channel arguments for the name and validate matching values.
+    Return the remaining arguments and all matches.
 
     :param args: The channel arguments to search.
     :param name: The name of the option to extract.

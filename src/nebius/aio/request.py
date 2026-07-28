@@ -1,23 +1,19 @@
 """Request helper used by generated clients.
 
-This module implements :class:`Request` which encapsulates a single RPC
-invocation, including retries, authorization handling, metadata extraction
-and convenience synchronous wrappers. The Request object is created by a
-generated client and then awaited to perform the RPC. It is intentionally
-rich: it exposes request status metadata (initial/trailing metadata,
-request/trace ids), synchronous helpers (``wait``, ``initial_metadata_sync``)
-and configurable retry/timeout behaviour.
+The :class:`Request` class contains one RPC invocation. It controls retries,
+authorization, metadata extraction, and synchronous calls. A generated client
+creates the object. Await the object to perform the RPC. Its methods supply
+status metadata, synchronous calls, and configurable retries and timeouts.
 
 Key concepts:
 
-  - Authorization loop: when an authorization provider exists, the request
-    will perform an auth step before attempting the RPC and will re-authenticate
-    on UNAUTHENTICATED responses when allowed.
+  - Authorization loop: If a provider exists, the request authorizes before
+    the RPC. If permitted, it authorizes again after ``UNAUTHENTICATED``.
   - Retry loop: transient errors are retried according to configured retry
     counts and per-retry timeouts.
 
-Only small, non-behavioral changes should be made to this module because the
-Request logic is central to the SDK call semantics.
+The request logic is central to SDK call semantics. Make only small changes
+that do not affect behavior.
 """
 
 from asyncio import CancelledError, Future, ensure_future, wait_for
@@ -91,10 +87,9 @@ DEFAULT_AUTH_TIMEOUT = 15 * 60.0  # 15 minutes
 
 
 class Request(Generic[Req, Res]):
-    """Encapsulates an RPC invocation with retries and auth handling.
+    """Contain an RPC invocation with retries and authorization.
 
-    The :class:`Request` object is the workhorse behind generated client
-    methods. It manages the lifecycle of a single RPC including:
+    Generated client methods use :class:`Request`. It controls one RPC:
 
     - preparing and populating protobuf request objects,
     - attaching metadata and idempotency keys,
@@ -104,10 +99,10 @@ class Request(Generic[Req, Res]):
     Callers typically either ``await`` the request or call :meth:`wait` to run
     it synchronously.
 
-    Parameters, that are general for all types of requests and are passed through
-    generated methods and various wrappers, are also encapsulated in the
-    :class:`nebius.aio.request_kwargs.RequestKwargs` class. Use this class to
-    automatically infer and validate request parameters.
+    :class:`nebius.aio.request_kwargs.RequestKwargs` contains parameters that
+    apply to all request types. Generated methods and wrappers pass these
+    parameters through. Use this class to infer and validate request
+    parameters.
 
     :param channel: Channel used to resolve address channels and perform
         synchronous execution when callers use the synchronous helpers.
@@ -188,7 +183,10 @@ class Request(Generic[Req, Res]):
             CreateBucketRequest,
         )
 
-        sdk = SDK(config_reader=Config())
+        sdk = SDK(
+            config_reader=Config(),
+            user_agent_prefix="example-application/1.0",
+        )
         service = BucketServiceClient(sdk)
 
         # Create a request (typically done by generated client methods)
@@ -324,9 +322,8 @@ class Request(Generic[Req, Res]):
         """Cancel the request; returns True when the request is marked
         cancelled.
 
-        If the underlying gRPC call has already been created, cancellation is
-        propagated to that call; otherwise a local cancelled flag is set so
-        the call will not be sent when the request is executed.
+        If the gRPC call exists, cancel that call. Otherwise, set a local flag
+        to prevent the request from sending the call.
         """
         if self._call is not None:
             return self._call.cancel()
@@ -456,11 +453,10 @@ class Request(Generic[Req, Res]):
     def run_sync_with_timeout(self, func: Awaitable[T]) -> T:
         """Run an awaitable synchronously using the channel's sync runner.
 
-        The channel's synchronous runner is invoked with the request's
-        authorization timeout budget (``_auth_timeout``). In case the sync
-        runner raises a :class:`TimeoutError` this method converts it into a
-        :class:`RequestError` populated with a DEADLINE_EXCEEDED status so
-        callers can inspect the failure uniformly.
+        Call the channel's synchronous runner with ``_auth_timeout``. If the
+        runner raises :class:`TimeoutError`, convert it to
+        :class:`RequestError` with ``DEADLINE_EXCEEDED``. Callers can then
+        inspect all timeout failures in the same way.
 
         :param func: awaitable to execute
         :returns: result of the awaitable
@@ -487,7 +483,7 @@ class Request(Generic[Req, Res]):
             raise RequestError(self._status) from e
 
     def wait(self) -> Res:
-        """Synchronous convenience wrapper for awaiting the request.
+        """Wait for the request synchronously.
 
         Equivalent to ``run_sync_with_timeout(self)``.
         """
@@ -538,8 +534,8 @@ class Request(Generic[Req, Res]):
         """Ensure metadata is received and return the request and trace ids.
 
         Returns a tuple ``(request_id, trace_id)`` extracted from the initial
-        metadata. This coroutine will await the request if metadata hasn't yet
-        been received.
+        metadata. This coroutine awaits the request if the metadata is not
+        available.
         """
         if self._request_id is not None and self._trace_id is not None:
             return (self._request_id, self._trace_id)
@@ -547,21 +543,20 @@ class Request(Generic[Req, Res]):
         return (self._request_id, self._trace_id)  # type: ignore[return-value] # should be set after receiving md
 
     async def request_id(self) -> str:
-        """Return the request id extracted from initial metadata.
-        This coroutine will await the request if metadata hasn't yet
-        been received.
+        """Return the request ID from the initial metadata.
 
-        This is a convenience wrapper over :meth:`_get_request_id`.
+        This coroutine awaits the request if the metadata is not available.
+
+        This method wraps :meth:`_get_request_id`.
         """
         ret = await self._get_request_id()
         return ret[0]
 
     async def trace_id(self) -> str:
-        """Return the trace id extracted from initial metadata.
-        This coroutine will await the request if metadata hasn't yet
-        been received.
+        """Return the trace ID from the initial metadata.
 
-        This is a convenience wrapper over :meth:`_get_request_id`.
+        This coroutine awaits the request if the metadata is not available.
+        This method wraps :meth:`_get_request_id`.
         """
         ret = await self._get_request_id()
         return ret[1]

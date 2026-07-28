@@ -1,10 +1,7 @@
-"""High-level federation bearer that provides cached, renewable tokens.
+"""Provide cached, renewable tokens through federation authorization.
 
-This module exposes :class:`FederationBearer`, a convenience bearer that
-composes the interactive federation authorization implementation
-(:class:`nebius.aio.token.federation_bearer.Bearer`) with the
-asynchronous file-backed renewable cache
-(:class:`nebius.aio.token.file_cache.async_renewable_bearer.AsynchronousRenewableFileCacheBearer`).
+:class:`FederationBearer` combines interactive federation authorization with
+an asynchronous, file-backed renewable cache.
 
 Behavior and authorization flow
 -------------------------------
@@ -14,9 +11,8 @@ following sequence may occur:
 
 1. The cache is consulted for a fresh token. If a cached token is valid it
    is returned immediately.
-2. If renewal is required the underlying interactive flow is invoked. This
-   flow is implemented by :class:`nebius.aio.token.federation_bearer.Receiver`
-   and will typically:
+2. If renewal is necessary, the bearer starts the interactive flow.
+   :class:`nebius.aio.token.federation_bearer.Receiver` controls this flow:
 
      - construct an authorization URL and attempt to open the user's
        browser (unless ``no_browser_open`` is set), or return the URL so callers
@@ -67,11 +63,9 @@ from .file_cache.async_renewable_bearer import AsynchronousRenewableFileCacheBea
 class FederationBearer(ParentBearer):
     """Bearer composing interactive federation auth with a renewable cache.
 
-    The bearer constructs an internal
-    :class:`nebius.aio.token.federation_bearer.Bearer` configured with the
-    provided parameters and wraps it in an
-    :class:`AsynchronousRenewableFileCacheBearer` to provide persistent
-    caching and background refresh.
+    The bearer configures an internal federation bearer. Then, an
+    :class:`AsynchronousRenewableFileCacheBearer` adds persistent caching and
+    background refresh.
 
 
     Behavior and authorization flow
@@ -82,9 +76,8 @@ class FederationBearer(ParentBearer):
 
     1. The cache is consulted for a fresh token. If a cached token is valid it
         is returned immediately.
-    2. If renewal is required the underlying interactive flow is invoked. This
-        flow is implemented by :class:`nebius.aio.token.federation_bearer.Receiver`
-        and will typically:
+    2. If renewal is necessary, the bearer starts the interactive flow.
+       :class:`nebius.aio.token.federation_bearer.Receiver` controls this flow:
 
             - construct an authorization URL and attempt to open the user's
                 browser (unless ``no_browser_open`` is set), or return the URL so
@@ -141,14 +134,17 @@ class FederationBearer(ParentBearer):
         from nebius.aio.token.federation_account import FederationBearer
         import sys
 
-        sdk = SDK(credentials=FederationBearer(
-            profile_name="not-a-cli-profile",
-            client_id="my-client-id",
-            federation_endpoint="auth.eu.nebius.com",
-            federation_id="federation-e00my-federation",
-            writer=sys.stdout,
-            no_browser_open=True,
-        ))
+        sdk = SDK(
+            credentials=FederationBearer(
+                profile_name="not-a-cli-profile",
+                client_id="my-client-id",
+                federation_endpoint="auth.eu.nebius.com",
+                federation_id="federation-e00my-federation",
+                writer=sys.stdout,
+                no_browser_open=True,
+            ),
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(

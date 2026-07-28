@@ -123,9 +123,8 @@ class Receiver(ParentReceiver):
     def _raise_request_error(self, err: AioRpcError) -> None:
         """Convert a gRPC AioRpcError into a RequestError with diagnostics.
 
-        The function extracts request and trace ids from the initial
-        metadata and converts the gRPC status into the SDK's
-        :class:`nebius.aio.service_error.RequestError` type.
+        Get request and trace IDs from the initial metadata. Convert the gRPC
+        status to :class:`nebius.aio.service_error.RequestError`.
 
         :param err: The original gRPC AioRpcError.
         :raises RequestError: always raised with enriched diagnostics.
@@ -293,7 +292,10 @@ class Bearer(ParentBearer):
         # Create a future for the channel that will be resolved with the SDK
         channel_future = Future()
 
-        sdk = SDK(credentials=Bearer(requester=requester, channel=channel_future))
+        sdk = SDK(
+            credentials=Bearer(requester=requester, channel=channel_future),
+            user_agent_prefix="example-application/1.0",
+        )
 
         # Resolve the future with the newly created SDK
         channel_future.set_result(sdk)

@@ -261,7 +261,7 @@ class Bearer(ParentBearer):
 
 
 class CachedBearer(ParentBearer):
-    """Convenience wrapper that caches impersonated tokens in memory."""
+    """Cache impersonated tokens in memory."""
 
     def __init__(
         self,

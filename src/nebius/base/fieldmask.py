@@ -1,9 +1,8 @@
 """Field mask utilities for partial updates and reset masks.
 
-This module provides small, composable helpers for building, merging, and
-serializing field masks used by the Nebius API. Masks are represented as a tree
-of fields and can be serialized into the dotted syntax accepted by gRPC
-metadata (for example, via the ``X-ResetMask`` header).
+This module supplies small helpers that build, merge, and serialize Nebius API
+field masks. A mask is a field tree. You can serialize it to the dotted syntax
+for gRPC metadata, such as the ``X-ResetMask`` header.
 
 Basic usage
 -----------
@@ -91,8 +90,8 @@ class FieldKey(str):
 class FieldPath(list[FieldKey]):
     """Ordered path of :class:`FieldKey` components.
 
-    Field paths are convenience objects that can be converted to masks and
-    can be combined with other paths or masks using ``+``.
+    You can convert field paths to masks. Use ``+`` to combine them with
+    other paths or masks.
 
     :param base: Optional iterable of :class:`FieldKey` or strings used to build
         the path. Strings are converted to :class:`FieldKey` and validated.

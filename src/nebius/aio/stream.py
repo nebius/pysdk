@@ -37,8 +37,8 @@ class StreamRequest(Generic[Req, Res]):
                 if done(item):
                     break
 
-    The context exit calls :meth:`aclose`, cancelling the native stream and
-    releasing its address channel deterministically.
+    The context exit calls :meth:`aclose`. This call cancels the native stream
+    and releases its address channel.
     """
 
     def __init__(

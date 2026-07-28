@@ -1,9 +1,8 @@
 """Renewable token bearer and receiver.
 
-This module implements a wrapper around an existing asynchronous
-``Bearer`` that provides automatic background token refresh and a
-light-weight per-request ``Receiver`` implementation which delegates the
-actual token fetch to the wrapped bearer while supporting retry accounting.
+This module wraps an asynchronous ``Bearer``. It refreshes tokens in the
+background. Its per-request ``Receiver`` delegates token retrieval to the
+wrapped bearer and counts retries.
 
 The primary public types provided here are:
 
@@ -11,16 +10,14 @@ The primary public types provided here are:
     bearer to obtain a token and tracks retry attempts.
 - :class:`Bearer` -- a bearer that wraps another bearer and keeps a
     cached token refreshed in the background. It provides synchronous and
-    asynchronous renewal request modes and convenient shutdown semantics.
+    asynchronous renewal request modes and controlled shutdown.
 
 Notes
 -----
-The renewal bearer starts a background task on the first token fetch
-and keeps the cached token refreshed up to a configurable safe fraction
-of the token lifetime. When a fetch request requires a renewed token
-it may either wait for the renewal to complete (synchronous mode) or
-trigger a background renewal and wait for the cached token to become
-fresh (asynchronous mode).
+The first token retrieval starts a background task. The task refreshes the
+cached token after a configurable fraction of its lifetime. Synchronous mode
+waits for renewal. Asynchronous mode starts background renewal and waits for a
+fresh cached token.
 
 Examples
 --------
@@ -124,9 +121,8 @@ class RenewalError(SDKError):
 class IsStoppedError(RenewalError):
     """Raised when a renewal operation is requested but the bearer is already stopped.
 
-    The exception has no additional attributes; it simply indicates that
-    the background renewal machinery has been shut down and cannot perform
-    further renewals.
+    The exception has no additional attributes. It indicates that the bearer
+    cannot renew more tokens after shutdown.
     """
 
     def __init__(self) -> None:
@@ -241,11 +237,10 @@ class Bearer(ParentBearer):
     proactively based on the token's expiration and the configured
     ``lifetime_safe_fraction``.
 
-    The bearer supports two renewal modes for fetch requests:
-        - asynchronous: trigger a background renewal and wait for the
-            cached token to become fresh;
-        - synchronous: block until a new token has been fetched (or until
-            a specified request timeout elapses).
+    The bearer supports two renewal modes:
+
+    - Asynchronous mode starts background renewal and waits for a fresh cache.
+    - Synchronous mode waits for a new token or the request timeout.
 
     Example
     -------
@@ -261,7 +256,10 @@ class Bearer(ParentBearer):
         # Wrap some bearer with renewal
         renewable_bearer = Bearer(some_bearer)
 
-        sdk = SDK(credentials=renewable_bearer)
+        sdk = SDK(
+            credentials=renewable_bearer,
+            user_agent_prefix="example-application/1.0",
+        )
 
     :param source: The inner bearer used to actually fetch tokens.
     :param max_retries: Maximum number of retry attempts performed by

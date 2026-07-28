@@ -13,7 +13,10 @@ Used in deferred token bearer implementations::
     chan: DeferredChannel = Future[ClientChannelInterface]()
     bearer = ServiceAccountBearer(..., channel=chan)
 
-    sdk = SDK(credentials=bearer)
+    sdk = SDK(
+        credentials=bearer,
+        user_agent_prefix="example-application/1.0",
+    )
     chan.set_result(sdk)
 """
 
@@ -34,6 +37,9 @@ Used in deferred token bearer implementations::
     chan: DeferredChannel = Future[ClientChannelInterface]()
     bearer = ServiceAccountBearer(..., channel=chan)
 
-    sdk = SDK(credentials=bearer)
+    sdk = SDK(
+        credentials=bearer,
+        user_agent_prefix="example-application/1.0",
+    )
     chan.set_result(sdk)
 """

@@ -1,9 +1,8 @@
-"""Asyncio-related abstract protocols used by the SDK.
+"""Define asynchronous protocols for the SDK.
 
-This module defines lightweight :class:`typing.Protocol` interfaces that the
-channel and related components implement. The protocols are intentionally
-minimal and runtime-checkable where appropriate so that implementations can
-be validated in unit tests.
+The channel and related components implement these small
+:class:`typing.Protocol` interfaces. Applicable protocols support runtime
+checks for unit tests.
 """
 
 from collections.abc import Awaitable
@@ -16,11 +15,10 @@ T = TypeVar("T")
 
 
 class SyncronizerInterface(Protocol):
-    """Protocol for objects capable of running awaitables synchronously.
+    """Define objects that run awaitables synchronously.
 
-    Implementations expose a single :meth:`run_sync` method which executes
-    an awaitable on an event loop owned by the implementation and blocks the
-    caller until completion.
+    :meth:`run_sync` runs an awaitable on the object's event loop. It blocks
+    the caller until the awaitable is complete.
     """
 
     def run_sync(self, awaitable: Awaitable[T], timeout: float | None = None) -> T:
@@ -89,11 +87,10 @@ class ClientChannelInterface(Protocol):
 
 
 class GracefulInterface(Protocol):
-    """Protocol for components that support graceful asynchronous shutdown.
+    """Define components that support controlled asynchronous shutdown.
 
-    Objects implementing this protocol expose an :py:meth:`close` coroutine
-    that the channel will call during shutdown to allow background tasks and
-    resources to be released.
+    During shutdown, the channel calls :py:meth:`close`. This coroutine stops
+    background tasks and releases resources.
     """
 
     async def close(self, grace: float | None = None) -> None:

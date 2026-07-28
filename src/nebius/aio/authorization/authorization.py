@@ -6,16 +6,15 @@ request-time authorization.
 Typical usage within the request lifecycle
 ------------------------------------------
 
-The :class:`Provider` is the object passed to request constructors and prior to sending
-an RPC the request layer calls :meth:`Provider.authenticator()` to obtain an
+Give a :class:`Provider` to the request constructor. Before it sends an RPC,
+the request layer calls :meth:`Provider.authenticator` to get an
 :class:`Authenticator`.
 
-The :class:`Authenticator` instance returned by the provider is treated as a
-per-request authorizer: it is responsible for ensuring the
-provided :class:`nebius.base.metadata.Metadata` contains the headers needed
-for that request only (for example an Authorization bearer token). If
-an authentication-related failure occurs, the request layer will consult
-``Authenticator.can_retry`` and will retry with the same authenticator.
+The authenticator authorizes one request. It adds the required headers to
+:class:`nebius.base.metadata.Metadata`. For example, it can add an
+authorization bearer token. After an authentication failure, the request
+layer calls :meth:`Authenticator.can_retry`. If permitted, it retries with
+the same authenticator.
 """
 
 from abc import ABC, abstractmethod
@@ -26,9 +25,9 @@ from nebius.base.metadata import Metadata
 class Authenticator(ABC):
     """Abstract interface for performing per-request authentication.
 
-    Subclasses must implement :meth:`authenticate` and may implement
-    :meth:`can_retry` to indicate whether authentication failures should be
-    retried, eg code UNAUTHENTICATED and number of calls to :meth:`authenticate` < 3.
+    Subclasses must implement :meth:`authenticate`. They can implement
+    :meth:`can_retry` to permit retries after authentication failures. For
+    example, permit fewer than three retries after an ``UNAUTHENTICATED`` code.
     """
 
     @abstractmethod
@@ -59,8 +58,7 @@ class Authenticator(ABC):
         err: Exception,
         options: dict[str, str] | None = None,
     ) -> bool:
-        """Indicate whether a failed authentication attempt or failed request may be
-        retried with a fresh authentication, calling to :meth:`authenticate`.
+        """Return whether to call :meth:`authenticate` and retry.
 
         :param err: The exception raised during authentication or while the
             RPC was in-flight. Implementations inspect the exception to
@@ -82,24 +80,19 @@ class Provider(ABC):
     Typical usage within the request lifecycle
     ------------------------------------------
 
-    The :class:`Provider` is the object passed to request constructors and prior to
-    sending an RPC the request layer calls :meth:`Provider.authenticator()` to obtain an
+    Give a provider to the request constructor. Before it sends an RPC, the
+    request layer calls :meth:`authenticator` to get an
     :class:`Authenticator`.
 
-    The :class:`Authenticator` instance returned by the provider is treated as a
-    per-request authorizer: it is responsible for ensuring the
-    provided :class:`nebius.base.metadata.Metadata` contains the headers needed
-    for that request only (for example an Authorization bearer token). If
-    an authentication-related failure occurs, the request layer will consult
-    ``Authenticator.can_retry`` and will retry with the same authenticator.
+    The authenticator authorizes one request. It adds the required headers to
+    :class:`nebius.base.metadata.Metadata`. After an authentication failure,
+    the request layer calls :meth:`Authenticator.can_retry`. If permitted, it
+    retries with the same authenticator.
 
     Example
     -------
 
-    A minimal example showing how a provider might be passed into an SDK or
-    request layer. The actual SDK in this repo accepts a provider via the
-    ``credentials`` parameter; the example below demonstrates the intent and
-    typical usage::
+    Give a provider to the SDK through the ``credentials`` parameter::
 
         from nebius.sdk import SDK
         from nebius.aio.authorization import Authenticator, Provider
@@ -113,7 +106,10 @@ class Provider(ABC):
                 return MyAuthenticator()
 
         provider = MyProvider()
-        sdk = SDK(credentials=provider)  # SDK initialisation (illustrative)
+        sdk = SDK(
+            credentials=provider,
+            user_agent_prefix="example-application/1.0",
+        )
 
     """
 

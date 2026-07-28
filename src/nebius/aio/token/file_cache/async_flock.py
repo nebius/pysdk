@@ -1,9 +1,8 @@
 """Asynchronous file lock using portalocker.
 
-This module provides a small ``async``-compatible file lock wrapper
-around :mod:`portalocker`. It exposes :class:`Lock` which can be used
-with ``async with`` to acquire a file-based lock without blocking the
-event loop (the implementation performs polling with ``asyncio.sleep``).
+This module wraps :mod:`portalocker` for asynchronous use. Use
+:class:`Lock` with ``async with`` to get a file lock without blocking the
+event loop. The implementation polls with ``asyncio.sleep``.
 
 The lock supports exclusive and shared modes and a configurable
 timeout/polling interval.

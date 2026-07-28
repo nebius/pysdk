@@ -8,9 +8,9 @@ local client by opening a browser or presenting a URL to the user.
 Interactive authorization flow (what happens on ``fetch``)
 ----------------------------------------------------------
 
-When :meth:`Receiver._fetch` is invoked the implementation will call the
-helper :func:`nebius.aio.token.federation_bearer.auth.authorize` which
-performs the interactive federation handshake. The typical flow is:
+When :meth:`Receiver._fetch` starts, it calls
+:func:`nebius.aio.token.federation_bearer.auth.authorize`. This function
+performs the interactive federation handshake:
 
 1. The helper constructs an authorization URL and either attempts to open
      the user's default browser or returns the URL for the caller to display.
@@ -26,10 +26,9 @@ Where the URL is shown
 
 - The authorization URL is logged at INFO/DEBUG levels so it appears in the project's
     logs.
-- If a ``writer`` text stream is provided to the :class:`Receiver` or
-    the :class:`Bearer`, the URL (and short instructions) will also be written
-    to that stream so callers can present it directly to a user (for example
-    printing to stdout).
+- If :class:`Receiver` or :class:`Bearer` has a ``writer``, the helper writes
+  the URL and short instructions to it. The caller can then show them to the
+  user, for example on stdout.
 
 Blocking considerations
 -----------------------
@@ -84,9 +83,9 @@ class Receiver(ParentReceiver):
     Interactive authorization flow (what happens on ``fetch``)
     ----------------------------------------------------------
 
-    When :meth:`Receiver._fetch` is invoked the implementation will call the
-    helper :func:`nebius.aio.token.federation_bearer.auth.authorize` which
-    performs the interactive federation handshake. The typical flow is:
+    :meth:`Receiver._fetch` calls
+    :func:`nebius.aio.token.federation_bearer.auth.authorize`. This function
+    performs the interactive federation handshake:
 
     1. The helper constructs an authorization URL and either attempts to open
         the user's default browser or returns the URL for the caller to display.
@@ -102,10 +101,9 @@ class Receiver(ParentReceiver):
 
     - The authorization URL is logged at INFO/DEBUG levels so it appears in the
         project's logs.
-    - If a ``writer`` text stream is provided to the :class:`Receiver` or
-        the :class:`Bearer`, the URL (and short instructions) will also be written
-        to that stream so callers can present it directly to a user (for example
-        printing to stdout).
+    - If :class:`Receiver` or :class:`Bearer` has a ``writer``, the helper
+      writes the URL and short instructions to it. The caller can then show
+      them to the user, for example on stdout.
 
     Blocking considerations
     -----------------------
@@ -120,7 +118,7 @@ class Receiver(ParentReceiver):
     :param federation_id: Identifier of the users federation.
     :param writer: Optional text writer used to display instructions to the user.
     :param no_browser_open: If true the implementation will not attempt to
-        open a browser automatically but will just print a URL to the ``writer`` and
+        open a browser automatically. It writes the URL to ``writer`` and the
         logs.
     :param ssl_ctx: Optional SSL context to use for HTTPS requests.
     :param metrics: Optional auth metrics callbacks used to record the
@@ -227,9 +225,9 @@ class Bearer(ParentBearer):
     Interactive authorization flow (what happens on ``fetch``)
     ----------------------------------------------------------
 
-    When :meth:`Receiver._fetch` is invoked the implementation will call the
-    helper :func:`nebius.aio.token.federation_bearer.auth.authorize` which
-    performs the interactive federation handshake. The typical flow is:
+    :meth:`Receiver._fetch` calls
+    :func:`nebius.aio.token.federation_bearer.auth.authorize`. This function
+    performs the interactive federation handshake:
 
     1. The helper constructs an authorization URL and either attempts to open
         the user's default browser or returns the URL for the caller to display.
@@ -245,10 +243,9 @@ class Bearer(ParentBearer):
 
     - The authorization URL is logged at INFO/DEBUG levels so it appears in the
         project's logs.
-    - If a ``writer`` text stream is provided to the :class:`Receiver` or
-        the :class:`Bearer`, the URL (and short instructions) will also be written
-        to that stream so callers can present it directly to a user (for example
-        printing to stdout).
+    - If :class:`Receiver` or :class:`Bearer` has a ``writer``, the helper
+      writes the URL and short instructions to it. The caller can then show
+      them to the user, for example on stdout.
 
     Blocking considerations
     -----------------------
@@ -279,14 +276,17 @@ class Bearer(ParentBearer):
         from nebius.aio.token.federation_bearer import Bearer
         import sys
 
-        sdk = SDK(credentials=Bearer(
-            profile_name="not-a-cli-profile",
-            client_id="my-client-id",
-            federation_endpoint="auth.eu.nebius.com",
-            federation_id="federation-e00my-federation",
-            writer=sys.stdout,
-            no_browser_open=True,
-        ))
+        sdk = SDK(
+            credentials=Bearer(
+                profile_name="not-a-cli-profile",
+                client_id="my-client-id",
+                federation_endpoint="auth.eu.nebius.com",
+                federation_id="federation-e00my-federation",
+                writer=sys.stdout,
+                no_browser_open=True,
+            ),
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(

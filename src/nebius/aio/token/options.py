@@ -8,10 +8,8 @@ behaviour.
 
 General conventions
 -------------------
-- Boolean flags: options that act as switches (for example
-  :data:`OPTION_RENEW_SYNCHRONOUS`) are enabled when the key is present
-  in the options mapping and its value is not an empty string. The exact
-  string value is ignored; presence/non-empty is considered ``True``.
+- Boolean flags: A present key with a nonempty value enables the option. The
+  exact string value has no effect.
 - Numeric overrides: some options accept numeric values encoded as
   strings (for example :data:`OPTION_MAX_RETRIES` and
   :data:`OPTION_RENEW_REQUEST_TIMEOUT`). These are parsed using
@@ -24,20 +22,15 @@ Options
 :data:`OPTION_MAX_RETRIES`
         Key: ``"max_fetch_token_retries"``
 
-        When present in the request ``options`` mapping this key overrides
-        the configured maximum number of fetch retries for the current
-        receiver. The value must be a decimal integer encoded as a string
-        (for example ``"3"``). If the value cannot be parsed as an
-        integer it is ignored and the receiver's configured default is
-        used (typically ``2``).
+        This key changes the maximum retrieval retries for the current
+        receiver. Its value must be a decimal integer string, such as ``"3"``.
+        An invalid value has no effect. The usual default is ``2``.
 
 :data:`OPTION_RENEW_REQUIRED`
         Key: ``"token_renew_required"``
 
-        A boolean-like flag that forces the bearer to perform a renewal
-        even if the cached token would normally be considered fresh. Any
-        non-empty string value will enable the behaviour; typically the key
-        is set to ``"1"`` or ``"true"`` in examples.
+        This flag forces renewal of a fresh cached token. A nonempty value
+        enables the option. Examples use ``"1"`` or ``"true"``.
 
 :data:`OPTION_RENEW_SYNCHRONOUS`
         Key: ``"token_renew_synchronous"``
@@ -52,10 +45,9 @@ Options
 :data:`OPTION_REPORT_ERROR`
         Key: ``"token_renew_report_error"``
 
-        When set, renewal errors are reported back to the caller of
-        :meth:`Receiver.fetch` by raising an exception instead of being
-        handled silently by background retry logic. This is useful when the
-        client needs immediate visibility of renewal failures.
+        When set, :meth:`Receiver.fetch` raises renewal errors. Background
+        retry logic does not hide these errors. Use this option to report
+        renewal failures immediately.
 
 :data:`OPTION_RENEW_REQUEST_TIMEOUT`
         Key: ``"token_renew_request_timeout"``

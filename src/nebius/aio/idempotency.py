@@ -1,11 +1,8 @@
-"""Idempotency key interceptor for gRPC aio clients.
+"""Add idempotency keys to asynchronous gRPC client calls.
 
-This module provides functionality to automatically add idempotency keys to
-gRPC client calls, ensuring that operations can be safely retried without
-causing duplicate side effects on the server.
-
-The interceptor adds a unique UUID4 key to the 'x-idempotency-key' header
-for each call that doesn't already have one.
+The interceptor adds a unique UUID4 key to the ``x-idempotency-key`` header.
+It does not replace an existing key. The key lets the server prevent duplicate
+effects when a client retries an operation.
 """
 
 from collections.abc import Callable
@@ -37,7 +34,7 @@ def new_key() -> str:
 
 
 def add_key_to_metadata(metadata: Metadata | GRPCMetadata) -> None:
-    """Add a new idempotency key to the provided metadata.
+    """Add a new idempotency key to the metadata.
 
     :param metadata: The metadata object to add the key to.
     """
@@ -48,7 +45,7 @@ def add_key_to_metadata(metadata: Metadata | GRPCMetadata) -> None:
 def ensure_key_in_metadata(metadata: Metadata | GRPCMetadata) -> None:
     """Ensure an idempotency key is present in the metadata.
 
-    If no idempotency key exists or it's empty, a new one is added.
+    Add a new key if the metadata has no key or has an empty key.
 
     :param metadata: The metadata object to check and potentially modify.
     """
@@ -57,10 +54,9 @@ def ensure_key_in_metadata(metadata: Metadata | GRPCMetadata) -> None:
 
 
 class IdempotencyKeyInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[unused-ignore,misc]
-    """gRPC client interceptor that adds idempotency keys to unary-unary calls.
+    """Add idempotency keys to unary-unary gRPC calls.
 
-    This interceptor ensures that every gRPC call has an idempotency key in its
-    metadata, which helps prevent duplicate operations on the server side.
+    The idempotency key lets the server prevent duplicate operations.
     """
 
     async def intercept_unary_unary(
@@ -69,7 +65,7 @@ class IdempotencyKeyInterceptor(UnaryUnaryClientInterceptor):  # type: ignore[un
         client_call_details: ClientCallDetails,
         request: Req,
     ) -> UnaryUnaryCall | Res:  # type: ignore[type-arg,unused-ignore]
-        """Intercept a unary-unary gRPC call and ensure idempotency key is present.
+        """Add an idempotency key to a unary-unary gRPC call.
 
         :param continuation: The next interceptor in the chain or the actual call.
         :param client_call_details: Details of the client call, including metadata.

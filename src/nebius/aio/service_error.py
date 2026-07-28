@@ -1,8 +1,8 @@
 """Helpers for converting service-level protobuf errors into SDK types.
 
-This module builds on :mod:`request_status` to represent detailed service
-errors (``ServiceError`` PBs) and to decide retriability based on service
-semantics and gRPC status codes.
+This module uses :mod:`request_status` to represent detailed service errors.
+It uses service semantics and gRPC status codes to decide if a request can
+retry.
 """
 
 from __future__ import annotations
@@ -46,7 +46,7 @@ class RequestError(BaseError):
 
 
 def to_str(err: Any) -> str:
-    """Render a :class:`ServiceError` into a concise human readable string.
+    """Render a ``ServiceError`` as a short human-readable string.
 
     The function inspects typed details attached to the service error and
     produces a one-line summary intended for logs and exception messages.
@@ -255,12 +255,12 @@ class RequestStatusExtended(RequestStatus):
     """Extended request status that includes parsed service errors.
 
     This supplements :class:`RequestStatus` with a list of domain-specific
-    :class:`ServiceError` messages extracted from the status details.
+    ``ServiceError`` messages extracted from the status details.
 
     :ivar code: gRPC status code
     :ivar message: human readable message (may be ``None``)
     :ivar details: list of ``google.protobuf.Any`` detail messages
-    :ivar service_errors: list of parsed :class:`ServiceError` messages
+    :ivar service_errors: list of parsed ``ServiceError`` messages
     :ivar request_id: request identifier extracted from metadata
     :ivar trace_id: trace identifier extracted from metadata
     """
@@ -369,7 +369,7 @@ class RequestStatusExtended(RequestStatus):
 
         This function uses internal helper :func:`pb2_from_status` to remove
         service error protos from the details and returns them as
-        :class:`ServiceError` wrappers.
+        ``ServiceError`` messages.
         """
         base = RequestStatus.from_rpc_status(
             status,

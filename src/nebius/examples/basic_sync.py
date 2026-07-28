@@ -37,6 +37,7 @@ if __name__ == "__main__":
                     os.environ.get("NEBIUS_IAM_TOKEN", ""),
                 )
             ),
+            user_agent_prefix="example-application/1.0",
         )
         project_id: str = args.project_id
 

@@ -1,15 +1,14 @@
 """A renewable file-backed bearer.
 
-This module composes a wrapped network :class:`nebius.aio.token.token.Bearer` with a
-:class:`ThrottledTokenCache` to provide cached tokens that are refreshed from
-the wrapped bearer when the cached token is close to expiration.
+This module combines a network bearer with :class:`ThrottledTokenCache`.
+When a cached token is near expiration, it gets a new token from the bearer.
 
 Classes
 -------
 
-- :class:`RenewableFileCacheReceiver` -- A receiver that prefers the cached
-  token when it's fresh, otherwise fetches a new token from the wrapped
-  bearer and stores it in the cache.
+- :class:`RenewableFileCacheReceiver` -- A receiver that uses a fresh cached
+  token. If the token is not fresh, it gets a new token from the wrapped
+  bearer and stores the token in the cache.
 - :class:`RenewableFileCacheBearer` -- A bearer that composes an existing
   :class:`nebius.aio.token.token.Bearer` instance with a file-backed cache and exposes
   the renewable receiver.
@@ -44,9 +43,8 @@ class RenewableFileCacheReceiver(ParentReceiver):
     """Receiver that returns a cached token when safe, or refreshes it.
 
     The receiver first consults the provided :class:`ThrottledTokenCache`.
-    If the cached token is missing or too close to expiration (depending
-    on the parent's ``safety_margin``), the receiver will fetch a fresh
-    token from the wrapped bearer and persist it to the cache.
+    The receiver reads :class:`ThrottledTokenCache` first. If the token is
+    missing or inside ``safety_margin``, it gets and caches a new token.
 
     :param bearer: The parent :class:`RenewableFileCacheBearer` containing
         configuration such as :attr:`safety_margin` and the wrapped bearer instance.
@@ -211,7 +209,10 @@ class RenewableFileCacheBearer(ParentBearer):
         custom_bearer = SomeCustomHeavyLoadBearer()
         cached_bearer = RenewableFileCacheBearer(custom_bearer)
 
-        sdk = SDK(credentials=cached_bearer)
+        sdk = SDK(
+            credentials=cached_bearer,
+            user_agent_prefix="example-application/1.0",
+        )
     """
 
     def __init__(
